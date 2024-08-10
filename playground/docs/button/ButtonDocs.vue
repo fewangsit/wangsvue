@@ -74,3 +74,9 @@ const severities = [undefined, 'secondary', 'success', 'warning', 'danger'];
     </div>
   </div>
 </template>
+
+<style>
+body {
+  zoom: 150%;
+}
+</style>
