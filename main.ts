@@ -10,15 +10,15 @@ import Tooltip from 'primevue/tooltip';
 import ToastService from 'primevue/toastservice';
 import router from './playground';
 
-// Presets
-import Presets from '@/preset';
+// Preset
+import Preset from '@/preset';
 
 const app = createApp(App);
 
 // Init PrimeVue
 app.use(PrimeVue, {
   unstyled: true,
-  pt: Presets,
+  pt: Preset,
 });
 
 app.use(router);
