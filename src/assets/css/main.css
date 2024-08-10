@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
 @import './icons.css';
-@import './base.css';
 
 @tailwind base;
 @tailwind components;
@@ -16,31 +15,6 @@
 
 :focus-visible {
   outline: none !important; /* Removes outline on visible element */
-}
-
-a {
-  text-decoration: none !important;
-}
-
-/* a[href]:focus-visible,
-a[href]:hover {
-  @apply !underline !underline-offset-2;
-} */
-
-/* Works on Chrome, Edge, and Safari */
-*::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-*::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: #c1c1c1;
-  border-radius: 20px;
-  border: 3px solid #f1f1f1;
 }
 
 @layer utilities {
