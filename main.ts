@@ -2,7 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 
 // Style
-import './src/assets/css/main.css';
+import './library/assets/css/main.css';
 
 // PrimeVue
 import PrimeVue from 'primevue/config';
@@ -11,7 +11,7 @@ import ToastService from 'primevue/toastservice';
 import router from './playground';
 
 // Preset
-import Preset from '@/preset';
+import Preset from 'lib/preset';
 
 const app = createApp(App);
 

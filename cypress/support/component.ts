@@ -11,7 +11,7 @@ import './commands';
 import './tailwind.css';
 
 import PrimeVue from 'primevue/config';
-import Presets from '../../src/preset';
+import Presets from 'lib/preset';
 import Tooltip from 'primevue/tooltip';
 import ToastService from 'primevue/toastservice';
 

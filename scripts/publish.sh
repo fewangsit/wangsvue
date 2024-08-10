@@ -4,7 +4,7 @@
 VERSION=$(jq -r '.version' package.json)
 
 # Change directory to 'dist'
-cd dist
+cd library/dist
 
 # Get the version from the main package.json
 

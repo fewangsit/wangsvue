@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "declaration": true,
+    "declarationDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "lib/*": [
+        "./*"
+      ],
+    },
+  },
+  "include": [
+    "**/*.d.ts",
+    "**/*.ts",
+    "**/*.vue",
+  ],
+  "exclude": [
+    "**/*.config.ts",
+  ],
+}

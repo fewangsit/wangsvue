@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { shallowRef, useAttrs } from 'vue';
-import { toArrayClass } from '@/components/helpers';
+import { toArrayClass } from 'lib/components/helpers';
 
-import Icon from '@/components/Icon/Icon.vue';
+import Icon from 'lib/components/Icon/Icon.vue';
 import PrimeButton from 'primevue/button';
 import type { TSButtonProps } from './Button.vue.d';
-import Preset from '@/preset/button';
+import Preset from 'lib/preset/button';
 
 const props = defineProps<TSButtonProps>();
 const attrs = useAttrs();

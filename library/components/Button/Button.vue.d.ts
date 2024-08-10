@@ -1,6 +1,6 @@
 import { DefineComponent } from 'vue';
 import { ButtonProps } from 'primevue/button';
-import type { TSVueIcons } from '@/components/Icon/Icon.vue.d';
+import type { TSVueIcons } from 'lib/components/Icon/Icon.vue.d';
 
 export interface TSButtonProps
   extends /* @vue-ignore */ Omit<ButtonProps, 'icon'> {

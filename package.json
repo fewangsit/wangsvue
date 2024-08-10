@@ -2,13 +2,15 @@
   "name": "wangsvue",
   "version": "1.0.23",
   "author": "fewangsit",
+  "description": "Global reusable components for micro frontend",
   "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "rimraf dist && vue-tsc && vite build",
+    "build:lib": "rimraf dist && vue-tsc && vite build --config ./library/vite.config.ts",
     "build:dev": "vue-tsc && vite build --watch",
-    "build:pub": "pnpm build && changelogen --release && ./scripts/publish.sh",
+    "release": "pnpm build:lib && changelogen --release && ./scripts/publish.sh",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.ts --fix --ignore-path .gitignore",
     "tailwind": "tailwind -i ./src/assets/css/main.css -o ./cypress/support/tailwind.css",
@@ -82,14 +84,5 @@
     "vite-plugin-istanbul": "6.0.2",
     "vue-tsc": "2.0.29",
     "wait-on": "7.2.0"
-  },
-  "description": "Global reusable components for micro frontend",
-  "module": "./dist/wangsvue.es.js",
-  "types": "./dist/main.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/main.d.ts",
-      "import": "./dist/wangsvue.es.js"
-    }
   }
 }

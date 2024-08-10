@@ -3,7 +3,7 @@ import { shallowRef } from 'vue';
 import type {
   TSVueIcons,
   TSVueIconSeverities,
-} from '@/components/Icon/Icon.vue.d';
+} from 'lib/components/Icon/Icon.vue.d';
 
 const props = withDefaults(
   defineProps<{

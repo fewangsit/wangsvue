@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Button from '@/components/Button/Button.vue';
+import Button from 'lib/components/Button/Button.vue';
 
 const severities = [undefined, 'secondary', 'success', 'warning', 'danger'];
 </script>

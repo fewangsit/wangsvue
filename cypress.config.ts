@@ -23,7 +23,7 @@ export default defineConfig({
     },
   },
   component: {
-    specPattern: 'src/**/*.cy.spec.{js,jsx,ts,tsx}',
+    specPattern: 'library/**/*.cy.spec.{js,jsx,ts,tsx}',
     supportFile: 'cypress/support/component.ts',
     watchForFileChanges: false,
     devServer: {
