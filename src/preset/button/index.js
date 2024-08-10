@@ -24,6 +24,7 @@ export default {
         'text-xl py-3 px-4': props.size === 'large',
       },
       { 'gap-1': props.label !== null },
+      { '!p-[7px] !w-max': props.label === null && props.icon },
       {
         'w-12 px-0 py-3': props.label == null && props.icon !== null,
       },
@@ -468,7 +469,8 @@ export default {
   label: ({ props }) => ({
     class: [
       'duration-200',
-      'font-normal text-xs leading-5',
+      'font-normal text-xs',
+      props.label ? 'leading-5' : 'leading-4',
       {
         'hover:underline': props.link,
       },
@@ -476,14 +478,7 @@ export default {
     ],
   }),
   icon: ({ props }) => ({
-    class: [
-      'mx-0',
-      {
-        'mr-2': props.iconPos == 'left' && props.label != null,
-        'ml-2 order-1': props.iconPos == 'right' && props.label != null,
-        'order-2': props.iconPos == 'bottom' && props.label != null,
-      },
-    ],
+    class: ['shrink-0'],
   }),
   loadingIcon: ({ props }) => ({
     class: [

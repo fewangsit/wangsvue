@@ -45,20 +45,31 @@ const severities = [undefined, 'secondary', 'success', 'warning', 'danger'];
       />
 
       <template :key="severity" v-for="severity of severities">
-        <Button
+        <div
           :key="style?.toString()"
           v-for="style of ['text', 'outlined', undefined]"
-          :label="
-            severity
-              ? `${severity?.[0].toUpperCase()}${severity?.slice(1)}`
-              : 'Primary'
-          "
-          :outlined="style === 'outlined'"
-          :severity="severity"
-          :text="style === 'text'"
-          icon="checkbox-blank-circle-line"
-          icon-pos="right"
-        />
+          class="flex gap-1"
+        >
+          <Button
+            :label="
+              severity
+                ? `${severity?.[0].toUpperCase()}${severity?.slice(1)}`
+                : 'Primary'
+            "
+            :outlined="style === 'outlined'"
+            :severity="severity"
+            :text="style === 'text'"
+            icon="checkbox-blank-circle-line"
+            icon-pos="right"
+          />
+          <Button
+            :outlined="style === 'outlined'"
+            :severity="severity"
+            :text="style === 'text'"
+            icon="checkbox-blank-circle-line"
+            icon-pos="right"
+          />
+        </div>
       </template>
     </div>
   </div>

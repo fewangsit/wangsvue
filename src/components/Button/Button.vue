@@ -28,8 +28,8 @@ const iconProps = shallowRef({
     :icon="icon"
     :icon-pos="iconPos"
   >
-    <template #icon>
-      <Icon v-if="icon" v-bind="iconProps" />
+    <template #icon="{ class: iconClass }">
+      <Icon v-if="icon" v-bind="iconProps" :class="iconClass" />
     </template>
     <slot />
   </PrimeButton>
