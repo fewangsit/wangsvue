@@ -45,7 +45,7 @@ const useField = <T>(
 };
 
 // Preset
-import Preset from './preset';
+import Preset from 'lib/preset';
 
 // Directives
 import Tooltip from 'primevue/tooltip';

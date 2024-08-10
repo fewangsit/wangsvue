@@ -1,14 +1,15 @@
 {
   "name": "wangsvue-monorepo",
   "version": "1.0.1",
-  "author": "fewangsit",
-  "description": "Global reusable components for micro frontend",
+  "author": "Wangsit FE Developer",
+  "description": "Wangsit Front End Developer Monorepo",
   "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "rimraf dist && vue-tsc && vite build",
     "build:dev": "vue-tsc && vite build --watch",
+    "build:lib": "pnpm --filter wangsvue build",
     "release": "pnpm --filter wangsvue release",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.ts --fix --ignore-path .gitignore",

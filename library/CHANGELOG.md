@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.1.1
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.1.0...v1.1.1)
+
+### 🏡 Chore
+
+- Configure monorepo for playground and library ([244be04](https://github.com/fewangsit/wangsvue/commit/244be04))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.1.0
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.0.17...v1.1.0)
