@@ -28,9 +28,6 @@
       "@/*": [
         "./src/*"
       ],
-      "v2/*": [
-        "./src/components/*"
-      ]
     },
     "types": [
       "cypress",
@@ -45,10 +42,9 @@
     "src/**/*.js",
     "src/**/*.d.ts",
     "src/**/*.tsx",
-    "src/**/*.vue"
+    "src/**/*.vue",
   ],
   "exclude": [
-    "cypress/*",
     "**/*.config.ts",
   ],
 }
