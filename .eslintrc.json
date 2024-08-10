@@ -1,0 +1,43 @@
+{
+  "root": true,
+  "extends": [
+    "ts-code-standard"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "cypress/e2e /**/*.{cy,spec}.{js,ts,jsx,tsx}",
+        "cypress/support /**/*.{js,ts,jsx,tsx}"
+      ],
+      "extends": [
+        "plugin:cypress/recommended"
+      ]
+    },
+    {
+      "files": [
+        "*.d.ts"
+      ],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off"
+      }
+    }
+  ],
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "rules": {
+    "vue/multi-word-component-names": "off",
+    "vue/no-static-inline-styles": "off",
+    "no-console": [
+      "error",
+      {
+        "allow": [
+          "error"
+        ]
+      }
+    ]
+  },
+  "ignorePatterns": [
+    "**/*.js"
+  ]
+}

@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
+@import './icons.css';
+@import './base.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: 'Manrope', sans-serif;
+
+  /* Works on Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: #c1c1c1 #f1f1f1;
+}
+
+:focus-visible {
+  outline: none !important; /* Removes outline on visible element */
+}
+
+a {
+  text-decoration: none !important;
+}
+
+/* a[href]:focus-visible,
+a[href]:hover {
+  @apply !underline !underline-offset-2;
+} */
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1;
+  border-radius: 20px;
+  border: 3px solid #f1f1f1;
+}
+
+@layer utilities {
+  .outlined {
+    @apply border border-solid;
+  }
+
+  .text-body-medium {
+    @apply text-general-800 dark:text-general-800 text-xs font-medium leading-[16.39px] tracking-[0.02em];
+  }
+
+  .text-body-small {
+    @apply text-[9px] font-medium leading-[12.29px] text-general-800;
+  }
+}
