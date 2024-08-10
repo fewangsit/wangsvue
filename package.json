@@ -1,6 +1,6 @@
 {
   "name": "wangsvue",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "author": "fewangsit",
   "license": "MIT",
   "type": "module",
@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "rimraf dist && vue-tsc && vite build",
     "build:dev": "vue-tsc && vite build --watch",
-    "build:pub": "pnpm build && ./scripts/publish.sh",
+    "build:pub": "pnpm build && changelogen --release && ./scripts/publish.sh",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.ts --fix --ignore-path .gitignore",
     "tailwind": "tailwind -i ./src/assets/css/main.css -o ./cypress/support/tailwind.css",
