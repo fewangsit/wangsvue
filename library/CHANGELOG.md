@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v1.1.3
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.1.1...v1.1.3)
+
+### 💅 Refactors
+
+- Lowercasen folder name ([4bbd392](https://github.com/fewangsit/wangsvue/commit/4bbd392))
+
+### 🏡 Chore
+
+- **release:** V1.1.1 ([a940c02](https://github.com/fewangsit/wangsvue/commit/a940c02))
+- **release:** V1.1.2 ([b47cb64](https://github.com/fewangsit/wangsvue/commit/b47cb64))
+- Build entry - change WangsVueConfig to WangsVue ([719d20a](https://github.com/fewangsit/wangsvue/commit/719d20a))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.1.2
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.1.1...v1.1.2)
