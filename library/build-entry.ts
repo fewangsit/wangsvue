@@ -4,7 +4,7 @@ import type { App, MaybeRef, MaybeRefOrGetter } from 'vue';
 import './assets/css/main.css';
 
 // PrimeVue
-import WangsVueConfig from 'primevue/config';
+import WangsVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
 
 // Vee-validate
@@ -54,7 +54,7 @@ import { Button } from './components';
 
 export default {
   install: (app: App): void => {
-    app.use(WangsVueConfig, {
+    app.use(WangsVue, {
       unstyled: true,
       pt: Preset,
     });
@@ -70,7 +70,7 @@ export default {
 
 export {
   // Config
-  WangsVueConfig,
+  WangsVue,
   ToastService,
   Preset,
 
