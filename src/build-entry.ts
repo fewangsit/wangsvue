@@ -4,7 +4,7 @@ import type { App, MaybeRef, MaybeRefOrGetter } from 'vue';
 import './assets/css/main.css';
 
 // PrimeVue
-import LibConfig from 'primevue/config';
+import WangsVueConfig from 'primevue/config';
 import ToastService from 'primevue/toastservice';
 
 // Vee-validate
@@ -44,22 +44,25 @@ const useField = <T>(
   return context;
 };
 
-// Presets
-import Presets from './preset';
+// Preset
+import Preset from './preset';
 
 // Directives
 import Tooltip from 'primevue/tooltip';
 
-import {} from './components';
+import { Button } from './components';
 
 export default {
   install: (app: App): void => {
-    app.use(LibConfig, {
+    app.use(WangsVueConfig, {
       unstyled: true,
-      pt: Presets,
+      pt: Preset,
     });
 
     app.use(ToastService);
+
+    // eslint-disable-next-line vue/no-reserved-component-names
+    app.component('Button', Button);
 
     app.directive('tooltip', Tooltip);
   },
@@ -67,11 +70,13 @@ export default {
 
 export {
   // Config
-  LibConfig,
+  WangsVueConfig,
   ToastService,
+  Preset,
 
   // Directives
   Tooltip,
   useForm,
   useField,
+  Button,
 };

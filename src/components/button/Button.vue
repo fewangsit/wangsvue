@@ -1,5 +1,6 @@
+<script setup lang="ts">
+import Button from 'primevue/button';
+</script>
 <template>
-  <button>
-    <slot />
-  </button>
+  <Button v-bind="$attrs" />
 </template>
