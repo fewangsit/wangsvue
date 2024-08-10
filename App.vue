@@ -2,5 +2,4 @@
 
 <template>
   <router-view />
-  <Loading />
 </template>

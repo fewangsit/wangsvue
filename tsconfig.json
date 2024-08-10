@@ -40,9 +40,7 @@
     "**/*.d.ts",
     "**/*.ts",
     "src/**/*.js",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
+    "**/*.vue",
   ],
   "exclude": [
     "**/*.config.ts",
