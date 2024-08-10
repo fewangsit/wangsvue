@@ -1,6 +1,6 @@
 {
   "name": "wangsvue",
-  "version": "1.0.3",
+  "version": "1.0.16",
   "author": "fewangsit",
   "license": "MIT",
   "type": "module",
@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "rimraf dist && vue-tsc && vite build",
     "build:dev": "vue-tsc && vite build --watch",
-    "build:pub": "pnpm build && npm link && npm publish",
+    "build:pub": "pnpm build && ./scripts/publish.sh",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.ts --fix --ignore-path .gitignore",
     "tailwind": "tailwind -i ./src/assets/css/main.css -o ./cypress/support/tailwind.css",
@@ -82,11 +82,12 @@
     "wait-on": "7.2.0"
   },
   "description": "Global reusable components for micro frontend",
-  "files": [
-    "dist"
-  ],
+  "module": "./dist/wangsvue.es.js",
+  "types": "./dist/main.d.ts",
   "exports": {
-    "./button": "./dist/button.js"
-  },
-  "types": "./dist/main.d.ts"
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/wangsvue.es.js"
+    }
+  }
 }
