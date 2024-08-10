@@ -1,9 +1,9 @@
 import { DefineComponent } from 'vue';
-import { ButtonProps } from 'primevue/button';
+import { ButtonProps as PrimeButtonProps } from 'primevue/button';
 import type { TSVueIcons } from 'lib/components/Icon/Icon.vue.d';
 
-export interface TSButtonProps
-  extends /* @vue-ignore */ Omit<ButtonProps, 'icon'> {
+export interface ButtonProps
+  extends /* @vue-ignore */ Omit<PrimeButtonProps, 'icon' | 'iconClass'> {
   /**
    * Tooltip/information to show on button hover.
    */
@@ -24,6 +24,6 @@ export interface TSButtonProps
   iconClass?: string | string[];
 }
 
-declare const TSButton: DefineComponent<TSButtonProps>;
+declare const TSButton: DefineComponent<ButtonProps>;
 
 export default TSButton;

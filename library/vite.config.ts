@@ -13,10 +13,10 @@ export default defineConfig({
   build: {
     cssCodeSplit: true,
     sourcemap: false,
-    outDir: resolve(__dirname, 'library/dist'),
+    outDir: 'dist',
     lib: {
       // Could also be a dictionary or array of multiple entry points
-      entry: 'library/build-entry.ts',
+      entry: 'build-entry.ts',
       formats: ['es'],
       fileName: 'wangsvue.es',
     },

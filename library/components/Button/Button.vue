@@ -4,10 +4,10 @@ import { toArrayClass } from 'lib/components/helpers';
 
 import Icon from 'lib/components/Icon/Icon.vue';
 import PrimeButton from 'primevue/button';
-import type { TSButtonProps } from './Button.vue.d';
+import type { ButtonProps } from './Button.vue.d';
 import Preset from 'lib/preset/button';
 
-const props = defineProps<TSButtonProps>();
+const props = defineProps<ButtonProps>();
 const attrs = useAttrs();
 
 const iconProps = shallowRef({

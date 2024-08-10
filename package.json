@@ -1,6 +1,6 @@
 {
-  "name": "wangsvue",
-  "version": "1.0.23",
+  "name": "wangsvue-monorepo",
+  "version": "1.0.1",
   "author": "fewangsit",
   "description": "Global reusable components for micro frontend",
   "license": "MIT",
@@ -8,9 +8,8 @@
   "scripts": {
     "dev": "vite",
     "build": "rimraf dist && vue-tsc && vite build",
-    "build:lib": "rimraf dist && vue-tsc && vite build --config ./library/vite.config.ts",
     "build:dev": "vue-tsc && vite build --watch",
-    "release": "pnpm build:lib && changelogen --release && ./scripts/publish.sh",
+    "release": "pnpm --filter wangsvue release",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.ts --fix --ignore-path .gitignore",
     "tailwind": "tailwind -i ./src/assets/css/main.css -o ./cypress/support/tailwind.css",
