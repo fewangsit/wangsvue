@@ -4,7 +4,6 @@ import avatar from './avatar';
 import avatargroup from './avatargroup';
 import badge from './badge';
 import badgedirective from './badgedirective';
-import breadcrumb from './breadcrumb';
 import button from './button';
 import calendar from './calendar';
 import card from './card';
@@ -145,7 +144,6 @@ export default {
   menubar,
   steps,
   tieredmenu,
-  breadcrumb,
   panelmenu,
   megamenu,
   dock,

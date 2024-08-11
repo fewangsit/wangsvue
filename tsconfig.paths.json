@@ -5,6 +5,9 @@
       "lib/*": [
         "library/*"
       ],
+      "wangsvue/breadcrumb": [
+        "library/components/breadcrumb/Breadcrumb.vue"
+      ],
       "wangsvue/button": [
         "library/components/button/Button.vue"
       ],

@@ -40,6 +40,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
         component: (): Promise<Component> =>
           import('./docs/filtercontainer/FilterContainerDocs.vue'),
       },
+      {
+        path: 'breadcrumb',
+        name: 'Breadcrumb Docs',
+        component: (): Promise<Component> =>
+          import('./docs/breadcrumb/BreadcrumbDocs.vue'),
+      },
     ],
   },
 ];
