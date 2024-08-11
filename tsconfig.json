@@ -42,8 +42,5 @@
     "**/*.js",
     "./library/colors.config.json",
     "**/*.vue",
-  ],
-  "exclude": [
-    "**/*.config.ts",
-  ],
+  ]
 }
