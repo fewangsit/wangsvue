@@ -25,28 +25,31 @@ export default {
       // Size
       'w-full',
       'h-full',
-      
+
       // Shape
       'rounded',
       'border-2',
 
       // Colors
-      'text-line',
+      'text-white',
       {
-        'border-general-100 bg-surface-0 dark:border-general-300 dark:bg-grayscale-800':
-          !context.checked && !props.disabled,
-        'border-primary bg-primary dark:border-primary dark:bg-primary':
-          context.checked && !props.disabled,
+        'border-general-300': props.disabled,
+        'border-grayscale-900': !props.disabled,
+        'bg-white': !context.checked && !props.disabled,
+        'bg-general-50': !context.checked && props.disabled,
+        'bg-grayscale-900': context.checked && !props.disabled,
+        'bg-general-300': context.checked && props.disabled,
       },
 
       {
-        'ring-2 ring-primary dark:ring-primary':
-          !props.disabled && context.focused,
+        'ring-8 ring-primary-400/[12%]': !props.disabled && context.focused,
       },
 
       // States
       {
-        'peer-focus-visible:ring-2 peer-focus-visible:ring-offset-1 peer-focus-visible:ring-primary dark:peer-focus-visible:ring-primary':
+        'peer-focus-visible:ring-8 peer-focus-visible:ring-offset-0 peer-focus-visible:ring-primary-400/[8%]':
+          !props.disabled,
+        'peer-active:ring-8 peer-active:ring-offset-0 peer-active:ring-primary-400/[12%]':
           !props.disabled,
         'cursor-default bg-general-50 border-general-200 dark:bg-general-50 dark:border-general-200':
           props.disabled && !context.checked,

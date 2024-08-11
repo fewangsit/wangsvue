@@ -11,17 +11,8 @@ export default {
         'pl-1': context?.right,
         'pr-1': context?.left,
       },
-      // {
-      //   'px-1.5':
-      //     context?.right ||
-      //     context?.left ||
-      //     (!context?.right &&
-      //       !context?.left &&
-      //       !context?.top &&
-      //       !context?.bottom),
-      //   'py-1.5': context?.top || context?.bottom,
-      // },
-      '!transition'
+
+      '!transition',
     ],
   }),
   arrow: {
@@ -30,21 +21,22 @@ export default {
   text: {
     class: [
       // Shape
-      'rounded-lg',
+      'rounded-[10px]',
 
       // Background
-      'bg-primary-bg-weak dark:bg-primary-50',
+      'bg-white',
 
       // Spacing
-      'px-2 py-1',
+      'px-3 py-1',
 
       // Typography
-      'text-[0.688rem] font-normal leading-[191%] tracking-[0.03em] text-left',
+      'text-xs font-normal leading-4 text-left',
 
       // Color
-      'text-general-800',
+      'text-grayscale-900',
 
       // Misc
+      'shadow-[0px_4px_4px_0px_#00000040]',
       'whitespace-pre-line',
       'break-words',
     ],

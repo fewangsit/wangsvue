@@ -58,5 +58,9 @@ defineExpose({
         </span>
       </a>
     </template>
+
+    <template #start>
+      <slot name="start" />
+    </template>
   </PrimeMenu>
 </template>

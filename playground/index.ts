@@ -52,6 +52,18 @@ const routes: Readonly<RouteRecordRaw[]> = [
         component: (): Promise<Component> =>
           import('./docs/dialog/DialogConfirmDocs.vue'),
       },
+      {
+        path: 'datatable',
+        name: 'DataTable Docs',
+        component: (): Promise<Component> =>
+          import('./docs/datatable/DataTableDocs.vue'),
+      },
+      {
+        path: 'checkbox',
+        name: 'Checbox Docs',
+        component: (): Promise<Component> =>
+          import('./docs/checkbox/CheckboxDocs.vue'),
+      },
     ],
   },
 ];

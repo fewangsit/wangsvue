@@ -72,7 +72,7 @@ export default {
   }),
   table: {
     class:
-      'w-full !border-separate !border-spacing-0 border !border-solid !border-general-100 !border-t-0 !border-l-0 !border-r-0 !rounded-lg',
+      'w-full !border-separate !border-spacing-0 border !border-solid !border-primary-100 !border-t-0 !border-l-0 !border-r-0 !rounded-lg',
   },
   thead: ({ context }) => ({
     class: [
@@ -118,14 +118,17 @@ export default {
   column: {
     headercell: ({ context, props }) => ({
       class: [
-        'font-bold',
+        'font-semibold',
         'text-xs',
-        'text-general-800 dark:text-general-800',
-        'text-xs leading-[16.39px] tracking-[0.02em]',
+        'text-white dark:text-white',
 
         // Position
         { '!sticky z-20 border-b': props.frozen || props.frozen === '' },
         { relative: context.resizable },
+        {
+          'hover:bg-primary-500 active:bg-primary-500 cursor-pointer transition duration-200':
+            props.frozen || props.frozen === '',
+        },
 
         // Alignment
         'text-left',
@@ -133,9 +136,9 @@ export default {
         // Shape
         { 'border-r last:border-r-0': context?.showGridlines },
         'border-0 !border-b border-solid',
-        'border-general-100 dark:border-general-500',
+        'border-primary-100 dark:border-primary-100',
         // Spacing
-        'py-1.5 px-[9.6px]',
+        'p-2',
         // context?.size === 'small'
         //   ? 'py-2.5 px-2'
         //   : context?.size === 'large'
@@ -143,14 +146,14 @@ export default {
         //     : 'py-1.5 px-[9.6px]',
 
         // Color
-        'bg-primary-200 dark:bg-primary-300 text-general-800 dark:text-general-800',
+        'bg-primary-400 dark:bg-primary-400 text-white dark:text-white',
         {
-          'bg-primary-300':
+          'bg-primary-500':
             (props.sortable === '' || props.sortable) && context.sorted,
         },
         // (props.sortable === '' || props.sortable) && context.sorted
-        //   ? 'dark:text-general-800'
-        //   : 'dark:text-general-800 dark:bg-primary-200',
+        //   ? 'dark:text-white'
+        //   : 'dark:text-white dark:bg-primary-400',
 
         // States
         // 'focus-visible:outline-none focus-visible:outline-offset-0 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
@@ -175,7 +178,7 @@ export default {
     },
     sort: ({ context }) => ({
       class: [
-        'text-general-800 dark:text-general-800',
+        'text-white dark:text-white',
         // context.sorted ? 'text-primary-500' : 'text-surface-700',
         // context.sorted ? 'dark:text-primary-400' : 'dark:text-white/80',
       ],
@@ -186,8 +189,8 @@ export default {
         //Position
         { sticky: parent.instance.frozenRow },
         { sticky: props.frozen || props.frozen === '' },
-        // 'text-general-800 dark:text-general-800',
-        'text-xs font-medium leading-[16.39px] tracking-[0.02em]',
+        // 'text-white dark:text-white',
+        'text-xs font-normal text-general-800',
         'overflow-hidden',
         // Alignment
         'text-left',
@@ -196,14 +199,14 @@ export default {
         //     parent.instance.frozenRow || props.frozen || props.frozen === '',
         // },
 
-        'border-0 !border-b !border-solid border-general-100 dark:border-general-500',
+        'border-0 !border-b !border-solid border-primary-100 dark:border-primary-100',
         { 'last:border-r-0 border-r border-b': context?.showGridlines },
         {
-          'bg-white dark:bg-grayscale-900':
+          'bg-white':
             parent.instance.frozenRow ||
             props.frozen ||
             (props.frozen === '' && !parent.props.selected),
-          'bg-primary-50 dark:bg-grayscale-900':
+          'bg-primary-50':
             (parent.instance.frozenRow ||
               props.frozen ||
               props.frozen === '') &&
@@ -214,7 +217,7 @@ export default {
         'py-[4.5px] px-2 min-h-6',
 
         // Color
-        // 'border-general-100 dark:border-general-100',
+        // 'border-primary-100 dark:border-primary-100',
 
         // Misc
         'space-nowrap text-nowrap w-max whitespace-nowrap',
@@ -622,7 +625,7 @@ export default {
 
           'bg-transparent border-transparent',
           'text-primary-500 dark:text-primary-400',
-          'hover:bg-primary-300/20',
+          'hover:bg-primary-400/20',
           'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-offset-current',
           'focus:ring-primary-500 dark:focus:ring-primary-400',
 
@@ -697,8 +700,8 @@ export default {
           // Shape
           'rounded-md shadow-sm border-0',
 
-          'text-primary-500 ring-1 ring-primary-500 hover:bg-primary-300/20',
-          'hover:bg-primary-300/20',
+          'text-primary-500 ring-1 ring-primary-500 hover:bg-primary-400/20',
+          'hover:bg-primary-400/20',
           'focus:ring-primary-500 dark:focus:ring-primary-400',
 
           // Transitions
@@ -726,7 +729,7 @@ export default {
           'text-white dark:text-surface-900',
           'bg-primary-500 dark:bg-primary-400',
           'ring-1 ring-primary-500 dark:ring-primary-400',
-          'hover:bg-primary-600 dark:hover:bg-primary-300 hover:ring-primary-600 dark:hover:ring-primary-300',
+          'hover:bg-primary-600 dark:hover:bg-primary-400 hover:ring-primary-600 dark:hover:ring-primary-300',
           'focus:ring-primary-500 dark:focus:ring-primary-400',
 
           // Transitions
@@ -809,7 +812,7 @@ export default {
         'border-0 rounded-full',
 
         // Color
-        'text-general-800',
+        'text-white',
         'bg-transparent',
         'focus-visible:outline-none focus-visible:outline-offset-0',
         'focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
@@ -1034,7 +1037,13 @@ export default {
     },
     headerCheckbox: {
       ...presetCheckbox,
-      root: { class: ['!mx-auto', ...presetCheckbox.root.class] },
+      root: {
+        class: [
+          '!mx-auto',
+          ...presetCheckbox.root.class,
+          '[&:has([aria-checked=false])_[data-pc-section=box]]:!bg-primary-400 [&:has([aria-checked=false])_[data-pc-section=box]]:!border-white',
+        ],
+      },
     },
     rowCheckbox: {
       ...presetCheckbox,
@@ -1054,16 +1063,14 @@ export default {
 
       // Color
       {
-        'text-general-800 dark:text-general-50': !context.selected,
+        'text-white dark:text-general-50': !context.selected,
         'text-primary-500 dark:text-general-50': context.selected,
       },
       {
-        'bg-primary-50 dark:bg-grayscale-900':
-          context.selected && context.stripedRows,
+        'bg-primary-50': context.selected && context.stripedRows,
       },
       {
-        'bg-primary-50 dark:bg-grayscale-900':
-          context.selected && !context.stripedRows,
+        'bg-primary-50': context.selected && !context.stripedRows,
       },
       {
         'bg-transparent text-surface-600 dark:bg-transparent':
@@ -1095,7 +1102,7 @@ export default {
     ],
   }),
   rowexpansion: ({ instance }) => ({
-    class: [{ 'bg-primary-50 dark:bg-grayscale-900': instance?.isSelected }],
+    class: [{ 'bg-primary-50': instance?.isSelected }],
   }),
   rowexpansioncell: {
     class: [
@@ -1103,7 +1110,7 @@ export default {
       'px-[64px] pt-3',
 
       // Shape
-      'border-b border-solid border-general-100',
+      'border-b border-solid border-primary-100',
 
       '[&_table]:!border-b-0',
     ],
@@ -1157,6 +1164,7 @@ export default {
     class: 'inline-block w-4 h-4',
   },
   resizehelper: {
-    class: 'resizer absolute cursor-col-resize translate-x-[-1px] hidden w-[10px] z-40 border-l border-primary-500',
+    class:
+      'resizer absolute cursor-col-resize translate-x-[-1px] hidden w-[10px] z-40 border-l border-primary-500',
   },
 };

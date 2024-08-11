@@ -20,6 +20,15 @@
       "wangsvue/card": [
         "library/components/card/Card.vue"
       ],
+      "wangsvue/checkbox": [
+        "library/components/checkbox/Checkbox.vue"
+      ],
+      "wangsvue/customcolumn": [
+        "library/components/customcolumn/CustomColumn.vue"
+      ],
+      "wangsvue/datatable": [
+        "library/components/datatable/DataTable.vue"
+      ],
       "wangsvue/dialogconfirm": [
         "library/components/dialogconfirm/DialogConfirm.vue"
       ],

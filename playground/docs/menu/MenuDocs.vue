@@ -12,15 +12,15 @@ const menu = ref<MenuClass>();
 const menuList: MenuItem[] = [
   {
     label: 'Action',
-    icon: 'checkbox-blank-circle-line',
+    icon: 'checkbox-blank-circle',
   },
   {
     label: 'Action',
-    icon: 'checkbox-blank-circle-line',
+    icon: 'checkbox-blank-circle',
   },
   {
     label: 'Danger Action',
-    icon: 'checkbox-blank-circle-line',
+    icon: 'checkbox-blank-circle',
     danger: true,
   },
 ];

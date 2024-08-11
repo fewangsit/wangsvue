@@ -17,21 +17,21 @@ const severities = [undefined, 'secondary', 'success', 'warning', 'danger'];
     >
       <Button
         disabled
-        icon="checkbox-blank-circle-line"
+        icon="checkbox-blank-circle"
         icon-pos="right"
         label="Disabled"
         text
       />
       <Button
         disabled
-        icon="checkbox-blank-circle-line"
+        icon="checkbox-blank-circle"
         icon-pos="right"
         label="Disabled"
         outlined
       />
       <Button
         disabled
-        icon="checkbox-blank-circle-line"
+        icon="checkbox-blank-circle"
         icon-pos="right"
         label="Disabled"
       />
@@ -51,14 +51,14 @@ const severities = [undefined, 'secondary', 'success', 'warning', 'danger'];
             :outlined="style === 'outlined'"
             :severity="severity"
             :text="style === 'text'"
-            icon="checkbox-blank-circle-line"
+            icon="checkbox-blank-circle"
             icon-pos="right"
           />
           <Button
             :outlined="style === 'outlined'"
             :severity="severity"
             :text="style === 'text'"
-            icon="checkbox-blank-circle-line"
+            icon="checkbox-blank-circle"
             icon-pos="right"
           />
         </div>

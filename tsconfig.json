@@ -35,6 +35,7 @@
     "**/*.d.ts",
     "**/*.ts",
     "**/*.js",
+    "**/*.json",
     "./library/colors.config.json",
     "**/*.vue",
   ],

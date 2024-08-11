@@ -2,29 +2,24 @@ export default {
   root: {
     class: [
       // Flex & Alignment
-      'flex items-center justify-start flex-wrap',
+      'flex items-center justify-start flex-wrap gap-0.5',
 
-      // Spacing
-      // 'px-4',
-
-      // Shape
-      // 'border-t',
-
-      // Color
-      'bg-white dark:bg-grayscale-900',
-      'text-placeholder dark:text-grayscale-500',
-      // 'border-surface-200 dark:border-surface-700',
+      'bg-white',
+      'text-grayscale-900',
     ],
   },
   paginatorwrapper: {
     class: 'mt-[11px]',
+  },
+  pages: {
+    class: 'flex gap-0.5',
   },
   firstpagebutton: ({ context }) => ({
     class: [
       'relative',
 
       // Font
-      'text-[11px] font-medium',
+      'text-2xl font-medium',
 
       // Flex & Alignment
       'inline-flex items-center justify-center',
@@ -36,15 +31,7 @@ export default {
       'w-6 h-6',
 
       // Color
-      'text-placeholder dark:text-grayscale-500',
-
-      // State
-      // {
-      //   'hover:border-surface-300 dark:hover:border-surface-200/30':
-      //     !context.disabled,
-      //   'focus-visible:outline-none focus-visible:outline-offset-0 focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400':
-      //     !context.disabled,
-      // },
+      'text-general-300',
 
       // Transition
       'transition duration-200',
@@ -59,7 +46,7 @@ export default {
       'relative',
 
       // Font
-      'text-[11px] font-medium',
+      'text-2xl font-medium',
 
       // Flex & Alignment
       'inline-flex items-center justify-center',
@@ -71,15 +58,7 @@ export default {
       'w-6 h-6',
 
       // Color
-      'text-placeholder dark:text-grayscale-500',
-
-      // State
-      // {
-      //   'hover:border-surface-300 dark:hover:border-surface-200/30':
-      //     !context.disabled,
-      //   'focus-visible:outline-none focus-visible:outline-offset-0 focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400':
-      //     !context.disabled,
-      // },
+      'text-general-300',
 
       // Transition
       'transition duration-200',
@@ -94,7 +73,7 @@ export default {
       'relative',
 
       // Font
-      'text-[11px] font-medium',
+      'text-2xl font-medium',
 
       // Flex & Alignment
       'inline-flex items-center justify-center',
@@ -106,15 +85,7 @@ export default {
       'w-6 h-6',
 
       // Color
-      'text-placeholder dark:text-grayscale-500',
-
-      // State
-      // {
-      //   'hover:border-surface-300 dark:hover:border-surface-200/30':
-      //     !context.disabled,
-      //   'focus-visible:outline-none focus-visible:outline-offset-0 focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400':
-      //     !context.disabled,
-      // },
+      'text-general-300',
 
       // Transition
       'transition duration-200',
@@ -129,7 +100,7 @@ export default {
       'relative',
 
       // Font
-      'text-[11px] font-medium',
+      'text-2xl font-medium',
 
       // Flex & Alignment
       'inline-flex items-center justify-center',
@@ -141,15 +112,7 @@ export default {
       'w-6 h-6',
 
       // Color
-      'text-placeholder dark:text-grayscale-500',
-
-      // State
-      // {
-      //   'hover:border-surface-300 dark:hover:border-surface-200/30':
-      //     !context.disabled,
-      //   'focus-visible:outline-none focus-visible:outline-offset-0 focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400':
-      //     !context.disabled,
-      // },
+      'text-general-300',
 
       // Transition
       'transition duration-200',
@@ -164,10 +127,7 @@ export default {
       'relative',
 
       // Font
-      'text-[11px] font-medium',
-
-      // Flex & Alignment
-      'inline-flex items-center justify-center',
+      'text-xs font-normal',
 
       // Shape
       'rounded-full',
@@ -177,10 +137,8 @@ export default {
 
       // Color
       {
-        'text-placeholder dark:text-grayscale-700 border-transparent':
-          !context.active,
-        'border-primary dark:border-primary text-white dark:text-primary-800 bg-primary':
-          context.active,
+        'text-general-300 border-none hover:bg-grayscale-50': !context.active,
+        'text-white bg-grayscale-900': context.active,
       },
 
       // State
@@ -207,17 +165,15 @@ export default {
         'relative',
 
         // Size
-        'w-12 h-[26.2px]',
+        'w-max',
+        'px-3 py-1',
 
         // Shape
-        'rounded-lg',
-
-        // Spacing
-        'mx-2',
+        'rounded-[50px]',
 
         // Color and Background
         'bg-transparent',
-        'border-[0.5px] border-general-200',
+        'border-[0.5px] border-primary-100',
 
         // Transitions
         'transition-all',
@@ -254,7 +210,7 @@ export default {
         'text-general-800 dark:text-general-50',
 
         // Sizing and Spacing
-        // 'w-[1%]',
+        'w-max',
         // 'py-1.5 px-3 pr-0',
 
         //Shape
@@ -284,13 +240,10 @@ export default {
         'flex items-center justify-center',
         'shrink-0',
 
-        // Color and Background
-        'bg-transparent',
-        'text-header-weak dark:text-general-50',
-
         // Size
-        'w-4',
-        'h-4',
+        'w-2',
+        'h-2',
+        'ml-0.5',
 
         // Shape
         'rounded-tr-md',
@@ -314,7 +267,7 @@ export default {
         // Color
         'bg-white dark:bg-white',
         'text-general-800 dark:text-general-800',
-        'ring-1 ring-inset ring-line dark:ring-line',
+        'ring-1 ring-inset ring-primary-100',
       ],
     },
     wrapper: {
@@ -327,12 +280,12 @@ export default {
       ],
     },
     list: {
-      class: 'py-1 list-none m-0',
+      class: 'py-0.5 list-none m-0',
     },
     item: ({ context }) => ({
       class: [
         // Font
-        'text-[11px]',
+        'text-xs',
         'leading-none',
         { 'font-normal': !context.selected, 'font-bold': context.selected },
 
@@ -381,9 +334,9 @@ export default {
           'relative',
 
           //Font
-          'font-sans',
           'leading-6',
           'text-xs',
+          'text-center',
 
           // Display
           'block',
@@ -391,16 +344,16 @@ export default {
 
           // Color and Background
           'bg-transparent',
-          'border-general-200 border-[0.5px]',
-          'text-general-800 dark:text-general-50',
+          'border-primary-100 border-[0.5px]',
+          'text-general-800',
           // 'ring-1 ring-inset ring-body dark:ring-body',
 
           // Sizing and Spacing
           'max-w-[3rem] w-fit',
-          'px-2 py-2',
+          'px-3 py-1',
 
           //Shape
-          'rounded-lg h-[26.2px]',
+          'rounded-[50px] h-6',
 
           // Transitions
           'transition',
@@ -590,8 +543,6 @@ export default {
     }),
   },
   current: {
-    class: [
-      'text-[11px] text-general-800 dark:text-general-100',
-    ],
+    class: ['text-xs font-normal leading-6 px-3'],
   },
 };
