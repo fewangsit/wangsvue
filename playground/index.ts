@@ -16,7 +16,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
         path: 'typo',
         name: 'Typography Docs',
         component: (): Promise<Component> =>
-          import('./docs/typography/Typography.vue'),
+          import('./docs/typography/TypographyDocs.vue'),
+      },
+      {
+        path: 'card',
+        name: 'Card Docs',
+        component: (): Promise<Component> => import('./docs/card/CardDocs.vue'),
       },
     ],
   },

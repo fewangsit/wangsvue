@@ -24,11 +24,6 @@
     "outDir": "dist",
     "declarationDir": "dist",
     "baseUrl": ".",
-    "paths": {
-      "lib/*": [
-        "./library/*"
-      ],
-    },
     "types": [
       "cypress",
       "node",
@@ -42,5 +37,6 @@
     "**/*.js",
     "./library/colors.config.json",
     "**/*.vue",
-  ]
+  ],
+  "extends": "./tsconfig.paths.json"
 }
