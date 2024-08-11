@@ -5,7 +5,7 @@ const severities = [undefined, 'secondary', 'success', 'warning', 'danger'];
 </script>
 <template>
   <div
-    class="h-[1058px] bg-white rounded-[40px] flex-col justify-start items-start gap-10 inline-flex"
+    class="h-[1058px] p-16 bg-white rounded-[40px] flex-col justify-start items-start gap-10 inline-flex"
   >
     <div class="flex-col justify-start items-start gap-1 flex">
       <div

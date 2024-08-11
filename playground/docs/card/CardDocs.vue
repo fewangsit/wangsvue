@@ -6,6 +6,7 @@ import Card from 'wangsvue/card';
 <template>
   <Card>
     <template #header> This is a Header using slot #header </template>
+    <template #subtitle> #subtitle Lorem ipsum dolor sit amet. </template>
     <template #content>
       The content using slot #content. Lorem ipsum dolor sit amet consectetur
       adipisicing elit. Eveniet praesentium architecto quae hic vel, consequatur
@@ -13,6 +14,7 @@ import Card from 'wangsvue/card';
       ullam? Iste atque aut ipsum.
     </template>
     <template #footer>
+      <span>The #footer</span>
       <Button label="Cancel" text />
       <Button label="Apply" />
     </template>
