@@ -12,8 +12,8 @@ export default {
       },
 
       // Font
-      'text-general-800 dark:text-general-100 text-xs leading-[133.333%] tracking-[0.24px] !font-medium',
-      'placeholder:text-general-200 dark:placeholder:text-grayscale-800 placeholder:!font-light',
+      'text-grayscale-900 text-xs !font-medium',
+      'placeholder:text-general-200 dark:placeholder:text-general-200 placeholder:!font-normal',
 
       // Colors
       // {

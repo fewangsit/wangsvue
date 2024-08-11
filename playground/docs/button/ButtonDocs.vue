@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import Button from 'lib/components/button/Button.vue';
+import Button from 'wangsvue/button';
 import DocTitle from '../DocTitle.vue';
+import ButtonSearchDocs from './ButtonSearchDocs.vue';
 
 const severities = [undefined, 'secondary', 'success', 'warning', 'danger'];
 </script>
 <template>
   <div
-    class="h-[1058px] p-16 bg-white rounded-[40px] flex-col justify-start items-start gap-4 inline-flex"
+    class="p-16 bg-white rounded-[40px] flex-col justify-start items-start gap-4 inline-flex"
   >
     <DocTitle name="Button" />
 
@@ -62,5 +63,7 @@ const severities = [undefined, 'secondary', 'success', 'warning', 'danger'];
         </div>
       </template>
     </div>
+
+    <ButtonSearchDocs />
   </div>
 </template>

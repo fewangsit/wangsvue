@@ -8,6 +8,9 @@
       "wangsvue/button": [
         "library/components/button/Button.vue"
       ],
+      "wangsvue/buttonsearch": [
+        "library/components/buttonsearch/ButtonSearch.vue"
+      ],
       "wangsvue/card": [
         "library/components/card/Card.vue"
       ],
