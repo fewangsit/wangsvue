@@ -91,7 +91,7 @@ watch(
 
 watch(
   () => props.totalRecords,
-  (total) => (totalRecords.value = total),
+  (total) => (totalRecords.value = total ?? 0),
   { immediate: true },
 );
 </script>
