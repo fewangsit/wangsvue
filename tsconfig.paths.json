@@ -11,6 +11,9 @@
       "wangsvue/button": [
         "library/components/button/Button.vue"
       ],
+      "wangsvue/buttonbulkaction": [
+        "library/components/buttonbulkaction/ButtonBulkAction.vue"
+      ],
       "wangsvue/buttonsearch": [
         "library/components/buttonsearch/ButtonSearch.vue"
       ],

@@ -2,6 +2,7 @@
 import Button from 'wangsvue/button';
 import DocTitle from '../DocTitle.vue';
 import ButtonSearchDocs from './ButtonSearchDocs.vue';
+import ButtonBulkActionDocs from './ButtonBulkActionDocs.vue';
 
 const severities = [undefined, 'secondary', 'success', 'warning', 'danger'];
 </script>
@@ -65,5 +66,6 @@ const severities = [undefined, 'secondary', 'success', 'warning', 'danger'];
     </div>
 
     <ButtonSearchDocs />
+    <ButtonBulkActionDocs />
   </div>
 </template>

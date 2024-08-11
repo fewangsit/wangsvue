@@ -19,14 +19,19 @@ export default {
       // Sizes & Spacing
       'leading-none font-normal rounded-[50px]',
       {
-        'text-xs px-3 py-[5px]': props.size === null,
-        'text-sm py-2 px-3': props.size === 'small',
+        'text-xs px-3 py-[5px]': props.size === null && props.label,
+        'text-xs !p-0.5': props.size === 'small',
         'text-xl py-3 px-4': props.size === 'large',
       },
       { 'gap-1': props.label !== null },
-      { '!p-[7px] !w-max': props.label === null && props.icon },
+    
       {
-        'w-12 px-0 py-3': props.label == null && props.icon !== null,
+        'p-[7px] w-max':
+          props.label === null && props.icon && props.size === null,
+      },
+      {
+        '!p-0.5 !h-4 !w-4':
+          props.label === null && props.icon && props.size === 'small',
       },
 
       // Ring
@@ -478,7 +483,7 @@ export default {
     ],
   }),
   icon: ({ props }) => ({
-    class: ['shrink-0'],
+    class: ['shrink-0', { '!h-[11px] !w-[11px]': props.size === 'small' }],
   }),
   loadingIcon: ({ props }) => ({
     class: [
