@@ -3,32 +3,25 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
-    path: '/',
-    redirect: '/button',
-    children: [
-      {
-        path: 'button',
-        name: 'ButtonDocs',
-        component: (): Promise<Component> =>
-          import('./docs/button/ButtonDocs.vue'),
-      },
-      {
-        path: 'typo',
-        name: 'Typography Docs',
-        component: (): Promise<Component> =>
-          import('./docs/typography/TypographyDocs.vue'),
-      },
-      {
-        path: 'card',
-        name: 'Card Docs',
-        component: (): Promise<Component> => import('./docs/card/CardDocs.vue'),
-      },
-    ],
+    path: '/wangsvue/button',
+    name: 'ButtonDocs',
+    component: (): Promise<Component> => import('./docs/button/ButtonDocs.vue'),
+  },
+  {
+    path: '/wangsvue/typo',
+    name: 'Typography Docs',
+    component: (): Promise<Component> =>
+      import('./docs/typography/TypographyDocs.vue'),
+  },
+  {
+    path: '/wangsvue/card',
+    name: 'Card Docs',
+    component: (): Promise<Component> => import('./docs/card/CardDocs.vue'),
   },
 ];
 
 const router = createRouter({
-  history: createWebHistory((import.meta.env || process.env).BASE_URL),
+  history: createWebHistory(),
   routes,
 });
 
