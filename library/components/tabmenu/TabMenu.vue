@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import PrimeTabMenu from 'primevue/tabmenu';
 import type { TabMenuEmits, TabMenuProps } from './TabMenu.vue.d';
+import Icon from '../icon/Icon.vue';
+import { WangsIcons } from '../icon/Icon.vue.d';
 
 defineProps<TabMenuProps>();
 const emit = defineEmits<TabMenuEmits>();
@@ -21,7 +23,11 @@ const activeIndex = defineModel<number>('activeIndex', { default: 0 });
         custom
       >
         <a v-ripple :href="href" v-bind="props.action" @click="navigate">
-          <span v-if="item.icon" v-bind="props.icon" />
+          <Icon
+            v-if="item.icon"
+            v-bind="props.icon"
+            :icon="item.icon as WangsIcons"
+          />
           <span v-bind="props.label">{{ item.label }}</span>
         </a>
       </router-link>
@@ -33,7 +39,11 @@ const activeIndex = defineModel<number>('activeIndex', { default: 0 });
         :target="item.target"
         v-bind="props.action"
       >
-        <span v-if="item.icon" v-bind="props.icon" />
+        <Icon
+          v-if="item.icon"
+          v-bind="props.icon"
+          :icon="item.icon as WangsIcons"
+        />
         <span v-bind="props.label">{{ item.label }}</span>
       </a>
     </template>

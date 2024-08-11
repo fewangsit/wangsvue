@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { MenuItem } from 'primevue/menuitem';
+import { MenuItem } from 'lib/components/menuitem/MenuItem.vue.d';
 import { shallowRef } from 'vue';
 import Card from 'wangsvue/card';
 import TabMenu from 'wangsvue/tabmenu';

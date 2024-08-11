@@ -1,6 +1,6 @@
 import { DefineComponent } from 'vue';
 import { ButtonProps as PrimeButtonProps } from 'primevue/button';
-import type { TSVueIcons } from 'lib/components/icon/Icon.vue.d';
+import type { WangsIcons } from 'lib/components/icon/Icon.vue.d';
 
 export interface ButtonProps
   extends /* @vue-ignore */ Omit<PrimeButtonProps, 'icon' | 'iconClass'> {
@@ -13,7 +13,7 @@ export interface ButtonProps
    * @default bottom
    */
   tooltipPos?: 'top' | 'right' | 'bottom' | 'left';
-  icon?: TSVueIcons;
+  icon?: WangsIcons;
   /**
    * @default left
    */

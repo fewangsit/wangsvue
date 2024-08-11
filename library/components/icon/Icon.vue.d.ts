@@ -1,6 +1,7 @@
-export type TSVueIconSeverities =
+export type WangsIconseverities =
   | 'danger'
   | 'info'
+  | 'warning'
   | 'primary'
   | 'success'
   | 'secondary';
@@ -8,7 +9,7 @@ export type TSVueIconSeverities =
 /**
  * List of all available icons.
  */
-export type TSVueIcons =
+export type WangsIcons =
   | 'add-line'
   | 'arrow-down'
   | 'arrow-drop-down'

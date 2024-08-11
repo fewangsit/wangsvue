@@ -21,7 +21,7 @@ export default {
       'overflow-hidden',
 
       // Colors
-      'bg-surface-0 dark:bg-grayscale-900',
+      'bg-white dark:bg-white',
       'text-general-800 dark:text-general-100',
       // 'ring-1 ring-line dark:ring-line',
     ],
@@ -76,8 +76,8 @@ export default {
     class: [
       'flex items-center justify-start gap-2',
 
-      'px-4 py-1.5',
-      // 'hover:bg-surface-50 dark:!bg-grayscale-800',
+      'px-4 py-[7px]',
+      'hover:bg-primary-50/80',
 
       'text-xs',
       // 'relative',
@@ -104,12 +104,10 @@ export default {
     class: [
       // Spacing
       'w-4 h-4',
-      'leading-6',
-      'text-xs',
     ],
   },
   label: {
-    class: ['text-inherit'],
+    class: ['text-inherit', 'leading-4'],
   },
   submenuheader: {
     class: [

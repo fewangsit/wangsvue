@@ -6,6 +6,8 @@
  *
  */
 
+import { WangsIcons } from '../icon/Icon.vue.d';
+
 /**
  * Custom command event.
  *  @todo next release should be able to change see menuItem.command
@@ -36,7 +38,7 @@ export interface MenuItem {
   /**
    * Icon of the item.
    */
-  icon?: string | undefined;
+  icon?: WangsIcons | undefined;
   /**
    * Callback to execute when item is clicked.
    * @param {MenuItemCommandEvent} event - Custom command event.
