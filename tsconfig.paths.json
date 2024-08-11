@@ -14,6 +14,9 @@
       "wangsvue/card": [
         "library/components/card/Card.vue"
       ],
+      "wangsvue/filtercontainer": [
+        "library/components/filtercontainer/FilterContainer.vue"
+      ],
       "wangsvue/icon": [
         "library/components/icon/Icon.vue"
       ],
