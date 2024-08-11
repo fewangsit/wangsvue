@@ -6,8 +6,6 @@
  *
  */
 
-import { WangsIcons } from '../icon/Icon.vue.d';
-
 /**
  * Custom command event.
  *  @todo next release should be able to change see menuItem.command
@@ -38,7 +36,7 @@ export interface MenuItem {
   /**
    * Icon of the item.
    */
-  icon?: WangsIcons | undefined;
+  icon?: string | undefined;
   /**
    * Callback to execute when item is clicked.
    * @param {MenuItemCommandEvent} event - Custom command event.
@@ -46,17 +44,13 @@ export interface MenuItem {
    */
   command?: (event: MenuItemCommandEvent) => void;
   /**
-   * Internal/ vue router link to navigate when item is clicked.
-   */
-  route?: string | undefined;
-  /**
    * External link to navigate when item is clicked.
    */
   url?: string | undefined;
   /**
-   * Specifies where to open the linked document.
+   * Internal/ vue router link to navigate when item is clicked.
    */
-  target?: string | undefined;
+  route?: string | undefined;
   /**
    * 	An array of children menuitems.
    */
@@ -71,6 +65,10 @@ export interface MenuItem {
    * @defaultValue true
    */
   visible?: boolean | ((...args: any) => boolean) | undefined;
+  /**
+   * Specifies where to open the linked document.
+   */
+  target?: string | undefined;
   /**
    * Defines the item as a separator.
    * @defaultValue false
