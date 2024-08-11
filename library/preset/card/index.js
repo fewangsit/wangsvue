@@ -12,21 +12,21 @@ export default {
     ],
   },
   header: {
-    class: ['text-2xl font-bold'],
+    class: [''],
   },
   body: {
     class: 'flex flex-col gap-3',
   },
   title: {
-    class: 'text-md font-medium',
+    class: 'text-2xl font-bold',
   },
   subtitle: {
-    class: ['text-base font-semibold'],
+    class: ['text-sm font-normal'],
   },
   content: {
-    class: 'flex flex-col gap-3 text-grayscale-900 dark:text-general-100',
+    class: 'flex flex-col gap-3 text-xs text-grayscale-900 dark:text-general-100',
   },
   footer: {
-    class: ['inline-flex gap-1 items-center'],
+    class: ['inline-flex gap-1 text-xs items-center'],
   },
 };

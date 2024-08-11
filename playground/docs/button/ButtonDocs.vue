@@ -1,24 +1,14 @@
 <script setup lang="ts">
 import Button from 'lib/components/button/Button.vue';
+import DocTitle from '../DocTitle.vue';
 
 const severities = [undefined, 'secondary', 'success', 'warning', 'danger'];
 </script>
 <template>
   <div
-    class="h-[1058px] p-16 bg-white rounded-[40px] flex-col justify-start items-start gap-10 inline-flex"
+    class="h-[1058px] p-16 bg-white rounded-[40px] flex-col justify-start items-start gap-4 inline-flex"
   >
-    <div class="flex-col justify-start items-start gap-1 flex">
-      <div
-        class="text-[#6e7191] text-xs font-bold font-['Plus Jakarta Sans'] leading-3"
-      >
-        COMPONENTS
-      </div>
-      <div
-        class="w-[342px] text-[#262627] text-3xl font-bold font-['Plus Jakarta Sans']"
-      >
-        Button
-      </div>
-    </div>
+    <DocTitle name="Button" />
 
     <div
       class="grid grid-cols-3 gap-2 p-4 relative rounded-[5px] border border-[#9747ff]"
@@ -74,9 +64,3 @@ const severities = [undefined, 'secondary', 'success', 'warning', 'danger'];
     </div>
   </div>
 </template>
-
-<style>
-body {
-  zoom: 150%;
-}
-</style>

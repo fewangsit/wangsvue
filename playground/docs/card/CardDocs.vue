@@ -6,12 +6,11 @@ import Card from 'wangsvue/card';
 <template>
   <Card>
     <template #header> This is a Header using slot #header </template>
-    <template #subtitle> #subtitle Lorem ipsum dolor sit amet. </template>
+    <template #title> Card title </template>
+    <template #subtitle> Card Sub Title </template>
     <template #content>
-      The content using slot #content. Lorem ipsum dolor sit amet consectetur
-      adipisicing elit. Eveniet praesentium architecto quae hic vel, consequatur
-      voluptate ea impedit, sit nostrum ratione blanditiis ex sapiente labore
-      ullam? Iste atque aut ipsum.
+      The content using slot #content.Card provides header, title, subtitle,
+      content and footer as the named templates to place content.
     </template>
     <template #footer>
       <span>The #footer</span>

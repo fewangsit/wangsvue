@@ -13,6 +13,9 @@
       ],
       "wangsvue/icon": [
         "library/components/icon/Icon.vue"
+      ],
+      "wangsvue/tabmenu": [
+        "library/components/tabmenu/TabMenu.vue"
       ]
     }
   }

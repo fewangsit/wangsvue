@@ -26,14 +26,14 @@ export default {
       'relative',
 
       // Font
-      'font-medium',
+      'font-normal',
       'text-xs',
 
       // Flexbox and Alignment
       'flex items-center',
 
       // Spacing
-      'pb-1.5 px-2 !h-6',
+      'p-2 pt-0 !h-6',
 
       // Shape
       'rounded-t-md border-b-2',
@@ -41,14 +41,15 @@ export default {
       // Colors and Conditions
       {
         'bg-transparent dark:bg-transparent': state.d_activeIndex !== context.index,
-        'text-grayscale-600 dark:text-grayscale-600':
+        'text-grayscale-900 dark:text-grayscale-900':
           state.d_activeIndex !== context.index,
 
-        'border-primary-500 dark:border-primary-300':
+        'border-primary-400 dark:border-primary-400':
           state.d_activeIndex === context.index,
-        'border-grayscale-400 dark:border-grayscale-600':
+
+        'border-primary-100 dark:border-primary-100':
           state.d_activeIndex !== context.index,
-        'text-primary-500 dark:text-primary-300':
+        'text-primary-500 dark:text-primary-500':
           state.d_activeIndex === context.index,
       },
 
@@ -58,14 +59,6 @@ export default {
       {
         'focus-visible:border-primary-200 dark:focus-visible:border-primary-200 focus-visible:text-primary-400 dark:focus-visible:text-primary-400 ':
           state.d_activeIndex !== context.index,
-      },
-      {
-        // 'hover:bg-surface-0 dark:hover:bg-surface-800/80':
-        //   state.d_activeIndex !== context.index,
-        // 'hover:border-surface-400 dark:hover:border-surface-600':
-        //   state.d_activeIndex !== context.index,
-        // 'hover:text-surface-900 dark:hover:text-surface-0':
-        //   state.d_activeIndex !== context.index,
       },
 
       // Transitions
@@ -83,6 +76,6 @@ export default {
     class: 'mr-2',
   },
   inkbar: {
-    class: 'grow border-b-2 border-grayscale-400 dark:border-grayscale-600'
+    class: 'grow border-b-2 border-primary-100 dark:border-primary-100'
   }
 };
