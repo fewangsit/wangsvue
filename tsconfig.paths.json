@@ -20,6 +20,9 @@
       "wangsvue/card": [
         "library/components/card/Card.vue"
       ],
+      "wangsvue/dialogconfirm": [
+        "library/components/dialogconfirm/DialogConfirm.vue"
+      ],
       "wangsvue/filtercontainer": [
         "library/components/filtercontainer/FilterContainer.vue"
       ],

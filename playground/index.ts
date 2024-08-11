@@ -46,6 +46,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
         component: (): Promise<Component> =>
           import('./docs/breadcrumb/BreadcrumbDocs.vue'),
       },
+      {
+        path: 'dialogconfirm',
+        name: 'Dialog Confirmation Docs',
+        component: (): Promise<Component> =>
+          import('./docs/dialog/DialogConfirmDocs.vue'),
+      },
     ],
   },
 ];

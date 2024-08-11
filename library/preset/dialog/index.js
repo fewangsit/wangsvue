@@ -54,11 +54,11 @@ export default {
       'rounded-tr-lg',
 
       // Colors
-      'text-header-weak dark:text-general-100',
+      'text-general-800',
     ],
   },
   title: {
-    class: ['text-general-800 dark:text-general-100 text-sm font-bold leading-[19.12px] tracking-[0.24px]'],
+    class: ['text-general-800 text-sm font-bold leading-[19.12px] tracking-[0.24px]'],
   },
   icons: {
     class: ['flex items-center ml-auto'],
@@ -150,7 +150,7 @@ export default {
   content: ({ state, instance }) => ({
     class: [
       // Font
-      '!text-header-weak text-xs font-medium tracking-[0.02em]',
+      '!text-general-800 text-xs font-normal',
 
       'pr-1.5 -mr-1.5 pl-1.5 -ml-1.5 pt-1.5 -mt-1.5 !pb-1.5 -mb-1.5',
 
