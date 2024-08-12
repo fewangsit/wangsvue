@@ -11,11 +11,12 @@ export type UpdateTableEvent = CustomEvent<{
 
 declare global {
   interface WindowEventMap {
-    downloadExcel: DownloadEvent;
-    fetchAllDataResolved: CustomEvent<Data[]>;
-    fetchAllData: CustomEvent<string>; // Param: The table name
-    updateTotalRecords: CustomEvent<{ total: number; name: string }>;
-    disableBulkAction: CustomEvent<boolean>;
-    updateTable: UpdateTableEvent;
+    'downloadExcel': DownloadEvent;
+    'fetchAllDataResolved': CustomEvent<Data[]>;
+    'fetchAllData': CustomEvent<string>; // Param: The table name
+    'updateTotalRecords': CustomEvent<{ total: number; name: string }>;
+    'disableBulkAction': CustomEvent<boolean>;
+    'updateTable': UpdateTableEvent;
+    'showingToast:severity': CustomEvent<string>;
   }
 }

@@ -12,12 +12,9 @@ withDefaults(defineProps<ToastProps>(), {
 defineEmits<ToastEmits>();
 
 onMounted(() => {
-  window.addEventListener(
-    'showingToast:severity',
-    (event: CustomEvent<string>) => {
-      severity.value = event.detail;
-    },
-  );
+  window.addEventListener('showingToast:severity', (event) => {
+    severity.value = event.detail;
+  });
 });
 
 const severity = ref('');
