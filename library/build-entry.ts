@@ -50,7 +50,7 @@ import Preset from 'lib/preset';
 // Directives
 import Tooltip from 'primevue/tooltip';
 
-import { Button } from './components';
+import { Button, Breadcrumb, Card, DataTable, TabMenu } from './components';
 
 export default {
   install: (app: App): void => {
@@ -63,6 +63,10 @@ export default {
 
     // eslint-disable-next-line vue/no-reserved-component-names
     app.component('Button', Button);
+    app.component('Breadcrumb', Breadcrumb);
+    app.component('Card', Card);
+    app.component('DataTable', DataTable);
+    app.component('TabMenu', TabMenu);
 
     app.directive('tooltip', Tooltip);
   },
@@ -78,5 +82,11 @@ export {
   Tooltip,
   useForm,
   useField,
+
+  // Components
   Button,
+  Breadcrumb,
+  Card,
+  DataTable,
+  TabMenu,
 };

@@ -1,5 +1,5 @@
 import { Component } from 'vue';
-import { MenuItem } from '../menuitem/MenuItem.vue.d';
+import { MenuItem } from '../menuitem';
 import { ClassComponent } from '../ts-helpers';
 import {
   DataTableFilterMeta,

@@ -37,7 +37,7 @@
     "**/*.js",
     "**/*.json",
     "./library/colors.config.json",
-    "**/*.vue",
+    "**/*.vue", "library/scripts/copydts.cjs",
   ],
   "extends": "./tsconfig.paths.json"
 }
