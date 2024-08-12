@@ -26,9 +26,8 @@ const focusToInput = (e: MouseEvent): void => {
       {
         '!ring-danger-500 !dark:ring-danger-500 [&_.inputgroupaddon]:ring-danger-500 [&_.inputgroupaddon]:dark:ring-danger-500':
           $props.invalid,
-        '[&_.inputgroupaddon]:ring-general-400 [&_.inputgroupaddon]:dark:ring-general-400':
-          !$props.invalid,
-        '!bg-general-50 dark:!bg-grayscale-800': $props.disabled,
+        '[&_.inputgroupaddon]:ring-general-400': !$props.invalid,
+        '!bg-general-50 ': $props.disabled,
       },
       '[&:has(:focus)]:ring-general-500 [&:has(:focus)_.inputgroupaddon]:ring-general-500',
       {

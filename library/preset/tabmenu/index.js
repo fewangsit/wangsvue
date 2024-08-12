@@ -33,10 +33,10 @@ export default {
       'flex items-center',
 
       // Spacing
-      'p-2 pt-0 !h-6',
+      'p-2 pb-1.5 pt-0.5 !h-6',
 
       // Shape
-      'rounded-t-md border-b-2',
+      'border-b-2',
 
       // Colors and Conditions
       {
@@ -54,6 +54,7 @@ export default {
       },
 
       // States
+      'hover:bg-primary-50',
       'focus-visible:outline-none focus-visible:outline-offset-0',
       'focus-visible:bg-primary-50 dark:focus-visible:bg-primary-50',
       {
