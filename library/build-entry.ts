@@ -50,7 +50,14 @@ import Preset from 'lib/preset';
 // Directives
 import Tooltip from 'primevue/tooltip';
 
-import { Button, Breadcrumb, Card, DataTable, TabMenu } from './components';
+import {
+  Button,
+  Breadcrumb,
+  Card,
+  DataTable,
+  TabMenu,
+  Toast,
+} from './components';
 
 export default {
   install: (app: App): void => {
@@ -67,6 +74,7 @@ export default {
     app.component('Card', Card);
     app.component('DataTable', DataTable);
     app.component('TabMenu', TabMenu);
+    app.component('Toast', Toast);
 
     app.directive('tooltip', Tooltip);
   },
@@ -89,4 +97,5 @@ export {
   Card,
   DataTable,
   TabMenu,
+  Toast,
 };
