@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Card from 'wangsvue/card';
+import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
 import Breadcrumb from 'lib/components/breadcrumb/Breadcrumb.vue';
 import type { BreadcrumbMenu } from 'lib/components/breadcrumb/Breadcrumb.vue.d';

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Card from 'wangsvue/card';
+import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
 import ButtonBulkAction from 'lib/components/buttonbulkaction/ButtonBulkAction.vue';
 </script>

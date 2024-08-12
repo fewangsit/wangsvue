@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Button from 'wangsvue/button';
+import Button from 'lib/components/button/Button.vue';
 import DocTitle from '../DocTitle.vue';
 import ButtonSearchDocs from './ButtonSearchDocs.vue';
 import ButtonBulkActionDocs from './ButtonBulkActionDocs.vue';
