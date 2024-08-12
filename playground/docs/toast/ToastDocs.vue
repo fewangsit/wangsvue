@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import Card from 'wangsvue/card';
+import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
-import Toast from 'wangsvue/toast';
-import Button from 'wangsvue/button';
+import Toast from 'lib/components/toast/Toast.vue';
+import Button from 'lib/components/button/Button.vue';
 import { useToast } from 'lib/utils/';
 
 const toast = useToast();
