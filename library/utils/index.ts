@@ -1,4 +1,5 @@
 import useToast from './toast.util';
+import { formatUserName } from './textFormatter.util';
 
 const getNestedProperyValue = (
   object: object,
@@ -8,4 +9,4 @@ const getNestedProperyValue = (
   return properties.reduce((o, p) => o?.[p as keyof object], object);
 };
 
-export { getNestedProperyValue, useToast };
+export { formatUserName, getNestedProperyValue, useToast };
