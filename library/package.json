@@ -11,6 +11,7 @@
     "release": "pnpm build && changelogen --release && ./scripts/publish.sh"
   },
   "exports": {
-    ".": "./dist/wangsvue.es.js"
+    ".": "./dist/wangsvue.es.js",
+    "./colors.config.json": "./colors.config.json"
   }
 }

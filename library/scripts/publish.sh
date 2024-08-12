@@ -18,10 +18,8 @@ cat << EOF > package.json
   "module": "./wangsvue.es.js",
   "types": "./main.d.ts",
   "exports": {
-    ".": {
-      "types": "./main.d.ts",
-      "import": "./wangsvue.es.js"
-    }
+    ".": "./dist/wangsvue.es.js",
+    "./colors.config.json": "./colors.config.json"
   }
 }
 EOF
