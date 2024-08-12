@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DefineComponent } from 'vue';
-import { MenuItem } from '../menuitem/MenuItem.vue.d';
+import { MenuItem } from '../menuitem';
 
 export interface ButtonBulkActionProps {
   /**

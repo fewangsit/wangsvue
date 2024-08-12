@@ -9,7 +9,7 @@
  */
 import { VNode } from 'vue';
 import { ComponentHooks } from '../basecomponent';
-import { MenuItem } from '../menuitem/MenuItem.vue.d';
+import { MenuItem } from '../menuitem';
 import { PassThroughOptions } from '../passthrough';
 import { ClassComponent, PassThrough } from '../ts-helpers';
 

@@ -1,4 +1,4 @@
-import { MenuItem } from '../menuitem/MenuItem.vue.d';
+import { MenuItem } from '../menuitem';
 
 /**
  * Filters the menu items to return only the visible ones.

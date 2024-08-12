@@ -6,7 +6,7 @@ import {
   ButtonBulkActionEmits,
   ButtonBulkActionProps,
 } from './ButtonBulkAction.vue.d';
-import { MenuItem } from '../menuitem/MenuItem.vue.d';
+import { MenuItem } from '../menuitem';
 import { filterVisibleMenu } from '../helpers';
 import Button from '../button/Button.vue';
 
