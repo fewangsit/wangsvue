@@ -47,6 +47,9 @@ const useField = <T>(
 // Preset
 import Preset from 'lib/preset';
 
+// Utils
+import { useToast, getNestedProperyValue } from 'lib/utils';
+
 // Directives
 import Tooltip from 'primevue/tooltip';
 
@@ -90,6 +93,10 @@ export {
   Tooltip,
   useForm,
   useField,
+
+  // Utils
+  getNestedProperyValue,
+  useToast,
 
   // Components
   Button,
