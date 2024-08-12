@@ -1,3 +1,5 @@
+import useToast from './toast.util';
+
 const getNestedProperyValue = (
   object: object,
   property: string,
@@ -6,4 +8,4 @@ const getNestedProperyValue = (
   return properties.reduce((o, p) => o?.[p as keyof object], object);
 };
 
-export { getNestedProperyValue };
+export { getNestedProperyValue, useToast };

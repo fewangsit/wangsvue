@@ -1,0 +1,41 @@
+<script setup lang="ts">
+import Card from 'wangsvue/card';
+import DocTitle from '../DocTitle.vue';
+import Toast from 'wangsvue/toast';
+import Button from 'wangsvue/button';
+import { useToast } from 'lib/utils/';
+
+const toast = useToast();
+
+const openToast = (message: string, isError?: boolean): void => {
+  toast.add({ message, error: isError });
+};
+</script>
+
+<template>
+  <Toast />
+
+  <Card>
+    <template #header>
+      <DocTitle name="Toast" />
+    </template>
+    <template #content>
+      <div
+        class="w-[324px] flex flex-col gap-3 h-[65px] p-4 relative bg-[#f8f7ee] rounded-[5px] border-2 border-dashed border-[#9747ff]"
+      >
+        <div class="flex gap-3">
+          <Button
+            @click="openToast('Perubahan telah disimpan.')"
+            label="Success Toast"
+            severity="success"
+          />
+          <Button
+            @click="openToast('Group soal gagal dihapus.', true)"
+            label="Error Toast"
+            severity="danger"
+          />
+        </div>
+      </div>
+    </template>
+  </Card>
+</template>

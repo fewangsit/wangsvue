@@ -14,13 +14,13 @@ export default {
   }),
   container: ({ props }) => ({
     class: [
-      'border-0 border-l-4 mt-6',
+      'border-0 mt-6',
       'rounded-[7px] w-full',
       'shadow-lg',
       // Colors
       {
-        'border-success-600 text-success-600 bg-success-50': props.message.severity === 'success',
-        'border-danger text-danger bg-danger-50': props.message.severity === 'error',
+        'border-success-600 text-white bg-success-500': props.message.severity === 'success',
+        'border-danger text-white bg-danger-500': props.message.severity === 'error',
         'border-primary-500 text-primary-500 bg-primary-50': props.message.severity === 'info',
       },
     ],
@@ -34,7 +34,7 @@ export default {
   text: {
     class: [
       // Font and Text
-      'text-xs leading-4 font-medium tracking-[0.02em] text-inherit',
+      'text-xs leading-4 font-normal tracking-[0.02em] text-inherit',
       'flex-1',
     ],
   },
@@ -61,7 +61,7 @@ export default {
       // Colors
       'bg-transparent',
       {
-        'text-success-600 dark:text-success-600': props.message.severity === 'success',
+        'text-white dark:text-white': props.message.severity === 'success',
         'text-danger dark:text-danger': props.message.severity === 'error',
         'text-primary-500 dark:text-primary-500': props.message.severity === 'info',
       },
@@ -70,11 +70,11 @@ export default {
       'transition duration-200 ease-in-out',
 
       // States
-      {
-        'hover:bg-success-100 dark:hover:bg-success-100': props.message.severity === 'success',
-        'hover:bg-danger-100 dark:hover:bg-danger-100': props.message.severity === 'error',
-        'hover:bg-primary-100 dark:hover:bg-primary-100': props.message.severity === 'info'
-      },
+      // {
+      //   'hover:bg-success-100 dark:hover:bg-success-100': props.message.severity === 'success',
+      //   'hover:bg-danger-100 dark:hover:bg-danger-100': props.message.severity === 'error',
+      //   'hover:bg-primary-100 dark:hover:bg-primary-100': props.message.severity === 'info'
+      // },
 
       // Misc
       'overflow-hidden',
