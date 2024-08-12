@@ -41,11 +41,7 @@ onMounted(() => {
   }
 });
 
-const inputPlaceholder = computed(
-  () =>
-    props.placeholder ??
-    `Enter ${props.label ? props.label.toLowerCase() : (props.type ?? 'text')}`,
-);
+const inputPlaceholder = computed(() => props.placeholder ?? 'Tulis');
 
 const setValidatorMessage = async (
   value: string,

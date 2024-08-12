@@ -2,8 +2,10 @@
 import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
 import InputText from 'lib/components/inputtext/InputText.vue';
-import { shallowRef } from 'vue';
-const text = shallowRef('This is an example text that exceeds maxLength');
+import { computed, shallowRef } from 'vue';
+const text = shallowRef('This is an example text that exceeds max length');
+
+const invalidState = computed(() => text.value?.length > 10);
 </script>
 
 <template>
@@ -18,10 +20,22 @@ const text = shallowRef('This is an example text that exceeds maxLength');
         Text you have inputted: {{ text }}
         <InputText v-model="text" disabled />
 
+        This input will be invalid if the length more than 10 char: invalid
+        {{ invalidState }}
         <InputText
-          :invalid="text.length > 10"
+          :invalid="invalidState"
           :value="text"
           use-validator
+          v-model:="text"
+          validator-message="Error Message"
+        />
+        Disabled and Invalid State
+        <InputText
+          :invalid="invalidState"
+          :value="text"
+          disabled
+          use-validator
+          v-model:="text"
           validator-message="Error Message"
         />
         <InputText v-model="text" disabled />
