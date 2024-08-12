@@ -6,4 +6,10 @@ const getNestedProperyValue = (
   return properties.reduce((o, p) => o?.[p as keyof object], object);
 };
 
-export { getNestedProperyValue };
+const convertToArrayClass = (classes?: string | string[]): string[] => {
+  if (!classes) return [];
+
+  return Array.isArray(classes) ? classes : [classes];
+};
+
+export { convertToArrayClass, getNestedProperyValue };
