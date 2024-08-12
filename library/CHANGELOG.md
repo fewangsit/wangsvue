@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.2.2
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.2.1...v1.2.2)
+
+### 📦 Build
+
+- Export colors config json ([4191932](https://github.com/fewangsit/wangsvue/commit/4191932))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.2.1
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.2.0...v1.2.1)
