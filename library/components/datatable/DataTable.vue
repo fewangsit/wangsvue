@@ -967,42 +967,45 @@ watch(
         />
       </template>
 
-      <template
-        #body="{ data: itemData }"
-        v-if="col.bodyComponent || col.bodyClass || col.bodyTemplate"
-      >
-        <component
-          :is="col.bodyComponent!(itemData).component"
-          v-if="col.bodyComponent"
-          v-model="col.bodyComponent!(itemData).model"
-          :disabled="col.bodyComponent!(itemData).disabled"
-          v-bind="col.bodyComponent!(itemData).props"
-          v-on="
-            col.bodyComponent!(itemData).events
-              ? col.bodyComponent!(itemData).events
-              : {}
-          "
-          @change="col.bodyComponent!(itemData).onChange?.(itemData)"
-          @update:model-value="
-            col.bodyComponent!(itemData).onChange?.(itemData)
-          "
-        />
+      <template #body="{ data: itemData, field }">
+        <template v-if="col.bodyComponent || col.bodyClass || col.bodyTemplate">
+          <component
+            :is="col.bodyComponent!(itemData).component"
+            v-if="col.bodyComponent"
+            v-model="col.bodyComponent!(itemData).model"
+            :disabled="col.bodyComponent!(itemData).disabled"
+            v-bind="col.bodyComponent!(itemData).props"
+            v-on="
+              col.bodyComponent!(itemData).events
+                ? col.bodyComponent!(itemData).events
+                : {}
+            "
+            @change="col.bodyComponent!(itemData).onChange?.(itemData)"
+            @update:model-value="
+              col.bodyComponent!(itemData).onChange?.(itemData)
+            "
+          />
 
-        <span
-          v-else
-          :class="
-            typeof col.bodyClass === 'function'
-              ? col.bodyClass(itemData)
-              : col.bodyClass
-          "
-        >
-          <template v-if="col.bodyTemplate">
-            {{ col.bodyTemplate && col.bodyTemplate(itemData) }}
-          </template>
-          <template v-else>
-            {{ getNestedProperyValue(itemData, col.field) }}
-          </template>
-        </span>
+          <span
+            v-else
+            :class="
+              typeof col.bodyClass === 'function'
+                ? col.bodyClass(itemData)
+                : col.bodyClass
+            "
+          >
+            <template v-if="col.bodyTemplate">
+              {{ (col.bodyTemplate && col.bodyTemplate(itemData)) || '-' }}
+            </template>
+            <template v-else>
+              {{ getNestedProperyValue(itemData, col.field) || '-' }}
+            </template>
+          </span>
+        </template>
+
+        <template v-else>
+          {{ getNestedProperyValue(itemData, field) ?? '-' }}
+        </template>
       </template>
     </Column>
 
