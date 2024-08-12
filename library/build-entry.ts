@@ -62,6 +62,7 @@ import {
   DataTable,
   TabMenu,
   Toast,
+  UserName,
 } from './components';
 
 export default {
@@ -82,6 +83,7 @@ export default {
     app.component('DataTable', DataTable);
     app.component('TabMenu', TabMenu);
     app.component('Toast', Toast);
+    app.component('UserName', UserName);
 
     app.directive('tooltip', Tooltip);
   },
@@ -111,4 +113,5 @@ export {
   DataTable,
   TabMenu,
   Toast,
+  UserName,
 };

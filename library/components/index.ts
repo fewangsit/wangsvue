@@ -6,6 +6,7 @@ import Breadcrumb from './breadcrumb/Breadcrumb.vue';
 import Card from './card/Card.vue';
 import TabMenu from './tabmenu/TabMenu.vue';
 import Toast from './toast/Toast.vue';
+import UserName from './username/UserName.vue';
 
 export {
   Badge,
@@ -16,4 +17,5 @@ export {
   Card,
   TabMenu,
   Toast,
+  UserName,
 };
