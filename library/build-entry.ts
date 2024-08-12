@@ -82,5 +82,11 @@ export {
   Tooltip,
   useForm,
   useField,
+
+  // Components
   Button,
+  Breadcrumb,
+  Card,
+  DataTable,
+  TabMenu,
 };
