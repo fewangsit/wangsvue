@@ -1,6 +1,6 @@
 const timepickerlabel = {
   class:
-    '[&_span]:w-[37px] [&_span]:h-[26px] [&_span]:flex [&_span]:justify-center [&_span]:items-center [&_span]:border [&_span]:border-general-200 [&_span]:rounded [&_span]:dark:text-general-100',
+    '[&_span]:w-[37px] [&_span]:h-[26px] [&_span]:flex [&_span]:justify-center [&_span]:items-center [&_span]:border [&_span]:border-general-200 [&_span]:rounded [&_span]:dark:text-general-800',
 };
 
 export default {
@@ -28,12 +28,12 @@ export default {
       'w-full',
 
       // Font
-      'text-xs tracking-[2%] font-medium placeholder:font-light',
+      'text-xs tracking-[2%] font-normal placeholder:font-light',
 
       // Colors
-      'text-general-800 dark:text-general-100',
+      'text-general-800 dark:text-general-800',
       'placeholder:text-general-200 dark:placeholder:text-general-200',
-      'bg-surface-0 dark:bg-grayscale-900',
+      'bg-white',
 
       // Shape
       'appearance-none',
@@ -52,11 +52,11 @@ export default {
       'duration-200',
 
       // States
-      'outline-none focus:ring-primary-500 dark:focus:ring-primary-400',
+      'outline-none focus:ring-primary-400 dark:focus:ring-primary-400',
     ],
   }),
   inputicon: {
-    class: ['text-general-500 dark:text-general-100'],
+    class: ['text-general-500 dark:text-general-800'],
   },
   dropdownbutton: {
     root: {
@@ -80,7 +80,7 @@ export default {
         // States
         'hover:bg-surface-200 dark:hover:bg-surface-700',
         'focus:outline-none focus:outline-offset-0 focus:ring-1',
-        'focus:ring-primary-500 dark:focus:ring-primary-400',
+        'focus:ring-primary-400 dark:focus:ring-primary-400',
       ],
     },
   },
@@ -104,7 +104,7 @@ export default {
       'rounded-[7px]',
 
       // Colors
-      'bg-surface-0 dark:bg-grayscale-900',
+      'bg-white',
 
       //Misc
       { 'overflow-x-auto': props.inline },
@@ -128,7 +128,7 @@ export default {
       },
 
       //Font
-      'text-xs font-medium',
+      'text-xs font-normal',
 
       // Flexbox and Alignment
       'flex justify-between items-start gap-1',
@@ -145,7 +145,7 @@ export default {
 
       // Colors
       'text-general-800 dark:general-800',
-      'bg-surface-0 dark:bg-grayscale-900',
+      'bg-white',
     ],
   }),
   previousbutton: ({ props }) => ({
@@ -165,7 +165,7 @@ export default {
 
       // Colors
       'text-general-800 dark:text-general-950',
-      'border-0 rounded-full',
+      'border-0 ',
       'bg-transparent',
 
       // States
@@ -178,7 +178,7 @@ export default {
   title: ({ props }) => ({
     class: [
       // Text
-      'dark:text-general-100 leading-6',
+      'dark:text-general-800 leading-6',
       'my-0',
       'order-2',
       // {
@@ -190,11 +190,11 @@ export default {
   monthTitle: {
     class: [
       //Font
-      'text-xs font-medium',
+      'text-xs font-normal',
 
       // Colors
-      'text-general-800 dark:text-general-100',
-      'bg-surface-0 dark:bg-grayscale-900',
+      'text-general-800 dark:text-general-800',
+      'bg-white',
 
       // Transitions
       'transition duration-200',
@@ -203,7 +203,7 @@ export default {
       'mr-1',
 
       // States
-      'hover:text-primary-500 dark:hover:text-primary-400',
+      'hover:text-primary-400 dark:hover:text-primary-400',
 
       // Misc
       'cursor-pointer',
@@ -216,11 +216,11 @@ export default {
       },
 
       //Font
-      'text-xs font-medium',
+      'text-xs font-normal',
 
       // Colors
-      'text-general-800 dark:text-general-100',
-      'bg-surface-0 dark:bg-grayscale-900',
+      'text-general-800 dark:text-general-800',
+      'bg-white',
 
       // Transitions
       'transition duration-200',
@@ -251,7 +251,7 @@ export default {
 
       // Colors
       'text-general-800 dark:text-general-950',
-      'border-0 rounded-full',
+      'border-0 ',
       'bg-transparent',
 
       // States
@@ -271,9 +271,9 @@ export default {
       'm-0',
 
       '[&_th]:text-xs [&_td]:text-xs',
-      '[&_th]:font-medium [&_td]:font-medium',
+      '[&_th]:font-normal [&_td]:font-normal',
       '[&_th]:text-general-800 [&_td]:text-general-800',
-      'dark:[&_th]:text-general-100 dark:[&_td]:text-general-100',
+      'dark:[&_th]:text-general-800 dark:[&_td]:text-general-800',
 
       // Hide the other months day
       '[&_[data-p-other-month="true"]]:invisible',
@@ -324,14 +324,14 @@ export default {
 
       // Shape & Size
       'w-10 h-10',
-      'rounded-full',
+      '',
       'border-transparent border',
 
       // Colors
       {
         'text-surface-600 dark:text-white/70 bg-transparent':
           !context.selected && !context.disabled,
-        'text-primary-500  dark:text-primary-400':
+        'text-primary-400  dark:text-primary-400':
           context.selected && !context.disabled,
       },
 
@@ -354,28 +354,18 @@ export default {
 
       // Shape & Size
       'w-8 h-8',
-      'rounded-full',
 
       // Colors
       {
-        'text-general-800 bg-general-100 dark:text-general-100 dark:bg-general-300':
-          context.date.today && !context.selected && !context.disabled,
-        'text-general-800 dark:text-general-100 bg-transparent':
-          !context.selected && !context.disabled && !context.date.today,
-        'bg-primary-200 dark:bg-primary-200 rounded-none':
-          context.selected && !context.disabled,
-        'rounded-full bg-primary-500 dark:bg-primary-500 text-surface-0 dark:text-surface-0':
-          !context.selected && !context.disabled && context.date.today,
+        'bg-primary-400 dark:bg-primary-400 text-white rounded-none':
+          (context.selected && !context.disabled) || context.date.today,
       },
 
       // States
-      // 'focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-primary-500 dark:focus:ring-primary-400',
+      'focus:outline-none focus-visible:outline-none',
       {
-        'hover:bg-general-50 dark:hover:bg-general-300': !context.disabled,
-        'hover:bg-general-200 dark:hover:bg-general-200':
-          !context.disabled && !context.date.today && context.selected,
-        'hover:bg-primary-600 dark:hover:bg-primary-600':
-          !context.disabled && context.date.today && !context.selected,
+        'hover:bg-primary-400/90': context.selected || context.date.today,
+        'hover:bg-primary-200': !context.selected,
       },
 
       {
@@ -405,14 +395,14 @@ export default {
 
       // Colors
       {
-        'text-general-800 dark:text-general-100 bg-transparent':
+        'text-general-800 dark:text-general-800 bg-transparent':
           !context.selected && !context.disabled,
-        'bg-primary-500 text-white dark:bg-primary-400 dark:text-white':
+        'bg-primary-400 text-white dark:bg-primary-400 dark:text-white':
           context.selected && !context.disabled,
       },
 
       // States
-      // 'focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-primary-500 dark:focus:ring-primary-400',
+      // 'focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-primary-400 dark:focus:ring-primary-400',
       'hover:bg-primary-50 dark:hover:bg-general-300',
       'hover:text-general-800 dark:hover:text-general-800',
 
@@ -443,14 +433,14 @@ export default {
 
       // Colors
       {
-        'text-general-800 dark:text-general-100 bg-transparent':
+        'text-general-800 dark:text-general-800 bg-transparent':
           !context.selected && !context.disabled,
-        'bg-primary-500 text-white dark:bg-primary-400 dark:text-white':
+        'bg-primary-400 text-white dark:bg-primary-400 dark:text-white':
           context.selected && !context.disabled,
       },
 
       // States
-      // 'focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-primary-500 dark:focus:ring-primary-400',
+      // 'focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-primary-400 dark:focus:ring-primary-400',
       'hover:text-general-800 dark:hover:text-general-800',
       'hover:bg-primary-50 dark:hover:bg-general-300',
 
@@ -485,7 +475,7 @@ export default {
   separator: {
     class: [
       // Text
-      'text-xs font-medium',
+      'text-xs font-normal',
     ],
   },
   hourpicker: {
@@ -644,19 +634,18 @@ export default {
         'px-2.5 py-1.5 text-sm leading-none',
 
         // Shape
-        'rounded-md',
+        '',
 
         // Colors
         'bg-transparent border-transparent',
-        'text-primary-500 dark:text-primary-400',
+        'text-primary-400 dark:text-primary-400',
 
         // Transitions
         'transition-colors duration-200 ease-in-out',
 
         // States
         // 'focus:outline-none focus:outline-offset-0 focus:ring-2 ring-inset',
-        // 'focus:ring-primary-500 dark:focus:ring-primary-400',
-        'hover:bg-primary-300/20',
+        // 'focus:ring-primary-400 dark:focus:ring-primary-400',
 
         // Misc
         'cursor-pointer',
@@ -673,18 +662,17 @@ export default {
         'px-2.5 py-1.5 text-sm leading-none',
 
         // Shape
-        'rounded-md',
 
         // Colors
         'bg-transparent border-transparent',
-        'text-primary-500 dark:text-primary-400',
+        'text-primary-400 dark:text-primary-400',
 
         // Transitions
         'transition-colors duration-200 ease-in-out',
 
         // States
         'focus:outline-none focus:outline-offset-0 focus:ring-2 ring-inset',
-        'focus:ring-primary-500 dark:focus:ring-primary-400',
+        'focus:ring-primary-400 dark:focus:ring-primary-400',
         'hover:bg-primary-300/20',
 
         // Misc
