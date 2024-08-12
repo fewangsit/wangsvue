@@ -2,6 +2,7 @@
 import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
 import Badge from 'lib/components/badge/Badge.vue';
+import BadgeGroup from 'lib/components/badgegroup/BadgeGroup.vue';
 </script>
 
 <template>
@@ -36,6 +37,16 @@ import Badge from 'lib/components/badge/Badge.vue';
           <Badge format="nowrap" label="Unverified" removable severity="dark" />
           <Badge disabled format="nowrap" label="Unverified" removable />
         </div>
+        <BadgeGroup
+          :labels="[
+            'June Nicolas',
+            'Tiffany Glover',
+            'Lori Ritchie',
+            'Rodney Fadel',
+          ]"
+          :limit="2"
+          format="username"
+        />
       </div>
     </template>
   </Card>
