@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.2.1
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.2.0...v1.2.1)
+
+### 🩹 Fixes
+
+- Typescript error while build ([b2df397](https://github.com/fewangsit/wangsvue/commit/b2df397))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.2.0
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.1.3...v1.2.0)
