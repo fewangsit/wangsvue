@@ -32,17 +32,29 @@
       "wangsvue/dialogconfirm": [
         "library/components/dialogconfirm/DialogConfirm.vue"
       ],
+      "wangsvue/fieldwrapper": [
+        "library/components/fieldwrapper/FieldWrapper.vue"
+      ],
       "wangsvue/filtercontainer": [
         "library/components/filtercontainer/FilterContainer.vue"
       ],
       "wangsvue/icon": [
         "library/components/icon/Icon.vue"
       ],
+      "wangsvue/inputgroup": [
+        "library/components/inputgroup/InputGroup.vue"
+      ],
+      "wangsvue/inputtext": [
+        "library/components/inputtext/InputText.vue"
+      ],
       "wangsvue/menu": [
         "library/components/menu/Menu.vue"
       ],
       "wangsvue/tabmenu": [
         "library/components/tabmenu/TabMenu.vue"
+      ],
+      "wangsvue/validatormessage": [
+        "library/components/validatormessage/ValidatorMessage.vue"
       ]
     }
   }
