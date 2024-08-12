@@ -6,43 +6,46 @@
         "library/*"
       ],
       "wangsvue/breadcrumb": [
-        "library/components/breadcrumb/Breadcrumb.vue"
+        "library\\components\\breadcrumb\\Breadcrumb.vue"
       ],
       "wangsvue/button": [
-        "library/components/button/Button.vue"
+        "library\\components\\button\\Button.vue"
       ],
       "wangsvue/buttonbulkaction": [
-        "library/components/buttonbulkaction/ButtonBulkAction.vue"
+        "library\\components\\buttonbulkaction\\ButtonBulkAction.vue"
       ],
       "wangsvue/buttonsearch": [
-        "library/components/buttonsearch/ButtonSearch.vue"
+        "library\\components\\buttonsearch\\ButtonSearch.vue"
       ],
       "wangsvue/card": [
-        "library/components/card/Card.vue"
+        "library\\components\\card\\Card.vue"
       ],
       "wangsvue/checkbox": [
-        "library/components/checkbox/Checkbox.vue"
+        "library\\components\\checkbox\\Checkbox.vue"
       ],
       "wangsvue/customcolumn": [
-        "library/components/customcolumn/CustomColumn.vue"
+        "library\\components\\customcolumn\\CustomColumn.vue"
       ],
       "wangsvue/datatable": [
-        "library/components/datatable/DataTable.vue"
+        "library\\components\\datatable\\DataTable.vue"
       ],
       "wangsvue/dialogconfirm": [
-        "library/components/dialogconfirm/DialogConfirm.vue"
+        "library\\components\\dialogconfirm\\DialogConfirm.vue"
       ],
       "wangsvue/filtercontainer": [
-        "library/components/filtercontainer/FilterContainer.vue"
+        "library\\components\\filtercontainer\\FilterContainer.vue"
       ],
       "wangsvue/icon": [
-        "library/components/icon/Icon.vue"
+        "library\\components\\icon\\Icon.vue"
       ],
       "wangsvue/menu": [
-        "library/components/menu/Menu.vue"
+        "library\\components\\menu\\Menu.vue"
       ],
       "wangsvue/tabmenu": [
-        "library/components/tabmenu/TabMenu.vue"
+        "library\\components\\tabmenu\\TabMenu.vue"
+      ],
+      "wangsvue/toast": [
+        "library\\components\\toast\\Toast.vue"
       ]
     }
   }

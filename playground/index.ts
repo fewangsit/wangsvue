@@ -64,6 +64,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
         component: (): Promise<Component> =>
           import('./docs/checkbox/CheckboxDocs.vue'),
       },
+      {
+        path: 'toast',
+        name: 'Toast Docs',
+        component: (): Promise<Component> =>
+          import('./docs/toast/ToastDocs.vue'),
+      },
     ],
   },
 ];
