@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.3.1
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.3.0...v1.3.1)
+
+### 📦 Build
+
+- Copy all dts after build ([5496b7b](https://github.com/fewangsit/wangsvue/commit/5496b7b))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.3.0
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.2.2...v1.3.0)
