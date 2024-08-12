@@ -54,6 +54,7 @@ import { useToast, getNestedProperyValue } from 'lib/utils';
 import Tooltip from 'primevue/tooltip';
 
 import {
+  Badge,
   Button,
   Breadcrumb,
   Card,
@@ -71,6 +72,7 @@ export default {
 
     app.use(ToastService);
 
+    app.component('Badge', Badge);
     // eslint-disable-next-line vue/no-reserved-component-names
     app.component('Button', Button);
     app.component('Breadcrumb', Breadcrumb);
@@ -99,6 +101,7 @@ export {
   useToast,
 
   // Components
+  Badge,
   Button,
   Breadcrumb,
   Card,
