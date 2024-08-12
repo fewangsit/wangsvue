@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Card from 'wangsvue/card';
+import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
-import Checkbox from 'wangsvue/checkbox';
+import Checkbox from 'lib/components/checkbox/Checkbox.vue';
 </script>
 
 <template>

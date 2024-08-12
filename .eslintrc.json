@@ -29,6 +29,7 @@
     "vue/multi-word-component-names": "off",
     "vue/no-static-inline-styles": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    "eqeqeq": "off",
     "no-console": [
       "error",
       {

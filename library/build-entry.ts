@@ -47,10 +47,23 @@ const useField = <T>(
 // Preset
 import Preset from 'lib/preset';
 
+// Utils
+import { useToast, getNestedProperyValue } from 'lib/utils';
+
 // Directives
 import Tooltip from 'primevue/tooltip';
 
-import { Button } from './components';
+import {
+  Badge,
+  BadgeGroup,
+  Button,
+  Breadcrumb,
+  Card,
+  DataTable,
+  TabMenu,
+  Toast,
+  UserName,
+} from './components';
 
 export default {
   install: (app: App): void => {
@@ -61,8 +74,16 @@ export default {
 
     app.use(ToastService);
 
+    app.component('Badge', Badge);
+    app.component('BadgeGroup', BadgeGroup);
     // eslint-disable-next-line vue/no-reserved-component-names
     app.component('Button', Button);
+    app.component('Breadcrumb', Breadcrumb);
+    app.component('Card', Card);
+    app.component('DataTable', DataTable);
+    app.component('TabMenu', TabMenu);
+    app.component('Toast', Toast);
+    app.component('UserName', UserName);
 
     app.directive('tooltip', Tooltip);
   },
@@ -78,5 +99,19 @@ export {
   Tooltip,
   useForm,
   useField,
+
+  // Utils
+  getNestedProperyValue,
+  useToast,
+
+  // Components
+  Badge,
+  BadgeGroup,
   Button,
+  Breadcrumb,
+  Card,
+  DataTable,
+  TabMenu,
+  Toast,
+  UserName,
 };

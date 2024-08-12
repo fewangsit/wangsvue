@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Card from 'wangsvue/card';
-import ButtonSearch from 'wangsvue/buttonsearch';
+import Card from 'lib/components/card/Card.vue';
+import ButtonSearch from 'lib/components/buttonsearch/ButtonSearch.vue';
 import DocTitle from '../DocTitle.vue';
 import { shallowRef } from 'vue';
 

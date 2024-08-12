@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { MenuItem } from 'lib/components/menuitem/MenuItem.vue.d';
-import Card from 'wangsvue/card';
-import Menu from 'wangsvue/menu';
-import Button from 'wangsvue/button';
+import { MenuItem } from 'lib/components/menuitem';
+import Card from 'lib/components/card/Card.vue';
+import Menu from 'lib/components/menu/Menu.vue';
+import Button from 'lib/components/button/Button.vue';
 import DocTitle from '../DocTitle.vue';
 import { ref } from 'vue';
 import MenuClass from 'lib/components/menu/Menu.vue.d';

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { MenuItem } from 'lib/components/menuitem/MenuItem.vue.d';
+import { MenuItem } from 'lib/components/menuitem';
 import { shallowRef } from 'vue';
-import Card from 'wangsvue/card';
-import TabMenu from 'wangsvue/tabmenu';
+import Card from 'lib/components/card/Card.vue';
+import TabMenu from 'lib/components/tabmenu/TabMenu.vue';
 import DocTitle from '../DocTitle.vue';
 
 const menu: MenuItem[] = [

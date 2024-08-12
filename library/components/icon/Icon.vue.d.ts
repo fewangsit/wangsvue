@@ -53,6 +53,8 @@ export type WangsIcons =
   | 'dragable-menu'
   | 'edit'
   | 'ellipsis-h'
+  | 'emotion-happy-fill'
+  | 'emotion-unhappy-fill'
   | 'error'
   | 'exchange'
   | 'extension-borrow'

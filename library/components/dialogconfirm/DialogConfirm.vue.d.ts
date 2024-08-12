@@ -1,5 +1,5 @@
 import { DefineComponent, Slot } from 'vue';
-import { TSVueIcons } from 'v2/Icon/Icon.vue.d';
+import { WangsIcons } from '../icon/Icon.vue.d';
 
 type ConfirmDialogSeverity = 'success' | 'danger';
 
@@ -14,7 +14,7 @@ export interface DialogConfirmProps {
   /**
    * Custom header icon. Default is 'error' icon for danger severity, and 'cehckbox-circle' for success severity.
    */
-  headerIcon?: TSVueIcons;
+  headerIcon?: WangsIcons;
   /**
    * The severity of the dialog.
    * The severity will determine the dialog icons and color scheme.
