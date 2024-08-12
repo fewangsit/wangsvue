@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Button from 'wangsvue/button';
-import Card from 'wangsvue/card';
+import Button from 'lib/components/button/Button.vue';
+import Card from 'lib/components/card/Card.vue';
 </script>
 
 <template>

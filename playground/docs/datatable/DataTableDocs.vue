@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { MenuItem } from 'lib/components/menuitem/MenuItem.vue.d';
-import Card from 'wangsvue/card';
+import { MenuItem } from 'lib/components/menuitem';
+import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
-import DataTable from 'wangsvue/datatable';
+import DataTable from 'lib/components/datatable/DataTable.vue';
 import {
   TableCellComponent,
   TableColumn,

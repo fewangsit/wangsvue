@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { shallowRef } from 'vue';
-import Card from 'wangsvue/card';
+import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
 import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
 import Button from 'lib/components/button/Button.vue';
