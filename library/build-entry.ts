@@ -54,12 +54,15 @@ import { useToast, getNestedProperyValue } from 'lib/utils';
 import Tooltip from 'primevue/tooltip';
 
 import {
+  Badge,
+  BadgeGroup,
   Button,
   Breadcrumb,
   Card,
   DataTable,
   TabMenu,
   Toast,
+  UserName,
 } from './components';
 
 export default {
@@ -71,6 +74,8 @@ export default {
 
     app.use(ToastService);
 
+    app.component('Badge', Badge);
+    app.component('BadgeGroup', BadgeGroup);
     // eslint-disable-next-line vue/no-reserved-component-names
     app.component('Button', Button);
     app.component('Breadcrumb', Breadcrumb);
@@ -78,6 +83,7 @@ export default {
     app.component('DataTable', DataTable);
     app.component('TabMenu', TabMenu);
     app.component('Toast', Toast);
+    app.component('UserName', UserName);
 
     app.directive('tooltip', Tooltip);
   },
@@ -99,10 +105,13 @@ export {
   useToast,
 
   // Components
+  Badge,
+  BadgeGroup,
   Button,
   Breadcrumb,
   Card,
   DataTable,
   TabMenu,
   Toast,
+  UserName,
 };

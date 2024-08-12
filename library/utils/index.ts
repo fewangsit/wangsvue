@@ -1,4 +1,5 @@
 import useToast from './toast.util';
+import { formatUserName } from './textFormatter.util';
 
 const getNestedProperyValue = (
   object: object,
@@ -8,4 +9,10 @@ const getNestedProperyValue = (
   return properties.reduce((o, p) => o?.[p as keyof object], object);
 };
 
-export { getNestedProperyValue, useToast };
+const convertToArrayClass = (classes?: string | string[]): string[] => {
+  if (!classes) return [];
+
+  return Array.isArray(classes) ? classes : [classes];
+};
+
+export { formatUserName, convertToArrayClass, getNestedProperyValue, useToast };

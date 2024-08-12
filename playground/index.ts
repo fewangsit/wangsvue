@@ -77,6 +77,29 @@ const routes: Readonly<RouteRecordRaw[]> = [
           import('./docs/inputtext/InputTextDocs.vue'),
       },
       {
+        path: 'badge',
+        name: 'Badge Docs',
+        component: (): Promise<Component> =>
+          import('./docs/badge/BadgeDocs.vue'),
+      },
+      {
+        path: 'username',
+        name: 'UserName Docs',
+        component: (): Promise<Component> =>
+          import('./docs/username/UserNameDocs.vue'),
+      },
+      {
+        path: 'form',
+        name: 'Form Docs',
+        component: (): Promise<Component> => import('./docs/form/FormDocs.vue'),
+      },
+      {
+        path: 'dialogform',
+        name: 'Dialog Form Docs',
+        component: (): Promise<Component> =>
+          import('./docs/dialog/DialogFormDocs.vue'),
+      },
+      {
         path: 'calendar',
         name: 'Calendar Docs',
         component: (): Promise<Component> =>
