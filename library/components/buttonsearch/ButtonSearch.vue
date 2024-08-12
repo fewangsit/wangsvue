@@ -58,7 +58,7 @@ const updateInput = (event: Event): void => {
       :model-value="query"
       @input="updateInput"
       class="!h-max"
-      placeholder="Search"
+      placeholder="Cari"
     />
 
     <Icon
