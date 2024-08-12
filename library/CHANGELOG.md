@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.3.0
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.2.2...v1.3.0)
+
+### 🚀 Enhancements
+
+- Add sub path for colors.config.json on export package json ([5abe890](https://github.com/fewangsit/wangsvue/commit/5abe890))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.2.2
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.2.1...v1.2.2)
