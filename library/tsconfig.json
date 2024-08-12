@@ -4,6 +4,7 @@
     "outDir": "dist",
     "declaration": true,
     "declarationDir": "dist",
+    "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
       "lib/*": [
