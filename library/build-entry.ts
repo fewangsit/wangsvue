@@ -55,6 +55,7 @@ import Tooltip from 'primevue/tooltip';
 
 import {
   Badge,
+  BadgeGroup,
   Button,
   Breadcrumb,
   Card,
@@ -73,6 +74,7 @@ export default {
     app.use(ToastService);
 
     app.component('Badge', Badge);
+    app.component('BadgeGroup', BadgeGroup);
     // eslint-disable-next-line vue/no-reserved-component-names
     app.component('Button', Button);
     app.component('Breadcrumb', Breadcrumb);
@@ -102,6 +104,7 @@ export {
 
   // Components
   Badge,
+  BadgeGroup,
   Button,
   Breadcrumb,
   Card,
