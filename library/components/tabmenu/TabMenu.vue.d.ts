@@ -11,11 +11,7 @@ import { VNode } from 'vue';
 import { ComponentHooks } from '../basecomponent';
 import { MenuItem } from '../menuitem/MenuItem.vue.d';
 import { PassThroughOptions } from '../passthrough';
-import {
-  ClassComponent,
-  GlobalComponentConstructor,
-  PassThrough,
-} from '../ts-helpers';
+import { ClassComponent, PassThrough } from '../ts-helpers';
 
 export declare type TabMenuPassThroughOptionType =
   | TabMenuPassThroughAttributes
@@ -284,11 +280,5 @@ declare class TabMenu extends ClassComponent<
   TabMenuSlots,
   TabMenuEmits
 > {}
-
-declare module 'vue' {
-  export interface GlobalComponents {
-    TabMenu: GlobalComponentConstructor<TabMenu>;
-  }
-}
 
 export default TabMenu;

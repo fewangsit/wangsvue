@@ -39,14 +39,14 @@ export interface ButtonBulkActionSlots {
    *
    * @slotprops selectedOption the current selected option/action. you can do conditional based on this slotprops.
    */
-  addition(selectedOption: MenuOption): () => any;
+  addition(selectedOption: MenuItem): () => any;
 }
 
 export type ButtonBulkActionEmits = {
   /**
    * Emits when Apply button is clicked.
    *
-   * By default 'command' on MenuOption will be executed.
+   * By default 'command' on MenuItem will be executed.
    * With this event, You can do additional actions.
    */
   'apply': [];

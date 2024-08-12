@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  *
  * InputGroup displays text, icon, buttons and other content can be grouped next to an input.
@@ -7,8 +6,8 @@
  *
  */
 import { VNode } from 'vue';
-import { ComponentHooks } from '../BaseComponent/BaseComponent.d';
-import { PassThroughOptions } from '../PassThrough';
+import { ComponentHooks } from '../basecomponent';
+import { PassThroughOptions } from '../passthrough';
 import {
   ClassComponent,
   GlobalComponentConstructor,
@@ -126,7 +125,7 @@ export interface InputGroupSlots {
 declare class InputGroup extends ClassComponent<
   InputGroupProps,
   InputGroupSlots,
-  InputGroupEmits
+  unknown
 > {}
 
 declare module '@vue/runtime-core' {
