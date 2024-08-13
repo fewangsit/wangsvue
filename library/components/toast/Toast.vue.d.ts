@@ -9,8 +9,8 @@
  *
  */
 import { TransitionProps, VNode } from 'vue';
-import { ComponentHooks } from '../baseComponent/index.d';
-import { PassThroughOptions } from '../passThrough';
+import { ComponentHooks } from '../basecomponent';
+import { PassThroughOptions } from '../passthrough';
 import {
   ClassComponent,
   GlobalComponentConstructor,

@@ -133,3 +133,18 @@ export type WangsIcons =
   | 'user-search'
   | 'user-settings'
   | 'verification';
+
+export interface IconProps {
+  icon: WangsIcons;
+  severity?: WangsIconseverities;
+  /**
+   * Show info on hover.
+   */
+  info?: string;
+  /**
+   * Set the position of tooltip.
+   */
+  tooltipPos?: 'top' | 'right' | 'bottom' | 'left';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  class?: any;
+}

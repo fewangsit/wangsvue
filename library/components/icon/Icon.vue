@@ -1,32 +1,13 @@
 <script setup lang="ts">
 import { shallowRef } from 'vue';
-import type {
-  WangsIcons,
-  WangsIconseverities,
-} from 'lib/components/icon/Icon.vue.d';
+import type { IconProps } from 'lib/components/icon/Icon.vue.d';
 
-const props = withDefaults(
-  defineProps<{
-    icon: WangsIcons;
-    severity?: WangsIconseverities;
-    /**
-     * Show info on hover.
-     */
-    info?: string;
-    /**
-     * Set the position of tooltip.
-     */
-    tooltipPos?: 'top' | 'right' | 'bottom' | 'left';
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    class?: any;
-  }>(),
-  {
-    severity: undefined,
-    info: undefined,
-    tooltipPos: 'top',
-    class: undefined,
-  },
-);
+const props = withDefaults(defineProps<IconProps>(), {
+  severity: undefined,
+  info: undefined,
+  tooltipPos: 'top',
+  class: undefined,
+});
 
 const severityClass = ((): string => {
   switch (props.severity) {

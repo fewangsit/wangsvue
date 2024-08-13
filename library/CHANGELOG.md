@@ -1,6 +1,76 @@
 # Changelog
 
 
+## v1.4.0
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.2.2...v1.4.0)
+
+### 🚀 Enhancements
+
+- Add sub path for colors.config.json on export package json ([5abe890](https://github.com/fewangsit/wangsvue/commit/5abe890))
+- **FSQRF5Fl:** Add toast component ([7f7705a](https://github.com/fewangsit/wangsvue/commit/7f7705a))
+- Export toast component into build entry ([3da35eb](https://github.com/fewangsit/wangsvue/commit/3da35eb))
+- Export useToast utils into build entry ([bc23253](https://github.com/fewangsit/wangsvue/commit/bc23253))
+- **XvjAonnB:** Add badge component ([e1d3093](https://github.com/fewangsit/wangsvue/commit/e1d3093))
+- Export badge into build entry ([1bb48c5](https://github.com/fewangsit/wangsvue/commit/1bb48c5))
+- **v9RCDH5Q:** Add badgegroup component ([1bbf3ed](https://github.com/fewangsit/wangsvue/commit/1bbf3ed))
+- Export badgegroup into build entry ([9a758c9](https://github.com/fewangsit/wangsvue/commit/9a758c9))
+- Add overlaypanel component ([01636aa](https://github.com/fewangsit/wangsvue/commit/01636aa))
+- Add username component ([a586161](https://github.com/fewangsit/wangsvue/commit/a586161))
+- Export username into build entry ([32f0346](https://github.com/fewangsit/wangsvue/commit/32f0346))
+- Add component Form, DialogForm, ValidatorMessage ([a285df0](https://github.com/fewangsit/wangsvue/commit/a285df0))
+- Add calendar ([dd23386](https://github.com/fewangsit/wangsvue/commit/dd23386))
+- Add download excel functionality ([f18850a](https://github.com/fewangsit/wangsvue/commit/f18850a))
+- Add buttonFilter ([9da9fe5](https://github.com/fewangsit/wangsvue/commit/9da9fe5))
+- **u63ssF8v:** Add multiselect component ([c455f50](https://github.com/fewangsit/wangsvue/commit/c455f50))
+- Export multiselect into build entry ([78fed99](https://github.com/fewangsit/wangsvue/commit/78fed99))
+- Add input range number ([43a2058](https://github.com/fewangsit/wangsvue/commit/43a2058))
+
+### 🩹 Fixes
+
+- Conflict in tsconfig.paths and playground index ([384600f](https://github.com/fewangsit/wangsvue/commit/384600f))
+- Ts error - Argument of type '(event: CustomEvent<string>) => void' is not assignable to parameter of type 'EventListenerOrEventListenerObject' ([9f8e66c](https://github.com/fewangsit/wangsvue/commit/9f8e66c))
+- Fallback to empty string when no data ([cd68bcd](https://github.com/fewangsit/wangsvue/commit/cd68bcd))
+- Conflict in util and playground index ([87479d1](https://github.com/fewangsit/wangsvue/commit/87479d1))
+- Update dialog title in badgegroup ([235410a](https://github.com/fewangsit/wangsvue/commit/235410a))
+- Typescirpt error in toast and multiseelct dts ([1a411e6](https://github.com/fewangsit/wangsvue/commit/1a411e6))
+
+### 💅 Refactors
+
+- Adjust naming for item & index in v-for list ([36ee2f1](https://github.com/fewangsit/wangsvue/commit/36ee2f1))
+- Refactor docs for form & dialogform ([71a9ab7](https://github.com/fewangsit/wangsvue/commit/71a9ab7))
+
+### 📦 Build
+
+- Export colors config json ([4191932](https://github.com/fewangsit/wangsvue/commit/4191932))
+- Copy all dts after build ([5496b7b](https://github.com/fewangsit/wangsvue/commit/5496b7b))
+- Export some components ([e2c2b36](https://github.com/fewangsit/wangsvue/commit/e2c2b36))
+
+### 🏡 Chore
+
+- **release:** V1.2.2 ([da0332a](https://github.com/fewangsit/wangsvue/commit/da0332a))
+- **release:** V1.3.0 ([b4f9ede](https://github.com/fewangsit/wangsvue/commit/b4f9ede))
+- **release:** V1.3.1 ([b72bdaa](https://github.com/fewangsit/wangsvue/commit/b72bdaa))
+- Remove dynamic path alias ([8442c80](https://github.com/fewangsit/wangsvue/commit/8442c80))
+- Update import path in toastdocs ([c5d0b78](https://github.com/fewangsit/wangsvue/commit/c5d0b78))
+
+### 🎨 Styles
+
+- **TabMenu:** Add hover state ([6d57595](https://github.com/fewangsit/wangsvue/commit/6d57595))
+- Input text ([f87b226](https://github.com/fewangsit/wangsvue/commit/f87b226))
+- Update custom column border ([9f3751b](https://github.com/fewangsit/wangsvue/commit/9f3751b))
+- Single selection date should rounded ([ff9e147](https://github.com/fewangsit/wangsvue/commit/ff9e147))
+
+### 🤖 CI
+
+- Deploy on push main ([5780893](https://github.com/fewangsit/wangsvue/commit/5780893))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+- Dzulqtera <dzul@qtera.co.id>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.3.1
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.3.0...v1.3.1)
