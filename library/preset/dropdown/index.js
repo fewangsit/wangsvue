@@ -121,8 +121,12 @@ export default {
       // Sizing
       'max-h-[15rem]',
 
+      // Shape
+      'border-[0.5px]',
+
       // Color
       'bg-white',
+      'border-grayscale-900',
 
       // Misc
       'overflow-auto',
