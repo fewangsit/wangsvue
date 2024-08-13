@@ -52,7 +52,7 @@ const setValidator = (): void => {
         const hasValue = Array.isArray(value) && value.length;
 
         if (!hasValue && props.mandatory) {
-          return props.validatorMessage;
+          return props.validatorMessage as string | boolean;
         }
 
         return true;

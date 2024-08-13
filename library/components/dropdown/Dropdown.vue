@@ -61,7 +61,7 @@ const setValidator = (): void => {
         const hasValue = value != null && value !== '';
 
         if (!hasValue && props.mandatory) {
-          return props.validatorMessage;
+          return props.validatorMessage as string | boolean;
         }
 
         return setValidatorMessage();
@@ -76,7 +76,7 @@ const setValidatorMessage = async (): Promise<boolean | string> => {
   await nextTick();
 
   if (props.validatorMessage && props.invalid) {
-    return props.validatorMessage;
+    return props.validatorMessage as string;
   }
 
   return true;
