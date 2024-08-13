@@ -137,7 +137,7 @@ export type MultiSelectEmits = {
  */
 declare class MultiSelect extends ClassComponent<
   MultiSelectProps,
-  MultiSelectSlots,
+  unknown,
   MultiSelectEmits
 > {
   /**
