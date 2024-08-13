@@ -153,6 +153,7 @@ export {
   Form,
   Icon,
   InputText,
+  InputNumber,
   MultiSelect,
   TabMenu,
   Toast,

@@ -1,6 +1,55 @@
 # Changelog
 
 
+## v1.4.4
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.3...v1.4.4)
+
+## v1.4.3
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.2...v1.4.3)
+
+### 🚀 Enhancements
+
+- Add component InputNumber ([ef11f66](https://github.com/fewangsit/wangsvue/commit/ef11f66))
+- Add docs playground for input number ([8dced3b](https://github.com/fewangsit/wangsvue/commit/8dced3b))
+- Add import for Form, DialogForm, InputNumber ([2b79bdd](https://github.com/fewangsit/wangsvue/commit/2b79bdd))
+- **SMxyn6tN:** Add InputEmail that extended from InputText ([21d96a6](https://github.com/fewangsit/wangsvue/commit/21d96a6))
+- Add InputEmail to buildentry ([7401c47](https://github.com/fewangsit/wangsvue/commit/7401c47))
+- **btqs0JTR:** Add buttontoggle component ([6d0816a](https://github.com/fewangsit/wangsvue/commit/6d0816a))
+- Export buttontoggle into build entry ([036ac28](https://github.com/fewangsit/wangsvue/commit/036ac28))
+
+### 🩹 Fixes
+
+- Fix styling dialog form ([19de0de](https://github.com/fewangsit/wangsvue/commit/19de0de))
+- Ts error on dropdown and multiselect ([b242968](https://github.com/fewangsit/wangsvue/commit/b242968))
+- Conflict in playground index ([7798480](https://github.com/fewangsit/wangsvue/commit/7798480))
+- Button filter does not change icon on click ([76b86eb](https://github.com/fewangsit/wangsvue/commit/76b86eb))
+- Ts error on input email ([e4d15dc](https://github.com/fewangsit/wangsvue/commit/e4d15dc))
+
+### 💅 Refactors
+
+- Add InputNumber field to dialog form ([cb7f4ca](https://github.com/fewangsit/wangsvue/commit/cb7f4ca))
+- Update button component ([f3b0ac8](https://github.com/fewangsit/wangsvue/commit/f3b0ac8))
+
+### 🏡 Chore
+
+- **release:** V1.4.2 ([ebb3a5c](https://github.com/fewangsit/wangsvue/commit/ebb3a5c))
+
+### 🎨 Styles
+
+- Update calendar today style ([40600e2](https://github.com/fewangsit/wangsvue/commit/40600e2))
+
+### 🤖 CI
+
+- Disable auto deploy on push ([f480bf8](https://github.com/fewangsit/wangsvue/commit/f480bf8))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+- Dzulqtera <dzul@qtera.co.id>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.4.2
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.1...v1.4.2)

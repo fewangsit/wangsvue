@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import InputText from '../inputtext/InputText.vue';
-import type { InputEmailEmits, InputEmailProps } from './InputEmail.vue.d';
 import { Nullable } from '../ts-helpers';
+import type { InputEmailEmits, InputEmailProps } from './InputEmail.vue.d';
 
 defineProps<InputEmailProps>();
 defineEmits<InputEmailEmits>();

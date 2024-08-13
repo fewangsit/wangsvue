@@ -53,6 +53,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
           import('./docs/dialog/DialogConfirmDocs.vue'),
       },
       {
+        path: 'dialog',
+        name: 'Dialog Docs',
+        component: (): Promise<Component> =>
+          import('./docs/dialog/DialogDocs.vue'),
+      },
+      {
         path: 'datatable',
         name: 'DataTable Docs',
         component: (): Promise<Component> =>
