@@ -28,13 +28,19 @@ const updateInput = (event: Event): void => {
     @click="showSearchInput = !showSearchInput"
     type="button"
   >
-    <Icon class="text-2xl" icon="search" />
+    <Icon
+      class="text-2xl"
+      icon="search"
+      info="Search"
+      severity="secondary"
+      tooltip-pos="bottom"
+    />
   </button>
   <form
     v-else
     :class="[
       { show: showSearchInput },
-      'grid grid-cols-[max-content,auto,max-content] items-center gap-0.5 max-w-[224px]',
+      'grid grid-cols-[max-content,auto,max-content] items-center gap-0.5 max-w-[224px] h-6',
       'border-b border-primary-100',
     ]"
     @submit.prevent="$emit('search', query)"

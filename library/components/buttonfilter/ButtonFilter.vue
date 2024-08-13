@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-import Button from '../button/Button.vue';
 import type {
   ButtonFilterProps,
   ButtonFilterEmits,
 } from './ButtonFilter.vue.d';
 import { WangsIcons } from '../icon/Icon.vue.d';
+import Icon from '../icon/Icon.vue';
 
 defineProps<ButtonFilterProps>();
 
@@ -23,12 +23,13 @@ const toggleFilterPanel = (): void => {
 </script>
 
 <template>
-  <Button
-    :icon="filterIcon"
-    @click="toggleFilterPanel"
-    data-section-name="buttonfilter"
-    severity="secondary"
-    text
-    tooltip="Filter"
-  />
+  <button @click="toggleFilterPanel">
+    <Icon
+      :icon="filterIcon"
+      class="text-2xl"
+      info="Filter"
+      severity="secondary"
+      tooltip-pos="bottom"
+    />
+  </button>
 </template>

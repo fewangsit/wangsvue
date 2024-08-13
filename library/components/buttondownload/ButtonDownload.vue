@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import Button from '../button/Button.vue';
+import Icon from '../icon/Icon.vue';
 import type { ButtonDownloadProps } from './ButtonDownload.vue.d';
 
 const props = withDefaults(defineProps<ButtonDownloadProps>(), {
@@ -17,13 +17,13 @@ const downloadExcel = (): void => {
 </script>
 
 <template>
-  <Button
-    @click="downloadExcel"
-    v-bind="$attrs"
-    icon="download"
-    severity="secondary"
-    text
-    tooltip="Download"
-    tooltip-pos="bottom"
-  />
+  <button @click="downloadExcel">
+    <Icon
+      class="text-2xl"
+      icon="download"
+      info="Download"
+      severity="secondary"
+      tooltip-pos="bottom"
+    />
+  </button>
 </template>
