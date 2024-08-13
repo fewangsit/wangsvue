@@ -6,7 +6,7 @@ export default {
       'shrink-0',
 
       // Shape
-      'rounded-2xl',
+      'rounded-[60px]',
 
       // Size
       'h-4 w-8',
@@ -26,7 +26,7 @@ export default {
       'absolute top-0 left-0 right-0 bottom-0',
 
       // Shape
-      'rounded-2xl',
+      'rounded-[60px]',
 
       // Before:
       'before:absolute before:top-1/2',
@@ -36,10 +36,12 @@ export default {
       'before:duration-200 before:transition before:ease-in-out',
       'before:shadow',
       {
-        'before:bg-general-100 before:dark:bg-general-100':
-          props.modelValue !== props.trueValue,
         'before:bg-white before:dark:bg-white':
           props.modelValue == props.trueValue,
+        'before:bg-primary-200 before:dark:bg-primary-200':
+          props.modelValue !== props.trueValue && !props.disabled,
+        'before:bg-general-50 before:dark:bg-general-50':
+          props.modelValue !== props.trueValue && props.disabled,
       },
       {
         'before:transform before:translate-x-3.5':
@@ -49,7 +51,8 @@ export default {
       // Colors
       'border',
       {
-        'border-general-100': props.modelValue !== props.trueValue,
+        'border-primary-200':
+          props.modelValue !== props.trueValue && !props.disabled,
         'border-transparent': props.modelValue == props.trueValue,
       },
       {
@@ -57,7 +60,12 @@ export default {
           props.modelValue !== props.trueValue && !props.disabled,
         'bg-primary-500 dark:bg-primary-500':
           props.modelValue == props.trueValue && !props.disabled,
-        'bg-general-200 dark:bg-general-200': props.disabled,
+        'bg-primary-100 dark:bg-primary-100':
+          props.modelValue == props.trueValue && props.disabled,
+        'bg-primary-100 dark:bg-primary-100':
+          props.modelValue == props.trueValue && props.disabled,
+        'bg-general-100 dark:bg-general-100':
+          props.modelValue !== props.trueValue && props.disabled,
       },
 
       // States

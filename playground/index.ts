@@ -135,6 +135,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
         component: (): Promise<Component> =>
           import('./docs/inputemail/InputEmailDocs.vue'),
       },
+      {
+        path: 'toggle',
+        name: 'ButtonToggle Docs',
+        component: (): Promise<Component> =>
+          import('./docs/buttontoggle/ButtonToggleDocs.vue'),
+      },
     ],
   },
 ];
