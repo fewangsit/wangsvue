@@ -61,6 +61,7 @@ import {
   Breadcrumb,
   Card,
   DataTable,
+  MultiSelect,
   TabMenu,
   Toast,
   UserName,
@@ -102,6 +103,7 @@ export default {
     app.component('Card', Card);
     app.component('DataTable', DataTable);
     app.component('Icon', Icon);
+    app.component('MultiSelect', MultiSelect);
     app.component('TabMenu', TabMenu);
     app.component('Toast', Toast);
     app.component('UserName', UserName);
@@ -133,6 +135,7 @@ export {
   Card,
   DataTable,
   Icon,
+  MultiSelect,
   TabMenu,
   Toast,
   UserName,

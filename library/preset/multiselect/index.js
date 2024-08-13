@@ -41,11 +41,11 @@ export default {
       // props.display === 'chip' && props?.modelValue?.length > 0
 
       'h-max',
-      
+
       //Font
       'text-xs',
       {
-        '!leading-5' : props.modelValue == null,
+        '!leading-5': props.modelValue == null,
       },
 
       //Shape
@@ -53,8 +53,10 @@ export default {
 
       // Color
       {
-        'text-general-200 dark:text-general-600 font-light': !props.modelValue?.length,
-        'text-grayscale-800 dark:text-general-50 font-medium': props.modelValue?.length,
+        'text-general-200 dark:text-general-600 font-light':
+          !props.modelValue?.length,
+        'text-grayscale-800 dark:text-general-50 font-medium':
+          props.modelValue?.length,
       },
       // {
       //   'text-surface-800 dark:text-surface-700': props.modelValue,
@@ -75,19 +77,19 @@ export default {
       'inline-flex items-center gap-1',
 
       // Spacing
-      'p-1',
+      'py-1 px-2',
 
       // Shape
-      'rounded-lg',
+      'rounded-[50px]',
 
-      'text-[9px]',
-      'font-semibold',
+      'text-xs',
+      'font-normal',
       'leading-[12px]',
       'tracking-[0.03em]',
       'items-center',
 
-      'text-grayscale-800 dark:text-grayscale-800',
-      'bg-grayscale-200 dark:bg-grayscale-200',
+      'text-grayscale-900 dark:text-grayscale-900',
+      'bg-grayscale-500 dark:bg-grayscale-500',
     ],
   },
   removeTokenIcon: {
@@ -166,7 +168,7 @@ export default {
 
       // Color
       'text-surface-700 dark:text-surface-700',
-      'bg-grayscale-100 dark:bg-general-600',
+      'bg-primary-400 dark:bg-primary-400',
       // 'border-surface-200 dark:border-surface-700',
     ],
   },
@@ -190,7 +192,17 @@ export default {
       'select-none',
     ],
   },
-  headerCheckbox: presetCheckbox,
+  headerCheckbox: {
+    ...presetCheckbox,
+    root: {
+      class: [
+        '!mx-auto',
+        ...presetCheckbox.root.class,
+        '[&:not(:has(svg))_[data-pc-section=box]]:!bg-primary-400',
+        '[&:not(:has(svg))_[data-pc-section=box]]:!border-white',
+      ],
+    },
+  },
   itemCheckbox: presetCheckbox,
   closeButton: {
     class: [
@@ -241,6 +253,9 @@ export default {
       // Sizing
       'max-h-[15rem]',
 
+      // Color
+      'bg-white',
+
       // Misc
       'overflow-auto',
       'rounded-br-lg',
@@ -253,8 +268,8 @@ export default {
   item: ({ context }) => ({
     class: [
       // Font
-      'text-xs',
-      { 'font-medium': !context.selected, 'font-bold': context.selected },
+      'text-xs font-normal',
+      // { 'font-normal': !context.selected, 'font-bold': context.selected },
 
       // Flexbox
       'flex items-center gap-2',
@@ -271,6 +286,7 @@ export default {
       'py-2 px-4',
 
       // Color
+      {'bg-primary-50': context.selected},
       {
         'text-surface-700 dark:text-general-100':
           !context.focused && !context.selected && !context.disabled,
@@ -326,9 +342,8 @@ export default {
   },
   filtercontainer: {
     class: [
-      'flex items-center relative w-full gap-2',
-      // 'bg-input dark:bg-input',
-      'py-2 px-3',
+      'flex flex-row-reverse items-center relative w-full gap-2',
+      // 'py-1',
 
       // Font
       'text-[0.7rem]',
@@ -339,23 +354,22 @@ export default {
       'w-full',
 
       //Color
-      'text-label dark:text-general-100',
-      'bg-surface-0 dark:bg-grayscale-900',
-      'placeholder:text-surface-400 dark:placeholder:text-surface-400',
-      'ring-1 ring-inset ring-body dark:ring-white',
+      'text-grayscale-900 dark:text-grayscale-900',
+      'bg-primary-400 dark:bg-primary-400',
+      // 'ring-1 ring-inset ring-body dark:ring-white',
 
       // Shape
-      'border-0',
-      'rounded-[6px]',
-
-      // // States
-      // 'focus:ring-2 focus:ring-inset focus:outline-none focus:outline-offset-0',
-      // 'focus:ring-primary-weak dark:focus:ring-primary-weak',
+      'border-b border-primary-100',
+      // 'rounded-[6px]',
     ],
   },
   filterinput: {
     class: [
-      'w-full dark:bg-grayscale-900',
+      'w-full',
+
+      'bg-primary-400 dark:bg-primary-400',
+      'text-white dark:text-white',
+      'placeholder:text-primary-100 dark:placeholder:text-primary-100',
 
       // Misc
       'appearance-none',

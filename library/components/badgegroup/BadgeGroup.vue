@@ -58,6 +58,10 @@ const detailDialog = ref(false);
     :header="headerLabel ?? 'Header'"
     :pt="{
       root: { style: 'width: 400px; padding: 12px 24px !important' },
+      title: {
+        class:
+          'text-general-900 text-sm font-semibold leading-[19.12px] tracking-[0.24px]',
+      },
     }"
     modal
   >
