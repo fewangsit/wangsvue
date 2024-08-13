@@ -1,5 +1,6 @@
 import useToast from './toast.util';
 import { formatUserName } from './textFormatter.util';
+import filterOptions from './filterOptions.util';
 
 const getNestedProperyValue = (
   object: object,
@@ -9,4 +10,4 @@ const getNestedProperyValue = (
   return properties.reduce((o, p) => o?.[p as keyof object], object);
 };
 
-export { formatUserName, getNestedProperyValue, useToast };
+export { formatUserName, getNestedProperyValue, useToast, filterOptions };

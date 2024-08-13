@@ -110,6 +110,7 @@ export type WangsIcons =
   | 'round-keyboard-double-arrow-left'
   | 'round-keyboard-double-arrow-right'
   | 'search'
+  | 'search-line'
   | 'search-eye'
   | 'settings'
   | 'shopping-cart-2'
