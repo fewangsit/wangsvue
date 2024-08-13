@@ -5,7 +5,7 @@ import type { IconProps } from 'lib/components/icon/Icon.vue.d';
 const props = withDefaults(defineProps<IconProps>(), {
   severity: undefined,
   info: undefined,
-  tooltipPos: 'top',
+  tooltipPos: 'bottom',
   class: undefined,
 });
 
