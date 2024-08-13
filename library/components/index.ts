@@ -21,6 +21,7 @@ import ButtonSearch from './buttonsearch/ButtonSearch.vue';
 import InputRangeNumber from './inputrangenumber/InputRangeNumber.vue';
 import Calendar from './calendar/Calendar.vue';
 import InputText from './inputtext/InputText.vue';
+import Form from './form/Form.vue';
 
 export {
   Badge,
@@ -46,4 +47,5 @@ export {
   InputRangeNumber,
   Calendar,
   InputText,
+  Form,
 };

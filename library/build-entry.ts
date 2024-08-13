@@ -77,6 +77,7 @@ import {
   InputRangeNumber,
   Calendar,
   InputText,
+  Form,
 } from './components';
 
 export default {
@@ -111,6 +112,7 @@ export default {
     app.component('TabMenu', TabMenu);
     app.component('Toast', Toast);
     app.component('UserName', UserName);
+    app.component('Form', Form);
 
     app.directive('tooltip', Tooltip);
   },
@@ -139,6 +141,7 @@ export {
   Card,
   DataTable,
   Dropdown,
+  Form,
   Icon,
   InputText,
   MultiSelect,
