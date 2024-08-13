@@ -77,8 +77,6 @@ const onSubmitClicked = (): void => {
 const submit = handleSubmit((formValues) => {
   const formattedValues = trimValues(formValues);
 
-  validated.value = true;
-
   const payload: FormPayload = {
     stayAfterSubmit: stayAfterSubmit.value,
     formValues: formattedValues,
