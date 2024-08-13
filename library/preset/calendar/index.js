@@ -361,6 +361,10 @@ export default {
           (context.selected && !context.disabled) || context.date.today,
       },
 
+      {
+        '!rounded-full': context.date.today && !context.selected,
+      },
+
       // States
       'focus:outline-none focus-visible:outline-none',
       {
