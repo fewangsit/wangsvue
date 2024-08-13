@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { shallowRef } from 'vue';
+import { computed } from 'vue';
 import { toArrayClass } from 'lib/components/helpers';
 
 import Icon from 'lib/components/icon/Icon.vue';
@@ -9,14 +9,14 @@ import Preset from 'lib/preset/button';
 
 const props = defineProps<ButtonProps>();
 
-const iconProps = shallowRef({
+const iconProps = computed(() => ({
   icon: props.icon ?? 'check',
   class: [
     ...Preset.icon({ props: props }).class,
     { 'text-base': props.icon && !props.label }, // Need to use attrs, because props.label is always undefined.
     ...toArrayClass(props.iconClass),
   ],
-});
+}));
 </script>
 
 <template>
