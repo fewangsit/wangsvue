@@ -75,6 +75,9 @@ import {
   ButtonSearch,
   InputRangeNumber,
   Calendar,
+  Form,
+  DialogForm,
+  InputNumber,
 } from './components';
 
 export default {
@@ -107,6 +110,9 @@ export default {
     app.component('TabMenu', TabMenu);
     app.component('Toast', Toast);
     app.component('UserName', UserName);
+    app.component('Form', Form);
+    app.component('DialogForm', DialogForm);
+    app.component('InputNumber', InputNumber);
 
     app.directive('tooltip', Tooltip);
   },
