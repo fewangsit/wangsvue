@@ -28,7 +28,7 @@ export default {
       'w-full',
 
       // Font
-      'text-xs tracking-[2%] font-normal placeholder:font-light',
+      'text-xs tracking-[2%] font-normal placeholder:font-normal',
 
       // Colors
       'text-general-800 dark:text-general-800',
