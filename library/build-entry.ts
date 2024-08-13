@@ -57,6 +57,7 @@ import {
   Badge,
   BadgeGroup,
   Button,
+  ButtonBulkAction,
   Breadcrumb,
   Card,
   DataTable,
@@ -65,6 +66,16 @@ import {
   TabMenu,
   Toast,
   UserName,
+  Icon,
+  ButtonDownload,
+  ButtonFilter,
+  FilterContainer,
+  DialogConfirm,
+  Checkbox,
+  Menu,
+  ButtonSearch,
+  InputRangeNumber,
+  Calendar,
 } from './components';
 
 export default {
@@ -78,12 +89,22 @@ export default {
 
     app.component('Badge', Badge);
     app.component('BadgeGroup', BadgeGroup);
-    // eslint-disable-next-line vue/no-reserved-component-names
     app.component('Button', Button);
+    app.component('ButtonBulkAction', ButtonBulkAction);
+    app.component('ButtonDownload', ButtonDownload);
+    app.component('ButtonFilter', ButtonFilter);
+    app.component('FilterContainer', FilterContainer);
+    app.component('DialogConfirm', DialogConfirm);
+    app.component('Checkbox', Checkbox);
+    app.component('Menu', Menu);
+    app.component('ButtonSearch', ButtonSearch);
+    app.component('Calendar', Calendar);
+    app.component('InputRangeNumber', InputRangeNumber);
     app.component('Breadcrumb', Breadcrumb);
     app.component('Card', Card);
     app.component('DataTable', DataTable);
     app.component('Dropdown', Dropdown);
+    app.component('Icon', Icon);
     app.component('MultiSelect', MultiSelect);
     app.component('TabMenu', TabMenu);
     app.component('Toast', Toast);
@@ -116,6 +137,7 @@ export {
   Card,
   DataTable,
   Dropdown,
+  Icon,
   MultiSelect,
   TabMenu,
   Toast,

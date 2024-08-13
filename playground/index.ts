@@ -112,6 +112,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
           import('./docs/multiselect/MultiSelectDocs.vue'),
       },
       {
+        path: 'inputrangenumber',
+        name: 'Input Range Number Docs',
+        component: (): Promise<Component> =>
+          import('./docs/inputrangenumber/InputRangeNumberDocs.vue'),
+      },
+      {
         path: 'dropdown',
         name: 'Dropdown Docs',
         component: (): Promise<Component> =>
