@@ -3,7 +3,7 @@
 @import 'tailwindcss/utilities';
 
 .ts-form {
-  @apply flex flex-col gap-3 text-general-800 text-[0.75rem] font-medium leading-[16.8px];
+  @apply flex flex-col gap-3 text-general-900 text-[0.75rem] font-medium leading-[16.8px];
 
   .ts-formts-form-fields {
     @apply grid gap-y-5 gap-x-6 grid-cols-2;

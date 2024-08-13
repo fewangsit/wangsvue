@@ -188,7 +188,7 @@ defineExpose({ form, clearField });
           data-ts-section="headericon"
         />
         <h3
-          class="text-general-800 dark:text-general-100 text-center text-[0.9rem] leading-[1.125rem] font-bold tracking-[0.28px]"
+          class="text-grayscale-900 dark:text-general-100 text-center text-[0.9rem] leading-[1.125rem] font-bold tracking-[0.28px]"
           data-ts-section="dialog-form-title"
         >
           {{ header }}
