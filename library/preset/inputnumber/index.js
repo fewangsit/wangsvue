@@ -4,6 +4,9 @@ export default {
       // Layout
       'flex items-center self-stretch shrink-0 grow',
 
+      //Size
+      'h-full',
+
       // Spacing
       'py-1 px-3',
 
