@@ -24,7 +24,7 @@ import {
 
 import { DownloadEvent, UpdateTableEvent } from '../../custom-events.d';
 import { filterVisibleMenu } from '../helpers';
-import { getNestedProperyValue } from 'lib/utils';
+import { exportToExcel, getNestedProperyValue, useToast } from 'lib/utils';
 import { FilterMatchMode, FilterService } from 'primevue/api';
 
 import Icon from 'lib/components/icon/Icon.vue';
@@ -37,6 +37,8 @@ import Checkbox from '../checkbox/Checkbox.vue';
 import CheckboxPreset from 'lib/preset/checkbox';
 import Button from '../button/Button.vue';
 import MenuClass from '../menu/Menu.vue.d';
+import { Booleanish } from '../ts-helpers';
+import Toast from '../toast/Toast.vue';
 
 type Data = Record<string, any>;
 type QueryParams = {
@@ -85,6 +87,7 @@ onBeforeUnmount(() => {
   removeUpdateTableListener();
 });
 
+const toast = useToast();
 const rowsPerPageOptions = ref([10, 25, 50, 100]);
 const optionMenu = ref<MenuClass | null>(null);
 const currentPageDataSelected = ref<Data[]>();
@@ -448,128 +451,6 @@ const removeClassActive = (): void => {
   });
 };
 
-/*
- * Const downloadExcel = async (
- *   fileName: string,
- *   tableName: string,
- * ): Promise<void> => {
- *   if (tableName !== props.tableName) return;
- */
-
-/*
- *   Const includedColumns = visibleColumns.value.filter((col) => !col.excluded);
- *   const headers = includedColumns.map(
- *     (col) => col.header ?? col.exportHeader ?? '-',
- *   );
- */
-
-/*
- *   Const formatFileName = (): string => {
- *     return fileName
- *       .trim() // Remove extra space
- *       .replace(/[^a-zA-Z0-9\s]/g, '-') // Replace special characters with dash
- *       .replace(/\s+/g, '-') // Replace spaces with dash
- *       .replace(/-+/g, '-') // Replace multiple dashes with a single dash
- *       .replace(/-+$/, ''); // Remove trailing dash
- *   };
- */
-
-/*
- *   Try {
- *     setLoading(true);
- */
-
-/*
- *     Const { data } = props.fetchFunction
- *       ? await fetchAllData(true)
- *       : { data: props.data };
- */
-
-/*
- *     Const excelBody = (data ?? []).map((item: Data) => {
- *       const body = {} as Record<string, unknown>;
- */
-
-/*
- *       IncludedColumns.forEach((col) => {
- *         const { field: colField, exportField, dateValue } = col;
- *         const field = exportField ?? colField; // Prioritize the exportField than colField.
- *         const fieldValue = getNestedProperyValue(item, field) || '-';
- */
-
-/*
- *         If (col.includeTruthyProperties) {
- *           const objectValue = (fieldValue ?? {}) as Record<string, Booleanish>;
- */
-
-/*
- *           Const truthyProperties = Object.keys(objectValue)
- *             .map((key) => {
- *               if (objectValue[key]) return key;
- *             })
- *             .filter(Boolean);
- */
-
-/*
- *           Body[field] = truthyProperties.join(',');
- *         } else if (Array.isArray(fieldValue)) {
- *           let arrayValue = fieldValue;
- */
-
-//           If (col.arrayValueField) {
-//             /**
-//              * Support for export array data with deeply nested array.
-//              *
-//              * If the array is only string array, only return its value.
-//              */
-//             ArrayValue = fieldValue.map((value) => {
-//               If (col.arrayValueField)
-//                 Return getNestedProperyValue(value, col.arrayValueField);
-//               Return value;
-//             });
-//           }
-
-/*
- *           Body[field] = arrayValue.join(arrayValue.length > 1 ? ',' : ''); // Only join with comma if the length at least two item
- *         } else if (dateValue) {
- *           // If the data is date value, format using formatDate
- *           body[field] = formatDate(fieldValue as string, true);
- *         } else if (col.booleanValue) {
- *           body[field] = fieldValue ? 'Yes' : 'No';
- *         } else {
- *           body[field] = fieldValue;
- *         }
- *       });
- */
-
-/*
- *       Return body;
- *     });
- */
-
-/*
- *     ExportToExcel({
- *       headers,
- *       data: excelBody,
- *       fileName: formatFileName(),
- *     });
- *   } catch (error) {
- *     console.error(error);
- *     toast.removeAllGroups();
- *     toast.add({
- *       message:
- *         'Error, failed to download ' +
- *         fileName +
- *         '. Please check your connection and try again.',
- *       group: 'download',
- *       error,
- *     });
- *   } finally {
- *     setLoading(false);
- *   }
- * };
- */
-
 const handleUpdateTableEvent = (event: UpdateTableEvent): void => {
   if (event.detail.tableName === props.tableName) {
     nextTick(() => refetch()); // Waits untill computed queryparams ready
@@ -577,12 +458,8 @@ const handleUpdateTableEvent = (event: UpdateTableEvent): void => {
 };
 
 const downloadEventHandler = (event: DownloadEvent): void => {
-  // eslint-disable-next-line no-console
-  console.log('🚀 ~ downloadEventHandler ~ event:', event);
-  /*
-   * Const { fileName, tableName } = event.detail;
-   * downloadExcel(fileName, tableName);
-   */
+  const { fileName, tableName } = event.detail;
+  downloadExcel(fileName, tableName);
 };
 
 const listenDownloadEvent = (): void => {
@@ -790,6 +667,100 @@ const getColumnStyle = (col: TableColumn): string => {
       : (col.width ?? 'max-content');
 
   return `width: ${computedWidth}; max-width: ${computedWidth}`;
+};
+
+const downloadExcel = async (
+  fileName: string,
+  tableName: string,
+): Promise<void> => {
+  if (tableName !== props.tableName) return;
+
+  const excelColumns = visibleColumns.value.filter(
+    (col) => col.visible !== false,
+  );
+
+  const includedColumns = excelColumns.filter((col) => !col.excluded);
+  const headers = includedColumns.map(
+    (col) => col.header ?? col.exportHeader ?? '-',
+  );
+
+  const formatFileName = (): string => {
+    return fileName
+      .trim() // Remove extra space
+      .replace(/[^a-zA-Z0-9\s]/g, '-') // Replace special characters with dash
+      .replace(/\s+/g, '-') // Replace spaces with dash
+      .replace(/-+/g, '-') // Replace multiple dashes with a single dash
+      .replace(/-+$/, ''); // Remove trailing dash
+  };
+
+  try {
+    // Loading Here
+
+    const { data } = props.fetchFunction
+      ? await fetchAllData(true)
+      : { data: props.data };
+
+    const excelBody = (data ?? []).map((item: Data) => {
+      const body = {} as Record<string, unknown>;
+
+      includedColumns.forEach((col) => {
+        const { field: colField, exportField } = col;
+        const field = exportField ?? colField; // Prioritize the exportField than colField.
+        const fieldValue = getNestedProperyValue(item, field) || '-';
+
+        if (col.includeTruthyProperties) {
+          const objectValue = (fieldValue ?? {}) as Record<string, Booleanish>;
+
+          const truthyProperties = Object.keys(objectValue)
+            .map((key) => {
+              if (objectValue[key]) return key;
+            })
+            .filter(Boolean);
+
+          body[field] = truthyProperties.join(',');
+        } else if (Array.isArray(fieldValue)) {
+          let arrayValue = fieldValue;
+
+          if (col.arrayValueField) {
+            /**
+             * Support for export array data with deeply nested array.
+             *
+             * If the array is only string array, only return its value.
+             */
+            arrayValue = fieldValue.map((value) => {
+              if (col.arrayValueField)
+                return getNestedProperyValue(value, col.arrayValueField);
+              return value;
+            });
+          }
+
+          body[field] = arrayValue.join(arrayValue.length > 1 ? ',' : ''); // Only join with comma if the length at least two item
+        } else if (col.booleanValue) {
+          body[field] = fieldValue ? 'Ya' : 'Tidak';
+        } else {
+          body[field] = fieldValue;
+        }
+      });
+
+      return body;
+    });
+
+    exportToExcel({
+      headers,
+      data: excelBody,
+      fileName: formatFileName(),
+    });
+  } catch (error) {
+    console.error(error);
+    toast.removeAllGroups();
+    toast.add({
+      message: props.excelToastErrorMessage,
+      error,
+      group: 'download',
+    });
+  } finally {
+    // Stop Loading here
+  }
 };
 
 watch(

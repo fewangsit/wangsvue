@@ -11,6 +11,7 @@ import { computed, onMounted, shallowRef } from 'vue';
 import Badge from 'primevue/badge';
 
 import response from './data/response.json';
+import ButtonDownload from 'lib/components/buttondownload/ButtonDownload.vue';
 
 const dataSelected = shallowRef();
 
@@ -105,6 +106,9 @@ const tableColumns = computed<TableColumn[]>(() => {
     </template>
     <template #title> Rich Feature Data Table </template>
     <template #content>
+      <div class="flex justify-end">
+        <ButtonDownload file-name="Download" />
+      </div>
       <DataTable
         v-model:selected-data="dataSelected"
         :columns="tableColumns"
