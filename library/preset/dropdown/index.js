@@ -4,7 +4,7 @@ export default {
   root: ({ props, state }) => ({
     class: [
       // Display and Position
-      'inline-flex',
+      'inline-flex items-center',
       'relative',
 
       // Shape
@@ -35,8 +35,10 @@ export default {
       //Font
       'text-xs',
       {
-        '!text-general-200 dark:text-grayscale-800 font-light': props.modelValue == null,
-        'text-general-800 dark:text-general-100 font-medium': props.modelValue != null,
+        '!text-general-200 dark:text-grayscale-800 font-light':
+          props.modelValue == null,
+        'text-general-800 dark:text-general-100 font-normal':
+          props.modelValue != null,
       },
 
       // Display
@@ -88,7 +90,7 @@ export default {
       'text-general-200',
 
       // Size
-      'w-6',
+      'w-6 h-full',
 
       // Shape
       'rounded-tr-md',
@@ -119,6 +121,9 @@ export default {
       // Sizing
       'max-h-[15rem]',
 
+      // Color
+      'bg-white',
+
       // Misc
       'overflow-auto',
       'rounded-br-lg',
@@ -131,8 +136,8 @@ export default {
   item: ({ context }) => ({
     class: [
       // Font
-      'text-xs',
-      { 'font-medium': !context.selected, 'font-bold': context.selected },
+      'text-xs font-normal',
+      // { 'font-medium': !context.selected, 'font-bold': context.selected },
       'w-full overflow-hidden text-ellipsis',
 
       // Position
@@ -147,6 +152,7 @@ export default {
       'py-2 px-4',
 
       // Color
+      { 'bg-primary-50': context.selected },
       {
         'text-surface-700 dark:text-general-100':
           !context.focused && !context.selected && !context.disabled,
