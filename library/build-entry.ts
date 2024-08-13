@@ -78,6 +78,7 @@ import {
   Form,
   DialogForm,
   InputNumber,
+  InputEmail,
 } from './components';
 
 export default {
@@ -113,6 +114,7 @@ export default {
     app.component('Form', Form);
     app.component('DialogForm', DialogForm);
     app.component('InputNumber', InputNumber);
+    app.component('InputEmail', InputEmail);
 
     app.directive('tooltip', Tooltip);
   },

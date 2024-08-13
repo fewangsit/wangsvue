@@ -22,6 +22,7 @@ import Calendar from './calendar/Calendar.vue';
 import Form from './form/Form.vue';
 import DialogForm from './dialogform/DialogForm.vue';
 import InputNumber from './inputnumber/InputNumber.vue';
+import InputEmail from './inputemail/InputEmail.vue';
 
 export {
   Badge,
@@ -48,4 +49,5 @@ export {
   Form,
   DialogForm,
   InputNumber,
+  InputEmail,
 };
