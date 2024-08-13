@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { shallowRef } from 'vue';
+import { computed } from 'vue';
 import type { IconProps } from 'lib/components/icon/Icon.vue.d';
 
 const props = withDefaults(defineProps<IconProps>(), {
   severity: undefined,
   info: undefined,
-  tooltipPos: 'top',
+  tooltipPos: 'bottom',
   class: undefined,
 });
 
@@ -26,7 +26,7 @@ const severityClass = ((): string => {
   }
 })();
 
-const classes = shallowRef([
+const classes = computed(() => [
   'icon',
   `ic-${props.icon}`,
   severityClass,

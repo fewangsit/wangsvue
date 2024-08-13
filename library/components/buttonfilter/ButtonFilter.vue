@@ -25,10 +25,10 @@ const toggleFilterPanel = (): void => {
 <template>
   <Button
     :icon="filterIcon"
-    :text="!active"
     @click="toggleFilterPanel"
     data-section-name="buttonfilter"
     severity="secondary"
+    text
     tooltip="Filter"
   />
 </template>
