@@ -1,6 +1,46 @@
 # Changelog
 
 
+## v1.4.5
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.3...v1.4.5)
+
+### 🚀 Enhancements
+
+- **OMulInGF:** Add component InputPassword ([5743547](https://github.com/fewangsit/wangsvue/commit/5743547))
+- Add dialog component ([52ae1da](https://github.com/fewangsit/wangsvue/commit/52ae1da))
+- Add IconDocs to show all available icons ([0157eb6](https://github.com/fewangsit/wangsvue/commit/0157eb6))
+
+### 🩹 Fixes
+
+- Fix error in typescript for InputEmail ([967f67e](https://github.com/fewangsit/wangsvue/commit/967f67e))
+- Ts error on input email ([e4d15dc](https://github.com/fewangsit/wangsvue/commit/e4d15dc))
+
+### 💅 Refactors
+
+- Refactor InputNumber to handle undefined value ([ba3aac0](https://github.com/fewangsit/wangsvue/commit/ba3aac0))
+- Adjust font weight ([c1f0d77](https://github.com/fewangsit/wangsvue/commit/c1f0d77))
+- Change preset for font weight in calendar ([aaf9a70](https://github.com/fewangsit/wangsvue/commit/aaf9a70))
+- Change ring color for inputgroup ([ef73c1f](https://github.com/fewangsit/wangsvue/commit/ef73c1f))
+
+### 📦 Build
+
+- Export some components ([1923a41](https://github.com/fewangsit/wangsvue/commit/1923a41))
+
+### 🏡 Chore
+
+- **release:** V1.4.3 ([b24ab4b](https://github.com/fewangsit/wangsvue/commit/b24ab4b))
+- **release:** V1.4.4 ([9e4e373](https://github.com/fewangsit/wangsvue/commit/9e4e373))
+
+### 🎨 Styles
+
+- Update button download, button filter, button search ([de46e86](https://github.com/fewangsit/wangsvue/commit/de46e86))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.4.4
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.3...v1.4.4)
