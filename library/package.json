@@ -1,6 +1,6 @@
 {
   "name": "wangsvue",
-  "version": "1.4.0",
+  "version": "1.4.2",
   "author": "fewangsit",
   "description": "Wangsit VueJS Component Library",
   "type": "module",
@@ -8,7 +8,8 @@
   "types": "./dist/main.d.ts",
   "scripts": {
     "build": "rimraf dist && vue-tsc && vite build --config ./vite.config.ts && ./scripts/postbuild.sh",
-    "release": "pnpm build && changelogen --release && ./scripts/publish.sh"
+    "release": "pnpm build && changelogen --release && ./scripts/publish.sh",
+    "release:patch": "pnpm build && changelogen --release --patch && ./scripts/publish.sh"
   },
   "exports": {
     ".": "./dist/wangsvue.es.js",

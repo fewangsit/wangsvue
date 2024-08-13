@@ -76,6 +76,11 @@ import {
   ButtonSearch,
   InputRangeNumber,
   Calendar,
+  InputText,
+  Form,
+  DialogForm,
+  InputNumber,
+  InputEmail,
 } from './components';
 
 export default {
@@ -105,10 +110,15 @@ export default {
     app.component('DataTable', DataTable);
     app.component('Dropdown', Dropdown);
     app.component('Icon', Icon);
+    app.component('InputText', InputText);
     app.component('MultiSelect', MultiSelect);
     app.component('TabMenu', TabMenu);
     app.component('Toast', Toast);
     app.component('UserName', UserName);
+    app.component('Form', Form);
+    app.component('DialogForm', DialogForm);
+    app.component('InputNumber', InputNumber);
+    app.component('InputEmail', InputEmail);
 
     app.directive('tooltip', Tooltip);
   },
@@ -137,7 +147,9 @@ export {
   Card,
   DataTable,
   Dropdown,
+  Form,
   Icon,
+  InputText,
   MultiSelect,
   TabMenu,
   Toast,

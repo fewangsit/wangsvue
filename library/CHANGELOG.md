@@ -1,6 +1,57 @@
 # Changelog
 
 
+## v1.4.2
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.1...v1.4.2)
+
+### 🚀 Enhancements
+
+- **xoyVEAYt:** Add dropdown component ([ff30566](https://github.com/fewangsit/wangsvue/commit/ff30566))
+- Export dropdown into build entry ([5a3ad8b](https://github.com/fewangsit/wangsvue/commit/5a3ad8b))
+
+### 🩹 Fixes
+
+- Conflict in build entry, playground, and component index ([9c16376](https://github.com/fewangsit/wangsvue/commit/9c16376))
+
+### 📦 Build
+
+- Export input text ([e1bb905](https://github.com/fewangsit/wangsvue/commit/e1bb905))
+- Add release patch script ([0c883e4](https://github.com/fewangsit/wangsvue/commit/0c883e4))
+
+### 🏡 Chore
+
+- **release:** V1.4.1 ([d2b3581](https://github.com/fewangsit/wangsvue/commit/d2b3581))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
+## v1.4.1
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.0...v1.4.1)
+
+### 🩹 Fixes
+
+- Typescirpt error in toast and multiseelct dts ([1a411e6](https://github.com/fewangsit/wangsvue/commit/1a411e6))
+
+### 💅 Refactors
+
+- Update icon dts ([0c989e3](https://github.com/fewangsit/wangsvue/commit/0c989e3))
+
+### 📦 Build
+
+- Export input text ([e1bb905](https://github.com/fewangsit/wangsvue/commit/e1bb905))
+
+### 🏡 Chore
+
+- **release:** V1.4.0 ([89f74fe](https://github.com/fewangsit/wangsvue/commit/89f74fe))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.0
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.2.2...v1.4.0)

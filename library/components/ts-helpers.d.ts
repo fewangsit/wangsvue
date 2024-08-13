@@ -58,3 +58,5 @@ export declare type DefaultPassThrough<T = void> =
   | T
   | ((instance?: VNode) => T | undefined)
   | undefined;
+
+export declare type HintedString<T extends string> = (string & {}) | T;
