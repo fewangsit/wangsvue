@@ -101,8 +101,8 @@ const setClass = async (): Promise<void> => {
    */
   const firstAndLast = '!bg-primary-1000 hover:!bg-primary-1000/90';
 
-  const first = highlights.length > 1 ? 'rounded-tl-full rounded-bl-full' : '';
-  const last = highlights.length > 1 ? 'rounded-tr-full rounded-br-full' : '';
+  const first = 'rounded-tl-full rounded-bl-full';
+  const last = 'rounded-tr-full rounded-br-full';
 
   highlights[0]?.classList.add(...firstAndLast.split(' '), ...first.split(' '));
   highlights[highlights.length - 1]?.classList.add(
