@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v1.4.1
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.0...v1.4.1)
+
+### 🩹 Fixes
+
+- Typescirpt error in toast and multiseelct dts ([1a411e6](https://github.com/fewangsit/wangsvue/commit/1a411e6))
+
+### 💅 Refactors
+
+- Update icon dts ([0c989e3](https://github.com/fewangsit/wangsvue/commit/0c989e3))
+
+### 📦 Build
+
+- Export input text ([e1bb905](https://github.com/fewangsit/wangsvue/commit/e1bb905))
+
+### 🏡 Chore
+
+- **release:** V1.4.0 ([89f74fe](https://github.com/fewangsit/wangsvue/commit/89f74fe))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.0
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.2.2...v1.4.0)
