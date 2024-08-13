@@ -57,6 +57,7 @@ import {
   Badge,
   BadgeGroup,
   Button,
+  ButtonToggle,
   ButtonBulkAction,
   Breadcrumb,
   Card,
@@ -95,6 +96,7 @@ export default {
     app.component('Badge', Badge);
     app.component('BadgeGroup', BadgeGroup);
     app.component('Button', Button);
+    app.component('ButtonToggle', ButtonToggle);
     app.component('ButtonBulkAction', ButtonBulkAction);
     app.component('ButtonDownload', ButtonDownload);
     app.component('ButtonFilter', ButtonFilter);
@@ -143,6 +145,7 @@ export {
   Badge,
   BadgeGroup,
   Button,
+  ButtonToggle,
   Breadcrumb,
   Card,
   DataTable,

@@ -1,6 +1,7 @@
 import Badge from './badge/Badge.vue';
 import BadgeGroup from './badgegroup/BadgeGroup.vue';
 import Button from './button/Button.vue';
+import ButtonToggle from './buttontoggle/ButtonToggle.vue';
 import Breadcrumb from './breadcrumb/Breadcrumb.vue';
 import Card from './card/Card.vue';
 import DataTable from './datatable/DataTable.vue';
@@ -30,6 +31,7 @@ export {
   Badge,
   BadgeGroup,
   Button,
+  ButtonToggle,
   DataTable,
   Dropdown,
   ButtonBulkAction,
