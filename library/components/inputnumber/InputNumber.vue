@@ -2,7 +2,11 @@
 import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue';
 import { useField } from 'vee-validate';
 import { FieldValidation } from 'lib/types/validation.type';
-import type { InputNumberProps, InputNumberEmits } from './InputNumber.vue.d';
+import type {
+  InputNumberProps,
+  InputNumberEmits,
+  InputNumberEvent,
+} from './InputNumber.vue.d';
 
 import InputNumber, { InputNumberInputEvent } from 'primevue/inputnumber';
 import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
@@ -87,7 +91,7 @@ const onUpdateValue = (
   const eventValue =
     type === 'input' ? (event as InputNumberInputEvent).value : event;
 
-  const assignEventValue = (): number | string => {
+  const assignEventValue = (): InputNumberEvent => {
     if (eventValue != null) {
       return eventValue !== '-' ? +eventValue : eventValue;
     }
@@ -95,13 +99,13 @@ const onUpdateValue = (
     return undefined;
   };
 
-  let value = assignEventValue();
+  let value: InputNumberEvent = assignEventValue();
 
   // eslint-disable-next-line eqeqeq
   if (value != null && !isNaN(+value)) {
     // eslint-disable-next-line eqeqeq
     value = eventValue != null ? +eventValue : undefined;
-    handleNumberValue(value, type);
+    handleNumberValue(type, value);
     // eslint-disable-next-line eqeqeq
   } else if (value == null && typeof value !== 'string') {
     field.value = value;
@@ -115,8 +119,8 @@ const onUpdateValue = (
 };
 
 const handleNumberValue = (
-  value: number,
   type: 'modelValue' | 'input',
+  value?: number,
 ): void => {
   const isExceed = typeof value === 'number' ? isExceedMaxDigits(value) : false;
 
@@ -126,17 +130,17 @@ const handleNumberValue = (
 
   // eslint-disable-next-line eqeqeq
   if (slicedValue != null) {
-    slicedValue = +slicedValue;
+    slicedValue = +(slicedValue ?? 0);
   }
 
-  field.value = isExceed ? +slicedValue : (value as number | undefined);
+  field.value = isExceed ? +(slicedValue ?? 0) : (value as number | undefined);
 
   if (isExceed) inputKey.value++;
 
   if (type === 'input') {
-    emit('input', isExceed ? +slicedValue : value);
+    emit('input', isExceed ? +(slicedValue ?? 0) : value);
   } else {
-    emit('update:modelValue', isExceed ? +slicedValue : value);
+    emit('update:modelValue', isExceed ? +(slicedValue ?? 0) : value);
   }
 };
 

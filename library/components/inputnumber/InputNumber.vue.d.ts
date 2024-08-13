@@ -1,6 +1,8 @@
 import { DefineComponent, Slot } from 'vue';
 import { CustomValidation } from 'lib/types/validation.type';
 
+export type InputNumberEvent = number | string | undefined;
+
 /**
  * InputNumber component props
  */
