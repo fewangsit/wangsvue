@@ -105,6 +105,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
         component: (): Promise<Component> =>
           import('./docs/calendar/CalendarDocs.vue'),
       },
+      {
+        path: 'multiselect',
+        name: 'MultiSelect Docs',
+        component: (): Promise<Component> =>
+          import('./docs/multiselect/MultiSelectDocs.vue'),
+      },
     ],
   },
 ];
