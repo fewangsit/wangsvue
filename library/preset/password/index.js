@@ -13,7 +13,8 @@ export default {
   }),
   input: {
     class: [
-      '!bg-primary-500'
+      '!bg-primary-500',
+      'placeholder:!font-normal',
       // 'bg-white text-general-800 placeholder:text-general-200 placeholder:font-light',
       // 'w-full h-full !max-h-[43px]',
       // 'py-1 px-3 items-center space-x-1',

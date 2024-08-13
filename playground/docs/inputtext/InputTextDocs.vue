@@ -46,6 +46,7 @@ const invalidState = computed(() => text.value?.length > 10);
           field-info="Mandatory"
           label="Input Text"
           mandatory
+          placeholder="Input Text"
         />
       </div>
     </template>

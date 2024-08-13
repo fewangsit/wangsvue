@@ -25,6 +25,7 @@ export default {
         'border-0 h-full w-full outline-none',
         'bg-inherit',
         'placeholder:text-general-200',
+        'placeholder:!font-normal',
       ],
     }),
   },
