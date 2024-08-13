@@ -4,6 +4,7 @@ import Card from 'lib/components/card/Card.vue';
 import DialogForm from 'lib/components/dialogform/DialogForm.vue';
 import { FormValue } from 'lib/components/form/Form.vue.d';
 import InputText from 'lib/components/inputtext/InputText.vue';
+import InputNumber from 'lib/components/inputnumber/InputNumber.vue';
 import { ref, shallowRef } from 'vue';
 import DocTitle from '../DocTitle.vue';
 
@@ -79,6 +80,16 @@ const apply = (e: {
             }"
             field-name="lastname"
             label="Nama Belakang"
+            mandatory
+            use-validator
+          />
+          <InputNumber
+            :validator-message="{
+              exceed: 'Max char 30',
+              empty: 'Should not empty',
+            }"
+            field-name="phone"
+            label="Nomor Telepon"
             mandatory
             use-validator
           />
