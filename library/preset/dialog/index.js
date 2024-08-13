@@ -6,7 +6,7 @@ export default {
       // 'shadow-xl',
       // 'border-0',
       'rounded-[0.4375em]',
-      'shadow-[box-shadow: -4px 4px 20px 0px #0000001A]',
+      'shadow-panel',
 
       // Layout
       'flex flex-col',
