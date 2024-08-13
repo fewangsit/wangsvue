@@ -117,6 +117,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
         component: (): Promise<Component> =>
           import('./docs/inputrangenumber/InputRangeNumberDocs.vue'),
       },
+      {
+        path: 'inputnumber',
+        name: 'Input Number Docs',
+        component: (): Promise<Component> =>
+          import('./docs/inputnumber/InputNumberDocs.vue'),
+      },
     ],
   },
 ];
