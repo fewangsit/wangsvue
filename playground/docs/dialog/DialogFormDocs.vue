@@ -4,6 +4,7 @@ import Card from 'lib/components/card/Card.vue';
 import DialogForm from 'lib/components/dialogform/DialogForm.vue';
 import { FormValue } from 'lib/components/form/Form.vue.d';
 import InputText from 'lib/components/inputtext/InputText.vue';
+import InputEmail from 'lib/components/inputemail/InputEmail.vue';
 import InputNumber from 'lib/components/inputnumber/InputNumber.vue';
 import { ref, shallowRef } from 'vue';
 import DocTitle from '../DocTitle.vue';
@@ -61,6 +62,18 @@ const apply = (e: {
             label="Username"
             mandatory
             placeholder="Use custom placholder"
+            use-validator
+          />
+          <InputEmail
+            :validator-message="{
+              exceed: 'Max char 30',
+              empty: 'Should not empty',
+              invalidFormat: 'Formatnya salah',
+            }"
+            field-name="email"
+            label="Email"
+            mandatory
+            placeholder="Masukkan email"
             use-validator
           />
           <InputText
