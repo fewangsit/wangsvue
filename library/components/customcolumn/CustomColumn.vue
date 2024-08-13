@@ -268,14 +268,14 @@ defineExpose({
       root: {
         class: [
           ...MenuPreset.root.class,
-          'border border-solid border-primary-100',
+          'border-[0.5px] border-solid border-grayscale-900',
           'shadow-panel',
         ],
       },
       start: {
         class: [
           ...MenuPreset?.start.class,
-          'border-b border-solid border-primary-100',
+          'border-b-[0.5px] border-solid border-grayscale-900',
         ],
       },
     }"

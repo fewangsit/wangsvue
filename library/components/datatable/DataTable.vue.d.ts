@@ -61,8 +61,10 @@ export type TableColumn = {
    * @default undefined - the export field using column 'field'
    */
   exportField?: string;
-  exportHeader?: string; // Value of header that will be exported
-  dateValue?: boolean; // To format the date value with formatDate util
+  /**
+   * Specify the header when exported
+   */
+  exportHeader?: string;
   /**
    * Specify the property or field which value in the array should be used for exporting to Excel.
    *
@@ -326,6 +328,10 @@ export interface DataTableProps {
    * Total disabled rows in table (used for synchronizing with bulk action button)
    */
   totalDisabledRows?: number;
+  /**
+   * Sepecify the error message download excel
+   */
+  excelToastErrorMessage?: string;
 }
 
 export type DataTableEmits = {

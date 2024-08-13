@@ -104,11 +104,11 @@ const confirm = (): void => {
 
     <template #default>
       <ul v-if="list" data-section-name="dialog-confirm-list">
-        <li :key="index" v-for="(list, index) in list">
+        <li :key="index" v-for="(item, index) in list">
           {{
-            listLabel && typeof list !== 'string'
-              ? getNestedProperyValue(list, listLabel)
-              : list
+            listLabel && typeof item !== 'string'
+              ? getNestedProperyValue(item, listLabel)
+              : item
           }}
         </li>
       </ul>
