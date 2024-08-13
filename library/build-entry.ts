@@ -75,6 +75,7 @@ import {
   ButtonSearch,
   InputRangeNumber,
   Calendar,
+  InputText,
 } from './components';
 
 export default {
@@ -103,6 +104,7 @@ export default {
     app.component('Card', Card);
     app.component('DataTable', DataTable);
     app.component('Icon', Icon);
+    app.component('InputText', InputText);
     app.component('MultiSelect', MultiSelect);
     app.component('TabMenu', TabMenu);
     app.component('Toast', Toast);
@@ -135,6 +137,7 @@ export {
   Card,
   DataTable,
   Icon,
+  InputText,
   MultiSelect,
   TabMenu,
   Toast,
