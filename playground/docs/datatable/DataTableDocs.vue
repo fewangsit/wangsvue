@@ -12,8 +12,12 @@ import Badge from 'primevue/badge';
 
 import response from './data/response.json';
 import ButtonDownload from 'lib/components/buttondownload/ButtonDownload.vue';
+import ButtonFilter from 'lib/components/buttonfilter/ButtonFilter.vue';
+import FilterContainer from 'lib/components/filtercontainer/FilterContainer.vue';
+import InputText from 'lib/components/inputtext/InputText.vue';
 
 const dataSelected = shallowRef();
+const showFilter = shallowRef(false);
 
 const singleAction: MenuItem[] = [
   {
@@ -108,7 +112,11 @@ const tableColumns = computed<TableColumn[]>(() => {
     <template #content>
       <div class="flex justify-end">
         <ButtonDownload file-name="Download" />
+        <ButtonFilter v-model:show-filter="showFilter" />
       </div>
+      <FilterContainer v-show="showFilter">
+        <InputText label="Nama" placeholder="Tulis nama" />
+      </FilterContainer>
       <DataTable
         v-model:selected-data="dataSelected"
         :columns="tableColumns"

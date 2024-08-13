@@ -754,7 +754,7 @@ const downloadExcel = async (
     console.error(error);
     toast.removeAllGroups();
     toast.add({
-      message: props.excelToastErrorMessage,
+      message: props.excelToastErrorMessage ?? 'Data gagal diunduh.',
       error,
       group: 'download',
     });
