@@ -123,6 +123,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
         component: (): Promise<Component> =>
           import('./docs/dropdown/DropdownDocs.vue'),
       },
+      {
+        path: 'toggle',
+        name: 'ButtonToggle Docs',
+        component: (): Promise<Component> =>
+          import('./docs/buttontoggle/ButtonToggleDocs.vue'),
+      },
     ],
   },
 ];
