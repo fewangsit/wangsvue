@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.6
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.5...v1.4.6)
+
+### 🚀 Enhancements
+
+- Add quick filter and integrate with datatble ([6abfa4f](https://github.com/fewangsit/wangsvue/commit/6abfa4f))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.5
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.3...v1.4.5)
