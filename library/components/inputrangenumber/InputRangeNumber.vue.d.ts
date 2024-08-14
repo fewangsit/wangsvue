@@ -9,6 +9,10 @@ export interface InputRangeNumberProps {
    */
   modelValue?: number[];
   /**
+   * Initial Form value.
+   */
+  value?: number[];
+  /**
    * The input label. Tell the user what input is this.
    */
   label?: string;
@@ -34,6 +38,8 @@ export interface InputRangeNumberProps {
    * Disabled the input.
    */
   disabled?: boolean;
+  useValidator?: boolean;
+  fieldName?: string;
 }
 
 /**
@@ -44,6 +50,7 @@ export type InputRangeNumberEmits = {
    * Emits when the both input already filled.
    */
   'update:modelValue': [payload?: number[]];
+  'submit': [];
 };
 
 /**

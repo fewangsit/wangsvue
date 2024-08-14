@@ -30,7 +30,7 @@ export interface FormProps {
   /**
    * The template for form buttons.
    */
-  buttonsTemplate: ('clear' | 'submit' | 'cancel')[];
+  buttonsTemplate?: ('clear' | 'submit' | 'cancel')[];
   /**
    * Custom button submit label.
    */

@@ -1,7 +1,7 @@
 import { DefineComponent, Slot } from 'vue';
 
 /**
- * Emits for TilterContainer component
+ * Emits for FilterContainer component
  */
 export type FilterContainerEmits = {
   apply: [];
@@ -9,7 +9,7 @@ export type FilterContainerEmits = {
 };
 
 /**
- * Slots for TilterContainer component
+ * Slots for FilterContainer component
  */
 export type FilterContainerSlots = {
   default: Slot;
@@ -27,10 +27,10 @@ export type FilterContainerSlots = {
  *
  * @group components
  */
-declare const TilterContainer: DefineComponent<
+declare const FilterContainer: DefineComponent<
   object,
   FilterContainerEmits,
   FilterContainerSlots
 >;
 
-export default TilterContainer;
+export default FilterContainer;

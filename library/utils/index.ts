@@ -17,6 +17,12 @@ const convertToArrayClass = (classes?: string | string[]): string[] => {
   return Array.isArray(classes) ? classes : [classes];
 };
 
+const isEmptyObject = (object: object): boolean => {
+  if (!object) return true;
+  const keys = Object.keys(object);
+  return !keys.length || keys.every((key) => object[key] == null);
+};
+
 export {
   formatUserName,
   convertToArrayClass,
@@ -24,4 +30,5 @@ export {
   useToast,
   exportToExcel,
   filterOptions,
+  isEmptyObject,
 };

@@ -41,6 +41,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
           import('./docs/filtercontainer/FilterContainerDocs.vue'),
       },
       {
+        path: 'quickfilter',
+        name: 'Quick Filter Container Docs',
+        component: (): Promise<Component> =>
+          import('./docs/quickfilter/QuickFilterDocs.vue'),
+      },
+      {
         path: 'breadcrumb',
         name: 'Breadcrumb Docs',
         component: (): Promise<Component> =>

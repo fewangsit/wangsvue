@@ -10,7 +10,7 @@ import {
 export type Data = Record<string, any>;
 
 export type QueryParams = {
-  [key: string]: unknown;
+  [key: string]: any;
 };
 
 export type FetchResponse = {

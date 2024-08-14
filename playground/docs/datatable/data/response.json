@@ -56,6 +56,7 @@
           "aliasCode": "ACS999"
         },
         "status": "TAG Reported",
+        "assetValue": 20000,
         "category": {
           "_id": "664af5f6adad15716b3e3cb7",
           "name": "Elektronik",
@@ -139,6 +140,7 @@
           "aliasCode": "ACS999"
         },
         "status": "TAG Reported",
+        "assetValue": 20000,
         "category": {
           "_id": "664af5f6adad15716b3e3cb7",
           "name": "Elektronik",
@@ -259,6 +261,7 @@
           "aliasCode": "ACS999"
         },
         "status": "Not Paired Yet",
+        "assetValue": 1200,
         "category": {
           "_id": "65eaeffae84c84c297fb8464",
           "name": "Category new",
@@ -301,6 +304,7 @@
           "aliasCode": "ACS999"
         },
         "status": "Not Paired Yet",
+        "assetValue": 1200,
         "category": {
           "_id": "65eaeffae84c84c297fb8464",
           "name": "Category new",
@@ -343,6 +347,7 @@
           "aliasCode": "ACS999"
         },
         "status": "Not Paired Yet",
+        "assetValue": 1200,
         "category": {
           "_id": "65eaeffae84c84c297fb8464",
           "name": "Category new",
@@ -385,6 +390,7 @@
           "aliasCode": "ACS999"
         },
         "status": "Not Paired Yet",
+        "assetValue": 1200,
         "category": {
           "_id": "65eaeffae84c84c297fb8464",
           "name": "Category new",

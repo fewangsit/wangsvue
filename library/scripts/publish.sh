@@ -1,5 +1,7 @@
 #!/bin/bash
 
+pnpm i
+
 # Get the updated version
 VERSION=$(jq -r '.version' package.json)
 
