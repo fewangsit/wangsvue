@@ -138,6 +138,10 @@ const wangsIconsArray: WangsIcons[] = [
   <Card>
     <template #header>
       <DocTitle name="Icon List" />
+      <span>
+        These icons were upscaled to 200% of their original size for better
+        viewing.
+      </span>
     </template>
     <template #content>
       <div class="flex flex-wrap gap-5 shrink-0">
