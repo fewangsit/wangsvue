@@ -18,35 +18,28 @@ const props = withDefaults(defineProps<InputRangeNumberProps>(), {
 });
 
 const emit = defineEmits<InputRangeNumberEmits>();
-
-const field = reactive<FieldValidation<number[]>>({ value: undefined });
+const field = reactive<FieldValidation<number[]>>({ value: [] });
 
 onMounted(() => {
   if (props.useValidator) {
     Object.assign(
       field,
-      useField(props.fieldName ?? 'rangeNumberInput', () => {
-        return true;
-      }),
+      useField(
+        props.fieldName ?? 'rangeNumberInput',
+        () => {
+          return true;
+        },
+        { initialValue: [] },
+      ),
     );
 
     // Check if props.value is not null or undefined
-    if (props.value != null) field.value = props.value;
+    if (props.value?.length) field.value = props.value;
   }
 });
 
 const handleKeydown = (event: KeyboardEvent): void => {
   if (event.key === 'Enter') emit('submit');
-};
-
-const updateFieldValue = (value: number | null, index: number): void => {
-  if (field.value) {
-    field.value[index] = value;
-  } else {
-    field.value = [value];
-  }
-
-  emit('update:modelValue', field.value);
 };
 
 // Watch for changes in the rangeValue model
@@ -62,7 +55,7 @@ watch(
 watch(
   () => props.value,
   (value) => {
-    field.value = value;
+    field.value = value ?? [];
   },
   { once: true },
 );
@@ -71,7 +64,7 @@ watch(
 watch(
   () => props.modelValue,
   (model) => {
-    field.value = model;
+    field.value = model ?? [];
   },
 );
 </script>
@@ -84,11 +77,10 @@ watch(
       <InputGroup>
         <InputNumber
           v-bind="$props"
-          :model-value="field.value?.[0]"
+          v-model="field.value[0]"
           :placeholder="placeholder ?? minPlaceholder"
           :use-grouping="false"
           @keydown="handleKeydown"
-          @update:model-value="updateFieldValue($event, 0)"
           class="w-full"
           input-id="range-start"
         />
@@ -97,11 +89,10 @@ watch(
       <InputGroup>
         <InputNumber
           v-bind="$props"
-          :model-value="field.value?.[1]"
+          v-model="field.value[1]"
           :placeholder="placeholder ?? minPlaceholder"
           :use-grouping="false"
           @keydown="handleKeydown"
-          @update:model-value="updateFieldValue($event, 1)"
           class="w-full"
           input-id="range-end"
         />

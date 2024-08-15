@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import Icon from '../icon/Icon.vue';
 import InputRangeNumber from '../inputrangenumber/InputRangeNumber.vue';
 import MultiSelect from '../multiselect/MultiSelect.vue';
@@ -8,7 +9,6 @@ import {
   QuickFilterProps,
 } from './QuickFilter.vue.d';
 import { useForm } from 'vee-validate';
-import { ref } from 'vue';
 import { MultiSelectOption } from 'lib/types/options.type';
 import { isEmptyObject } from 'lib/utils';
 
@@ -31,9 +31,9 @@ const getOptions = async (
   try {
     loading.value[field] = true;
     filterOption.value[field] = [];
-    const option = await fn();
+    const option = await fn?.();
 
-    filterOption.value[field] = option;
+    if (option) filterOption.value[field] = option;
   } catch (error) {
     console.error(error);
   } finally {
@@ -41,6 +41,7 @@ const getOptions = async (
   }
 };
 </script>
+
 <template>
   <div :class="['flex items-center', { 'gap-3': !isEmptyObject(values) }]">
     <div :class="['grid gap-3', `grid-cols-${fields.length}`]">
