@@ -1,0 +1,371 @@
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue';
+import Icon from '../icon/Icon.vue';
+
+const months = [
+  'Januari',
+  'Februari',
+  'Maret',
+  'April',
+  'Mei',
+  'Juni',
+  'Juli',
+  'Agustus',
+  'September',
+  'Oktober',
+  'November',
+  'Desember',
+];
+
+const dayNames = [
+  'Minggu',
+  'Senin',
+  'Selasa',
+  'Rabu',
+  'Kamis',
+  'Jumat',
+  'Sabtu',
+];
+
+interface Holiday {
+  date: number;
+  localName: string;
+}
+
+interface WCDate {
+  date: number;
+  /**
+   * Formatted "yyyy-mm-dd" (ISO 8601 format)
+   */
+  dateString: string;
+  isOtherMonth: boolean;
+  isToday: boolean;
+  isWorkDay: boolean;
+  isNationalHoliday: boolean;
+  eventName: string;
+  state: 'workday' | 'holiday' | 'weekend';
+}
+
+onMounted(async () => {
+  await getNationalHolidays();
+  getWorkDaysInYear();
+});
+
+const currentDate = ref(new Date());
+const currentMonth = ref(currentDate.value.getMonth());
+const currentYear = ref(currentDate.value.getFullYear());
+
+const holidays = ref<Holiday[]>([]);
+const defaultWorkDays = ref<number[]>([1, 2, 3, 4, 5]); // Indexes of weekdays
+
+const workDaysInYear = ref<string[]>([]); // Stores dates in 'yyyy-mm-dd'
+
+const datesInMonth = computed(() => {
+  return calendarWeeks.value.flatMap((week) => week);
+});
+
+const workDaysInMonth = computed(() => {
+  return workDaysInYear.value.filter((day) => {
+    const dateObj = new Date(day);
+    return dateObj.getMonth() === currentMonth.value;
+  });
+});
+
+const calendarWeeks = computed(() => {
+  const firstDayOfMonth = new Date(currentYear.value, currentMonth.value, 1);
+  const lastDayOfMonth = new Date(currentYear.value, currentMonth.value + 1, 0);
+  const daysInMonth = lastDayOfMonth.getDate();
+  const firstDayOfWeek = firstDayOfMonth.getDay();
+  const lastDayOfWeek = lastDayOfMonth.getDay();
+
+  const weeks: WCDate[][] = [];
+  let currentDay = 1 - firstDayOfWeek;
+
+  while (currentDay <= daysInMonth) {
+    const week: WCDate[] = [];
+
+    for (let i = 0; i < 7; i++) {
+      const todaysEvent = holidays.value.find((holiday) => {
+        const holidayDate = new Date(holiday.date);
+        return (
+          holidayDate.getFullYear() === currentYear.value &&
+          holidayDate.getMonth() === currentMonth.value &&
+          holidayDate.getDate() === currentDay
+        );
+      });
+
+      const dateString = formatWorkDateString(currentMonth.value, currentDay);
+      const isWorkDay = workDaysInMonth.value.includes(dateString);
+      const isNationalHoliday = todaysEvent != undefined;
+
+      week.push({
+        date: currentDay,
+        dateString,
+        isOtherMonth: currentDay < 1 || currentDay > daysInMonth,
+        isToday:
+          currentDay === currentDate.value.getDate() &&
+          currentMonth.value === new Date().getMonth() &&
+          currentYear.value === new Date().getFullYear(),
+        isWorkDay,
+        eventName: todaysEvent?.localName,
+        isNationalHoliday,
+        state: ((): WCDate['state'] => {
+          switch (true) {
+            case isNationalHoliday:
+              return 'holiday';
+            case isWorkDay:
+              return 'workday';
+            default:
+              return 'weekend';
+          }
+        })(),
+      });
+
+      currentDay++;
+    }
+
+    weeks.push(week);
+  }
+
+  // Fill the last week with next month's days if needed
+  if (lastDayOfWeek !== 6) {
+    const lastWeek = weeks[weeks.length - 1];
+    let nextMonthDay = 1;
+    for (let i = lastDayOfWeek + 1; i < 7; i++) {
+      lastWeek[i].date = nextMonthDay++;
+      lastWeek[i].isOtherMonth = true;
+    }
+  }
+
+  return weeks;
+});
+
+const getNationalHolidays = async (): Promise<void> => {
+  try {
+    const response = await fetch(
+      `https://date.nager.at/api/v3/PublicHolidays/${currentYear.value}/ID`,
+    );
+
+    holidays.value = await response.json();
+  } catch (error) {
+    console.error('Error fetching holidays:', error);
+  }
+};
+
+const getWorkDaysInYear = (): void => {
+  const workDays: string[] = [];
+
+  for (let month = 0; month < 12; month++) {
+    const daysInMonth = new Date(currentYear.value, month + 1, 0).getDate();
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dateObj = new Date(currentYear.value, month, day);
+      const dayOfWeek = dateObj.getDay();
+
+      if (
+        defaultWorkDays.value.includes(dayOfWeek) &&
+        !holidays.value.some((holiday) => {
+          const holidayDate = new Date(holiday.date);
+          return (
+            holidayDate.getFullYear() === currentYear.value &&
+            holidayDate.getMonth() === month &&
+            holidayDate.getDate() === day
+          );
+        })
+      ) {
+        // Format the date as "yyyy-mm-dd" (ISO 8601 format)
+        const formattedDate = formatWorkDateString(month, day);
+        workDays.push(formattedDate);
+      }
+    }
+  }
+
+  workDaysInYear.value = workDays;
+};
+
+const toggleWorkDayState = (day: WCDate): void => {
+  switch (day.state) {
+    case 'workday':
+      removeWorkDay(day.dateString);
+      break;
+    case 'holiday':
+    case 'weekend':
+      workDaysInYear.value.push(
+        formatWorkDateString(currentMonth.value, day.date),
+      );
+      break;
+  }
+};
+
+const removeWorkDay = (day: string): void => {
+  workDaysInYear.value = workDaysInYear.value.filter((d) => d !== day);
+};
+
+const formatWorkDateString = (month: number, day: number): string => {
+  return `${currentYear.value}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+};
+
+const prevMonth = (): void => {
+  if (currentMonth.value === 0) {
+    currentYear.value--;
+    currentMonth.value = 11;
+  } else {
+    currentMonth.value--;
+  }
+
+  updateDate();
+};
+
+const nextMonth = (): void => {
+  if (currentMonth.value === 11) {
+    currentYear.value++;
+    currentMonth.value = 0;
+  } else {
+    currentMonth.value++;
+  }
+
+  updateDate();
+};
+
+const updateDate = (): void => {
+  currentDate.value = new Date(
+    currentYear.value,
+    currentMonth.value,
+    new Date().getDate(),
+  );
+  currentYear.value = currentDate.value.getFullYear(); // Ensure year is updated if needed
+  currentMonth.value = currentDate.value.getMonth(); // Ensure month is updated if needed
+};
+</script>
+
+<template>
+  <div class="flex gap-3">
+    <div
+      class="w-[428px] text-grayscale-900 flex flex-col gap-1 p-6"
+      data-pc-section="container"
+    >
+      <div
+        class="h-6 w-full justify-between items-start gap-1 inline-flex"
+        data-section-name="navigation"
+      >
+        <Icon
+          @click="prevMonth"
+          class="text-2xl text-general-900 rotate-180"
+          icon="arrow-right"
+        />
+
+        <div class="flex gap-1">
+          <span>{{ months[currentMonth].slice(0, 3) }}</span>
+          <span>{{ currentYear }}</span>
+        </div>
+
+        <Icon
+          @click="nextMonth"
+          class="text-2xl text-general-900"
+          icon="arrow-right"
+        />
+      </div>
+      <div class="flex flex-col gap-1" data-pc-section="date">
+        <div data-pc-section="tableheader">
+          <div class="grid grid-cols-7 gap-2" data-section-name="weekdays">
+            <span
+              :key="day"
+              v-for="day in dayNames"
+              abbr="day"
+              class="px-2 py-[5.4px] text-center"
+              data-section-name="weekday"
+            >
+              {{ day.slice(0, 3) }}
+            </span>
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-7 gap-y-1 gap-x-2"
+          data-pc-section="tablebody"
+        >
+          <span
+            :key="dayIndex"
+            v-for="(day, dayIndex) in datesInMonth"
+            :aria-label="day.date.toString()"
+            :data-wv-national-holiday="day.isNationalHoliday"
+            :data-wv-other-month="day.isOtherMonth"
+            :data-wv-today="day.isToday"
+            @click="toggleWorkDayState(day)"
+            class="p-0"
+            data-wv-section="day"
+          >
+            <span
+              v-tooltip.top="{
+                value: day.eventName,
+                pt: {
+                  root: {
+                    style: 'max-width: 200px',
+                  },
+                  text: {
+                    style: 'text-align: center;',
+                  },
+                },
+              }"
+              :aria-disabled="day.isOtherMonth"
+              :class="{
+                'flex items-center justify-center w-12 h-12 focus:outline-none focus-visible:outline-none cursor-pointer': true,
+                'hidden': day.isOtherMonth,
+                'text-white !rounded-full focus:outline-none focus-visible:outline-none cursor-pointer':
+                  day.isWorkDay || day.isNationalHoliday,
+                'bg-primary-1000 hover:bg-primary-1000/90':
+                  day.state === 'workday',
+                'bg-danger-500 hover:bg-danger-500/90': day.state === 'holiday',
+              }"
+              :data-p-disabled="day.isOtherMonth"
+              aria-selected="false"
+              data-p-highlight="false"
+              data-pc-group-section="tablebodycelllabel"
+              data-pc-section="daylabel"
+              draggable="false"
+            >
+              <template v-if="!day.isOtherMonth">{{ day.date }}</template>
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="w-[300px] h-[366.52px] p-6 bg-white rounded-lg flex-col justify-start items-start gap-3 inline-flex"
+    >
+      <div class="self-stretch justify-between items-start inline-flex">
+        <div class="text-xs font-semibold leading-none">
+          Jumlah Hari Kerja 2024
+        </div>
+        <div class="text-xs font-semibold leading-none">
+          {{ workDaysInYear.length }} Hari
+        </div>
+      </div>
+      <div class="self-stretch justify-between items-start inline-flex">
+        <div class="text-xs font-semibold leading-none">
+          {{ months[currentMonth] }} {{ currentYear }}
+        </div>
+        <div class="text-xs font-semibold leading-none">
+          {{ workDaysInMonth.length }} Hari
+        </div>
+      </div>
+      <ul
+        class="self-stretch h-64 flex-col justify-start items-start gap-2 flex overflow-auto"
+        style="scrollbar-width: none"
+      >
+        <li
+          :key="day"
+          v-for="day in workDaysInMonth"
+          class="inline-flex w-full justify-between"
+        >
+          {{ day.split('-')[2] }} {{ months[currentMonth] }} {{ currentYear }}
+          <Icon
+            @click="removeWorkDay(day)"
+            class="text-base cursor-pointer hover:scale-110 hover:p-1"
+            icon="close"
+            severity="danger"
+          />
+        </li>
+      </ul>
+    </div>
+  </div>
+</template>
