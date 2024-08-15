@@ -22,6 +22,7 @@ cat << EOF > package.json
   "exports": {
     ".": "./wangsvue.es.js",
     "./style.css": "./style.css",
+    "./types": "./types",
     "./colors.config.json": "./colors.config.json"
   }
 }

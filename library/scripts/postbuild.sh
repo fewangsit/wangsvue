@@ -1,6 +1,7 @@
 #!/bin/bash
 
 cp colors.config.json dist
+cp types dist
 
 source_directory="./components"
 target_directory="./dist/components"
