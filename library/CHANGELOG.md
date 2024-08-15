@@ -1,6 +1,33 @@
 # Changelog
 
 
+## v1.4.7
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.6...v1.4.7)
+
+### 🩹 Fixes
+
+- Add border for overlay menu in dropdown and multiselect ([b9f2caa](https://github.com/fewangsit/wangsvue/commit/b9f2caa))
+- **isObjectEmpty:** Supoort nested object ([f9d311c](https://github.com/fewangsit/wangsvue/commit/f9d311c))
+
+### 💅 Refactors
+
+- Update icons ([032044e](https://github.com/fewangsit/wangsvue/commit/032044e))
+
+### 📦 Build
+
+- Export quick filter ([606d08f](https://github.com/fewangsit/wangsvue/commit/606d08f))
+
+### 🏡 Chore
+
+- Add description for icon docs ([7cdec14](https://github.com/fewangsit/wangsvue/commit/7cdec14))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.4.6
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.5...v1.4.6)
