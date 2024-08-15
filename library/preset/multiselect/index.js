@@ -162,14 +162,14 @@ export default {
       'm-0',
 
       //Shape
-      'border-b-none',
+      'border-[0.5px] border-b-0',
       'rounded-tl-md',
       'rounded-tr-md',
 
       // Color
       'text-surface-700 dark:text-surface-700',
       'bg-primary-400 dark:bg-primary-400',
-      // 'border-surface-200 dark:border-surface-700',
+      'border-grayscale-900',
     ],
   },
   headerCheckboxContainer: {
@@ -253,8 +253,12 @@ export default {
       // Sizing
       'max-h-[15rem]',
 
+      // Shape
+      'border-[0.5px]',
+
       // Color
       'bg-white',
+      'border-grayscale-900',
 
       // Misc
       'overflow-auto',
@@ -286,7 +290,7 @@ export default {
       'py-2 px-4',
 
       // Color
-      {'bg-primary-50': context.selected},
+      { 'bg-primary-50': context.selected },
       {
         'text-surface-700 dark:text-general-100':
           !context.focused && !context.selected && !context.disabled,

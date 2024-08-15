@@ -58,6 +58,7 @@ const wangsIconsArray: WangsIcons[] = [
   'flag',
   'file-copy',
   'file-edit',
+  'file-history',
   'file-info',
   'files',
   'file-list-2',
@@ -86,13 +87,15 @@ const wangsIconsArray: WangsIcons[] = [
   'menu-unfold',
   'more',
   'move-to',
-  'note',
   'node-tree',
+  'note',
+  'notification',
   'pair-tag',
   'pencil',
   'phone',
   'printer',
   'price-tag-3',
+  'profile',
   'qr',
   'qr-scan',
   'refresh',
@@ -135,6 +138,10 @@ const wangsIconsArray: WangsIcons[] = [
   <Card>
     <template #header>
       <DocTitle name="Icon List" />
+      <span>
+        These icons were upscaled to 200% of their original size for better
+        viewing.
+      </span>
     </template>
     <template #content>
       <div class="flex flex-wrap gap-5 shrink-0">
