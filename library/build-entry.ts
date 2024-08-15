@@ -73,6 +73,7 @@ import {
   FilterContainer,
   DialogConfirm,
   Checkbox,
+  QuickFilter,
   Menu,
   ButtonSearch,
   InputRangeNumber,
@@ -107,6 +108,7 @@ export default {
     app.component('ButtonSearch', ButtonSearch);
     app.component('Calendar', Calendar);
     app.component('InputRangeNumber', InputRangeNumber);
+    app.component('QuickFilter', QuickFilter);
     app.component('Breadcrumb', Breadcrumb);
     app.component('Card', Card);
     app.component('DataTable', DataTable);
@@ -162,6 +164,7 @@ export {
   DialogConfirm,
   Checkbox,
   Menu,
+  QuickFilter,
   ButtonSearch,
   InputRangeNumber,
   Calendar,

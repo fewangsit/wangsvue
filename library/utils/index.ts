@@ -17,7 +17,8 @@ const convertToArrayClass = (classes?: string | string[]): string[] => {
   return Array.isArray(classes) ? classes : [classes];
 };
 
-const isEmptyObject = (obj: object): boolean => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const isEmptyObject = (obj: any): boolean => {
   if (!obj) return true;
 
   const keys = Object.keys(obj);

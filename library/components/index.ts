@@ -19,6 +19,7 @@ import DialogConfirm from './dialogconfirm/DialogConfirm.vue';
 import Checkbox from './checkbox/Checkbox.vue';
 import Menu from './menu/Menu.vue';
 import ButtonSearch from './buttonsearch/ButtonSearch.vue';
+import QuickFilter from './quickfilter/QuickFilter.vue';
 import InputRangeNumber from './inputrangenumber/InputRangeNumber.vue';
 import Calendar from './calendar/Calendar.vue';
 import InputText from './inputtext/InputText.vue';
@@ -56,4 +57,5 @@ export {
   DialogForm,
   InputNumber,
   InputEmail,
+  QuickFilter,
 };
