@@ -5,6 +5,7 @@ export default {
 
       // Transition
       'transition-transform',
+      'z-50',
 
       // Sizing and Shape
       'w-max min-w-52',

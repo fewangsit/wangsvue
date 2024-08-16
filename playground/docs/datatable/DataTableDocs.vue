@@ -168,7 +168,7 @@ const quickFiltering = (payload: QueryParams): void => {
       <div class="flex justify-end gap-4">
         <ButtonBulkAction
           v-model:selected-data="dataSelected"
-          :options="[]"
+          :options="singleAction"
           show-select-all-button
         />
         <ButtonSearch @search="filters.global.value = $event" class="ml-auto" />
