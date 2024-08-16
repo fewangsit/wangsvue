@@ -59,7 +59,7 @@ defineExpose({
       </a>
     </template>
 
-    <template #start>
+    <template #start v-if="$slots['start']">
       <slot name="start" />
     </template>
   </PrimeMenu>

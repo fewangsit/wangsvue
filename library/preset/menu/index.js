@@ -11,8 +11,10 @@ export default {
       'min-w-[196px]',
       'max-h-[90vh] overflow-y-auto',
       'rounded-md',
+      'border-[0.5px] border-solid border-grayscale-900',
       'max-w-[400px]',
 
+      'translate-y-1',
       // Spacing
       // 'p-1.5',
 

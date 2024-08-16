@@ -266,11 +266,7 @@ defineExpose({
     :data-table-id="tableId"
     :pt="{
       root: {
-        class: [
-          ...MenuPreset.root.class,
-          'border-[0.5px] border-solid border-grayscale-900',
-          'shadow-panel',
-        ],
+        class: [...MenuPreset.root.class, 'shadow-panel'],
       },
       start: {
         class: [
