@@ -25,11 +25,6 @@ export interface ButtonBulkActionProps {
    * You need to set the appropiate id the same with the table-name where the bulkaction used for.
    */
   tableName?: string;
-  /**
-   * Hide or show the button select all.
-   * @default true
-   */
-  showSelectAllButton?: boolean;
 }
 
 export interface ButtonBulkActionSlots {

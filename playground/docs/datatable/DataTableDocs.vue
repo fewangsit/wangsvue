@@ -4,6 +4,7 @@ import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
 import DataTable from 'lib/components/datatable/DataTable.vue';
 import {
+  FetchResponse,
   QueryParams,
   TableCellComponent,
   TableColumn,
@@ -21,6 +22,7 @@ import QuickFilter from 'lib/components/quickfilter/QuickFilter.vue';
 import { fields } from '../quickfilter/helpers/fields';
 import { FilterMatchMode } from 'primevue/api';
 import { cloneDeep } from 'lodash';
+import ButtonBulkAction from 'lib/components/buttonbulkaction/ButtonBulkAction.vue';
 
 const dataSelected = shallowRef();
 const showFilter = shallowRef(false);
@@ -114,6 +116,28 @@ const tableColumns = computed<TableColumn[]>(() => {
   ];
 });
 
+const getTableData = async (
+  params: QueryParams,
+): Promise<FetchResponse | undefined> => {
+  // Simulate an asynchronous operation (even though we're returning static data)
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const startIndex = ((params.page || 1) - 1) * (params.limit || 10); // Default limit to 10 if not provided
+      const endIndex = startIndex + (params.limit || 10);
+
+      const data =
+        params.page != null && params.limit != null
+          ? response.data.data.slice(startIndex, endIndex)
+          : response.data.data;
+
+      resolve({
+        data, // Use 'slice' for data limiting
+        totalRecords: response.data.totalRecords,
+      });
+    }, 0); // You can adjust the timeout if you need a delay
+  });
+};
+
 const filters = ref<any>({
   'global': { value: undefined, matchMode: FilterMatchMode.CONTAINS },
   'category.key': { value: null, matchMode: FilterMatchMode.IN },
@@ -129,7 +153,6 @@ const quickFiltering = (payload: QueryParams): void => {
   newFilter['status'].value = payload.status;
   newFilter['brand.key'].value = payload.brand.key;
   newFilter['assetValue'].value = payload.assetValue;
-  console.log('🚀 ~ quickFiltering ~ assetValue:', payload.assetValue);
 
   filters.value = newFilter;
 };
@@ -143,7 +166,12 @@ const quickFiltering = (payload: QueryParams): void => {
     <template #title> Rich Feature Data Table </template>
     <template #content>
       <div class="flex justify-end gap-4">
-        <ButtonSearch @search="filters.global.value = $event" />
+        <ButtonBulkAction
+          v-model:selected-data="dataSelected"
+          :options="[]"
+          show-select-all-button
+        />
+        <ButtonSearch @search="filters.global.value = $event" class="ml-auto" />
         <ButtonDownload file-name="Download" />
         <ButtonFilter v-model:show-filter="showFilter" />
       </div>
@@ -155,10 +183,13 @@ const quickFiltering = (payload: QueryParams): void => {
       <DataTable
         v-model:selected-data="dataSelected"
         :columns="tableColumns"
-        :data="response.data.data"
+        :fetch-function="getTableData"
         :filters="filters"
         :options="singleAction"
+        :total-disabled-rows="1"
         data-key="_id"
+        disable-key="isDefault"
+        lazy
         selection-type="checkbox"
         use-option
         use-paginator

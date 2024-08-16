@@ -12,7 +12,6 @@ import Button from '../button/Button.vue';
 
 const props = withDefaults(defineProps<ButtonBulkActionProps>(), {
   tableName: 'datatable',
-  showSelectAllButton: true,
   useButton: true,
 });
 
@@ -40,10 +39,7 @@ const bulkOptions = computed(() => {
 
 const showSelectAllButton = computed(
   () =>
-    props.showSelectAllButton &&
-    props.selectedData?.length &&
-    !isDisabled.value &&
-    totalRecords.value > 0,
+    props.selectedData?.length && !isDisabled.value && totalRecords.value > 0,
 );
 
 const selectAllData = (): void => {
@@ -84,8 +80,8 @@ const updateTotalRecordsHandler = (
 watch(
   [(): Record<string, unknown>[] => props.selectedData, totalRecords],
   ([datas, total]) => {
-    if (!datas.length) selectedOption.value = undefined;
-    isAllDataSelected.value = datas.length === total;
+    if (!datas?.length) selectedOption.value = undefined;
+    isAllDataSelected.value = datas?.length === total;
   },
 );
 
@@ -97,7 +93,7 @@ watch(
 </script>
 
 <template>
-  <div class="flex gap-2 items-center">
+  <div v-show="selectedData?.length" class="flex gap-2 items-center">
     <Menu
       id="bulkaction-overlay-menu"
       ref="menu"

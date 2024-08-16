@@ -2,7 +2,7 @@
   "status": 200,
   "message": "Success get Asset Policy!!!",
   "data": {
-    "totalRecords": 1473,
+    "totalRecords": 12,
     "data": [
       {
         "_id": "663ce742f0667d5266d83d66",
@@ -13,6 +13,7 @@
           "key": 81,
           "aliasCode": "ACS999"
         },
+        "isDefault": true,
         "category": {
           "_id": "65eaeffae84c84c297fb8464",
           "name": "Category new",
@@ -382,6 +383,92 @@
       },
       {
         "_id": "66a4c1e92e4816c0a80a2d62",
+        "name": {
+          "_id": "66273a5d84bb0535a80b4aaf",
+          "nameWithSequence": "AC Portable Indoor - 15",
+          "name": "AC Portable Indoor",
+          "key": 81,
+          "aliasCode": "ACS999"
+        },
+        "status": "Not Paired Yet",
+        "assetValue": 1200,
+        "category": {
+          "_id": "65eaeffae84c84c297fb8464",
+          "name": "Category new",
+          "fullPath": "Category new",
+          "key": 1
+        },
+        "group": {
+          "_id": "65f9344de4f427fe9c7f064b",
+          "name": "All",
+          "fullPath": "All",
+          "key": -1
+        },
+        "brand": {
+          "_id": "665d94cd6f035617250c9a90",
+          "name": "JHG-90",
+          "key": 370
+        },
+        "model": {
+          "_id": "665d94cd6f035617250c9a97",
+          "name": "as",
+          "key": 424
+        },
+        "policy": "Need Handover",
+        "isTransactionable": true,
+        "lastModifier": {
+          "_id": "6454c4253dd1017f28689572",
+          "fullName": "ASDF Tag Samurai V2",
+          "key": 1
+        },
+        "isSelfService": false,
+        "sequence": 15
+      },
+      {
+        "_id": "66a4c1e92e4816c0a80a2d622",
+        "name": {
+          "_id": "66273a5d84bb0535a80b4aaf",
+          "nameWithSequence": "AC Portable Indoor - 15",
+          "name": "AC Portable Indoor",
+          "key": 81,
+          "aliasCode": "ACS999"
+        },
+        "status": "Not Paired Yet",
+        "assetValue": 1200,
+        "category": {
+          "_id": "65eaeffae84c84c297fb8464",
+          "name": "Category new",
+          "fullPath": "Category new",
+          "key": 1
+        },
+        "group": {
+          "_id": "65f9344de4f427fe9c7f064b",
+          "name": "All",
+          "fullPath": "All",
+          "key": -1
+        },
+        "brand": {
+          "_id": "665d94cd6f035617250c9a90",
+          "name": "JHG-90",
+          "key": 370
+        },
+        "model": {
+          "_id": "665d94cd6f035617250c9a97",
+          "name": "as",
+          "key": 424
+        },
+        "policy": "Need Handover",
+        "isTransactionable": true,
+        "lastModifier": {
+          "_id": "6454c4253dd1017f28689572",
+          "fullName": "ASDF Tag Samurai V2",
+          "key": 1
+        },
+        "isSelfService": false,
+        "sequence": 15
+      },
+      {
+        "_id": "66a4c1e92e4816c0a80a2d623",
         "name": {
           "_id": "66273a5d84bb0535a80b4aaf",
           "nameWithSequence": "AC Portable Indoor - 15",

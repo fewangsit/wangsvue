@@ -39,6 +39,7 @@ import Button from '../button/Button.vue';
 import MenuClass from '../menu/Menu.vue.d';
 import { Booleanish } from '../ts-helpers';
 import Toast from '../toast/Toast.vue';
+import { cloneDeep } from 'lodash';
 
 type Data = Record<string, any>;
 type QueryParams = {
@@ -279,7 +280,7 @@ const dispatchUpdateTotalRecordsEvent = (total?: number): void => {
  * Used in export excel and event listener from Bulkaction select all data.
  */
 const fetchAllData = async (isDownload?: boolean): Promise<FetchResponse> => {
-  const params = structuredClone({ ...queryParams.value });
+  const params = cloneDeep(queryParams.value);
   delete params.page;
   delete params.limit;
 
@@ -288,10 +289,7 @@ const fetchAllData = async (isDownload?: boolean): Promise<FetchResponse> => {
   return response ?? { data: [], totalRecords: 0 };
 };
 
-/**
- * @param scanParams search by scan params, includes default Query Params
- */
-const refetch = async (scanParams?: QueryParams): Promise<void> => {
+const refetch = async (): Promise<void> => {
   /**
    * Maintain the selected data if the selected is All record data.
    *
@@ -308,7 +306,7 @@ const refetch = async (scanParams?: QueryParams): Promise<void> => {
 
   loadingTable.value = true;
   const { data, totalRecords: total = 0 } =
-    (await props.fetchFunction?.(scanParams ?? queryParams.value)) ?? {};
+    (await props.fetchFunction?.(queryParams.value)) ?? {};
 
   dispatchUpdateTotalRecordsEvent(total);
   currentPageTableData.value = data;
