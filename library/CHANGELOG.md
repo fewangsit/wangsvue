@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v1.4.9
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.8...v1.4.9)
+
+### 🚀 Enhancements
+
+- **Workcalendar:** Add documentation ([daa91b4](https://github.com/fewangsit/wangsvue/commit/daa91b4))
+
+### 🩹 Fixes
+
+- **Menu:** Menu should have bolder ([455974c](https://github.com/fewangsit/wangsvue/commit/455974c))
+- **DataTable:** Total record for disabled row ([15bff1b](https://github.com/fewangsit/wangsvue/commit/15bff1b))
+- Z index bulk action menu ([ed50d82](https://github.com/fewangsit/wangsvue/commit/ed50d82))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.8
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.7...v1.4.8)
