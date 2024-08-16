@@ -13,9 +13,6 @@ export default {
       // Border
       'rounded',
 
-      // Text Color
-      'text',
-
       'appearance-none',
     ],
   }),
@@ -24,8 +21,8 @@ export default {
       class: [
         'border-0 h-full w-full outline-none',
         'bg-inherit',
+        'text-xs font-normal',
         'placeholder:text-general-200',
-        'placeholder:!font-normal',
       ],
     }),
   },
