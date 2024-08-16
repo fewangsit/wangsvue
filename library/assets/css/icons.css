@@ -579,3 +579,19 @@
 .ic-profile {
   --svg: url("data:image/svg+xml,%3Csvg width='14' height='18' viewBox='0 0 14 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M11.5375 4.9639C11.5375 7.48135 9.51902 9.49995 6.99979 9.49995C4.48142 9.49995 2.46209 7.48135 2.46209 4.9639C2.46209 2.44645 4.48142 0.428711 6.99979 0.428711C9.51902 0.428711 11.5375 2.44645 11.5375 4.9639ZM6.99996 17.5717C3.282 17.5717 0.142822 16.9674 0.142822 14.6359C0.142822 12.3036 3.30172 11.7208 6.99996 11.7208C10.7188 11.7208 13.8571 12.3251 13.8571 14.6565C13.8571 16.9888 10.6982 17.5717 6.99996 17.5717Z' fill='%23262627'/%3E%3C/svg%3E");
 }
+
+.ic-close-circle-fill {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m0-11.414L9.172 7.757L7.757 9.172L10.586 12l-2.829 2.828l1.415 1.415L12 13.414l2.828 2.829l1.415-1.415L13.414 12l2.829-2.828l-1.415-1.415z'/%3E%3C/svg%3E");
+}
+
+.ic-file-copy-2-line {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1 1 0 0 1 3 21l.003-14c0-.552.45-1 1.006-1zM5.002 8L5 20h10V8zM9 6h8v10h2V4H9zm-2 5h6v2H7zm0 4h6v2H7z'/%3E%3C/svg%3E");
+}
+
+.ic-user-received-2-line {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M14 14.252v2.09A6 6 0 0 0 6 22H4a8 8 0 0 1 10-7.749M12 13c-3.315 0-6-2.685-6-6s2.685-6 6-6s6 2.685 6 6s-2.685 6-6 6m0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4s-4 1.79-4 4s1.79 4 4 4m8 6h3v2h-3v3.5L15 18l5-4.5z'/%3E%3C/svg%3E");
+}
+
+.ic-user-shared-2-line {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M14 14.252v2.09A6 6 0 0 0 6 22H4a8 8 0 0 1 10-7.749M12 13c-3.315 0-6-2.685-6-6s2.685-6 6-6s6 2.685 6 6s-2.685 6-6 6m0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4s-4 1.79-4 4s1.79 4 4 4m6 6v-3.5l5 4.5l-5 4.5V19h-3v-2z'/%3E%3C/svg%3E");
+}

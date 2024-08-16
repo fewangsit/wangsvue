@@ -40,6 +40,7 @@ export type WangsIcons =
   | 'checkbox-blank-circle'
   | 'close'
   | 'close-circle'
+  | 'close-circle-fill'
   | 'coins'
   | 'completion'
   | 'dashboard'
@@ -62,6 +63,7 @@ export type WangsIcons =
   | 'eye-off'
   | 'flag'
   | 'file-copy'
+  | 'file-copy-2-line'
   | 'file-edit'
   | 'file-history'
   | 'file-info'
@@ -133,8 +135,10 @@ export type WangsIcons =
   | 'user'
   | 'user-add'
   | 'user-follow'
+  | 'user-received-2-line'
   | 'user-search'
   | 'user-settings'
+  | 'user-shared-2-line'
   | 'verification';
 
 export interface IconProps {
