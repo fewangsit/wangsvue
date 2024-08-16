@@ -41,8 +41,8 @@ interface WCDate {
   isWorkDay: boolean;
   isDefaultWorkDay: boolean;
   isNationalHoliday: boolean;
-  eventName: string;
   state: 'workday' | 'holiday' | 'weekend';
+  eventName?: string;
 }
 
 const props = withDefaults(defineProps<WorkCalendarProps>(), {
