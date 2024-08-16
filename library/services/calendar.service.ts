@@ -50,6 +50,16 @@ interface GoogleCalendarResponse {
   }[];
 }
 
+/**
+ * Source: /settings/browsecalendars
+ *
+ * - Go to https://calendar.google.com/calendar
+ * - Navigate ot Settings > General > Add Calendar > Browse Calendars of interests
+ * - Regional holidays > view
+ *
+ * @param year
+ * @returns
+ */
 const getHolidays = async (year: number): Promise<Holiday[]> => {
   const BASE_URL = 'https://clients6.google.com/calendar/v3/calendars';
   const API_KEY = 'AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs';
