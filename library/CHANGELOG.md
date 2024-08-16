@@ -1,6 +1,42 @@
 # Changelog
 
 
+## v1.4.8
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.7...v1.4.8)
+
+### 🚀 Enhancements
+
+- Add work calendar - to be continued ([2e9c097](https://github.com/fewangsit/wangsvue/commit/2e9c097))
+- **WorkCalendar:** Add google calendar api for public holiday ([1d3ac67](https://github.com/fewangsit/wangsvue/commit/1d3ac67))
+
+### 🩹 Fixes
+
+- **WorkCalendar:** Typescript error Type 'undefined' is not assignable to type 'string' on WCDate interface ([b48f24d](https://github.com/fewangsit/wangsvue/commit/b48f24d))
+
+### 💅 Refactors
+
+- Add new icons ([591273d](https://github.com/fewangsit/wangsvue/commit/591273d))
+
+### 📦 Build
+
+- Export types ([d5ee0c6](https://github.com/fewangsit/wangsvue/commit/d5ee0c6))
+
+### 🏡 Chore
+
+- **release:** V1.4.7 ([467b6a6](https://github.com/fewangsit/wangsvue/commit/467b6a6))
+- Move env values to hardcoded in code - this values does not necessary to be secrets ([a3ef8b0](https://github.com/fewangsit/wangsvue/commit/a3ef8b0))
+
+### 🎨 Styles
+
+- Fix multliselect and dropdown placeholder font weight ([109be2f](https://github.com/fewangsit/wangsvue/commit/109be2f))
+- Fix font size input number ([f0ceb46](https://github.com/fewangsit/wangsvue/commit/f0ceb46))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.7
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.6...v1.4.7)
