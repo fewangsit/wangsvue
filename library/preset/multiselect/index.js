@@ -9,20 +9,6 @@ export default {
 
       // Shape
       'w-full',
-      // 'w-full md:w-56',
-      // 'rounded-md',
-      // 'shadow-sm',
-
-      // Color and Background
-      // 'bg-surface-0 dark:bg-surface-900',
-
-      // States
-      // {
-      //   'ring-1 ring-inset ring-placeholder dark:ring-placeholder':
-      //     !state.focused,
-      //   'ring-2 ring-inset ring-primary-weak dark:ring-primary-weak':
-      //     state.focused,
-      // },
 
       // Misc
       'cursor-default',
@@ -43,7 +29,7 @@ export default {
       'h-max',
 
       //Font
-      'text-xs',
+      'text-xs font-normal',
       {
         '!leading-5': props.modelValue == null,
       },
@@ -53,16 +39,9 @@ export default {
 
       // Color
       {
-        'text-general-200 dark:text-general-600 font-light':
-          !props.modelValue?.length,
-        'text-grayscale-800 dark:text-general-50 font-medium':
-          props.modelValue?.length,
+        'text-general-200': !props.modelValue?.length,
+        'text-grayscale-900': props.modelValue?.length,
       },
-      // {
-      //   'text-surface-800 dark:text-surface-700': props.modelValue,
-      //   'text-surface-400 dark:text-surface-500': !props.modelValue,
-      // },
-      // 'placeholder:text-surface-400 dark:placeholder:text-surface-500',
 
       // Transitions
       'transition duration-200',

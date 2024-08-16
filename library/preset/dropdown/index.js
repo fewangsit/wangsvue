@@ -33,12 +33,10 @@ export default {
   input: ({ props }) => ({
     class: [
       //Font
-      'text-xs',
+      'text-xs  font-normal',
       {
-        '!text-general-200 dark:text-grayscale-800 font-light':
-          props.modelValue == null,
-        'text-general-800 dark:text-general-100 font-normal':
-          props.modelValue != null,
+        '!text-general-200 dark:text-grayscale-800': props.modelValue == null,
+        'text-grayscale-900': props.modelValue != null,
       },
 
       // Display
