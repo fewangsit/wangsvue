@@ -51,10 +51,9 @@ interface GoogleCalendarResponse {
 }
 
 const getHolidays = async (year: number): Promise<Holiday[]> => {
-  const BASE_URL = import.meta.env.VITE_APP_GOOGLE_PUBLIC_HOLIDAY_API;
-  const API_KEY = import.meta.env.VITE_APP_GOOGLE_PUBLIC_HOLIDAY_API_KEY;
-  const CALENDAR_ID = import.meta.env
-    .VITE_APP_GOOGLE_PUBLIC_HOLIDAY_CALENDAR_ID;
+  const BASE_URL = 'https://clients6.google.com/calendar/v3/calendars';
+  const API_KEY = 'AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs';
+  const CALENDAR_ID = 'id.indonesian%23holiday%40group.v.calendar.google.com';
 
   try {
     const params = {
