@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, shallowRef, watch } from 'vue';
 import Icon from '../icon/Icon.vue';
+import CalendarServices, { Holiday } from 'lib/services/calendar.service';
+import Skeleton from 'primevue/skeleton';
+import { WorkCalendarProps } from './WorkCalendar.vue.d';
 
 const months = [
   'Januari',
@@ -27,11 +30,6 @@ const dayNames = [
   'Sabtu',
 ];
 
-interface Holiday {
-  date: number;
-  localName: string;
-}
-
 interface WCDate {
   date: number;
   /**
@@ -41,14 +39,15 @@ interface WCDate {
   isOtherMonth: boolean;
   isToday: boolean;
   isWorkDay: boolean;
+  isDefaultWorkDay: boolean;
   isNationalHoliday: boolean;
   eventName: string;
   state: 'workday' | 'holiday' | 'weekend';
 }
 
-onMounted(async () => {
-  await getNationalHolidays();
-  getWorkDaysInYear();
+const props = withDefaults(defineProps<WorkCalendarProps>(), {
+  defaultWorkDays: () => [1, 2, 3, 4, 5],
+  state: 'view',
 });
 
 const currentDate = ref(new Date());
@@ -56,7 +55,7 @@ const currentMonth = ref(currentDate.value.getMonth());
 const currentYear = ref(currentDate.value.getFullYear());
 
 const holidays = ref<Holiday[]>([]);
-const defaultWorkDays = ref<number[]>([1, 2, 3, 4, 5]); // Indexes of weekdays
+const isLoading = shallowRef(false);
 
 const workDaysInYear = ref<string[]>([]); // Stores dates in 'yyyy-mm-dd'
 
@@ -107,11 +106,12 @@ const calendarWeeks = computed(() => {
           currentMonth.value === new Date().getMonth() &&
           currentYear.value === new Date().getFullYear(),
         isWorkDay,
-        eventName: todaysEvent?.localName,
+        isDefaultWorkDay: props.defaultWorkDays.includes(i),
+        eventName: todaysEvent?.eventName,
         isNationalHoliday,
         state: ((): WCDate['state'] => {
           switch (true) {
-            case isNationalHoliday:
+            case isNationalHoliday && !isWorkDay:
               return 'holiday';
             case isWorkDay:
               return 'workday';
@@ -142,13 +142,14 @@ const calendarWeeks = computed(() => {
 
 const getNationalHolidays = async (): Promise<void> => {
   try {
-    const response = await fetch(
-      `https://date.nager.at/api/v3/PublicHolidays/${currentYear.value}/ID`,
-    );
+    isLoading.value = true;
+    const response = await CalendarServices.getHolidays(currentYear.value);
 
-    holidays.value = await response.json();
+    holidays.value = response;
   } catch (error) {
     console.error('Error fetching holidays:', error);
+  } finally {
+    isLoading.value = false;
   }
 };
 
@@ -162,7 +163,7 @@ const getWorkDaysInYear = (): void => {
       const dayOfWeek = dateObj.getDay();
 
       if (
-        defaultWorkDays.value.includes(dayOfWeek) &&
+        props.defaultWorkDays.includes(dayOfWeek) &&
         !holidays.value.some((holiday) => {
           const holidayDate = new Date(holiday.date);
           return (
@@ -183,21 +184,28 @@ const getWorkDaysInYear = (): void => {
 };
 
 const toggleWorkDayState = (day: WCDate): void => {
-  switch (day.state) {
-    case 'workday':
-      removeWorkDay(day.dateString);
-      break;
-    case 'holiday':
-    case 'weekend':
-      workDaysInYear.value.push(
-        formatWorkDateString(currentMonth.value, day.date),
-      );
-      break;
+  if (props.state === 'edit') {
+    switch (day.state) {
+      case 'workday':
+        removeWorkDay(day.dateString);
+        break;
+      case 'holiday':
+      case 'weekend':
+        addWorkDay(day);
+        break;
+    }
   }
 };
 
 const removeWorkDay = (day: string): void => {
   workDaysInYear.value = workDaysInYear.value.filter((d) => d !== day);
+};
+
+const addWorkDay = (day: WCDate): void => {
+  const dateString = formatWorkDateString(currentMonth.value, day.date);
+  if (!workDaysInYear.value.includes(dateString)) {
+    workDaysInYear.value.push(dateString);
+  }
 };
 
 const formatWorkDateString = (month: number, day: number): string => {
@@ -232,9 +240,19 @@ const updateDate = (): void => {
     currentMonth.value,
     new Date().getDate(),
   );
+
   currentYear.value = currentDate.value.getFullYear(); // Ensure year is updated if needed
   currentMonth.value = currentDate.value.getMonth(); // Ensure month is updated if needed
 };
+
+watch(
+  currentYear,
+  async () => {
+    await getNationalHolidays();
+    getWorkDaysInYear();
+  },
+  { immediate: true },
+);
 </script>
 
 <template>
@@ -289,11 +307,18 @@ const updateDate = (): void => {
             :data-wv-national-holiday="day.isNationalHoliday"
             :data-wv-other-month="day.isOtherMonth"
             :data-wv-today="day.isToday"
+            :data-wv-workday="day.isWorkDay"
             @click="toggleWorkDayState(day)"
             class="p-0"
             data-wv-section="day"
           >
+            <Skeleton
+              v-if="isLoading && !day.isOtherMonth"
+              class="!w-12 !h-12"
+              shape="circle"
+            />
             <span
+              v-else-if="!isLoading"
               v-tooltip.top="{
                 value: day.eventName,
                 pt: {
@@ -311,9 +336,9 @@ const updateDate = (): void => {
                 'hidden': day.isOtherMonth,
                 'text-white !rounded-full focus:outline-none focus-visible:outline-none cursor-pointer':
                   day.isWorkDay || day.isNationalHoliday,
+                'bg-danger-500 hover:bg-danger-500/90': day.state === 'holiday',
                 'bg-primary-1000 hover:bg-primary-1000/90':
                   day.state === 'workday',
-                'bg-danger-500 hover:bg-danger-500/90': day.state === 'holiday',
               }"
               :data-p-disabled="day.isOtherMonth"
               aria-selected="false"
@@ -337,7 +362,8 @@ const updateDate = (): void => {
           Jumlah Hari Kerja 2024
         </div>
         <div class="text-xs font-semibold leading-none">
-          {{ workDaysInYear.length }} Hari
+          <Skeleton v-if="isLoading" class="!w-12" />
+          <template v-else>{{ workDaysInYear.length }} Hari</template>
         </div>
       </div>
       <div class="self-stretch justify-between items-start inline-flex">
@@ -345,20 +371,30 @@ const updateDate = (): void => {
           {{ months[currentMonth] }} {{ currentYear }}
         </div>
         <div class="text-xs font-semibold leading-none">
-          {{ workDaysInMonth.length }} Hari
+          <Skeleton v-if="isLoading" class="!w-12" />
+          <template v-else>{{ workDaysInMonth.length }} Hari</template>
         </div>
       </div>
       <ul
         class="self-stretch h-64 flex-col justify-start items-start gap-2 flex overflow-auto"
         style="scrollbar-width: none"
       >
+        <template v-if="isLoading">
+          <Skeleton
+            :key="index"
+            v-for="(_, index) in Array.from({ length: 11 })"
+            :style="`width: ${Math.floor(Math.random() * 90) + 100}px`"
+          />
+        </template>
         <li
           :key="day"
+          v-else
           v-for="day in workDaysInMonth"
           class="inline-flex w-full justify-between"
         >
           {{ day.split('-')[2] }} {{ months[currentMonth] }} {{ currentYear }}
           <Icon
+            v-if="state === 'edit'"
             @click="removeWorkDay(day)"
             class="text-base cursor-pointer hover:scale-110 hover:p-1"
             icon="close"

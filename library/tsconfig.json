@@ -3,7 +3,10 @@
     "allowJs": true,
     "outDir": "dist",
     "declaration": true,
+    "module": "ESNext",
+    "target": "ESNext",
     "declarationDir": "dist",
+    "moduleResolution": "Node",
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
