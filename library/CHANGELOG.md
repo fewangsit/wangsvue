@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.16
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.15...v1.4.16)
+
+### 🩹 Fixes
+
+- TypeError: e.filter is not a function ([e3e0680](https://github.com/fewangsit/wangsvue/commit/e3e0680))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.15
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.14...v1.4.15)
