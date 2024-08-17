@@ -1,15 +1,18 @@
 import { QueryParams } from 'lib/components/datatable/DataTable.vue.d';
 import mitt from 'mitt';
 
+export type TableEvent = {
+  tableName: string;
+};
+
 type Events = {
-  filterTable: {
-    tableName: string;
+  filterTable: TableEvent & {
     filter: QueryParams;
   };
-  searchTable: {
-    tableName: string;
+  searchTable: TableEvent & {
     search: string | undefined;
   };
+  updateTable: TableEvent;
 };
 
 const eventBus = mitt<Events>();

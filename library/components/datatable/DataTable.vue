@@ -23,7 +23,7 @@ import {
   TableColumn,
 } from './DataTable.vue.d';
 
-import { DownloadEvent, UpdateTableEvent } from '../../custom-events.d';
+import { DownloadEvent } from '../../custom-events.d';
 import { filterVisibleMenu } from '../helpers';
 import { exportToExcel, getNestedProperyValue, useToast } from 'lib/utils';
 import { FilterMatchMode, FilterService } from 'primevue/api';
@@ -41,7 +41,7 @@ import MenuClass from '../menu/Menu.vue.d';
 import { Booleanish } from '../ts-helpers';
 import Toast from '../toast/Toast.vue';
 import { cloneDeep } from 'lodash';
-import eventBus from 'lib/event-bus';
+import eventBus, { TableEvent } from 'lib/event-bus';
 
 type Data = Record<string, any>;
 type QueryParams = {
@@ -471,8 +471,8 @@ const removeClassActive = (): void => {
   });
 };
 
-const handleUpdateTableEvent = (event: UpdateTableEvent): void => {
-  if (event.detail.tableName === props.tableName) {
+const handleUpdateTableEvent = (event: TableEvent): void => {
+  if (event.tableName === props.tableName) {
     nextTick(() => refetch()); // Waits untill computed queryparams ready
   }
 };
@@ -499,11 +499,11 @@ const removeFetchAllDataEventListener = (): void => {
 };
 
 const listenUpdateTableEvent = (): void => {
-  window.addEventListener('updateTable', handleUpdateTableEvent);
+  eventBus.on('updateTable', handleUpdateTableEvent);
 };
 
 const removeUpdateTableListener = (): void => {
-  window.removeEventListener('updateTable', handleUpdateTableEvent);
+  eventBus.off('updateTable');
 };
 
 const fetchAllDataHandler = (event: CustomEvent<string>): void => {
