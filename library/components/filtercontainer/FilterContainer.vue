@@ -59,7 +59,6 @@ const getOptions = async (
 ): Promise<void> => {
   try {
     loading.value[field] = true;
-    filterOption.value[field] = [];
     const params = { [field]: true };
     const option = await fn?.(params);
 
@@ -78,6 +77,8 @@ const clear = (): void => {
 const apply = handleSubmit((values) => {
   const fields = Object.keys(values);
   const parsedFilter: QueryParams = {};
+
+  eventBus.emit('hideOverlay');
 
   fields.forEach((field) => {
     parsedFilter[field] = JSON.stringify(values[field]);
@@ -102,7 +103,7 @@ defineOptions({
       ' bg-primary-50 rounded-[7px] [&>*]:w-full [&>*]min-w-0',
       'grid items-end grid-cols-4 p-3 gap-4',
     ]"
-    @submit="apply"
+    @submit.prevent="apply"
     data-name="filter-container"
   >
     <slot :key="contentKey">

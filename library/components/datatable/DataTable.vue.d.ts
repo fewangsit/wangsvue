@@ -13,8 +13,8 @@ export type QueryParams = {
   [key: string]: any;
 };
 
-export type FetchResponse<T = Data> = {
-  data: T[];
+export type FetchResponse<T = Data[]> = {
+  data: T;
   totalRecords: number;
 };
 

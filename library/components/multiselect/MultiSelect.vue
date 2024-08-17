@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref, watch } from 'vue';
+import { computed, onMounted, onUnmounted, reactive, ref, watch } from 'vue';
 import { useField } from 'vee-validate';
 
 import type {
@@ -17,6 +17,7 @@ import ValidatorMessage from 'lib/components/validatormessage/ValidatorMessage.v
 import FieldWrapper from 'lib/components/fieldwrapper/FieldWrapper.vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import InputGroup from 'lib/components/inputgroup/InputGroup.vue';
+import eventBus from 'lib/event-bus';
 
 const props = withDefaults(defineProps<MultiSelectProps>(), {
   display: 'chip',
@@ -27,6 +28,11 @@ const emit = defineEmits<MultiSelectEmits>();
 
 onMounted(() => {
   setValidator();
+  eventBus.on('hideOverlay', hideOverlay);
+});
+
+onUnmounted(() => {
+  eventBus.off('hideOverlay');
 });
 
 const isShowOverlay = ref<boolean>(false);

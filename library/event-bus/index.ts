@@ -14,6 +14,7 @@ type Events = {
   };
   updateTable: TableEvent;
   showFilter: TableEvent & { show: boolean };
+  hideOverlay: unknown;
 };
 
 const eventBus = mitt<Events>();
