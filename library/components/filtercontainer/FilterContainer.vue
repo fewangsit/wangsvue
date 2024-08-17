@@ -60,7 +60,7 @@ const getOptions = async (
   try {
     loading.value[field] = true;
     filterOption.value[field] = [];
-    const params = { [field + 'Options']: true };
+    const params = { [field]: true };
     const option = await fn?.(params);
 
     if (option) filterOption.value[field] = option;

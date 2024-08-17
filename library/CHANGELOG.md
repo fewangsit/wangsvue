@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.17
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.16...v1.4.17)
+
+### 🩹 Fixes
+
+- **FIlterContainer:** Include params in fetchOptionFn ([b191e20](https://github.com/fewangsit/wangsvue/commit/b191e20))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.16
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.15...v1.4.16)
