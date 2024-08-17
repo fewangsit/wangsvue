@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.20
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.19...v1.4.20)
+
+### 🩹 Fixes
+
+- **FilterContainer:** Multiselect does not hide the panel when the form submitted ([5bace35](https://github.com/fewangsit/wangsvue/commit/5bace35))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.19
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.18...v1.4.19)
