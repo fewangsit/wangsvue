@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.15
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.14...v1.4.15)
+
+### 💅 Refactors
+
+- **FilterContainer:** Integrate with ButtonFilter using eventBus ([c33e95e](https://github.com/fewangsit/wangsvue/commit/c33e95e))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.14
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.13...v1.4.14)
