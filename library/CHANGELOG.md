@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.14
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.13...v1.4.14)
+
+### 💅 Refactors
+
+- Change eventListener to eventBus ([f2d95ae](https://github.com/fewangsit/wangsvue/commit/f2d95ae))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.13
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.12...v1.4.13)
