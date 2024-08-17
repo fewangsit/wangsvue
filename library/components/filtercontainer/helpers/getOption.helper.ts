@@ -1,11 +1,11 @@
 import {
-  FilterField,
   FilterOptions,
   LoadingFilters,
+  MultiSelectFilterField,
 } from '../FilterContainer.vue.d';
 
 const getOptions = async (
-  fn: FilterField['fetchOptionFn'],
+  fn: MultiSelectFilterField['fetchOptionFn'],
   field: string,
   filterOption: FilterOptions,
   loading: LoadingFilters,

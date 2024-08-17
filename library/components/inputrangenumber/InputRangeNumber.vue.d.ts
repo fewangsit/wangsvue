@@ -39,7 +39,8 @@ export interface InputRangeNumberProps {
    */
   disabled?: boolean;
   useValidator?: boolean;
-  fieldName?: string;
+  minFieldName?: string;
+  maxFieldName?: string;
 }
 
 /**

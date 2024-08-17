@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.12
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.11...v1.4.12)
+
+### 🚀 Enhancements
+
+- Dunamicaly create filter fields and intergrate with datatable ([a90b1c0](https://github.com/fewangsit/wangsvue/commit/a90b1c0))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.11
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.10...v1.4.11)

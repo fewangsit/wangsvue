@@ -2,25 +2,24 @@ import { MultiSelectOption } from 'lib/types/options.type';
 import { DefineComponent, Slot } from 'vue';
 import { MultiSelectProps } from '../multiselect/MultiSelect.vue.d';
 import { InputRangeNumberProps } from '../inputrangenumber/InputRangeNumber.vue.d';
-export interface BaseFilterField {
+
+// More specific filter field types
+export interface MultiSelectFilterField extends MultiSelectProps {
+  type: 'multiselect';
   field: string; // The name of the field this filter applies to
   fetchOptionFn?:
     | ((args?: any) => MultiSelectOption[]) // Sync function to fetch options
     | ((args?: any) => Promise<MultiSelectOption[]>); // Async function
-  tooltip?: string; // Optional tooltip for the filter
 }
 
-// More specific filter field types
-export interface MultiSelectFilterField
-  extends BaseFilterField,
-    MultiSelectProps {
-  type: 'multiselect';
-}
-
-export interface RangeNumberFilterField
-  extends BaseFilterField,
-    InputRangeNumberProps {
+export interface RangeNumberFilterField extends InputRangeNumberProps {
   type: 'rangenumber';
+  /**
+   * Specify min and max field
+   *
+   * @example ['minAge', 'maxAge']
+   */
+  fields: string[];
 }
 
 export type FilterField = MultiSelectFilterField | RangeNumberFilterField;

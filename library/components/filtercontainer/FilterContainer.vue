@@ -3,9 +3,9 @@ import { onMounted, ref } from 'vue';
 import Button from '../button/Button.vue';
 import {
   FilterContainerProps,
-  FilterField,
   FilterOptions,
   LoadingFilters,
+  MultiSelectFilterField,
 } from './FilterContainer.vue.d';
 import { useForm } from 'vee-validate';
 import InputRangeNumber from '../inputrangenumber/InputRangeNumber.vue';
@@ -47,7 +47,7 @@ onMounted(() => {
 });
 
 const getOptions = async (
-  fn: FilterField['fetchOptionFn'],
+  fn: MultiSelectFilterField['fetchOptionFn'],
   field: string,
 ): Promise<void> => {
   try {
@@ -93,11 +93,12 @@ const apply = handleSubmit((values) => {
     data-name="filter-container"
   >
     <slot :key="contentKey">
-      <template :key="field.field" v-for="field of fields">
+      <template :key="field" v-for="field of fields">
         <InputRangeNumber
           v-if="field.type == 'rangenumber'"
           v-bind="field"
-          :field-name="field.field"
+          :max-field-name="field.fields[1]"
+          :min-field-name="field.fields[0]"
           use-validator
         />
         <MultiSelect

@@ -18,23 +18,41 @@ const props = withDefaults(defineProps<InputRangeNumberProps>(), {
 });
 
 const emit = defineEmits<InputRangeNumberEmits>();
-const field = reactive<FieldValidation<number[]>>({ value: [] });
+
+// Separate fields for min and max values
+const minField = reactive<FieldValidation<number>>({ value: undefined });
+const maxField = reactive<FieldValidation<number>>({ value: undefined });
 
 onMounted(() => {
   if (props.useValidator) {
+    // Initialize minField and maxField with vee-validate
     Object.assign(
-      field,
+      minField,
       useField(
-        props.fieldName ?? 'rangeNumberInput',
+        props.minFieldName ?? 'minNumberInput',
         () => {
           return true;
         },
-        { initialValue: [] },
+        { initialValue: undefined },
+      ),
+    );
+
+    Object.assign(
+      maxField,
+      useField(
+        props.maxFieldName ?? 'maxNumberInput',
+        () => {
+          return true;
+        },
+        { initialValue: undefined },
       ),
     );
 
     // Check if props.value is not null or undefined
-    if (props.value?.length) field.value = props.value;
+    if (props.value) {
+      minField.value = props.value[0];
+      maxField.value = props.value[1];
+    }
   }
 });
 
@@ -42,20 +60,17 @@ const handleKeydown = (event: KeyboardEvent): void => {
   if (event.key === 'Enter') emit('submit');
 };
 
-// Watch for changes in the rangeValue model
-watch(
-  field.value,
-  (newValue) => {
-    emit('update:modelValue', newValue);
-  },
-  { deep: true },
-); // Deep watch to detect changes within the array
+// Watch for changes in minField and maxField
+watch([minField.value, maxField.value], ([newMinValue, newMaxValue]) => {
+  emit('update:modelValue', [newMinValue, newMaxValue]);
+});
 
 // Watch for changes in props.value (for async data)
 watch(
   () => props.value,
   (value) => {
-    field.value = value ?? [];
+    minField.value = value ? value[0] : undefined;
+    maxField.value = value ? value[1] : undefined;
   },
   { once: true },
 );
@@ -64,10 +79,12 @@ watch(
 watch(
   () => props.modelValue,
   (model) => {
-    field.value = model ?? [];
+    minField.value = model ? model[0] : undefined;
+    maxField.value = model ? model[1] : undefined;
   },
 );
 </script>
+
 <template>
   <FieldWrapper :label="props.label">
     <div
@@ -77,7 +94,7 @@ watch(
       <InputGroup>
         <InputNumber
           v-bind="$props"
-          v-model="field.value[0]"
+          v-model="minField.value"
           :placeholder="placeholder ?? minPlaceholder"
           :use-grouping="false"
           @keydown="handleKeydown"
@@ -89,8 +106,8 @@ watch(
       <InputGroup>
         <InputNumber
           v-bind="$props"
-          v-model="field.value[1]"
-          :placeholder="placeholder ?? minPlaceholder"
+          v-model="maxField.value"
+          :placeholder="placeholder ?? maxPlaceholder"
           :use-grouping="false"
           @keydown="handleKeydown"
           class="w-full"

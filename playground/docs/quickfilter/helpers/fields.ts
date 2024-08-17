@@ -97,7 +97,7 @@ export const filterFields: FilterField[] = [
   },
   {
     label: 'Asset Value',
-    field: 'assetValue',
+    fields: ['minValue', 'maxValue'],
     type: 'rangenumber',
     placeholder: '0',
   },
