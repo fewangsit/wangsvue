@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.4.13
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.12...v1.4.13)
+
+### 💅 Refactors
+
+- Add icons ([53967f6](https://github.com/fewangsit/wangsvue/commit/53967f6))
+
+### 🌊 Types
+
+- Update dialog confirm dts ([8f89332](https://github.com/fewangsit/wangsvue/commit/8f89332))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.4.12
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.11...v1.4.12)
