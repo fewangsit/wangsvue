@@ -8,6 +8,10 @@ type ConfirmDialogSeverity = 'success' | 'danger';
  */
 export interface DialogConfirmProps {
   /**
+   * The boolean modelValue to show dialog.
+   */
+  visible: boolean;
+  /**
    * The header of the dialog.
    */
   header: string;
