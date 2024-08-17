@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
 import QuickFilter from 'lib/components/quickfilter/QuickFilter.vue';
-import { fields } from './helpers/fields';
+import { quickFilterField } from './helpers/fields';
 
 const filters = ref();
 </script>
@@ -15,7 +15,7 @@ const filters = ref();
     </template>
     <template #content>
       Filters: {{ filters }}
-      <QuickFilter :fields="fields" @change="filters = $event" />
+      <QuickFilter :fields="quickFilterField" @change="filters = $event" />
     </template>
   </Card>
 </template>

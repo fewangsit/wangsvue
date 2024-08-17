@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import { shallowRef } from 'vue';
 import Icon from '../icon/Icon.vue';
-import { ButtonSearchEmits } from './ButtonSearch.vue.d';
+import { ButtonSearchEmits, ButtonSearchProps } from './ButtonSearch.vue.d';
 import InputText from 'primevue/inputtext';
+import eventBus from 'lib/event-bus';
+
+withDefaults(defineProps<ButtonSearchProps>(), {
+  tableName: 'datatable',
+});
 
 defineEmits<ButtonSearchEmits>();
 
@@ -43,7 +48,7 @@ const updateInput = (event: Event): void => {
       'grid grid-cols-[max-content,auto,max-content] items-center gap-0.5 max-w-[224px] h-6',
       'border-b border-primary-100',
     ]"
-    @submit.prevent="$emit('search', query)"
+    @submit.prevent="eventBus.emit('searchTable', { tableName, search: query })"
     data-section-name="searchbox-form"
   >
     <Icon
@@ -52,7 +57,7 @@ const updateInput = (event: Event): void => {
           query = undefined;
           showSearchInput = false;
           $emit('collapsed');
-          $emit('search', undefined);
+          eventBus.emit('searchTable', { tableName, search: undefined });
         }
       "
       class="w-6 h-6 text-grayscale-900 shrink-0"

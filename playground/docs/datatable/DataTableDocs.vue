@@ -16,16 +16,15 @@ import response from './data/response.json';
 import ButtonDownload from 'lib/components/buttondownload/ButtonDownload.vue';
 import ButtonFilter from 'lib/components/buttonfilter/ButtonFilter.vue';
 import FilterContainer from 'lib/components/filtercontainer/FilterContainer.vue';
-import InputText from 'lib/components/inputtext/InputText.vue';
 import ButtonSearch from 'lib/components/buttonsearch/ButtonSearch.vue';
 import QuickFilter from 'lib/components/quickfilter/QuickFilter.vue';
-import { fields } from '../quickfilter/helpers/fields';
+import { filterFields, quickFilterField } from '../quickfilter/helpers/fields';
 import { FilterMatchMode } from 'primevue/api';
 import { cloneDeep } from 'lodash';
 import ButtonBulkAction from 'lib/components/buttonbulkaction/ButtonBulkAction.vue';
 
 const dataSelected = shallowRef();
-const showFilter = shallowRef(false);
+const showFilter = shallowRef(true);
 
 const singleAction: MenuItem[] = [
   {
@@ -175,22 +174,18 @@ const quickFiltering = (payload: QueryParams): void => {
         <ButtonDownload file-name="Download" />
         <ButtonFilter v-model:show-filter="showFilter" />
       </div>
-      <QuickFilter :fields="fields" @change="quickFiltering" />
+      <QuickFilter :fields="quickFilterField" @change="quickFiltering" />
 
-      <FilterContainer v-show="showFilter">
-        <InputText label="Nama" placeholder="Tulis nama" />
-      </FilterContainer>
+      <FilterContainer v-show="showFilter" :fields="filterFields" />
       <DataTable
         v-model:selected-data="dataSelected"
         :columns="tableColumns"
         :fetch-function="getTableData"
-        :filters="filters"
         :options="singleAction"
         :total-disabled-rows="1"
         data-key="_id"
         disable-key="isDefault"
         lazy
-        selection-type="checkbox"
         use-option
         use-paginator
       />

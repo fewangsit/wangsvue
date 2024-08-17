@@ -18,7 +18,7 @@ const apply = (): void => alert('Filter Diterapkan!');
           {{ index + 1 }} Field Layout
         </span>
 
-        <FilterContainer @apply="apply" @clear="clear">
+        <FilterContainer :fields="[]" @apply="apply" @clear="clear">
           <div
             :key="fieldIndex"
             v-for="(el, fieldIndex) of Array.from({ length: index + 1 })"

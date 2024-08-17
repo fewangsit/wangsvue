@@ -1,9 +1,25 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import Button from '../button/Button.vue';
-import { FilterContainerEmits } from './FilterContainer.vue.d';
+import {
+  FilterContainerProps,
+  FilterField,
+  FilterOptions,
+  LoadingFilters,
+} from './FilterContainer.vue.d';
+import { useForm } from 'vee-validate';
+import InputRangeNumber from '../inputrangenumber/InputRangeNumber.vue';
+import MultiSelect from '../multiselect/MultiSelect.vue';
+import { QueryParams } from '../datatable/DataTable.vue.d';
+import eventBus from 'lib/event-bus';
 
-defineEmits<FilterContainerEmits>();
+const props = withDefaults(defineProps<FilterContainerProps>(), {
+  tableName: 'datatable',
+});
+
+const { resetForm, handleSubmit } = useForm();
+const loading = ref<LoadingFilters>({});
+const filterOption = ref<FilterOptions>({});
 
 const container = ref<HTMLDivElement | null>(null);
 const contentKey = ref<number>(0);
@@ -29,28 +45,80 @@ onMounted(() => {
     }
   }
 });
+
+const getOptions = async (
+  fn: FilterField['fetchOptionFn'],
+  field: string,
+): Promise<void> => {
+  try {
+    loading.value[field] = true;
+    filterOption.value[field] = [];
+    const option = await fn?.();
+
+    if (option) filterOption.value[field] = option;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    loading.value[field] = false;
+  }
+};
+
+const clear = (): void => {
+  resetForm();
+};
+
+const apply = handleSubmit((values) => {
+  const fields = Object.keys(values);
+  const parsedFilter: QueryParams = {};
+
+  fields.forEach((field) => {
+    parsedFilter[field] = JSON.stringify(values[field]);
+  });
+
+  eventBus.emit('filterTable', {
+    tableName: props.tableName,
+    filter: parsedFilter,
+  });
+});
 </script>
 
 <template>
-  <div
+  <form
     ref="container"
     :class="[
       ' bg-primary-50 rounded-[7px] [&>*]:w-full [&>*]min-w-0',
       'grid items-end grid-cols-4 p-3 gap-4',
     ]"
+    @submit="apply"
     data-name="filter-container"
   >
-    <slot :key="contentKey" />
+    <slot :key="contentKey">
+      <template :key="field.field" v-for="field of fields">
+        <InputRangeNumber
+          v-if="field.type == 'rangenumber'"
+          v-bind="field"
+          :field-name="field.field"
+          use-validator
+        />
+        <MultiSelect
+          v-else-if="field.type == 'multiselect'"
+          v-bind="field"
+          :field-name="field.field"
+          :loading="loading[field.field]"
+          :options="filterOption[field.field]"
+          @show="getOptions(field.fetchOptionFn, field.field)"
+          option-label="label"
+          option-value="value"
+          use-validator
+        />
+      </template>
+    </slot>
     <div
       class="flex items-end justify-end gap-2"
       data-section-name="filter-action-buttons"
     >
-      <Button
-        @click="$emit('clear'), contentKey++"
-        label="Bersihkan Field"
-        text
-      />
-      <Button @click="$emit('apply')" label="Terapkan" severity="success" />
+      <Button @click="clear" label="Bersihkan Field" text />
+      <Button @click="apply" label="Terapkan" severity="success" />
     </div>
-  </div>
+  </form>
 </template>

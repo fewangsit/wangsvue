@@ -6,6 +6,7 @@ import {
   onMounted,
   onBeforeUnmount,
   nextTick,
+  shallowRef,
 } from 'vue';
 
 import PrimeDataTable, {
@@ -40,6 +41,7 @@ import MenuClass from '../menu/Menu.vue.d';
 import { Booleanish } from '../ts-helpers';
 import Toast from '../toast/Toast.vue';
 import { cloneDeep } from 'lodash';
+import eventBus from 'lib/event-bus';
 
 type Data = Record<string, any>;
 type QueryParams = {
@@ -80,12 +82,27 @@ onMounted(async () => {
   listenFetchAllDataEvent();
 
   registerCustomFilter();
+  eventBus.on('filterTable', (e) => {
+    if (e.tableName === props.tableName) {
+      filterQueryParams.value = e.filter;
+      handleFilter();
+    }
+  });
+
+  eventBus.on('searchTable', (e) => {
+    if (e.tableName === props.tableName) {
+      searchQueryParam.value = e.search;
+      handleFilter();
+    }
+  });
 });
 
 onBeforeUnmount(() => {
   removeDownloadEventListener();
   removeFetchAllDataEventListener();
   removeUpdateTableListener();
+  eventBus.off('filterTable');
+  eventBus.off('searchTable');
 });
 
 const toast = useToast();
@@ -190,15 +207,18 @@ const tableKey = ref<number>(0);
 const customColumnKey = ref<number>(0);
 const totalRecords = ref<number>();
 const loadingTable = ref<boolean>(false);
+// Stores filter from event bus FilterContainer
+const filterQueryParams = shallowRef<QueryParams>({});
+const searchQueryParam = shallowRef<string>();
 
 const queryParams = computed<QueryParams>(() => ({
   ...props.defaultQueryParams,
-  search: props.search,
+  search: props.lazy ? searchQueryParam.value : props.search,
   page: props.usePaginator ? tablePage.value : undefined,
   limit: props.usePaginator ? tableRows.value : undefined,
   sortOrder: sortOrder.value,
   sortBy: sortField.value,
-  ...props.filters, // This will resets the previous filters.
+  ...(props.lazy ? filterQueryParams.value : props.filters), // This will resets the previous filters.
 }));
 
 const isArrayIncluded = (
@@ -305,6 +325,8 @@ const refetch = async (): Promise<void> => {
    */
 
   loadingTable.value = true;
+  // eslint-disable-next-line no-console
+  console.log('🚀 ~ refetch ~ queryParams.value:', queryParams.value);
   const { data, totalRecords: total = 0 } =
     (await props.fetchFunction?.(queryParams.value)) ?? {};
 

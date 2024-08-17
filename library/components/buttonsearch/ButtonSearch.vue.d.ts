@@ -13,7 +13,9 @@ export type ButtonSearchEmits = {
   collapsed: [];
 };
 
-export interface ButtonSearchProps {}
+export interface ButtonSearchProps {
+  tableName?: string;
+}
 
 /**
  * **TSVue - ButtonSearch**

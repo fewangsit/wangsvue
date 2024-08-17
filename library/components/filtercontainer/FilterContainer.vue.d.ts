@@ -1,12 +1,42 @@
+import { MultiSelectOption } from 'lib/types/options.type';
 import { DefineComponent, Slot } from 'vue';
+import { MultiSelectProps } from '../multiselect/MultiSelect.vue.d';
+import { InputRangeNumberProps } from '../inputrangenumber/InputRangeNumber.vue.d';
+export interface BaseFilterField {
+  field: string; // The name of the field this filter applies to
+  fetchOptionFn?:
+    | ((args?: any) => MultiSelectOption[]) // Sync function to fetch options
+    | ((args?: any) => Promise<MultiSelectOption[]>); // Async function
+  tooltip?: string; // Optional tooltip for the filter
+}
 
-/**
- * Emits for FilterContainer component
- */
-export type FilterContainerEmits = {
-  apply: [];
-  clear: [];
-};
+// More specific filter field types
+export interface MultiSelectFilterField
+  extends BaseFilterField,
+    MultiSelectProps {
+  type: 'multiselect';
+}
+
+export interface RangeNumberFilterField
+  extends BaseFilterField,
+    InputRangeNumberProps {
+  type: 'rangenumber';
+}
+
+export type FilterField = MultiSelectFilterField | RangeNumberFilterField;
+
+export type FilterOptions = Record<string, MultiSelectOption[]>;
+export type LoadingFilters = Record<string, boolean>;
+
+export interface FilterContainerProps {
+  /**
+   * Specify the table name integrated with this filter.
+   *
+   * @default datatable - the default table name
+   */
+  tableName?: string;
+  fields: FilterField[];
+}
 
 /**
  * Slots for FilterContainer component
@@ -28,8 +58,8 @@ export type FilterContainerSlots = {
  * @group components
  */
 declare const FilterContainer: DefineComponent<
-  object,
-  FilterContainerEmits,
+  FilterContainerProps,
+  unknown,
   FilterContainerSlots
 >;
 
