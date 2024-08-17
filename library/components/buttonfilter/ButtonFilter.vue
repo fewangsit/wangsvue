@@ -1,15 +1,11 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-import type {
-  ButtonFilterProps,
-  ButtonFilterEmits,
-} from './ButtonFilter.vue.d';
 import { WangsIcons } from '../icon/Icon.vue.d';
+import { ButtonFilterProps } from './ButtonFilter.vue.d';
 import Icon from '../icon/Icon.vue';
+import eventBus from 'lib/event-bus';
 
-defineProps<ButtonFilterProps>();
-
-const emit = defineEmits<ButtonFilterEmits>();
+const { tableName } = defineProps<ButtonFilterProps>();
 
 const active = ref<boolean>(false);
 const filterIcon = ref<WangsIcons>('filter');
@@ -18,7 +14,7 @@ const toggleFilterPanel = (): void => {
   active.value = !active.value;
   filterIcon.value = active.value ? 'filter-fill' : 'filter';
 
-  emit('update:showFilter', active.value);
+  eventBus.emit('showFilter', { tableName, show: active.value });
 };
 </script>
 

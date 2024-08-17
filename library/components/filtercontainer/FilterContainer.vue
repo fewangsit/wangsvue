@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onBeforeUnmount, onMounted, ref, shallowRef } from 'vue';
 import Button from '../button/Button.vue';
 import {
   FilterContainerProps,
@@ -22,7 +22,8 @@ const loading = ref<LoadingFilters>({});
 const filterOption = ref<FilterOptions>({});
 
 const container = ref<HTMLDivElement | null>(null);
-const contentKey = ref<number>(0);
+const contentKey = shallowRef<number>(0);
+const showFilter = shallowRef(false);
 
 onMounted(() => {
   if (container.value) {
@@ -44,6 +45,12 @@ onMounted(() => {
       }
     }
   }
+
+  eventBus.on('showFilter', (e) => (showFilter.value = e.show));
+});
+
+onBeforeUnmount(() => {
+  eventBus.off('showFilter');
 });
 
 const getOptions = async (
@@ -80,11 +87,16 @@ const apply = handleSubmit((values) => {
     filter: parsedFilter,
   });
 });
+
+defineOptions({
+  inheritAttrs: false,
+});
 </script>
 
 <template>
   <form
     ref="container"
+    v-show="showFilter"
     :class="[
       ' bg-primary-50 rounded-[7px] [&>*]:w-full [&>*]min-w-0',
       'grid items-end grid-cols-4 p-3 gap-4',

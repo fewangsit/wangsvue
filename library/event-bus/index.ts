@@ -13,6 +13,7 @@ type Events = {
     search: string | undefined;
   };
   updateTable: TableEvent;
+  showFilter: TableEvent & { show: boolean };
 };
 
 const eventBus = mitt<Events>();

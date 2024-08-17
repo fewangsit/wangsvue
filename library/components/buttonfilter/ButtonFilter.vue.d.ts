@@ -1,16 +1,12 @@
 import { DefineComponent } from 'vue';
 
 export interface ButtonFilterProps {
-  showFilter?: boolean;
+  /**
+   * Integrate with datatable with table name
+   */
+  tableName?: string;
 }
 
-export type ButtonFilterEmits = {
-  'update:showFilter': [state: boolean];
-};
-
-declare const ButtonFilter: DefineComponent<
-  ButtonFilterProps,
-  ButtonFilterEmits
->;
+declare const ButtonFilter: DefineComponent<ButtonFilterProps>;
 
 export default ButtonFilter;
