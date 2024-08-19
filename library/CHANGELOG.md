@@ -1,6 +1,39 @@
 # Changelog
 
 
+## v1.4.21
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.13...v1.4.21)
+
+### 🩹 Fixes
+
+- TypeError: e.filter is not a function ([e3e0680](https://github.com/fewangsit/wangsvue/commit/e3e0680))
+- **FIlterContainer:** Include params in fetchOptionFn ([b191e20](https://github.com/fewangsit/wangsvue/commit/b191e20))
+- **FilterContainer:** Multiselect does not hide the panel when the form submitted ([5bace35](https://github.com/fewangsit/wangsvue/commit/5bace35))
+- Type error on getOption.helper.ts ([ff8fdd1](https://github.com/fewangsit/wangsvue/commit/ff8fdd1))
+- Type error on inpur range number ([13935a5](https://github.com/fewangsit/wangsvue/commit/13935a5))
+
+### 💅 Refactors
+
+- Change eventListener to eventBus ([f2d95ae](https://github.com/fewangsit/wangsvue/commit/f2d95ae))
+- **FilterContainer:** Integrate with ButtonFilter using eventBus ([c33e95e](https://github.com/fewangsit/wangsvue/commit/c33e95e))
+- Update datatable fetch response interface ([f61c722](https://github.com/fewangsit/wangsvue/commit/f61c722))
+
+### 🏡 Chore
+
+- **release:** V1.4.13 ([3551051](https://github.com/fewangsit/wangsvue/commit/3551051))
+- **release:** V1.4.14 ([81dbf50](https://github.com/fewangsit/wangsvue/commit/81dbf50))
+- **release:** V1.4.15 ([6b2d726](https://github.com/fewangsit/wangsvue/commit/6b2d726))
+- **release:** V1.4.16 ([6138dfd](https://github.com/fewangsit/wangsvue/commit/6138dfd))
+- **release:** V1.4.17 ([16090ae](https://github.com/fewangsit/wangsvue/commit/16090ae))
+- **release:** V1.4.18 ([962ed35](https://github.com/fewangsit/wangsvue/commit/962ed35))
+- **release:** V1.4.19 ([14d1d7b](https://github.com/fewangsit/wangsvue/commit/14d1d7b))
+- **release:** V1.4.20 ([1331597](https://github.com/fewangsit/wangsvue/commit/1331597))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.20
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.19...v1.4.20)
