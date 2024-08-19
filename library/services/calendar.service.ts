@@ -73,8 +73,8 @@ const getHolidays = async (year: number): Promise<Holiday[]> => {
       maxAttendees: 1,
       // MaxResults: 250,
       sanitizeHtml: true,
-      timeMin: `${year}-01-01T00:00:00Z`,
-      timeMax: `${year}-12-31T00:00:00Z`,
+      timeMin: `${year - 1}-01-01T00:00:00Z`,
+      timeMax: `${year + 1}-12-31T00:00:00Z`,
       key: API_KEY,
     };
 

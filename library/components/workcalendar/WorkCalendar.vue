@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { ref, computed, shallowRef, watch } from 'vue';
+import { ref, computed, shallowRef, onMounted } from 'vue';
+import { WorkCalendarProps } from './WorkCalendar.vue.d';
+import { isEmptyObject } from 'lib/utils';
+import { useField } from 'vee-validate';
 import Icon from '../icon/Icon.vue';
 import CalendarServices, { Holiday } from 'lib/services/calendar.service';
 import Skeleton from 'primevue/skeleton';
-import { WorkCalendarProps } from './WorkCalendar.vue.d';
 
 const months = [
   'Januari',
@@ -50,9 +52,31 @@ const props = withDefaults(defineProps<WorkCalendarProps>(), {
   state: 'view',
 });
 
+onMounted(async () => {
+  await initWorkDays();
+});
+
 const currentDate = ref(new Date());
 const currentMonth = ref(currentDate.value.getMonth());
 const currentYear = ref(currentDate.value.getFullYear());
+
+const workDaysInMonth = ref<string[]>([]);
+const calendarWeeks = ref<WCDate[][]>([]);
+
+const holidays = ref<Holiday[]>([]);
+const isLoading = shallowRef(false);
+
+const workDaysField = useField<WorkCalendarProps['workDays']>(
+  'workDays',
+  undefined,
+  {
+    initialValue: {
+      [currentYear.value - 1]: [''],
+      [currentYear.value]: [''],
+      [currentYear.value + 1]: [''],
+    },
+  },
+);
 
 const disablePrevButton = computed(() => {
   const today = new Date();
@@ -70,30 +94,56 @@ const disableNextButton = computed(() => {
   );
 });
 
-const holidays = ref<Holiday[]>([]);
-const isLoading = shallowRef(false);
-
-const workDaysInYear = ref<string[]>([]); // Stores dates in 'yyyy-mm-dd'
-
 const datesInMonth = computed(() => {
   return calendarWeeks.value.flatMap((week) => week);
 });
 
-const workDaysInMonth = computed(() => {
-  const workDays = workDaysInYear.value.filter((day) => {
-    const dateObj = new Date(day);
-    return dateObj.getMonth() === currentMonth.value;
-  });
+const getNationalHolidays = async (): Promise<void> => {
+  try {
+    isLoading.value = true;
+    const response = await CalendarServices.getHolidays(currentYear.value);
 
-  // Sort the work days using the Date object for comparison
-  workDays.sort((a, b) => {
-    return +new Date(a) - +new Date(b);
-  });
+    holidays.value = response;
+  } catch (error) {
+    console.error('Error fetching holidays:', error);
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+const getWorkDaysInYear = (year: number): string[] => {
+  const workDays: string[] = props.workDays?.[year] ?? [];
+
+  if (isEmptyObject(props.workDays)) {
+    for (let month = 0; month < 12; month++) {
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateObj = new Date(year, month, day);
+        const dayOfWeek = dateObj.getDay();
+
+        if (
+          props.defaultWorkDays.includes(dayOfWeek) &&
+          !holidays.value.some((holiday) => {
+            const holidayDate = new Date(holiday.date);
+            return (
+              holidayDate.getFullYear() === year &&
+              holidayDate.getMonth() === month &&
+              holidayDate.getDate() === day
+            );
+          })
+        ) {
+          // Format the date as "yyyy-mm-dd" (ISO 8601 format)
+          const formattedDate = formatWorkDateString(year, month, day);
+          workDays.push(formattedDate);
+        }
+      }
+    }
+  }
 
   return workDays;
-});
+};
 
-const calendarWeeks = computed(() => {
+const getCalendarWeeks = (): WCDate[][] => {
   const firstDayOfMonth = new Date(currentYear.value, currentMonth.value, 1);
   const lastDayOfMonth = new Date(currentYear.value, currentMonth.value + 1, 0);
   const daysInMonth = lastDayOfMonth.getDate();
@@ -116,7 +166,11 @@ const calendarWeeks = computed(() => {
         );
       });
 
-      const dateString = formatWorkDateString(currentMonth.value, currentDay);
+      const dateString = formatWorkDateString(
+        currentYear.value,
+        currentMonth.value,
+        currentDay,
+      );
       const isWorkDay = workDaysInMonth.value.includes(dateString);
       const isNationalHoliday = todaysEvent != undefined;
 
@@ -161,51 +215,22 @@ const calendarWeeks = computed(() => {
   }
 
   return weeks;
-});
-
-const getNationalHolidays = async (): Promise<void> => {
-  try {
-    isLoading.value = true;
-    const response = await CalendarServices.getHolidays(currentYear.value);
-
-    holidays.value = response;
-  } catch (error) {
-    console.error('Error fetching holidays:', error);
-  } finally {
-    isLoading.value = false;
-  }
 };
 
-const getWorkDaysInYear = (): void => {
-  const workDays: string[] = props.workDays ?? [];
+const getWorkDaysInMonth = (): string[] => {
+  const workDays = workDaysField.value.value[currentYear.value].filter(
+    (day) => {
+      const dateObj = new Date(day);
+      return dateObj.getMonth() === currentMonth.value;
+    },
+  );
 
-  if (!props.workDays?.length) {
-    for (let month = 0; month < 12; month++) {
-      const daysInMonth = new Date(currentYear.value, month + 1, 0).getDate();
-      for (let day = 1; day <= daysInMonth; day++) {
-        const dateObj = new Date(currentYear.value, month, day);
-        const dayOfWeek = dateObj.getDay();
+  // Sort the work days using the Date object for comparison
+  workDays.sort((a, b) => {
+    return +new Date(a) - +new Date(b);
+  });
 
-        if (
-          props.defaultWorkDays.includes(dayOfWeek) &&
-          !holidays.value.some((holiday) => {
-            const holidayDate = new Date(holiday.date);
-            return (
-              holidayDate.getFullYear() === currentYear.value &&
-              holidayDate.getMonth() === month &&
-              holidayDate.getDate() === day
-            );
-          })
-        ) {
-          // Format the date as "yyyy-mm-dd" (ISO 8601 format)
-          const formattedDate = formatWorkDateString(month, day);
-          workDays.push(formattedDate);
-        }
-      }
-    }
-  }
-
-  workDaysInYear.value = workDays;
+  return workDays;
 };
 
 const toggleWorkDayState = (day: WCDate): void => {
@@ -223,18 +248,33 @@ const toggleWorkDayState = (day: WCDate): void => {
 };
 
 const removeWorkDay = (day: string): void => {
-  workDaysInYear.value = workDaysInYear.value.filter((d) => d !== day);
+  workDaysField.value.value[currentYear.value] = workDaysField.value.value[
+    currentYear.value
+  ].filter((d) => d !== day);
+
+  updateCalendar();
 };
 
 const addWorkDay = (day: WCDate): void => {
-  const dateString = formatWorkDateString(currentMonth.value, day.date);
-  if (!workDaysInYear.value.includes(dateString)) {
-    workDaysInYear.value.push(dateString);
+  const dateString = formatWorkDateString(
+    currentYear.value,
+    currentMonth.value,
+    day.date,
+  );
+
+  if (!workDaysField.value.value[currentYear.value].includes(dateString)) {
+    workDaysField.value.value[currentYear.value].push(dateString);
   }
+
+  updateCalendar();
 };
 
-const formatWorkDateString = (month: number, day: number): string => {
-  return `${currentYear.value}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+const formatWorkDateString = (
+  year: number,
+  month: number,
+  day: number,
+): string => {
+  return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 };
 
 const prevMonth = (): void => {
@@ -268,18 +308,25 @@ const updateDate = (): void => {
 
   currentYear.value = currentDate.value.getFullYear(); // Ensure year is updated if needed
   currentMonth.value = currentDate.value.getMonth(); // Ensure month is updated if needed
+
+  updateCalendar();
 };
 
-watch(
-  currentYear,
-  async () => {
-    await getNationalHolidays();
-    getWorkDaysInYear();
-  },
-  { immediate: true },
-);
+const updateCalendar = (): void => {
+  workDaysInMonth.value = getWorkDaysInMonth();
+  calendarWeeks.value = getCalendarWeeks();
+};
 
-watch(() => props.workDays, getWorkDaysInYear, { once: true });
+const initWorkDays = async (): Promise<void> => {
+  await getNationalHolidays();
+  workDaysField.value.value = {
+    [currentYear.value - 1]: getWorkDaysInYear(currentYear.value - 1),
+    [currentYear.value]: getWorkDaysInYear(currentYear.value),
+    [currentYear.value + 1]: getWorkDaysInYear(currentYear.value + 1),
+  };
+
+  updateCalendar();
+};
 </script>
 
 <template>
@@ -396,7 +443,10 @@ watch(() => props.workDays, getWorkDaysInYear, { once: true });
         </div>
         <div class="text-xs font-semibold leading-none">
           <Skeleton v-if="isLoading" class="!w-12" />
-          <template v-else>{{ workDaysInYear.length }} Hari</template>
+          <template v-else>
+            {{ workDaysField[currentYear]?.length }}
+            Hari
+          </template>
         </div>
       </div>
       <div class="self-stretch justify-between items-start inline-flex">

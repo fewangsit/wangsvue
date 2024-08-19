@@ -8,9 +8,15 @@ export type WorkCalendarState = 'view' | 'edit';
 export interface WorkCalendarProps {
   /**
    * Initial Value or saved Workdays in a year
-   * Ddate string in format: "yyyy-mm-dd" (ISO 8601 format)
+   * Date string in format: "yyyy-mm-dd" (ISO 8601 format)
+   *
+   * @example {
+   *  2020: ['2020-05-01'],
+   *  2021: ['2021-05-01'],
+   *  2022: ['2021-05-01'],
+   * }
    */
-  workDays?: string[];
+  workDays?: Record<number, string[]>;
   /**
    * Default work days in number array 0 - 6
    *
@@ -21,11 +27,6 @@ export interface WorkCalendarProps {
    * @default 'view'
    */
   state?: WorkCalendarState;
-  /**
-   * Type of view to display.
-   * @defaultValue date
-   */
-  view?: 'date' | 'month' | 'year' | undefined;
 }
 
 /**
