@@ -54,6 +54,22 @@ const currentDate = ref(new Date());
 const currentMonth = ref(currentDate.value.getMonth());
 const currentYear = ref(currentDate.value.getFullYear());
 
+const disablePrevButton = computed(() => {
+  const today = new Date();
+
+  return (
+    currentMonth.value === 0 && currentYear.value === today.getFullYear() - 1
+  );
+});
+
+const disableNextButton = computed(() => {
+  const today = new Date();
+
+  return (
+    currentMonth.value === 11 && currentYear.value === today.getFullYear() + 1
+  );
+});
+
 const holidays = ref<Holiday[]>([]);
 const isLoading = shallowRef(false);
 
@@ -277,8 +293,11 @@ watch(() => props.workDays, getWorkDaysInYear, { once: true });
         data-section-name="navigation"
       >
         <Icon
+          :class="[
+            'text-2xl text-general-900 rotate-180',
+            { '!text-general-300 pointer-events-none': disablePrevButton },
+          ]"
           @click="prevMonth"
-          class="text-2xl text-general-900 rotate-180"
           icon="arrow-right"
         />
 
@@ -288,8 +307,11 @@ watch(() => props.workDays, getWorkDaysInYear, { once: true });
         </div>
 
         <Icon
+          :class="[
+            'text-2xl text-general-900',
+            { '!text-general-300 pointer-events-none': disableNextButton },
+          ]"
           @click="nextMonth"
-          class="text-2xl text-general-900"
           icon="arrow-right"
         />
       </div>
