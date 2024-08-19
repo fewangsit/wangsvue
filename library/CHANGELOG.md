@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v1.4.22
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.21...v1.4.22)
+
+### 🚀 Enhancements
+
+- **WorkCalendar:** Sort the workdays ([a9ea77d](https://github.com/fewangsit/wangsvue/commit/a9ea77d))
+- **WorkCalendar:** Limit the available year to only 3 year,  curent pass and next year ([b7b2052](https://github.com/fewangsit/wangsvue/commit/b7b2052))
+
+### 💅 Refactors
+
+- Update datatable fetch response interface ([f61c722](https://github.com/fewangsit/wangsvue/commit/f61c722))
+
+### 🏡 Chore
+
+- **release:** V1.4.21 ([1b7a338](https://github.com/fewangsit/wangsvue/commit/1b7a338))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.21
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.13...v1.4.21)

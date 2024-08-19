@@ -83,6 +83,7 @@ import {
   DialogForm,
   InputNumber,
   InputEmail,
+  WorkCalendar,
 } from './components';
 
 export default {
@@ -107,6 +108,7 @@ export default {
     app.component('Menu', Menu);
     app.component('ButtonSearch', ButtonSearch);
     app.component('Calendar', Calendar);
+    app.component('WorkCalendar', WorkCalendar);
     app.component('InputRangeNumber', InputRangeNumber);
     app.component('QuickFilter', QuickFilter);
     app.component('Breadcrumb', Breadcrumb);
@@ -168,6 +170,7 @@ export {
   ButtonSearch,
   InputRangeNumber,
   Calendar,
+  WorkCalendar,
   InputText,
   Form,
   DialogForm,
