@@ -2,7 +2,7 @@ import { QueryParams } from 'lib/components/datatable/DataTable.vue.d';
 import mitt from 'mitt';
 
 export type TableEvent = {
-  tableName: string;
+  tableName?: string;
 };
 
 type Events = {

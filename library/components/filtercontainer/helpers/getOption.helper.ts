@@ -11,7 +11,7 @@ const getOptions = async (
   loading: LoadingFilters,
 ): Promise<void> => {
   try {
-    loading.value[field] = true;
+    loading[field] = true;
     filterOption[field] = [];
     const option = await fn?.();
 
@@ -19,7 +19,7 @@ const getOptions = async (
   } catch (error) {
     console.error(error);
   } finally {
-    loading.value[field] = false;
+    loading[field] = false;
   }
 };
 
