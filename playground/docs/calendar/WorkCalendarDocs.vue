@@ -5,14 +5,19 @@ import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
 import WorkCalendar from 'lib/components/workcalendar/WorkCalendar.vue';
 import Button from 'lib/components/button/Button.vue';
+
 const calendarState = shallowRef<WorkCalendarState>('view');
+const defaultWorkDay = shallowRef<number[]>([1, 2, 3, 4, 5]);
 </script>
 
 <template>
   <Card>
     <template #header> <DocTitle name="Work Calendar" /> </template>
     <template #content>
-      <WorkCalendar :state="calendarState" />
+      <WorkCalendar
+        :default-work-days="defaultWorkDay"
+        :state="calendarState"
+      />
     </template>
     <template #footer>
       <Button

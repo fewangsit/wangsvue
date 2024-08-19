@@ -7,9 +7,10 @@ export type WorkCalendarState = 'view' | 'edit';
  */
 export interface WorkCalendarProps {
   /**
-   * WorkCalendar modelValue is date timestamp: 1706423635731
+   * Initial Value or saved Workdays in a year
+   * Ddate string in format: "yyyy-mm-dd" (ISO 8601 format)
    */
-  modelValue?: number | number[];
+  workDays?: string[];
   /**
    * Default work days in number array 0 - 6
    *

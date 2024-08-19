@@ -64,10 +64,17 @@ const datesInMonth = computed(() => {
 });
 
 const workDaysInMonth = computed(() => {
-  return workDaysInYear.value.filter((day) => {
+  const workDays = workDaysInYear.value.filter((day) => {
     const dateObj = new Date(day);
     return dateObj.getMonth() === currentMonth.value;
   });
+
+  // Sort the work days using the Date object for comparison
+  workDays.sort((a, b) => {
+    return +new Date(a) - +new Date(b);
+  });
+
+  return workDays;
 });
 
 const calendarWeeks = computed(() => {
@@ -154,28 +161,30 @@ const getNationalHolidays = async (): Promise<void> => {
 };
 
 const getWorkDaysInYear = (): void => {
-  const workDays: string[] = [];
+  const workDays: string[] = props.workDays ?? [];
 
-  for (let month = 0; month < 12; month++) {
-    const daysInMonth = new Date(currentYear.value, month + 1, 0).getDate();
-    for (let day = 1; day <= daysInMonth; day++) {
-      const dateObj = new Date(currentYear.value, month, day);
-      const dayOfWeek = dateObj.getDay();
+  if (!props.workDays?.length) {
+    for (let month = 0; month < 12; month++) {
+      const daysInMonth = new Date(currentYear.value, month + 1, 0).getDate();
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateObj = new Date(currentYear.value, month, day);
+        const dayOfWeek = dateObj.getDay();
 
-      if (
-        props.defaultWorkDays.includes(dayOfWeek) &&
-        !holidays.value.some((holiday) => {
-          const holidayDate = new Date(holiday.date);
-          return (
-            holidayDate.getFullYear() === currentYear.value &&
-            holidayDate.getMonth() === month &&
-            holidayDate.getDate() === day
-          );
-        })
-      ) {
-        // Format the date as "yyyy-mm-dd" (ISO 8601 format)
-        const formattedDate = formatWorkDateString(month, day);
-        workDays.push(formattedDate);
+        if (
+          props.defaultWorkDays.includes(dayOfWeek) &&
+          !holidays.value.some((holiday) => {
+            const holidayDate = new Date(holiday.date);
+            return (
+              holidayDate.getFullYear() === currentYear.value &&
+              holidayDate.getMonth() === month &&
+              holidayDate.getDate() === day
+            );
+          })
+        ) {
+          // Format the date as "yyyy-mm-dd" (ISO 8601 format)
+          const formattedDate = formatWorkDateString(month, day);
+          workDays.push(formattedDate);
+        }
       }
     }
   }
@@ -253,6 +262,8 @@ watch(
   },
   { immediate: true },
 );
+
+watch(() => props.workDays, getWorkDaysInYear, { once: true });
 </script>
 
 <template>
@@ -359,7 +370,7 @@ watch(
     >
       <div class="self-stretch justify-between items-start inline-flex">
         <div class="text-xs font-semibold leading-none">
-          Jumlah Hari Kerja 2024
+          Jumlah Hari Kerja {{ currentYear }}
         </div>
         <div class="text-xs font-semibold leading-none">
           <Skeleton v-if="isLoading" class="!w-12" />
