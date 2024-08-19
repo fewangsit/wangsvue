@@ -14,8 +14,11 @@ export type QueryParams = {
 };
 
 export type FetchResponse<T = Data[]> = {
-  data: T;
-  totalRecords: number;
+  message: string;
+  data: {
+    data: T;
+    totalRecords: number;
+  };
 };
 
 export type TableCellComponent = {

@@ -299,14 +299,16 @@ const dispatchUpdateTotalRecordsEvent = (total?: number): void => {
 /**
  * Used in export excel and event listener from Bulkaction select all data.
  */
-const fetchAllData = async (isDownload?: boolean): Promise<FetchResponse> => {
+const fetchAllData = async (
+  isDownload?: boolean,
+): Promise<FetchResponse['data']> => {
   const params = cloneDeep(queryParams.value);
   delete params.page;
   delete params.limit;
 
-  const response = await props.fetchFunction?.(params);
-  if (!response && isDownload) throw new Error(); // To make the downloadExcel function catches the error and show toast error.
-  return response ?? { data: [], totalRecords: 0 };
+  const { data } = (await props.fetchFunction?.(params)) ?? {};
+  if (!data && isDownload) throw new Error(); // To make the downloadExcel function catches the error and show toast error.
+  return data ?? { data: [], totalRecords: 0 };
 };
 
 const refetch = async (): Promise<void> => {
@@ -326,10 +328,9 @@ const refetch = async (): Promise<void> => {
 
   loadingTable.value = true;
   // eslint-disable-next-line no-console
-  console.log('🚀 ~ refetch ~ queryParams.value:', queryParams.value);
-  const { data, totalRecords: total = 0 } =
-    (await props.fetchFunction?.(queryParams.value)) ?? {};
+  const response = await props.fetchFunction?.(queryParams.value);
 
+  const { data, totalRecords: total = 0 } = response?.data ?? {};
   dispatchUpdateTotalRecordsEvent(total);
   currentPageTableData.value = data;
   totalRecords.value = total;
