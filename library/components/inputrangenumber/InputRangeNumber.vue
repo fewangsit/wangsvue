@@ -20,8 +20,12 @@ const props = withDefaults(defineProps<InputRangeNumberProps>(), {
 const emit = defineEmits<InputRangeNumberEmits>();
 
 // Separate fields for min and max values
-const minField = reactive<FieldValidation<number>>({ value: undefined });
-const maxField = reactive<FieldValidation<number>>({ value: undefined });
+const minField = reactive<FieldValidation<number | undefined>>({
+  value: undefined,
+});
+const maxField = reactive<FieldValidation<number | undefined>>({
+  value: undefined,
+});
 
 onMounted(() => {
   if (props.useValidator) {

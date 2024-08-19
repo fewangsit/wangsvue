@@ -50,7 +50,7 @@ export type InputRangeNumberEmits = {
   /**
    * Emits when the both input already filled.
    */
-  'update:modelValue': [payload?: number[]];
+  'update:modelValue': [payload?: (number | undefined)[]];
   'submit': [];
 };
 
