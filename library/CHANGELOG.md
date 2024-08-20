@@ -1,6 +1,34 @@
 # Changelog
 
 
+## v1.4.39
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.32...v1.4.39)
+
+### 🚀 Enhancements
+
+- Add fetchOptionResponse ([520d6b4](https://github.com/fewangsit/wangsvue/commit/520d6b4))
+
+### 🩹 Fixes
+
+- **Menu:** Close panel on item clicked ([42d0e01](https://github.com/fewangsit/wangsvue/commit/42d0e01))
+- Type error on mitt.ts ([82ef32f](https://github.com/fewangsit/wangsvue/commit/82ef32f))
+- **KtTJ2fjs:** Wrong toast message for serverity error ([854d44e](https://github.com/fewangsit/wangsvue/commit/854d44e))
+
+### 🏡 Chore
+
+- **release:** V1.4.32 ([5f9698e](https://github.com/fewangsit/wangsvue/commit/5f9698e))
+- **release:** V1.4.33 ([7579aca](https://github.com/fewangsit/wangsvue/commit/7579aca))
+- **release:** V1.4.34 ([faee724](https://github.com/fewangsit/wangsvue/commit/faee724))
+- **release:** V1.4.35 ([bb2a1e0](https://github.com/fewangsit/wangsvue/commit/bb2a1e0))
+- **release:** V1.4.36 ([fbbca8a](https://github.com/fewangsit/wangsvue/commit/fbbca8a))
+- **release:** V1.4.37 ([12e8786](https://github.com/fewangsit/wangsvue/commit/12e8786))
+- **release:** V1.4.38 ([b55ba08](https://github.com/fewangsit/wangsvue/commit/b55ba08))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.38
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.37...v1.4.38)
