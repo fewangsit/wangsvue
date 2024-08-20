@@ -23,6 +23,7 @@ cat << EOF > package.json
     ".": "./wangsvue.es.js",
     "./style.css": "./style.css",
     "./types": "./types",
+    "./event-bus": "./event-bus",
     "./colors.config.json": "./colors.config.json"
   }
 }
