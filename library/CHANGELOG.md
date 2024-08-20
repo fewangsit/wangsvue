@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v1.4.28
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.27...v1.4.28)
+
+### 💅 Refactors
+
+- **FieldWrapper:** Show text optional for non mandatory field ([dc2c734](https://github.com/fewangsit/wangsvue/commit/dc2c734))
+
+### 📦 Build
+
+- Update postbuild script to copy ts-helper and  folder types corectly ([16c0481](https://github.com/fewangsit/wangsvue/commit/16c0481))
+
+### 🏡 Chore
+
+- **release:** V1.4.27 ([44ae3fb](https://github.com/fewangsit/wangsvue/commit/44ae3fb))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.27
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.26...v1.4.27)
