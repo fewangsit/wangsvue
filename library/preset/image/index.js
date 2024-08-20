@@ -1,5 +1,3 @@
-import { ringClass } from '../global';
-
 export default {
   root: ({ props }) => ({
     class: [
@@ -7,7 +5,6 @@ export default {
       'shrink-0',
       { 'rounded-full': props.rounded },
       { 'rounded-lg': !props.rounded },
-      ...ringClass,
     ],
   }),
   image: ({ props }) => ({
@@ -23,8 +20,8 @@ export default {
       'absolute',
       'w-full h-full',
       'inset-0 opacity-0 transition-opacity duration-300',
-      'bg-transparent text-surface-0',
-      'hover:cursor-pointer hover:bg-header-weak hover:opacity-50',
+      'bg-transparent text-white',
+      'hover:cursor-pointer hover:bg-header-weak hover:opacity-100',
     ],
     style: 'border-radius: inherit',
   },
@@ -36,7 +33,7 @@ export default {
       'flex items-center justify-center',
       'fixed top-0 left-0',
       'w-full h-full',
-      'bg-surface-900/85',
+      'bg-grayscale-950/90',
     ],
   },
   toolbar: {
@@ -50,7 +47,7 @@ export default {
       'mr-2',
       'rounded-full',
       'text-white bg-transparent',
-      'hover:text-white hover:bg-surface-0/10',
+      'hover:text-white hover:bg-white/10',
       'focus:outline-none focus:outline-offset-0 focus:ring focus:ring-primary-400/50 dark:focus:ring-primary-300/50',
       'transition duration-200 ease-in-out',
     ],
@@ -66,7 +63,7 @@ export default {
       'mr-2',
       'rounded-full',
       'text-white bg-transparent',
-      'hover:text-white hover:bg-surface-0/10',
+      'hover:text-white hover:bg-white/10',
       'focus:outline-none focus:outline-offset-0 focus:ring focus:ring-primary-400/50 dark:focus:ring-primary-300/50',
       'transition duration-200 ease-in-out',
     ],
@@ -82,7 +79,7 @@ export default {
       'mr-2',
       'rounded-full',
       'text-white bg-transparent',
-      'hover:text-white hover:bg-surface-0/10',
+      'hover:text-white hover:bg-white/10',
       'focus:outline-none focus:outline-offset-0 focus:ring focus:ring-primary-400/50 dark:focus:ring-primary-300/50',
       'transition duration-200 ease-in-out',
     ],
@@ -98,7 +95,7 @@ export default {
       'mr-2',
       'rounded-full',
       'text-white bg-transparent',
-      'hover:text-white hover:bg-surface-0/10',
+      'hover:text-white hover:bg-white/10',
       'focus:outline-none focus:outline-offset-0 focus:ring focus:ring-primary-400/50 dark:focus:ring-primary-300/50',
       'transition duration-200 ease-in-out',
     ],
@@ -114,7 +111,7 @@ export default {
       'mr-2',
       'rounded-full',
       'text-white bg-transparent',
-      'hover:text-white hover:bg-surface-0/10',
+      'hover:text-white hover:bg-white/10',
       'focus:outline-none focus:outline-offset-0 focus:ring focus:ring-primary-400/50 dark:focus:ring-primary-300/50',
       'transition duration-200 ease-in-out',
     ],

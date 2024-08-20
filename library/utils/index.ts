@@ -2,6 +2,7 @@ import useToast from './toast.util';
 import { formatUserName } from './textFormatter.util';
 import filterOptions from './filterOptions.util';
 import exportToExcel from './exportToExcel.util';
+import getImageURL, { genPlaceholder } from './getImageURL.util';
 
 const getNestedProperyValue = (
   object: object,
@@ -52,4 +53,6 @@ export {
   exportToExcel,
   filterOptions,
   isEmptyObject,
+  getImageURL,
+  genPlaceholder,
 };
