@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v1.4.32
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.29...v1.4.32)
+
+### 💅 Refactors
+
+- **QuickFilter:** Integrate with datatable by table name ([304a421](https://github.com/fewangsit/wangsvue/commit/304a421))
+
+### 🏡 Chore
+
+- **release:** V1.4.29 ([a06b3e8](https://github.com/fewangsit/wangsvue/commit/a06b3e8))
+- **release:** V1.4.30 ([289cbba](https://github.com/fewangsit/wangsvue/commit/289cbba))
+- **release:** V1.4.31 ([01df879](https://github.com/fewangsit/wangsvue/commit/01df879))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.31
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.30...v1.4.31)

@@ -66,7 +66,10 @@ const handleKeydown = (event: KeyboardEvent): void => {
 
 // Watch for changes in minField and maxField
 watch(
-  [(): number => minField.value, (): number => maxField.value],
+  [
+    (): number | undefined => minField.value,
+    (): number | undefined => maxField.value,
+  ],
   ([newMinValue, newMaxValue]) => {
     emit('update:modelValue', [newMinValue, newMaxValue]);
   },
