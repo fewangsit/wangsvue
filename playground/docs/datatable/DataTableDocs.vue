@@ -20,11 +20,10 @@ import ButtonSearch from 'lib/components/buttonsearch/ButtonSearch.vue';
 import QuickFilter from 'lib/components/quickfilter/QuickFilter.vue';
 import { filterFields, quickFilterField } from '../quickfilter/helpers/fields';
 import { FilterMatchMode } from 'primevue/api';
-import { cloneDeep } from 'lodash';
 import ButtonBulkAction from 'lib/components/buttonbulkaction/ButtonBulkAction.vue';
 
 const dataSelected = shallowRef();
-const showFilter = shallowRef(true);
+const showFilter = shallowRef(false);
 
 const singleAction: MenuItem[] = [
   {
@@ -147,17 +146,6 @@ const filters = ref<any>({
   'status': { value: null, matchMode: FilterMatchMode.IN },
   'assetValue': { value: null, matchMode: FilterMatchMode.BETWEEN },
 });
-
-const quickFiltering = (payload: QueryParams): void => {
-  const newFilter = cloneDeep(filters.value);
-
-  newFilter['category.key'].value = payload.category.key;
-  newFilter['status'].value = payload.status;
-  newFilter['brand.key'].value = payload.brand.key;
-  newFilter['assetValue'].value = payload.assetValue;
-
-  filters.value = newFilter;
-};
 </script>
 
 <template>
@@ -177,7 +165,7 @@ const quickFiltering = (payload: QueryParams): void => {
         <ButtonDownload file-name="Download" />
         <ButtonFilter v-model:show-filter="showFilter" />
       </div>
-      <QuickFilter :fields="quickFilterField" @change="quickFiltering" />
+      <QuickFilter :fields="quickFilterField" />
 
       <FilterContainer v-show="showFilter" :fields="filterFields" />
       <DataTable

@@ -21,6 +21,7 @@ export interface RangeNumberFilterField extends InputRangeNumberProps {
    * @example ['minAge', 'maxAge']
    */
   fields: string[];
+  tooltip?: string;
 }
 
 export interface CalendarFilterField extends CalendarProps {
@@ -50,6 +51,9 @@ export interface FilterContainerProps {
  * Slots for FilterContainer component
  */
 export type FilterContainerSlots = {
+  /**
+   * @deprecated Please use props.fields instead
+   */
   default: Slot;
 };
 

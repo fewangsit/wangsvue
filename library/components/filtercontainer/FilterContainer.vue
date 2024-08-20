@@ -8,12 +8,12 @@ import {
   MultiSelectFilterField,
 } from './FilterContainer.vue.d';
 import { useForm } from 'vee-validate';
-import { QueryParams } from '../datatable/DataTable.vue.d';
 
 import InputRangeNumber from '../inputrangenumber/InputRangeNumber.vue';
 import MultiSelect from '../multiselect/MultiSelect.vue';
 import eventBus from 'lib/event-bus';
 import Calendar from '../calendar/Calendar.vue';
+import applyFilter from './helpers/applyFilter.helper';
 
 const props = withDefaults(defineProps<FilterContainerProps>(), {
   tableName: 'datatable',
@@ -24,7 +24,6 @@ const loading = ref<LoadingFilters>({});
 const filterOption = ref<FilterOptions>({});
 
 const container = ref<HTMLDivElement | null>(null);
-const contentKey = shallowRef<number>(0);
 const showFilter = shallowRef(false);
 
 onMounted(() => {
@@ -77,23 +76,7 @@ const clear = (): void => {
 };
 
 const apply = handleSubmit((values) => {
-  const fields = Object.keys(values);
-  const parsedFilter: QueryParams = {};
-
-  eventBus.emit('multi-select:hide-overlay');
-
-  fields.forEach((field) => {
-    parsedFilter[field] = JSON.stringify(values[field]);
-  });
-
-  eventBus.emit('data-table:apply-filter', {
-    tableName: props.tableName,
-    filter: parsedFilter,
-  });
-
-  eventBus.emit('data-table:clear-selected-data', {
-    tableName: props.tableName,
-  });
+  applyFilter(values, props.tableName);
 });
 
 defineOptions({
@@ -112,35 +95,33 @@ defineOptions({
     @submit.prevent="apply"
     data-name="filter-container"
   >
-    <slot :key="contentKey">
-      <template :key="field" v-for="field of fields">
-        <InputRangeNumber
-          v-if="field.type == 'rangenumber'"
-          v-bind="field"
-          :max-field-name="field.fields[1]"
-          :min-field-name="field.fields[0]"
-          use-validator
-        />
-        <MultiSelect
-          v-else-if="field.type == 'multiselect'"
-          v-bind="field"
-          :field-name="field.field"
-          :loading="loading[field.field]"
-          :options="filterOption[field.field]"
-          @show="getOptions(field.fetchOptionFn, field.field)"
-          option-label="label"
-          option-value="value"
-          use-validator
-        />
-        <Calendar
-          v-else-if="field.type === 'calendar'"
-          v-bind="field"
-          :field-name="field.field"
-          mode="range"
-          use-validator
-        />
-      </template>
-    </slot>
+    <template :key="field" v-for="field of fields">
+      <InputRangeNumber
+        v-if="field.type == 'rangenumber'"
+        v-bind="field"
+        :max-field-name="field.fields[1]"
+        :min-field-name="field.fields[0]"
+        use-validator
+      />
+      <MultiSelect
+        v-else-if="field.type == 'multiselect'"
+        v-bind="field"
+        :field-name="field.field"
+        :loading="loading[field.field]"
+        :options="filterOption[field.field]"
+        @show="getOptions(field.fetchOptionFn, field.field)"
+        option-label="label"
+        option-value="value"
+        use-validator
+      />
+      <Calendar
+        v-else-if="field.type === 'calendar'"
+        v-bind="field"
+        :field-name="field.field"
+        mode="range"
+        use-validator
+      />
+    </template>
     <div
       class="flex items-end justify-end gap-2"
       data-section-name="filter-action-buttons"

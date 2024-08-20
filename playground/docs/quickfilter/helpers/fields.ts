@@ -1,10 +1,9 @@
 import { FilterField } from 'lib/components/filtercontainer/FilterContainer.vue.d';
-import { QuickFilterField } from 'lib/components/quickfilter/QuickFilter.vue.d';
 import { MultiSelectOption } from 'lib/types/options.type';
 
-export const quickFilterField: QuickFilterField[] = [
+export const quickFilterField: FilterField[] = [
   {
-    field: 'category.key',
+    field: 'category',
     type: 'multiselect',
     placeholder: 'Pilih category',
     fetchOptionFn(): MultiSelectOption[] {
@@ -32,7 +31,7 @@ export const quickFilterField: QuickFilterField[] = [
     },
   },
   {
-    field: 'brand.key',
+    field: 'brand',
     type: 'multiselect',
     placeholder: 'Pilih brand',
     fetchOptionFn(): Promise<MultiSelectOption[]> {
@@ -44,7 +43,7 @@ export const quickFilterField: QuickFilterField[] = [
     },
   },
   {
-    field: 'assetValue',
+    fields: ['minValue', 'maxValue'],
     type: 'rangenumber',
     placeholder: '0',
     tooltip: 'Asset Value',

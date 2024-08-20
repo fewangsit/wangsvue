@@ -65,9 +65,12 @@ const handleKeydown = (event: KeyboardEvent): void => {
 };
 
 // Watch for changes in minField and maxField
-watch([minField.value, maxField.value], ([newMinValue, newMaxValue]) => {
-  emit('update:modelValue', [newMinValue, newMaxValue]);
-});
+watch(
+  [(): number => minField.value, (): number => maxField.value],
+  ([newMinValue, newMaxValue]) => {
+    emit('update:modelValue', [newMinValue, newMaxValue]);
+  },
+);
 
 // Watch for changes in props.value (for async data)
 watch(

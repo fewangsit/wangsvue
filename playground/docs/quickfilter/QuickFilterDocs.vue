@@ -15,7 +15,7 @@ const filters = ref();
     </template>
     <template #content>
       Filters: {{ filters }}
-      <QuickFilter :fields="quickFilterField" @change="filters = $event" />
+      <QuickFilter :fields="quickFilterField" />
     </template>
   </Card>
 </template>

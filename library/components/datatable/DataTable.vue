@@ -325,7 +325,6 @@ const refetch = async (): Promise<void> => {
    */
 
   loadingTable.value = true;
-  // eslint-disable-next-line no-console
   const response = await props.fetchFunction?.(queryParams.value);
 
   const { data, totalRecords: total = 0 } = response?.data ?? {};

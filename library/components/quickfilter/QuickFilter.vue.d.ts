@@ -1,34 +1,16 @@
-import { MultiSelectOption } from 'lib/types/options.type';
-import { QueryParams } from '../datatable/DataTable.vue.d';
 import { DefineComponent } from 'vue';
-
-export interface QuickFilterField {
-  field: string;
-  type: 'rangenumber' | 'multiselect';
-  fetchOptionFn?:
-    | ((arrgs?: any) => MultiSelectOption[])
-    | ((arrgs?: any) => Promise<MultiSelectOption[]>);
-  placeholder?: string;
-  tooltip?: string;
-}
+import { FilterField } from '../filtercontainer/FilterContainer.vue.d';
 
 export interface QuickFilterProps {
-  fields: QuickFilterField[];
+  fields: FilterField[];
+  tableName?: string;
 }
-
-export type QuickFilterEmits = {
-  change: [filters: QueryParams];
-};
 
 /**
  * **WangsVue - QuickFilter**
  *
  * @group components
  */
-declare const QuickFilter: DefineComponent<
-  QuickFilterProps,
-  QuickFilterEmits,
-  unknown
->;
+declare const QuickFilter: DefineComponent<QuickFilterProps, unknown, unknown>;
 
 export default QuickFilter;

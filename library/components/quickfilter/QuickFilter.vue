@@ -1,37 +1,41 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import Icon from '../icon/Icon.vue';
-import InputRangeNumber from '../inputrangenumber/InputRangeNumber.vue';
-import MultiSelect from '../multiselect/MultiSelect.vue';
-import {
-  QuickFilterEmits,
-  QuickFilterField,
-  QuickFilterProps,
-} from './QuickFilter.vue.d';
+import { QuickFilterProps } from './QuickFilter.vue.d';
 import { useForm } from 'vee-validate';
 import { MultiSelectOption } from 'lib/types/options.type';
 import { isEmptyObject } from 'lib/utils';
+import { MultiSelectFilterField } from '../filtercontainer/FilterContainer.vue.d';
+import Icon from '../icon/Icon.vue';
+import InputRangeNumber from '../inputrangenumber/InputRangeNumber.vue';
+import MultiSelect from '../multiselect/MultiSelect.vue';
+import applyFilter from '../filtercontainer/helpers/applyFilter.helper';
+import Calendar from '../calendar/Calendar.vue';
 
 const { values, resetForm } = useForm();
 
 const loading = ref<Record<string, boolean>>({});
 const filterOption = ref<Record<string, MultiSelectOption[]>>({});
 
-defineProps<QuickFilterProps>();
-defineEmits<QuickFilterEmits>();
+const props = withDefaults(defineProps<QuickFilterProps>(), {
+  tableName: 'datatable',
+});
 
 const clear = (): void => {
   resetForm();
 };
 
+const apply = (): void => {
+  applyFilter(values, props.tableName);
+};
+
 const getOptions = async (
-  fn: QuickFilterField['fetchOptionFn'],
+  fn: MultiSelectFilterField['fetchOptionFn'],
   field: string,
 ): Promise<void> => {
   try {
     loading.value[field] = true;
-    filterOption.value[field] = [];
-    const option = await fn?.();
+    const params = { [field]: true };
+    const option = await fn?.(params);
 
     if (option) filterOption.value[field] = option;
   } catch (error) {
@@ -44,29 +48,40 @@ const getOptions = async (
 
 <template>
   <div :class="['flex items-center', { 'gap-3': !isEmptyObject(values) }]">
-    <div :class="['grid gap-3', `grid-cols-${fields.length}`]">
-      <template
-        :key="type"
-        v-for="{ type, field, placeholder, fetchOptionFn, tooltip } of fields"
-      >
+    <div
+      :class="['grid gap-3 transition-transform', `grid-cols-${fields.length}`]"
+    >
+      <template :key="field" v-for="field of fields">
         <InputRangeNumber
-          v-if="type == 'rangenumber'"
-          v-tooltip.top="tooltip"
-          :field-name="field"
-          :placeholder="placeholder"
-          @update:model-value="$emit('change', values)"
+          v-if="field.type == 'rangenumber'"
+          v-tooltip.top="field.tooltip"
+          v-bind="field"
+          :label="undefined"
+          :max-field-name="field.fields[1]"
+          :min-field-name="field.fields[0]"
+          @update:model-value="apply"
           use-validator
         />
         <MultiSelect
-          v-else-if="type == 'multiselect'"
-          :field-name="field"
-          :loading="loading[field]"
-          :options="filterOption[field]"
-          :placeholder="placeholder"
-          @show="getOptions(fetchOptionFn, field)"
-          @update:model-value="$emit('change', values)"
+          v-else-if="field.type == 'multiselect'"
+          v-bind="field"
+          :field-name="field.field"
+          :label="undefined"
+          :loading="loading[field.field]"
+          :options="filterOption[field.field]"
+          @show="getOptions(field.fetchOptionFn, field.field)"
+          @update:model-value="apply"
           option-label="label"
           option-value="value"
+          use-validator
+        />
+        <Calendar
+          v-else-if="field.type === 'calendar'"
+          v-bind="field"
+          :field-name="field.field"
+          :label="undefined"
+          @update:model-value="apply"
+          mode="range"
           use-validator
         />
       </template>
