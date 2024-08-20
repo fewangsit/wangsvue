@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { computed, ref, watch } from 'vue';
 import InputSwitch from 'primevue/inputswitch';
 import type {
   ButtonToggleProps,
@@ -13,7 +14,11 @@ const props = withDefaults(defineProps<ButtonToggleProps>(), {
 
 defineEmits<ButtonToggleEmits>();
 
-const model = defineModel<boolean>({ default: false });
+const computedVal = computed(() => props.modelValue);
+
+const model = ref(props.modelValue);
+
+watch(computedVal, (val) => (model.value = val));
 </script>
 
 <template>
