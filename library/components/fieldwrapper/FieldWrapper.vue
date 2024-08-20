@@ -17,7 +17,12 @@ defineProps<FieldWrapperProps>();
       data-ts-section="field-label"
     >
       {{ label }}
-      <span v-if="mandatory" class="text-danger">*</span>
+      <span
+        v-if="!mandatory"
+        class="text-grayscale-700 text-[10px] font-normal leading-4"
+      >
+        (opsional)
+      </span>
       <Icon
         v-if="info"
         :info="info"
