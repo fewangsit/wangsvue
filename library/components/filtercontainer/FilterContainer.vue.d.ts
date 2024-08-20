@@ -34,8 +34,17 @@ export type FilterField =
   | RangeNumberFilterField
   | CalendarFilterField;
 
-export type FilterOptions = Record<string, MultiSelectOption[]>;
+export type FilterOptions<Opt = Record<string, boolean>> = Record<
+  keyof Opt,
+  MultiSelectOption[]
+>;
+
 export type LoadingFilters = Record<string, boolean>;
+
+export type FetchOptionResponse<Opt = Record<string, boolean>> = {
+  message: string;
+  data: FilterOptions<Opt>;
+};
 
 export interface FilterContainerProps {
   /**
