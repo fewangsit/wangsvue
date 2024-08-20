@@ -24,13 +24,13 @@ onMounted(() => {
   window.addEventListener('updateTotalRecords', updateTotalRecordsHandler);
   window.addEventListener('disableBulkAction', disableBulkAction);
 
-  eventBus.on('update:selectedData', handleUpdateSelectedData);
+  eventBus.on('data-table:update-selected-data', handleUpdateSelectedData);
 });
 
 onUnmounted(() => {
   window.removeEventListener('updateTotalRecords', updateTotalRecordsHandler);
   window.removeEventListener('disableBulkAction', disableBulkAction);
-  eventBus.off('update:selectedData');
+  eventBus.off('data-table:update-selected-data');
 });
 
 const menu = ref();
@@ -61,7 +61,9 @@ const selectAllData = (): void => {
 
 const unSelectAllData = (): void => {
   emit('update:selectedData', []);
-  eventBus.emit('clear:selectedData', { tableName: props.tableName });
+  eventBus.emit('data-table:clear-selected-data', {
+    tableName: props.tableName,
+  });
 };
 
 const disableBulkAction = (event: CustomEvent): void => {
@@ -85,7 +87,9 @@ const updateTotalRecordsHandler = (
   }
 };
 
-const handleUpdateSelectedData = (e: Events['update:selectedData']): void => {
+const handleUpdateSelectedData = (
+  e: Events['data-table:update-selected-data'],
+): void => {
   if (e.tableName === props.tableName) {
     dataSelected.value = e.data;
     emit('update:selectedData', e.data);

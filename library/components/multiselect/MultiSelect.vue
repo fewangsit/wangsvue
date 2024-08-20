@@ -28,11 +28,11 @@ const emit = defineEmits<MultiSelectEmits>();
 
 onMounted(() => {
   setValidator();
-  eventBus.on('hideOverlay', hideOverlay);
+  eventBus.on('multi-select:hide-overlay', hideOverlay);
 });
 
 onUnmounted(() => {
-  eventBus.off('hideOverlay');
+  eventBus.off('multi-select:hide-overlay');
 });
 
 const isShowOverlay = ref<boolean>(false);

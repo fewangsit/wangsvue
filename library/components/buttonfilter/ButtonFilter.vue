@@ -14,7 +14,7 @@ const toggleFilterPanel = (): void => {
   active.value = !active.value;
   filterIcon.value = active.value ? 'filter-fill' : 'filter';
 
-  eventBus.emit('showFilter', { tableName, show: active.value });
+  eventBus.emit('show-filter', { tableName, show: active.value });
 };
 </script>
 

@@ -16,7 +16,7 @@ declare global {
     'fetchAllData': CustomEvent<string>; // Param: The table name
     'updateTotalRecords': CustomEvent<{ total: number; name: string }>;
     'disableBulkAction': CustomEvent<boolean>;
-    'updateTable': UpdateTableEvent;
+    'data-table:update': UpdateTableEvent;
     'showingToast:severity': CustomEvent<string>;
   }
 }

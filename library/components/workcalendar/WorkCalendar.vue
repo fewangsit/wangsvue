@@ -6,6 +6,7 @@ import { useField } from 'vee-validate';
 import Icon from '../icon/Icon.vue';
 import CalendarServices, { Holiday } from 'lib/services/calendar.service';
 import Skeleton from 'primevue/skeleton';
+import eventBus from 'lib/event-bus';
 
 const months = [
   'Januari',
@@ -54,6 +55,8 @@ const props = withDefaults(defineProps<WorkCalendarProps>(), {
 
 onMounted(async () => {
   initCalendarWeeks();
+  eventBus.on('work-calendar:reset-month', resetDefaultThisMonth);
+  eventBus.on('work-calendar:reset-year', resetDefaultThisYear);
 
   await initWorkDays();
 });
@@ -61,6 +64,11 @@ onMounted(async () => {
 const currentDate = ref(new Date());
 const currentMonth = ref(currentDate.value.getMonth());
 const currentYear = ref(currentDate.value.getFullYear());
+const defaultWorkDaysInOverallYear = ref<WorkCalendarProps['workDays']>({
+  [currentYear.value - 1]: [''],
+  [currentYear.value]: [''],
+  [currentYear.value + 1]: [''],
+});
 
 const workDaysInMonth = ref<string[]>([]);
 const calendarWeeks = ref<WCDate[][]>([]);
@@ -113,33 +121,44 @@ const getNationalHolidays = async (): Promise<void> => {
   }
 };
 
-const getWorkDaysInYear = (year: number): string[] => {
+const getDefaultWorkDaysInYear = (year: number): string[] => {
+  const workDays: string[] = [];
+
+  for (let month = 0; month < 12; month++) {
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dateObj = new Date(year, month, day);
+      const dayOfWeek = dateObj.getDay();
+
+      if (
+        props.defaultWorkDays.includes(dayOfWeek) &&
+        !holidays.value.some((holiday) => {
+          const holidayDate = new Date(holiday.date);
+          return (
+            holidayDate.getFullYear() === year &&
+            holidayDate.getMonth() === month &&
+            holidayDate.getDate() === day
+          );
+        })
+      ) {
+        // Format the date as "yyyy-mm-dd" (ISO 8601 format)
+        const formattedDate = formatWorkDateString(year, month, day);
+        workDays.push(formattedDate);
+      }
+    }
+  }
+
+  return workDays;
+};
+
+const getWorkDaysInYear = (
+  year: number,
+  defaultWorkDays: string[],
+): string[] => {
   const workDays: string[] = props.workDays?.[year] ?? [];
 
   if (isEmptyObject(props.workDays)) {
-    for (let month = 0; month < 12; month++) {
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-      for (let day = 1; day <= daysInMonth; day++) {
-        const dateObj = new Date(year, month, day);
-        const dayOfWeek = dateObj.getDay();
-
-        if (
-          props.defaultWorkDays.includes(dayOfWeek) &&
-          !holidays.value.some((holiday) => {
-            const holidayDate = new Date(holiday.date);
-            return (
-              holidayDate.getFullYear() === year &&
-              holidayDate.getMonth() === month &&
-              holidayDate.getDate() === day
-            );
-          })
-        ) {
-          // Format the date as "yyyy-mm-dd" (ISO 8601 format)
-          const formattedDate = formatWorkDateString(year, month, day);
-          workDays.push(formattedDate);
-        }
-      }
-    }
+    workDays.concat(defaultWorkDays);
   }
 
   return workDays;
@@ -326,13 +345,60 @@ const initCalendarWeeks = (): void => {
 
 const initWorkDays = async (): Promise<void> => {
   await getNationalHolidays();
+
+  const passYear = currentYear.value - 1;
+  const onGoingYear = currentYear.value;
+  const nextYear = currentYear.value + 1;
+
+  defaultWorkDaysInOverallYear.value = {
+    [currentYear.value - 1]: getDefaultWorkDaysInYear(passYear),
+    [currentYear.value]: getDefaultWorkDaysInYear(onGoingYear),
+    [currentYear.value + 1]: getDefaultWorkDaysInYear(nextYear),
+  };
+
   workDaysField.value.value = {
-    [currentYear.value - 1]: getWorkDaysInYear(currentYear.value - 1),
-    [currentYear.value]: getWorkDaysInYear(currentYear.value),
-    [currentYear.value + 1]: getWorkDaysInYear(currentYear.value + 1),
+    [currentYear.value - 1]: getWorkDaysInYear(
+      passYear,
+      defaultWorkDaysInOverallYear[passYear],
+    ),
+
+    [currentYear.value]: getWorkDaysInYear(
+      onGoingYear,
+      defaultWorkDaysInOverallYear[onGoingYear],
+    ),
+
+    [currentYear.value + 1]: getWorkDaysInYear(
+      nextYear,
+      defaultWorkDaysInOverallYear[nextYear],
+    ),
   };
 
   updateCalendar();
+};
+
+const resetDefaultThisMonth = (): void => {
+  datesInMonth.value.forEach(
+    ({ isDefaultWorkDay, isOtherMonth, dateString }) => {
+      if (
+        !isOtherMonth &&
+        isDefaultWorkDay &&
+        !workDaysInMonth.value.includes(dateString)
+      ) {
+        workDaysField.value.value?.[currentYear.value].push(dateString);
+      }
+    },
+  );
+
+  updateCalendar();
+};
+
+const resetDefaultThisYear = (): void => {
+  if (workDaysField.value.value) {
+    workDaysField.value.value[currentYear.value] =
+      defaultWorkDaysInOverallYear.value[currentYear.value];
+
+    updateCalendar();
+  }
 };
 </script>
 

@@ -82,21 +82,21 @@ onMounted(async () => {
   listenFetchAllDataEvent();
 
   registerCustomFilter();
-  eventBus.on('filterTable', (e) => {
+  eventBus.on('data-table:apply-filter', (e) => {
     if (e.tableName === props.tableName) {
       filterQueryParams.value = e.filter;
       handleFilter();
     }
   });
 
-  eventBus.on('searchTable', (e) => {
+  eventBus.on('search-table', (e) => {
     if (e.tableName === props.tableName) {
       searchQueryParam.value = e.search;
       handleFilter();
     }
   });
 
-  eventBus.on('clear:selectedData', (e) => {
+  eventBus.on('data-table:clear-selected-data', (e) => {
     if (e.tableName === props.tableName) {
       dataSelected.value = [];
     }
@@ -107,9 +107,9 @@ onBeforeUnmount(() => {
   removeDownloadEventListener();
   removeFetchAllDataEventListener();
   removeUpdateTableListener();
-  eventBus.off('filterTable');
-  eventBus.off('searchTable');
-  eventBus.off('clear:selectedData');
+  eventBus.off('data-table:apply-filter');
+  eventBus.off('search-table');
+  eventBus.off('data-table:clear-selected-data');
 });
 
 const toast = useToast();
@@ -498,11 +498,11 @@ const removeFetchAllDataEventListener = (): void => {
 };
 
 const listenUpdateTableEvent = (): void => {
-  eventBus.on('updateTable', handleUpdateTableEvent);
+  eventBus.on('data-table:update', handleUpdateTableEvent);
 };
 
 const removeUpdateTableListener = (): void => {
-  eventBus.off('updateTable');
+  eventBus.off('data-table:update');
 };
 
 const fetchAllDataHandler = (event: CustomEvent<string>): void => {
@@ -793,7 +793,7 @@ watch(dataSelected, (newSelectedData: Data[]) => {
   emit('selectData', newSelectedData);
   emit('update:selectedData', newSelectedData);
 
-  eventBus.emit('update:selectedData', {
+  eventBus.emit('data-table:update-selected-data', {
     tableName: props.tableName,
     data: newSelectedData,
   });

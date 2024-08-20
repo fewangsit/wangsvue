@@ -7,6 +7,7 @@ import WorkCalendar from 'lib/components/workcalendar/WorkCalendar.vue';
 import Button from 'lib/components/button/Button.vue';
 
 import { useForm } from 'vee-validate';
+import eventBus from 'lib/event-bus';
 
 const { values } = useForm();
 
@@ -747,7 +748,23 @@ const workDays = {
       />
     </template>
     <template #footer>
+      <template v-if="calendarState === 'edit'">
+        <Button
+          @click="eventBus.emit('work-calendar:reset-month')"
+          class="ml-auto"
+          label="Reset Default This Month"
+          text
+        />
+        <Button
+          @click="eventBus.emit('work-calendar:reset-year')"
+          class="ml-1"
+          label="Reset Default This Year"
+          text
+        />
+      </template>
+
       <Button
+        :class="calendarState === 'edit' ? 'ml-1' : 'ml-auto'"
         :label="calendarState === 'edit' ? 'Simpan' : 'Edit'"
         :severity="calendarState === 'edit' ? 'success' : 'secondary'"
         @click="
@@ -756,7 +773,6 @@ const workDays = {
             console.log(values);
           }
         "
-        class="ml-auto"
       />
     </template>
   </Card>

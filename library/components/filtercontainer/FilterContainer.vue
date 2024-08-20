@@ -48,11 +48,11 @@ onMounted(() => {
     }
   }
 
-  eventBus.on('showFilter', (e) => (showFilter.value = e.show));
+  eventBus.on('show-filter', (e) => (showFilter.value = e.show));
 });
 
 onBeforeUnmount(() => {
-  eventBus.off('showFilter');
+  eventBus.off('show-filter');
 });
 
 const getOptions = async (
@@ -80,18 +80,20 @@ const apply = handleSubmit((values) => {
   const fields = Object.keys(values);
   const parsedFilter: QueryParams = {};
 
-  eventBus.emit('hideOverlay');
+  eventBus.emit('multi-select:hide-overlay');
 
   fields.forEach((field) => {
     parsedFilter[field] = JSON.stringify(values[field]);
   });
 
-  eventBus.emit('filterTable', {
+  eventBus.emit('data-table:apply-filter', {
     tableName: props.tableName,
     filter: parsedFilter,
   });
 
-  eventBus.emit('clear:selectedData', { tableName: props.tableName });
+  eventBus.emit('data-table:clear-selected-data', {
+    tableName: props.tableName,
+  });
 });
 
 defineOptions({

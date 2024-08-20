@@ -6,17 +6,24 @@ export type TableEvent = {
 };
 
 export type Events = {
-  'filterTable': TableEvent & {
+  'data-table:apply-filter': TableEvent & {
     filter: QueryParams;
   };
-  'searchTable': TableEvent & {
+
+  'search-table': TableEvent & {
     search: string | undefined;
   };
-  'updateTable': TableEvent;
-  'showFilter': TableEvent & { show: boolean };
-  'hideOverlay': unknown;
-  'update:selectedData': TableEvent & { data?: Data[] };
-  'clear:selectedData': TableEvent;
+
+  'show-filter': TableEvent & { show: boolean };
+
+  'multi-select:hide-overlay': unknown;
+
+  'data-table:update': TableEvent;
+  'data-table:update-selected-data': TableEvent & { data?: Data[] };
+  'data-table:clear-selected-data': TableEvent;
+
+  'work-calendar:reset-month': unknown;
+  'work-calendar:reset-year': unknown;
 };
 
 const eventBus = mitt<Events>();
