@@ -3,6 +3,7 @@
 cp colors.config.json dist
 rm -r dist/types
 cp -r types dist
+cp -r event-bus dist
 cp components/ts-helpers.d.ts dist/components
 
 source_directory="./components"
