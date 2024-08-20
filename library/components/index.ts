@@ -28,6 +28,7 @@ import DialogForm from './dialogform/DialogForm.vue';
 import InputNumber from './inputnumber/InputNumber.vue';
 import InputEmail from './inputemail/InputEmail.vue';
 import WorkCalendar from './workcalendar/WorkCalendar.vue';
+import Dialog from './dialog/Dialog.vue';
 
 export {
   Badge,
@@ -60,4 +61,5 @@ export {
   InputEmail,
   QuickFilter,
   WorkCalendar,
+  Dialog,
 };

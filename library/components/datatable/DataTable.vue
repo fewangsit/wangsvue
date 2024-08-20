@@ -171,6 +171,11 @@ const selectedData = computed<object[]>({
   set(newSelectedData: Data[]) {
     emit('selectData', newSelectedData);
     emit('update:selectedData', newSelectedData);
+
+    eventBus.emit('update:selectedData', {
+      tableName: props.tableName,
+      data: newSelectedData,
+    });
   },
 });
 

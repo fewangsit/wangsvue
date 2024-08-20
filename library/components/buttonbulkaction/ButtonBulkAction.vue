@@ -9,6 +9,8 @@ import {
 import { MenuItem } from '../menuitem';
 import { filterVisibleMenu } from '../helpers';
 import Button from '../button/Button.vue';
+import eventBus, { Events } from 'lib/event-bus';
+import { Data } from '../datatable/DataTable.vue.d';
 
 const props = withDefaults(defineProps<ButtonBulkActionProps>(), {
   tableName: 'datatable',
@@ -20,11 +22,14 @@ const emit = defineEmits<ButtonBulkActionEmits>();
 onMounted(() => {
   window.addEventListener('updateTotalRecords', updateTotalRecordsHandler);
   window.addEventListener('disableBulkAction', disableBulkAction);
+
+  eventBus.on('update:selectedData', handleUpdateSelectedData);
 });
 
 onUnmounted(() => {
   window.removeEventListener('updateTotalRecords', updateTotalRecordsHandler);
   window.removeEventListener('disableBulkAction', disableBulkAction);
+  eventBus.off('update:selectedData');
 });
 
 const menu = ref();
@@ -32,6 +37,7 @@ const selectedOption = shallowRef<MenuItem>();
 const totalRecords = shallowRef<number>(0);
 const isAllDataSelected = shallowRef<boolean>(false);
 const isDisabled = shallowRef<boolean>(false);
+const dataSelected = shallowRef<Data[] | undefined>(props.selectedData);
 
 const bulkOptions = computed(() => {
   return filterVisibleMenu(props.options);
@@ -39,7 +45,7 @@ const bulkOptions = computed(() => {
 
 const showSelectAllButton = computed(
   () =>
-    props.selectedData?.length && !isDisabled.value && totalRecords.value > 0,
+    dataSelected.value?.length && !isDisabled.value && totalRecords.value > 0,
 );
 
 const selectAllData = (): void => {
@@ -77,13 +83,16 @@ const updateTotalRecordsHandler = (
   }
 };
 
-watch(
-  [(): Record<string, unknown>[] => props.selectedData, totalRecords],
-  ([datas, total]) => {
-    if (!datas?.length) selectedOption.value = undefined;
-    isAllDataSelected.value = datas?.length === total;
-  },
-);
+const handleUpdateSelectedData = (e: Events['update:selectedData']): void => {
+  if (e.tableName === props.tableName) {
+    dataSelected.value = e.data;
+  }
+};
+
+watch([dataSelected, totalRecords], ([datas, total]) => {
+  if (!datas?.length) selectedOption.value = undefined;
+  isAllDataSelected.value = datas?.length === total;
+});
 
 watch(
   () => props.totalRecords,
