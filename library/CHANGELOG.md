@@ -1,6 +1,32 @@
 # Changelog
 
 
+## v1.4.25
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.24...v1.4.25)
+
+### 🚀 Enhancements
+
+- **DataTable:** Intergration with bulk action selected data with event bus ([1b00fe5](https://github.com/fewangsit/wangsvue/commit/1b00fe5))
+- **FilterContainer:** Add calendar range filter field ([9b9a0cd](https://github.com/fewangsit/wangsvue/commit/9b9a0cd))
+
+### 🩹 Fixes
+
+- **DialogConfirm:** Mising binding props.visible ([a880f49](https://github.com/fewangsit/wangsvue/commit/a880f49))
+- **WorkCalendar:** Data for Jumlah Hari Kerja not shown as well ([b017644](https://github.com/fewangsit/wangsvue/commit/b017644))
+
+### 💅 Refactors
+
+- Fix integration between bulk action, table and filter - apply filter resets selection ([b7daec0](https://github.com/fewangsit/wangsvue/commit/b7daec0))
+
+### 🏡 Chore
+
+- **release:** V1.4.24 ([d97b2c8](https://github.com/fewangsit/wangsvue/commit/d97b2c8))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.24
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.22...v1.4.24)
