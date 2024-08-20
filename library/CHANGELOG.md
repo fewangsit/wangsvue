@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.40
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.39...v1.4.40)
+
+### 💅 Refactors
+
+- Update button toggle model value to use defineModel ([10530be](https://github.com/fewangsit/wangsvue/commit/10530be))
+
+### 🏡 Chore
+
+- **release:** V1.4.39 ([9b8a8a5](https://github.com/fewangsit/wangsvue/commit/9b8a8a5))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.39
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.32...v1.4.39)
