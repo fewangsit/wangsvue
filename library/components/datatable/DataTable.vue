@@ -470,7 +470,7 @@ const removeClassActive = (): void => {
 };
 
 const handleUpdateTableEvent = (event: TableEvent): void => {
-  if (event.tableName === props.tableName) {
+  if (!event.tableName || event.tableName === props.tableName) {
     nextTick(() => refetch()); // Waits untill computed queryparams ready
   }
 };

@@ -21,6 +21,7 @@ import QuickFilter from 'lib/components/quickfilter/QuickFilter.vue';
 import { filterFields, quickFilterField } from '../quickfilter/helpers/fields';
 import { FilterMatchMode } from 'primevue/api';
 import ButtonBulkAction from 'lib/components/buttonbulkaction/ButtonBulkAction.vue';
+import eventBus from 'lib/event-bus';
 
 const dataSelected = shallowRef();
 const showFilter = shallowRef(false);
@@ -38,6 +39,9 @@ const singleAction: MenuItem[] = [
     label: 'Danger Action',
     icon: 'checkbox-blank-circle',
     danger: true,
+    command: (): void => {
+      eventBus.emit('data-table:update', {});
+    },
   },
 ];
 
