@@ -31,7 +31,7 @@ const useToast = (): ToastMethod => {
   const toastMethod = {
     add: ({ message, error, severity, life, group }: ToastParams): void => {
       const detail = (
-        error
+        error || severity === 'error'
           ? `Oh tidak! ${message} Silakan coba lagi.`
           : `Berhasil! ${message}`
       ).trim();
