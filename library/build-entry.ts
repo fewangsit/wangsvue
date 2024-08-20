@@ -1,5 +1,4 @@
 import type { App, MaybeRef, MaybeRefOrGetter } from 'vue';
-import eventBus from './event-bus';
 
 // Style
 import './assets/css/main.css';
@@ -138,7 +137,6 @@ export {
   WangsVue,
   ToastService,
   Preset,
-  eventBus,
 
   // Directives
   Tooltip,
