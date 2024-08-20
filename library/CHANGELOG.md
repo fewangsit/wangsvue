@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.36
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.35...v1.4.36)
+
+### 🩹 Fixes
+
+- **Menu:** Close panel on item clicked ([42d0e01](https://github.com/fewangsit/wangsvue/commit/42d0e01))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.35
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.34...v1.4.35)
