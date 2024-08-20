@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.41
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.40...v1.4.41)
+
+### 🚀 Enhancements
+
+- Re render column on update table event ([8bf0d0c](https://github.com/fewangsit/wangsvue/commit/8bf0d0c))
+
+### 🩹 Fixes
+
+- Revert change button toggle ([5907c5c](https://github.com/fewangsit/wangsvue/commit/5907c5c))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.40
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.39...v1.4.40)
