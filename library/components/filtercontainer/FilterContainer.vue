@@ -12,6 +12,7 @@ import InputRangeNumber from '../inputrangenumber/InputRangeNumber.vue';
 import MultiSelect from '../multiselect/MultiSelect.vue';
 import { QueryParams } from '../datatable/DataTable.vue.d';
 import eventBus from 'lib/event-bus';
+import Calendar from '../calendar/Calendar.vue';
 
 const props = withDefaults(defineProps<FilterContainerProps>(), {
   tableName: 'datatable',
@@ -124,6 +125,13 @@ defineOptions({
           @show="getOptions(field.fetchOptionFn, field.field)"
           option-label="label"
           option-value="value"
+          use-validator
+        />
+        <Calendar
+          v-else-if="field.type === 'calendar'"
+          v-bind="field"
+          :field-name="field.field"
+          mode="range"
           use-validator
         />
       </template>

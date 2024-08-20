@@ -2,6 +2,7 @@ import { MultiSelectOption } from 'lib/types/options.type';
 import { DefineComponent, Slot } from 'vue';
 import { MultiSelectProps } from '../multiselect/MultiSelect.vue.d';
 import { InputRangeNumberProps } from '../inputrangenumber/InputRangeNumber.vue.d';
+import { CalendarProps } from '../calendar/Calendar.vue.d';
 
 // More specific filter field types
 export interface MultiSelectFilterField extends MultiSelectProps {
@@ -22,7 +23,15 @@ export interface RangeNumberFilterField extends InputRangeNumberProps {
   fields: string[];
 }
 
-export type FilterField = MultiSelectFilterField | RangeNumberFilterField;
+export interface CalendarFilterField extends CalendarProps {
+  type: 'calendar';
+  field: string;
+}
+
+export type FilterField =
+  | MultiSelectFilterField
+  | RangeNumberFilterField
+  | CalendarFilterField;
 
 export type FilterOptions = Record<string, MultiSelectOption[]>;
 export type LoadingFilters = Record<string, boolean>;

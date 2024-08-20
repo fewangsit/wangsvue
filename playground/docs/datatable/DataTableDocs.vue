@@ -130,8 +130,11 @@ const getTableData = async (
           : response.data.data;
 
       resolve({
-        data, // Use 'slice' for data limiting
-        totalRecords: response.data.totalRecords,
+        message: '',
+        data: {
+          data, // Use 'slice' for data limiting
+          totalRecords: response.data.totalRecords,
+        },
       });
     }, 0); // You can adjust the timeout if you need a delay
   });

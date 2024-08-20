@@ -96,6 +96,12 @@ export const filterFields: FilterField[] = [
     },
   },
   {
+    label: 'Calendar',
+    type: 'calendar',
+    field: 'daterange',
+    placeholder: 'Input Date',
+  },
+  {
     label: 'Asset Value',
     fields: ['minValue', 'maxValue'],
     type: 'rangenumber',
