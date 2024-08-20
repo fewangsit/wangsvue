@@ -1,6 +1,33 @@
 # Changelog
 
 
+## v1.4.24
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.22...v1.4.24)
+
+### 🚀 Enhancements
+
+- **WorkCalendar:** Limit the available year to only 3 year,  curent pass and next year ([b7b2052](https://github.com/fewangsit/wangsvue/commit/b7b2052))
+- **DataTable:** Intergration with bulk action selected data with event bus ([1b00fe5](https://github.com/fewangsit/wangsvue/commit/1b00fe5))
+- **FilterContainer:** Add calendar range filter field ([9b9a0cd](https://github.com/fewangsit/wangsvue/commit/9b9a0cd))
+
+### 🩹 Fixes
+
+- **3c5Dnaab:** Add type button in button filter to fix form submitted ([4e2844e](https://github.com/fewangsit/wangsvue/commit/4e2844e))
+
+### 💅 Refactors
+
+- **WorkCalendar:** Set form field -  should only show 3 year (last year, current year and next year) ([e693eb8](https://github.com/fewangsit/wangsvue/commit/e693eb8))
+
+### 🏡 Chore
+
+- **release:** V1.4.22 ([193be92](https://github.com/fewangsit/wangsvue/commit/193be92))
+- **release:** V1.4.23 ([f0c248c](https://github.com/fewangsit/wangsvue/commit/f0c248c))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.23
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.22...v1.4.23)
