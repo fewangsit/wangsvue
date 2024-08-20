@@ -17,7 +17,7 @@ const downloadExcel = (): void => {
 </script>
 
 <template>
-  <button @click="downloadExcel">
+  <button @click="downloadExcel" type="button">
     <Icon
       class="text-2xl"
       icon="download"

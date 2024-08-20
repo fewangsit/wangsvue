@@ -19,7 +19,7 @@ const toggleFilterPanel = (): void => {
 </script>
 
 <template>
-  <button @click="toggleFilterPanel">
+  <button @click="toggleFilterPanel" type="button">
     <Icon
       :icon="filterIcon"
       class="text-2xl"
