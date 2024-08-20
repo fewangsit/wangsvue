@@ -116,7 +116,7 @@ const toast = useToast();
 const rowsPerPageOptions = ref([10, 25, 50, 100]);
 const optionMenu = ref<MenuClass | null>(null);
 const currentPageDataSelected = ref<Data[]>();
-const dataSelected = shallowRef<Data[]>(props.selectedData);
+const dataSelected = shallowRef<Data[]>(props.selectedData ?? []);
 
 const selectionMode = computed(() => {
   switch (props.selectionType) {
