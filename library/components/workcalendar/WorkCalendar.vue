@@ -53,6 +53,8 @@ const props = withDefaults(defineProps<WorkCalendarProps>(), {
 });
 
 onMounted(async () => {
+  initCalendarWeeks();
+
   await initWorkDays();
 });
 
@@ -315,6 +317,10 @@ const updateDate = (): void => {
 
 const updateCalendar = (): void => {
   workDaysInMonth.value = getWorkDaysInMonth();
+  calendarWeeks.value = getCalendarWeeks();
+};
+
+const initCalendarWeeks = (): void => {
   calendarWeeks.value = getCalendarWeeks();
 };
 
