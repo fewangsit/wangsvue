@@ -1,7 +1,9 @@
 #!/bin/bash
 
 cp colors.config.json dist
-cp types dist
+rm -r dist/types
+cp -r types dist
+cp components/ts-helpers.d.ts dist/components
 
 source_directory="./components"
 target_directory="./dist/components"
