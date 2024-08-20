@@ -117,6 +117,7 @@ const rowsPerPageOptions = ref([10, 25, 50, 100]);
 const optionMenu = ref<MenuClass | null>(null);
 const currentPageDataSelected = ref<Data[]>();
 const dataSelected = shallowRef<Data[]>(props.selectedData ?? []);
+const columnKey = shallowRef(0);
 
 const selectionMode = computed(() => {
   switch (props.selectionType) {
@@ -471,7 +472,10 @@ const removeClassActive = (): void => {
 
 const handleUpdateTableEvent = (event: TableEvent): void => {
   if (!event.tableName || event.tableName === props.tableName) {
-    nextTick(() => refetch()); // Waits untill computed queryparams ready
+    nextTick(() => {
+      columnKey.value++;
+      refetch();
+    }); // Waits untill computed queryparams ready
   }
 };
 
@@ -917,7 +921,7 @@ watch(dataSelected, (newSelectedData: Data[]) => {
     <Column
       :key="col.field"
       v-for="col of visibleColumns"
-      v-memo="[col.visible !== false]"
+      v-memo="[col.visible !== false, columnKey]"
       v-bind="col"
       :body-style="
         typeof col.bodyStyle === 'function' ? col.bodyStyle() : col.bodyStyle

@@ -86,6 +86,10 @@ export type DialogConfirmEmits = {
    */
   'confirm': [];
   /**
+   * Emits when dialog closed.
+   */
+  'hide': [];
+  /**
    * Emits when the dialog is closed. Wether from cancel button, close button, or ESC button pressed.
    */
   'update:visible': [state: boolean];

@@ -75,6 +75,7 @@ const confirm = (): void => {
       },
     }"
     :visible="props.visible"
+    @hide="emit('hide')"
     @update:visible="emit('update:visible', !!$event)"
     close-on-escape
     data-section-name="dialog-confirm"

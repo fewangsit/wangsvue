@@ -22,9 +22,13 @@ import { filterFields, quickFilterField } from '../quickfilter/helpers/fields';
 import { FilterMatchMode } from 'primevue/api';
 import ButtonBulkAction from 'lib/components/buttonbulkaction/ButtonBulkAction.vue';
 import eventBus from 'lib/event-bus';
+import ButtonToggle from 'lib/components/buttontoggle/ButtonToggle.vue';
+import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
 
 const dataSelected = shallowRef();
+const actionData = ref();
 const showFilter = shallowRef(false);
+const showDialog = shallowRef(false);
 
 const singleAction: MenuItem[] = [
   {
@@ -72,6 +76,23 @@ const tableColumns = computed<TableColumn[]>(() => {
       },
     },
 
+    {
+      field: 'isActive',
+      header: 'Active',
+      sortable: true,
+      bodyComponent: (data: any): TableCellComponent => {
+        return {
+          component: ButtonToggle,
+          props: {
+            modelValue: data.isActive,
+          },
+          onChange: (d: any): void => {
+            actionData.value = d;
+            showDialog.value = true;
+          },
+        };
+      },
+    },
     {
       field: 'group.name',
       header: 'Group',
@@ -182,6 +203,13 @@ const filters = ref<any>({
         lazy
         use-option
         use-paginator
+      />
+
+      <DialogConfirm
+        v-model:visible="showDialog"
+        @hide="console.log(actionData)"
+        header="Header"
+        severity="danger"
       />
     </template>
   </Card>
