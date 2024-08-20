@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.23
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.22...v1.4.23)
+
+### 💅 Refactors
+
+- **WorkCalendar:** Set form field -  should only show 3 year (last year, current year and next year) ([e693eb8](https://github.com/fewangsit/wangsvue/commit/e693eb8))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.22
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.21...v1.4.22)
