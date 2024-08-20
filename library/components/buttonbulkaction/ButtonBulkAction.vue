@@ -124,12 +124,18 @@ watch(
 
     <Button
       v-show="showSelectAllButton"
+      :class="[
+        '!p-1.5 -ml-1.5 -mr-1.5',
+        { 'pointer-events-none': isAllDataSelected },
+      ]"
       @click="selectAllData"
-      class="!p-1.5 -ml-1.5 -mr-1.5"
       data-section-name="button-select-all"
       text
     >
-      Pilih semua ({{ totalRecords }} data)
+      <template v-if="!isAllDataSelected">
+        Pilih semua ({{ totalRecords }} data)
+      </template>
+      <template v-else> Semua data terpilih </template>
     </Button>
 
     <Button
