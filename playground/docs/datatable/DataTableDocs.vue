@@ -181,7 +181,6 @@ const quickFiltering = (payload: QueryParams): void => {
 
       <FilterContainer v-show="showFilter" :fields="filterFields" />
       <DataTable
-        v-model:selected-data="dataSelected"
         :columns="tableColumns"
         :fetch-function="getTableData"
         :options="singleAction"

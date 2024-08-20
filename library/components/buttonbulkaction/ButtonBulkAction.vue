@@ -8,9 +8,10 @@ import {
 } from './ButtonBulkAction.vue.d';
 import { MenuItem } from '../menuitem';
 import { filterVisibleMenu } from '../helpers';
+import { Data } from '../datatable/DataTable.vue.d';
+
 import Button from '../button/Button.vue';
 import eventBus, { Events } from 'lib/event-bus';
-import { Data } from '../datatable/DataTable.vue.d';
 
 const props = withDefaults(defineProps<ButtonBulkActionProps>(), {
   tableName: 'datatable',
@@ -60,6 +61,7 @@ const selectAllData = (): void => {
 
 const unSelectAllData = (): void => {
   emit('update:selectedData', []);
+  eventBus.emit('clear:selectedData', { tableName: props.tableName });
 };
 
 const disableBulkAction = (event: CustomEvent): void => {
@@ -102,22 +104,22 @@ watch(
 </script>
 
 <template>
-  <div v-show="selectedData?.length" class="flex gap-2 items-center">
+  <div v-show="dataSelected?.length" class="flex gap-2 items-center">
     <Menu
       id="bulkaction-overlay-menu"
       ref="menu"
-      v-if="selectedData?.length"
+      v-if="dataSelected?.length"
       :model="bulkOptions"
       :popup="true"
       data-ts-section="ts-bulkaction-menu"
     />
 
     <span
-      v-show="selectedData?.length"
+      v-show="dataSelected?.length"
       class="text-xs text-grayscale-900 cursor-default whitespace-nowrap"
       data-ts-section="ts-selection-message"
     >
-      {{ selectedData?.length }} data dipilih
+      {{ dataSelected?.length }} data dipilih
     </span>
 
     <Button

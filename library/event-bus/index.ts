@@ -16,6 +16,7 @@ export type Events = {
   'showFilter': TableEvent & { show: boolean };
   'hideOverlay': unknown;
   'update:selectedData': TableEvent & { data?: Data[] };
+  'clear:selectedData': TableEvent;
 };
 
 const eventBus = mitt<Events>();

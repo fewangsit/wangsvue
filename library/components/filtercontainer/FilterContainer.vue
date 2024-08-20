@@ -8,9 +8,10 @@ import {
   MultiSelectFilterField,
 } from './FilterContainer.vue.d';
 import { useForm } from 'vee-validate';
+import { QueryParams } from '../datatable/DataTable.vue.d';
+
 import InputRangeNumber from '../inputrangenumber/InputRangeNumber.vue';
 import MultiSelect from '../multiselect/MultiSelect.vue';
-import { QueryParams } from '../datatable/DataTable.vue.d';
 import eventBus from 'lib/event-bus';
 import Calendar from '../calendar/Calendar.vue';
 
@@ -89,6 +90,8 @@ const apply = handleSubmit((values) => {
     tableName: props.tableName,
     filter: parsedFilter,
   });
+
+  eventBus.emit('clear:selectedData', { tableName: props.tableName });
 });
 
 defineOptions({

@@ -95,6 +95,12 @@ onMounted(async () => {
       handleFilter();
     }
   });
+
+  eventBus.on('clear:selectedData', (e) => {
+    if (e.tableName === props.tableName) {
+      dataSelected.value = [];
+    }
+  });
 });
 
 onBeforeUnmount(() => {
@@ -103,12 +109,14 @@ onBeforeUnmount(() => {
   removeUpdateTableListener();
   eventBus.off('filterTable');
   eventBus.off('searchTable');
+  eventBus.off('clear:selectedData');
 });
 
 const toast = useToast();
 const rowsPerPageOptions = ref([10, 25, 50, 100]);
 const optionMenu = ref<MenuClass | null>(null);
 const currentPageDataSelected = ref<Data[]>();
+const dataSelected = shallowRef<Data[]>(props.selectedData);
 
 const selectionMode = computed(() => {
   switch (props.selectionType) {
@@ -162,21 +170,6 @@ const isSelectedAll = computed(() => {
     (totalRecords.value ?? 0) - (currentPageDisabledRows.value.length ?? 0);
 
   return isCurrentPageAllDataSelected || isAllRecordSelected;
-});
-
-const selectedData = computed<object[]>({
-  get() {
-    return props.selectedData ?? [];
-  },
-  set(newSelectedData: Data[]) {
-    emit('selectData', newSelectedData);
-    emit('update:selectedData', newSelectedData);
-
-    eventBus.emit('update:selectedData', {
-      tableName: props.tableName,
-      data: newSelectedData,
-    });
-  },
 });
 
 const globalFilterFields = computed(() =>
@@ -381,7 +374,7 @@ const onSelectAllChange = (event: DataTableSelectAllChangeEvent): void => {
 
   if (!props.lazy) dispatchUpdateTotalRecordsEvent();
 
-  emit('update:selectedData', event.checked ? filteredRows : []);
+  dataSelected.value = event.checked ? filteredRows : [];
 };
 
 const onRowToggleSelectAll = (): void => {
@@ -394,7 +387,7 @@ const onRowClick = (event: DataTableRowClickEvent): void => {
 
 const onUnselectData = (data: Data): void => {
   currentPageDataSelected.value = currentPageDataSelected.value?.filter(
-    (dataSelected) => dataSelected[props.dataKey] !== data[props.dataKey],
+    (dt) => dt[props.dataKey] !== data[props.dataKey],
   );
   if (!props.lazy) dispatchUpdateTotalRecordsEvent();
 };
@@ -528,12 +521,12 @@ const selectAllData = async (event: CustomEvent<string>): Promise<void> => {
       const { data, totalRecords: total = 0 } = await fetchAllData();
 
       const disabledRows = getDisabledRows(data);
-      emit('update:selectedData', filterDisabledRows(data, disabledRows));
+      dataSelected.value = filterDisabledRows(data, disabledRows);
 
       dispatchUpdateTotalRecordsEvent(total);
     } else {
       const disabledRows = getDisabledRows(props.data);
-      emit('update:selectedData', filterDisabledRows(props.data, disabledRows));
+      dataSelected.value = filterDisabledRows(props.data, disabledRows);
 
       dispatchUpdateTotalRecordsEvent(props.data?.length);
     }
@@ -795,6 +788,16 @@ watch(
     customColumnKey.value++;
   },
 );
+
+watch(dataSelected, (newSelectedData: Data[]) => {
+  emit('selectData', newSelectedData);
+  emit('update:selectedData', newSelectedData);
+
+  eventBus.emit('update:selectedData', {
+    tableName: props.tableName,
+    data: newSelectedData,
+  });
+});
 </script>
 
 <template>
@@ -804,7 +807,7 @@ watch(
     ref="dataTable"
     v-model:expanded-rows="expandedRows"
     v-model:filters="staticFilters"
-    v-model:selection="selectedData"
+    v-model:selection="dataSelected"
     :data-key="props.dataKey"
     :global-filter-fields="props.globalFilterFields ?? globalFilterFields"
     :lazy="props.lazy"
@@ -881,7 +884,7 @@ watch(
           data-section-name="checkboxselection"
         >
           <Checkbox
-            v-model="selectedData"
+            v-model="dataSelected"
             :binary="false"
             :disabled="disableAllRows || rowData[disableKey]"
             :value="rowData"
