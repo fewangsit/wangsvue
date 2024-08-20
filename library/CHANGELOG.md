@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v1.4.27
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.26...v1.4.27)
+
+### 🚀 Enhancements
+
+- **BulkAction:** Add state for all data selected ([40d0546](https://github.com/fewangsit/wangsvue/commit/40d0546))
+- **WorkCalendar:** Add support for reset this month and year - refactor - change event bus names with kebab case ([1786ee6](https://github.com/fewangsit/wangsvue/commit/1786ee6))
+
+### 🩹 Fixes
+
+- **BulkAction:** HandleUpdateSelectedData should also emits update selected data to parent ([880e164](https://github.com/fewangsit/wangsvue/commit/880e164))
+- **WorkCalendar:** Loading calendar weeks skeleton ([7b87b2c](https://github.com/fewangsit/wangsvue/commit/7b87b2c))
+- **WorkCalendar:** Type error on defaultWorkDaysInOverallYear ([13494d9](https://github.com/fewangsit/wangsvue/commit/13494d9))
+- **WorkCalendar:** Default workdays should be deep cloned when assigned ([a3b5204](https://github.com/fewangsit/wangsvue/commit/a3b5204))
+
+### 🏡 Chore
+
+- **release:** V1.4.26 ([0699eb4](https://github.com/fewangsit/wangsvue/commit/0699eb4))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.26
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.25...v1.4.26)
