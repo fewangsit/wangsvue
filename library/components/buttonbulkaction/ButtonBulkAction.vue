@@ -92,7 +92,7 @@ const handleUpdateSelectedData = (
 ): void => {
   if (e.tableName === props.tableName) {
     dataSelected.value = e.data;
-    emit('update:selectedData', e.data);
+    emit('update:selectedData', e.data ?? []);
   }
 };
 

@@ -64,7 +64,7 @@ onMounted(async () => {
 const currentDate = ref(new Date());
 const currentMonth = ref(currentDate.value.getMonth());
 const currentYear = ref(currentDate.value.getFullYear());
-const defaultWorkDaysInOverallYear = ref<WorkCalendarProps['workDays']>({
+const defaultWorkDaysInOverallYear = ref({
   [currentYear.value - 1]: [''],
   [currentYear.value]: [''],
   [currentYear.value + 1]: [''],
@@ -359,17 +359,17 @@ const initWorkDays = async (): Promise<void> => {
   workDaysField.value.value = {
     [currentYear.value - 1]: getWorkDaysInYear(
       passYear,
-      defaultWorkDaysInOverallYear[passYear],
+      defaultWorkDaysInOverallYear.value[passYear],
     ),
 
     [currentYear.value]: getWorkDaysInYear(
       onGoingYear,
-      defaultWorkDaysInOverallYear[onGoingYear],
+      defaultWorkDaysInOverallYear.value[onGoingYear],
     ),
 
     [currentYear.value + 1]: getWorkDaysInYear(
       nextYear,
-      defaultWorkDaysInOverallYear[nextYear],
+      defaultWorkDaysInOverallYear.value[nextYear],
     ),
   };
 
