@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v1.4.26
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.25...v1.4.26)
+
+### 🚀 Enhancements
+
+- **BulkAction:** Add state for all data selected ([40d0546](https://github.com/fewangsit/wangsvue/commit/40d0546))
+
+### 🩹 Fixes
+
+- **BulkAction:** HandleUpdateSelectedData should also emits update selected data to parent ([880e164](https://github.com/fewangsit/wangsvue/commit/880e164))
+
+### 🏡 Chore
+
+- **release:** V1.4.25 ([b54135b](https://github.com/fewangsit/wangsvue/commit/b54135b))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.25
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.24...v1.4.25)
