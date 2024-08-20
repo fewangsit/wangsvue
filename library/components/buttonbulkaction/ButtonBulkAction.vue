@@ -38,7 +38,7 @@ const selectedOption = shallowRef<MenuItem>();
 const totalRecords = shallowRef<number>(0);
 const isAllDataSelected = shallowRef<boolean>(false);
 const isDisabled = shallowRef<boolean>(false);
-const dataSelected = shallowRef<Data[] | undefined>(props.selectedData);
+const dataSelected = ref<Data[] | undefined>(props.selectedData);
 
 const bulkOptions = computed(() => {
   return filterVisibleMenu(props.options);
@@ -88,6 +88,7 @@ const updateTotalRecordsHandler = (
 const handleUpdateSelectedData = (e: Events['update:selectedData']): void => {
   if (e.tableName === props.tableName) {
     dataSelected.value = e.data;
+    emit('update:selectedData', e.data);
   }
 };
 
