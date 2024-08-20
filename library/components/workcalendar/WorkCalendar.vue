@@ -218,12 +218,11 @@ const getCalendarWeeks = (): WCDate[][] => {
 };
 
 const getWorkDaysInMonth = (): string[] => {
-  const workDays = workDaysField.value.value[currentYear.value].filter(
-    (day) => {
+  const workDays =
+    workDaysField.value.value?.[currentYear.value].filter((day) => {
       const dateObj = new Date(day);
       return dateObj.getMonth() === currentMonth.value;
-    },
-  );
+    }) ?? [];
 
   // Sort the work days using the Date object for comparison
   workDays.sort((a, b) => {
@@ -248,9 +247,11 @@ const toggleWorkDayState = (day: WCDate): void => {
 };
 
 const removeWorkDay = (day: string): void => {
-  workDaysField.value.value[currentYear.value] = workDaysField.value.value[
-    currentYear.value
-  ].filter((d) => d !== day);
+  if (workDaysField.value.value) {
+    workDaysField.value.value[currentYear.value] = workDaysField.value.value?.[
+      currentYear.value
+    ].filter((d) => d !== day);
+  }
 
   updateCalendar();
 };
@@ -262,8 +263,8 @@ const addWorkDay = (day: WCDate): void => {
     day.date,
   );
 
-  if (!workDaysField.value.value[currentYear.value].includes(dateString)) {
-    workDaysField.value.value[currentYear.value].push(dateString);
+  if (!workDaysField.value.value?.[currentYear.value].includes(dateString)) {
+    workDaysField.value.value?.[currentYear.value].push(dateString);
   }
 
   updateCalendar();
@@ -444,7 +445,7 @@ const initWorkDays = async (): Promise<void> => {
         <div class="text-xs font-semibold leading-none">
           <Skeleton v-if="isLoading" class="!w-12" />
           <template v-else>
-            {{ workDaysField[currentYear]?.length }}
+            {{ workDaysField.value.value?.[currentYear]?.length }}
             Hari
           </template>
         </div>
