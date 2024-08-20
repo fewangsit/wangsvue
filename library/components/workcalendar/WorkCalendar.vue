@@ -7,6 +7,7 @@ import Icon from '../icon/Icon.vue';
 import CalendarServices, { Holiday } from 'lib/services/calendar.service';
 import Skeleton from 'primevue/skeleton';
 import eventBus from 'lib/event-bus';
+import { cloneDeep } from 'lodash';
 
 const months = [
   'Januari',
@@ -158,7 +159,7 @@ const getWorkDaysInYear = (
   const workDays: string[] = props.workDays?.[year] ?? [];
 
   if (isEmptyObject(props.workDays)) {
-    workDays.concat(defaultWorkDays);
+    workDays.push(...cloneDeep(defaultWorkDays));
   }
 
   return workDays;
@@ -238,9 +239,11 @@ const getCalendarWeeks = (): WCDate[][] => {
   return weeks;
 };
 
-const getWorkDaysInMonth = (): string[] => {
+const getWorkDaysInMonth = (useDefault?: boolean): string[] => {
   const workDays =
-    workDaysField.value.value?.[currentYear.value].filter((day) => {
+    (useDefault
+      ? cloneDeep(defaultWorkDaysInOverallYear.value)
+      : workDaysField.value.value)?.[currentYear.value].filter((day) => {
       const dateObj = new Date(day);
       return dateObj.getMonth() === currentMonth.value;
     }) ?? [];
@@ -377,25 +380,29 @@ const initWorkDays = async (): Promise<void> => {
 };
 
 const resetDefaultThisMonth = (): void => {
-  datesInMonth.value.forEach(
-    ({ isDefaultWorkDay, isOtherMonth, dateString }) => {
-      if (
-        !isOtherMonth &&
-        isDefaultWorkDay &&
-        !workDaysInMonth.value.includes(dateString)
-      ) {
-        workDaysField.value.value?.[currentYear.value].push(dateString);
-      }
-    },
+  const defaultWorkDays = getWorkDaysInMonth(true);
+  const currentYearWorkDays =
+    workDaysField.value.value?.[currentYear.value] || [];
+
+  const filteredWorkDays = currentYearWorkDays.filter(
+    (day) => !workDaysInMonth.value.includes(day),
   );
+
+  if (workDaysField.value.value) {
+    workDaysField.value.value[currentYear.value] = [
+      ...filteredWorkDays,
+      ...defaultWorkDays,
+    ];
+  }
 
   updateCalendar();
 };
 
 const resetDefaultThisYear = (): void => {
   if (workDaysField.value.value) {
-    workDaysField.value.value[currentYear.value] =
-      defaultWorkDaysInOverallYear.value[currentYear.value];
+    workDaysField.value.value[currentYear.value] = cloneDeep(
+      defaultWorkDaysInOverallYear.value[currentYear.value],
+    );
 
     updateCalendar();
   }
