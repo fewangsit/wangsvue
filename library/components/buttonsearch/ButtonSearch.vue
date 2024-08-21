@@ -48,7 +48,9 @@ const updateInput = (event: Event): void => {
       'grid grid-cols-[max-content,auto,max-content] items-center gap-0.5 max-w-[224px] h-6',
       'border-b border-primary-100',
     ]"
-    @submit.prevent="eventBus.emit('search-table', { tableName, search: query })"
+    @submit.prevent="
+      eventBus.emit('search-table', { tableName, search: query })
+    "
     data-section-name="searchbox-form"
   >
     <Icon
