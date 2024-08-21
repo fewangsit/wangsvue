@@ -31,6 +31,7 @@
     "lodash": "4.17.21",
     "primevue": "^3.53.0",
     "qrcode": "1.5.4",
+    "sharp": "^0.33.5",
     "single-spa": "6.0.1",
     "vee-validate": "4.13.2",
     "vue": "3.4.37",
