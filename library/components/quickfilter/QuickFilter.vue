@@ -55,7 +55,8 @@ const getOptions = async (
     data-wv-name="quickfilter"
   >
     <div
-      :class="['grid gap-3 transition-transform', `grid-cols-${fields.length}`]"
+      :class="['grid gap-3 transition-transform']"
+      :style="`grid-template-columns: repeat(${fields.length}, 1fr)`"
       data-wv-section="quickfilterfields"
     >
       <template :key="field" v-for="field of fields">

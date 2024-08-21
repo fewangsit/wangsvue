@@ -48,6 +48,12 @@ export const quickFilterField: FilterField[] = [
     placeholder: '0',
     tooltip: 'Asset Value',
   },
+  {
+    fields: ['minValue', 'maxValue'],
+    type: 'rangenumber',
+    placeholder: '0',
+    tooltip: 'Asset Value',
+  },
 ];
 
 export const filterFields: FilterField[] = [
