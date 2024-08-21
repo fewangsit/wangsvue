@@ -27,9 +27,9 @@ const filter = reactive<ChangelogFilter>({});
  * @returns {Promise<void>}
  */
 const fetchOptions = async (
+  field: keyof ChangelogOptionQuery,
   params?: ChangelogOptionQuery,
-  field?: keyof ChangelogOptionQuery,
-): Promise<MultiSelectOption[] | undefined> => {
+): Promise<MultiSelectOption[]> => {
   try {
     const { data } = await LogServices.getChangelogOptions({
       ...params,
@@ -38,12 +38,14 @@ const fetchOptions = async (
       ...props.customParams,
     });
 
-    return data.data[field];
+    return data.data[field] ?? [];
   } catch (error) {
     toast.add({
       error,
       message: 'Error, failed to fetch options.',
     });
+
+    return [];
   }
 };
 
@@ -78,12 +80,12 @@ watch(filter, () => {
         label: 'Aksi',
         type: 'multiselect',
         field: 'actionOptions',
-        fetchOptionFn: async (params) => {
-          return await fetchOptions(params, 'actionOptions');
+        fetchOptionFn: async (params): Promise<MultiSelectOption[]> => {
+          return await fetchOptions('actionOptions', params);
         },
       },
     ]"
-    :table-name
+    :table-name="props.tableName"
     @clear="clearFilter"
     data-wv-name="history-filter"
   />

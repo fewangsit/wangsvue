@@ -24,7 +24,7 @@ export type ChangelogFilter = {
 };
 
 export type ChangelogFilterQuery = {
-  [key: string]: string;
+  [key: string]: string | undefined;
 };
 
 export type ChangelogOptionQuery = {

@@ -108,14 +108,6 @@ const changelogColumn = computed(() => [
 ]);
 
 /**
- * Define reactive object to handle the params
- * conventional name: `paramsQuery`
- *
- * hint: use `structuredClone` to ensure the default object will not be modified
- */
-const paramsQuery = ref<ChangelogFilterQuery>({});
-
-/**
  * Define the default params
  */
 const defaultParamsQuery = ref<ChangelogFilterQuery>({
@@ -145,7 +137,6 @@ const fetchChangelogs = async (
 const resetState = (): void => {
   showChangelogFilter.value = false;
   searchLogs.value = undefined;
-  paramsQuery.value = {};
 };
 
 watch(showChangelogDialog, (newValue) => {
@@ -194,15 +185,13 @@ watch(showChangelogDialog, (newValue) => {
         :object="props.object"
         :object-id="defaultParamsQuery.objectId"
         :objects="props.objects"
-        :table-name
-        @apply="paramsQuery = $event"
+        :table-name="tableName"
       />
       <DataTable
         :key="dataTableKey"
         :columns="changelogColumn"
         :default-query-params="defaultParamsQuery"
         :fetch-function="fetchChangelogs"
-        :filters="paramsQuery"
         :rows="10"
         :scroll-height="showChangelogFilter ? 'calc(50vh - 126px)' : '50vh'"
         :search="searchLogs"
