@@ -99,7 +99,7 @@ defineOptions({
     @submit.prevent="apply"
     data-wv-name="filtercontainer"
   >
-    <template :key="field.label + fieldsKey" v-for="field of fields">
+    <template :key="JSON.stringify(field) + fieldsKey" v-for="field of fields">
       <InputRangeNumber
         v-if="field.type == 'rangenumber'"
         v-bind="field"
