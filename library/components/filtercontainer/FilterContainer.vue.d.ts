@@ -53,6 +53,12 @@ export interface FilterContainerProps {
    * @default datatable - the default table name
    */
   tableName?: string;
+  /**
+   * Set the fields count in a row
+   *
+   * @default 4 grid columns
+   */
+  fieldsPerRow?: number;
   fields: FilterField[];
 }
 

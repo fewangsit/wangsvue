@@ -4,15 +4,13 @@ import Icon from '../icon/Icon.vue';
 import { ButtonSearchEmits, ButtonSearchProps } from './ButtonSearch.vue.d';
 import InputText from 'primevue/inputtext';
 import eventBus from 'lib/event-bus';
+import { buttonFocusClass } from 'lib/preset/button';
 
 withDefaults(defineProps<ButtonSearchProps>(), {
   tableName: 'datatable',
 });
 
 defineEmits<ButtonSearchEmits>();
-
-const buttonFocusClass =
-  'focus-within:ring-2 focus-within:ring-primary-400 focus-within:outline-none rounded-sm';
 
 const query = shallowRef<string>();
 const inputtext = ref();

@@ -17,6 +17,7 @@ import applyFilter from './helpers/applyFilter.helper';
 
 const props = withDefaults(defineProps<FilterContainerProps>(), {
   tableName: 'datatable',
+  fieldsPerRow: 4,
 });
 
 const { resetForm, handleSubmit } = useForm();
@@ -30,17 +31,17 @@ onMounted(() => {
   if (container.value) {
     const { children } = container.value;
     const childCount = container.value.childElementCount;
-    const isOdd = childCount % 4;
+    const isOdd = childCount % props.fieldsPerRow;
 
     let [rowPos, colPos] = [1, 1];
     for (const i in Array.from({ length: childCount })) {
       const isLast = Number(i) === childCount - 1;
       children[i].setAttribute(
         'style',
-        `grid-area: ${rowPos}/${isLast && isOdd ? 4 : colPos}`,
+        `grid-area: ${rowPos}/${isLast && isOdd ? props.fieldsPerRow : colPos}`,
       );
 
-      if (++colPos > 4) {
+      if (++colPos > props.fieldsPerRow) {
         colPos = 1;
         rowPos++;
       }
@@ -90,8 +91,9 @@ defineOptions({
     v-show="showFilter"
     :class="[
       ' bg-primary-50 rounded-[7px] [&>*]:w-full [&>*]min-w-0',
-      'grid items-end grid-cols-4 p-3 gap-4',
+      'grid items-end p-3 gap-4',
     ]"
+    :style="`grid-template-columns: repeat(${fieldsPerRow}, 1fr)`"
     @submit.prevent="apply"
     data-wv-name="filtercontainer"
   >

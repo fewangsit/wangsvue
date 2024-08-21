@@ -63,6 +63,7 @@ const wangsIconsArray: WangsIcons[] = [
   'file-copy-2-line',
   'file-edit',
   'file-history',
+  'file-history-fill',
   'file-info',
   'files',
   'file-list-2',

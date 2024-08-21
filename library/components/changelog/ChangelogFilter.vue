@@ -135,8 +135,9 @@ watch(filter, () => {
 <template>
   <FilterContainer
     :fields="fields"
+    :fields-per-row="3"
     :table-name="props.tableName"
     @clear="clearFilter"
-    data-wv-name="history-filter"
+    data-wv-name="changelog-filter"
   />
 </template>

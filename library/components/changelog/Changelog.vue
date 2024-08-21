@@ -18,6 +18,7 @@ import {
   ChangelogProps,
   ChangelogType,
 } from './Changelog.vue.d';
+import { buttonFocusClass } from 'lib/preset/button';
 
 const props = defineProps<ChangelogProps>();
 defineEmits<ChangelogEmits>();
@@ -150,10 +151,15 @@ watch(showChangelogDialog, (newValue) => {
 </script>
 
 <template>
-  <button @click="showChangelogDialog = true" type="button">
+  <button
+    :class="buttonFocusClass"
+    @click="showChangelogDialog = true"
+    data-wv-section="changelog-button"
+    type="button"
+  >
     <Icon
+      :icon="showChangelogDialog ? 'file-history-fill' : 'file-history'"
       class="text-2xl"
-      icon="file-history"
       info="Changelog"
       severity="secondary"
       tooltip-pos="bottom"
@@ -166,22 +172,22 @@ watch(showChangelogDialog, (newValue) => {
     @hide="$emit('hide')"
     class="w-[800px] !z-50"
     content-class="-mr-3 pr-3"
-    data-wv-name="dialog-changelog"
+    data-wv-name="changelog-dialog"
     modal
   >
     <div v-if="showChangelogDialog" class="flex flex-col gap-2 justify-between">
       <div
         class="flex justify-end gap-1 items-center"
-        data-wv-section="dialog-changelog-header"
+        data-wv-section="changelog-dialog-header"
       >
         <ButtonSearch
           :table-name="tableName"
           class="ring-inset"
-          data-wv-section="dialog-changelog-button-search"
+          data-wv-section="changelog-dialog-button-search"
         />
         <ButtonFilter
           v-model:show-filter="showChangelogFilter"
-          data-wv-section="dialog-changelog-button-filter"
+          data-wv-section="changelog-dialog-button-filter"
         />
       </div>
       <ChangelogFilter

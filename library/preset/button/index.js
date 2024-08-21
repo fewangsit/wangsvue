@@ -1,3 +1,6 @@
+export const buttonFocusClass =
+  'focus-within:ring-2 focus-within:ring-primary-400 focus-within:outline-none rounded-sm';
+
 export default {
   root: ({ props, context, parent }) => ({
     class: [
@@ -24,7 +27,7 @@ export default {
         'text-xl py-3 px-4': props.size === 'large',
       },
       { 'gap-1': props.label !== null },
-    
+
       {
         'p-[7px] w-max':
           props.label === null && props.icon && props.size === null,
