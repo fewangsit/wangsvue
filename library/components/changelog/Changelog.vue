@@ -50,6 +50,7 @@ const changelogColumn = computed(() => [
     field: 'createdAt',
     header: 'Tanggal',
     sortable: true,
+    visible: true,
     bodyTemplate: (data: ChangelogType): string => {
       return data.createdAt ?? '-';
     },
@@ -59,6 +60,7 @@ const changelogColumn = computed(() => [
     header: 'Aksi',
     sortable: true,
     fixed: true,
+    visible: true,
     bodyTemplate: (data: ChangelogType): string => {
       return data.action ?? '-';
     },
@@ -68,6 +70,7 @@ const changelogColumn = computed(() => [
     header: changelogColumnHeader.value,
     sortable: true,
     fixed: true,
+    visible: true,
     bodyTemplate: (data: ChangelogType): string => {
       return data.objectName ?? '-';
     },
@@ -77,6 +80,7 @@ const changelogColumn = computed(() => [
     header: 'Field',
     sortable: true,
     fixed: true,
+    visible: !/Testing/.test(props.object),
     bodyTemplate: (data: ChangelogType): string => {
       return data.field ?? '-';
     },
@@ -85,6 +89,7 @@ const changelogColumn = computed(() => [
     field: 'oldValue',
     header: 'Data Lama',
     sortable: true,
+    visible: true,
     bodyTemplate: (data: ChangelogType): string => {
       return data.oldValue ?? '-';
     },
@@ -93,6 +98,7 @@ const changelogColumn = computed(() => [
     field: 'newValue',
     header: 'Data Baru',
     sortable: true,
+    visible: true,
     bodyTemplate: (data: ChangelogType): string => {
       return data.newValue ?? '-';
     },
@@ -101,6 +107,7 @@ const changelogColumn = computed(() => [
     field: 'modifiedBy',
     header: 'Diubah Oleh',
     sortable: true,
+    visible: true,
     bodyTemplate: (data: ChangelogType): string => {
       return data.modifiedBy ?? '-';
     },
@@ -149,7 +156,7 @@ watch(showChangelogDialog, (newValue) => {
     <Icon
       class="text-2xl"
       icon="file-history"
-      info="Download"
+      info="Changelog"
       severity="secondary"
       tooltip-pos="bottom"
     />
@@ -181,6 +188,7 @@ watch(showChangelogDialog, (newValue) => {
       </div>
       <ChangelogFilter
         v-show="showChangelogFilter"
+        :changelog-column-header="changelogColumnHeader"
         :custom-params="props.customParams"
         :object="props.object"
         :object-id="defaultParamsQuery.objectId"
