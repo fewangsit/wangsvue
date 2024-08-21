@@ -27,7 +27,6 @@ const toast = useToast();
 const showChangelogFilter = ref<boolean>(false);
 const showChangelogDialog = ref<boolean>(false);
 const dataTableKey = ref<number>(0);
-const searchLogs = ref<string>();
 
 const tableName = computed(
   () =>
@@ -143,7 +142,6 @@ const fetchChangelogs = async (
  */
 const resetState = (): void => {
   showChangelogFilter.value = false;
-  searchLogs.value = undefined;
 };
 
 watch(showChangelogDialog, (newValue) => {
@@ -177,7 +175,7 @@ watch(showChangelogDialog, (newValue) => {
         data-wv-section="dialog-changelog-header"
       >
         <ButtonSearch
-          @search="searchLogs = $event"
+          :table-name="tableName"
           class="ring-inset"
           data-wv-section="dialog-changelog-button-search"
         />
@@ -202,7 +200,6 @@ watch(showChangelogDialog, (newValue) => {
         :fetch-function="fetchChangelogs"
         :rows="10"
         :scroll-height="showChangelogFilter ? 'calc(50vh - 126px)' : '50vh'"
-        :search="searchLogs"
         :table-name="tableName"
         :use-option="false"
         data-key="_id"
