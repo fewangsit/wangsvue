@@ -109,20 +109,25 @@ watch(
 </script>
 
 <template>
-  <div v-show="dataSelected?.length" class="flex gap-2 items-center">
+  <div
+    v-show="dataSelected?.length"
+    class="flex gap-2 items-center"
+    data-wv-name="bulkaction"
+    data-wv-section="root"
+  >
     <Menu
       id="bulkaction-overlay-menu"
       ref="menu"
       v-if="dataSelected?.length"
       :model="bulkOptions"
       :popup="true"
-      data-ts-section="ts-bulkaction-menu"
+      data-wv-section="bulkactionmenu"
     />
 
     <span
       v-show="dataSelected?.length"
       class="text-xs text-grayscale-900 cursor-default whitespace-nowrap"
-      data-ts-section="ts-selection-message"
+      data-wv-section="selection-message"
     >
       {{ dataSelected?.length }} data dipilih
     </span>
@@ -130,11 +135,11 @@ watch(
     <Button
       v-show="showSelectAllButton"
       :class="[
-        '!p-1.5 -ml-1.5 -mr-1.5',
+        '!p-1.5 -ml-1.5 -mr-1.5 !text-xs',
         { 'pointer-events-none': isAllDataSelected },
       ]"
       @click="selectAllData"
-      data-wv-section="button-select-all"
+      data-wv-section="buttonselectall"
       text
     >
       <template v-if="!isAllDataSelected">
@@ -145,6 +150,7 @@ watch(
 
     <Button
       @click="toggleMenu"
+      data-wv-section="bulkactiontoggle"
       icon="ellipsis-h"
       outlined
       severity="secondary"
@@ -153,6 +159,7 @@ watch(
     <Button
       @click="unSelectAllData"
       class="!p-0 !w-6 !h-6 [&_.icon]:!w-5 [&_.icon]:!h-5"
+      data-wv-section="clearselection"
       icon="close"
       severity="danger"
       text
