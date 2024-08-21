@@ -231,7 +231,7 @@ defineExpose({ form, clearField });
         v-if="showStayCheckbox"
         :model-value="form?.stayAfterSubmit"
         @update:model-value="form && (form.stayAfterSubmit = $event)"
-        label="Stay on this form after submitting"
+        label="Tetap di halaman ini"
       />
       <ValidatorMessage
         v-show="invalid && validatorMessage"
