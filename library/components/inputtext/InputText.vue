@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, shallowRef, watch } from 'vue';
+import {
+  computed,
+  onMounted,
+  reactive,
+  shallowRef,
+  watch,
+  nextTick,
+} from 'vue';
 import { useField } from 'vee-validate';
 import { Nullable } from '../ts-helpers';
 import { FieldValidation } from 'lib/types/validation.type';
@@ -32,7 +39,9 @@ onMounted(() => {
     Object.assign(
       field,
       useField(props.fieldName ?? 'textInput', (value: string) => {
-        return setValidatorMessage(value?.trim());
+        return nextTick(() => {
+          return setValidatorMessage(value?.trim());
+        }); // Waits props.invalid changed
       }),
     );
 
