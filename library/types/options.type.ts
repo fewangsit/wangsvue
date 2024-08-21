@@ -1,4 +1,4 @@
-import { WangsIcons } from 'lib/components/icon/Icon.vue.d';
+import { WangsIcons } from '../components/icon/Icon.vue.d';
 
 export type OptionValue = string | number | boolean | Record<string, unknown>;
 

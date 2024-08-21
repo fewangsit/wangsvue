@@ -1,4 +1,4 @@
-import { Data, QueryParams } from 'lib/components/datatable/DataTable.vue.d';
+import { Data, QueryParams } from '../components/datatable/DataTable.vue.d';
 import mitt from './mitt';
 
 export type TableEvent = {
