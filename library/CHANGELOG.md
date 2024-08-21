@@ -1,6 +1,35 @@
 # Changelog
 
 
+## v1.4.55
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.54...v1.4.55)
+
+### 🚀 Enhancements
+
+- Add changelog docs ([ab81592](https://github.com/fewangsit/wangsvue/commit/ab81592))
+- Add util to get base url ([bc36de5](https://github.com/fewangsit/wangsvue/commit/bc36de5))
+- Add changelog component (temporary, wait backend) ([c6726d6](https://github.com/fewangsit/wangsvue/commit/c6726d6))
+- Add more fields for filtering changelog and its visibility ([ea48bcc](https://github.com/fewangsit/wangsvue/commit/ea48bcc))
+
+### 🩹 Fixes
+
+- Fix eslint warning ([1fa6a74](https://github.com/fewangsit/wangsvue/commit/1fa6a74))
+- Fix ts error & unused variable ([72d4c74](https://github.com/fewangsit/wangsvue/commit/72d4c74))
+- Add type to params ([55b6011](https://github.com/fewangsit/wangsvue/commit/55b6011))
+
+### 💅 Refactors
+
+- **R0vXROCk:** Refactor menu to be able to redirect to specific route when defined ([a38ae87](https://github.com/fewangsit/wangsvue/commit/a38ae87))
+- **1c5h4lY5:** Add adjustable text for close button label ([bdac1a1](https://github.com/fewangsit/wangsvue/commit/bdac1a1))
+- Add visibility to column ([2a327fa](https://github.com/fewangsit/wangsvue/commit/2a327fa))
+- Change data-ts into data-wv ([69c6598](https://github.com/fewangsit/wangsvue/commit/69c6598))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.4.54
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.53...v1.4.54)
