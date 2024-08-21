@@ -56,7 +56,7 @@ export default function mitt<Events extends Record<EventType, unknown>>(
   return {
     /**
      * A Map of event names to registered handler functions.
-     */kw
+     */
     all,
 
     /**
