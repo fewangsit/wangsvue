@@ -57,6 +57,12 @@ export interface CalendarProps {
    */
   mandatory?: boolean;
   /**
+   * Show the text (opsional)
+   *
+   * @default true if mandatory true
+   */
+  showOptionalText?: boolean;
+  /**
    * Sets the invalid state.
    */
   invalid?: boolean;

@@ -38,6 +38,12 @@ export interface InputRangeNumberProps {
    * Disabled the input.
    */
   disabled?: boolean;
+  /**
+   * Show the text (opsional)
+   *
+   * @default true if mandatory true
+   */
+  showOptionalText?: boolean;
   useValidator?: boolean;
   minFieldName?: string;
   maxFieldName?: string;

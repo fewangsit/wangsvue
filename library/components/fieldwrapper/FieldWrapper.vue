@@ -2,7 +2,9 @@
 import Icon from '../icon/Icon.vue';
 import type { FieldWrapperProps } from './FieldWrapper.vue.d';
 
-defineProps<FieldWrapperProps>();
+withDefaults(defineProps<FieldWrapperProps>(), {
+  showOptionalText: true,
+});
 </script>
 
 <template>
@@ -18,7 +20,7 @@ defineProps<FieldWrapperProps>();
     >
       {{ label }}
       <span
-        v-if="!mandatory"
+        v-if="mandatory == false && showOptionalText"
         class="text-grayscale-700 text-[10px] font-normal leading-4"
       >
         (opsional)

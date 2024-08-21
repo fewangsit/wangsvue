@@ -40,6 +40,12 @@ export interface MultiSelectProps {
    */
   mandatory?: boolean;
   /**
+   * Show the text (opsional)
+   *
+   * @default true if mandatory true
+   */
+  showOptionalText?: boolean;
+  /**
    * Set custom validator message.
    * It is rarely use, this component has handled the validator message.
    */

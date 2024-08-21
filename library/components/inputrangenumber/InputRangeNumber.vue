@@ -96,7 +96,7 @@ watch(
 </script>
 
 <template>
-  <FieldWrapper :label="props.label">
+  <FieldWrapper :label="props.label" :show-optional-text="showOptionalText">
     <div
       class="flex gap-2 w-full items-center"
       data-section-name="inputwrapper"

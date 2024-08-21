@@ -21,6 +21,7 @@ const model = ref<OptionValue[]>();
           <MultiSelect
             v-model="model"
             :options="['Waiting for Approval', 'Waiting for Handover']"
+            :show-optional-text="false"
             label="Status"
             placeholder="Pilih status"
           />

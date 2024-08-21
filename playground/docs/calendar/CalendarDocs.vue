@@ -8,8 +8,9 @@ import Calendar from 'lib/components/calendar/Calendar.vue';
   <Card>
     <template #header> <DocTitle name="Calendar" /> </template>
     <template #content>
-      <div class="grid grid-cols-4">
+      <div class="grid grid-cols-4 items-end justify-end gap-3">
         <Calendar mode="range" />
+        <Calendar label="Calendar" mode="range" use-validator />
       </div>
     </template>
   </Card>

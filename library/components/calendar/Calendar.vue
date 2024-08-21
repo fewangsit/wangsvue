@@ -24,6 +24,7 @@ const props = withDefaults(defineProps<CalendarProps>(), {
   view: 'date',
   mode: 'single',
   showYear: true,
+  showOptionalText: true,
 });
 
 const emit = defineEmits<CalendarEmits>();

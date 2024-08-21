@@ -3,6 +3,7 @@ import { DefineComponent } from 'vue';
 export interface FieldWrapperProps {
   label?: string;
   mandatory?: boolean;
+  showOptionalText?: boolean;
   info?: string;
   labelClass?: string;
 }

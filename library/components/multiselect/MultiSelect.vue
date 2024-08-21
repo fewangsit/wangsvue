@@ -22,8 +22,10 @@ import eventBus from 'lib/event-bus';
 const props = withDefaults(defineProps<MultiSelectProps>(), {
   display: 'chip',
   filter: true,
+  showOptionalText: true,
   filterPlaceholder: 'Cari',
 });
+
 const emit = defineEmits<MultiSelectEmits>();
 
 onMounted(() => {
@@ -122,6 +124,7 @@ defineExpose({
     :info="fieldInfo"
     :label="props.label"
     :mandatory="props.mandatory"
+    :show-optional-text="showOptionalText"
   >
     <InputGroup
       :class="{ 'rounded-none border-none': controls }"

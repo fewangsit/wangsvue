@@ -99,8 +99,10 @@ defineOptions({
       <InputRangeNumber
         v-if="field.type == 'rangenumber'"
         v-bind="field"
+        :mandatory="false"
         :max-field-name="field.fields[1]"
         :min-field-name="field.fields[0]"
+        :show-optional-text="false"
         use-validator
       />
       <MultiSelect
@@ -108,7 +110,9 @@ defineOptions({
         v-bind="field"
         :field-name="field.field"
         :loading="loading[field.field]"
+        :mandatory="false"
         :options="filterOption[field.field]"
+        :show-optional-text="false"
         @show="getOptions(field.fetchOptionFn, field.field)"
         option-label="label"
         option-value="value"
@@ -118,6 +122,8 @@ defineOptions({
         v-else-if="field.type === 'calendar'"
         v-bind="field"
         :field-name="field.field"
+        :mandatory="false"
+        :show-optional-text="false"
         mode="range"
         use-validator
       />
