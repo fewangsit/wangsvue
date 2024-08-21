@@ -141,10 +141,7 @@ defineExpose({
 
     <div ref="footer" v-if="!hideFooter" class="ts-form-footer">
       <div v-if="!hideStayCheckbox" class="ts-form-stay-checkbox">
-        <Checkbox
-          v-model="stayAfterSubmit"
-          label="Stay on this form after submitting"
-        />
+        <Checkbox v-model="stayAfterSubmit" label="Tetap di halaman ini" />
       </div>
 
       <div class="ts-form-action-buttons">
