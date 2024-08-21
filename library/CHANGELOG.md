@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v1.4.60
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.59...v1.4.60)
+
+### 🚀 Enhancements
+
+- **InputRangeNumber:** Add max and min to prevent max input has value less than min input and vice versa ([d8f18eb](https://github.com/fewangsit/wangsvue/commit/d8f18eb))
+- Add support 3 column filter container ([6011016](https://github.com/fewangsit/wangsvue/commit/6011016))
+
+### 🩹 Fixes
+
+- **FilterContainer:** Calendar field does not resets its model value when form resetted ([20491ba](https://github.com/fewangsit/wangsvue/commit/20491ba))
+- **DataTable:** Checkbox all selection  does not checked when all the data is selected ([0ea5370](https://github.com/fewangsit/wangsvue/commit/0ea5370))
+- **ImageComporessor:** Expected an assignment or function call and instead saw an expression ([50be9a8](https://github.com/fewangsit/wangsvue/commit/50be9a8))
+
+### 💅 Refactors
+
+- **ButtonSearch:** Add auto focus input when searach form opened ([559e586](https://github.com/fewangsit/wangsvue/commit/559e586))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.59
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.58...v1.4.59)
