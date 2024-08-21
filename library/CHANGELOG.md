@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.48
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.47...v1.4.48)
+
+### 🩹 Fixes
+
+- **Menu:** Action command invoked twice ([26b1a4b](https://github.com/fewangsit/wangsvue/commit/26b1a4b))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.47
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.46...v1.4.47)
