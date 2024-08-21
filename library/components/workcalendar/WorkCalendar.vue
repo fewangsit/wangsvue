@@ -417,7 +417,7 @@ const resetDefaultThisYear = (): void => {
     >
       <div
         class="h-6 w-full justify-between items-start gap-1 inline-flex"
-        data-section-name="navigation"
+        data-wv-section="navigation"
       >
         <Icon
           :class="[
@@ -444,13 +444,13 @@ const resetDefaultThisYear = (): void => {
       </div>
       <div class="flex flex-col gap-1" data-pc-section="date">
         <div data-pc-section="tableheader">
-          <div class="grid grid-cols-7 gap-2" data-section-name="weekdays">
+          <div class="grid grid-cols-7 gap-2" data-wv-section="weekdays">
             <span
               :key="day"
               v-for="day in dayNames"
               abbr="day"
               class="px-2 py-[5.4px] text-center"
-              data-section-name="weekday"
+              data-wv-section="weekday"
             >
               {{ day.slice(0, 3) }}
             </span>

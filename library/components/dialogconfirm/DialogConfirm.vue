@@ -52,33 +52,33 @@ const confirm = (): void => {
           ...DialogPreset.root({ state: {} }).class,
           '!w-[clamp(360px,75vw,400px)]',
         ],
-        'data-section-name': $attrs['data-section-name'] ?? 'root',
+        'data-wv-section': $attrs['data-wv-section'] ?? 'root',
         'data-ts-name': $attrs['data-ts-name'] ?? 'dialogconfirm',
       },
       header: {
         'class': [...DialogPreset.header.class],
-        'data-section-name': 'dialog-confirm-header',
+        'data-wv-section': 'dialog-confirm-header',
       },
       content: {
         'class': [
           ...DialogPreset.content({ state: {}, instance: {} }).class,
           '[&_ul]:list-inside [&_ul]:list-disc [&_ul_li]:pl-[6px]',
         ],
-        'data-section-name': 'dialog-confirm-content',
+        'data-wv-section': 'dialog-confirm-content',
       },
       footer: {
         'class': [
           ...DialogPreset.footer.class,
           'flex items-end justify-end gap-1 !mt-0',
         ],
-        'data-section-name': 'dialog-confirm-footer',
+        'data-wv-section': 'dialog-confirm-footer',
       },
     }"
     :visible="props.visible"
     @hide="emit('hide')"
     @update:visible="emit('update:visible', !!$event)"
     close-on-escape
-    data-section-name="dialog-confirm"
+    data-wv-section="dialog-confirm"
     modal
   >
     <template #header>
@@ -88,7 +88,7 @@ const confirm = (): void => {
         :severity="severity"
         aria-label="Header Icon"
         class="text-2xl"
-        data-section-name="headericon"
+        data-wv-section="headericon"
       />
       <h3
         :class="[
@@ -98,14 +98,14 @@ const confirm = (): void => {
             'text-danger-700': severity === 'danger',
           },
         ]"
-        data-section-name="dialog-confirm-title"
+        data-wv-section="dialog-confirm-title"
       >
         {{ header }}
       </h3>
     </template>
 
     <template #default>
-      <ul v-if="list" data-section-name="dialog-confirm-list">
+      <ul v-if="list" data-wv-section="dialog-confirm-list">
         <li :key="index" v-for="(item, index) in list">
           {{
             listLabel && typeof item !== 'string'
@@ -116,7 +116,7 @@ const confirm = (): void => {
       </ul>
 
       <slot :items="list" name="body">
-        <p data-section-name="confirm-message">{{ message }}</p>
+        <p data-wv-section="confirm-message">{{ message }}</p>
       </slot>
     </template>
 
@@ -125,7 +125,7 @@ const confirm = (): void => {
         <Button
           :label="props.actionable ? 'Batal' : 'Tutup'"
           @click="closeDialog"
-          data-section-name="cancel-button"
+          data-wv-section="cancel-button"
           severity="secondary"
           text
         />
@@ -136,7 +136,7 @@ const confirm = (): void => {
           :label="confirmLabel"
           :severity="severity"
           @click="confirm"
-          data-section-name="confirm-button"
+          data-wv-section="confirm-button"
         />
       </slot>
     </template>

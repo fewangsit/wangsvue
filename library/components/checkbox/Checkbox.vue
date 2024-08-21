@@ -27,7 +27,7 @@ const modelValue = defineModel<CheckboxModelValue>('modelValue');
       { 'gap-1': props.label },
       { 'pointer-events-none': !selectable },
     ]"
-    data-name="checkbox"
+    data-wv-name="checkbox"
   >
     <Checkbox
       v-bind="$props"
@@ -36,7 +36,7 @@ const modelValue = defineModel<CheckboxModelValue>('modelValue');
       :pt="{
         input: { disabled: !selectable || disabled },
       }"
-      data-section-name="checkbox-input"
+      data-wv-section="checkbox-input"
     >
       <template #icon>
         <Icon
@@ -48,7 +48,7 @@ const modelValue = defineModel<CheckboxModelValue>('modelValue');
 
     <span
       class="flex items-start gap-px select-none tracking-[0.02em] leading-none"
-      data-section-name="checkbox-label"
+      data-wv-section="checkbox-label"
     >
       {{ label }}
       <Icon
@@ -56,7 +56,7 @@ const modelValue = defineModel<CheckboxModelValue>('modelValue');
         :info="tooltip"
         :tooltip-pos="tooltipPos"
         class="w-[10px] h-[10px] text-grayscale-900"
-        data-section-name="tooltip-icon"
+        data-wv-section="tooltip-icon"
         icon="info"
       />
     </span>

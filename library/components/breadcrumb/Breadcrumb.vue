@@ -14,7 +14,7 @@ const lastIndex = computed(() => props.menus.length - 1);
       'text-grayscale-900 ',
       'text-xs font-normal leading-none',
     ]"
-    data-name="breadcrumb"
+    data-wv-name="breadcrumb"
   >
     <template :key="index" v-for="(menu, index) in props.menus">
       <span
@@ -22,7 +22,7 @@ const lastIndex = computed(() => props.menus.length - 1);
           'font-semibold': index == lastIndex,
           'text-primary-400': index && index < lastIndex,
         }"
-        data-section-name="breadcrumb-menu"
+        data-wv-section="breadcrumb-menu"
       >
         <a
           v-if="menu.route"
@@ -30,7 +30,7 @@ const lastIndex = computed(() => props.menus.length - 1);
           :title="menu.title"
           @click="navigateToUrl(menu.route!)"
           class="cursor-pointer text-primary"
-          data-section-name="breadcrumb-menu-link"
+          data-wv-section="breadcrumb-menu-link"
         >
           {{ menu.name }}
         </a>
@@ -43,7 +43,7 @@ const lastIndex = computed(() => props.menus.length - 1);
       <span
         v-if="index != lastIndex"
         v-text="'>'"
-        data-section-name="breadcrumb-separator"
+        data-wv-section="breadcrumb-separator"
       />
     </template>
   </div>

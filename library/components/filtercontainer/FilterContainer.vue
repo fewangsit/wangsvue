@@ -93,7 +93,7 @@ defineOptions({
       'grid items-end grid-cols-4 p-3 gap-4',
     ]"
     @submit.prevent="apply"
-    data-name="filter-container"
+    data-wv-name="filter-container"
   >
     <template :key="field" v-for="field of fields">
       <InputRangeNumber
@@ -130,7 +130,7 @@ defineOptions({
     </template>
     <div
       class="flex items-end justify-end gap-2"
-      data-section-name="filter-action-buttons"
+      data-wv-section="filter-action-buttons"
     >
       <Button @click="clear" label="Bersihkan Field" text />
       <Button @click="apply" label="Terapkan" severity="success" />

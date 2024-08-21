@@ -99,7 +99,7 @@ watch(
   <FieldWrapper :label="props.label" :show-optional-text="showOptionalText">
     <div
       class="flex gap-2 w-full items-center"
-      data-section-name="inputwrapper"
+      data-wv-section="inputwrapper"
     >
       <InputGroup>
         <InputNumber

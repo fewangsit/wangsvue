@@ -884,7 +884,7 @@ watch(dataSelected, (newSelectedData: Data[]) => {
       <template #body="{ data: rowData }" v-if="disableKey || disableAllRows">
         <span
           class="flex justify-center items-center"
-          data-section-name="checkboxselection"
+          data-wv-section="checkboxselection"
         >
           <Checkbox
             v-model="dataSelected"
@@ -1030,7 +1030,7 @@ watch(dataSelected, (newSelectedData: Data[]) => {
       <template #body="{ data: itemData }" v-if="useOption">
         <div
           class="relative w-full h-full flex items-center justify-center"
-          data-section-name="single-action-wrapper"
+          data-wv-section="single-action-wrapper"
         >
           <Button
             :id="'button-action-' + itemData[props.dataKey]"
@@ -1043,7 +1043,7 @@ watch(dataSelected, (newSelectedData: Data[]) => {
             ]"
             :disabled="disableAllRows"
             @click.stop="toggleOptions($event, itemData)"
-            data-section-name="button-action"
+            data-wv-section="button-action"
             icon="ellipsis-h"
             outlined
             severity="secondary"

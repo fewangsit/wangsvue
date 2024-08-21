@@ -49,7 +49,7 @@ const updateInput = (event: Event): void => {
       'border-b border-primary-100',
     ]"
     @submit.prevent="eventBus.emit('search-table', { tableName, search: query })"
-    data-section-name="searchbox-form"
+    data-wv-section="searchbox-form"
   >
     <Icon
       @click="

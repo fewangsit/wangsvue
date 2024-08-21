@@ -134,7 +134,7 @@ watch(
         { 'pointer-events-none': isAllDataSelected },
       ]"
       @click="selectAllData"
-      data-section-name="button-select-all"
+      data-wv-section="button-select-all"
       text
     >
       <template v-if="!isAllDataSelected">
