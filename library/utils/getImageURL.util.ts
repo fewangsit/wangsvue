@@ -1,4 +1,4 @@
-import * as colors from '../colors.config.json';
+import colors from '../colors.config.json';
 const getImageURL = (name?: string | null): string | undefined => {
   if (!name) return;
 
@@ -8,11 +8,11 @@ const getImageURL = (name?: string | null): string | undefined => {
 
 export const genPlaceholder = (text: string, size: 30 | 125): string => {
   const bgOptions: string[] = [
-    colors['default']['primary-400'],
-    colors['default']['danger-500'],
-    colors['default']['success-500'],
-    colors['default']['general-500'],
-    colors['default']['grayscale-900'],
+    colors['primary-400'],
+    colors['danger-500'],
+    colors['success-500'],
+    colors['general-500'],
+    colors['grayscale-900'],
   ];
 
   const randomIndex = Math.floor(Math.random() * bgOptions.length);
