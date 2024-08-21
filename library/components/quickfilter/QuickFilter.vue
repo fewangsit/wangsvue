@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, shallowRef } from 'vue';
 import { QuickFilterProps } from './QuickFilter.vue.d';
 import { useForm } from 'vee-validate';
 import { MultiSelectOption } from 'lib/types/options.type';
@@ -14,6 +14,7 @@ import Calendar from '../calendar/Calendar.vue';
 const { values, resetForm } = useForm();
 
 const loading = ref<Record<string, boolean>>({});
+const fieldsKey = shallowRef(0);
 const filterOption = ref<Record<string, MultiSelectOption[]>>({});
 
 const props = withDefaults(defineProps<QuickFilterProps>(), {
@@ -22,6 +23,7 @@ const props = withDefaults(defineProps<QuickFilterProps>(), {
 
 const clear = (): void => {
   resetForm();
+  fieldsKey.value++;
 };
 
 const apply = (): void => {
@@ -59,7 +61,10 @@ const getOptions = async (
       :style="`grid-template-columns: repeat(${fields.length}, 1fr)`"
       data-wv-section="quickfilterfields"
     >
-      <template :key="field" v-for="field of fields">
+      <template
+        :key="JSON.stringify(field) + fieldsKey"
+        v-for="field of fields"
+      >
         <InputRangeNumber
           v-if="field.type == 'rangenumber'"
           v-tooltip.top="field.tooltip"

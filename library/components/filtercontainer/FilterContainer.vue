@@ -26,6 +26,7 @@ const filterOption = ref<FilterOptions>({});
 
 const container = ref<HTMLDivElement | null>(null);
 const showFilter = shallowRef(false);
+const fieldsKey = shallowRef(0);
 
 onMounted(() => {
   if (container.value) {
@@ -74,6 +75,7 @@ const getOptions = async (
 
 const clear = (): void => {
   resetForm();
+  fieldsKey.value++;
 };
 
 const apply = handleSubmit((values) => {
@@ -97,7 +99,7 @@ defineOptions({
     @submit.prevent="apply"
     data-wv-name="filtercontainer"
   >
-    <template :key="field" v-for="field of fields">
+    <template :key="field.label + fieldsKey" v-for="field of fields">
       <InputRangeNumber
         v-if="field.type == 'rangenumber'"
         v-bind="field"
