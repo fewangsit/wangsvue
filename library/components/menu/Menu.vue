@@ -37,7 +37,6 @@ defineExpose({
   >
     <template #item="{ item, props }">
       <a
-        @click="item.command?.({ originalEvent: $event, item })"
         v-bind="props.action"
         aria-hidden="true"
         data-pc-section="action"

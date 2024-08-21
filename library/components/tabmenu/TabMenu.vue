@@ -14,6 +14,7 @@ const activeIndex = defineModel<number>('activeIndex', { default: 0 });
     v-model:activeIndex="activeIndex"
     :model="menu"
     @tab-change="emit('tab-change', $event)"
+    data-wv-name="tabmenu"
   >
     <template #item="{ item, props }">
       <router-link
