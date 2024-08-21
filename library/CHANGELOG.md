@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.44
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.43...v1.4.44)
+
+### 💅 Refactors
+
+- **Form:** Change checkbox stay after submit label ([935a82f](https://github.com/fewangsit/wangsvue/commit/935a82f))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.43
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.42...v1.4.43)
