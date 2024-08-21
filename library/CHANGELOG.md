@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.43
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.42...v1.4.43)
+
+### 🚀 Enhancements
+
+- Add genPlaceholder with sharp - to be continued ([e8e23a3](https://github.com/fewangsit/wangsvue/commit/e8e23a3))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.42
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.40...v1.4.42)
