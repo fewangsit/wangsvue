@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v1.4.57
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.56...v1.4.57)
+
+### 🩹 Fixes
+
+- SetValidator message should waits the props.validaorMessage and props.invalid value changed ([db2cddf](https://github.com/fewangsit/wangsvue/commit/db2cddf))
+- Failed to resolve on mfe module ([e3f590e](https://github.com/fewangsit/wangsvue/commit/e3f590e))
+
+### 🏡 Chore
+
+- **release:** V1.4.55 ([b013422](https://github.com/fewangsit/wangsvue/commit/b013422))
+- **release:** V1.4.56 ([ab48468](https://github.com/fewangsit/wangsvue/commit/ab48468))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.56
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.55...v1.4.56)
