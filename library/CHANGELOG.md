@@ -1,6 +1,33 @@
 # Changelog
 
 
+## v1.4.42
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.40...v1.4.42)
+
+### 🚀 Enhancements
+
+- Re render column on update table event ([8bf0d0c](https://github.com/fewangsit/wangsvue/commit/8bf0d0c))
+- Add image component with placeholder generator ([f9e22ee](https://github.com/fewangsit/wangsvue/commit/f9e22ee))
+
+### 🩹 Fixes
+
+- Revert change button toggle ([5907c5c](https://github.com/fewangsit/wangsvue/commit/5907c5c))
+- Type error allowSyntheticDefaultImports on import colors from colors.config.json ([8edadd8](https://github.com/fewangsit/wangsvue/commit/8edadd8))
+
+### 💅 Refactors
+
+- Update button toggle model value to use defineModel ([10530be](https://github.com/fewangsit/wangsvue/commit/10530be))
+
+### 🏡 Chore
+
+- **release:** V1.4.40 ([1cc2788](https://github.com/fewangsit/wangsvue/commit/1cc2788))
+- **release:** V1.4.41 ([38c6a16](https://github.com/fewangsit/wangsvue/commit/38c6a16))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.41
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.40...v1.4.41)
