@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { shallowRef } from 'vue';
+import { nextTick, ref, shallowRef } from 'vue';
 import Icon from '../icon/Icon.vue';
 import { ButtonSearchEmits, ButtonSearchProps } from './ButtonSearch.vue.d';
 import InputText from 'primevue/inputtext';
@@ -11,8 +11,26 @@ withDefaults(defineProps<ButtonSearchProps>(), {
 
 defineEmits<ButtonSearchEmits>();
 
+const buttonFocusClass =
+  'focus-within:ring-2 focus-within:ring-primary-400 focus-within:outline-none rounded-sm';
+
 const query = shallowRef<string>();
+const inputtext = ref();
 const showSearchInput = shallowRef(false);
+
+const showSearchForm = (): void => {
+  showSearchInput.value = true;
+
+  focusToInput();
+};
+
+const focusToInput = (): void => {
+  nextTick(() => {
+    if (inputtext.value) {
+      inputtext.value['$el'].focus();
+    }
+  });
+};
 
 /**
  * Need to update the query on input to show the clear (x) icon.
@@ -30,7 +48,8 @@ const updateInput = (event: Event): void => {
 <template>
   <button
     v-if="!showSearchInput"
-    @click="showSearchInput = !showSearchInput"
+    :class="'w-max ' + buttonFocusClass"
+    @click="showSearchForm"
     data-wv-section="buttonsearchtrigger"
     type="button"
   >
@@ -54,7 +73,8 @@ const updateInput = (event: Event): void => {
     "
     data-wv-section="searchbox-form"
   >
-    <Icon
+    <button
+      :class="buttonFocusClass"
       @click="
         () => {
           query = undefined;
@@ -63,23 +83,27 @@ const updateInput = (event: Event): void => {
           eventBus.emit('search-table', { tableName, search: undefined });
         }
       "
-      class="w-6 h-6 text-grayscale-900 shrink-0"
-      icon="arrow-left"
-    />
+      data-wv-section="buttonsearchtrigger"
+      type="button"
+    >
+      <Icon class="w-6 h-6 text-grayscale-900 shrink-0" icon="arrow-left" />
+    </button>
 
     <InputText
-      v-focus
+      ref="inputtext"
       :model-value="query"
       @input="updateInput"
       class="!h-max"
       placeholder="Cari"
     />
-
-    <Icon
-      :class="['text-2xl shrink-0', { invisible: !query }]"
-      @click="query = undefined"
-      icon="close"
-    />
+    <button
+      :class="[buttonFocusClass, { invisible: !query }]"
+      @click="(query = undefined), focusToInput()"
+      data-wv-section="buttonsearchtrigger"
+      type="button"
+    >
+      <Icon :class="['text-2xl shrink-0']" icon="close" />
+    </button>
     <button class="hidden" type="submit" />
   </form>
 </template>
