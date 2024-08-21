@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.59
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.58...v1.4.59)
+
+### 🩹 Fixes
+
+- **QuickFilter:** Dynamic grid-cols class not work - change with style ([49414ff](https://github.com/fewangsit/wangsvue/commit/49414ff))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.58
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.57...v1.4.58)
