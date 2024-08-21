@@ -155,26 +155,26 @@ defineExpose({ form, clearField });
       },
       header: {
         'class': [...DialogPreset.header.class],
-        'data-ts-section': 'dialog-form-header',
+        'data-wv-section': 'dialog-form-header',
       },
       content: {
         'class': [
           ...DialogPreset.content({ state: {}, instance: {} }).class,
           ...convertToArrayClass(contentClass),
         ],
-        'data-ts-section': 'dialog-form-content',
+        'data-wv-section': 'dialog-form-content',
       },
       footer: {
         'class': [
           ...DialogPreset.footer.class,
           'flex flex-col !items-end justify-end !gap-1',
         ],
-        'data-ts-section': 'dialog-form-footer',
+        'data-wv-section': 'dialog-form-footer',
       },
     }"
     :visible="visible"
     @update:visible="emit('update:visible', !!$event)"
-    data-ts-section="dialog-form"
+    data-wv-section="dialog-form"
     modal
   >
     <template #header>
@@ -185,11 +185,11 @@ defineExpose({ form, clearField });
           :severity="severity"
           aria-label="Header Icon"
           class="text-2xl"
-          data-ts-section="headericon"
+          data-wv-section="headericon"
         />
         <h3
           class="text-grayscale-900 dark:text-general-100 text-center text-[0.9rem] leading-[1.125rem] font-bold tracking-[0.28px]"
-          data-ts-section="dialog-form-title"
+          data-wv-section="dialog-form-title"
         >
           {{ header }}
         </h3>
@@ -200,7 +200,7 @@ defineExpose({ form, clearField });
       <Icon
         @click="closeDialog"
         class="w-[22px] h-[22px]"
-        data-ts-section="close-icon"
+        data-wv-section="close-icon"
         icon="close"
         severity="secondary"
       />
@@ -241,13 +241,13 @@ defineExpose({ form, clearField });
       <div
         v-if="props.buttonsTemplate.length"
         class="flex gap-1 items-center justify-end"
-        data-ts-section="footer-button"
+        data-wv-section="footer-button"
       >
         <slot :submit="onButtonSubmitClicked" name="actionButtons">
           <Button
             v-if="props.buttonsTemplate?.includes('cancel')"
             @click="emit('close'), emit('update:visible', false)"
-            data-ts-section="cancel-btn"
+            data-wv-section="cancel-btn"
             label="Batal"
             severity="dark"
             text
@@ -256,7 +256,7 @@ defineExpose({ form, clearField });
             v-if="props.buttonsTemplate?.includes('clear')"
             :label="clearBtnLabel ?? 'Bersihkan Field'"
             @click="clearField"
-            data-ts-section="clear-field"
+            data-wv-section="clear-field"
             text
           />
           <Button
@@ -264,7 +264,7 @@ defineExpose({ form, clearField });
             :label="submitBtnLabel ?? 'Simpan'"
             :severity="props.severity === 'primary' ? undefined : 'success'"
             @click="onButtonSubmitClicked"
-            data-ts-section="save-submit-button"
+            data-wv-section="save-submit-button"
           />
         </slot>
       </div>

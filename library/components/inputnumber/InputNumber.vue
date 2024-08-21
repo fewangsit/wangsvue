@@ -226,12 +226,12 @@ watch(
 
       <span
         :class="['relative', { 'w-max': autoResize }]"
-        data-ts-section="autoresizeinputwrapper"
+        data-wv-section="autoresizeinputwrapper"
       >
         <span
           v-if="autoResize"
           class="text-body-medium !tracking-[0.28px] user-select-none py-1 px-3 inline-block min-w-4 leading-[17px]"
-          data-ts-section="inputresizer"
+          data-wv-section="inputresizer"
         >
           {{ (field.value ?? '').toString().padStart(padStart, '0') }}
         </span>

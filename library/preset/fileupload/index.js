@@ -1,5 +1,5 @@
 export default {
   root: {
-    'data-ts-name': 'fileupload',
+    'data-wv-name': 'fileupload',
   },
 };

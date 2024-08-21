@@ -189,7 +189,7 @@ const teleportColumnList = (
   source: HTMLUListElement | null,
   target: HTMLElement | null,
 ): void => {
-  source?.setAttribute('data-ts-section', 'custom-column-menu');
+  source?.setAttribute('data-wv-section', 'custom-column-menu');
   source?.removeAttribute('style');
 
   target?.append(source ?? document.createElement('ul'));
@@ -284,14 +284,14 @@ defineExpose({
     @hide="setColumnVisibilityConfig"
     append-to="body"
     auto-z-index
-    data-ts-name="column-visibility"
-    data-ts-section="menu"
+    data-wv-name="column-visibility"
+    data-wv-section="menu"
     popup
   >
     <template #start>
       <Button
         @click="resetToDefault"
-        data-ts-section="button-reset-default"
+        data-wv-section="button-reset-default"
         label="Atur Ulang ke Default"
         text
       />
@@ -308,7 +308,7 @@ defineExpose({
       { 'grid grid-rows-4 grid-flow-col-dense w-max gap-x-4': type === 'flat' },
       // { 'flex flex-col': type === 'menu' },
     ]"
-    data-ts-section="custom-column-flat-list"
+    data-wv-section="custom-column-flat-list"
   >
     <template :key="item.field" v-for="(item, index) in columnReorderData">
       <li
@@ -346,7 +346,7 @@ defineExpose({
             'dark:bg-primary-50',
           )
         "
-        data-ts-section="custom-column-menu-item"
+        data-wv-section="custom-column-menu-item"
       >
         <Icon
           :class="[

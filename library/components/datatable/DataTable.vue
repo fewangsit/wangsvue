@@ -832,8 +832,8 @@ watch(dataSelected, (newSelectedData: Data[]) => {
     @row-unselect-all="onRowToggleSelectAll"
     @select-all-change="onSelectAllChange"
     @sort="handleSortTable"
-    current-page-report-template="Showing {first} to {last} of {totalRecords}"
-    data-ts-name="TSDataTable"
+    current-page-report-template="Menampilkan {first} - {last} dari {totalRecords}"
+    data-wv-name="TSDataTable"
     paginator-template="FirstPageLink PrevPageLink PageLinks JumpToPageInput NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
     removable-sort
     resizable-columns
@@ -1113,7 +1113,7 @@ watch(dataSelected, (newSelectedData: Data[]) => {
 
 <style>
 /* This style to fix bug: When pointer released after resizing, the sorting becomes active */
-[data-ts-name='TSDataTable']:has(.resizer[style*='display: block']) {
+[data-wv-name='TSDataTable']:has(.resizer[style*='display: block']) {
   pointer-events: none;
 }
 </style>

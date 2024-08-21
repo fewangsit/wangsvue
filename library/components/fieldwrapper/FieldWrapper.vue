@@ -10,13 +10,13 @@ withDefaults(defineProps<FieldWrapperProps>(), {
 <template>
   <div
     class="flex flex-col items-start justify-start relative gap-1 w-full shrink-0 overflow-hidden"
-    data-ts-name="field-wrapper"
-    data-ts-section="root"
+    data-wv-name="field-wrapper"
+    data-wv-section="root"
   >
     <label
       v-if="label"
       :class="['text-general-900  text-xs flex gap-[2px]', labelClass]"
-      data-ts-section="field-label"
+      data-wv-section="field-label"
     >
       {{ label }}
       <span

@@ -53,7 +53,7 @@ const confirm = (): void => {
           '!w-[clamp(360px,75vw,400px)]',
         ],
         'data-wv-section': $attrs['data-wv-section'] ?? 'root',
-        'data-ts-name': $attrs['data-ts-name'] ?? 'dialogconfirm',
+        'data-wv-name': $attrs['data-wv-name'] ?? 'dialogconfirm',
       },
       header: {
         'class': [...DialogPreset.header.class],

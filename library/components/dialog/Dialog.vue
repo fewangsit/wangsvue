@@ -58,7 +58,7 @@ defineEmits<DialogEmits>();
             ? $props.headerClass
             : [$props.headerClass]),
         ],
-        'data-ts-section': 'dialogheader',
+        'data-wv-section': 'dialogheader',
       },
       content: {
         class: [

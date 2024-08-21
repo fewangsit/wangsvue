@@ -31,6 +31,7 @@ const updateInput = (event: Event): void => {
   <button
     v-if="!showSearchInput"
     @click="showSearchInput = !showSearchInput"
+    data-wv-section="buttonsearchtrigger"
     type="button"
   >
     <Icon
@@ -48,7 +49,9 @@ const updateInput = (event: Event): void => {
       'grid grid-cols-[max-content,auto,max-content] items-center gap-0.5 max-w-[224px] h-6',
       'border-b border-primary-100',
     ]"
-    @submit.prevent="eventBus.emit('search-table', { tableName, search: query })"
+    @submit.prevent="
+      eventBus.emit('search-table', { tableName, search: query })
+    "
     data-wv-section="searchbox-form"
   >
     <Icon
