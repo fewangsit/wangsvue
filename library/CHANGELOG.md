@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.46
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.45...v1.4.46)
+
+### 💅 Refactors
+
+- Change data name and data section name ([42d3cdd](https://github.com/fewangsit/wangsvue/commit/42d3cdd))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.45
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.44...v1.4.45)
