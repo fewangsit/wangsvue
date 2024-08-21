@@ -176,6 +176,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
         name: 'Icon Docs',
         component: (): Promise<Component> => import('./docs/icon/IconDocs.vue'),
       },
+      {
+        path: 'changelog',
+        name: 'Changelog Docs',
+        component: (): Promise<Component> =>
+          import('./docs/changelog/ChangelogDocs.vue'),
+      },
     ],
   },
 ];

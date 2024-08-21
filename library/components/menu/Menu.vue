@@ -36,7 +36,39 @@ defineExpose({
     @focus="$emit('focus', $event)"
   >
     <template #item="{ item, props }">
+      <router-link
+        v-slot="{ href, navigate }"
+        v-if="item.route"
+        :to="item.route"
+        custom
+      >
+        <a v-ripple :href="href" v-bind="props.action" @click="navigate">
+          <Icon
+            v-if="item.icon"
+            v-bind="props.icon"
+            :icon="item.icon as WangsIcons"
+          />
+          <span v-bind="props.label">{{ item.label }}</span>
+        </a>
+      </router-link>
+
       <a
+        v-else-if="item.url"
+        v-ripple
+        :href="item.url"
+        :target="item.target"
+        v-bind="props.action"
+      >
+        <Icon
+          v-if="item.icon"
+          v-bind="props.icon"
+          :icon="item.icon as WangsIcons"
+        />
+        <span v-bind="props.label">{{ item.label }}</span>
+      </a>
+
+      <a
+        v-else
         v-bind="props.action"
         aria-hidden="true"
         data-pc-section="action"

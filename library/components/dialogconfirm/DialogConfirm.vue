@@ -15,6 +15,7 @@ import Button from '../button/Button.vue';
 const props = withDefaults(defineProps<DialogConfirmProps>(), {
   list: undefined,
   listLabel: undefined,
+  closeLabel: undefined,
   message: 'Apa kamu yakin?',
   confirmLabel: 'Yakin',
   closeAfterConfirm: true,
@@ -30,6 +31,11 @@ const dialogConfirm = ref<Dialog>();
 const headerIcon = computed(() => {
   if (props.headerIcon) return props.headerIcon;
   return props.severity === 'danger' ? 'error' : 'checkbox-circle';
+});
+
+const closeButtonLabel = computed<string>(() => {
+  if (props.closeLabel) return props.closeLabel;
+  return props.actionable ? 'Batal' : 'Tutup';
 });
 
 const closeDialog = (): void => emit('update:visible', false);
@@ -123,7 +129,7 @@ const confirm = (): void => {
     <template #footer>
       <slot name="footer">
         <Button
-          :label="props.actionable ? 'Batal' : 'Tutup'"
+          :label="closeButtonLabel"
           @click="closeDialog"
           data-wv-section="cancel-button"
           severity="secondary"

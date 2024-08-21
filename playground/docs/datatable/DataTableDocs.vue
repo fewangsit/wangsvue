@@ -32,12 +32,14 @@ const showDialog = shallowRef(false);
 
 const singleAction: MenuItem[] = [
   {
-    label: 'Action',
+    label: 'Button',
     icon: 'checkbox-blank-circle',
+    url: '/wangsvue/button',
   },
   {
-    label: 'Action',
+    label: 'Icon',
     icon: 'checkbox-blank-circle',
+    route: '/icon',
   },
   {
     label: 'Danger Action',

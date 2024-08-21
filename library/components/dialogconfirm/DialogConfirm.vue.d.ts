@@ -25,6 +25,10 @@ export interface DialogConfirmProps {
    */
   severity: ConfirmDialogSeverity;
   /**
+   * The label of the close/cancel button.
+   */
+  closeLabel?: string;
+  /**
    * The label of the confirm button.
    * @default 'Yes, Continue'
    */
