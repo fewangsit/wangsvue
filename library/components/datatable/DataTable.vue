@@ -143,24 +143,15 @@ const isSelectedAll = computed(() => {
   )
     return false;
 
-  const length = props.selectedData?.length;
-
-  /*
-   * Const currentPageDataLength = filterDisabledRows(
-   *   currentPageTableData.value,
-   * ).length;
-   * Const currentSelectedLength = currentPageDataSelected.value?.length;
-   * Const isCurrentPageAllDataSelected =
-   *   length === currentSelectedLength &&
-   *   currentSelectedLength === currentPageDataLength;
-   */
+  const length = dataSelected.value?.length;
 
   const currentPageDataKey =
     filterDisabledRows(currentPageTableData.value)?.map(
       (dt) => dt[props.dataKey],
     ) ?? [];
+
   const selectedDataKey =
-    props.selectedData?.map((dt) => dt[props.dataKey]) ?? [];
+    dataSelected.value?.map((dt) => dt[props.dataKey]) ?? [];
 
   const isCurrentPageAllDataSelected = selectedDataKey.length
     ? isArrayIncluded(currentPageDataKey, selectedDataKey)
@@ -319,7 +310,7 @@ const refetch = async (): Promise<void> => {
    * If the selection is global/totalRecords, don't.
    */
   /*
-   * If (props.selectedData?.length !== totalRecords.value) {
+   * If (dataSelected.value?.length !== totalRecords.value) {
    *   selectedData.value = [];
    *   currentPageDataSelected.value = [];
    * }
