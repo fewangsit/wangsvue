@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.58
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.57...v1.4.58)
+
+### 🩹 Fixes
+
+- Change quick filter flex layout into grid ([4b97a06](https://github.com/fewangsit/wangsvue/commit/4b97a06))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.57
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.56...v1.4.57)
