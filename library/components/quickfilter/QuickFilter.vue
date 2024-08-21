@@ -48,7 +48,10 @@ const getOptions = async (
 
 <template>
   <div
-    :class="['flex items-center', { 'gap-3': !isEmptyObject(values) }]"
+    :class="[
+      'grid grid-cols-1 items-center',
+      { 'gap-3 grid-cols-[auto,max-content]': !isEmptyObject(values) },
+    ]"
     data-wv-name="quickfilter"
   >
     <div
