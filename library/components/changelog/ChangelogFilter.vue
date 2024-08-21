@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { reactive, watch } from 'vue';
+import { computed, reactive, watch } from 'vue';
 import FilterContainer from '../filtercontainer/FilterContainer.vue';
+import { FilterField } from '../filtercontainer/FilterContainer.vue.d';
 import { useToast } from 'lib/utils';
 import { MultiSelectOption } from 'lib/types/options.type';
 
@@ -13,7 +14,56 @@ import LogServices from 'lib/services/log.service';
 
 const toast = useToast();
 
-const props = defineProps<ChangelogProps & { tableName: string }>();
+const props = defineProps<
+  ChangelogProps & { tableName: string; changelogColumnHeader: string }
+>();
+
+const fields = computed<FilterField[]>(() => {
+  return [
+    {
+      label: 'Tanggal',
+      type: 'calendar',
+      field: 'createdAt',
+      visible: true,
+    },
+    {
+      label: 'Aksi',
+      type: 'multiselect',
+      field: 'action',
+      visible: true,
+      fetchOptionFn: async (params): Promise<MultiSelectOption[]> => {
+        return await fetchOptions('actionOptions', params);
+      },
+    },
+    {
+      label: props.changelogColumnHeader,
+      type: 'multiselect',
+      field: 'assetName',
+      visible: true,
+      fetchOptionFn: async (params): Promise<MultiSelectOption[]> => {
+        return await fetchOptions('assetNameOptions', params);
+      },
+    },
+    {
+      label: 'Field',
+      type: 'multiselect',
+      field: 'field',
+      visible: !/Testing/.test(props.object),
+      fetchOptionFn: async (params): Promise<MultiSelectOption[]> => {
+        return await fetchOptions('fieldOptions', params);
+      },
+    },
+    {
+      label: 'Diubah Oleh',
+      type: 'multiselect',
+      field: 'modifiedBy',
+      visible: true,
+      fetchOptionFn: async (params): Promise<MultiSelectOption[]> => {
+        return await fetchOptions('modifiedByOptions', params);
+      },
+    },
+  ].filter((field) => field.visible) as FilterField[];
+});
 
 const filter = reactive<ChangelogFilter>({});
 
@@ -28,11 +78,12 @@ const filter = reactive<ChangelogFilter>({});
  */
 const fetchOptions = async (
   field: keyof ChangelogOptionQuery,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   params?: ChangelogOptionQuery,
 ): Promise<MultiSelectOption[]> => {
   try {
     const { data } = await LogServices.getChangelogOptions({
-      ...params,
+      [field]: true,
       object: props.objects ? undefined : props.object,
       objects: props.objects ? JSON.stringify(props.objects) : undefined,
       ...props.customParams,
@@ -75,16 +126,7 @@ watch(filter, () => {
 
 <template>
   <FilterContainer
-    :fields="[
-      {
-        label: 'Aksi',
-        type: 'multiselect',
-        field: 'actionOptions',
-        fetchOptionFn: async (params): Promise<MultiSelectOption[]> => {
-          return await fetchOptions('actionOptions', params);
-        },
-      },
-    ]"
+    :fields="fields"
     :table-name="props.tableName"
     @clear="clearFilter"
     data-wv-name="history-filter"
