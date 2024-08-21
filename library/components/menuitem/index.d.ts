@@ -48,6 +48,10 @@ export interface MenuItem {
    */
   url?: string | undefined;
   /**
+   * Specifies where to open the linked document.
+   */
+  target?: string | undefined;
+  /**
    * Internal/ vue router link to navigate when item is clicked.
    */
   route?: string | undefined;
@@ -65,10 +69,6 @@ export interface MenuItem {
    * @defaultValue true
    */
   visible?: boolean | ((...args: any) => boolean) | undefined;
-  /**
-   * Specifies where to open the linked document.
-   */
-  target?: string | undefined;
   /**
    * Defines the item as a separator.
    * @defaultValue false
