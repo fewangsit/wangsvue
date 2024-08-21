@@ -28,6 +28,7 @@ const showDanger = shallowRef<boolean>(false);
       </div>
       <DialogConfirm
         v-model:visible="showSuccess"
+        close-label="Hilangkan"
         confirm-label="Simpan"
         header="Simpan Data"
         message="Apakah kamu yakin ingin menyimpan data ini?"
