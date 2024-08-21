@@ -97,14 +97,12 @@ watch(
 
 <template>
   <FieldWrapper :label="props.label" :show-optional-text="showOptionalText">
-    <div
-      class="flex gap-2 w-full items-center"
-      data-wv-section="inputwrapper"
-    >
+    <div class="flex gap-2 w-full items-center" data-wv-section="inputwrapper">
       <InputGroup>
         <InputNumber
           v-bind="$props"
           v-model="minField.value"
+          :max="maxField.value"
           :placeholder="placeholder ?? minPlaceholder"
           :use-grouping="false"
           @keydown="handleKeydown"
@@ -117,6 +115,7 @@ watch(
         <InputNumber
           v-bind="$props"
           v-model="maxField.value"
+          :min="minField.value"
           :placeholder="placeholder ?? maxPlaceholder"
           :use-grouping="false"
           @keydown="handleKeydown"
