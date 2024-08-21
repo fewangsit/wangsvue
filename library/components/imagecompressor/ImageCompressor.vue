@@ -371,7 +371,7 @@ const drawCroppedImage = async (
     canvas.value.setAttribute('width', width.toString());
     canvas.value.setAttribute('height', height.toString());
 
-    canvasContext && canvasContext.drawImage(newImage, 0, 0, width, height);
+    if (canvasContext) canvasContext.drawImage(newImage, 0, 0, width, height);
 
     // If all files have been proceed
     const base64 = canvas.value.toDataURL('image/webp', 0.95);
