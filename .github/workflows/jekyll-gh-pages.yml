@@ -44,6 +44,8 @@ jobs:
         
       - name: Vite Build
         run: pnpm build
+        env: 
+          VUE_APP_LOGS_API: ${{ secrets.APP_LOGS_API }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
