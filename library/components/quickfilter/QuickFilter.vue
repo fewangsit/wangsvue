@@ -47,9 +47,13 @@ const getOptions = async (
 </script>
 
 <template>
-  <div :class="['flex items-center', { 'gap-3': !isEmptyObject(values) }]">
+  <div
+    :class="['flex items-center', { 'gap-3': !isEmptyObject(values) }]"
+    data-wv-name="quickfilter"
+  >
     <div
       :class="['grid gap-3 transition-transform', `grid-cols-${fields.length}`]"
+      data-wv-section="quickfilterfields"
     >
       <template :key="field" v-for="field of fields">
         <InputRangeNumber
@@ -91,6 +95,7 @@ const getOptions = async (
       v-show="!isEmptyObject(values)"
       @click="clear"
       class="rounded-full hover:bg-danger-300/20 p-0.5"
+      data-wv-section="quickfilterclearbutton"
       type="button"
     >
       <Icon class="shrink-0 w-6 h-6" icon="close" severity="danger" />
