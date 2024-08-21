@@ -31,7 +31,9 @@ const fields = computed<FilterField[]>(() => {
       type: 'multiselect',
       field: 'action',
       visible: true,
-      fetchOptionFn: async (params): Promise<MultiSelectOption[]> => {
+      fetchOptionFn: async (
+        params?: ChangelogOptionQuery,
+      ): Promise<MultiSelectOption[]> => {
         return await fetchOptions('actionOptions', params);
       },
     },
@@ -40,7 +42,9 @@ const fields = computed<FilterField[]>(() => {
       type: 'multiselect',
       field: 'assetName',
       visible: true,
-      fetchOptionFn: async (params): Promise<MultiSelectOption[]> => {
+      fetchOptionFn: async (
+        params?: ChangelogOptionQuery,
+      ): Promise<MultiSelectOption[]> => {
         return await fetchOptions('assetNameOptions', params);
       },
     },
@@ -49,7 +53,9 @@ const fields = computed<FilterField[]>(() => {
       type: 'multiselect',
       field: 'field',
       visible: !/Testing/.test(props.object),
-      fetchOptionFn: async (params): Promise<MultiSelectOption[]> => {
+      fetchOptionFn: async (
+        params?: ChangelogOptionQuery,
+      ): Promise<MultiSelectOption[]> => {
         return await fetchOptions('fieldOptions', params);
       },
     },
@@ -58,7 +64,9 @@ const fields = computed<FilterField[]>(() => {
       type: 'multiselect',
       field: 'modifiedBy',
       visible: true,
-      fetchOptionFn: async (params): Promise<MultiSelectOption[]> => {
+      fetchOptionFn: async (
+        params?: ChangelogOptionQuery,
+      ): Promise<MultiSelectOption[]> => {
         return await fetchOptions('modifiedByOptions', params);
       },
     },
