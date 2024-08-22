@@ -4,7 +4,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 const routes: Readonly<RouteRecordRaw[]> = [
   {
     path: '/',
-    redirect: '/image',
+    redirect: '/button',
     children: [
       {
         path: 'button',
@@ -65,7 +65,7 @@ const routes: Readonly<RouteRecordRaw[]> = [
           import('./docs/dialog/DialogDocs.vue'),
       },
       {
-        path: 'datatable',
+        path: 'datatable', // X
         name: 'DataTable Docs',
         component: (): Promise<Component> =>
           import('./docs/datatable/DataTableDocs.vue'),
@@ -89,10 +89,16 @@ const routes: Readonly<RouteRecordRaw[]> = [
           import('./docs/inputtext/InputTextDocs.vue'),
       },
       {
-        path: 'image',
+        path: 'image', // X
         name: 'Image Docs',
         component: (): Promise<Component> =>
           import('./docs/image/ImageDocs.vue'),
+      },
+      {
+        path: 'imagecompressor',
+        name: 'Image Docs',
+        component: (): Promise<Component> =>
+          import('./docs/image/ImageCompressorDocs.vue'),
       },
       {
         path: 'badge',
@@ -177,7 +183,7 @@ const routes: Readonly<RouteRecordRaw[]> = [
         component: (): Promise<Component> => import('./docs/icon/IconDocs.vue'),
       },
       {
-        path: 'changelog',
+        path: 'changelog', // X
         name: 'Changelog Docs',
         component: (): Promise<Component> =>
           import('./docs/changelog/ChangelogDocs.vue'),
