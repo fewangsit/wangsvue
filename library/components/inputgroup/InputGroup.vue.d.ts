@@ -113,12 +113,12 @@ export interface InputGroupSlots {
 }
 
 /**
- * **TSVue - InputGroup**
+ * **WangsVue - InputGroup**
  *
  * _InputGroup displays text, icon, buttons and other content can be grouped next to an input._
  *
  * --- ---
- * ![TSVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
  *
  * @group Component
  */

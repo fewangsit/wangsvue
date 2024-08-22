@@ -18,12 +18,12 @@ export interface ButtonSearchProps {
 }
 
 /**
- * **TSVue - ButtonSearch**
+ * **WangsVue - ButtonSearch**
  *
  * _Search button with searchbox for table._
  *
  * --- ---
- * ![TSVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
  *
  * @group form
  */

@@ -143,12 +143,12 @@ export type ImageCompressorEmits = {
 };
 
 /**
- * **TSVue v2 - ImageCompressor**
+ * **WangsVue - ImageCompressor**
  *
  * _Handle image input and compression._
  *
  * --- ---
- * ![TSVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
  *
  * @group Component
  *

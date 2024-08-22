@@ -29,6 +29,7 @@
     "debounce": "2.1.0",
     "idb": "8.0.0",
     "lodash": "4.17.21",
+    "moment-timezone": "^0.5.45",
     "primevue": "^3.53.0",
     "qrcode": "1.5.4",
     "sharp": "^0.33.5",

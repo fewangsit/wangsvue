@@ -43,7 +43,7 @@ export type BadgeEmits = {
 };
 
 /**
- * **TSVue V2 - Badge**
+ * **WangsVue - Badge**
  *
  * _Badge is a component for displaying a text with optional remove functionality._
  *

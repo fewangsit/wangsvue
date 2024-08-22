@@ -95,12 +95,12 @@ export type InputInitialNameEmits = {
   'blur': [payload?: Nullable<string>];
 };
 /**
- * **TSVue - InputInitialName**
+ * **WangsVue - InputInitialName**
  *
  * _Handle input email with form validation._
  *
  * --- ---
- * ![TSVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
  *
  * @group form
  */

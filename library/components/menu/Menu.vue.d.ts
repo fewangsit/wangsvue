@@ -4,7 +4,7 @@
  *
  * Menu is a navigation / command component that supports dynamic and static positioning.
  *
- * [Live Demo](https://www.TSvue.org/menu/)
+ * [Live Demo](https://www.WangsVue.org/menu/)
  *
  * @module menu
  *
@@ -340,12 +340,12 @@ export type MenuEmits = {
 };
 
 /**
- * **TSVue - Menu**
+ * **WangsVue - Menu**
  *
  * _Menu is a navigation / command component that supports dynamic and static positioning._
  *
  * --- ---
- * ![TSVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
  *
  * @group Component
  *

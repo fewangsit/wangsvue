@@ -135,7 +135,7 @@ export type MultiSelectEmits = {
 };
 
 /**
- * **TSVue - MultiSelect**
+ * **WangsVue - MultiSelect**
  *
  * _MultiSelect also known as Select, is used to choose an item from a collection of options._
  *

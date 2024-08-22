@@ -3,7 +3,7 @@
  *
  * Displays an image with preview.
  *
- * [Live Demo](https://www.TSVue v2.org/image/)
+ * [Live Demo](https://www.WangsVue.org/image/)
  *
  * @module image
  *
@@ -334,12 +334,12 @@ export interface ImageSlots {
 }
 
 /**
- * **TSVue v2 - Image**
+ * **WangsVue - Image**
  *
  * _Displays an image with preview._
  *
  * --- ---
- * ![TSVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
  *
  * @group Component
  *

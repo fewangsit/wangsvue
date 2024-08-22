@@ -125,12 +125,12 @@ export type DropdownEmits = {
 };
 
 /**
- * **TSVue - Dropwdown**
+ * **WangsVue - Dropwdown**
  *
  * _Dropdown also known as Select, is used to choose an item from a collection of options._
  *
  * --- ---
- * ![TSVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
  *
  * @group Component
  */

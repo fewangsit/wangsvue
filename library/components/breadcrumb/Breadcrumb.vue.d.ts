@@ -14,7 +14,7 @@ export interface BreadcrumbProps {
 }
 
 /**
- * **TSVue - Breadcrumb**
+ * **WangsVue - Breadcrumb**
  *
  * _Breadcrumb is a component for displaying a breadcrumb trail to help users navigate a website or application.
  * It takes an array of menu items as a prop and displays each item as a link or label, with a separator between them._

@@ -186,13 +186,13 @@ export type DialogFormEmits = {
 };
 
 /**
- * **TSVue v2 - DialogForm**
+ * **WangsVue - DialogForm**
  *
  * _DialogForm is combination of Form and Dialog. Handles validation on submit using vee-validate.
  * You need to install vee-validate while using this component._
  *
  * --- ---
- * ![TSVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
  *
  * @group components
  */

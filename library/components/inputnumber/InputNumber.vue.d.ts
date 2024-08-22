@@ -158,12 +158,12 @@ export interface InputNumberSlots {
 }
 
 /**
- * **TSVue - InputNumber**
+ * **WangsVue - InputNumber**
  *
  * _Handle input number with form validation._
  *
  * --- ---
- * ![TSVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
  *
  * @group form
  */

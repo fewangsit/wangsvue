@@ -3,7 +3,7 @@
  *
  * Toast is used to display messages in an overlay.
  *
- * [Live Demo](https://www.TSVue.org/toast/)
+ * [Live Demo](https://www.WangsVue.org/toast/)
  *
  * @module toast
  *
@@ -342,12 +342,12 @@ export type ToastEmits = {
 };
 
 /**
- * **TSVue - Toast**
+ * **WangsVue - Toast**
  *
  * _Toast is used to display messages in an overlay._
  *
  * --- ---
- * ![TSVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
  *
  * @group Component
  *

@@ -84,13 +84,13 @@ export type FormEmits = {
 };
 
 /**
- * **TSVue v2 - Form**
+ * **WangsVue - Form**
  *
  * _Form is a component for creating forms with validation on submit using vee-validate.
  * You need to install vee-validate while using this component._
  *
  * --- ---
- * ![TSVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
  *
  * @group components
  */

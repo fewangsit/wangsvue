@@ -89,6 +89,7 @@ import {
   Dialog,
   InputInitialName,
   ImageCompressor,
+  InputPhoneNumber,
 } from './components';
 
 export default {
@@ -115,6 +116,7 @@ export default {
     app.component('Menu', Menu);
     app.component('ButtonSearch', ButtonSearch);
     app.component('Calendar', Calendar);
+    app.component('InputPhoneNumber', InputPhoneNumber);
     app.component('Changelog', Changelog);
     app.component('WorkCalendar', WorkCalendar);
     app.component('InputRangeNumber', InputRangeNumber);
@@ -175,6 +177,7 @@ export {
   Icon,
   ButtonDownload,
   ButtonFilter,
+  InputPhoneNumber,
   FilterContainer,
   ImageCompressor,
   DialogConfirm,

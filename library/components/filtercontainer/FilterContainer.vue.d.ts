@@ -73,7 +73,7 @@ export type FilterContainerSlots = {
 };
 
 /**
- * **TSVue - FilterContainer**
+ * **WangsVue - FilterContainer**
  *
  * _FilterContainer is a component for generating a dynamic grid-based layout for any count of filter fields.
  * It calculates the number of children in the container and sets their grid area style dynamically.

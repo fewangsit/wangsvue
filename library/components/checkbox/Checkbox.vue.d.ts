@@ -292,12 +292,12 @@ export type CheckboxEmits = {
 };
 
 /**
- * **TSVue - Checkbox**
+ * **WangsVue - Checkbox**
  *
  * Checkbox is an extension to checkbox element with label and info tooltip.
  *
  * --- ---
- * ![TSVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
  *
  * @group Component
  *

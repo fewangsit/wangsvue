@@ -32,6 +32,7 @@ import Dialog from './dialog/Dialog.vue';
 import ImageCompressor from './imagecompressor/ImageCompressor.vue';
 import Changelog from './changelog/Changelog.vue';
 import InputInitialName from './inputinitialname/InputInititalName.vue';
+import InputPhoneNumber from './inputphonenumber/InputPhoneNumber.vue';
 
 export {
   Badge,
@@ -68,4 +69,5 @@ export {
   QuickFilter,
   WorkCalendar,
   Dialog,
+  InputPhoneNumber,
 };

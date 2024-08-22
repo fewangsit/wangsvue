@@ -100,12 +100,12 @@ export type DialogConfirmEmits = {
 };
 
 /**
- * **TSVue - DialogConfirm**
+ * **WangsVue - DialogConfirm**
  *
  * _DialogConfirm is a component for creating confirmation dialogs._
  *
  * --- ---
- * ![TSVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
  *
  * @group components
  */

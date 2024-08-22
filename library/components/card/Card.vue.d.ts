@@ -119,12 +119,12 @@ export interface CardSlots {
 }
 
 /**
- * **TSVue - Card**
+ * **WangsVue - Card**
  *
  * _Card is a flexible container component._
  *
  * --- ---
- * ![TSVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
  *
  * @group Component
  */

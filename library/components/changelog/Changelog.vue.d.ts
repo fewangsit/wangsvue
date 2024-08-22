@@ -83,13 +83,13 @@ export type ChangelogEmits = {
 };
 
 /**
- * **TSVue v2 - Changelog**
+ * **WangsVue - Changelog**
  *
  * _Changelog is a component for to show changelog dialog.
  * You need to install vee-validate while using this component._
  *
  * --- ---
- * ![TSVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
  *
  * @group components
  */

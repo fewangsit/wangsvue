@@ -52,12 +52,12 @@ export type ButtonBulkActionEmits = {
 };
 
 /**
- * **TSVue V2 - ButtonBulkAction**
+ * **WangsVue - ButtonBulkAction**
  *
  * _ButtonBulkAction is a component for handling bulk action for multiple data at once._
  *
  * --- ---
- * ![TSVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
  *
  * @group buttons
  */
