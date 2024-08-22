@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.66
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.65...v1.4.66)
+
+### 🚀 Enhancements
+
+- **Changelog:** Add header for group member ([c314e8c](https://github.com/fewangsit/wangsvue/commit/c314e8c))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.65
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.64...v1.4.65)
