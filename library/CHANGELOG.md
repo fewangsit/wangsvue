@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.64
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.63...v1.4.64)
+
+### 💅 Refactors
+
+- **ImageCompressor:** Update hover state for initital image paceholder ([1eabf4f](https://github.com/fewangsit/wangsvue/commit/1eabf4f))
+
+### 🏡 Chore
+
+- **release:** V1.4.63 ([abecc9f](https://github.com/fewangsit/wangsvue/commit/abecc9f))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.63
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.62...v1.4.63)
