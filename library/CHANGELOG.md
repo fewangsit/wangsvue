@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.68
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.67...v1.4.68)
+
+### 🚀 Enhancements
+
+- Add input phone number with user locale detection ([1509edb](https://github.com/fewangsit/wangsvue/commit/1509edb))
+
+### 🏡 Chore
+
+- **release:** V1.4.67 ([1d9df0f](https://github.com/fewangsit/wangsvue/commit/1d9df0f))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.67
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.65...v1.4.67)
