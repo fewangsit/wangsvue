@@ -123,8 +123,10 @@ const assignPreviewImagesFromProp = (): void => {
     previewImages.value = props.compressedBlob;
   } else if (props.compressedBlob) {
     previewImages.value = [props.compressedBlob];
-  } else if (props.inititalName != undefined) {
+  } else if (props.inititalName) {
     previewImages.value = [genPlaceholder(props.inititalName, 125, randomBg)];
+  } else {
+    previewImages.value = [];
   }
 };
 
