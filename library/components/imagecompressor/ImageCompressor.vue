@@ -551,25 +551,36 @@ watch(
             data-wv-section="preview-image-wrapper"
           >
             <div
-              class="relative w-[125px] h-[125px]"
+              :class="[
+                {
+                  '[&>span]:hover:opacity-30 [&>[data-wv-section=input-image-trigger]]:hover:opacity-100':
+                    isInititalImage(index),
+                },
+                'relative w-[125px] h-[125px]',
+              ]"
               data-wv-section="image-wrapper"
             >
               <ImagePreview
                 :rounded="rounded"
                 :thumbnail="previewImage"
+                class="transition-opacity duration-300"
                 data-wv-section="preview-image"
               />
               <button
                 v-if="isInititalImage(index)"
-                :class="[ImagePreset.button.class, 'rounded-lg']"
+                :class="[
+                  ImagePreset.button.class,
+                  'hover:bg-opacity-0 rounded-lg opacity-0',
+                ]"
                 @click="pickImage(false)"
                 data-wv-section="input-image-trigger"
                 type="button"
               >
                 <Icon
-                  class="w-6 h-6 text-white"
+                  class="w-6 h-6"
                   data-wv-section="trigger-icon"
                   icon="image-add"
+                  severity="primary"
                 />
               </button>
             </div>
