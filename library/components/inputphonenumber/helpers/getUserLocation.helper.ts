@@ -13,7 +13,10 @@ const timeZoneCityToCountry: Record<string, string> = {};
 Object.keys(zones).forEach((z) => {
   const cityArr = z.split('/');
   const city = cityArr[cityArr.length - 1];
-  timeZoneCityToCountry[city] = countries[zones[z].countries[0]].name;
+  timeZoneCityToCountry[city] =
+    countries[
+      zones[z as keyof typeof zones].countries[0] as keyof typeof countries
+    ].name;
 });
 
 // Manually add missing or incorrect mappings (e.g., "Calcutta" to "Kolkata")
