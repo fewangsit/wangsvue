@@ -5,11 +5,13 @@ import ImageCompressor from 'lib/components/imagecompressor/ImageCompressor.vue'
 import InputText from 'lib/components/inputtext/InputText.vue';
 import { shallowRef } from 'vue';
 import { useForm } from 'vee-validate';
+import InputInititalName from 'lib/components/inputinitialname/InputInititalName.vue';
 
 const { values } = useForm();
 
 const fullName = shallowRef('Zain Kurnia');
-const initialName = shallowRef('ZK');
+const initialName = shallowRef();
+const existingInitialNames = ['ZK', 'ZNK', 'KRN', 'ZAI'];
 </script>
 
 <template>
@@ -22,8 +24,7 @@ const initialName = shallowRef('ZK');
         <h3 class="text-xl font-semibold mb-2">Image Input</h3>
 
         <span class="block mb-4">
-          Try to remove initial name value, the full name will be converted into
-          initial name
+          Existing Initital Names: {{ existingInitialNames }}
         </span>
 
         <InputText
@@ -32,17 +33,19 @@ const initialName = shallowRef('ZK');
           label="Name"
           mandatory
         />
-        <InputText
+        <InputInititalName
           v-model="initialName"
+          :existing-initital-names="existingInitialNames"
+          :full-name="fullName"
           class="mb-4 w-[20vw]"
-          label="Inisial Name"
+          field-name="inititalName"
+          label="Initial Name"
         />
-        <ImageCompressor :full-name="fullName" :initital-name="initialName" />
+        <ImageCompressor :initital-name="initialName" />
       </div>
       <div class="my-10">
         <h3 class="text-xl font-semibold mb-4">Image Input with Validation</h3>
         <ImageCompressor
-          :full-name="fullName"
           :initital-name="initialName"
           field-name="image"
           use-validator

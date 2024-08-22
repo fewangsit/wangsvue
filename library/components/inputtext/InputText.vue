@@ -47,14 +47,13 @@ onMounted(() => {
 
     // eslint-disable-next-line eqeqeq
     if (props.value != null) field.value = props.value?.trim();
+    if (props.modelValue != null) field.value = props.modelValue?.trim();
   }
 });
 
 const inputPlaceholder = computed(() => props.placeholder ?? 'Tulis');
 
-const setValidatorMessage = async (
-  value: string,
-): Promise<boolean | string> => {
+const setValidatorMessage = (value: string): boolean | string => {
   if (typeof props.validatorMessage === 'string' && props.invalid) {
     return props.validatorMessage;
   } else if (typeof props.validatorMessage !== 'string') {
@@ -103,12 +102,14 @@ const validateEmail = (
 
 const onUpdateModelValue = (e?: string): void => {
   if (
-    props.blurOnReachMaxLength &&
-    props.maxLength &&
-    e &&
-    e.length > props.maxLength
+    (props.blurOnReachMaxLength &&
+      props.maxLength &&
+      e &&
+      e.length > props.maxLength) ||
+    (props.type === 'initialname' && e.length > 3)
   ) {
-    const sliced = e.slice(0, props.maxLength);
+    const max = props.type === 'initialname' ? 3 : props.maxLength;
+    const sliced = e.slice(0, max);
     emit('update:modelValue', sliced);
     if (props.useValidator) field.value = sliced;
     inputKey.value++;

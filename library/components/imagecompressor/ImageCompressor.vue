@@ -62,7 +62,7 @@ onMounted(async () => {
 
   if (props.imagePreviewUrl) {
     field.value = props.imagePreviewUrl;
-  } else if (props.inititalName || props.fullName) {
+  } else if (props.inititalName) {
     field.value = previewImages.value?.[0] as string;
   }
 });
@@ -123,29 +123,9 @@ const assignPreviewImagesFromProp = (): void => {
     previewImages.value = props.compressedBlob;
   } else if (props.compressedBlob) {
     previewImages.value = [props.compressedBlob];
-  } else if (props.fullName || props.inititalName) {
-    const inisial = props.inititalName || getInititalName(props.fullName);
-    previewImages.value = [genPlaceholder(inisial, 125, randomBg)];
+  } else if (props.inititalName != undefined) {
+    previewImages.value = [genPlaceholder(props.inititalName, 125, randomBg)];
   }
-};
-
-const getInititalName = (fullName?: string): string => {
-  if (!fullName) return '';
-
-  // Split the full name into an array of words
-  const words = fullName.split(' ');
-
-  // Initialize an empty string to store the initials
-  let initials = '';
-
-  // Iterate over each word in the array
-
-  for (const word of words) {
-    initials += word.charAt(0).toUpperCase();
-  }
-
-  // Return the initials string
-  return initials;
 };
 
 /**
@@ -475,6 +455,11 @@ const deleteImage = (index = 0): void => {
   if (props.multiple && Array.isArray(field.value)) {
     field.value = field.value.toSpliced(index, 1);
   } else if (field.handleReset) field.handleReset();
+
+  assignPreviewImagesFromProp();
+  if (props.inititalName) {
+    field.value = previewImages.value?.[0] as string;
+  }
 };
 
 /**
@@ -516,10 +501,7 @@ watch(showImageCropper, (value) => {
 });
 
 watch(
-  [
-    (): string | undefined => props.fullName,
-    (): string | undefined => props.inititalName,
-  ],
+  (): string | undefined => props.inititalName,
   () => {
     assignPreviewImagesFromProp();
   },

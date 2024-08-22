@@ -19,3 +19,83 @@ export const formatUserName = (name?: string): string => {
 
   return `${firstWord} ${lastWord.slice(0, 1)}`;
 };
+
+export const getInititalName = (
+  existing: string[],
+  fullName?: string,
+): string => {
+  if (!fullName) return '';
+
+  // Split the full name into an array of words
+  const words = fullName.split(' ');
+
+  // Initialize an empty string to store the initials
+  let initials = '';
+
+  // Iterate over each word in the array
+
+  for (const word of words) {
+    initials += word.charAt(0).toUpperCase();
+  }
+
+  if (!existing?.length || !existing.includes(initials)) return initials;
+
+  return getInitialsByConsonant(existing, fullName);
+};
+
+export const getInitialsByConsonant = (
+  existingInitials: string[],
+  fullName: string,
+): string => {
+  if (!fullName) return '';
+
+  const words = fullName.split(' ');
+  let initials = '';
+
+  const getInitial = (): void => {
+    for (const word of words) {
+      const consonants = word.match(/[bcdfghjklmnpqrstvwxyz]/gi);
+      if (consonants && consonants.length > 0 && initials.length < 3) {
+        const currentLength = initials.length;
+        const remaining = 3 - currentLength;
+
+        initials += consonants.slice(0, remaining).join('');
+      }
+    }
+  };
+
+  Array.from({ length: words.length }).forEach(() => {
+    getInitial();
+    initials = initials.toUpperCase();
+
+    if (existingInitials.includes(initials) && words.length != 1) {
+      words.splice(0, 1);
+      initials = '';
+    }
+  });
+
+  return getInitialsBy3FirstLetter(existingInitials, fullName);
+};
+export const getInitialsBy3FirstLetter = (
+  existingInitials: string[],
+  fullName: string,
+): string => {
+  if (!fullName) return '';
+
+  const words = fullName.split(' ');
+  let initials = '';
+
+  const getInitial = (word: string): string => {
+    return word.slice(0, 3).toUpperCase();
+  };
+
+  for (const word of words) {
+    initials = getInitial(word);
+
+    if (!existingInitials.includes(initials)) {
+      break;
+    }
+  }
+
+  return initials;
+};
