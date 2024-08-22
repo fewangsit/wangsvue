@@ -21,7 +21,7 @@ export default {
       'w-full h-full',
       'inset-0 opacity-0 transition-opacity duration-300',
       'bg-transparent text-white',
-      'hover:cursor-pointer hover:bg-header-weak hover:opacity-100',
+      'hover:cursor-pointer hover:bg-grayscale-900 hover:opacity-50',
     ],
     style: 'border-radius: inherit',
   },

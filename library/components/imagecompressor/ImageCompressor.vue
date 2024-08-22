@@ -22,6 +22,7 @@ import Dialog from '../dialog/Dialog.vue';
 import Button from '../button/Button.vue';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
+import ImagePreset from 'lib/preset/image';
 
 import 'vue-advanced-cropper/dist/style.css';
 
@@ -33,6 +34,8 @@ import type {
 } from './ImageCompressor.vue.d';
 import ImageInputInfo from './ImageInputInfo.vue';
 import ButtonRadio from 'primevue/radiobutton';
+import { genPlaceholder } from 'lib/utils';
+import { genRandomPlaceholderBg } from 'lib/utils/getImageURL.util';
 
 const props = withDefaults(defineProps<ImageCompressorProps>(), {
   disabled: false,
@@ -59,6 +62,8 @@ onMounted(async () => {
 
   if (props.imagePreviewUrl) {
     field.value = props.imagePreviewUrl;
+  } else if (props.inititalName || props.fullName) {
+    field.value = previewImages.value?.[0] as string;
   }
 });
 
@@ -78,6 +83,7 @@ const image = ref<Image[]>([
   },
 ]);
 
+const randomBg = genRandomPlaceholderBg();
 const canvas = ref<HTMLCanvasElement>();
 const previewImages = ref<(string | Blob | undefined)[]>([]);
 const inputImageFile = ref<HTMLInputElement>();
@@ -101,6 +107,13 @@ const inputImageKey = shallowRef(0);
 const showImageCropper = shallowRef(false);
 const showDeleteConfirm = ref<boolean[]>([false, false]);
 
+const isInititalImage = (index: number): boolean => {
+  return (
+    typeof previewImages.value[index] == 'string' &&
+    previewImages.value[index].includes('placehold')
+  );
+};
+
 const assignPreviewImagesFromProp = (): void => {
   if (props.imagePreviewUrl?.length) {
     previewImages.value = Array.isArray(props.imagePreviewUrl)
@@ -108,9 +121,31 @@ const assignPreviewImagesFromProp = (): void => {
       : [props.imagePreviewUrl];
   } else if (Array.isArray(props.compressedBlob)) {
     previewImages.value = props.compressedBlob;
-  } else {
+  } else if (props.compressedBlob) {
     previewImages.value = [props.compressedBlob];
+  } else if (props.fullName || props.inititalName) {
+    const inisial = props.inititalName || getInititalName(props.fullName);
+    previewImages.value = [genPlaceholder(inisial, 125, randomBg)];
   }
+};
+
+const getInititalName = (fullName?: string): string => {
+  if (!fullName) return '';
+
+  // Split the full name into an array of words
+  const words = fullName.split(' ');
+
+  // Initialize an empty string to store the initials
+  let initials = '';
+
+  // Iterate over each word in the array
+
+  for (const word of words) {
+    initials += word.charAt(0).toUpperCase();
+  }
+
+  // Return the initials string
+  return initials;
 };
 
 /**
@@ -162,22 +197,22 @@ const loadImage = async (file: File, index: number): Promise<void> => {
       // Check file type
       if (!isImageType(file.type)) {
         invalidInput.value = true;
-        invalidMessage.value = 'File type is not image!';
+        invalidMessage.value = 'Tipe file harus berupa gambar!';
         /*
-         * Preview.value = { message: 'File type is not image!' };
+         * Preview.value = { message: 'Tipe file harus berupa gambar!' };
          * imageUploadErrorMessage.value = preview.value.message;
          */
         previewImages.value[index] = undefined;
         showImageCropper.value = false;
         revokeObjectURL(index);
-        reject('File type is not image!');
+        reject('Tipe file harus berupa gambar!');
       } else if (isExceededLimit(file.size)) {
         invalidInput.value = true;
-        invalidMessage.value = 'File size is too big! Max. 1 MB';
+        invalidMessage.value = 'Ukuran gambar terlalu besar! Maks. 1 MB';
         assignPreviewImagesFromProp();
         showImageCropper.value = false;
         revokeObjectURL(index);
-        reject('File size is too big! Max. 1 MB');
+        reject('Ukuran gambar terlalu besar! Maks. 1 MB');
       } else {
         // 1. Revoke the object URL, to allow the garbage collector to destroy the uploaded before file
         revokeObjectURL(index);
@@ -479,6 +514,16 @@ watch(invalidMessage, (value) => {
 watch(showImageCropper, (value) => {
   if (!value) inputImageFileKey.value++;
 });
+
+watch(
+  [
+    (): string | undefined => props.fullName,
+    (): string | undefined => props.inititalName,
+  ],
+  () => {
+    assignPreviewImagesFromProp();
+  },
+);
 </script>
 
 <template>
@@ -505,26 +550,45 @@ watch(showImageCropper, (value) => {
             class="flex flex-col gap-1"
             data-wv-section="preview-image-wrapper"
           >
-            <ImagePreview
-              :rounded="rounded"
-              :thumbnail="previewImage"
-              data-wv-section="preview-image"
-            />
             <div
-              v-if="!props.disabled"
+              class="relative w-[125px] h-[125px]"
+              data-wv-section="image-wrapper"
+            >
+              <ImagePreview
+                :rounded="rounded"
+                :thumbnail="previewImage"
+                data-wv-section="preview-image"
+              />
+              <button
+                v-if="isInititalImage(index)"
+                :class="[ImagePreset.button.class, 'rounded-lg']"
+                @click="pickImage(false)"
+                data-wv-section="input-image-trigger"
+                type="button"
+              >
+                <Icon
+                  class="w-6 h-6 text-white"
+                  data-wv-section="trigger-icon"
+                  icon="image-add"
+                />
+              </button>
+            </div>
+            <div
+              v-if="!props.disabled && !isInititalImage(index)"
               class="flex gap-0.5 justify-center"
               data-wv-section="preview-buttons"
             >
               <Button
                 @click="editImage(index)"
-                class="!py-0.5 !px-1 !h-max text-[11px]"
+                class="!py-0.5 !px-1 !h-max"
                 icon="pencil"
                 label="Edit"
+                severity="secondary"
                 text
               />
               <Button
                 @click="onBeforeDeleteImage(index)"
-                class="!py-0.5 !px-1 !h-max text-[11px]"
+                class="!py-0.5 !px-1 !h-max"
                 icon="delete-bin"
                 label="Delete"
                 severity="danger"
@@ -571,7 +635,7 @@ watch(showImageCropper, (value) => {
               },
               { 'rounded-full': rounded, 'rounded-lg': !rounded },
               {
-                'ring-general-200 dark:ring-general-200 focus-visible:ring-primary-500 focus-visible:dark:ring-primary-500':
+                'ring-general-400 dark:ring-general-400 focus-visible:ring-primary-500 focus-visible:dark:ring-primary-500':
                   !invalidInput && !field.errorMessage,
                 'ring-danger-500 dark:ring-danger-500':
                   invalidInput || field.errorMessage,
@@ -622,7 +686,7 @@ watch(showImageCropper, (value) => {
     :draggable="false"
     :footer-class="['!gap-1']"
     data-wv-section="dialog-cropper"
-    header="Adjust Photo"
+    header="Sesuaikan gambar"
     modal
   >
     <Cropper
@@ -638,15 +702,15 @@ watch(showImageCropper, (value) => {
     <template #footer>
       <Button
         @click="closeImageCropper"
-        label="Cancel"
-        plain
+        label="Batal"
         severity="secondary"
         text
+        type="button"
       />
-      <Button @click="changeImage" label="Change Image" text />
+      <Button @click="changeImage" label="Ganti Gambar" text type="button" />
       <Button
         @click="applyImageCropper"
-        label="Apply"
+        label="Terapkan"
         severity="success"
         type="button"
       />

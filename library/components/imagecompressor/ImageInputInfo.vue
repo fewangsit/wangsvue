@@ -15,14 +15,15 @@ defineEmits<{
     <ul
       v-if="showInfo"
       :class="[
+        'text-xs font-normal text-grayscale-900',
         `[&_li]:before:content-['•']`,
         '[&_li]:before:inline-block [&_li]:before:w-[12px] [&_li]:before:ml-[-12px] pl-3',
-        'max-w-[121px] text-body-medium text-general-800 dark:text-general-100 [&_li]:pl-0.5',
+        'max-w-[121px] [&_li]:pl-0.5',
       ]"
       data-wv-section="image-requirements-info"
     >
-      <li>Max. 1 MB</li>
-      <li>Must be image format</li>
+      <li>Maks. 1 MB</li>
+      <li>Hanya mendukung format gambar</li>
     </ul>
 
     <Button

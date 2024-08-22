@@ -9,7 +9,6 @@ import ImagePreset from 'lib/preset/image';
 import Button from '../button/Button.vue';
 
 const props = withDefaults(defineProps<ImageProps>(), {
-  thumbnail: genPlaceholder('WS', 125),
   rounded: false,
 });
 

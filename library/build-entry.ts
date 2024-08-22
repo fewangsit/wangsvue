@@ -87,6 +87,7 @@ import {
   InputEmail,
   WorkCalendar,
   Dialog,
+  ImageCompressor,
 } from './components';
 
 export default {
@@ -124,6 +125,7 @@ export default {
     app.component('InputText', InputText);
     app.component('MultiSelect', MultiSelect);
     app.component('TabMenu', TabMenu);
+    app.component('ImageCompressor', ImageCompressor);
     app.component('Toast', Toast);
     app.component('UserName', UserName);
     app.component('Form', Form);
@@ -171,6 +173,7 @@ export {
   ButtonDownload,
   ButtonFilter,
   FilterContainer,
+  ImageCompressor,
   DialogConfirm,
   Checkbox,
   Menu,

@@ -64,8 +64,8 @@ const hideNotifications = (): void => {
     >
       {{
         notificationType === 'wheel'
-          ? 'Use ctrl + scroll to zoom the cropper'
-          : 'Use two fingers to move the cropper'
+          ? 'Gunakan Ctrl + Scroll untuk perbesar atau perkecil gambar'
+          : 'Gunakan dua jari untuk untuk perbesar atau perkecil gambar'
       }}
     </div>
   </TransformableImage>

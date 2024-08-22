@@ -29,6 +29,7 @@ import InputNumber from './inputnumber/InputNumber.vue';
 import InputEmail from './inputemail/InputEmail.vue';
 import WorkCalendar from './workcalendar/WorkCalendar.vue';
 import Dialog from './dialog/Dialog.vue';
+import ImageCompressor from './imagecompressor/ImageCompressor.vue';
 import Changelog from './changelog/Changelog.vue';
 
 export {
@@ -40,6 +41,7 @@ export {
   Dropdown,
   ButtonBulkAction,
   ButtonFilter,
+  ImageCompressor,
   ButtonDownload,
   Breadcrumb,
   Card,

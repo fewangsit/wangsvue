@@ -20,6 +20,16 @@ export type ImageCompressorPayload = {
 
 export interface ImageCompressorProps {
   /**
+   * Specify the user full name to be formatted into inisial name
+   */
+  fullName?: string;
+  /**
+   * Specify the user initial name for the Image Placeholder
+   *
+   * max-length: 3
+   */
+  inititalName?: string;
+  /**
    * Specify the input type, wether single ro multiple image input.
    *
    * @default false - single input.
