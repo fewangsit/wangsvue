@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.62
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.61...v1.4.62)
+
+### 🚀 Enhancements
+
+- Finish image compressor with image placeholder from initial name ([a4ba440](https://github.com/fewangsit/wangsvue/commit/a4ba440))
+
+### 🏡 Chore
+
+- **release:** V1.4.61 ([7484738](https://github.com/fewangsit/wangsvue/commit/7484738))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.61
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.60...v1.4.61)
