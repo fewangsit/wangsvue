@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.4.65
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.64...v1.4.65)
+
+### 🚀 Enhancements
+
+- Add image compressor docs ([3d20056](https://github.com/fewangsit/wangsvue/commit/3d20056))
+- Add input initial name to be combined with input image ([92e4944](https://github.com/fewangsit/wangsvue/commit/92e4944))
+
+### 🏡 Chore
+
+- **release:** V1.4.64 ([8c6bf68](https://github.com/fewangsit/wangsvue/commit/8c6bf68))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.64
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.63...v1.4.64)

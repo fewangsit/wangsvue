@@ -31,6 +31,7 @@ import WorkCalendar from './workcalendar/WorkCalendar.vue';
 import Dialog from './dialog/Dialog.vue';
 import ImageCompressor from './imagecompressor/ImageCompressor.vue';
 import Changelog from './changelog/Changelog.vue';
+import InputInitialName from './inputinitialname/InputInititalName.vue';
 
 export {
   Badge,
@@ -50,6 +51,7 @@ export {
   FilterContainer,
   Icon,
   TabMenu,
+  InputInitialName,
   Toast,
   UserName,
   DialogConfirm,

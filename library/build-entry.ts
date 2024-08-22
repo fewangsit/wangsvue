@@ -87,6 +87,7 @@ import {
   InputEmail,
   WorkCalendar,
   Dialog,
+  InputInitialName,
   ImageCompressor,
 } from './components';
 
@@ -108,6 +109,7 @@ export default {
     app.component('ButtonFilter', ButtonFilter);
     app.component('FilterContainer', FilterContainer);
     app.component('Dialog', Dialog);
+    app.component('InputInitialName', InputInitialName);
     app.component('DialogConfirm', DialogConfirm);
     app.component('Checkbox', Checkbox);
     app.component('Menu', Menu);
@@ -162,6 +164,7 @@ export {
   Breadcrumb,
   Card,
   Changelog,
+  InputInitialName,
   Dialog,
   DataTable,
   Dropdown,

@@ -102,11 +102,11 @@ const validateEmail = (
 
 const onUpdateModelValue = (e?: string): void => {
   if (
-    (props.blurOnReachMaxLength &&
+    (e &&
+      props.blurOnReachMaxLength &&
       props.maxLength &&
-      e &&
       e.length > props.maxLength) ||
-    (props.type === 'initialname' && e.length > 3)
+    (props.type === 'initialname' && e && e.length > 3)
   ) {
     const max = props.type === 'initialname' ? 3 : props.maxLength;
     const sliced = e.slice(0, max);
