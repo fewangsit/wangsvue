@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v1.4.67
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.65...v1.4.67)
+
+### 🚀 Enhancements
+
+- Add input initial name to be combined with input image ([92e4944](https://github.com/fewangsit/wangsvue/commit/92e4944))
+- **Changelog:** Add header for group member ([c314e8c](https://github.com/fewangsit/wangsvue/commit/c314e8c))
+
+### 🩹 Fixes
+
+- **ImageCompressor:** Inital name image preview should only show if props initial name not null or empty string ([d0a966d](https://github.com/fewangsit/wangsvue/commit/d0a966d))
+
+### 🏡 Chore
+
+- **release:** V1.4.65 ([755556f](https://github.com/fewangsit/wangsvue/commit/755556f))
+- **release:** V1.4.66 ([3b36ee9](https://github.com/fewangsit/wangsvue/commit/3b36ee9))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.66
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.65...v1.4.66)
