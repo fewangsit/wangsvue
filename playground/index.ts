@@ -4,7 +4,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 const routes: Readonly<RouteRecordRaw[]> = [
   {
     path: '/',
-    redirect: '/button',
+    redirect: '/image',
     children: [
       {
         path: 'button',
