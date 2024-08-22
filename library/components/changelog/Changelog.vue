@@ -40,6 +40,8 @@ const changelogColumnHeader = computed<string>(() => {
       return 'Email';
     case 'Process':
       return 'Template Process';
+    case 'groupMember':
+      return 'Grup Member';
     default:
       return props.object;
   }
