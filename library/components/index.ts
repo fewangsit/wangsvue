@@ -29,6 +29,7 @@ import InputNumber from './inputnumber/InputNumber.vue';
 import InputEmail from './inputemail/InputEmail.vue';
 import WorkCalendar from './workcalendar/WorkCalendar.vue';
 import Dialog from './dialog/Dialog.vue';
+import Changelog from './changelog/Changelog.vue';
 
 export {
   Badge,
@@ -42,6 +43,7 @@ export {
   ButtonDownload,
   Breadcrumb,
   Card,
+  Changelog,
   MultiSelect,
   FilterContainer,
   Icon,

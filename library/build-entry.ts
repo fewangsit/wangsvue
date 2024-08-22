@@ -62,6 +62,7 @@ import {
   ButtonBulkAction,
   Breadcrumb,
   Card,
+  Changelog,
   DataTable,
   Dropdown,
   MultiSelect,
@@ -111,6 +112,7 @@ export default {
     app.component('Menu', Menu);
     app.component('ButtonSearch', ButtonSearch);
     app.component('Calendar', Calendar);
+    app.component('Changelog', Changelog);
     app.component('WorkCalendar', WorkCalendar);
     app.component('InputRangeNumber', InputRangeNumber);
     app.component('QuickFilter', QuickFilter);
@@ -157,6 +159,7 @@ export {
   ButtonBulkAction,
   Breadcrumb,
   Card,
+  Changelog,
   Dialog,
   DataTable,
   Dropdown,
