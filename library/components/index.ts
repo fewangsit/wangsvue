@@ -33,6 +33,7 @@ import ImageCompressor from './imagecompressor/ImageCompressor.vue';
 import Changelog from './changelog/Changelog.vue';
 import InputInitialName from './inputinitialname/InputInititalName.vue';
 import InputPhoneNumber from './inputphonenumber/InputPhoneNumber.vue';
+import InputPassword from './inputpassword/InputPassword.vue';
 
 export {
   Badge,
@@ -70,4 +71,5 @@ export {
   WorkCalendar,
   Dialog,
   InputPhoneNumber,
+  InputPassword,
 };

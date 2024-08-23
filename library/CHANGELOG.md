@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.69
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.68...v1.4.69)
+
+### 🩹 Fixes
+
+- Type error on getUserLocation ([54be2e8](https://github.com/fewangsit/wangsvue/commit/54be2e8))
+
+### 🏡 Chore
+
+- **release:** V1.4.68 ([22501df](https://github.com/fewangsit/wangsvue/commit/22501df))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.68
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.67...v1.4.68)

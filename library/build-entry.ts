@@ -90,6 +90,7 @@ import {
   InputInitialName,
   ImageCompressor,
   InputPhoneNumber,
+  InputPassword,
 } from './components';
 
 export default {
@@ -136,6 +137,7 @@ export default {
     app.component('DialogForm', DialogForm);
     app.component('InputNumber', InputNumber);
     app.component('InputEmail', InputEmail);
+    app.component('InputPassword', InputPassword);
 
     app.directive('tooltip', Tooltip);
   },
@@ -175,6 +177,7 @@ export {
   Toast,
   UserName,
   Icon,
+  InputPassword,
   ButtonDownload,
   ButtonFilter,
   InputPhoneNumber,
