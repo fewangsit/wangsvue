@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v1.4.70
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.69...v1.4.70)
+
+### 🩹 Fixes
+
+- **FieldWrapper:** Label should have font weight 400 ([fbf4b98](https://github.com/fewangsit/wangsvue/commit/fbf4b98))
+- **Dropdown:** Selected options becomes placeholder when the options filtered ([d336b66](https://github.com/fewangsit/wangsvue/commit/d336b66))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.69
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.68...v1.4.69)
