@@ -66,6 +66,8 @@ const setValidatorMessage = (value: string): boolean | string => {
       return validateEmail(value, invalidFormat);
     } else if (value && props.type === 'url') {
       return validateURL(value, invalidFormat);
+    } else if (props.existingValues?.includes(value)) {
+      return props.validatorMessage.exist;
     }
   }
 

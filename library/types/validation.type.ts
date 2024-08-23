@@ -2,7 +2,7 @@ import { FieldContext } from 'vee-validate';
 import { Nullable } from 'primevue/ts-helpers';
 import { Ref } from 'vue';
 
-export type Condition = 'empty' | 'exceed' | 'invalidFormat';
+export type Condition = 'empty' | 'exceed' | 'invalidFormat' | 'exist';
 
 export type CustomValidation = Partial<Record<Condition, string>>;
 

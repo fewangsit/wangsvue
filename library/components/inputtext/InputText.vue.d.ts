@@ -102,6 +102,12 @@ export interface InputTextProps extends /* @vue-ignore */ InputHTMLAttributes {
    */
   value?: string;
   /**
+   * Exisitng values to be checkeed with validation 'exist' - check the validatorMessage props
+   *
+   * - Need to specify the custom validation : { empty: 'Error message when empty' } within props validatorMessage
+   */
+  existingValues?: string[];
+  /**
    * The maximun character length allowed.
    *
    * @default 30 - for inputText;
