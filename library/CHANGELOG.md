@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.72
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.71...v1.4.72)
+
+### 💅 Refactors
+
+- Move all interface inside validation type into form.vue.d.ts ([64e5829](https://github.com/fewangsit/wangsvue/commit/64e5829))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.71
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.70...v1.4.71)
