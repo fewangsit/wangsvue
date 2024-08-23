@@ -15,7 +15,10 @@ withDefaults(defineProps<FieldWrapperProps>(), {
   >
     <label
       v-if="label"
-      :class="['text-general-900  text-xs flex gap-[2px]', labelClass]"
+      :class="[
+        'text-general-900  text-xs flex gap-[2px] font-normal',
+        labelClass,
+      ]"
       data-wv-section="field-label"
     >
       {{ label }}
