@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.71
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.70...v1.4.71)
+
+### 🚀 Enhancements
+
+- Add new validation exist to check the exisiting vlaues ([88d1676](https://github.com/fewangsit/wangsvue/commit/88d1676))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.70
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.69...v1.4.70)
