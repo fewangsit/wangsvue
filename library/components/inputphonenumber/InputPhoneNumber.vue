@@ -13,7 +13,8 @@ import axios from 'axios';
 
 import InputNumber, { InputNumberInputEvent } from 'primevue/inputnumber';
 import Dropdown from 'primevue/dropdown';
-import { FieldValidation } from 'lib/types/validation.type';
+import { FieldValidation } from '../form/Form.vue.d';
+
 import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 import Icon from '../icon/Icon.vue';

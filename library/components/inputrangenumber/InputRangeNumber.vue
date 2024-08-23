@@ -9,7 +9,7 @@ import {
 } from './InputRangeNumber.vue.d';
 import { reactive, watch, onMounted } from 'vue';
 import { useField } from 'vee-validate';
-import { FieldValidation } from 'lib/types/validation.type';
+import { FieldValidation } from '../form/Form.vue.d';
 
 const props = withDefaults(defineProps<InputRangeNumberProps>(), {
   minPlaceholder: 'Tulis',

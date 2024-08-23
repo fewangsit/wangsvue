@@ -9,7 +9,8 @@ import {
 } from 'vue';
 import { useField } from 'vee-validate';
 import { Nullable } from '../ts-helpers';
-import { FieldValidation } from 'lib/types/validation.type';
+import { FieldValidation } from '../form/Form.vue.d';
+
 import { InputTextEmits, InputTextProps } from './InputText.vue.d';
 
 import InputText from 'primevue/inputtext';

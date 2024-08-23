@@ -1,4 +1,4 @@
-import { CustomValidation } from 'lib/types/validation.type';
+import { CustomValidation } from '../form/Form.vue.d';
 import { DefineComponent } from 'vue';
 
 /**

@@ -12,7 +12,7 @@ import {
 import BackgroundImageCropper from './BackgroundImageCropper.vue';
 import { Cropper, CropperResult } from 'vue-advanced-cropper';
 import { useField } from 'vee-validate';
-import { FieldValidation } from 'lib/types/validation.type';
+import { FieldValidation } from '../form/Form.vue.d';
 
 import base64toblob from 'base64toblob';
 import ImagePreview from 'lib/components/image/Image.vue';

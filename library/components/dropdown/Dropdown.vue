@@ -8,7 +8,7 @@ import type {
 } from 'lib/components/dropdown/Dropdown.vue.d';
 
 import { OptionValue } from 'lib/types/options.type';
-import { FieldValidation } from 'lib/types/validation.type';
+import { FieldValidation } from '../form/Form.vue.d';
 
 import ValidatorMessage from 'lib/components/validatormessage/ValidatorMessage.vue';
 import Dropdown, { DropdownChangeEvent } from 'primevue/dropdown';

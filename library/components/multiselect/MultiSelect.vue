@@ -8,7 +8,8 @@ import type {
 } from 'lib/components/multiselect/MultiSelect.vue.d';
 
 import { OptionValue } from 'lib/types/options.type';
-import { FieldValidation } from 'lib/types/validation.type';
+import { FieldValidation } from '../form/Form.vue.d';
+
 import { filterOptions } from 'lib/utils';
 
 import Button from 'lib/components/button/Button.vue';

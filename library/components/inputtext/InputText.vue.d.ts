@@ -10,8 +10,7 @@
 import { InputHTMLAttributes } from 'vue';
 import { ComponentHooks } from '../basecomponent';
 import { ClassComponent, Nullable } from '../ts-helpers';
-import { CustomValidation } from 'lib/types/validation.type';
-
+import { CustomValidation } from '../form/Form.vue.d';
 export declare type InputTextPassThroughOptionType<T = any> =
   | InputTextPassThroughAttributes
   | ((

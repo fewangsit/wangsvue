@@ -10,7 +10,7 @@ import {
 } from 'vue';
 import { useField } from 'vee-validate';
 import { CalendarProps, CalendarEmits } from './Calendar.vue.d';
-import { FieldValidation } from 'lib/types/validation.type';
+import { FieldValidation } from '../form/Form.vue.d';
 
 import Calendar, { CalendarState } from 'primevue/calendar';
 import CalendarPresets from 'lib/preset/calendar';

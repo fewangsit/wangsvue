@@ -1,7 +1,36 @@
-import { Slot } from 'vue';
-import { GenericObject } from 'vee-validate';
+import { Slot, Ref } from 'vue';
+import { FieldContext, GenericObject } from 'vee-validate';
 import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
 import { CheckboxModelValue } from '../checkbox/Checkbox.vue.d';
+
+import { Nullable } from 'primevue/ts-helpers';
+
+export type Condition = 'empty' | 'exceed' | 'invalidFormat' | 'exist';
+
+export type CustomValidation = Partial<Record<Condition, string>>;
+
+type FieldValue =
+  | Nullable<string>
+  | Nullable<number>
+  | string
+  | string[]
+  | number
+  | number[]
+  | boolean
+  | undefined
+  | null
+  | object;
+
+export type FieldValidation<T = FieldValue | undefined> =
+  | {
+      value: T;
+      errorMessage?: Ref<string | undefined>;
+      setErrors?: (errors?: string | string[]) => void;
+      handleReset?: () => void;
+    }
+  | (Omit<FieldContext, 'value'> & {
+      value: T;
+    });
 
 export type FormValue =
   | string

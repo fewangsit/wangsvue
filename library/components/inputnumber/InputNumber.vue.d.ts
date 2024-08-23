@@ -1,6 +1,5 @@
 import { DefineComponent, Slot } from 'vue';
-import { CustomValidation } from 'lib/types/validation.type';
-
+import { CustomValidation } from '../form/Form.vue.d';
 export type InputNumberEvent = number | string | undefined;
 
 /**

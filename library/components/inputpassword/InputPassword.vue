@@ -7,7 +7,8 @@ import type {
   InputPasswordProps,
   InputPasswordEmits,
 } from './InputPassword.vue.d';
-import { FieldValidation } from 'lib/types/validation.type';
+import { FieldValidation } from '../form/Form.vue.d';
+
 import { useField } from 'vee-validate';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 import Icon from '../icon/Icon.vue';

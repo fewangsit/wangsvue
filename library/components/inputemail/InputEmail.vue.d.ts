@@ -1,6 +1,6 @@
 import { DefineComponent } from 'vue';
 import { Nullable } from '../ts-helpers';
-import { CustomValidation } from 'lib/types/validation.type';
+import { CustomValidation } from '../form/Form.vue.d';
 
 /**
  * InputEmail component props

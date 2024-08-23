@@ -1,6 +1,6 @@
 import { DefineComponent, Slot } from 'vue';
 import { DropdownOption, OptionValue } from 'lib/types/options.type';
-import { CustomValidation } from 'types/validation.type';
+import { CustomValidation } from '../form/Form.vue.d';
 
 /**
  * Dropdown component props
