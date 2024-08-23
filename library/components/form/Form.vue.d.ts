@@ -27,6 +27,7 @@ export type FieldValidation<T = FieldValue | undefined> =
       errorMessage?: Ref<string | undefined>;
       setErrors?: (errors?: string | string[]) => void;
       handleReset?: () => void;
+      validate?: () => void;
     }
   | (Omit<FieldContext, 'value'> & {
       value: T;

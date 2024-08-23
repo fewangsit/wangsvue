@@ -139,6 +139,13 @@ watch(
     field.value = value?.trim();
   },
 );
+
+watch(
+  () => props.invalid,
+  () => {
+    field.validate();
+  },
+);
 </script>
 
 <template>
