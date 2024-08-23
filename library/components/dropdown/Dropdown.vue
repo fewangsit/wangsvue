@@ -138,6 +138,14 @@ watch(
         @hide="isShowOverlay = false"
         @show="$emit('show'), (isShowOverlay = true)"
       >
+        <template #value="slotProps">
+          <div v-if="slotProps.value" class="flex align-items-center">
+            {{ optionLabel ? slotProps.value[optionLabel] : slotProps.value }}
+          </div>
+          <template v-else>
+            {{ slotProps.placeholder }}
+          </template>
+        </template>
         <template #dropdownicon>
           <Icon
             :class="[
