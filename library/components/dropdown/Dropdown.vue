@@ -180,8 +180,7 @@ watch(
     </InputGroup>
     <ValidatorMessage
       :id="props.label + 'error'"
-      :format="formatValidatorMessage"
-      :message="field.errorMessage ?? props.validatorMessage"
+      :message="field.errorMessage"
     />
   </FieldWrapper>
 </template>

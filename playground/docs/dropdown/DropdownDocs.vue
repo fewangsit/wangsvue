@@ -4,6 +4,7 @@ import DocTitle from '../DocTitle.vue';
 import Dropdown from 'lib/components/dropdown/Dropdown.vue';
 import { ref } from 'vue';
 import { OptionValue } from 'lib/types/options.type';
+import Form from 'lib/components/form/Form.vue';
 
 const model = ref<OptionValue>();
 </script>
@@ -26,6 +27,21 @@ const model = ref<OptionValue>();
           />
         </div>
       </div>
+
+      Dropdown with validation
+
+      <Form :buttons-template="['submit']" @submit="console.log">
+        <template #fields>
+          <Dropdown
+            :options="['Waiting for Approval', 'Waiting for Handover']"
+            label="Status"
+            mandatory
+            placeholder="Pilih status"
+            use-validator
+            validator-message="Ga boleh kosong"
+          />
+        </template>
+      </Form>
     </template>
   </Card>
 </template>
