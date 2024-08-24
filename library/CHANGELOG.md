@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v1.4.75
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.74...v1.4.75)
+
+### 🚀 Enhancements
+
+- **Inputtext:** Watch the props.invalid and trigger validate field ([88cd0ae](https://github.com/fewangsit/wangsvue/commit/88cd0ae))
+- **Checkbox:** Make checkbox can be used asa form field ([814fe2d](https://github.com/fewangsit/wangsvue/commit/814fe2d))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.74
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.73...v1.4.74)
