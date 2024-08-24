@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.81
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.80...v1.4.81)
+
+### 🩹 Fixes
+
+- **Dropwodn:** Error message always shown when props.validatorMessage exist ([d0454eb](https://github.com/fewangsit/wangsvue/commit/d0454eb))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.80
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.79...v1.4.80)
