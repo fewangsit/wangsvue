@@ -28,23 +28,31 @@ const field = reactive<FieldValidation<boolean | CheckboxModelValue>>({
 
 onMounted(() => {
   if (props.useValidator) {
-    Object.assign(field, useField(props.fieldName ?? 'textInput'));
+    Object.assign(field, useField(props.fieldName ?? 'checkbox'));
 
     // eslint-disable-next-line eqeqeq
     if (props.value != null) field.value = props.value;
   }
 });
 
-watch(field, () => {
-  modelValue.value = field.value;
-});
+watch(
+  () => field.value,
+  () => {
+    modelValue.value = field.value;
+  },
+);
 
 watch(
   () => props.value,
   () => {
-    if (props.useValidator) {
-      field.value = props.value;
-    }
+    field.value = props.value;
+  },
+);
+
+watch(
+  () => props.modelValue,
+  () => {
+    field.value = props.modelValue;
   },
 );
 </script>
