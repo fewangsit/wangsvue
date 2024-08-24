@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.78
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.76...v1.4.78)
+
+### 🚀 Enhancements
+
+- **InputText:** Update defailt placeholder ([966ed45](https://github.com/fewangsit/wangsvue/commit/966ed45))
+
+### 🏡 Chore
+
+- **release:** V1.4.77 ([09ba998](https://github.com/fewangsit/wangsvue/commit/09ba998))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.77
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.76...v1.4.77)
