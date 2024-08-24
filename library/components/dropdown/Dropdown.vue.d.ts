@@ -1,6 +1,7 @@
-import { DefineComponent, Slot } from 'vue';
+import { Slot } from 'vue';
 import { DropdownOption, OptionValue } from 'lib/types/options.type';
 import { CustomValidation } from '../form/Form.vue.d';
+import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
 
 /**
  * Dropdown component props
@@ -134,10 +135,29 @@ export type DropdownEmits = {
  *
  * @group Component
  */
-declare const Dropdown: DefineComponent<
+declare class Dropdown extends ClassComponent<
   DropdownProps,
-  DropdownSlots,
+  unknown,
   DropdownEmits
->;
+> {
+  /**
+   * Shows the overlay.
+   *
+   * @memberof Dropdown
+   */
+  showOverlayClassComponent(): void;
+  /**
+   * Hides the overlay.
+   *
+   * @memberof Dropdown
+   */
+  hideHideOverlayClassComponent(): void;
+}
+
+declare module '@vue/runtime-core' {
+  interface GlobalComponents {
+    Dropdown: GlobalComponentConstructor<Dropdown>;
+  }
+}
 
 export default Dropdown;
