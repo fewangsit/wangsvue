@@ -5,6 +5,9 @@ import type {
   CheckboxModelValue,
 } from './Checkbox.vue.d';
 
+import { onMounted, reactive, watch } from 'vue';
+import { useField } from 'vee-validate';
+import { FieldValidation } from '../form/Form.vue.d';
 import Checkbox from 'primevue/checkbox';
 import Icon from '../icon/Icon.vue';
 import Preset from 'lib/preset/checkbox';
@@ -18,6 +21,32 @@ const props = withDefaults(defineProps<CheckboxProps>(), {
 
 defineEmits<CheckboxEmits>();
 const modelValue = defineModel<CheckboxModelValue>('modelValue');
+
+const field = reactive<FieldValidation<boolean | CheckboxModelValue>>({
+  value: props.value,
+});
+
+onMounted(() => {
+  if (props.useValidator) {
+    Object.assign(field, useField(props.fieldName ?? 'textInput'));
+
+    // eslint-disable-next-line eqeqeq
+    if (props.value != null) field.value = props.value;
+  }
+});
+
+watch(field, () => {
+  modelValue.value = field.value;
+});
+
+watch(
+  () => props.value,
+  () => {
+    if (props.useValidator) {
+      field.value = props.value;
+    }
+  },
+);
 </script>
 
 <template>
@@ -31,7 +60,7 @@ const modelValue = defineModel<CheckboxModelValue>('modelValue');
   >
     <Checkbox
       v-bind="$props"
-      v-model="modelValue"
+      v-model="field.value"
       :input-id="inputId"
       :pt="{
         input: { disabled: !selectable || disabled },

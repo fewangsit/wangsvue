@@ -110,7 +110,7 @@ export type CheckboxModelValue =
  */
 export interface CheckboxProps {
   /**
-   * Value of the checkbox.
+   * Value of the checkbox. Can be used to set the checkbox field value when using use-validator
    */
   value?: any;
   /**
@@ -173,6 +173,8 @@ export interface CheckboxProps {
    * @default false
    */
   readonly?: boolean | undefined;
+  useValidator?: boolean;
+  fieldName?: string;
   /**
    * When present, it specifies that the element is required.
    * @default false
