@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.76
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.75...v1.4.76)
+
+### 🩹 Fixes
+
+- **Checkbox:** Page becomes not responsive because wather to field, change the watcher into field.value fix this issue ([8b12788](https://github.com/fewangsit/wangsvue/commit/8b12788))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.75
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.74...v1.4.75)
