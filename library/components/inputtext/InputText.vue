@@ -52,7 +52,11 @@ onMounted(() => {
   }
 });
 
-const inputPlaceholder = computed(() => props.placeholder ?? 'Tulis');
+const inputPlaceholder = computed(() =>
+  (props.placeholder ?? 'Tulis ' + props.label)
+    ? props.label?.toLowerCase()
+    : '',
+);
 
 const setValidatorMessage = (value: string): boolean | string => {
   if (typeof props.validatorMessage === 'string' && props.invalid) {
