@@ -55,7 +55,7 @@ onMounted(() => {
 const inputPlaceholder = computed(
   () =>
     props.placeholder ??
-    ('Tulis ' + props.label ? props.label?.toLowerCase() : ''),
+    'Tulis ' + (props.label ? props.label?.toLowerCase() : ''),
 );
 
 const setValidatorMessage = (value: string): boolean | string => {

@@ -49,6 +49,9 @@ const invalidState = computed(() => text.value?.length > 10);
           placeholder="Input Text"
         />
       </div>
+
+      Default Placeholder
+      <InputText field-info="Mandatory" label="Name" mandatory />
     </template>
   </Card>
 </template>
