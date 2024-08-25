@@ -145,6 +145,8 @@ const childrenColumns = computed(() => {
 const getTableData = async (
   params: QueryParams,
 ): Promise<FetchResponse | undefined> => {
+  // eslint-disable-next-line no-console
+  console.log('🚀 ~ params:', params);
   // Simulate an asynchronous operation (even though we're returning static data)
   return new Promise((resolve) => {
     setTimeout(
@@ -165,7 +167,7 @@ const getTableData = async (
           },
         });
       },
-      params.page === 1 || params.sortBy ? 2000 : 100,
+      params.page === 1 || params.sortBy ? 2000 : 1000,
     ); // You can adjust the timeout if you need a delay
   });
 };

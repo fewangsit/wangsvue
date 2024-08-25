@@ -14,7 +14,7 @@ import {
   TreeTableEmits,
   TreeTableProps,
 } from './TreeTable.vue.d';
-import { Data, QueryParams } from '../datatable/DataTable.vue.d';
+import { Data, FetchResponse, QueryParams } from '../datatable/DataTable.vue.d';
 import { getNestedProperyValue } from 'lib/utils';
 import { filterVisibleMenu } from '../helpers';
 import Icon from '../icon/Icon.vue';
@@ -32,9 +32,10 @@ import { isArrayIncluded } from './helpers';
 import { LottieAnimation } from 'lottie-web-vue';
 
 import nodataJson from './animations/nodata.json';
+import { cloneDeep } from 'lodash';
 
 const props = withDefaults(defineProps<TreeTableProps>(), {
-  tableName: 'treetable',
+  tableName: 'datatable',
   selectionType: 'checkbox',
 });
 
@@ -346,11 +347,48 @@ const refetch = async (): Promise<void> => {
     loadingTable.value = true;
     const response = await props.fetchFunction?.(queryParams.value);
 
-    const { data, totalRecords: total = 0 } = response?.data ?? {}; // DispatchUpdateTotalRecordsEvent;
+    const { data, totalRecords: total = 0 } = response?.data ?? {};
+    updateTotalRecordBulkAction(total);
     currentPageTableData.value = data;
     totalRecords.value = total;
   } catch (error) {
     console.error('🚀 ~ refetch ~ error:', error);
+  } finally {
+    loadingTable.value = false;
+  }
+};
+
+/**
+ * Used in export excel and event listener from Bulkaction select all data.
+ */
+const fetchAllData = async (
+  isDownload?: boolean,
+): Promise<FetchResponse['data']> => {
+  const params = cloneDeep(queryParams.value);
+  delete params.page;
+  delete params.limit;
+
+  const { data } = (await props.fetchFunction?.(params)) ?? {};
+  if (!data && isDownload) throw new Error(); // To make the downloadExcel function catches the error and show toast error.
+  return data ?? { data: [], totalRecords: 0 };
+};
+
+/**
+ * Handle select all data from bulk action.
+ */
+const selectAllData = async (event: TableEvent): Promise<void> => {
+  if (props.tableName !== event.tableName) return;
+
+  try {
+    loadingTable.value = true;
+    const { data, totalRecords: total = 0 } = props.lazy
+      ? await fetchAllData()
+      : { totalRecords: props.data.length };
+
+    const disabledRows = getDisabledRows(data);
+    checkboxSelection.value = filterDisabledRows(data, disabledRows);
+
+    updateTotalRecordBulkAction(total);
   } finally {
     loadingTable.value = false;
   }
@@ -415,6 +453,16 @@ watch(
   },
 );
 
+watch(checkboxSelection, (newSelectedData: Data[]) => {
+  emit('selectData', newSelectedData);
+  emit('update:selectedData', newSelectedData);
+
+  eventBus.emit('data-table:update-selected-data', {
+    tableName: props.tableName,
+    data: newSelectedData,
+  });
+});
+
 const attachEventListener = (): void => {
   eventBus.on('data-table:apply-filter', (e) => {
     if (e.tableName === props.tableName) {
@@ -435,6 +483,12 @@ const attachEventListener = (): void => {
       checkboxSelection.value = [];
     }
   });
+
+  eventBus.on('data-table:select-all-record', (e) => {
+    if (e.tableName === props.tableName) {
+      selectAllData(e);
+    }
+  });
 };
 
 const removeEventListener = (): void => {
@@ -442,6 +496,18 @@ const removeEventListener = (): void => {
   eventBus.off('data-table:clear-selected-data');
   eventBus.off('data-table:update');
   eventBus.off('search-table');
+};
+
+const updateTotalRecordBulkAction = (total?: number): void => {
+  const disabledCount =
+    (currentPageDisabledRows.value.length || props.totalDisabledRows) ?? 0;
+
+  const data = {
+    total: ((props.lazy ? total : props.data?.length) ?? 0) - disabledCount,
+    tableName: props.tableName,
+  };
+
+  eventBus.emit('data-table:update-total-record', data);
 };
 
 const listenUpdateTableEvent = (): void => {
@@ -699,7 +765,8 @@ const listenUpdateTableEvent = (): void => {
     </template>
 
     <Paginator
-      v-if="!loadingTable"
+      :key="tableKey"
+      v-show="!loadingTable"
       v-model:rows="tableRows"
       :current-page-report-template="
         totalRecords

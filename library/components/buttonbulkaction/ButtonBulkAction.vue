@@ -21,15 +21,15 @@ const props = withDefaults(defineProps<ButtonBulkActionProps>(), {
 const emit = defineEmits<ButtonBulkActionEmits>();
 
 onMounted(() => {
-  window.addEventListener('updateTotalRecords', updateTotalRecordsHandler);
   window.addEventListener('disableBulkAction', disableBulkAction);
 
   eventBus.on('data-table:update-selected-data', handleUpdateSelectedData);
+  eventBus.on('data-table:update-total-record', updateTotalRecordsHandler);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('updateTotalRecords', updateTotalRecordsHandler);
   window.removeEventListener('disableBulkAction', disableBulkAction);
+  eventBus.off('data-table:update-total-record');
   eventBus.off('data-table:update-selected-data');
 });
 
@@ -57,6 +57,8 @@ const selectAllData = (): void => {
   window.dispatchEvent(
     new CustomEvent('fetchAllData', { detail: props.tableName }),
   );
+
+  eventBus.emit('data-table:select-all-record', { tableName: props.tableName });
 };
 
 const unSelectAllData = (): void => {
@@ -80,10 +82,10 @@ const toggleMenu = (e: Event): void => {
  * @param event custom event with totalRecords data.
  */
 const updateTotalRecordsHandler = (
-  event: CustomEvent<{ total: number; name: string }>,
+  event: Events['data-table:update-total-record'],
 ): void => {
-  if (props.tableName === event?.detail?.name) {
-    totalRecords.value = event?.detail?.total;
+  if (props.tableName === event?.tableName) {
+    totalRecords.value = event?.total;
   }
 };
 

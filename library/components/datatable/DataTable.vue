@@ -280,13 +280,10 @@ const dispatchUpdateTotalRecordsEvent = (total?: number): void => {
 
   const data = {
     total: ((props.lazy ? total : props.data?.length) ?? 0) - disabledCount,
-    name: props.tableName,
+    tableName: props.tableName,
   };
 
-  window.dispatchEvent(
-    // Older: new CustomEvent('updateTotalRecords', { detail: total }),
-    new CustomEvent('updateTotalRecords', { detail: data }),
-  );
+  eventBus.emit('data-table:update-total-record', data);
 };
 
 /**
