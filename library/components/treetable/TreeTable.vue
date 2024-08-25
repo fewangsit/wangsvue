@@ -559,7 +559,11 @@ const listenUpdateTableEvent = (): void => {
             </td>
 
             <td
-              @click.stop=""
+              @click="
+                (e) => {
+                  if (item.childRow || item.childRowHeader) e.stopPropagation();
+                }
+              "
               v-bind="Preset.bodycell"
               class="w-[40px] text-center"
             >
