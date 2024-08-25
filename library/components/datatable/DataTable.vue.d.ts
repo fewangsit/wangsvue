@@ -198,29 +198,6 @@ export interface DataTableProps {
    */
   useOption?: boolean;
   /**
-   * An array of table columns for children table.
-   */
-  childrenColumns?: TableColumn[];
-  /**
-   * Whether show single action option in children table.
-   * @default true;
-   */
-  childrenUseOption?: boolean;
-  /**
-   * The options that will be visible for each row data in children table.
-   *
-   * __Provide at least one option to display an Options Menu for each row.__
-   *
-   * The options menu will be displayed on the right side of the children table row.
-   */
-  childrenOptions?: MenuItem[];
-  /**
-   * The key of the data object to use as a unique identifier for chlidren table.
-   * @default '_id'
-   */
-  childrenDataKey?: string;
-  childrenFilters?: DataTableFilterMeta;
-  /**
    * An array of objects to display in the table.
    */
   data?: Data[];
@@ -342,10 +319,6 @@ export type DataTableEmits = {
    * Emits when option menu button clicked.
    */
   'toggleOption': [data: Data];
-  /**
-   * Emits when option menu button in children table was clicked.
-   */
-  'toggleChildrenOption': [data: Data];
   /**
    * @deprecated use 'v-model:selected-data' instead.
    */

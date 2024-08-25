@@ -23,7 +23,7 @@ defineEmits<CheckboxEmits>();
 const modelValue = defineModel<CheckboxModelValue>('modelValue');
 
 const field = reactive<FieldValidation<boolean | CheckboxModelValue>>({
-  value: props.value,
+  value: props.modelValue ?? props.value,
 });
 
 onMounted(() => {

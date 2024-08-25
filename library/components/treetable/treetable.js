@@ -1,5 +1,14 @@
 export default {
-  root: {},
+  root: {
+    'class': 'overflow-auto relative',
+    'data-wv-name': 'treetable',
+    'data-wv-section': 'root',
+    'style': 'scrollbar-width: none',
+  },
+  table: {
+    'class': 'min-w-max w-full',
+    'data-wv-section': 'table',
+  },
   headercell: {
     'class': 'text-xs font-semibold text-white bg-primary-400 p-2 text-left',
     'data-wv-section': 'headercell',

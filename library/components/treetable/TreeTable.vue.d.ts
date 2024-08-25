@@ -1,4 +1,8 @@
-import { DataTableProps, TableColumn } from '../datatable/DataTable.vue.d';
+import {
+  DataTableEmits,
+  DataTableProps,
+  TableColumn,
+} from '../datatable/DataTable.vue.d';
 
 interface TreeTableColumns extends TableColumn {
   /**
@@ -7,8 +11,7 @@ interface TreeTableColumns extends TableColumn {
   colspan?: number;
 }
 
-export interface TreeTableProps
-  extends Omit<DataTableProps, 'columns' | 'customColumn'> {
+export interface TreeTableProps extends Omit<DataTableProps, 'columns'> {
   /**
    * An array of table columns to display.
    */
@@ -23,3 +26,5 @@ export interface TreeTableProps
     header?: string;
   };
 }
+
+export type TreeTableEmits = DataTableEmits;

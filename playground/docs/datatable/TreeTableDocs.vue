@@ -194,6 +194,8 @@ const filters = ref<any>({
         :columns="tableColumns"
         :fetch-function="getTableData"
         :options="singleAction"
+        @toggle-option="console.log"
+        custom-column
         data-key="_id"
         lazy
         use-option
