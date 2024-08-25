@@ -866,7 +866,7 @@ const listenUpdateTableEvent = (): void => {
     </template>
 
     <template v-if="loadingTable">
-      <div class="w-full p-4 flex items-center justify-center">
+      <div class="sticky left-0 w-full p-4 flex items-center justify-center">
         <img
           alt="Table is loading data"
           class="w-14 h-auto"
