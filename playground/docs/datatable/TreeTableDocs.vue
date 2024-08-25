@@ -34,6 +34,7 @@ const showFilter = shallowRef(false);
 const showDialog = shallowRef(false);
 const tableKey = shallowRef(0);
 const noRecord = shallowRef(false);
+const treetable = shallowRef(true);
 const { setLoading } = useLoadingStore();
 
 const singleAction: MenuItem[] = [
@@ -58,7 +59,7 @@ const singleAction: MenuItem[] = [
 ];
 
 onMounted(() => {
-  setLoading(true);
+  setLoading(true, 'Memuat');
   setTimeout(() => {
     showGroup.value = true;
     setLoading(false);
@@ -184,10 +185,14 @@ const filters = ref<any>({
 <template>
   <Card>
     <template #header>
-      <DocTitle name="Tree Table" />
+      <DocTitle :name="treetable ? 'Tree Table' : 'Data Table'" />
     </template>
-    <template #title> Rich Feature Tree Table </template>
+    <template #title>
+      Rich Feature {{ treetable ? 'Tree Table' : 'Data Table' }}
+    </template>
     <template #content>
+      <Checkbox v-model="treetable" label="Tree Table" />
+
       <Checkbox
         v-model="noRecord"
         @update:model-value="tableKey++"
@@ -203,6 +208,7 @@ const filters = ref<any>({
         <ButtonDownload file-name="Download" />
         <ButtonFilter v-model:show-filter="showFilter" />
       </div>
+
       <QuickFilter :fields="quickFilterField" />
 
       <FilterContainer v-show="showFilter" :fields="filterFields" />
@@ -212,6 +218,7 @@ const filters = ref<any>({
         :columns="tableColumns"
         :fetch-function="getTableData"
         :options="singleAction"
+        :tree-table="treetable"
         @toggle-option="console.log"
         custom-column
         data-key="_id"

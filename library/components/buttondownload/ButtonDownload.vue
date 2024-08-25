@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { buttonFocusClass } from 'lib/preset/button';
-import Icon from '../icon/Icon.vue';
 import type { ButtonDownloadProps } from './ButtonDownload.vue.d';
+import eventBus from 'lib/event-bus';
+import Icon from '../icon/Icon.vue';
 
 const props = withDefaults(defineProps<ButtonDownloadProps>(), {
   tableName: 'datatable',
@@ -9,11 +10,9 @@ const props = withDefaults(defineProps<ButtonDownloadProps>(), {
 
 const downloadExcel = (): void => {
   const { fileName, tableName } = props;
-  const event = new CustomEvent('downloadExcel', {
-    detail: { fileName, tableName },
-  });
+  const event = { fileName, tableName };
 
-  window.dispatchEvent(event);
+  eventBus.emit('data-table:download', event);
 };
 </script>
 

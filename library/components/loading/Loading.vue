@@ -3,7 +3,7 @@ import useLoadingStore from './store/loading.store';
 import { LottieAnimation } from 'lottie-web-vue';
 import loadingJson from './loading.json';
 
-const { loading } = useLoadingStore();
+const { loading, message } = useLoadingStore();
 </script>
 
 <template>
@@ -12,7 +12,7 @@ const { loading } = useLoadingStore();
       :class="[
         'w-screen h-screen fixed top-0 left-0 z-[9999999]',
         'bg-white',
-        'flex items-center justify-center',
+        'flex flex-col gap-3 items-center justify-center',
         'transition-opacity',
       ]"
       data-wv-name="loading-overlay"
@@ -24,6 +24,8 @@ const { loading } = useLoadingStore();
         class="w-96"
         loop
       />
+
+      {{ message }}
     </div>
   </Teleport>
 </template>

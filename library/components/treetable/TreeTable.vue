@@ -15,7 +15,7 @@ import {
   TreeTableProps,
 } from './TreeTable.vue.d';
 import { Data, FetchResponse, QueryParams } from '../datatable/DataTable.vue.d';
-import { getNestedProperyValue } from 'lib/utils';
+import { exportToExcel, getNestedProperyValue, useToast } from 'lib/utils';
 import { filterVisibleMenu } from '../helpers';
 import Icon from '../icon/Icon.vue';
 import Checkbox from 'primevue/checkbox';
@@ -26,22 +26,27 @@ import CustomColumn from '../customcolumn/CustomColumn.vue';
 import CustomColumnInstance from '../customcolumn/CustomColumn.vue.d';
 import MenuInstance from '../menu/Menu.vue.d';
 import Menu from '../menu/Menu.vue';
-import eventBus, { TableEvent } from 'lib/event-bus';
+import eventBus, { Events, TableEvent } from 'lib/event-bus';
 import Paginator, { PageState } from 'primevue/paginator';
 import { isArrayIncluded } from './helpers';
 import { LottieAnimation } from 'lottie-web-vue';
 
 import nodataJson from './animations/nodata.json';
 import { cloneDeep } from 'lodash';
+import { Booleanish } from '../ts-helpers';
+import useLoadingStore from '../loading/store/loading.store';
 
 const props = withDefaults(defineProps<TreeTableProps>(), {
   tableName: 'datatable',
+  lazy: true,
   selectionType: 'checkbox',
 });
 
 const emit = defineEmits<TreeTableEmits>();
 
 const rowsPerPageOptions = [10, 25, 50, 100];
+const toast = useToast();
+const { setLoading } = useLoadingStore();
 
 const dataTableID = ((): string => {
   const path = window.location.pathname.replace('/', '').split('/').join('-');
@@ -433,6 +438,100 @@ const getDisabledRows = (tableData: Data[] | undefined = []): string[] => {
     .map((data) => data[props.dataKey]);
 };
 
+const downloadExcel = async ({
+  tableName,
+  fileName,
+}: Events['data-table:download']): Promise<void> => {
+  if (tableName !== props.tableName) return;
+
+  const excelColumns = visibleColumns.value.filter(
+    (col) => col.visible !== false,
+  );
+
+  const includedColumns = excelColumns.filter((col) => !col.excluded);
+  const headers = includedColumns.map(
+    (col) => col.header ?? col.exportHeader ?? '-',
+  );
+
+  const formatFileName = (): string => {
+    return fileName
+      .trim() // Remove extra space
+      .replace(/[^a-zA-Z0-9\s]/g, '-') // Replace special characters with dash
+      .replace(/\s+/g, '-') // Replace spaces with dash
+      .replace(/-+/g, '-') // Replace multiple dashes with a single dash
+      .replace(/-+$/, ''); // Remove trailing dash
+  };
+
+  try {
+    setLoading(true, 'Mengunduh data');
+
+    const { data } = props.fetchFunction
+      ? await fetchAllData(true)
+      : { data: props.data };
+
+    const excelBody = (data ?? []).map((item: Data) => {
+      const body = {} as Record<string, unknown>;
+
+      includedColumns.forEach((col) => {
+        const { field: colField, exportField } = col;
+        const field = exportField ?? colField; // Prioritize the exportField than colField.
+        const fieldValue = getNestedProperyValue(item, field) || '-';
+
+        if (col.includeTruthyProperties) {
+          const objectValue = (fieldValue ?? {}) as Record<string, Booleanish>;
+
+          const truthyProperties = Object.keys(objectValue)
+            .map((key) => {
+              if (objectValue[key]) return key;
+            })
+            .filter(Boolean);
+
+          body[field] = truthyProperties.join(',');
+        } else if (Array.isArray(fieldValue)) {
+          let arrayValue = fieldValue;
+
+          if (col.arrayValueField) {
+            /**
+             * Support for export array data with deeply nested array.
+             *
+             * If the array is only string array, only return its value.
+             */
+            arrayValue = fieldValue.map((value) => {
+              if (col.arrayValueField)
+                return getNestedProperyValue(value, col.arrayValueField);
+              return value;
+            });
+          }
+
+          body[field] = arrayValue.join(arrayValue.length > 1 ? ',' : ''); // Only join with comma if the length at least two item
+        } else if (col.booleanValue) {
+          body[field] = fieldValue ? 'Ya' : 'Tidak';
+        } else {
+          body[field] = fieldValue;
+        }
+      });
+
+      return body;
+    });
+
+    exportToExcel({
+      headers,
+      data: excelBody,
+      fileName: formatFileName(),
+    });
+  } catch (error) {
+    console.error(error);
+    toast.removeAllGroups();
+    toast.add({
+      message: props.excelToastErrorMessage ?? 'Data gagal diunduh.',
+      error,
+      group: 'download',
+    });
+  } finally {
+    setLoading(false);
+  }
+};
+
 onMounted(async () => {
   if (props.fetchFunction) {
     await refetch();
@@ -493,6 +592,12 @@ const attachEventListener = (): void => {
       selectAllData(e);
     }
   });
+
+  eventBus.on('data-table:download', (e) => {
+    if (e.tableName === props.tableName) {
+      downloadExcel(e);
+    }
+  });
 };
 
 const removeEventListener = (): void => {
@@ -545,7 +650,8 @@ const listenUpdateTableEvent = (): void => {
           </th>
 
           <th
-            class="w-[40px] text-center"
+            v-if="treeTable"
+            class="w-[40px] text-center !py-1"
             v-bind="headerCellPreset()"
             data-wv-section="headertoggler"
           >
@@ -568,7 +674,7 @@ const listenUpdateTableEvent = (): void => {
             v-bind="headerCellPreset(col)"
             @click="sortColumn(col.field)"
           >
-            <span class="inline-flex gap-2 items-center">
+            <span class="inline-flex gap-2 items-center leading-[18px]">
               {{ col.header }}
 
               <Icon
@@ -631,6 +737,7 @@ const listenUpdateTableEvent = (): void => {
             </td>
 
             <td
+              v-if="treeTable"
               @click="
                 (e) => {
                   if (item.childRow || item.childRowHeader) e.stopPropagation();
