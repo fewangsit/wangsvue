@@ -14,6 +14,7 @@ import PrimeDataTable, {
   DataTablePageEvent,
   DataTableSortEvent,
   DataTableRowClickEvent,
+  DataTableExpandedRows,
 } from 'primevue/datatable';
 
 import {
@@ -69,6 +70,8 @@ const props = withDefaults(defineProps<DataTableProps>(), {
 });
 
 const emit = defineEmits<DataTableEmits>();
+
+const expandedRows = defineModel<DataTableExpandedRows>('expandedRows');
 
 onMounted(async () => {
   if (props.fetchFunction) {
@@ -187,7 +190,7 @@ const dataTable = ref<typeof PrimeDataTable>();
  * Store the data list for the first page only.
  * Cannot have length more than the row limit, it will result unexpected result.
  */
-const currentPageTableData = ref<Data[]>();
+const currentPageTableData = defineModel<Data[]>('tableData');
 const tablePage = ref<number>(1);
 const tableRows = ref<number>(props.rows ?? 10);
 const sortOrder = ref<DataTableSortEvent['sortOrder']>();
@@ -316,16 +319,25 @@ const refetch = async (): Promise<void> => {
    * }
    */
 
-  loadingTable.value = true;
-  const response = await props.fetchFunction?.(queryParams.value);
+  try {
+    loadingTable.value = true;
+    const response = await props.fetchFunction?.(queryParams.value);
 
-  const { data, totalRecords: total = 0 } = response?.data ?? {};
-  dispatchUpdateTotalRecordsEvent(total);
-  currentPageTableData.value = data;
-  totalRecords.value = total;
-  loadingTable.value = false;
+    const { data, totalRecords: total = 0 } = response?.data ?? {};
+    dispatchUpdateTotalRecordsEvent(total);
+    currentPageTableData.value = data;
+    // eslint-disable-next-line no-console
+    console.log(
+      '🚀 ~ refetch ~ currentPageTableData.value:',
+      currentPageTableData.value,
+    );
+    totalRecords.value = total;
+    loadingTable.value = false;
 
-  nextTick(disableRowClick);
+    nextTick(disableRowClick);
+  } catch (error) {
+    console.error('🚀 ~ refetch ~ error:', error);
+  }
 };
 
 /**
@@ -623,13 +635,6 @@ const matchModes = computed(() => ({
   ...props.filters,
 }));
 
-const expandedRows = ref({});
-
-const isRowExpanded = (key: string): boolean => {
-  const keys = Object.keys(expandedRows.value);
-  return keys.includes(key);
-};
-
 const adjustMenuPosition = (event: Event): void => {
   let el = event.target as HTMLElement;
 
@@ -776,6 +781,10 @@ const downloadExcel = async (
   }
 };
 
+const firstColumn = (field: string): boolean => {
+  return props.columns.findIndex((col) => col.field === field) === 0;
+};
+
 watch(
   () => props.columns,
   () => {
@@ -843,27 +852,7 @@ watch(dataSelected, (newSelectedData: Data[]) => {
       />
     </template>
 
-    <Column
-      v-if="!!props.childrenColumns"
-      expander
-      style="width: 32px; min-width: 32px; max-width: 32px"
-    >
-      <template #body="{ rowTogglerCallback, data: rowData }">
-        <div
-          v-if="rowData?.hasChildren || rowData.children?.length"
-          class="flex items-center justify-center"
-        >
-          <Button
-            :class="{ 'rotate-90': isRowExpanded(rowData[props.dataKey]) }"
-            @click="rowTogglerCallback($event)"
-            class="!p-0 !m-0 !w-auto !h-auto"
-            icon="arrow-right"
-            severity="secondary"
-            text
-          />
-        </div>
-      </template>
-    </Column>
+    <slot v-if="$slots['expander']" name="expander" />
 
     <Column
       v-if="selectionType === 'checkbox'"
@@ -872,12 +861,14 @@ watch(dataSelected, (newSelectedData: Data[]) => {
       selection-mode="multiple"
       style="min-width: 32px !important; max-width: 32px !important"
     >
-      <template #body="{ data: rowData }" v-if="disableKey || disableAllRows">
+      <template #body="{ data: rowData }">
         <span
+          :role="rowData.role"
           class="flex justify-center items-center"
           data-wv-section="checkboxselection"
         >
           <Checkbox
+            v-if="!rowData.role?.includes('child')"
             v-model="dataSelected"
             :binary="false"
             :disabled="disableAllRows || rowData[disableKey]"
@@ -885,16 +876,6 @@ watch(dataSelected, (newSelectedData: Data[]) => {
             @change="updateCurrentPageSelection($event, rowData)"
           />
         </span>
-      </template>
-
-      <template #rowcheckboxicon="{ checked }" v-else>
-        <Icon
-          :class="[
-            ...CheckboxPreset.icon.class,
-            { 'text-transparent': !checked },
-          ]"
-          icon="check"
-        />
       </template>
 
       <template #headercheckboxicon="{ checked }">
@@ -962,43 +943,50 @@ watch(dataSelected, (newSelectedData: Data[]) => {
       </template>
 
       <template #body="{ data: itemData, field }">
-        <template v-if="col.bodyComponent || col.bodyClass || col.bodyTemplate">
-          <component
-            :is="col.bodyComponent!(itemData).component"
-            v-if="col.bodyComponent"
-            v-model="col.bodyComponent!(itemData).model"
-            :disabled="col.bodyComponent!(itemData).disabled"
-            v-bind="col.bodyComponent!(itemData).props"
-            v-on="
-              col.bodyComponent!(itemData).events
-                ? col.bodyComponent!(itemData).events
-                : {}
-            "
-            @change="col.bodyComponent!(itemData).onChange?.(itemData)"
-            @update:model-value="
-              col.bodyComponent!(itemData).onChange?.(itemData)
-            "
-          />
-
-          <span
-            v-else
-            :class="
-              typeof col.bodyClass === 'function'
-                ? col.bodyClass(itemData)
-                : col.bodyClass
-            "
-          >
-            <template v-if="col.bodyTemplate">
-              {{ (col.bodyTemplate && col.bodyTemplate(itemData)) || '-' }}
-            </template>
-            <template v-else>
-              {{ getNestedProperyValue(itemData, col.field) || '-' }}
-            </template>
-          </span>
+        <template v-if="itemData.role === 'childheader'">
+          <template v-if="firstColumn(field)">{{ itemData.header }}</template>
         </template>
-
         <template v-else>
-          {{ getNestedProperyValue(itemData, field) ?? '-' }}
+          <template
+            v-if="col.bodyComponent || col.bodyClass || col.bodyTemplate"
+          >
+            <component
+              :is="col.bodyComponent!(itemData).component"
+              v-if="col.bodyComponent"
+              v-model="col.bodyComponent!(itemData).model"
+              :disabled="col.bodyComponent!(itemData).disabled"
+              v-bind="col.bodyComponent!(itemData).props"
+              v-on="
+                col.bodyComponent!(itemData).events
+                  ? col.bodyComponent!(itemData).events
+                  : {}
+              "
+              @change="col.bodyComponent!(itemData).onChange?.(itemData)"
+              @update:model-value="
+                col.bodyComponent!(itemData).onChange?.(itemData)
+              "
+            />
+
+            <span
+              v-else
+              :class="
+                typeof col.bodyClass === 'function'
+                  ? col.bodyClass(itemData)
+                  : col.bodyClass
+              "
+            >
+              <template v-if="col.bodyTemplate">
+                {{ (col.bodyTemplate && col.bodyTemplate(itemData)) || '-' }}
+              </template>
+              <template v-else>
+                {{ getNestedProperyValue(itemData, col.field) || '-' }}
+              </template>
+            </span>
+          </template>
+
+          <template v-else>
+            {{ getNestedProperyValue(itemData, field) ?? '-' }}
+          </template>
         </template>
       </template>
     </Column>
@@ -1047,20 +1035,8 @@ watch(dataSelected, (newSelectedData: Data[]) => {
       </template>
     </Column>
 
-    <template #expansion="{ data }" v-if="props.childrenColumns">
-      <DataTable
-        :columns="props.childrenColumns"
-        :custom-column="props.childrenUseOption"
-        :data="data.children"
-        :data-key="props.childrenDataKey"
-        :filters="props.childrenFilters"
-        :options="props.childrenOptions"
-        :search="props.search"
-        :use-option="props.childrenUseOption"
-        @toggle-option="emit('toggleChildrenOption', $event)"
-        selection-type="single"
-        table-name="children-table"
-      />
+    <template #expansion="{ data }" v-if="$slots['expansion']">
+      <slot :data="data" name="expansion" />
     </template>
 
     <template #paginatorfirstpagelinkicon="{ class: iconClass }">
