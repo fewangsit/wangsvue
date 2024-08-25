@@ -29,6 +29,9 @@ import Menu from '../menu/Menu.vue';
 import eventBus, { TableEvent } from 'lib/event-bus';
 import Paginator, { PageState } from 'primevue/paginator';
 import { isArrayIncluded } from './helpers';
+import { LottieAnimation } from 'lottie-web-vue';
+
+import nodataJson from './animations/nodata.json';
 
 const props = withDefaults(defineProps<TreeTableProps>(), {
   tableName: 'treetable',
@@ -530,10 +533,6 @@ const listenUpdateTableEvent = (): void => {
       </thead>
 
       <tbody v-if="!loadingTable" :="Preset.tbody">
-        <template v-if="!currentPageTableData?.length">
-          Tidak ada data
-        </template>
-
         <template :key="index" v-for="(item, index) in currentPageTableData">
           <tr
             @click="toggleRowSelection(item)"
@@ -678,6 +677,17 @@ const listenUpdateTableEvent = (): void => {
       </tbody>
     </table>
 
+    <template v-if="!loadingTable && !currentPageTableData?.length">
+      <div class="w-full p-4 flex items-center justify-center">
+        <LottieAnimation
+          :animation-data="nodataJson"
+          auto-play
+          class="w-36"
+          loop
+        />
+      </div>
+    </template>
+
     <template v-if="loadingTable">
       <div class="w-full p-4 flex items-center justify-center">
         <img
@@ -689,12 +699,17 @@ const listenUpdateTableEvent = (): void => {
     </template>
 
     <Paginator
+      v-if="!loadingTable"
       v-model:rows="tableRows"
+      :current-page-report-template="
+        totalRecords
+          ? 'Menampilkan {first} - {last} dari {totalRecords}'
+          : 'Tidak ditemukan data'
+      "
       :rows-per-page-options="rowsPerPageOptions"
       :total-records="totalRecords"
       @page="handlePageChange"
       class="sticky left-0"
-      current-page-report-template="Menampilkan {first} - {last} dari {totalRecords}"
       template="FirstPageLink PrevPageLink PageLinks JumpToPageInput NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
     >
       <template #firstpagelinkicon>

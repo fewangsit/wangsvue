@@ -26,11 +26,14 @@ import TreeTable from 'lib/components/treetable/TreeTable.vue';
 import { TreeTableColumns } from 'lib/components/treetable/TreeTable.vue.d';
 import { cloneDeep } from 'lodash';
 import useLoadingStore from 'lib/components/loading/store/loading.store';
+import Checkbox from 'lib/components/checkbox/Checkbox.vue';
 
 const dataSelected = shallowRef();
 const actionData = ref();
 const showFilter = shallowRef(false);
 const showDialog = shallowRef(false);
+const tableKey = shallowRef(0);
+const noRecord = shallowRef(false);
 const { setLoading } = useLoadingStore();
 
 const singleAction: MenuItem[] = [
@@ -59,7 +62,7 @@ onMounted(() => {
   setTimeout(() => {
     showGroup.value = true;
     setLoading(false);
-  }, 10000);
+  }, 3000);
 });
 
 const showGroup = shallowRef<boolean>(false);
@@ -157,8 +160,8 @@ const getTableData = async (
         resolve({
           message: '',
           data: {
-            data, // Use 'slice' for data limiting
-            totalRecords: response.data.totalRecords,
+            data: noRecord.value ? [] : data, // Use 'slice' for data limiting
+            totalRecords: noRecord.value ? 0 : response.data.totalRecords,
           },
         });
       },
@@ -183,6 +186,11 @@ const filters = ref<any>({
     </template>
     <template #title> Rich Feature Tree Table </template>
     <template #content>
+      <Checkbox
+        v-model="noRecord"
+        @update:model-value="tableKey++"
+        label="Check this box to make the table has no record found"
+      />
       <div class="flex justify-end gap-4">
         <ButtonBulkAction
           v-model:selected-data="dataSelected"
@@ -197,6 +205,7 @@ const filters = ref<any>({
 
       <FilterContainer v-show="showFilter" :fields="filterFields" />
       <TreeTable
+        :key="tableKey"
         :child-table-props="{ header: 'Detail', columns: childrenColumns }"
         :columns="tableColumns"
         :fetch-function="getTableData"

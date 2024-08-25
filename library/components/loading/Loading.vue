@@ -18,7 +18,12 @@ const { loading } = useLoadingStore();
       data-wv-name="loading-overlay"
       data-wv-section="overlay"
     >
-      <LottieAnimation :animation-data="loadingJson" auto-play loop />
+      <LottieAnimation
+        :animation-data="loadingJson"
+        auto-play
+        class="w-96"
+        loop
+      />
     </div>
   </Teleport>
 </template>
