@@ -24,6 +24,7 @@ const props = withDefaults(defineProps<QuickFilterProps>(), {
 const clear = (): void => {
   resetForm();
   fieldsKey.value++;
+  apply();
 };
 
 const apply = (): void => {
