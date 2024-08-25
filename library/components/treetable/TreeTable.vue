@@ -39,6 +39,8 @@ import useLoadingStore from '../loading/store/loading.store';
 const props = withDefaults(defineProps<TreeTableProps>(), {
   tableName: 'datatable',
   lazy: true,
+  dataKey: '_id',
+  disableKey: 'isDefault',
   selectionType: 'checkbox',
 });
 
@@ -53,7 +55,7 @@ const dataTableID = ((): string => {
   return `${path}-${props.tableName}`;
 })();
 
-const currentPageTableData = ref<Data[]>();
+const currentPageTableData = ref<Data[]>([]);
 const expandedRows = ref<DataTableExpandedRows>({});
 const visibleColumns = ref<TreeTableColumns[]>(props.columns);
 const checkboxSelection = ref<Data[]>([]);
@@ -170,8 +172,8 @@ const toggleRowExpand = (
     }
 
     if (indexOfData >= 0) {
-      const childHeader = props.childTableProps.header
-        ? { childRowHeader: true, header: props.childTableProps.header }
+      const childHeader = props.childTableProps?.header
+        ? { childRowHeader: true, header: props.childTableProps?.header }
         : undefined;
 
       const childrenRows = (childHeader ? [childHeader] : []).concat(
@@ -352,7 +354,7 @@ const refetch = async (): Promise<void> => {
     loadingTable.value = true;
     const response = await props.fetchFunction?.(queryParams.value);
 
-    const { data, totalRecords: total = 0 } = response?.data ?? {};
+    const { data = [], totalRecords: total = 0 } = response?.data ?? {};
     updateTotalRecordBulkAction(total);
     currentPageTableData.value = data;
     totalRecords.value = total;
@@ -388,7 +390,7 @@ const selectAllData = async (event: TableEvent): Promise<void> => {
     loadingTable.value = true;
     const { data, totalRecords: total = 0 } = props.lazy
       ? await fetchAllData()
-      : { totalRecords: props.data.length };
+      : { totalRecords: (props.data ?? []).length, data: props.data };
 
     const disabledRows = getDisabledRows(data);
     checkboxSelection.value = filterDisabledRows(data, disabledRows);
@@ -773,7 +775,7 @@ const listenUpdateTableEvent = (): void => {
               <td
                 :key="col.field"
                 v-for="col in item.childRow
-                  ? (props.childTableProps.columns ?? columns)
+                  ? (props.childTableProps?.columns ?? columns)
                   : visibleColumns"
                 :colspan="col.colspan"
                 v-bind="Preset.bodycell"
