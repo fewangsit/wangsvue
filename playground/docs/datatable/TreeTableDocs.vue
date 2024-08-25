@@ -25,11 +25,13 @@ import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
 import TreeTable from 'lib/components/treetable/TreeTable.vue';
 import { TreeTableColumns } from 'lib/components/treetable/TreeTable.vue.d';
 import { cloneDeep } from 'lodash';
+import useLoadingStore from 'lib/components/loading/store/loading.store';
 
 const dataSelected = shallowRef();
 const actionData = ref();
 const showFilter = shallowRef(false);
 const showDialog = shallowRef(false);
+const { setLoading } = useLoadingStore();
 
 const singleAction: MenuItem[] = [
   {
@@ -53,9 +55,11 @@ const singleAction: MenuItem[] = [
 ];
 
 onMounted(() => {
+  setLoading(true);
   setTimeout(() => {
     showGroup.value = true;
-  }, 3000);
+    setLoading(false);
+  }, 10000);
 });
 
 const showGroup = shallowRef<boolean>(false);
