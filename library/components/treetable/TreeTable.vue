@@ -344,9 +344,10 @@ const refetch = async (): Promise<void> => {
     const { data, totalRecords: total = 0 } = response?.data ?? {}; // DispatchUpdateTotalRecordsEvent;
     currentPageTableData.value = data;
     totalRecords.value = total;
-    loadingTable.value = false;
   } catch (error) {
     console.error('🚀 ~ refetch ~ error:', error);
+  } finally {
+    loadingTable.value = false;
   }
 };
 
@@ -526,7 +527,11 @@ const listenUpdateTableEvent = (): void => {
         </tr>
       </thead>
 
-      <tbody :="Preset.tbody">
+      <tbody v-if="!loadingTable" :="Preset.tbody">
+        <template v-if="!currentPageTableData?.length">
+          Tidak ada data
+        </template>
+
         <template :key="index" v-for="(item, index) in currentPageTableData">
           <tr
             @click="toggleRowSelection(item)"
@@ -665,6 +670,16 @@ const listenUpdateTableEvent = (): void => {
         </template>
       </tbody>
     </table>
+
+    <template v-if="loadingTable">
+      <div class="w-full p-4 flex items-center justify-center">
+        <img
+          alt="Table is loading data"
+          class="w-14 h-auto"
+          src="../../assets/loading.gif"
+        />
+      </div>
+    </template>
 
     <Paginator
       v-model:rows="tableRows"

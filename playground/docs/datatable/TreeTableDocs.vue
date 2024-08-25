@@ -140,23 +140,26 @@ const getTableData = async (
 ): Promise<FetchResponse | undefined> => {
   // Simulate an asynchronous operation (even though we're returning static data)
   return new Promise((resolve) => {
-    setTimeout(() => {
-      const startIndex = ((params.page || 1) - 1) * (params.limit || 10); // Default limit to 10 if not provided
-      const endIndex = startIndex + (params.limit || 10);
+    setTimeout(
+      () => {
+        const startIndex = ((params.page || 1) - 1) * (params.limit || 10); // Default limit to 10 if not provided
+        const endIndex = startIndex + (params.limit || 10);
 
-      const data =
-        params.page != null && params.limit != null
-          ? response.data.data.slice(startIndex, endIndex)
-          : response.data.data;
+        const data =
+          params.page != null && params.limit != null
+            ? response.data.data.slice(startIndex, endIndex)
+            : response.data.data;
 
-      resolve({
-        message: '',
-        data: {
-          data, // Use 'slice' for data limiting
-          totalRecords: response.data.totalRecords,
-        },
-      });
-    }, 0); // You can adjust the timeout if you need a delay
+        resolve({
+          message: '',
+          data: {
+            data, // Use 'slice' for data limiting
+            totalRecords: response.data.totalRecords,
+          },
+        });
+      },
+      params.page === 1 || params.sortBy ? 2000 : 100,
+    ); // You can adjust the timeout if you need a delay
   });
 };
 

@@ -4,6 +4,7 @@ import { WangsIcons } from '../icon/Icon.vue.d';
 import { ButtonFilterProps } from './ButtonFilter.vue.d';
 import Icon from '../icon/Icon.vue';
 import eventBus from 'lib/event-bus';
+import { buttonFocusClass } from 'lib/preset/button';
 
 const { tableName } = defineProps<ButtonFilterProps>();
 
@@ -19,7 +20,7 @@ const toggleFilterPanel = (): void => {
 </script>
 
 <template>
-  <button @click="toggleFilterPanel" type="button">
+  <button :class="buttonFocusClass" @click="toggleFilterPanel" type="button">
     <Icon
       :icon="filterIcon"
       class="text-2xl"

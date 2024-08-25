@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { buttonFocusClass } from 'lib/preset/button';
 import Icon from '../icon/Icon.vue';
 import type { ButtonDownloadProps } from './ButtonDownload.vue.d';
 
@@ -17,7 +18,7 @@ const downloadExcel = (): void => {
 </script>
 
 <template>
-  <button @click="downloadExcel" type="button">
+  <button :class="buttonFocusClass" @click="downloadExcel" type="button">
     <Icon
       class="text-2xl"
       icon="download"
