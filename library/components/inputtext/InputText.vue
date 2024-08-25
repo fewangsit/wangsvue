@@ -72,7 +72,7 @@ const setValidatorMessage = (value: string): boolean | string => {
     } else if (value && props.type === 'url') {
       return validateURL(value, invalidFormat);
     } else if (props.existingValues?.includes(value)) {
-      return props.validatorMessage.exist;
+      return props.validatorMessage?.exist ?? props.label + ' sudah ada';
     }
   }
 
@@ -147,7 +147,7 @@ watch(
 watch(
   () => props.invalid,
   () => {
-    field.validate();
+    field.validate?.();
   },
 );
 </script>
