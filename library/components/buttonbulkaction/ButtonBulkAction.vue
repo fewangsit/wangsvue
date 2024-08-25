@@ -98,10 +98,14 @@ const handleUpdateSelectedData = (
   }
 };
 
-watch([dataSelected, totalRecords], ([datas, total]) => {
-  if (!datas?.length) selectedOption.value = undefined;
-  isAllDataSelected.value = datas?.length === total;
-});
+watch(
+  [dataSelected, totalRecords],
+  ([datas, total]) => {
+    if (!datas?.length) selectedOption.value = undefined;
+    isAllDataSelected.value = datas?.length === total;
+  },
+  { deep: true },
+);
 
 watch(
   () => props.totalRecords,
