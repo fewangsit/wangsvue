@@ -149,18 +149,18 @@ const toggleRowExpand = (
   indexOfData: number,
   isExpanding?: boolean,
 ): void => {
-  const isExpandingRow = isExpanding ?? !isRowExpanded(data[props.dataKey]);
+  const { children } = data;
 
-  if (isExpandingRow) {
-    expandedRows.value[data[props.dataKey]] = true;
-  } else {
-    delete expandedRows.value[data[props.dataKey]];
-  }
+  if (children?.length) {
+    const isExpandingRow = isExpanding ?? !isRowExpanded(data[props.dataKey]);
 
-  if (indexOfData >= 0) {
-    const { children } = data;
+    if (isExpandingRow) {
+      expandedRows.value[data[props.dataKey]] = true;
+    } else {
+      delete expandedRows.value[data[props.dataKey]];
+    }
 
-    if (children?.length) {
+    if (indexOfData >= 0) {
       const childHeader = props.childTableProps.header
         ? { childRowHeader: true, header: props.childTableProps.header }
         : undefined;
@@ -185,12 +185,14 @@ const toggleAllDataSelection = (e: boolean): void => {
 };
 
 const toggleRowSelection = (data: Data): void => {
-  const selected = isRowSelected(data[props.dataKey]);
-  if (selected)
-    checkboxSelection.value = checkboxSelection.value.filter(
-      (d) => d[props.dataKey] != data[props.dataKey],
-    );
-  else checkboxSelection.value.push(data);
+  if (!data.childRow && !data.childRowHeader) {
+    const selected = isRowSelected(data[props.dataKey]);
+    if (selected)
+      checkboxSelection.value = checkboxSelection.value.filter(
+        (d) => d[props.dataKey] != data[props.dataKey],
+      );
+    else checkboxSelection.value.push(data);
+  }
 };
 
 const toggleExpandAll = (): void => {
@@ -535,6 +537,7 @@ const listenUpdateTableEvent = (): void => {
         <template :key="index" v-for="(item, index) in currentPageTableData">
           <tr
             @click="toggleRowSelection(item)"
+            @dblclick="toggleRowExpand(item, index)"
             class="border-b border-general-100"
             v-bind="
               Preset.bodyrow({
