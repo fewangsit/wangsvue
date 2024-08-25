@@ -42,7 +42,7 @@ defineExpose({
         :to="item.route"
         custom
       >
-        <a v-ripple :href="href" v-bind="props.action" @click="navigate">
+        <a :href="href" v-bind="props.action" @click="navigate">
           <Icon
             v-if="item.icon"
             v-bind="props.icon"
@@ -54,7 +54,6 @@ defineExpose({
 
       <a
         v-else-if="item.url"
-        v-ripple
         :href="item.url"
         :target="item.target"
         v-bind="props.action"

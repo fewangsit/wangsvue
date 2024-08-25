@@ -22,9 +22,18 @@ export default {
       '[&_tr:last-of-type>td:first-child]:!rounded-bl-lg',
     ],
   },
-  headercell: {
-    'class': 'text-xs font-semibold text-white bg-primary-400 p-2 text-left',
-    'data-wv-section': 'headercell',
+  headercell: ({ context }) => {
+    return {
+      'class': [
+        'text-xs font-semibold text-white p-2 text-left cursor-pointer',
+        { 'bg-primary-400': !context.sorted || !context.sortable },
+        { 'bg-primary-500': context.sorted },
+        {
+          'hover:bg-primary-500': context.columnVisibility,
+        },
+      ],
+      'data-wv-section': 'headercell',
+    };
   },
   headercheckbox: {
     'class': '',

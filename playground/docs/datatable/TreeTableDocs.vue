@@ -172,9 +172,9 @@ const filters = ref<any>({
 <template>
   <Card>
     <template #header>
-      <DocTitle name="Table" />
+      <DocTitle name="Tree Table" />
     </template>
-    <template #title> Rich Feature Data Table </template>
+    <template #title> Rich Feature Tree Table </template>
     <template #content>
       <div class="flex justify-end gap-4">
         <ButtonBulkAction

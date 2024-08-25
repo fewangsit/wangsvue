@@ -305,20 +305,6 @@ const fetchAllData = async (
 };
 
 const refetch = async (): Promise<void> => {
-  /**
-   * Maintain the selected data if the selected is All record data.
-   *
-   * Resets selected data only if the selection is only on current page.
-   *
-   * If the selection is global/totalRecords, don't.
-   */
-  /*
-   * If (dataSelected.value?.length !== totalRecords.value) {
-   *   selectedData.value = [];
-   *   currentPageDataSelected.value = [];
-   * }
-   */
-
   try {
     loadingTable.value = true;
     const response = await props.fetchFunction?.(queryParams.value);
@@ -326,11 +312,6 @@ const refetch = async (): Promise<void> => {
     const { data, totalRecords: total = 0 } = response?.data ?? {};
     dispatchUpdateTotalRecordsEvent(total);
     currentPageTableData.value = data;
-    // eslint-disable-next-line no-console
-    console.log(
-      '🚀 ~ refetch ~ currentPageTableData.value:',
-      currentPageTableData.value,
-    );
     totalRecords.value = total;
     loadingTable.value = false;
 
