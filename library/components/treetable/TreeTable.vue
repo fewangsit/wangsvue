@@ -254,7 +254,7 @@ watch(
         </tr>
       </thead>
 
-      <tbody>
+      <tbody :="Preset.tbody">
         <template :key="index" v-for="(item, index) in tableData">
           <tr class="border-b border-general-100">
             <td class="w-[40px] text-center">
