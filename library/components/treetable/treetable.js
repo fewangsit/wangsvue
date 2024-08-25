@@ -22,6 +22,30 @@ export default {
       '[&_tr:last-of-type>td:first-child]:!rounded-bl-lg',
     ],
   },
+  bodyrow: ({ context, props }) => ({
+    class: [
+      // Color
+      'text-genenral-800 text-xs font-normal',
+      {
+        'bg-transparent': !context.selected,
+        'bg-primary-100': context.selected,
+      },
+
+      // State
+      {
+        'focus:outline-none focus:outline-offset-0': props.selectionType,
+      },
+
+      // Transition
+      {
+        'transition duration-200':
+          (props.selectionType && !context.selected) || props.rowHover,
+      },
+
+      // Misc
+      { 'cursor-pointer': props.selectionType },
+    ],
+  }),
   headercell: ({ context }) => {
     return {
       'class': [
@@ -31,6 +55,8 @@ export default {
         {
           'hover:bg-primary-500': context.columnVisibility,
         },
+        'border-0 !border-b border-solid',
+        'border-primary-100 dark:border-primary-100',
       ],
       'data-wv-section': 'headercell',
     };
@@ -44,7 +70,10 @@ export default {
     'data-wv-section': 'rowcheckbox',
   },
   bodycell: {
-    'class': 'text-xs px-2 py-1.5',
+    'class': [
+      'text-xs px-2 py-1.5',
+      'border-0 !border-b !border-solid border-primary-100 dark:border-primary-100',
+    ],
     'data-wv-section': 'bodycell',
   },
 };

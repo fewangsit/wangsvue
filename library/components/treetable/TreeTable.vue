@@ -28,9 +28,11 @@ import MenuInstance from '../menu/Menu.vue.d';
 import Menu from '../menu/Menu.vue';
 import eventBus, { TableEvent } from 'lib/event-bus';
 import Paginator, { PageState } from 'primevue/paginator';
+import { isArrayIncluded } from './helpers';
 
 const props = withDefaults(defineProps<TreeTableProps>(), {
   tableName: 'treetable',
+  selectionType: 'checkbox',
 });
 
 const emit = defineEmits<TreeTableEmits>();
@@ -42,12 +44,11 @@ const dataTableID = ((): string => {
   return `${path}-${props.tableName}`;
 })();
 
-const tableData = ref<Data[]>();
+const currentPageTableData = ref<Data[]>();
 const expandedRows = ref<DataTableExpandedRows>({});
 const visibleColumns = ref<TreeTableColumns[]>(props.columns);
 const checkboxSelection = ref<Data[]>([]);
 
-const allDataSelected = shallowRef(false);
 const loadingTable = shallowRef(false);
 const columnKey = shallowRef(0);
 const tableKey = shallowRef(0);
@@ -77,13 +78,52 @@ const queryParams = computed<QueryParams>(() => ({
 }));
 
 const isExpandedAll = computed(() => {
-  const rowsHasChildren = tableData.value?.filter((d) => d.children?.length);
+  const rowsHasChildren = currentPageTableData.value?.filter(
+    (d) => d.children?.length,
+  );
 
   return (
     rowsHasChildren?.length &&
     rowsHasChildren.every((data) => expandedRows.value[data[props.dataKey]])
   );
 });
+
+/**
+ * This computed variable determines wether the selection checkbox on header should be checked or not.
+ * When select all data from bulkaction, the tableData value should not be updated.
+ * The 'isSelectedAll' will be true if either the all current page data is selected or all records selected.
+ */
+const isSelectedAll = computed(() => {
+  if (
+    props.disableAllRows ||
+    !fliterParentRowData()?.length ||
+    props.selectionType !== 'checkbox'
+  )
+    return false;
+
+  const length = checkboxSelection.value?.length;
+
+  const currentPageDataKey =
+    filterDisabledRows(fliterParentRowData())?.map((dt) => dt[props.dataKey]) ??
+    [];
+
+  const selectedDataKey =
+    checkboxSelection.value?.map((dt) => dt[props.dataKey]) ?? [];
+
+  const isCurrentPageAllSelected = selectedDataKey.length
+    ? isArrayIncluded(currentPageDataKey, selectedDataKey)
+    : false;
+
+  const isAllRecordSelected =
+    length ===
+    (totalRecords.value ?? 0) - (currentPageDisabledRows.value.length ?? 0);
+
+  return isCurrentPageAllSelected || isAllRecordSelected;
+});
+
+const currentPageDisabledRows = computed(() =>
+  getDisabledRows(props.data ?? fliterParentRowData() ?? []),
+);
 
 const singleOptions = computed(() => {
   return filterVisibleMenu(props.options ?? []);
@@ -92,6 +132,16 @@ const singleOptions = computed(() => {
 const isRowExpanded = (key: string): boolean => {
   const keys = Object.keys(expandedRows.value);
   return keys.includes(key);
+};
+
+const isRowSelected = (key: string): boolean => {
+  return !!checkboxSelection.value.find((data) => data[props.dataKey] === key);
+};
+
+const fliterParentRowData = (rowData?: Data[]): Data[] => {
+  return (rowData ?? currentPageTableData.value ?? []).filter(
+    (d) => !d.childRowHeader && !d.childRow,
+  );
 };
 
 const toggleRowExpand = (
@@ -112,29 +162,39 @@ const toggleRowExpand = (
 
     if (children?.length) {
       const childHeader = props.childTableProps.header
-        ? { role: 'childheader', header: props.childTableProps.header }
+        ? { childRowHeader: true, header: props.childTableProps.header }
         : undefined;
 
       const childrenRows = (childHeader ? [childHeader] : []).concat(
         children.map((child: Data) => ({
-          role: 'child',
+          childRow: true,
           ...child,
         })),
       );
 
       if (isExpandingRow)
-        tableData.value.splice(indexOfData + 1, 0, ...childrenRows);
-      else tableData.value.splice(indexOfData + 1, childrenRows.length);
+        currentPageTableData.value.splice(indexOfData + 1, 0, ...childrenRows);
+      else
+        currentPageTableData.value.splice(indexOfData + 1, childrenRows.length);
     }
   }
 };
 
 const toggleAllDataSelection = (e: boolean): void => {
-  checkboxSelection.value = e ? tableData.value : [];
+  checkboxSelection.value = e ? fliterParentRowData() : [];
+};
+
+const toggleRowSelection = (data: Data): void => {
+  const selected = isRowSelected(data[props.dataKey]);
+  if (selected)
+    checkboxSelection.value = checkboxSelection.value.filter(
+      (d) => d[props.dataKey] != data[props.dataKey],
+    );
+  else checkboxSelection.value.push(data);
 };
 
 const toggleExpandAll = (): void => {
-  tableData.value.forEach((data, index) => {
+  currentPageTableData.value.forEach((data, index) => {
     if (data.children?.length) toggleRowExpand(data, index);
   });
 };
@@ -250,8 +310,11 @@ const handlePageChange = async (event: PageState): Promise<void> => {
    * Miantain the rows expanded on page change
    */
   Object.keys(expandedRows.value).forEach((key) => {
-    const index = tableData.value.findIndex((d) => d[props.dataKey] == key);
-    if (index >= 0) toggleRowExpand(tableData.value[index], index, true);
+    const index = currentPageTableData.value.findIndex(
+      (d) => d[props.dataKey] == key,
+    );
+    if (index >= 0)
+      toggleRowExpand(currentPageTableData.value[index], index, true);
   });
 };
 
@@ -279,7 +342,7 @@ const refetch = async (): Promise<void> => {
     const response = await props.fetchFunction?.(queryParams.value);
 
     const { data, totalRecords: total = 0 } = response?.data ?? {}; // DispatchUpdateTotalRecordsEvent;
-    tableData.value = data;
+    currentPageTableData.value = data;
     totalRecords.value = total;
     loadingTable.value = false;
   } catch (error) {
@@ -307,6 +370,23 @@ const handleUpdateTableEvent = (event: TableEvent): void => {
       refetch();
     }); // Waits untill computed queryparams ready
   }
+};
+
+const filterDisabledRows = (
+  tableData: Data[] | undefined,
+  rowsIDs?: string[],
+): Data[] => {
+  return (tableData ?? []).filter(
+    (data) =>
+      !(rowsIDs ?? currentPageDisabledRows.value).includes(data[props.dataKey]),
+  );
+};
+
+const getDisabledRows = (tableData: Data[] | undefined = []): string[] => {
+  if (props.disableAllRows) return tableData.map((data) => data[props.dataKey]);
+  return tableData
+    .filter((data) => data[props.disableKey])
+    .map((data) => data[props.dataKey]);
 };
 
 onMounted(async () => {
@@ -369,20 +449,20 @@ const listenUpdateTableEvent = (): void => {
       <thead>
         <tr class="border-b border-primary-100">
           <th
+            @click="toggleAllDataSelection(!isSelectedAll)"
             v-bind="headerCellPreset()"
             class="w-[40px] text-center"
-            data-wv-section="headerselection"
+            data-wv-section="headercheckbox"
           >
             <Checkbox
               v-bind="Preset.headercheckbox"
-              v-model="allDataSelected"
               :class="[
                 {
                   '[&_[data-pc-section=box]]:!border-white [&_[data-pc-section=box]]:!bg-transparent':
-                    !allDataSelected,
+                    !isSelectedAll,
                 },
               ]"
-              @update:model-value="toggleAllDataSelection"
+              :model-value="isSelectedAll"
               binary
               data-wv-section="headercheckbox"
             />
@@ -447,18 +527,37 @@ const listenUpdateTableEvent = (): void => {
       </thead>
 
       <tbody :="Preset.tbody">
-        <template :key="index" v-for="(item, index) in tableData">
-          <tr class="border-b border-general-100">
-            <td class="w-[40px] text-center">
+        <template :key="index" v-for="(item, index) in currentPageTableData">
+          <tr
+            @click="toggleRowSelection(item)"
+            class="border-b border-general-100"
+            v-bind="
+              Preset.bodyrow({
+                context: {
+                  selected: isRowSelected(item[dataKey]),
+                },
+                props,
+              })
+            "
+          >
+            <td
+              @click.stop=""
+              v-bind="Preset.bodycell"
+              class="w-[40px] text-center"
+            >
               <Checkbox
-                v-if="!item.role?.includes('child')"
+                v-if="!item.childRow && !item.childRowHeader"
                 v-bind="Preset.rowcheckbox"
                 v-model="checkboxSelection"
                 :value="item"
               />
             </td>
 
-            <td class="w-[40px] text-center">
+            <td
+              @click.stop=""
+              v-bind="Preset.bodycell"
+              class="w-[40px] text-center"
+            >
               <Button
                 v-if="item.children?.length"
                 :class="[
@@ -466,7 +565,7 @@ const listenUpdateTableEvent = (): void => {
                   { 'rotate-180': isRowExpanded(item[dataKey]) },
                   { 'rotate-0': !isRowExpanded(item[dataKey]) },
                 ]"
-                @click="toggleRowExpand(item, index)"
+                @click.stop="toggleRowExpand(item, index)"
                 icon="arrow-down"
                 icon-class="w-6 h-6"
                 text
@@ -474,9 +573,10 @@ const listenUpdateTableEvent = (): void => {
             </td>
 
             <td
-              v-if="item.role === 'childheader'"
+              v-if="item.childRowHeader"
               :class="[Preset.bodycell.class, 'font-semibold text-xs']"
               :colspan="props.columns.length"
+              @click.stop=""
             >
               {{ item.header }}
             </td>
@@ -484,7 +584,7 @@ const listenUpdateTableEvent = (): void => {
             <template v-else>
               <td
                 :key="col.field"
-                v-for="col in item.role == 'child'
+                v-for="col in item.childRow
                   ? (props.childTableProps.columns ?? columns)
                   : visibleColumns"
                 :colspan="col.colspan"
@@ -505,6 +605,7 @@ const listenUpdateTableEvent = (): void => {
                         : {}
                     "
                     @change="col.bodyComponent!(item).onChange?.(item)"
+                    @click.stop=""
                     @update:model-value="
                       col.bodyComponent!(item).onChange?.(item)
                     "

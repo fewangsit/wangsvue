@@ -2,7 +2,7 @@
   "status": 200,
   "message": "Success get Asset Policy!!!",
   "data": {
-    "totalRecords": 12,
+    "totalRecords": 11,
     "data": [
       {
         "_id": "663ce742f0667d5266d83d66",
