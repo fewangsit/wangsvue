@@ -453,15 +453,19 @@ watch(
   },
 );
 
-watch(checkboxSelection, (newSelectedData: Data[]) => {
-  emit('selectData', newSelectedData);
-  emit('update:selectedData', newSelectedData);
+watch(
+  checkboxSelection,
+  (newSelectedData: Data[]) => {
+    emit('selectData', newSelectedData);
+    emit('update:selectedData', newSelectedData);
 
-  eventBus.emit('data-table:update-selected-data', {
-    tableName: props.tableName,
-    data: newSelectedData,
-  });
-});
+    eventBus.emit('data-table:update-selected-data', {
+      tableName: props.tableName,
+      data: newSelectedData,
+    });
+  },
+  { deep: true },
+);
 
 const attachEventListener = (): void => {
   eventBus.on('data-table:apply-filter', (e) => {
