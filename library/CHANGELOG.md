@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.90
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.89...v1.4.90)
+
+### 🩹 Fixes
+
+- **TreeTable:** Disable row feature does not works ([df9c453](https://github.com/fewangsit/wangsvue/commit/df9c453))
+
+### 🏡 Chore
+
+- **release:** V1.4.89 ([6dad8dc](https://github.com/fewangsit/wangsvue/commit/6dad8dc))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.89
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.88...v1.4.89)
