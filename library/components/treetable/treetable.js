@@ -54,7 +54,8 @@ export default {
         { 'bg-primary-400': !context.sorted || !context.sortable },
         { 'bg-primary-500': context.sorted },
         {
-          'hover:bg-primary-500': context.columnVisibility,
+          'hover:bg-primary-500': context.customColumn,
+          '!cursor-default': !context.customColumn && !context.sortable,
         },
         'border-0 !border-b border-solid',
         'border-primary-100 dark:border-primary-100',

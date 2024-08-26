@@ -221,7 +221,6 @@ const filters = ref<any>({
         :total-disabled-rows="1"
         :tree-table="treetable"
         @toggle-option="console.log"
-        custom-column
         data-key="_id"
         lazy
         use-option

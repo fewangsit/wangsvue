@@ -413,11 +413,11 @@ const selectAllData = async (event: TableEvent): Promise<void> => {
 
 const headerCellPreset = (
   col?: TreeTableColumns,
-  columnVisibility?: boolean,
+  useCustomColumn?: boolean,
 ): object => {
   return Preset.headercell({
     context: {
-      columnVisibility,
+      customColumn: useCustomColumn,
       sorted: sortBy.value && sortBy.value === col?.field,
       sortable: col?.sortable,
     },
@@ -706,7 +706,7 @@ const listenUpdateTableEvent = (): void => {
           <th
             v-if="props.customColumn || props.useOption"
             @click="customColumn?.toggleMenu"
-            v-bind="headerCellPreset(undefined, true)"
+            v-bind="headerCellPreset(undefined, props.customColumn)"
             class="sticky right-0"
           >
             <Icon
