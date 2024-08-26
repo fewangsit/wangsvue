@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v1.4.88
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.87...v1.4.88)
+
+### 🚀 Enhancements
+
+- **inputNumber:** Add tooltipPos prop ([49183d0](https://github.com/fewangsit/wangsvue/commit/49183d0))
+
+### 🩹 Fixes
+
+- Type errro on tree table docs ([474473a](https://github.com/fewangsit/wangsvue/commit/474473a))
+
+### 🏡 Chore
+
+- **release:** V1.4.87 ([d78461e](https://github.com/fewangsit/wangsvue/commit/d78461e))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.87
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.86...v1.4.87)
