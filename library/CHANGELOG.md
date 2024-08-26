@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.4.91
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.90...v1.4.91)
+
+### 🩹 Fixes
+
+- **TreeTable:** Disable row feature does not works ([df9c453](https://github.com/fewangsit/wangsvue/commit/df9c453))
+- **TreeTable:** Udpate conditional styling custom column header cell ([84af6a2](https://github.com/fewangsit/wangsvue/commit/84af6a2))
+
+### 🏡 Chore
+
+- **release:** V1.4.90 ([3be6f29](https://github.com/fewangsit/wangsvue/commit/3be6f29))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.90
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.89...v1.4.90)
