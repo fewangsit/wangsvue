@@ -86,10 +86,17 @@ const tableColumns = computed<TableColumn[]>(() => {
       sortable: true,
       preset: {
         type: 'toggle',
-        onToggle: (e, revert): void => {
+        confirmDialogProps: {
+          header: 'Are you sure?',
+          listLabel: 'name.nameWithSequence',
+          message: 'This action will set this data to innactive. Are you sure?',
+          severity: 'danger',
+          confirmLabel: 'Yes, sure!',
+        },
+        onConfirm: (state, data, revert): void => {
           setTimeout(() => {
             revert();
-          }, 100);
+          }, 1000);
         },
       },
     },

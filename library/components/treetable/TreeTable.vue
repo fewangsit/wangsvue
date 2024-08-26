@@ -36,6 +36,7 @@ import { cloneDeep } from 'lodash';
 import { Booleanish } from '../ts-helpers';
 import useLoadingStore from '../loading/store/loading.store';
 import InputSwitch from 'primevue/inputswitch';
+import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
 
 const props = withDefaults(defineProps<TreeTableProps>(), {
   tableName: 'datatable',
@@ -80,6 +81,7 @@ const sortOrder = shallowRef<-1 | 1>();
 const tablePage = shallowRef(1);
 const tableRows = shallowRef(10);
 const totalRecords = shallowRef(0);
+const showConfirmToggle = ref<Record<string, boolean>>({});
 
 const queryParams = computed<QueryParams>(() => ({
   ...props.defaultQueryParams,
@@ -829,11 +831,33 @@ const listenUpdateTableEvent = (): void => {
                     :input-id="item[dataKey]"
                     @click.stop=""
                     @update:model-value="
-                      col.preset?.onToggle?.(
-                        $event,
+                      (e) => {
+                        col.preset?.onToggle?.(
+                          e,
+                          item,
+                          () => (item[col.field] = !item[col.field]),
+                        );
+
+                        if (col.preset.confirmDialogProps) {
+                          showConfirmToggle[item[dataKey]] = true;
+                        }
+                      }
+                    "
+                  />
+
+                  <DialogConfirm
+                    :list="[item]"
+                    :visible="showConfirmToggle[item[dataKey]]"
+                    @confirm="
+                      col.preset.onConfirm?.(
+                        item[col.field],
+                        item,
                         () => (item[col.field] = !item[col.field]),
                       )
                     "
+                    @update:visible="showConfirmToggle[item[dataKey]] = $event"
+                    actionable
+                    v-bind="col.preset?.confirmDialogProps"
                   />
                 </template>
 

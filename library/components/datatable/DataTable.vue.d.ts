@@ -6,6 +6,7 @@ import {
   DataTablePageEvent,
   DataTableSortEvent,
 } from 'primevue/datatable';
+import { DialogConfirmProps } from '../dialogconfirm/DialogConfirm.vue.d';
 
 export type ChildGroup = {
   groupHeader: string;
@@ -41,11 +42,19 @@ export interface ColumnTogglePreset {
   type: 'toggle';
   /**
    *
-   * @param e boolean - the toggle state
+   * @param state boolean - the toggle state
    * @param revertFunction - function to revert previous state when action failed
    * @returns
    */
-  onToggle?: (e: boolean, revertFunction: () => void) => void;
+  onToggle?: (state: boolean, data: Data, revertFunction: () => void) => void;
+  /**
+   * Use dialog confirmation
+   */
+  confirmDialogProps?: Omit<
+    DialogConfirmProps,
+    'visible' | 'list' | 'onConfirm'
+  >;
+  onConfirm?: (state: boolean, data: Data, revertFunction: () => void) => void;
 }
 
 export type ColumnPreset = ColumnTogglePreset;
