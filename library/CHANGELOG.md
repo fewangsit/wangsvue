@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.100
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.99...v1.4.100)
+
+### 🚀 Enhancements
+
+- **Treetable:** Assign props.data to currentPageTableData for table without fetchFunc ([a9f9d55](https://github.com/fewangsit/wangsvue/commit/a9f9d55))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.99
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.98...v1.4.99)
