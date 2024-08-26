@@ -87,6 +87,25 @@ const updateFieldValue = (event: DropdownChangeEvent): void => {
   emit('update:modelValue', value);
 };
 
+const getOptionLabel = (): string => {
+  if (props.optionValue) {
+    const matchOption = visibleOptions.value.find(
+      (op) => op[props.optionValue] === (field.value as string),
+    );
+
+    if (typeof matchOption != 'string') {
+      return matchOption[props.optionLabel];
+    }
+  } else if (
+    typeof field.value === 'object' &&
+    props.optionLabel in field.value
+  ) {
+    return field.value[props.optionLabel] as string;
+  }
+
+  return field.value as string;
+};
+
 watch(
   () => props.initialValue,
   (value) => {
@@ -140,7 +159,7 @@ watch(
       >
         <template #value="slotProps">
           <div v-if="slotProps.value" class="flex align-items-center">
-            {{ slotProps.value }}
+            {{ getOptionLabel() }}
           </div>
           <template v-else>
             {{ slotProps.placeholder }}

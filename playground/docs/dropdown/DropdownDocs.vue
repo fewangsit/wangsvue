@@ -34,13 +34,26 @@ const model = ref<OptionValue>();
         <template #fields>
           <Dropdown
             :options="[
-              { label: 'Waiting for Approval' },
-              { label: 'Waiting for Handover' },
+              { label: 'Waiting for Approval', value: 'Approval' },
+              { label: 'Waiting for Handover', value: 'Handover' },
             ]"
             label="Status"
             mandatory
             option-label="label"
-            option-value="label"
+            option-value="value"
+            placeholder="Pilih status"
+            use-validator
+            validator-message="Ga boleh kosong"
+          />
+          <Dropdown
+            :options="[
+              { label: 'Waiting for Approval', value: 'Approval' },
+              { label: 'Waiting for Handover', value: 'Handover' },
+            ]"
+            field-name="status2"
+            label="Status"
+            mandatory
+            option-label="label"
             placeholder="Pilih status"
             use-validator
             validator-message="Ga boleh kosong"
