@@ -842,7 +842,9 @@ const listenUpdateTableEvent = (): void => {
                           const { showWhen } = col.preset?.confirmDialogProps;
 
                           showConfirmToggle[item[dataKey]] =
-                            !showWhen || (showWhen === 'active' && e);
+                            !showWhen ||
+                            (showWhen === 'active' && e) ||
+                            (showWhen === 'inactive' && !e);
                         }
                       }
                     "

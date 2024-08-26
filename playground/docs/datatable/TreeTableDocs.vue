@@ -92,7 +92,7 @@ const tableColumns = computed<TableColumn[]>(() => {
           message: 'This action will set this data to innactive. Are you sure?',
           severity: 'danger',
           confirmLabel: 'Yes, sure!',
-          showWhen: 'active',
+          showWhen: 'inactive',
         },
         onConfirm: (state, data, revert): void => {
           setTimeout(() => {
