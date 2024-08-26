@@ -7,7 +7,14 @@ import {
   DataTableSortEvent,
 } from 'primevue/datatable';
 
-export type Data = Record<string, any>;
+export type ChildGroup = {
+  groupHeader: string;
+  groupItems: Data[];
+};
+
+export type Data = Record<string, any> & {
+  children?: ChildGroup[];
+};
 
 export type QueryParams = {
   [key: string]: any;

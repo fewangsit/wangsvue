@@ -49,48 +49,102 @@
         "sequence": 4,
         "children": [
           {
-            "_id": "664af669adad15716b3e30f",
-            "name": {
-              "_id": "66273a5d84bb0535a80b4aaf",
-              "nameWithSequence": "AC Portable Indoor - 99",
-              "name": "AC Portable Indoor",
-              "key": 81,
-              "aliasCode": "ACS999"
-            },
-            "status": "TAG Reported",
-            "assetValue": 20000,
-            "category": {
-              "_id": "664af5f6adad15716b3e3cb7",
-              "name": "Elektronik",
-              "key": 247,
-              "fullPath": "Elektronik"
-            },
-            "group": {
-              "_id": "664af3dbadad15716b3e3be4",
-              "name": "Head Office AU",
-              "key": 366,
-              "fullPath": "Head Office AU"
-            },
-            "brand": {
-              "_id": "662cbb1c3f49c63e3efa2993",
-              "name": "Asus",
-              "key": 114
-            },
-            "model": {
-              "_id": "6646c4ed66e4aa0ed82d7800",
-              "name": "ZenBook",
-              "key": 393
-            },
-            "policy": "Need Handover",
-            "isTransactionable": true,
-            "isActive": true,
-            "lastModifier": {
-              "_id": "6454c4253dd1017f28689572",
-              "fullName": "ASDF Tag Samurai V2",
-              "key": 1
-            },
-            "isSelfService": false,
-            "sequence": 7
+            "groupHeader": "Child Group",
+            "groupItems": [
+              {
+                "_id": "664af669adad15716b3e30f",
+                "name": {
+                  "_id": "66273a5d84bb0535a80b4aaf",
+                  "nameWithSequence": "AC Portable Indoor - 99",
+                  "name": "AC Portable Indoor",
+                  "key": 81,
+                  "aliasCode": "ACS999"
+                },
+                "status": "TAG Reported",
+                "assetValue": 20000,
+                "category": {
+                  "_id": "664af5f6adad15716b3e3cb7",
+                  "name": "Elektronik",
+                  "key": 247,
+                  "fullPath": "Elektronik"
+                },
+                "group": {
+                  "_id": "664af3dbadad15716b3e3be4",
+                  "name": "Head Office AU",
+                  "key": 366,
+                  "fullPath": "Head Office AU"
+                },
+                "brand": {
+                  "_id": "662cbb1c3f49c63e3efa2993",
+                  "name": "Asus",
+                  "key": 114
+                },
+                "model": {
+                  "_id": "6646c4ed66e4aa0ed82d7800",
+                  "name": "ZenBook",
+                  "key": 393
+                },
+                "policy": "Need Handover",
+                "isTransactionable": true,
+                "isActive": true,
+                "lastModifier": {
+                  "_id": "6454c4253dd1017f28689572",
+                  "fullName": "ASDF Tag Samurai V2",
+                  "key": 1
+                },
+                "isSelfService": false,
+                "sequence": 7
+              }
+            ]
+          },
+          {
+            "groupHeader": "Another Child Group",
+            "groupItems": [
+              {
+                "_id": "664af669adad15716b3e30b",
+                "name": {
+                  "_id": "66273a5d84bb0535a80b4aaf",
+                  "nameWithSequence": "AC Portable Indoor - 99",
+                  "name": "AC Portable Indoor",
+                  "key": 81,
+                  "aliasCode": "ACS999"
+                },
+                "status": "TAG Reported",
+                "assetValue": 20000,
+                "category": {
+                  "_id": "664af5f6adad15716b3e3cb7",
+                  "name": "Elektronik",
+                  "key": 247,
+                  "fullPath": "Elektronik"
+                },
+                "group": {
+                  "_id": "664af3dbadad15716b3e3be4",
+                  "name": "Head Office AU",
+                  "key": 366,
+                  "fullPath": "Head Office AU"
+                },
+                "brand": {
+                  "_id": "662cbb1c3f49c63e3efa2993",
+                  "name": "Asus",
+                  "key": 114
+                },
+                "model": {
+                  "_id": "6646c4ed66e4aa0ed82d7800",
+                  "name": "ZenBook",
+                  "key": 393
+                },
+                "policy": "Need Handover",
+                "isTransactionable": true,
+                "isActive": true,
+                "lastModifier": {
+                  "_id": "6454c4253dd1017f28689572",
+                  "fullName": "ASDF Tag Samurai V2",
+                  "key": 1
+                },
+                "isSelfService": false,
+                "sequence": 7
+              }
+            ]
           }
         ]
       },

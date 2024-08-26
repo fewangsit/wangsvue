@@ -172,16 +172,17 @@ const toggleRowExpand = (
     }
 
     if (indexOfData >= 0) {
-      const childHeader = props.childTableProps?.header
-        ? { childRowHeader: true, header: props.childTableProps?.header }
-        : undefined;
+      const childrenRows = children.flatMap((child) => {
+        const rowHeader: Data = {
+          childRowHeader: true,
+          header: child.groupHeader,
+        };
 
-      const childrenRows = (childHeader ? [childHeader] : []).concat(
-        children.map((child: Data) => ({
-          childRow: true,
-          ...child,
-        })),
-      );
+        return [
+          rowHeader,
+          ...(child.groupItems ?? []).map((d) => ({ childRow: true, ...d })),
+        ];
+      });
 
       if (isExpandingRow)
         currentPageTableData.value.splice(indexOfData + 1, 0, ...childrenRows);

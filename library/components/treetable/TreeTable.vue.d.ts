@@ -23,12 +23,7 @@ export interface TreeTableProps extends Omit<DataTableProps, 'columns'> {
   /**
    * Properties to be passed into sub table
    */
-  childTableProps?: Partial<TreeTableProps> & {
-    /**
-     * Specify the header/title for the child table
-     */
-    header?: string;
-  };
+  childTableProps?: Partial<TreeTableProps>;
 }
 
 export type TreeTableEmits = DataTableEmits;
