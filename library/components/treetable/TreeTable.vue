@@ -846,6 +846,7 @@ const listenUpdateTableEvent = (): void => {
                   />
 
                   <DialogConfirm
+                    v-if="col.preset?.confirmDialogProps"
                     :list="[item]"
                     :visible="showConfirmToggle[item[dataKey]]"
                     @confirm="
@@ -907,11 +908,11 @@ const listenUpdateTableEvent = (): void => {
               </td>
 
               <td
+                v-if="useOption"
                 v-bind="Preset.bodycell"
                 :class="[{ 'sticky right-0 bg-white': useOption }]"
               >
                 <div
-                  v-if="useOption"
                   class="relative w-full h-full flex items-center justify-center"
                   data-wv-section="single-action-wrapper"
                 >
