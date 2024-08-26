@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v1.4.93
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.91...v1.4.93)
+
+### 🩹 Fixes
+
+- **TreeTable:** When all record is disable - checkbox all selectionon header sould not checked and my not be checked ([597daab](https://github.com/fewangsit/wangsvue/commit/597daab))
+- **Dropdown:** Selected option not shown in input when the optionsLabel is specified ([2f16409](https://github.com/fewangsit/wangsvue/commit/2f16409))
+
+### 💅 Refactors
+
+- **UserName:** Update props to axcept image ([0f5024d](https://github.com/fewangsit/wangsvue/commit/0f5024d))
+
+### 🏡 Chore
+
+- **release:** V1.4.91 ([4855573](https://github.com/fewangsit/wangsvue/commit/4855573))
+- **release:** V1.4.92 ([80ba92a](https://github.com/fewangsit/wangsvue/commit/80ba92a))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.92
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.91...v1.4.92)
