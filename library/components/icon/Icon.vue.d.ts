@@ -25,6 +25,7 @@ export type WangsIcons =
   | 'asset-view'
   | 'assignment'
   | 'audit'
+  | 'barricade-line'
   | 'bell'
   | 'bell-alert'
   | 'borrow'
