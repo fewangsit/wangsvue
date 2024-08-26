@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.105
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.104...v1.4.105)
+
+### 🚀 Enhancements
+
+- Add emit close dialog confirm to trigger toggle confirm column ([1bb1543](https://github.com/fewangsit/wangsvue/commit/1bb1543))
+
+### 🎨 Styles
+
+- Fix z index bulk action menu ([7b0b04c](https://github.com/fewangsit/wangsvue/commit/7b0b04c))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.104
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.103...v1.4.104)
