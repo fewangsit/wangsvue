@@ -6,7 +6,6 @@ import { useToast } from 'lib/utils';
 import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
 import ButtonFilter from '../buttonfilter/ButtonFilter.vue';
 import Dialog from '../dialog/Dialog.vue';
-import DataTable from '../datatable/DataTable.vue';
 import Icon from '../icon/Icon.vue';
 import ChangelogFilter from './ChangelogFilter.vue';
 import LogServices from 'lib/services/log.service';
@@ -20,6 +19,7 @@ import {
 } from './Changelog.vue.d';
 import { buttonFocusClass } from 'lib/preset/button';
 import eventBus from 'lib/event-bus';
+import TreeTable from '../treetable/TreeTable.vue';
 
 const props = defineProps<ChangelogProps>();
 defineEmits<ChangelogEmits>();
@@ -202,12 +202,11 @@ watch(showChangelogDialog, (newValue) => {
         :objects="props.objects"
         :table-name="tableName"
       />
-      <DataTable
+      <TreeTable
         :key="dataTableKey"
         :columns="changelogColumn"
         :default-query-params="defaultParamsQuery"
         :fetch-function="fetchChangelogs"
-        :rows="10"
         :scroll-height="showChangelogFilter ? 'calc(50vh - 126px)' : '50vh'"
         :table-name="tableName"
         :use-option="false"

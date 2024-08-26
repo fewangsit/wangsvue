@@ -588,44 +588,56 @@ watch(
 );
 
 const attachEventListener = (): void => {
-  eventBus.on('data-table:apply-filter', (e) => {
-    if (e.tableName === props.tableName) {
-      filterQueryParams.value = e.filter;
-      handleFilter();
-    }
-  });
-
-  eventBus.on('search-table', (e) => {
-    if (e.tableName === props.tableName) {
-      searchQueryParam.value = e.search;
-      handleFilter();
-    }
-  });
-
-  eventBus.on('data-table:clear-selected-data', (e) => {
-    if (e.tableName === props.tableName) {
-      checkboxSelection.value = [];
-    }
-  });
-
-  eventBus.on('data-table:select-all-record', (e) => {
-    if (e.tableName === props.tableName) {
-      selectAllData(e);
-    }
-  });
-
-  eventBus.on('data-table:download', (e) => {
-    if (e.tableName === props.tableName) {
-      downloadExcel(e);
-    }
-  });
+  eventBus.on('data-table:apply-filter', applyFilterHandler);
+  eventBus.on('search-table', searchTableHandler);
+  eventBus.on('data-table:clear-selected-data', clearSelectedDataHandler);
+  eventBus.on('data-table:select-all-record', selectAllRecordHandler);
+  eventBus.on('data-table:download', downloadHandler);
 };
 
 const removeEventListener = (): void => {
-  eventBus.off('data-table:apply-filter');
-  eventBus.off('data-table:clear-selected-data');
-  eventBus.off('data-table:update');
-  eventBus.off('search-table');
+  eventBus.off('data-table:update', handleUpdateTableEvent);
+  eventBus.off('data-table:apply-filter', applyFilterHandler);
+  eventBus.off('search-table', searchTableHandler);
+  eventBus.off('data-table:clear-selected-data', clearSelectedDataHandler);
+  eventBus.off('data-table:select-all-record', selectAllRecordHandler);
+  eventBus.off('data-table:download', downloadHandler);
+};
+
+const applyFilterHandler = (e: Events['data-table:apply-filter']): void => {
+  if (e.tableName === props.tableName) {
+    filterQueryParams.value = e.filter;
+    handleFilter();
+  }
+};
+
+const searchTableHandler = (e: Events['search-table']): void => {
+  if (e.tableName === props.tableName) {
+    searchQueryParam.value = e.search;
+    handleFilter();
+  }
+};
+
+const selectAllRecordHandler = (
+  e: Events['data-table:select-all-record'],
+): void => {
+  if (e.tableName === props.tableName) {
+    selectAllData(e);
+  }
+};
+
+const clearSelectedDataHandler = (
+  e: Events['data-table:clear-selected-data'],
+): void => {
+  if (e.tableName === props.tableName) {
+    checkboxSelection.value = [];
+  }
+};
+
+const downloadHandler = (e: Events['data-table:download']): void => {
+  if (e.tableName === props.tableName) {
+    downloadExcel(e);
+  }
 };
 
 const updateTotalRecordBulkAction = (total?: number): void => {
