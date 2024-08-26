@@ -4,6 +4,7 @@ import type { FieldWrapperProps } from './FieldWrapper.vue.d';
 
 withDefaults(defineProps<FieldWrapperProps>(), {
   showOptionalText: true,
+  tooltipPos: 'top',
 });
 </script>
 
@@ -31,6 +32,7 @@ withDefaults(defineProps<FieldWrapperProps>(), {
       <Icon
         v-if="info"
         :info="info"
+        :tooltip-pos="tooltipPos"
         class="w-2.5 h-2.5 text-grayscale-900"
         icon="info"
       />

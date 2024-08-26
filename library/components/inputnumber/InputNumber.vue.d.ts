@@ -110,6 +110,10 @@ export interface InputNumberProps {
    */
   fieldInfo?: string;
   /**
+   * The filed info tooltip position
+   */
+  tooltipPos?: 'top' | 'right' | 'bottom' | 'left';
+  /**
    * Class to be bind on addon left component
    */
   addonLeftClass?: any;

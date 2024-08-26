@@ -188,6 +188,7 @@ watch(
     :info="fieldInfo"
     :label="props.label"
     :mandatory="props.mandatory"
+    :tooltip-pos="tooltipPos"
   >
     <InputGroup
       :class="[

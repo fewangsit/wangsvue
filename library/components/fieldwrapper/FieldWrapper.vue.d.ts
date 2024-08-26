@@ -6,6 +6,7 @@ export interface FieldWrapperProps {
   showOptionalText?: boolean;
   info?: string;
   labelClass?: string;
+  tooltipPos?: 'top' | 'right' | 'bottom' | 'left';
 }
 
 declare const FieldWrapper: DefineComponent<FieldWrapperProps>;
