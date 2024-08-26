@@ -1,6 +1,35 @@
 # Changelog
 
 
+## v1.4.97
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.96...v1.4.97)
+
+### 🚀 Enhancements
+
+- **TreeTable:** Add support for single and none selection ([53ab808](https://github.com/fewangsit/wangsvue/commit/53ab808))
+
+### 🩹 Fixes
+
+- Type error on dropdown and user name ([15596fb](https://github.com/fewangsit/wangsvue/commit/15596fb))
+- **lSrFl1CR:** Fix filter container has not checks for tableName ([7333922](https://github.com/fewangsit/wangsvue/commit/7333922))
+
+### 💅 Refactors
+
+- **TreeTable:** Remove eventBus should pass the handler ([624bffc](https://github.com/fewangsit/wangsvue/commit/624bffc))
+
+### 🏡 Chore
+
+- **release:** V1.4.96 ([f44e4ba](https://github.com/fewangsit/wangsvue/commit/f44e4ba))
+
+### 🎨 Styles
+
+- **TreeTable:** Update style single td action when useOption false ([570773f](https://github.com/fewangsit/wangsvue/commit/570773f))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.96
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.94...v1.4.96)
