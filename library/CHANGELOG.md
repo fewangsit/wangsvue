@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.95
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.94...v1.4.95)
+
+### 🩹 Fixes
+
+- **Dropdown:** Selected option not shown in input when the optionsLabel is specified #2 ([#2](https://github.com/fewangsit/wangsvue/issues/2))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.94
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.93...v1.4.94)
