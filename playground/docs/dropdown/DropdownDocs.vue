@@ -33,9 +33,14 @@ const model = ref<OptionValue>();
       <Form :buttons-template="['submit']" @submit="console.log">
         <template #fields>
           <Dropdown
-            :options="['Waiting for Approval', 'Waiting for Handover']"
+            :options="[
+              { label: 'Waiting for Approval' },
+              { label: 'Waiting for Handover' },
+            ]"
             label="Status"
             mandatory
+            option-label="label"
+            option-value="label"
             placeholder="Pilih status"
             use-validator
             validator-message="Ga boleh kosong"

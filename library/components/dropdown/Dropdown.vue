@@ -140,7 +140,7 @@ watch(
       >
         <template #value="slotProps">
           <div v-if="slotProps.value" class="flex align-items-center">
-            {{ optionLabel ? slotProps.value[optionLabel] : slotProps.value }}
+            {{ slotProps.value }}
           </div>
           <template v-else>
             {{ slotProps.placeholder }}
