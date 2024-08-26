@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.106
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.105...v1.4.106)
+
+### 🚀 Enhancements
+
+- Add option showWhen to set the confition when the confirm dialof should be shown ([6ae3d70](https://github.com/fewangsit/wangsvue/commit/6ae3d70))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.105
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.104...v1.4.105)
