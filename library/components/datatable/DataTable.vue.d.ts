@@ -53,7 +53,14 @@ export interface ColumnTogglePreset {
   confirmDialogProps?: Omit<
     DialogConfirmProps,
     'visible' | 'list' | 'onConfirm'
-  >;
+  > & {
+    /**
+     * When the dialog should be shown? On toggle active or inactive
+     *
+     * @default both - leave this as undefined to show on both state
+     */
+    showWhen?: 'active' | 'inactive';
+  };
   onConfirm?: (state: boolean, data: Data, revertFunction: () => void) => void;
 }
 

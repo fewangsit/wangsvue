@@ -839,7 +839,10 @@ const listenUpdateTableEvent = (): void => {
                         );
 
                         if (col.preset.confirmDialogProps) {
-                          showConfirmToggle[item[dataKey]] = true;
+                          const { showWhen } = col.preset?.confirmDialogProps;
+
+                          showConfirmToggle[item[dataKey]] =
+                            !showWhen || (showWhen === 'active' && e);
                         }
                       }
                     "
