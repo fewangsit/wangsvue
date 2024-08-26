@@ -20,6 +20,7 @@ const wangsIconsArray: WangsIcons[] = [
   'asset-view',
   'assignment',
   'audit',
+  'barricade-line',
   'bell',
   'bell-alert',
   'borrow',
