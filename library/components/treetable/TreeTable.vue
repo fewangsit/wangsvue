@@ -57,7 +57,7 @@ const dataTableID = ((): string => {
 
 const singleSelection = defineModel<Data>('singleSelection');
 
-const currentPageTableData = ref<Data[]>([]);
+const currentPageTableData = ref<Data[]>(props.data ?? []);
 const expandedRows = ref<DataTableExpandedRows>({});
 const visibleColumns = ref<TreeTableColumns[]>(props.columns);
 const checkboxSelection = ref<Data[]>([]);
@@ -570,6 +570,13 @@ watch(
   () => props.columns,
   () => {
     customColumnKey.value++;
+  },
+);
+
+watch(
+  () => props.data,
+  (data) => {
+    currentPageTableData.value = data;
   },
 );
 
