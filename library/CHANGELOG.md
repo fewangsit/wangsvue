@@ -1,6 +1,75 @@
 # Changelog
 
 
+## v1.4.86
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.69...v1.4.86)
+
+### 🚀 Enhancements
+
+- Add new validation exist to check the exisiting vlaues ([88d1676](https://github.com/fewangsit/wangsvue/commit/88d1676))
+- **Inputtext:** Watch the props.invalid and trigger validate field ([88cd0ae](https://github.com/fewangsit/wangsvue/commit/88cd0ae))
+- **Checkbox:** Make checkbox can be used asa form field ([814fe2d](https://github.com/fewangsit/wangsvue/commit/814fe2d))
+- **InputText:** Update defailt placeholder ([966ed45](https://github.com/fewangsit/wangsvue/commit/966ed45))
+- Add TreeTable from scratch - to be continued ([e079deb](https://github.com/fewangsit/wangsvue/commit/e079deb))
+- Add Single Action and column visibility feature in tree table ([5229ecd](https://github.com/fewangsit/wangsvue/commit/5229ecd))
+- **TreeTable:** Add sorting and pagination feature ([b7fcae6](https://github.com/fewangsit/wangsvue/commit/b7fcae6))
+- **TreeTable:** Select data on row click ([065acc2](https://github.com/fewangsit/wangsvue/commit/065acc2))
+- **Treetable:** Add loading table animation ([120348e](https://github.com/fewangsit/wangsvue/commit/120348e))
+- **TreeTable:** Expand rows on double click ([380120e](https://github.com/fewangsit/wangsvue/commit/380120e))
+- Add loading component ([978a4ec](https://github.com/fewangsit/wangsvue/commit/978a4ec))
+- **TreeTable:** Add no data animation ([c176bb7](https://github.com/fewangsit/wangsvue/commit/c176bb7))
+- **TreeTable:** Integrate with bulk action ([7188864](https://github.com/fewangsit/wangsvue/commit/7188864))
+- **TreeTable:** Add download excel feature ([2c9971d](https://github.com/fewangsit/wangsvue/commit/2c9971d))
+
+### 🩹 Fixes
+
+- **FieldWrapper:** Label should have font weight 400 ([fbf4b98](https://github.com/fewangsit/wangsvue/commit/fbf4b98))
+- **Dropdown:** Selected options becomes placeholder when the options filtered ([d336b66](https://github.com/fewangsit/wangsvue/commit/d336b66))
+- **Checkbox:** Page becomes not responsive because wather to field, change the watcher into field.value fix this issue ([8b12788](https://github.com/fewangsit/wangsvue/commit/8b12788))
+- **Dropwodn:** Error message always shown when props.validatorMessage exist ([d0454eb](https://github.com/fewangsit/wangsvue/commit/d0454eb))
+- **Treetable:** Bulk action selected data does no updated on first time ([1e663a9](https://github.com/fewangsit/wangsvue/commit/1e663a9))
+- **BulkAction:** Button select all label does not updated to All data Selected when manualy selected ([a4f0ba7](https://github.com/fewangsit/wangsvue/commit/a4f0ba7))
+- **QuickFilter:** Clear filter does not refetch table ([ada522d](https://github.com/fewangsit/wangsvue/commit/ada522d))
+- **TreeTable:** Loading table position when table scrolled right not centered ([f7f4d6b](https://github.com/fewangsit/wangsvue/commit/f7f4d6b))
+- Type error on InputText ([1ada0dc](https://github.com/fewangsit/wangsvue/commit/1ada0dc))
+- Type error on tree table ([0f7bb92](https://github.com/fewangsit/wangsvue/commit/0f7bb92))
+- Type error on image compressor ([5a79180](https://github.com/fewangsit/wangsvue/commit/5a79180))
+
+### 💅 Refactors
+
+- Move all interface inside validation type into form.vue.d.ts ([64e5829](https://github.com/fewangsit/wangsvue/commit/64e5829))
+- **TreeTable:** Programaticaly stop propagation on expander td ([be73839](https://github.com/fewangsit/wangsvue/commit/be73839))
+- **ImageCompressor:** Create own function to create placeholder with and convert it into data url and blob and file ([6905d6f](https://github.com/fewangsit/wangsvue/commit/6905d6f))
+
+### 🏡 Chore
+
+- **release:** V1.4.69 ([73e3590](https://github.com/fewangsit/wangsvue/commit/73e3590))
+- **release:** V1.4.70 ([2d66dcc](https://github.com/fewangsit/wangsvue/commit/2d66dcc))
+- **release:** V1.4.71 ([d0846b6](https://github.com/fewangsit/wangsvue/commit/d0846b6))
+- **release:** V1.4.72 ([74e6429](https://github.com/fewangsit/wangsvue/commit/74e6429))
+- **release:** V1.4.73 ([a06c468](https://github.com/fewangsit/wangsvue/commit/a06c468))
+- **release:** V1.4.74 ([9d6525b](https://github.com/fewangsit/wangsvue/commit/9d6525b))
+- **release:** V1.4.75 ([2d3305a](https://github.com/fewangsit/wangsvue/commit/2d3305a))
+- **release:** V1.4.76 ([52c2820](https://github.com/fewangsit/wangsvue/commit/52c2820))
+- **release:** V1.4.77 ([09ba998](https://github.com/fewangsit/wangsvue/commit/09ba998))
+- **release:** V1.4.78 ([f617236](https://github.com/fewangsit/wangsvue/commit/f617236))
+- **release:** V1.4.79 ([140f3f0](https://github.com/fewangsit/wangsvue/commit/140f3f0))
+- **release:** V1.4.80 ([b006d90](https://github.com/fewangsit/wangsvue/commit/b006d90))
+- **release:** V1.4.81 ([3b5499a](https://github.com/fewangsit/wangsvue/commit/3b5499a))
+- **release:** V1.4.82 ([ae4f83e](https://github.com/fewangsit/wangsvue/commit/ae4f83e))
+- **release:** V1.4.83 ([a107dc7](https://github.com/fewangsit/wangsvue/commit/a107dc7))
+- **release:** V1.4.84 ([8322e6d](https://github.com/fewangsit/wangsvue/commit/8322e6d))
+- **release:** V1.4.85 ([3dc5488](https://github.com/fewangsit/wangsvue/commit/3dc5488))
+
+### 🎨 Styles
+
+- **TreeTable:** Make it rounded ([4237e3c](https://github.com/fewangsit/wangsvue/commit/4237e3c))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.85
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.84...v1.4.85)

@@ -54,6 +54,8 @@ import { useToast, getNestedProperyValue } from 'lib/utils';
 // Directives
 import Tooltip from 'primevue/tooltip';
 
+import useLoadingStore from './components/loading/store/loading.store';
+
 import {
   Badge,
   BadgeGroup,
@@ -196,4 +198,7 @@ export {
   DialogForm,
   InputNumber,
   InputEmail,
+
+  // Component store
+  useLoadingStore,
 };

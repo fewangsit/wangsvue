@@ -34,6 +34,7 @@ import Changelog from './changelog/Changelog.vue';
 import InputInitialName from './inputinitialname/InputInitialName.vue';
 import InputPhoneNumber from './inputphonenumber/InputPhoneNumber.vue';
 import InputPassword from './inputpassword/InputPassword.vue';
+import Loading from './loading/Loading.vue';
 
 export {
   Badge,
@@ -72,4 +73,5 @@ export {
   Dialog,
   InputPhoneNumber,
   InputPassword,
+  Loading,
 };
