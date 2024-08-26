@@ -4,7 +4,6 @@ import Button from './button/Button.vue';
 import ButtonToggle from './buttontoggle/ButtonToggle.vue';
 import Breadcrumb from './breadcrumb/Breadcrumb.vue';
 import Card from './card/Card.vue';
-import DataTable from './datatable/DataTable.vue';
 import Dropdown from './dropdown/Dropdown.vue';
 import MultiSelect from './multiselect/MultiSelect.vue';
 import TabMenu from './tabmenu/TabMenu.vue';
@@ -35,7 +34,7 @@ import InputInitialName from './inputinitialname/InputInitialName.vue';
 import InputPhoneNumber from './inputphonenumber/InputPhoneNumber.vue';
 import InputPassword from './inputpassword/InputPassword.vue';
 import Loading from './loading/Loading.vue';
-import TreeTable from './treetable/TreeTable.vue';
+import DataTable from './treetable/TreeTable.vue';
 
 export {
   Badge,
@@ -75,5 +74,4 @@ export {
   InputPhoneNumber,
   InputPassword,
   Loading,
-  TreeTable,
 };

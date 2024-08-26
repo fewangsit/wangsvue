@@ -73,13 +73,27 @@ onMounted(() => {
   setTimeout(() => {
     showGroup.value = true;
     setLoading(false);
-  }, 3000);
+  }, 1000);
 });
 
 const showGroup = shallowRef<boolean>(false);
 
 const tableColumns = computed<TableColumn[]>(() => {
   return [
+    {
+      field: 'isActive',
+      header: 'Group',
+      sortable: true,
+      preset: {
+        type: 'toggle',
+        onToggle: (e, revert): void => {
+          setTimeout(() => {
+            revert();
+          }, 100);
+        },
+      },
+    },
+
     {
       field: 'name.nameWithSequence',
       header: 'Asset Name',

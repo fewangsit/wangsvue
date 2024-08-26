@@ -262,7 +262,7 @@
         },
         "policy": "Need Handover",
         "isTransactionable": true,
-        "isActive": true,
+        "isActive": false,
         "lastModifier": {
           "_id": "6454c4253dd1017f28689572",
           "fullName": "ASDF Tag Samurai V2",

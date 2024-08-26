@@ -35,6 +35,7 @@ import nodataJson from './animations/nodata.json';
 import { cloneDeep } from 'lodash';
 import { Booleanish } from '../ts-helpers';
 import useLoadingStore from '../loading/store/loading.store';
+import InputSwitch from 'primevue/inputswitch';
 
 const props = withDefaults(defineProps<TreeTableProps>(), {
   tableName: 'datatable',
@@ -576,7 +577,7 @@ watch(
 watch(
   () => props.data,
   (data) => {
-    currentPageTableData.value = data;
+    currentPageTableData.value = data ?? [];
   },
 );
 
@@ -822,8 +823,24 @@ const listenUpdateTableEvent = (): void => {
                 :colspan="col.colspan"
                 v-bind="Preset.bodycell"
               >
+                <template v-if="col.preset?.type === 'toggle'">
+                  <InputSwitch
+                    v-model="item[col.field]"
+                    :input-id="item[dataKey]"
+                    @click.stop=""
+                    @update:model-value="
+                      col.preset?.onToggle?.(
+                        $event,
+                        () => (item[col.field] = !item[col.field]),
+                      )
+                    "
+                  />
+                </template>
+
                 <template
-                  v-if="col.bodyComponent || col.bodyClass || col.bodyTemplate"
+                  v-else-if="
+                    col.bodyComponent || col.bodyClass || col.bodyTemplate
+                  "
                 >
                   <component
                     :is="col.bodyComponent!(item).component"

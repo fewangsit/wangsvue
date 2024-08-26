@@ -37,6 +37,19 @@ export type TableCellComponent = {
   disabled?: boolean;
 };
 
+export interface ColumnTogglePreset {
+  type: 'toggle';
+  /**
+   *
+   * @param e boolean - the toggle state
+   * @param revertFunction - function to revert previous state when action failed
+   * @returns
+   */
+  onToggle?: (e: boolean, revertFunction: () => void) => void;
+}
+
+export type ColumnPreset = ColumnTogglePreset;
+
 export type TableColumn = {
   header?: string;
   field: string;
@@ -52,6 +65,10 @@ export type TableColumn = {
   dragable?: boolean;
   fixed?: boolean;
   visible?: boolean;
+  /**
+   * Use commontly used component as preset
+   */
+  preset?: ColumnPreset;
   /**
    * Wether the column is checked by default, only for Custom Report Table
    * @default true
