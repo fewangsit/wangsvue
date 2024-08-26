@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.92
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.91...v1.4.92)
+
+### 🩹 Fixes
+
+- **TreeTable:** When all record is disable - checkbox all selectionon header sould not checked and my not be checked ([597daab](https://github.com/fewangsit/wangsvue/commit/597daab))
+
+### 💅 Refactors
+
+- **UserName:** Update props to axcept image ([0f5024d](https://github.com/fewangsit/wangsvue/commit/0f5024d))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.91
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.90...v1.4.91)
