@@ -209,9 +209,9 @@ const filters = ref<any>({
         <ButtonFilter v-model:show-filter="showFilter" />
       </div>
 
+      <FilterContainer v-show="showFilter" :fields="filterFields" />
       <QuickFilter :fields="quickFilterField" />
 
-      <FilterContainer v-show="showFilter" :fields="filterFields" />
       <TreeTable
         :key="tableKey"
         :child-table-props="{ columns: childrenColumns }"
