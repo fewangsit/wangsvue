@@ -203,6 +203,7 @@ export {
   InputNumber,
   InputEmail,
   TreeTable,
+  Loading,
 
   // Component store
   useLoadingStore,

@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.94
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.93...v1.4.94)
+
+### 🏡 Chore
+
+- **release:** V1.4.93 ([b501863](https://github.com/fewangsit/wangsvue/commit/b501863))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.93
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.91...v1.4.93)
