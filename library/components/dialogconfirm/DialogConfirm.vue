@@ -38,7 +38,10 @@ const closeButtonLabel = computed<string>(() => {
   return props.actionable ? 'Batal' : 'Tutup';
 });
 
-const closeDialog = (): void => emit('update:visible', false);
+const closeDialog = (): void => {
+  emit('update:visible', false);
+  emit('close');
+};
 
 const confirm = (): void => {
   emit('confirm');

@@ -90,6 +90,10 @@ export type DialogConfirmEmits = {
    */
   'confirm': [];
   /**
+   * Emits when close button clicked.
+   */
+  'close': [];
+  /**
    * Emits when dialog closed.
    */
   'hide': [];

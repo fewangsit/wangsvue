@@ -849,6 +849,17 @@ const listenUpdateTableEvent = (): void => {
                     v-if="col.preset?.confirmDialogProps"
                     :list="[item]"
                     :visible="showConfirmToggle[item[dataKey]]"
+                    @close="
+                      () => {
+                        if (!col.preset?.confirmDialogProps?.actionable) {
+                          col.preset.onConfirm?.(
+                            item[col.field],
+                            item,
+                            () => (item[col.field] = !item[col.field]),
+                          );
+                        }
+                      }
+                    "
                     @confirm="
                       col.preset.onConfirm?.(
                         item[col.field],
