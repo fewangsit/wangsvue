@@ -55,6 +55,8 @@ const dataTableID = ((): string => {
   return `${path}-${props.tableName}`;
 })();
 
+const singleSelection = defineModel<Data>('singleSelection');
+
 const currentPageTableData = ref<Data[]>([]);
 const expandedRows = ref<DataTableExpandedRows>({});
 const visibleColumns = ref<TreeTableColumns[]>(props.columns);
@@ -206,14 +208,20 @@ const toggleRowSelection = (data: Data): void => {
   if (
     !data.childRow &&
     !data.childRowHeader &&
-    !isRowDisabled(data[props.dataKey])
+    !isRowDisabled(data[props.dataKey]) &&
+    props.selectionType !== 'none'
   ) {
     const selected = isRowSelected(data[props.dataKey]);
-    if (selected)
-      checkboxSelection.value = checkboxSelection.value.filter(
-        (d) => d[props.dataKey] != data[props.dataKey],
-      );
-    else checkboxSelection.value.push(data);
+
+    if (props.selectionType === 'checkbox') {
+      if (selected)
+        checkboxSelection.value = checkboxSelection.value.filter(
+          (d) => d[props.dataKey] != data[props.dataKey],
+        );
+      else checkboxSelection.value.push(data);
+    } else {
+      singleSelection.value = selected ? undefined : data;
+    }
   }
 };
 
@@ -643,6 +651,7 @@ const listenUpdateTableEvent = (): void => {
       <thead>
         <tr class="border-b border-primary-100">
           <th
+            v-if="selectionType === 'checkbox'"
             @click="toggleAllDataSelection(!isSelectedAll)"
             v-bind="headerCellPreset()"
             class="w-[40px] text-center"
@@ -725,7 +734,7 @@ const listenUpdateTableEvent = (): void => {
         <template :key="index" v-for="(item, index) in currentPageTableData">
           <tr
             @click="toggleRowSelection(item)"
-            @dblclick="toggleRowExpand(item, index)"
+            @dblclick="treeTable ? toggleRowExpand(item, index) : null"
             class="border-b border-general-100"
             v-bind="
               Preset.bodyrow({
@@ -738,6 +747,7 @@ const listenUpdateTableEvent = (): void => {
             "
           >
             <td
+              v-if="selectionType === 'checkbox'"
               @click.stop=""
               v-bind="Preset.bodycell"
               class="w-[40px] text-center"
@@ -836,7 +846,11 @@ const listenUpdateTableEvent = (): void => {
                 </template>
               </td>
 
-              <td v-bind="Preset.bodycell" class="sticky right-0 bg-white">
+              <td
+                v-if="props.useOption"
+                v-bind="Preset.bodycell"
+                class="sticky right-0 bg-white"
+              >
                 <div
                   class="relative w-full h-full flex items-center justify-center"
                   data-wv-section="single-action-wrapper"
@@ -892,6 +906,7 @@ const listenUpdateTableEvent = (): void => {
 
     <Paginator
       :key="tableKey"
+      v-if="usePaginator"
       v-show="!loadingTable"
       v-model:rows="tableRows"
       :current-page-report-template="

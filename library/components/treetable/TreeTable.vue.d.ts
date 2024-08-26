@@ -1,4 +1,5 @@
 import {
+  Data,
   DataTableEmits,
   DataTableProps,
   TableColumn,
@@ -13,6 +14,10 @@ interface TreeTableColumns extends TableColumn {
 
 export interface TreeTableProps extends Omit<DataTableProps, 'columns'> {
   /**
+   * V-model single selection. Works with selectionType 'single'
+   */
+  singleSelection?: Data;
+  /**
    * Activate tree table mode
    */
   treeTable?: boolean;
@@ -26,4 +31,6 @@ export interface TreeTableProps extends Omit<DataTableProps, 'columns'> {
   childTableProps?: Partial<TreeTableProps>;
 }
 
-export type TreeTableEmits = DataTableEmits;
+export type TreeTableEmits = DataTableEmits & {
+  'update:singleSelection': [data: Data];
+};

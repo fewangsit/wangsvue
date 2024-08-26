@@ -34,7 +34,7 @@ export default {
       // State
       {
         'focus:outline-none focus:outline-offset-0': props.selectionType,
-        'hover:bg-primary-50': props.selectionType && !context.disabled,
+        'hover:bg-primary-50': props.selectionType && props.selectionType !== 'none' && !context.disabled,
       },
 
       // Transition

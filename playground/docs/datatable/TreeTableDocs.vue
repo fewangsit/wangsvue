@@ -8,7 +8,7 @@ import {
   TableCellComponent,
   TableColumn,
 } from 'lib/components/datatable/DataTable.vue.d';
-import { computed, onMounted, ref, shallowRef } from 'vue';
+import { computed, onMounted, ref, shallowRef, watch } from 'vue';
 import Badge from 'primevue/badge';
 
 import response from './data/treetable-response.json';
@@ -23,18 +23,27 @@ import ButtonBulkAction from 'lib/components/buttonbulkaction/ButtonBulkAction.v
 import eventBus from 'lib/event-bus';
 import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
 import TreeTable from 'lib/components/treetable/TreeTable.vue';
-import { TreeTableColumns } from 'lib/components/treetable/TreeTable.vue.d';
+import {
+  TreeTableColumns,
+  TreeTableProps,
+} from 'lib/components/treetable/TreeTable.vue.d';
 import { cloneDeep } from 'lodash';
 import useLoadingStore from 'lib/components/loading/store/loading.store';
 import Checkbox from 'lib/components/checkbox/Checkbox.vue';
+import Dropdown from 'lib/components/dropdown/Dropdown.vue';
 
 const dataSelected = shallowRef();
 const actionData = ref();
 const showFilter = shallowRef(false);
 const showDialog = shallowRef(false);
+const usePaginator = shallowRef(true);
+const useOption = shallowRef(true);
+const selectionType = shallowRef('Checkbox');
+const customColumn = shallowRef(true);
 const tableKey = shallowRef(0);
 const noRecord = shallowRef(false);
 const treetable = shallowRef(true);
+const singleSelection = shallowRef();
 const { setLoading } = useLoadingStore();
 
 const singleAction: MenuItem[] = [
@@ -163,8 +172,8 @@ const getTableData = async (
         resolve({
           message: '',
           data: {
-            data: noRecord.value ? [] : data.filter((d) => d.isDefault), // Use 'slice' for data limiting
-            totalRecords: noRecord.value ? 0 : 1,
+            data: noRecord.value ? [] : data, // Use 'slice' for data limiting
+            totalRecords: noRecord.value ? 0 : response.data.totalRecords,
           },
         });
       },
@@ -172,6 +181,10 @@ const getTableData = async (
     ); // You can adjust the timeout if you need a delay
   });
 };
+
+watch(usePaginator, () => {
+  tableKey.value++;
+});
 
 const filters = ref<any>({
   'global': { value: undefined, matchMode: FilterMatchMode.CONTAINS },
@@ -192,12 +205,25 @@ const filters = ref<any>({
     </template>
     <template #content>
       <Checkbox v-model="treetable" label="Tree Table" />
-
+      <Checkbox v-model="usePaginator" label="Use Pagination" />
+      <Checkbox v-model="customColumn" label="Use Column Visibility" />
+      <Checkbox v-model="useOption" label="Use Single Action" />
       <Checkbox
         v-model="noRecord"
         @update:model-value="tableKey++"
         label="Check this box to make the table has no record found"
       />
+
+      <Dropdown
+        v-model="selectionType"
+        :options="['Checkbox', 'Single', 'None']"
+        class="max-w-40"
+        label="Selection Type"
+      />
+
+      <span v-if="selectionType === 'Single'">
+        Your Selection: {{ singleSelection }}
+      </span>
       <div class="flex justify-end gap-4">
         <ButtonBulkAction
           v-model:selected-data="dataSelected"
@@ -214,17 +240,23 @@ const filters = ref<any>({
 
       <TreeTable
         :key="tableKey"
+        v-model:single-selection="singleSelection"
         :child-table-props="{ columns: childrenColumns }"
         :columns="tableColumns"
+        :custom-column="customColumn"
         :fetch-function="getTableData"
         :options="singleAction"
+        :selection-type="
+          selectionType.toLowerCase() as TreeTableProps['selectionType']
+        "
         :total-disabled-rows="1"
         :tree-table="treetable"
+        :use-option="useOption"
+        :use-paginator="usePaginator"
         @toggle-option="console.log"
+        @update:single-selection="console.log"
         data-key="_id"
         lazy
-        use-option
-        use-paginator
       />
 
       <DialogConfirm
