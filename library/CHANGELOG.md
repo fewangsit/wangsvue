@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v1.4.96
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.94...v1.4.96)
+
+### 🚀 Enhancements
+
+- **TreeTable:** Add support for single and none selection ([53ab808](https://github.com/fewangsit/wangsvue/commit/53ab808))
+
+### 🩹 Fixes
+
+- **Dropdown:** Selected option not shown in input when the optionsLabel is specified #2 ([#2](https://github.com/fewangsit/wangsvue/issues/2))
+- Change order filter ([cdaf83a](https://github.com/fewangsit/wangsvue/commit/cdaf83a))
+- Type error on dropdown and user name ([15596fb](https://github.com/fewangsit/wangsvue/commit/15596fb))
+- **lSrFl1CR:** Fix filter container has not checks for tableName ([7333922](https://github.com/fewangsit/wangsvue/commit/7333922))
+
+### 🏡 Chore
+
+- **release:** V1.4.94 ([db6da43](https://github.com/fewangsit/wangsvue/commit/db6da43))
+- **release:** V1.4.95 ([b9a28d1](https://github.com/fewangsit/wangsvue/commit/b9a28d1))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.95
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.94...v1.4.95)
