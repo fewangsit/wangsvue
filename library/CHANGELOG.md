@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.102
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.101...v1.4.102)
+
+### 🚀 Enhancements
+
+- **Table:** Add dialog confirm toggle for column preset ([ede5e33](https://github.com/fewangsit/wangsvue/commit/ede5e33))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.101
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.100...v1.4.101)
