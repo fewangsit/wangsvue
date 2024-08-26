@@ -141,7 +141,7 @@ watch(
     <Button
       v-show="showSelectAllButton"
       :class="[
-        '!p-1.5 -ml-1.5 -mr-1.5 !text-xs',
+        '!px-1.5 !py-1 -ml-1.5 -mr-1.5 !text-xs',
         { 'pointer-events-none': isAllDataSelected },
       ]"
       @click="selectAllData"

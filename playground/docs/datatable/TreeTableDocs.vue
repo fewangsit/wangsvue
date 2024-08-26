@@ -218,6 +218,7 @@ const filters = ref<any>({
         :columns="tableColumns"
         :fetch-function="getTableData"
         :options="singleAction"
+        :total-disabled-rows="1"
         :tree-table="treetable"
         @toggle-option="console.log"
         custom-column

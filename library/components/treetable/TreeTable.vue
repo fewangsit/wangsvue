@@ -145,6 +145,11 @@ const isRowExpanded = (key: string): boolean => {
   return keys.includes(key);
 };
 
+const isRowDisabled = (key: string): boolean => {
+  const keys = currentPageDisabledRows.value;
+  return keys.includes(key);
+};
+
 const isRowSelected = (key: string): boolean => {
   return !!checkboxSelection.value.find((data) => data[props.dataKey] === key);
 };
@@ -197,7 +202,11 @@ const toggleAllDataSelection = (e: boolean): void => {
 };
 
 const toggleRowSelection = (data: Data): void => {
-  if (!data.childRow && !data.childRowHeader) {
+  if (
+    !data.childRow &&
+    !data.childRowHeader &&
+    !isRowDisabled(data[props.dataKey])
+  ) {
     const selected = isRowSelected(data[props.dataKey]);
     if (selected)
       checkboxSelection.value = checkboxSelection.value.filter(
@@ -721,6 +730,7 @@ const listenUpdateTableEvent = (): void => {
               Preset.bodyrow({
                 context: {
                   selected: isRowSelected(item[dataKey]),
+                  disabled: isRowDisabled(item[dataKey]),
                 },
                 props,
               })
@@ -735,6 +745,7 @@ const listenUpdateTableEvent = (): void => {
                 v-if="!item.childRow && !item.childRowHeader"
                 v-bind="Preset.rowcheckbox"
                 v-model="checkboxSelection"
+                :disabled="isRowDisabled(item[dataKey])"
                 :value="item"
               />
             </td>
