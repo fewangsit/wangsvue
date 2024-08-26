@@ -163,8 +163,8 @@ const getTableData = async (
         resolve({
           message: '',
           data: {
-            data: noRecord.value ? [] : data, // Use 'slice' for data limiting
-            totalRecords: noRecord.value ? 0 : response.data.totalRecords,
+            data: noRecord.value ? [] : data.filter((d) => d.isDefault), // Use 'slice' for data limiting
+            totalRecords: noRecord.value ? 0 : 1,
           },
         });
       },

@@ -107,15 +107,16 @@ const isExpandedAll = computed(() => {
 const isSelectedAll = computed(() => {
   if (
     props.disableAllRows ||
-    !fliterParentRowData()?.length ||
-    props.selectionType !== 'checkbox'
+    !filterParentRowData()?.length ||
+    props.selectionType !== 'checkbox' ||
+    currentPageDisabledRows.value?.length === currentPageTableData.value.length
   )
     return false;
 
   const length = checkboxSelection.value?.length;
 
   const currentPageDataKey =
-    filterDisabledRows(fliterParentRowData())?.map((dt) => dt[props.dataKey]) ??
+    filterDisabledRows(filterParentRowData())?.map((dt) => dt[props.dataKey]) ??
     [];
 
   const selectedDataKey =
@@ -133,7 +134,7 @@ const isSelectedAll = computed(() => {
 });
 
 const currentPageDisabledRows = computed(() =>
-  getDisabledRows(props.data ?? fliterParentRowData() ?? []),
+  getDisabledRows(props.data ?? filterParentRowData() ?? []),
 );
 
 const singleOptions = computed(() => {
@@ -154,7 +155,7 @@ const isRowSelected = (key: string): boolean => {
   return !!checkboxSelection.value.find((data) => data[props.dataKey] === key);
 };
 
-const fliterParentRowData = (rowData?: Data[]): Data[] => {
+const filterParentRowData = (rowData?: Data[]): Data[] => {
   return (rowData ?? currentPageTableData.value ?? []).filter(
     (d) => !d.childRowHeader && !d.childRow,
   );
@@ -198,7 +199,7 @@ const toggleRowExpand = (
 };
 
 const toggleAllDataSelection = (e: boolean): void => {
-  checkboxSelection.value = e ? fliterParentRowData() : [];
+  checkboxSelection.value = e ? filterDisabledRows(filterParentRowData()) : [];
 };
 
 const toggleRowSelection = (data: Data): void => {
