@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.101
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.100...v1.4.101)
+
+### 🚀 Enhancements
+
+- **Table:** Add preset on column - export tree table as table ([a3da186](https://github.com/fewangsit/wangsvue/commit/a3da186))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.100
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.99...v1.4.100)
