@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.87
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.86...v1.4.87)
+
+### 💅 Refactors
+
+- **Treetable:** Change structure children to support more than one group child ([b0c3746](https://github.com/fewangsit/wangsvue/commit/b0c3746))
+
+### 🏡 Chore
+
+- **release:** V1.4.86 ([8903fca](https://github.com/fewangsit/wangsvue/commit/8903fca))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.86
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.69...v1.4.86)
