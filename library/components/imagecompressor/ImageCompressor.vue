@@ -136,7 +136,7 @@ const canvasToFile = async (): Promise<File> => {
   return new Promise((resolve) => {
     canvasPlaceholder.value?.toBlob((blob) => {
       resolve(
-        new File([blob], props.initialName?.toLowerCase(), {
+        new File([blob ?? new Blob()], props.initialName?.toLowerCase() ?? '', {
           type: 'image/png',
         }),
       );
