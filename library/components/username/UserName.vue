@@ -1,16 +1,23 @@
 <script setup lang="ts">
-const props = defineProps<{
-  user: { [key: string]: any };
-}>();
+import { getNestedProperyValue } from 'lib/utils';
+import { UserNameProps } from './UserName.vue.d';
+import Image from '../image/Image.vue';
+
+const props = withDefaults(defineProps<UserNameProps>(), {
+  userNameField: 'nickName',
+  userProfileField: 'profile',
+});
 </script>
 
 <template>
-  <div class="flex items-center gap-1">
-    <img
-      alt=""
-      class="w-[30px] h-[30px] object-cover"
-      src="https://assets.tagsamurai.com/img/USER-PROFILE.svg"
+  <span class="flex items-center gap-1">
+    <Image
+      :thumbnail="getNestedProperyValue(props.user, userProfileField) as string"
+      class="w-[30px] h-[30px]"
+      rounded
     />
-    <div class="text-xs font-normal">{{ props.user.nickName }}</div>
-  </div>
+    <span class="text-xs font-normal">
+      {{ getNestedProperyValue(props.user, userNameField) }}
+    </span>
+  </span>
 </template>
