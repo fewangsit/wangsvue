@@ -214,7 +214,7 @@ const filters = ref<any>({
       <FilterContainer v-show="showFilter" :fields="filterFields" />
       <TreeTable
         :key="tableKey"
-        :child-table-props="{ header: 'Detail', columns: childrenColumns }"
+        :child-table-props="{ columns: childrenColumns }"
         :columns="tableColumns"
         :fetch-function="getTableData"
         :options="singleAction"
