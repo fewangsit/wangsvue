@@ -7,7 +7,7 @@ import type {
   DropdownProps,
 } from 'lib/components/dropdown/Dropdown.vue.d';
 
-import { OptionValue } from 'lib/types/options.type';
+import { DropdownOption, OptionValue } from 'lib/types/options.type';
 import { FieldValidation } from '../form/Form.vue.d';
 
 import ValidatorMessage from 'lib/components/validatormessage/ValidatorMessage.vue';
@@ -89,15 +89,24 @@ const updateFieldValue = (event: DropdownChangeEvent): void => {
 
 const getOptionLabel = (): string => {
   if (props.optionValue) {
-    const matchOption = visibleOptions.value.find(
-      (op) => op[props.optionValue] === (field.value as string),
-    );
+    const matchOption = visibleOptions.value.find((op) => {
+      if (typeof op != 'string') {
+        return (
+          op[(props.optionValue ?? '') as keyof DropdownOption] ===
+          (field.value as string)
+        );
+      }
+    });
 
-    if (typeof matchOption != 'string') {
-      return matchOption[props.optionLabel];
+    if (matchOption && typeof matchOption != 'string') {
+      return matchOption[
+        (props.optionLabel ?? '') as keyof DropdownOption
+      ] as string;
     }
   } else if (
+    field.value &&
     typeof field.value === 'object' &&
+    props.optionLabel &&
     props.optionLabel in field.value
   ) {
     return field.value[props.optionLabel] as string;
