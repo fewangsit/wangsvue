@@ -22,7 +22,7 @@ onUnmounted(() => {
   stopInterval();
 });
 
-const Placeholder = genPlaceholder('WS', 125);
+const Placeholder = genPlaceholder('WS', 125).toDataURL();
 const currentGalleryImage = shallowRef<number>(0);
 const intervalId = shallowRef<number>();
 const timeOutId = shallowRef<number>();
@@ -31,7 +31,8 @@ const errorLoadImage = shallowRef<boolean>(false);
 const usePreview = computed(() => {
   return (
     !errorLoadImage.value &&
-    (!!props.preview || !imageThumbnail.value?.toString().includes('placehold'))
+    (!!props.preview ||
+      !imageThumbnail.value?.toString().includes('data:image/png;base64'))
   );
 });
 
@@ -73,7 +74,7 @@ const imageThumbnail = computed((): string | Blob | undefined => {
   if (!props.thumbnail || errorLoadImage.value) return Placeholder;
   if (typeof props.thumbnail === 'string') {
     return props.thumbnail.includes('http') ||
-      props.thumbnail.includes('data:image/svg+xml')
+      props.thumbnail.includes('data:image/png;base64')
       ? props.thumbnail
       : getImageURL(props.thumbnail);
   }

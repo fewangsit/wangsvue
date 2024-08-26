@@ -1,56 +1,63 @@
-import sharp from 'sharp';
+const bgOptions: string[] = [
+  '#57291F',
+  '#C0413B',
+  '#D77B5F',
+  '#FF9200',
+  '#FFCD73',
+  '#C87505',
+  '#F18E3F',
+  '#E59579',
+  '#C14C32',
+  '#80003A',
+  '#506432',
+  '#FFC500',
+  '#B30019',
+  '#EC410B',
+  '#8CB5B5',
+  '#6C3400',
+  '#FFA400',
+  '#41222A',
+  '#FFF7C2',
+  '#FFB27B',
+  '#FFCD87',
+  '#BC7576',
+];
 
-const genPlaceholder = async (text: string, size: number): Promise<string> => {
-  const bgOptions = [
-    'primary-400',
-    'danger-500',
-    'success-500',
-    'general-500',
-    'grayscale-900',
-  ];
-
+export const genRandomPlaceholderBg = (): string => {
   const randomIndex = Math.floor(Math.random() * bgOptions.length);
-  const bg = bgOptions[randomIndex];
+  return bgOptions[randomIndex];
+};
 
-  const image = sharp({
-    create: {
-      width: size,
-      height: size,
-      channels: 4, // RGBA
-      background: bg,
-    },
-  });
+export const genPlaceholder = (
+  text: string,
+  size: 30 | 125,
+  bgColor?: string,
+): HTMLCanvasElement => {
+  const bg = bgColor ?? genRandomPlaceholderBg();
+  const canvas = document.createElement('canvas');
 
-  const textBuffer = await sharp({
-    raw: {
-      width: size,
-      height: size,
-      channels: 4,
-    },
-  })
-    .resize(size, size)
-    .flatten()
-    .composite([
-      {
-        input: Buffer.from(
-          '<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-size="30" fill="white" font-weight="semibold">' +
-            text +
-            '</text></svg>',
-        ),
-        top: 0,
-        left: 0,
-        blend: 'multiply',
-      },
-    ])
-    .toBuffer();
+  canvas.style.background = bg;
+  canvas.width = size;
+  canvas.height = size;
 
-  return await image
-    .composite([{ input: textBuffer, blend: 'multiply', top: 0, left: 0 }])
-    .toBuffer()
-    .then((buffer) => {
-      const dataUrl = `data:image/png;base64,${buffer.toString('base64')}`;
-      return dataUrl;
-    });
+  const ctx = canvas.getContext('2d');
+
+  if (ctx) {
+    ctx.font = '600 48px Poppins';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    const horizontalCenter = canvas.width / 2;
+    const verticalCenter = canvas.height / 2;
+
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = '#fff';
+    ctx.fillText(text, horizontalCenter, verticalCenter);
+  }
+
+  return canvas;
 };
 
 export default genPlaceholder;

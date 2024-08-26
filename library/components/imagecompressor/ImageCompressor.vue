@@ -35,7 +35,7 @@ import type {
 import ImageInputInfo from './ImageInputInfo.vue';
 import ButtonRadio from 'primevue/radiobutton';
 import { genPlaceholder } from 'lib/utils';
-import { genRandomPlaceholderBg } from 'lib/utils/getImageURL.util';
+import { genRandomPlaceholderBg } from 'lib/utils/genPlaceholder.util';
 
 const props = withDefaults(defineProps<ImageCompressorProps>(), {
   disabled: false,
@@ -56,15 +56,8 @@ const props = withDefaults(defineProps<ImageCompressorProps>(), {
 const emit = defineEmits<ImageCompressorEmits>();
 
 onMounted(async () => {
-  assignPreviewImagesFromProp();
-
   setField();
-
-  if (props.imagePreviewUrl) {
-    field.value = props.imagePreviewUrl;
-  } else if (props.inititalName) {
-    field.value = previewImages.value?.[0] as string;
-  }
+  assignPreviewImagesFromProp();
 });
 
 onUnmounted(() => {
@@ -84,6 +77,8 @@ const image = ref<Image[]>([
 ]);
 
 const randomBg = genRandomPlaceholderBg();
+const canvasPlaceholder = ref<HTMLCanvasElement>();
+
 const canvas = ref<HTMLCanvasElement>();
 const previewImages = ref<(string | Blob | undefined)[]>([]);
 const inputImageFile = ref<HTMLInputElement>();
@@ -107,14 +102,14 @@ const inputImageKey = shallowRef(0);
 const showImageCropper = shallowRef(false);
 const showDeleteConfirm = ref<boolean[]>([false, false]);
 
-const isInititalImage = (index: number): boolean => {
+const isInitialImage = (index: number): boolean => {
   return (
     typeof previewImages.value[index] == 'string' &&
-    previewImages.value[index].includes('placehold')
+    previewImages.value[index].includes('data:image/png;base64')
   );
 };
 
-const assignPreviewImagesFromProp = (): void => {
+const assignPreviewImagesFromProp = async (): Promise<void> => {
   if (props.imagePreviewUrl?.length) {
     previewImages.value = Array.isArray(props.imagePreviewUrl)
       ? props.imagePreviewUrl
@@ -123,11 +118,30 @@ const assignPreviewImagesFromProp = (): void => {
     previewImages.value = props.compressedBlob;
   } else if (props.compressedBlob) {
     previewImages.value = [props.compressedBlob];
-  } else if (props.inititalName) {
-    previewImages.value = [genPlaceholder(props.inititalName, 125, randomBg)];
+  } else if (props.initialName) {
+    canvasPlaceholder.value = genPlaceholder(props.initialName, 125, randomBg);
+    previewImages.value = [canvasPlaceholder.value?.toDataURL()];
   } else {
     previewImages.value = [];
   }
+
+  if (props.imagePreviewUrl) {
+    field.value = props.imagePreviewUrl;
+  } else if (props.initialName) {
+    field.value = await canvasToFile();
+  }
+};
+
+const canvasToFile = async (): Promise<File> => {
+  return new Promise((resolve) => {
+    canvasPlaceholder.value?.toBlob((blob) => {
+      resolve(
+        new File([blob], props.initialName?.toLowerCase(), {
+          type: 'image/png',
+        }),
+      );
+    });
+  });
 };
 
 /**
@@ -459,9 +473,6 @@ const deleteImage = (index = 0): void => {
   } else if (field.handleReset) field.handleReset();
 
   assignPreviewImagesFromProp();
-  if (props.inititalName) {
-    field.value = previewImages.value?.[0] as string;
-  }
 };
 
 /**
@@ -503,7 +514,7 @@ watch(showImageCropper, (value) => {
 });
 
 watch(
-  (): string | undefined => props.inititalName,
+  (): string | undefined => props.initialName,
   () => {
     assignPreviewImagesFromProp();
   },
@@ -538,7 +549,7 @@ watch(
               :class="[
                 {
                   '[&>span]:hover:opacity-30 [&>[data-wv-section=input-image-trigger]]:hover:opacity-100':
-                    isInititalImage(index),
+                    isInitialImage(index),
                 },
                 'relative w-[125px] h-[125px]',
               ]"
@@ -551,7 +562,7 @@ watch(
                 data-wv-section="preview-image"
               />
               <button
-                v-if="isInititalImage(index)"
+                v-if="isInitialImage(index)"
                 :class="[
                   ImagePreset.button.class,
                   'hover:bg-opacity-0 rounded-lg opacity-0',
@@ -569,7 +580,7 @@ watch(
               </button>
             </div>
             <div
-              v-if="!props.disabled && !isInititalImage(index)"
+              v-if="!props.disabled && !isInitialImage(index)"
               class="flex gap-0.5 justify-center"
               data-wv-section="preview-buttons"
             >

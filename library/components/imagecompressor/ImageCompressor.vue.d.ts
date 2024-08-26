@@ -24,7 +24,7 @@ export interface ImageCompressorProps {
    *
    * max-length: 3
    */
-  inititalName?: string;
+  initialName?: string;
   /**
    * Specify the input type, wether single ro multiple image input.
    *

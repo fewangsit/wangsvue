@@ -2,7 +2,8 @@ import useToast from './toast.util';
 import { formatUserName, getInititalName } from './textFormatter.util';
 import filterOptions from './filterOptions.util';
 import exportToExcel from './exportToExcel.util';
-import getImageURL, { genPlaceholder } from './getImageURL.util';
+import getImageURL from './getImageURL.util';
+import genPlaceholder from './genPlaceholder.util';
 
 const getNestedProperyValue = (
   object: object,

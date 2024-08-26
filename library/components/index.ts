@@ -31,7 +31,7 @@ import WorkCalendar from './workcalendar/WorkCalendar.vue';
 import Dialog from './dialog/Dialog.vue';
 import ImageCompressor from './imagecompressor/ImageCompressor.vue';
 import Changelog from './changelog/Changelog.vue';
-import InputInitialName from './inputinitialname/InputInititalName.vue';
+import InputInitialName from './inputinitialname/InputInitialName.vue';
 import InputPhoneNumber from './inputphonenumber/InputPhoneNumber.vue';
 import InputPassword from './inputpassword/InputPassword.vue';
 

@@ -5,7 +5,7 @@ import { Nullable } from '../ts-helpers';
 import type {
   InputInitialNameEmits,
   InputInitialNameProps,
-} from './InputInititalName.vue.d';
+} from './InputInitialName.vue.d';
 import { getInititalName } from 'lib/utils';
 
 const props = defineProps<InputInitialNameProps>();
@@ -21,7 +21,7 @@ const model = computed({
 });
 
 const isExist = computed(() => {
-  return props.existingInititalNames.includes(model.value);
+  return props.existingInitialNames.includes(model.value);
 });
 
 const errorMessage = computed(() => {
@@ -34,7 +34,7 @@ const errorMessage = computed(() => {
 watch(
   () => props.fullName,
   () => {
-    model.value = getInititalName(props.existingInititalNames, props.fullName);
+    model.value = getInititalName(props.existingInitialNames, props.fullName);
   },
   {
     immediate: true,
