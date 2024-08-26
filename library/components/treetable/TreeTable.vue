@@ -847,11 +847,11 @@ const listenUpdateTableEvent = (): void => {
               </td>
 
               <td
-                v-if="props.useOption"
                 v-bind="Preset.bodycell"
-                class="sticky right-0 bg-white"
+                :class="[{ 'sticky right-0 bg-white': useOption }]"
               >
                 <div
+                  v-if="useOption"
                   class="relative w-full h-full flex items-center justify-center"
                   data-wv-section="single-action-wrapper"
                 >
