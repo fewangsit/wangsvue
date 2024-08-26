@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, ref, shallowRef, watch } from 'vue';
 
 import { useToast } from 'lib/utils';
 
@@ -19,15 +19,16 @@ import {
   ChangelogType,
 } from './Changelog.vue.d';
 import { buttonFocusClass } from 'lib/preset/button';
+import eventBus from 'lib/event-bus';
 
 const props = defineProps<ChangelogProps>();
 defineEmits<ChangelogEmits>();
 
 const toast = useToast();
 
-const showChangelogFilter = ref<boolean>(false);
-const showChangelogDialog = ref<boolean>(false);
-const dataTableKey = ref<number>(0);
+const showChangelogFilter = shallowRef<boolean>(false);
+const showChangelogDialog = shallowRef<boolean>(false);
+const dataTableKey = shallowRef<number>(0);
 
 const tableName = computed(
   () =>
@@ -144,7 +145,7 @@ const fetchChangelogs = async (
  * Need to reset the state to make sure every dialog open, the fetch result is correct.
  */
 const resetState = (): void => {
-  showChangelogFilter.value = false;
+  eventBus.emit('show-filter', { tableName: tableName.value, show: false });
 };
 
 watch(showChangelogDialog, (newValue) => {
@@ -188,12 +189,12 @@ watch(showChangelogDialog, (newValue) => {
           data-wv-section="changelog-dialog-button-search"
         />
         <ButtonFilter
-          v-model:show-filter="showChangelogFilter"
+          :show-filter="showChangelogFilter"
+          :table-name="tableName"
           data-wv-section="changelog-dialog-button-filter"
         />
       </div>
       <ChangelogFilter
-        v-show="showChangelogFilter"
         :changelog-column-header="changelogColumnHeader"
         :custom-params="props.customParams"
         :object="props.object"

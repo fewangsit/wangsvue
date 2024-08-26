@@ -49,7 +49,11 @@ onMounted(() => {
     }
   }
 
-  eventBus.on('show-filter', (e) => (showFilter.value = e.show));
+  eventBus.on('show-filter', (e) => {
+    if (e.tableName === props.tableName) {
+      showFilter.value = e.show;
+    }
+  });
 });
 
 onBeforeUnmount(() => {
