@@ -93,6 +93,8 @@ import {
   ImageCompressor,
   InputPhoneNumber,
   InputPassword,
+  TreeTable,
+  Loading,
 } from './components';
 
 export default {
@@ -140,6 +142,8 @@ export default {
     app.component('InputNumber', InputNumber);
     app.component('InputEmail', InputEmail);
     app.component('InputPassword', InputPassword);
+    app.component('Loading', Loading);
+    app.component('TreeTable', TreeTable);
 
     app.directive('tooltip', Tooltip);
   },
@@ -198,6 +202,7 @@ export {
   DialogForm,
   InputNumber,
   InputEmail,
+  TreeTable,
 
   // Component store
   useLoadingStore,

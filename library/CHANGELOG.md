@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.89
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.88...v1.4.89)
+
+### 🚀 Enhancements
+
+- **inputNumber:** Add tooltipPos prop ([49183d0](https://github.com/fewangsit/wangsvue/commit/49183d0))
+
+### 🏡 Chore
+
+- **release:** V1.4.88 ([303d758](https://github.com/fewangsit/wangsvue/commit/303d758))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.88
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.87...v1.4.88)

@@ -35,6 +35,7 @@ import InputInitialName from './inputinitialname/InputInitialName.vue';
 import InputPhoneNumber from './inputphonenumber/InputPhoneNumber.vue';
 import InputPassword from './inputpassword/InputPassword.vue';
 import Loading from './loading/Loading.vue';
+import TreeTable from './treetable/TreeTable.vue';
 
 export {
   Badge,
@@ -74,4 +75,5 @@ export {
   InputPhoneNumber,
   InputPassword,
   Loading,
+  TreeTable,
 };
