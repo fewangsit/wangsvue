@@ -36,6 +36,7 @@ import InputPassword from './inputpassword/InputPassword.vue';
 import Loading from './loading/Loading.vue';
 import DataTable from './treetable/TreeTable.vue';
 import SummaryAccordion from './summaryaccordion/SummaryAccordion.vue';
+import InputURL from './inputurl/InputURL.vue';
 
 export {
   Badge,
@@ -76,4 +77,5 @@ export {
   InputPassword,
   Loading,
   SummaryAccordion,
+  InputURL,
 };

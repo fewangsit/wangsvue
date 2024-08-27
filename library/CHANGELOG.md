@@ -1,6 +1,33 @@
 # Changelog
 
 
+## v1.4.111
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.110...v1.4.111)
+
+### 🚀 Enhancements
+
+- Add SummaryAccordion for project and modul summary ([03218dd](https://github.com/fewangsit/wangsvue/commit/03218dd))
+- Add input url ([4350eff](https://github.com/fewangsit/wangsvue/commit/4350eff))
+
+### 🩹 Fixes
+
+- **DialogCOnfirm:** Change default headerIcon for danger severity ([731201c](https://github.com/fewangsit/wangsvue/commit/731201c))
+- Type errorr on table preste ([526bd8a](https://github.com/fewangsit/wangsvue/commit/526bd8a))
+- Type errror on summary accordion ([e62a290](https://github.com/fewangsit/wangsvue/commit/e62a290))
+
+### 💅 Refactors
+
+- Update interface and structure to support 3 types of summary ([bfadc77](https://github.com/fewangsit/wangsvue/commit/bfadc77))
+
+### 🏡 Chore
+
+- **release:** V1.4.110 ([643799d](https://github.com/fewangsit/wangsvue/commit/643799d))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.110
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.108...v1.4.110)
