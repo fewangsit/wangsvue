@@ -92,7 +92,13 @@ const tableColumns = computed<TableColumn[]>(() => {
           message: 'This action will set this data to innactive. Are you sure?',
           severity: 'danger',
           confirmLabel: 'Yes, sure!',
-          showWhen: 'inactive',
+          showWhen: async (data): Promise<boolean> => {
+            return new Promise((resolve) => {
+              setTimeout(() => {
+                resolve(!data.isActive);
+              }, 2000);
+            });
+          },
         },
         onConfirm: (state, data, revert): void => {
           setTimeout(() => {

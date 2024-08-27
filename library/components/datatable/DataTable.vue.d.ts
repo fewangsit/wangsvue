@@ -57,9 +57,15 @@ export interface ColumnTogglePreset {
     /**
      * When the dialog should be shown? On toggle active or inactive
      *
+     * Pass a boolean returning function to show dialog when it returns true
+     *
      * @default both - leave this as undefined to show on both state
      */
-    showWhen?: 'active' | 'inactive';
+    showWhen?:
+      | 'active'
+      | 'inactive'
+      | ((data: Data) => boolean)
+      | ((data: Data) => Promise<boolean>);
   };
   onConfirm?: (state: boolean, data: Data, revertFunction: () => void) => void;
 }

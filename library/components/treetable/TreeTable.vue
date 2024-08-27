@@ -831,7 +831,7 @@ const listenUpdateTableEvent = (): void => {
                     :input-id="item[dataKey]"
                     @click.stop=""
                     @update:model-value="
-                      (e) => {
+                      async (e) => {
                         col.preset?.onToggle?.(
                           e,
                           item,
@@ -841,10 +841,15 @@ const listenUpdateTableEvent = (): void => {
                         if (col.preset.confirmDialogProps) {
                           const { showWhen } = col.preset?.confirmDialogProps;
 
-                          showConfirmToggle[item[dataKey]] =
-                            !showWhen ||
-                            (showWhen === 'active' && e) ||
-                            (showWhen === 'inactive' && !e);
+                          if (typeof showWhen === 'function') {
+                            showConfirmToggle[item[dataKey]] =
+                              await showWhen(item);
+                          } else {
+                            showConfirmToggle[item[dataKey]] =
+                              !showWhen ||
+                              (showWhen === 'active' && e) ||
+                              (showWhen === 'inactive' && !e);
+                          }
                         }
                       }
                     "
