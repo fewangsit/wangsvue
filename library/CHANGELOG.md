@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v1.4.110
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.108...v1.4.110)
+
+### 🚀 Enhancements
+
+- **Table:** Preset toggle - add boolean returning function on prop showWhen ([7b54a63](https://github.com/fewangsit/wangsvue/commit/7b54a63))
+- **Table Peset Toggle:** Disabled toggle if the row is disabled ([b86a3af](https://github.com/fewangsit/wangsvue/commit/b86a3af))
+- Set the column viasibility to default true ([ba3939b](https://github.com/fewangsit/wangsvue/commit/ba3939b))
+- Add disabled state calendar ([b3f5124](https://github.com/fewangsit/wangsvue/commit/b3f5124))
+
+### 🩹 Fixes
+
+- **DialogCOnfirm:** Change default headerIcon for danger severity ([731201c](https://github.com/fewangsit/wangsvue/commit/731201c))
+
+### 🏡 Chore
+
+- **release:** V1.4.108 ([29bbb0b](https://github.com/fewangsit/wangsvue/commit/29bbb0b))
+- **release:** V1.4.109 ([b3cf6b7](https://github.com/fewangsit/wangsvue/commit/b3cf6b7))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.109
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.108...v1.4.109)
