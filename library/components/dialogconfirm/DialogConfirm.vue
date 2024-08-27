@@ -30,7 +30,7 @@ const dialogConfirm = ref<Dialog>();
 
 const headerIcon = computed(() => {
   if (props.headerIcon) return props.headerIcon;
-  return props.severity === 'danger' ? 'error' : 'checkbox-circle';
+  return props.severity === 'danger' ? 'error-fill' : 'checkbox-circle';
 });
 
 const closeButtonLabel = computed<string>(() => {
