@@ -7,7 +7,7 @@
  * @module inputtext
  *
  */
-import { InputHTMLAttributes } from 'vue';
+import { InputHTMLAttributes, Slot } from 'vue';
 import { ComponentHooks } from '../basecomponent';
 import { ClassComponent, Nullable } from '../ts-helpers';
 import { CustomValidation } from '../form/Form.vue.d';
@@ -199,6 +199,11 @@ export type InputTextEmits = {
   'input': [payload?: Nullable<string>];
 };
 
+export type InputTextSlots = {
+  'addon-left': Slot;
+  'addon-right': Slot;
+};
+
 /**
  * **WangsVue - InputText**
  *
@@ -210,7 +215,7 @@ export type InputTextEmits = {
  */
 declare class InputText extends ClassComponent<
   InputTextProps,
-  unknown,
+  InputTextSlots,
   InputTextEmits
 > {}
 

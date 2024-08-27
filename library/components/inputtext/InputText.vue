@@ -68,9 +68,9 @@ const setValidatorMessage = (value: string): boolean | string => {
     } else if (value?.length > props.maxLength && props.type === 'text') {
       return exceed ?? true;
     } else if (value && props.type === 'email') {
-      return validateEmail(value, invalidFormat);
+      return validateEmail(value, invalidFormat ?? 'Format URL tidak valid');
     } else if (value && props.type === 'url') {
-      return validateURL(value, invalidFormat);
+      return validateURL(value, invalidFormat ?? 'Format URL tidak valid');
     } else if (props.existingValues?.includes(value)) {
       return props.validatorMessage?.exist ?? props.label + ' sudah ada';
     }

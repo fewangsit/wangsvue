@@ -29,7 +29,7 @@ const focusToInput = (e: MouseEvent): void => {
         '[&_.inputgroupaddon]:ring-general-400': !$props.invalid,
         '!bg-general-50 ': $props.disabled,
       },
-      '[&:has(:focus)]:ring-primary-400 [&:has(:focus)_.inputgroupaddon]:ring-primary-400',
+      '[&:has(:focus)]:!ring-primary-400 [&:has(:focus)_.inputgroupaddon]:!ring-primary-400',
       {
         'ring-[1px] [&_.inputgroupaddon]:ring-[1px]': isFirefoxBased,
         'ring-[0.5px] [&_.inputgroupaddon]:ring-[0.5px]': !isFirefoxBased,
