@@ -134,7 +134,7 @@ const updateLabel = (inputElement: HTMLElement, badgeEl: HTMLElement): void => {
     <span
       ref="input"
       :class="[
-        'text-nowrap whitespace-nowrap font-normal text-xs leading-3 tracking-[0.2488px]',
+        'text-nowrap whitespace-nowrap font-normal text-xs leading-4 tracking-[0.2488px]',
         { 'cursor-default': !!badgeTooltip },
         { 'caret-surface-700	': editable },
       ]"

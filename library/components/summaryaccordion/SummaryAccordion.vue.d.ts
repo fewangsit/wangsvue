@@ -1,14 +1,14 @@
+export type SubModuleStatus =
+  | 'Pending E2E Testing'
+  | 'Reported Bug'
+  | 'Sprint'
+  | 'Backlog';
+
 export interface Summary {
   name: string;
   priority: number;
   status: 'Backlog' | 'Sprint' | 'Selesai';
   initialName: string;
-  /**
-   * Progress percentage of all module in project in rounded number (Math.round())
-   */
-  progress: number;
-  totalModule: number;
-  totalCompletedModule: number;
   /**
    * Task with status 'Sprint'
    */
@@ -31,7 +31,26 @@ export interface Summary {
   totalBugHistories: number;
 }
 
+export interface ProjectSummary extends Summary {
+  type: 'project';
+  totalModule: number;
+  totalCompletedModule: number;
+}
+
+export interface ModuleSummary extends Summary {
+  type: 'module';
+  totalSubModule: number;
+}
+
+export interface SubModuleSummary extends Summary {
+  type: 'submodule';
+  moduleName: string;
+  progressWeb: number;
+  progressMobile: number;
+  statusWeb: SubModuleStatus;
+  statusMobile: SubModuleStatus;
+}
+
 export interface SummaryAccordionProps {
-  type: 'project' | 'module';
-  summary: Summary;
+  summary: ProjectSummary | ModuleSummary | SubModuleSummary;
 }

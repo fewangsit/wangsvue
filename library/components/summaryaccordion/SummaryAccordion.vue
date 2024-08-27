@@ -13,6 +13,7 @@ interface SummaryItem {
   severity: IconProps['severity'];
   label: string;
   value: string | number;
+  show: boolean;
 }
 
 const props = defineProps<SummaryAccordionProps>();
@@ -31,14 +32,35 @@ const severity = computed<BadgeProps['severity']>(() => {
   }
 });
 
+const name = computed(() => {
+  switch (props.summary.type) {
+    case 'module':
+      return 'Modul ' + props.summary.name;
+    case 'submodule':
+      return 'Sub Modul ' + props.summary.name;
+    default:
+      return props.summary.name;
+  }
+});
+
+const progressSubModule = computed(() => {
+  const { statusWeb, progressWeb, statusMobile, progressMobile } =
+    props.summary.type === 'submodule' ? props.summary : {};
+
+  return {
+    statusWeb,
+    progressWeb,
+    statusMobile,
+    progressMobile,
+  };
+});
+
 const progress = computed(() => {
-  const {
-    totalCompletedTask,
-    totalSprintTask,
-    totalBacklogTask,
-    totalModule,
-    totalCompletedModule,
-  } = props.summary;
+  const { totalCompletedTask, totalSprintTask, totalBacklogTask } =
+    props.summary;
+
+  const { totalModule, totalCompletedModule } =
+    props.summary.type === 'project' ? props.summary : {};
 
   const totalTask = totalCompletedTask + totalSprintTask + totalBacklogTask;
   const task = Math.round((totalCompletedTask / totalTask) * 100);
@@ -57,53 +79,79 @@ const summaryItems = computed<SummaryItem[]>(() => {
     totalBacklogTask,
     totalSprintPoint,
     totalBugHistories,
-    totalModule,
-    totalCompletedModule,
   } = props.summary;
+
+  const { totalModule, totalCompletedModule } =
+    props.summary.type === 'project' ? props.summary : {};
+
+  const { totalSubModule } =
+    props.summary.type === 'module' ? props.summary : {};
+
+  const { moduleName } =
+    props.summary.type === 'submodule' ? props.summary : {};
 
   const totalTask = totalCompletedTask + totalSprintTask + totalBacklogTask;
 
-  return [
+  const items: SummaryItem[] = [
     {
       icon: 'check-double-fill',
       severity: 'primary',
-      label: props.type === 'project' ? 'Progress Modul' : 'Sub Modul',
-      value:
-        props.type === 'project'
-          ? `${progress.value.module}% (${totalCompletedModule}/${totalModule})`
-          : totalModule,
+      label: 'Progress Modul',
+      value: `${progress.value.module}% (${totalCompletedModule}/${totalModule})`,
+      show: props.summary.type === 'project',
+    },
+    {
+      icon: 'check-double-fill',
+      severity: 'primary',
+      label: 'Sub Modul',
+      value: totalSubModule,
+      show: props.summary.type === 'module',
+    },
+    {
+      icon: 'file-copy-2-line',
+      severity: 'primary',
+      label: 'Modul',
+      value: moduleName,
+      show: props.summary.type === 'submodule',
     },
     {
       icon: 'check-double-fill',
       severity: 'primary',
       label: 'Progress Task',
       value: `${progress.value.task}% (${totalCompletedTask}/${totalTask})`,
+      show: true,
     },
     {
       icon: 'star',
       severity: 'primary',
       label: 'Total Poin',
       value: totalSprintPoint,
+      show: true,
     },
     {
       icon: 'list-check',
       severity: 'warning',
       label: 'Task Sprint',
       value: totalSprintTask,
+      show: true,
     },
     {
       icon: 'list-check',
       severity: 'success',
       label: 'Task Selesai',
       value: totalCompletedTask,
+      show: true,
     },
     {
       icon: 'list-check',
       severity: 'danger',
       label: 'Histori Bug',
       value: totalBugHistories,
+      show: true,
     },
   ];
+
+  return items.filter((item) => item.show);
 });
 </script>
 <template>
@@ -119,21 +167,21 @@ const summaryItems = computed<SummaryItem[]>(() => {
         class="font-semibold text-base leading-4"
         data-wv-section="projectname"
       >
-        {{ summary.name }} ({{ summary.initialName }})
+        {{ name }} ({{ summary.initialName }})
       </h2>
 
       <div class="flex items-center gap-3">
         <ProgressBar
           :show-value="false"
-          :value="type === 'project' ? progress.module : progress.task"
+          :value="progress.task"
           class="w-[20vw] max-w-[200px]"
         />
         <span class="font-medium text-[14px] leading-4">
-          {{ type === 'project' ? progress.module : progress.task }}%
+          {{ progress.task }}%
         </span>
       </div>
 
-      <Badge :label="summary.status" :severity="severity" />
+      <Badge :label="summary.status" :severity="severity" format="nowrap" />
 
       <Button
         :class="[
@@ -145,6 +193,40 @@ const summaryItems = computed<SummaryItem[]>(() => {
         icon-class="w-6 h-6 text-general-800"
         text
       />
+    </div>
+
+    <div
+      v-if="summary.type === 'submodule'"
+      v-show="expanded"
+      class="grid grid-cols-2 gap-3"
+    >
+      <div
+        class="grid grid-cols-[max-content,max-content,1fr,max-content] items-center gap-2"
+      >
+        Web
+        <Badge :label="progressSubModule.statusWeb" format="nowrap" />
+        <ProgressBar
+          :show-value="false"
+          :value="progressSubModule.progressWeb"
+        />
+        <span class="font-medium text-[14px] leading-4">
+          {{ progressSubModule.progressWeb }}%
+        </span>
+      </div>
+
+      <div
+        class="grid grid-cols-[max-content,max-content,1fr,max-content] items-center gap-2"
+      >
+        Mobile
+        <Badge :label="progressSubModule.statusMobile" format="nowrap" />
+        <ProgressBar
+          :show-value="false"
+          :value="progressSubModule.progressWeb"
+        />
+        <span class="font-medium text-[14px] leading-4">
+          {{ progressSubModule.progressMobile }}%
+        </span>
+      </div>
     </div>
 
     <div
