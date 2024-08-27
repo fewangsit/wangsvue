@@ -45,6 +45,7 @@ const props = withDefaults(defineProps<TreeTableProps>(), {
   disableKey: 'isDefault',
   selectionType: 'checkbox',
   customColumn: true,
+  useOption: true,
 });
 
 const emit = defineEmits<TreeTableEmits>();

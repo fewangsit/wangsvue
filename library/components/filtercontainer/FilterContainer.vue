@@ -11,7 +11,7 @@ import { useForm } from 'vee-validate';
 
 import InputRangeNumber from '../inputrangenumber/InputRangeNumber.vue';
 import MultiSelect from '../multiselect/MultiSelect.vue';
-import eventBus from 'lib/event-bus';
+import eventBus, { Events } from 'lib/event-bus';
 import Calendar from '../calendar/Calendar.vue';
 import applyFilter from './helpers/applyFilter.helper';
 
@@ -49,16 +49,18 @@ onMounted(() => {
     }
   }
 
-  eventBus.on('show-filter', (e) => {
-    if (e.tableName === props.tableName) {
-      showFilter.value = e.show;
-    }
-  });
+  eventBus.on('show-filter', udpateShowFIlter);
 });
 
 onBeforeUnmount(() => {
-  eventBus.off('show-filter');
+  eventBus.off('show-filter', udpateShowFIlter);
 });
+
+const udpateShowFIlter = (e: Events['show-filter']): void => {
+  if (e.tableName === props.tableName) {
+    showFilter.value = e.show;
+  }
+};
 
 const getOptions = async (
   fn: MultiSelectFilterField['fetchOptionFn'],
