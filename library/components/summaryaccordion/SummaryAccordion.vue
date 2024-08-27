@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue';
 import { BadgeProps } from '../badge/Badge.vue.d';
-import { SummaryAccordionProps } from './SummaryAccordion.vue.d';
+import {
+  ModuleSummary,
+  ProjectSummary,
+  SubModuleSummary,
+  SummaryAccordionProps,
+} from './SummaryAccordion.vue.d';
 import ProgressBar from 'primevue/progressbar';
 import Badge from '../badge/Badge.vue';
 import Button from '../button/Button.vue';
@@ -45,7 +50,9 @@ const name = computed(() => {
 
 const progressSubModule = computed(() => {
   const { statusWeb, progressWeb, statusMobile, progressMobile } =
-    props.summary.type === 'submodule' ? props.summary : {};
+    props.summary.type === 'submodule'
+      ? props.summary
+      : ({} as SubModuleSummary);
 
   return {
     statusWeb,
@@ -60,7 +67,7 @@ const progress = computed(() => {
     props.summary;
 
   const { totalModule, totalCompletedModule } =
-    props.summary.type === 'project' ? props.summary : {};
+    props.summary.type === 'project' ? props.summary : ({} as ProjectSummary);
 
   const totalTask = totalCompletedTask + totalSprintTask + totalBacklogTask;
   const task = Math.round((totalCompletedTask / totalTask) * 100);
@@ -82,13 +89,15 @@ const summaryItems = computed<SummaryItem[]>(() => {
   } = props.summary;
 
   const { totalModule, totalCompletedModule } =
-    props.summary.type === 'project' ? props.summary : {};
+    props.summary.type === 'project' ? props.summary : ({} as ProjectSummary);
 
   const { totalSubModule } =
-    props.summary.type === 'module' ? props.summary : {};
+    props.summary.type === 'module' ? props.summary : ({} as ModuleSummary);
 
   const { moduleName } =
-    props.summary.type === 'submodule' ? props.summary : {};
+    props.summary.type === 'submodule'
+      ? props.summary
+      : ({} as SubModuleSummary);
 
   const totalTask = totalCompletedTask + totalSprintTask + totalBacklogTask;
 
