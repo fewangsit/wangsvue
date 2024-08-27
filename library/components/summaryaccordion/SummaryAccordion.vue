@@ -171,7 +171,11 @@ const summaryItems = computed<SummaryItem[]>(() => {
     data-wv-name="projectsummary"
     data-wv-section="root"
   >
-    <div class="flex items-center gap-1" data-wv-section="projectmeta">
+    <div
+      @click="expanded = !expanded"
+      class="flex items-center gap-1 cursor-pointer"
+      data-wv-section="projectmeta"
+    >
       <h2
         class="font-semibold text-base leading-4"
         data-wv-section="projectname"
