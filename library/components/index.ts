@@ -35,6 +35,7 @@ import InputPhoneNumber from './inputphonenumber/InputPhoneNumber.vue';
 import InputPassword from './inputpassword/InputPassword.vue';
 import Loading from './loading/Loading.vue';
 import DataTable from './treetable/TreeTable.vue';
+import SummaryAccordion from './summaryaccordion/SummaryAccordion.vue';
 
 export {
   Badge,
@@ -74,4 +75,5 @@ export {
   InputPhoneNumber,
   InputPassword,
   Loading,
+  SummaryAccordion,
 };

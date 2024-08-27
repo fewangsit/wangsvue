@@ -24,6 +24,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
         component: (): Promise<Component> =>
           import('./docs/calendar/CalendarDocs.vue'),
       },
+      {
+        path: 'projectsummary',
+        name: 'Project Summary Docs',
+        component: (): Promise<Component> =>
+          import('./docs/projectsummary/ProjectSummaryDocs.vue'),
+      },
       /*
        * {
        *   path: 'imagecompressor',

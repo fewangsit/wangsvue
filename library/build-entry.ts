@@ -94,6 +94,7 @@ import {
   InputPhoneNumber,
   InputPassword,
   Loading,
+  SummaryAccordion,
 } from './components';
 
 export default {
@@ -142,6 +143,7 @@ export default {
     app.component('InputEmail', InputEmail);
     app.component('InputPassword', InputPassword);
     app.component('Loading', Loading);
+    app.component('SummaryAccordion', SummaryAccordion);
 
     app.directive('tooltip', Tooltip);
   },
@@ -201,6 +203,7 @@ export {
   InputEmail,
   DataTable,
   Loading,
+  SummaryAccordion,
 
   // Component store
   useLoadingStore,

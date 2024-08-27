@@ -6,9 +6,9 @@ export default {
 
       // Shape and Size
       'border-0',
-      'rounded-sm',
-      { 'h-3': props.mode !== 'indeterminate' && !props.showValue },
-      // { 'h-3': props.mode !== 'indeterminate' && props.showValue },
+      'rounded-full',
+      { 'h-1.5': props.mode !== 'indeterminate' && !props.showValue },
+      // { 'h-1.5': props.mode !== 'indeterminate' && props.showValue },
       // {
       //   'h-2 bg-surface-100 dark:bg-surface-700 ':
       //     props.mode == 'indeterminate' || !props.showValue,
@@ -16,7 +16,7 @@ export default {
 
       // Before & After (!indeterminate)
       {
-        'before:absolute before:w-full before:rounded-sm before:h-3 before:top-0 before:left-0 before:bottom-0 before:bg-general-100 dark:before:bg-general-100':
+        'before:absolute before:w-full before:rounded-full before:h-1.5 before:top-0 before:left-0 before:bottom-0 before:bg-general-100 dark:before:bg-general-100':
           props.mode !== 'indeterminate',
       },
     ],
@@ -30,11 +30,11 @@ export default {
       },
 
       // Colors
-      'bg-success-500 dark:bg-success-500',
+      'bg-warning-500',
 
       // Spacing & Sizing
       'm-0',
-      { 'h-3 w-0': props.mode !== 'indeterminate' },
+      { 'h-1.5 w-0': props.mode !== 'indeterminate' },
 
       // Shape
       'border-0',
