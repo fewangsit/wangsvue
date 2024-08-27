@@ -1,6 +1,10 @@
 # Changelog
 
 
+## v1.4.113
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.112...v1.4.113)
+
 ## v1.4.112
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.111...v1.4.112)
