@@ -1,6 +1,41 @@
 # Changelog
 
 
+## v1.4.108
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.101...v1.4.108)
+
+### 🚀 Enhancements
+
+- **Treetable:** Assign props.data to currentPageTableData for table without fetchFunc ([a9f9d55](https://github.com/fewangsit/wangsvue/commit/a9f9d55))
+- **Table:** Add preset on column - export tree table as table ([a3da186](https://github.com/fewangsit/wangsvue/commit/a3da186))
+- **Table:** Add dialog confirm toggle for column preset ([ede5e33](https://github.com/fewangsit/wangsvue/commit/ede5e33))
+- Add emit close dialog confirm to trigger toggle confirm column ([1bb1543](https://github.com/fewangsit/wangsvue/commit/1bb1543))
+- Add option showWhen to set the confition when the confirm dialof should be shown ([6ae3d70](https://github.com/fewangsit/wangsvue/commit/6ae3d70))
+- Add option showWhen to set the confition when the confirm dialof should be shown #2 ([#2](https://github.com/fewangsit/wangsvue/issues/2))
+- **Table:** Preset toggle - add boolean returning function on prop showWhen ([7b54a63](https://github.com/fewangsit/wangsvue/commit/7b54a63))
+
+### 🏡 Chore
+
+- **release:** V1.4.98 ([8824a9b](https://github.com/fewangsit/wangsvue/commit/8824a9b))
+- **release:** V1.4.99 ([bc2ff79](https://github.com/fewangsit/wangsvue/commit/bc2ff79))
+- **release:** V1.4.100 ([b5dbf7c](https://github.com/fewangsit/wangsvue/commit/b5dbf7c))
+- **release:** V1.4.101 ([fb9a002](https://github.com/fewangsit/wangsvue/commit/fb9a002))
+- **release:** V1.4.102 ([dc6659f](https://github.com/fewangsit/wangsvue/commit/dc6659f))
+- **release:** V1.4.103 ([9b5d979](https://github.com/fewangsit/wangsvue/commit/9b5d979))
+- **release:** V1.4.104 ([5f807a2](https://github.com/fewangsit/wangsvue/commit/5f807a2))
+- **release:** V1.4.105 ([82bcfdb](https://github.com/fewangsit/wangsvue/commit/82bcfdb))
+- **release:** V1.4.106 ([8d8484a](https://github.com/fewangsit/wangsvue/commit/8d8484a))
+- **release:** V1.4.107 ([e232e79](https://github.com/fewangsit/wangsvue/commit/e232e79))
+
+### 🎨 Styles
+
+- Fix z index bulk action menu ([7b0b04c](https://github.com/fewangsit/wangsvue/commit/7b0b04c))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.107
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.106...v1.4.107)
