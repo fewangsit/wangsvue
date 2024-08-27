@@ -18,7 +18,6 @@ import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
 import Icon from '../icon/Icon.vue';
 import InputGroup from '../inputgroup/InputGroup.vue';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
-import SelectButton from 'primevue/selectbutton';
 
 const props = withDefaults(defineProps<CalendarProps>(), {
   view: 'date',
@@ -45,11 +44,6 @@ const field = reactive<FieldValidation<typeof props.modelValue>>({
 });
 
 const calendar = ref<CalendarState>();
-
-/**
- * Custom AM/PM picker with SelectButton component
- */
-const timePeriod = ref<SelectButton>();
 
 const invalidInput = computed(() => props.invalid || !!field.errorMessage);
 const dateFormat = 'dd/mm/yy';
@@ -116,65 +110,6 @@ const onShowOverlay = (): void => {
   previousDate.value = date.value;
   setTimeout(formatDateText, 0);
   setClass();
-  /*
-   * ReplaceInputTime('hour');
-   * replaceInputTime('minute');
-   */
-  teleportTimePeriod();
-};
-
-/**
- * Replace default primevue ampmpicker buttons with custom AM/PM select button
- */
-const teleportTimePeriod = (): void => {
-  if (timePeriod.value) {
-    /**
-     * The primevue default AM/PM picker
-     */
-    const ampmpicker = document.querySelector(
-      '[data-pc-section=ampmpicker]',
-    ) as HTMLElement | null;
-
-    /**
-     * The real element of Ref<SelectButton>
-     */
-    const timePeriodSelect = timePeriod.value[
-      '$el' as keyof SelectButton
-    ] as HTMLElement | null;
-
-    /**
-     * Hidden wrapper is the Teleport source elelemnt wrapper that needs to be hidden
-     * to ensure the calendar panel has correct positioning
-     */
-    const hiddenWrapper = timePeriodSelect?.parentElement;
-
-    /**
-     * The buttons on SelectButton element
-     */
-    const radioButtons = timePeriodSelect?.querySelectorAll(
-      '[data-pc-section="button"]',
-    );
-
-    if (ampmpicker && timePeriodSelect) {
-      ampmpicker.previousElementSibling?.remove(); // Removes the separator
-      ampmpicker.parentElement?.append(timePeriodSelect);
-      ampmpicker.classList.add('hidden'); // Hide the default picker, we still need to works with the increment button
-
-      // Get increment button to toggle AM/PM
-      const incrementBtn = ampmpicker.querySelector('button');
-
-      if (radioButtons?.length) {
-        // Attach event handler to the AM/PM button to toggle the AM/PM by clicking the real/default increment button
-        radioButtons.forEach((button) => {
-          button.addEventListener('click', () => {
-            incrementBtn?.click();
-          });
-        });
-      }
-
-      hiddenWrapper?.remove(); // Remove the hidden wrapper, no longger needed
-    }
-  }
 };
 
 const setValidator = (): void => {
@@ -271,10 +206,11 @@ watch(date, formatDateText);
 
 <template>
   <FieldWrapper v-bind="$props">
-    <InputGroup :invalid="invalidInput">
+    <InputGroup :disabled="disabled" :invalid="invalidInput">
       <Calendar
         ref="calendar"
         :date-format="dateFormat"
+        :disabled="disabled"
         :hide-on-date-time-select="false"
         :hide-on-range-selection="!showButtons && !showTime"
         :invalid="invalidInput"
@@ -325,8 +261,7 @@ watch(date, formatDateText);
     </InputGroup>
     <ValidatorMessage
       v-show="field.errorMessage"
-      :message="field.errorMessage ?? props.validatorMessage"
-      data-test="ts-calendar-validator-message"
+      :message="field.errorMessage"
     />
   </FieldWrapper>
 </template>

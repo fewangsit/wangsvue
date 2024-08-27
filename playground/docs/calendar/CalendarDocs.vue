@@ -11,6 +11,7 @@ import Calendar from 'lib/components/calendar/Calendar.vue';
       <div class="grid grid-cols-4 items-end justify-end gap-3">
         <Calendar mode="range" />
         <Calendar label="Calendar" mode="range" use-validator />
+        <Calendar disabled label="Calendar Disabled" mode="range" />
       </div>
     </template>
   </Card>

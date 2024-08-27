@@ -1,5 +1,5 @@
 import { CustomValidation } from '../form/Form.vue.d';
-import { DefineComponent } from 'vue';
+import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
 
 /**
  * Calendar component props
@@ -18,6 +18,7 @@ export interface CalendarProps {
    */
   label?: string;
   placeholder?: string;
+  disabled?: boolean;
   /**
    * Whether single date or date range model value.
    *
@@ -123,6 +124,16 @@ export type CalendarEmits = {
  *
  * @group form
  */
-declare const Calendar: DefineComponent<CalendarProps, CalendarEmits>;
+declare class Calendar extends ClassComponent<
+  CalendarProps,
+  unknown,
+  CalendarEmits
+> {}
+
+declare module 'vue' {
+  export interface GlobalComponents {
+    Calendar: GlobalComponentConstructor<Calendar>;
+  }
+}
 
 export default Calendar;

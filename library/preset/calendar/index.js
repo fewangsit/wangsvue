@@ -1,6 +1,6 @@
 const timepickerlabel = {
   class:
-    '[&_span]:w-[37px] [&_span]:h-[26px] [&_span]:flex [&_span]:justify-center [&_span]:items-center [&_span]:border [&_span]:border-general-200 [&_span]:rounded [&_span]:dark:text-general-800',
+    '[&_span]:w-[37px] [&_span]:h-[26px] [&_span]:flex [&_span]:justify-center [&_span]:items-center [&_span]:border [&_span]:border-general-200 [&_span]:rounded [&_span]:dark:text-grayscale-900',
 };
 
 export default {
@@ -18,22 +18,20 @@ export default {
 
       // Misc
       {
-        'opacity-40 select-none pointer-events-none cursor-default':
-          props.disabled,
+        'select-none pointer-events-none cursor-default': props.disabled,
       },
     ],
   }),
   input: ({ props }) => ({
     class: [
-      'w-full',
+      'w-full peer',
 
       // Font
-      'text-xs tracking-[2%] font-normal placeholder:font-normal',
+      'text-xs font-normal placeholder:font-normal leading-6',
 
       // Colors
-      'text-general-800 dark:text-general-800',
+      'text-grayscale-900 dark:text-grayscale-900',
       'placeholder:text-general-200 dark:placeholder:text-general-200',
-      'bg-white',
 
       // Shape
       'appearance-none',
@@ -56,7 +54,7 @@ export default {
     ],
   }),
   inputicon: {
-    class: ['text-general-500 dark:text-general-800'],
+    class: ['text-grayscale-900 peer-disabled:bg-general-300'],
   },
   dropdownbutton: {
     root: {
@@ -144,7 +142,7 @@ export default {
       'rounded-t-md',
 
       // Colors
-      'text-general-800 dark:general-800',
+      'text-grayscale-900 dark:grayscale-900',
       'bg-white',
     ],
   }),
@@ -164,7 +162,7 @@ export default {
       'p-1.5 m-0',
 
       // Colors
-      'text-general-800 dark:text-general-950',
+      'text-grayscale-900 dark:text-general-950',
       'border-0 ',
       'bg-transparent',
 
@@ -178,7 +176,7 @@ export default {
   title: ({ props }) => ({
     class: [
       // Text
-      'dark:text-general-800 leading-6',
+      'dark:text-grayscale-900 leading-6',
       'my-0',
       'order-2',
       // {
@@ -193,7 +191,7 @@ export default {
       'text-xs font-normal',
 
       // Colors
-      'text-general-800 dark:text-general-800',
+      'text-grayscale-900 dark:text-grayscale-900',
       'bg-white',
 
       // Transitions
@@ -219,7 +217,7 @@ export default {
       'text-xs font-normal',
 
       // Colors
-      'text-general-800 dark:text-general-800',
+      'text-grayscale-900 dark:text-grayscale-900',
       'bg-white',
 
       // Transitions
@@ -250,7 +248,7 @@ export default {
       'p-1.5 m-0',
 
       // Colors
-      'text-general-800 dark:text-general-950',
+      'text-grayscale-900 dark:text-general-950',
       'border-0 ',
       'bg-transparent',
 
@@ -272,8 +270,8 @@ export default {
 
       '[&_th]:text-xs [&_td]:text-xs',
       '[&_th]:font-normal [&_td]:font-normal',
-      '[&_th]:text-general-800 [&_td]:text-general-800',
-      'dark:[&_th]:text-general-800 dark:[&_td]:text-general-800',
+      '[&_th]:text-grayscale-900 [&_td]:text-grayscale-900',
+      'dark:[&_th]:text-grayscale-900 dark:[&_td]:text-grayscale-900',
 
       // Hide the other months day
       '[&_[data-p-other-month="true"]]:invisible',
@@ -399,7 +397,7 @@ export default {
 
       // Colors
       {
-        'text-general-800 dark:text-general-800 bg-transparent':
+        'text-grayscale-900 dark:text-grayscale-900 bg-transparent':
           !context.selected && !context.disabled,
         'bg-primary-400 text-white dark:bg-primary-400 dark:text-white':
           context.selected && !context.disabled,
@@ -408,7 +406,7 @@ export default {
       // States
       // 'focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-primary-400 dark:focus:ring-primary-400',
       'hover:bg-primary-50 dark:hover:bg-general-300',
-      'hover:text-general-800 dark:hover:text-general-800',
+      'hover:text-grayscale-900 dark:hover:text-grayscale-900',
 
       // Misc
       'cursor-pointer',
@@ -437,7 +435,7 @@ export default {
 
       // Colors
       {
-        'text-general-800 dark:text-general-800 bg-transparent':
+        'text-grayscale-900 dark:text-grayscale-900 bg-transparent':
           !context.selected && !context.disabled,
         'bg-primary-400 text-white dark:bg-primary-400 dark:text-white':
           context.selected && !context.disabled,
@@ -445,7 +443,7 @@ export default {
 
       // States
       // 'focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-primary-400 dark:focus:ring-primary-400',
-      'hover:text-general-800 dark:hover:text-general-800',
+      'hover:text-grayscale-900 dark:hover:text-grayscale-900',
       'hover:bg-primary-50 dark:hover:bg-general-300',
 
       // Misc
@@ -550,7 +548,7 @@ export default {
       '[&_i]:dark:text-general-950',
 
       // Colors
-      'text-general-800',
+      'text-grayscale-900',
       'border-0',
       'bg-transparent',
 
@@ -578,7 +576,7 @@ export default {
       '[&_i]:dark:text-general-950',
 
       // Colors
-      'text-general-800',
+      'text-grayscale-900',
       'border-0',
       'bg-transparent',
 
