@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v1.4.109
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.108...v1.4.109)
+
+### 🚀 Enhancements
+
+- **Table Peset Toggle:** Disabled toggle if the row is disabled ([b86a3af](https://github.com/fewangsit/wangsvue/commit/b86a3af))
+- Set the column viasibility to default true ([ba3939b](https://github.com/fewangsit/wangsvue/commit/ba3939b))
+- Add disabled state calendar ([b3f5124](https://github.com/fewangsit/wangsvue/commit/b3f5124))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.108
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.101...v1.4.108)
