@@ -840,7 +840,7 @@ const listenUpdateTableEvent = (): void => {
                           () => (item[col.field] = !item[col.field]),
                         );
 
-                        if (col.preset.confirmDialogProps) {
+                        if (col.preset?.confirmDialogProps) {
                           const { showWhen } = col.preset?.confirmDialogProps;
 
                           if (typeof showWhen === 'function') {
@@ -864,7 +864,7 @@ const listenUpdateTableEvent = (): void => {
                     @close="
                       () => {
                         if (!col.preset?.confirmDialogProps?.actionable) {
-                          col.preset.onConfirm?.(
+                          col.preset?.onConfirm?.(
                             item[col.field],
                             item,
                             () => (item[col.field] = !item[col.field]),
