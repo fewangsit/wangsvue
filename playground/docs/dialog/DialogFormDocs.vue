@@ -118,7 +118,7 @@ const apply = (e: {
           />
         </template>
 
-        <template #aside-right />
+        <template #aside-right> Aside Rigt </template>
       </DialogForm>
     </template>
   </Card>

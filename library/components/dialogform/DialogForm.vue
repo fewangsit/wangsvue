@@ -293,13 +293,13 @@ defineExpose({ form, clearField });
         </main>
 
         <aside
-          v-if="$slots['aside-right']"
+          v-if="$slots['aside-right'] && expanded"
           :class="[
             'flex flex-col gap-3',
-            { invisible: !expanded },
-            { 'w-[236px]': expanded },
+            { 'w-0 opacity-0': !expanded },
+            { 'w-[236px] opacity-100': expanded },
           ]"
-          style="transition: width 0.1s ease-in"
+          style="transition: opacity 0.1s ease-in"
         >
           <slot name="aside-right" />
         </aside>
