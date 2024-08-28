@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v1.4.116
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.115...v1.4.116)
+
+### 🚀 Enhancements
+
+- **DialogForm:** Add aside slot dialog form ([785c637](https://github.com/fewangsit/wangsvue/commit/785c637))
+
+### 🩹 Fixes
+
+- **Table:** Wrong sort order ([2c95849](https://github.com/fewangsit/wangsvue/commit/2c95849))
+
+### 🏡 Chore
+
+- **release:** V1.4.115 ([7047952](https://github.com/fewangsit/wangsvue/commit/7047952))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.115
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.114...v1.4.115)
