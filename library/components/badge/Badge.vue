@@ -4,8 +4,12 @@ import { BadgeProps, BadgeEmits } from 'lib/components/badge/Badge.vue.d';
 import { formatUserName } from 'lib/utils';
 
 import Button from 'lib/components/button/Button.vue';
+import getStatusSeverity from 'lib/utils/statusSeverity.util';
+import { WangsitStatus } from 'lib/types/wangsStatus.type';
 
-const props = defineProps<BadgeProps>();
+const props = withDefaults(defineProps<BadgeProps>(), {
+  format: 'nowrap',
+});
 const emit = defineEmits<BadgeEmits>();
 
 const hasValue = computed(() => {
@@ -16,9 +20,13 @@ const hasValue = computed(() => {
   );
 });
 
+const badgeSeverity = computed(() => {
+  return props.severity ?? getStatusSeverity(props.label as WangsitStatus);
+});
+
 const severityClasses = computed<string[]>(() => {
   if (!props.disabled) {
-    switch (props.severity) {
+    switch (badgeSeverity.value) {
       case 'success':
         return [
           'text-success-800 bg-success-100',
@@ -156,20 +164,20 @@ const updateLabel = (inputElement: HTMLElement, badgeEl: HTMLElement): void => {
         'remove-btn',
         {
           'dark:hover:!text-primary-300 !text-primary-800 dark:!text-primary-800':
-            !severity || severity === 'primary',
+            !badgeSeverity || badgeSeverity === 'primary',
           'dark:hover:!text-success-200 !text-success-800 dark:!text-success-800':
-            severity === 'success',
+            badgeSeverity === 'success',
           'dark:hover:!text-danger-200 !text-danger-700 dark:!text-danger-700':
-            severity === 'danger',
+            badgeSeverity === 'danger',
           'dark:hover:!text-warning-400 !text-warning-600 dark:!text-warning-600':
-            severity === 'warning',
+            badgeSeverity === 'warning',
           'dark:hover:!text-grayscale-800 !text-grayscale-900 dark:!text-grayscale-900':
-            severity === 'dark',
+            badgeSeverity === 'dark',
         },
       ]"
       :disabled="props.disabled"
       :pt="props.disabled ? ptDisabledBtn : undefined"
-      :severity="severity"
+      :severity="badgeSeverity"
       @click="emit('remove')"
       icon="close"
       rounded

@@ -201,7 +201,7 @@ const summaryItems = computed<SummaryItem[]>(() => {
           '!p-0 !m-0 !w-auto !h-auto !ml-auto',
           { 'rotate-180': expanded },
         ]"
-        @click="expanded = !expanded"
+        @click.stop="expanded = !expanded"
         icon="arrow-down"
         icon-class="w-6 h-6 text-general-800"
         text

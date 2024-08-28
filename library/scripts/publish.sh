@@ -24,6 +24,7 @@ cat << EOF > package.json
     "./style.css": "./style.css",
     "./types": "./types",
     "./event-bus": "./event-bus",
+    "./utils": "./utils",
     "./colors.config.json": "./colors.config.json"
   }
 }

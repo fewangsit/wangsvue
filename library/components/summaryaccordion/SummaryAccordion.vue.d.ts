@@ -1,8 +1,4 @@
-export type SubModuleStatus =
-  | 'Pending E2E Testing'
-  | 'Reported Bug'
-  | 'Sprint'
-  | 'Backlog';
+import { DevelopmentStatus } from 'lib/types/wangsStatus.type';
 
 export interface Summary {
   name: string;
@@ -47,8 +43,8 @@ export interface SubModuleSummary extends Summary {
   moduleName: string;
   progressWeb: number;
   progressMobile: number;
-  statusWeb: SubModuleStatus;
-  statusMobile: SubModuleStatus;
+  statusWeb: DevelopmentStatus;
+  statusMobile: DevelopmentStatus;
 }
 
 export interface SummaryAccordionProps {
