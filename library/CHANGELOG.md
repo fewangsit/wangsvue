@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v1.4.115
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.114...v1.4.115)
+
+### 🚀 Enhancements
+
+- Add mini profile on user name ([d8fe9b4](https://github.com/fewangsit/wangsvue/commit/d8fe9b4))
+- Add mini profile on user name ([e67605a](https://github.com/fewangsit/wangsvue/commit/e67605a))
+- **DialogForm:** Add aside slot dialog form ([785c637](https://github.com/fewangsit/wangsvue/commit/785c637))
+
+### 🩹 Fixes
+
+- Button seawrch should emits search with query ([49c211b](https://github.com/fewangsit/wangsvue/commit/49c211b))
+- Click image user name shouldnot opens overlay mini profile ([265c011](https://github.com/fewangsit/wangsvue/commit/265c011))
+
+### 🏡 Chore
+
+- **release:** V1.4.114 ([93dec19](https://github.com/fewangsit/wangsvue/commit/93dec19))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.114
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.111...v1.4.114)
