@@ -24,13 +24,22 @@ export default {
   value: ({ props }) => ({
     class: [
       // Flexbox & Overflow & Position
+      'rounded-full',
       {
         'absolute flex items-center justify-center':
           props.mode !== 'indeterminate',
       },
 
       // Colors
-      'bg-warning-500',
+      {
+        'bg-warning-500':
+          (props.value < 100 && props.value > 0 && props.severity != 'danger') ||
+          props.severity === 'warning',
+        'min-w-[6px] bg-grayscale-500': props.value == 0,
+        'bg-success-1000': props.value == 100 || props.severity == 'success',
+        'bg-danger-500': props.severity == 'danger',
+        'bg-primary-400': props.severity == 'primary',
+      },
 
       // Spacing & Sizing
       'm-0',

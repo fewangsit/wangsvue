@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue';
-import { BadgeProps } from '../badge/Badge.vue.d';
 import {
   ModuleSummary,
   ProjectSummary,
   SubModuleSummary,
   SummaryAccordionProps,
 } from './SummaryAccordion.vue.d';
-import ProgressBar from 'primevue/progressbar';
+import ProgressBar from '../progressbar/ProgressBar.vue';
 import Badge from '../badge/Badge.vue';
 import Button from '../button/Button.vue';
 import { IconProps, WangsIcons } from '../icon/Icon.vue.d';
 import Icon from '../icon/Icon.vue';
+import getStatusSeverity from 'lib/utils/statusSeverity.util';
 
 interface SummaryItem {
   icon: WangsIcons;
@@ -24,18 +24,6 @@ interface SummaryItem {
 const props = defineProps<SummaryAccordionProps>();
 
 const expanded = shallowRef(false);
-
-const severity = computed<BadgeProps['severity']>(() => {
-  switch (props.summary.status) {
-    case 'Sprint':
-      return 'warning';
-    case 'Selesai':
-      return 'success';
-    case 'Backlog':
-    default:
-      return 'dark';
-  }
-});
 
 const name = computed(() => {
   switch (props.summary.type) {
@@ -173,7 +161,7 @@ const summaryItems = computed<SummaryItem[]>(() => {
   >
     <div
       @click="expanded = !expanded"
-      class="flex items-center gap-1 cursor-pointer"
+      class="flex items-center gap-[10px] cursor-pointer"
       data-wv-section="projectmeta"
     >
       <h2
@@ -183,8 +171,9 @@ const summaryItems = computed<SummaryItem[]>(() => {
         {{ name }} ({{ summary.initialName }})
       </h2>
 
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2">
         <ProgressBar
+          :severity="getStatusSeverity(summary.status)"
           :show-value="false"
           :value="progress.task"
           class="w-[20vw] max-w-[200px]"
@@ -194,7 +183,7 @@ const summaryItems = computed<SummaryItem[]>(() => {
         </span>
       </div>
 
-      <Badge :label="summary.status" :severity="severity" format="nowrap" />
+      <Badge :label="summary.status" format="nowrap" />
 
       <Button
         :class="[
@@ -211,34 +200,36 @@ const summaryItems = computed<SummaryItem[]>(() => {
     <div
       v-if="summary.type === 'submodule'"
       v-show="expanded"
-      class="grid grid-cols-2 gap-3"
+      class="flex gap-3 items-center"
     >
       <div
-        class="grid grid-cols-[max-content,max-content,1fr,max-content] items-center gap-2"
+        class="grid grid-cols-[max-content,150px,max-content,max-content] items-center gap-2"
       >
         Web
-        <Badge :label="progressSubModule.statusWeb" format="nowrap" />
         <ProgressBar
+          :severity="getStatusSeverity(progressSubModule.statusWeb)"
           :show-value="false"
           :value="progressSubModule.progressWeb"
         />
         <span class="font-medium text-[14px] leading-4">
           {{ progressSubModule.progressWeb }}%
         </span>
+        <Badge :label="progressSubModule.statusWeb" format="nowrap" />
       </div>
 
       <div
-        class="grid grid-cols-[max-content,max-content,1fr,max-content] items-center gap-2"
+        class="grid grid-cols-[max-content,150px,max-content,max-content] items-center gap-2"
       >
         Mobile
-        <Badge :label="progressSubModule.statusMobile" format="nowrap" />
         <ProgressBar
+          :severity="getStatusSeverity(progressSubModule.statusMobile)"
           :show-value="false"
-          :value="progressSubModule.progressWeb"
+          :value="progressSubModule.progressMobile"
         />
         <span class="font-medium text-[14px] leading-4">
           {{ progressSubModule.progressMobile }}%
         </span>
+        <Badge :label="progressSubModule.statusMobile" format="nowrap" />
       </div>
     </div>
 

@@ -1,9 +1,9 @@
-import { DevelopmentStatus } from 'lib/types/wangsStatus.type';
+import { DevelopmentStatus, ProjectStatus } from 'lib/types/wangsStatus.type';
 
 export interface Summary {
   name: string;
   priority: number;
-  status: 'Backlog' | 'Sprint' | 'Selesai';
+  status: ProjectStatus;
   initialName: string;
   /**
    * Task with status 'Sprint'
