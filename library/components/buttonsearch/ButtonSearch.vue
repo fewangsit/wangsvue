@@ -67,7 +67,10 @@ const updateInput = (event: Event): void => {
       'border-b border-primary-100',
     ]"
     @submit.prevent="
-      eventBus.emit('search-table', { tableName, search: query })
+      () => {
+        eventBus.emit('search-table', { tableName, search: query });
+        $emit('search', query);
+      }
     "
     data-wv-section="searchbox-form"
   >
@@ -79,6 +82,7 @@ const updateInput = (event: Event): void => {
           showSearchInput = false;
           $emit('collapsed');
           eventBus.emit('search-table', { tableName, search: undefined });
+          $emit('search', undefined);
         }
       "
       data-wv-section="buttonsearchtrigger"
