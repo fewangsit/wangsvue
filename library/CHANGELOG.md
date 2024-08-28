@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v1.4.118
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.117...v1.4.118)
+
+### 🚀 Enhancements
+
+- Add getStatusSeverity function and implement to Badge when no severity passed ([f5af22f](https://github.com/fewangsit/wangsvue/commit/f5af22f))
+
+### 💅 Refactors
+
+- Update progress bar project summary ([7210647](https://github.com/fewangsit/wangsvue/commit/7210647))
+
+### 🏡 Chore
+
+- **release:** V1.4.117 ([aa3582f](https://github.com/fewangsit/wangsvue/commit/aa3582f))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.117
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.116...v1.4.117)
