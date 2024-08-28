@@ -46,7 +46,7 @@ export default {
   header: {
     class: [
       // Flexbox and Alignment
-      'flex items-center justify-between gap-2',
+      'flex items-center gap-2',
       'shrink-0',
 
       // Shape
