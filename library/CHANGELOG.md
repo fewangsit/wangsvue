@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.117
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.116...v1.4.117)
+
+### 🩹 Fixes
+
+- **DialogForm:** Update confitional showing aside ([610445a](https://github.com/fewangsit/wangsvue/commit/610445a))
+
+### 🏡 Chore
+
+- **release:** V1.4.116 ([60c4a67](https://github.com/fewangsit/wangsvue/commit/60c4a67))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.116
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.115...v1.4.116)
