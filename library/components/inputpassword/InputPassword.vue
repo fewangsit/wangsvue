@@ -85,6 +85,13 @@ watch(
     field.value = value;
   },
 );
+
+watch(
+  () => props.invalid,
+  () => {
+    field.validate?.();
+  },
+);
 </script>
 
 <template>
