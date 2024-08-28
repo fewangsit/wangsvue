@@ -5,7 +5,12 @@ import { CheckboxModelValue } from '../checkbox/Checkbox.vue.d';
 
 import { Nullable } from 'primevue/ts-helpers';
 
-export type Condition = 'empty' | 'exceed' | 'invalidFormat' | 'exist';
+export type Condition =
+  | 'empty'
+  | 'exceed'
+  | 'invalidFormat'
+  | 'exist'
+  | 'mismatch';
 
 export type CustomValidation = Partial<Record<Condition, string>>;
 

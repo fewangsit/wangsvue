@@ -49,8 +49,11 @@ const apply = (e: {
       <DialogForm
         v-model:visible="showForm"
         :buttons-template="['submit', 'cancel', 'clear']"
+        :closable="false"
         @submit="apply"
-        header="Form pembuatan member"
+        header="Buat Member"
+        show-stay-checkbox
+        width="small"
       >
         <template #fields>
           <InputText
@@ -114,6 +117,8 @@ const apply = (e: {
             value="Indonesia"
           />
         </template>
+
+        <template #aside-right />
       </DialogForm>
     </template>
   </Card>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, useSlots, withDefaults } from 'vue';
+import { computed, ref, shallowRef, useSlots, withDefaults } from 'vue';
 import Form from '../form/Form.vue';
 import Dialog from 'primevue/dialog';
 import Button from '../button/Button.vue';
@@ -34,11 +34,25 @@ const slots = useSlots();
 
 const form = ref<FormInstance>();
 const dialogForm = ref<Dialog>();
-const fieldsKey = ref<number>(0);
-const showConfirm = ref<boolean>(false);
+const fieldsKey = shallowRef<number>(0);
+const showConfirm = shallowRef<boolean>(false);
+const expanded = shallowRef<boolean>(false);
 const formPayload = ref<FormPayload>({
   stayAfterSubmit: false,
   formValues: {},
+});
+
+const computedWidth = computed(() => {
+  const asideRightWidth = slots['aside-right'] && expanded.value ? 260 : 0;
+  const baseWidth = {
+    'small': 400,
+    'medium': 500,
+    'large': 572,
+    'semi-xlarge': 600,
+    'xlarge': 800,
+  }[props.width];
+
+  return `calc(${baseWidth}px + ${asideRightWidth}px)`;
 });
 
 const closeDialog = (): void => {
@@ -141,17 +155,8 @@ defineExpose({ form, clearField });
     :header="header"
     :pt="{
       root: {
-        class: [
-          ...DialogPreset.root({ state: {} }).class,
-          'max-w-[90vw]',
-          {
-            '!w-[400px]': props.width === 'small',
-            '!w-[500px]': props.width === 'medium',
-            '!w-[572px]': props.width === 'large',
-            '!w-[600px]': props.width === 'semi-xlarge',
-            '!w-[800px]': props.width === 'xlarge',
-          },
-        ],
+        class: [...DialogPreset.root({ state: {} }).class, 'max-w-[90vw]'],
+        style: `width: ${computedWidth}; transition: width 0.1s ease-in;`,
       },
       header: {
         'class': [...DialogPreset.header.class],
@@ -177,96 +182,127 @@ defineExpose({ form, clearField });
     data-wv-section="dialog-form"
     modal
   >
-    <template #header>
-      <slot name="header">
-        <Icon
-          v-if="headerIcon"
-          :icon="headerIcon"
-          :severity="severity"
-          aria-label="Header Icon"
-          class="text-2xl"
-          data-wv-section="headericon"
-        />
-        <h3
-          class="text-grayscale-900 dark:text-general-100 text-center text-[0.9rem] leading-[1.125rem] font-bold tracking-[0.28px]"
-          data-wv-section="dialog-form-title"
+    <template #container>
+      <div :class="['flex', { 'gap-6': expanded }]">
+        <main class="flex flex-col gap-3 w-full">
+          <div class="flex items-center gap-2" data-wv-section="header">
+            <slot name="header">
+              <Icon
+                v-if="headerIcon"
+                :icon="headerIcon"
+                :severity="severity"
+                aria-label="Header Icon"
+                class="text-2xl"
+                data-wv-section="headericon"
+              />
+              <h3
+                class="mr-auto text-grayscale-900 dark:text-general-100 text-center text-[0.9rem] leading-[1.125rem] font-bold tracking-[0.28px]"
+                data-wv-section="dialog-form-title"
+              >
+                {{ header }}
+              </h3>
+
+              <Button
+                v-if="$slots['aside-right']"
+                :class="['!px-1.5 !py-1 -mr-1.5 !text-xs']"
+                :label="expanded ? 'Tutup <' : 'Lihat data yang ada >'"
+                @click="expanded = !expanded"
+                data-wv-section="buttonselectall"
+                text
+              />
+
+              <Button
+                v-if="closable"
+                @click="closeDialog"
+                class="!p-0.5"
+                data-wv-section="closebutton"
+                icon="close"
+                icon-class="w-[22px] h-[22px]"
+                severity="secondary"
+                text
+              />
+            </slot>
+          </div>
+
+          <Form
+            ref="form"
+            :buttons-template="buttonsTemplate"
+            :column-per-row="columnPerRow"
+            :reset-after-submit="resetAfterSubmit"
+            @submit="onSubmitDialogForm"
+            hide-footer
+          >
+            <template #fields="{ formValues }">
+              <slot :key="fieldsKey" :form-values="formValues" name="fields" />
+            </template>
+          </Form>
+
+          <slot
+            :hide="() => (showConfirm = false)"
+            :submit="onFormValidated"
+            :visible="showConfirm"
+            name="confirm"
+          />
+
+          <div class="flex flex-col gap-3 items-end justify-center">
+            <Checkbox
+              v-if="showStayCheckbox"
+              :model-value="form?.stayAfterSubmit"
+              @update:model-value="form && (form.stayAfterSubmit = $event)"
+              label="Tetap di halaman ini"
+            />
+            <ValidatorMessage
+              v-show="invalid && validatorMessage"
+              :format="false"
+              :message="validatorMessage"
+            />
+            <div
+              v-if="props.buttonsTemplate.length"
+              class="flex gap-1 items-center justify-end"
+              data-wv-section="footer-button"
+            >
+              <slot :submit="onButtonSubmitClicked" name="actionButtons">
+                <Button
+                  v-if="props.buttonsTemplate?.includes('cancel')"
+                  @click="emit('close'), emit('update:visible', false)"
+                  data-wv-section="cancel-btn"
+                  label="Batal"
+                  severity="dark"
+                  text
+                />
+                <Button
+                  v-if="props.buttonsTemplate?.includes('clear')"
+                  :label="clearBtnLabel ?? 'Bersihkan Field'"
+                  @click="clearField"
+                  class="whitespace-nowrap"
+                  data-wv-section="clear-field"
+                  text
+                />
+                <Button
+                  v-if="props.buttonsTemplate?.includes('submit')"
+                  :label="submitBtnLabel ?? 'Simpan'"
+                  :severity="
+                    props.severity === 'primary' ? undefined : 'success'
+                  "
+                  @click="onButtonSubmitClicked"
+                  data-wv-section="save-submit-button"
+                />
+              </slot>
+            </div>
+          </div>
+        </main>
+
+        <aside
+          v-if="$slots['aside-right']"
+          :class="[
+            'flex flex-col gap-3',
+            { invisible: !expanded },
+            { 'w-[236px]': expanded },
+          ]"
+          style="transition: width 0.1s ease-in"
         >
-          {{ header }}
-        </h3>
-      </slot>
-    </template>
-
-    <template #closeicon>
-      <Icon
-        @click="closeDialog"
-        class="w-[22px] h-[22px]"
-        data-wv-section="close-icon"
-        icon="close"
-        severity="secondary"
-      />
-    </template>
-
-    <Form
-      ref="form"
-      :buttons-template="buttonsTemplate"
-      :column-per-row="columnPerRow"
-      :reset-after-submit="resetAfterSubmit"
-      @submit="onSubmitDialogForm"
-      hide-footer
-    >
-      <template #fields="{ formValues }">
-        <slot :key="fieldsKey" :form-values="formValues" name="fields" />
-      </template>
-    </Form>
-
-    <slot
-      :hide="() => (showConfirm = false)"
-      :submit="onFormValidated"
-      :visible="showConfirm"
-      name="confirm"
-    />
-
-    <template #footer>
-      <Checkbox
-        v-if="showStayCheckbox"
-        :model-value="form?.stayAfterSubmit"
-        @update:model-value="form && (form.stayAfterSubmit = $event)"
-        label="Tetap di halaman ini"
-      />
-      <ValidatorMessage
-        v-show="invalid && validatorMessage"
-        :format="false"
-        :message="validatorMessage"
-      />
-      <div
-        v-if="props.buttonsTemplate.length"
-        class="flex gap-1 items-center justify-end"
-        data-wv-section="footer-button"
-      >
-        <slot :submit="onButtonSubmitClicked" name="actionButtons">
-          <Button
-            v-if="props.buttonsTemplate?.includes('cancel')"
-            @click="emit('close'), emit('update:visible', false)"
-            data-wv-section="cancel-btn"
-            label="Batal"
-            severity="dark"
-            text
-          />
-          <Button
-            v-if="props.buttonsTemplate?.includes('clear')"
-            :label="clearBtnLabel ?? 'Bersihkan Field'"
-            @click="clearField"
-            data-wv-section="clear-field"
-            text
-          />
-          <Button
-            v-if="props.buttonsTemplate?.includes('submit')"
-            :label="submitBtnLabel ?? 'Simpan'"
-            :severity="props.severity === 'primary' ? undefined : 'success'"
-            @click="onButtonSubmitClicked"
-            data-wv-section="save-submit-button"
-          />
-        </slot>
+          <slot name="aside-right" />
+        </aside>
       </div>
     </template>
   </Dialog>

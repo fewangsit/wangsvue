@@ -61,7 +61,7 @@ export default {
     class: ['text-general-800 text-sm font-bold leading-[19.12px] tracking-[0.24px]'],
   },
   icons: {
-    class: ['flex items-center ml-auto'],
+    class: ['flex items-center'],
   },
   closeButton: {
     class: [
