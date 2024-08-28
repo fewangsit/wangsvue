@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v1.4.119
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.118...v1.4.119)
+
+### 🚀 Enhancements
+
+- **InputPassword:** Watch props.invalid then trigger validate ([1b14dc1](https://github.com/fewangsit/wangsvue/commit/1b14dc1))
+
+### 🩹 Fixes
+
+- User anem and email should be centered ([3b7afb7](https://github.com/fewangsit/wangsvue/commit/3b7afb7))
+- Wrong severity for Pending E2E - sub module should not using initial name ([439c3df](https://github.com/fewangsit/wangsvue/commit/439c3df))
+- Dialog confirm header text centered ([3ee6879](https://github.com/fewangsit/wangsvue/commit/3ee6879))
+
+### 🏡 Chore
+
+- **release:** V1.4.118 ([30793ad](https://github.com/fewangsit/wangsvue/commit/30793ad))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.118
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.117...v1.4.118)
