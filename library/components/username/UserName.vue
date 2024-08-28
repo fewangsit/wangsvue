@@ -68,7 +68,7 @@ const adjustPosition = (): void => {
           rounded
         />
 
-        <div class="flex flex-col gap-0.5">
+        <div class="flex flex-col gap-0.5 items-center justify-center">
           <h4 class="font-semibold text-[10px] leading-[15px]">
             {{ props.user?.fullName }} ({{ props.user?.nickName }})
           </h4>
