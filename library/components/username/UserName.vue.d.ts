@@ -5,6 +5,10 @@ import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
  */
 export interface UserNameProps {
   /**
+   * @default 'picture' - Show user profile picture instead of user icon
+   */
+  type?: 'icon' | 'picture';
+  /**
    * The thumbnail UserName.
    */
   thumbnail?: string | Blob;
@@ -26,13 +30,13 @@ export interface UserNameProps {
    */
   userNameField?: string;
   /**
-   * Specify the field of user to be used as display name
+   * Specify the field of user to be used as display picture
    *
    * @example 'image.profile'
    *
-   * @default 'profile'
+   * @default 'profilePicture'
    */
-  userProfileField?: string;
+  profilePictureField?: string;
 }
 
 /**

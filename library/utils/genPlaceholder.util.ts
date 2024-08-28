@@ -43,12 +43,12 @@ export const genPlaceholder = (
   const ctx = canvas.getContext('2d');
 
   if (ctx) {
-    ctx.font = '600 48px Poppins';
+    ctx.font = '600 48px/48px Poppins';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
     const horizontalCenter = canvas.width / 2;
-    const verticalCenter = canvas.height / 2;
+    const verticalCenter = (canvas.height + 8) / 2;
 
     ctx.fillStyle = bg;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
