@@ -168,7 +168,12 @@ const summaryItems = computed<SummaryItem[]>(() => {
         class="font-semibold text-base leading-4"
         data-wv-section="projectname"
       >
-        {{ name }} ({{ summary.initialName }})
+        <template v-if="summary.type != 'submodule'">
+          {{ name }} ({{ summary.initialName }})
+        </template>
+        <template v-else>
+          {{ name }}
+        </template>
       </h2>
 
       <div class="flex items-center gap-2">

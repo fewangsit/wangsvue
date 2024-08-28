@@ -127,7 +127,9 @@ const subModuleSummary = reactive<SubModuleSummary>({
           totalSprintTask: 0,
           totalBacklogTask: 0,
           progressMobile: 100,
+          progressWeb: 100,
           statusMobile: 'Selesai',
+          statusWeb: 'Selesai',
         }"
       />
     </div>
