@@ -42,6 +42,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
         component: (): Promise<Component> =>
           import('./docs/username/UserNameDocs.vue'),
       },
+      {
+        path: 'dialogform',
+        name: 'Dialog Form Docs',
+        component: (): Promise<Component> =>
+          import('./docs/dialog/DialogFormDocs.vue'),
+      },
       /*
        * {
        *   path: 'imagecompressor',
@@ -167,12 +173,6 @@ const routes: Readonly<RouteRecordRaw[]> = [
        *   path: 'form',
        *   name: 'Form Docs',
        *   component: (): Promise<Component> => import('./docs/form/FormDocs.vue'),
-       * },
-       * {
-       *   path: 'dialogform',
-       *   name: 'Dialog Form Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/dialog/DialogFormDocs.vue'),
        * },
        * {
        *   path: 'calendar',

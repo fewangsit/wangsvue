@@ -39,6 +39,7 @@ const adjustPosition = (): void => {
       :thumbnail="
         getNestedProperyValue(props.user ?? {}, profilePictureField) as string
       "
+      @click.stop=""
       class="w-[30px] h-[30px]"
       rounded
     />
@@ -47,7 +48,7 @@ const adjustPosition = (): void => {
 
     <span
       :class="[
-        'text-xs font-normal',
+        'text-xs font-normal cursor-pointer',
         { 'text-primary-400 cursor-pointer': props.type === 'icon' },
         { 'text-general-800': props.type !== 'icon' },
       ]"
