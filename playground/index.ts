@@ -48,6 +48,25 @@ const routes: Readonly<RouteRecordRaw[]> = [
         component: (): Promise<Component> =>
           import('./docs/dialog/DialogFormDocs.vue'),
       },
+      {
+        path: 'editor',
+        name: 'Editor Docs',
+        component: (): Promise<Component> =>
+          import('./docs/editor/EditorDocs.vue'),
+      },
+      {
+        path: 'dialogconfirm',
+        name: 'Dialog Confirmation Docs',
+        component: (): Promise<Component> =>
+          import('./docs/dialog/DialogConfirmDocs.vue'),
+      },
+
+      {
+        path: 'button',
+        name: 'ButtonDocs',
+        component: (): Promise<Component> =>
+          import('./docs/button/ButtonDocs.vue'),
+      },
       /*
        * {
        *   path: 'imagecompressor',
