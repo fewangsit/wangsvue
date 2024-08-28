@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v1.4.114
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.111...v1.4.114)
+
+### 🚀 Enhancements
+
+- Add input url ([4350eff](https://github.com/fewangsit/wangsvue/commit/4350eff))
+- **SummaryAccordion:** Click accordion title opens content ([d63eb68](https://github.com/fewangsit/wangsvue/commit/d63eb68))
+
+### 🩹 Fixes
+
+- Filter conttainer should remove event bus with specified handler ([64c6426](https://github.com/fewangsit/wangsvue/commit/64c6426))
+- Button seawrch should emits search with query ([49c211b](https://github.com/fewangsit/wangsvue/commit/49c211b))
+
+### 🏡 Chore
+
+- **release:** V1.4.111 ([6443ece](https://github.com/fewangsit/wangsvue/commit/6443ece))
+- **release:** V1.4.112 ([ae3bcbd](https://github.com/fewangsit/wangsvue/commit/ae3bcbd))
+- **release:** V1.4.113 ([c7e9cc1](https://github.com/fewangsit/wangsvue/commit/c7e9cc1))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.113
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.112...v1.4.113)
