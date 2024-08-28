@@ -729,8 +729,8 @@ const listenUpdateTableEvent = (): void => {
                   !sortBy || sortBy != col.field
                     ? 'arrow-up-down'
                     : sortOrder == 1
-                      ? 'sort-desc'
-                      : 'sort-asc'
+                      ? 'sort-asc'
+                      : 'sort-desc'
                 "
                 class="text-base"
               />

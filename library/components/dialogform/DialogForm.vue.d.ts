@@ -148,19 +148,23 @@ export interface DialogFormSlots {
   /**
    * The fields slot for the Dialogform. Here is where you can put your Dialogform fields.
    */
-  fields: Slot<{ formValues: GenericObject; key?: number }>;
+  'fields': Slot<{ formValues: GenericObject; key?: number }>;
   /**
    * Slot for dialog confirm.
    */
-  confirm: Slot<ConfirmSlots>;
+  'confirm': Slot<ConfirmSlots>;
+  /**
+   * Slot for aside right expansion.
+   */
+  'aside-right': Slot;
   /**
    * Slot for dialog header.
    */
-  header: Slot;
+  'header': Slot;
   /**
    * Slot for action buttons.
    */
-  actionButtons: Slot<ActionSlots>;
+  'actionButtons': Slot<ActionSlots>;
 }
 
 /**
