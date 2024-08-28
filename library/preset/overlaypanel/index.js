@@ -1,6 +1,7 @@
 export default {
   root: {
     class: [
+      'h-max',
       // Shape
       'rounded-lg',
       'shadow-xl',
