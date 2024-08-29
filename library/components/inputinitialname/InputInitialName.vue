@@ -13,15 +13,15 @@ const emit = defineEmits<InputInitialNameEmits>();
 
 const model = computed({
   get() {
-    return props.modelValue?.toUpperCase() ?? '';
+    return props.modelValue?.toUpperCase();
   },
-  set(value: string) {
-    emit('update:modelValue', value.toUpperCase());
+  set(value: string | null) {
+    emit('update:modelValue', value?.toUpperCase());
   },
 });
 
 const isExist = computed(() => {
-  return props.existingInitialNames.includes(model.value);
+  return props.existingInitialNames?.includes(model.value);
 });
 
 const errorMessage = computed(() => {
@@ -34,7 +34,8 @@ const errorMessage = computed(() => {
 watch(
   () => props.fullName,
   () => {
-    model.value = getInititalName(props.existingInitialNames, props.fullName);
+    model.value =
+      getInititalName(props.existingInitialNames, props.fullName) || null;
   },
   {
     immediate: true,

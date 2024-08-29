@@ -76,6 +76,7 @@ export const getInitialsByConsonant = (
 
   return getInitialsBy3FirstLetter(existingInitials, fullName);
 };
+
 export const getInitialsBy3FirstLetter = (
   existingInitials: string[],
   fullName: string,

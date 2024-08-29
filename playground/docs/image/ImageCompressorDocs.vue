@@ -40,6 +40,8 @@ const existingInitialNames = ['ZK', 'ZNK', 'KRN', 'ZAI'];
           class="mb-4 w-[20vw]"
           field-name="initialName"
           label="Initial Name"
+          mandatory
+          use-validator
         />
         <ImageCompressor :initial-name="initialName" />
       </div>
