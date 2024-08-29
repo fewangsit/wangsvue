@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.127
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.126...v1.4.127)
+
+### 🚀 Enhancements
+
+- **DialogForm:** Add emit hide and show ([d6b4b08](https://github.com/fewangsit/wangsvue/commit/d6b4b08))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.126
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.120...v1.4.126)
