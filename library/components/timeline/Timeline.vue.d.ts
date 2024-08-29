@@ -1,11 +1,37 @@
 import { ClassComponent } from '../ts-helpers';
 
-export interface DetailValueImage {
-  type: 'image';
-  path?: string;
+export interface AttachmentFile {
+  type: 'image' | 'xls' | 'doc' | 'pdf' | 'csv' | 'video' | 'data';
+  filePath?: string;
 }
 
-export type DetailValue = string | DetailValueImage;
+export interface AttachmentLink {
+  type: 'link';
+  url?: string;
+}
+
+export interface LinkTaskURL {
+  type: 'taskUrl';
+  url: string;
+}
+
+export interface LinkTaskIframeEmbed {
+  type: 'embed';
+  code: string;
+}
+
+export type Attachment =
+  | AttachmentLink
+  | AttachmentFile
+  | LinkTaskIframeEmbed
+  | LinkTaskURL;
+
+export type LinkTaskEditAction = Record<
+  'Sebelum' | 'Sesudah',
+  LinkTaskURL | LinkTaskIframeEmbed
+>;
+
+export type KeyValue = Record<string, string>;
 
 export type TimelineItem = {
   _id: string;
@@ -20,7 +46,7 @@ export type TimelineItem = {
     position: string;
     email: string;
   };
-  detail?: Record<string, DetailValue>;
+  detail?: string | KeyValue | Attachment | LinkTaskEditAction;
 };
 
 export type TimelineProps = {

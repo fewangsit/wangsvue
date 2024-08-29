@@ -5,22 +5,7 @@ export default {
     class: ['flex flex-col grow', 'text-xs font-normal text-grayscale-900'],
   }),
   event: ({ props, context }) => ({
-    class: [
-      'flex relative min-h-[31px] gap-[10px]',
-      {
-        'flex-row-reverse':
-          props.align === 'right' ||
-          (props.layout === 'vertical' &&
-            props.align === 'alternate' &&
-            context.index % 2 === 1),
-        'flex-col flex-1': props.layout === 'horizontal',
-        'flex-col-reverse ':
-          props.align === 'bottom' ||
-          (props.layout === 'horizontal' &&
-            props.align === 'alternate' &&
-            context.index % 2 === 1),
-      },
-    ],
+    class: ['grid grid-cols-[max-content,1fr] gap-x-[10px] gap-y-1'],
   }),
   opposite: ({ props, context }) => ({
     class: 'hidden',
@@ -56,6 +41,6 @@ export default {
     class: ['w-[2px] grow bg-grayscale-900'],
   }),
   content: ({ props, context }) => ({
-    class: ['flex-1 text-left'],
+    class: ['grid grid-rows-[max-content,auto] pb-3'],
   }),
 };
