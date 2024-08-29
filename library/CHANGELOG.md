@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v1.4.120
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.119...v1.4.120)
+
+### 🚀 Enhancements
+
+- Add editor - to be continued ([e5467c6](https://github.com/fewangsit/wangsvue/commit/e5467c6))
+- **FilterContainer:** Add emit apply values ([85678b9](https://github.com/fewangsit/wangsvue/commit/85678b9))
+
+### 🩹 Fixes
+
+- Dialog confirm header text centered ([3ee6879](https://github.com/fewangsit/wangsvue/commit/3ee6879))
+
+### 🏡 Chore
+
+- **release:** V1.4.119 ([9d7e20d](https://github.com/fewangsit/wangsvue/commit/9d7e20d))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.119
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.118...v1.4.119)
