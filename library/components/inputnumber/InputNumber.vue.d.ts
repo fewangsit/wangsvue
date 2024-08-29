@@ -18,6 +18,12 @@ export interface InputNumberProps {
    */
   value?: number;
   /**
+   * Exisitng values to be checkeed with validation 'exist' - check the validatorMessage props
+   *
+   * - Need to specify the custom validation : { empty: 'Error message when empty' } within props validatorMessage
+   */
+  existingValues?: number[];
+  /**
    * The input label. Tell the user what input is this.
    */
   label?: string;
