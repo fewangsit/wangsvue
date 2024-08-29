@@ -178,6 +178,8 @@ defineExpose({ form, clearField });
       },
     }"
     :visible="visible"
+    @hide="emit('hide')"
+    @show="emit('show')"
     @update:visible="emit('update:visible', !!$event)"
     data-wv-section="dialog-form"
     modal

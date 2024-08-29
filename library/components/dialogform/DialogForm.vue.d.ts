@@ -187,6 +187,14 @@ export type DialogFormEmits = {
    * Emits when 'Clear Field' button clicked.
    */
   'clear': [];
+  /**
+   * Callback to invoke when dialog is shown.
+   */
+  'show': [];
+  /**
+   * Callback to invoke when dialog is hidden.
+   */
+  'hide': [];
 };
 
 /**
