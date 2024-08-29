@@ -1,5 +1,6 @@
 import { Component } from 'vue';
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import TimeLineDocs from './docs/timeline/TimeLineDocs.vue';
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
@@ -70,16 +71,17 @@ const routes: Readonly<RouteRecordRaw[]> = [
       {
         path: 'timeline',
         name: 'TimelineDocs',
-        component: (): Promise<Component> =>
-          import('./docs/timeline/TimeLineDocs.vue'),
+        component: TimeLineDocs,
       },
 
-      {
-        path: 'imagecompressor',
-        name: 'Image Docs',
-        component: (): Promise<Component> =>
-          import('./docs/image/ImageCompressorDocs.vue'),
-      },
+      /*
+       * {
+       *   path: 'imagecompressor',
+       *   name: 'Image Docs',
+       *   component: (): Promise<Component> =>
+       *     import('./docs/image/ImageCompressorDocs.vue'),
+       * },
+       */
       /*
        * {
        *   path: 'button',
