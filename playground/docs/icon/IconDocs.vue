@@ -81,6 +81,7 @@ const wangsIconsArray: WangsIcons[] = [
   'image-add',
   'indeterminate-circle-fill',
   'info',
+  'information-line',
   'link-unlink-m',
   'list-settings',
   'loader-4',
