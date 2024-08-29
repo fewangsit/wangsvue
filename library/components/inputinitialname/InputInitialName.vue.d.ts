@@ -11,6 +11,10 @@ export interface InputInitialNameProps {
    */
   modelValue?: Nullable<string>;
   /**
+   * Initial value for field validation
+   */
+  value?: Nullable<string>;
+  /**
    * Pass the full name to automaticaly formatted to initial name
    */
   fullName?: string;

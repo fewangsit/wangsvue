@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue';
+import { computed, onMounted, watch } from 'vue';
 import InputText from '../inputtext/InputText.vue';
 import { Nullable } from '../ts-helpers';
 import type {
@@ -14,6 +14,10 @@ const props = withDefaults(defineProps<InputInitialNameProps>(), {
 });
 
 const emit = defineEmits<InputInitialNameEmits>();
+
+onMounted(() => {
+  if (!props.value) convertFullNameToInitial();
+});
 
 const model = computed({
   get() {
@@ -35,19 +39,28 @@ const errorMessage = computed(() => {
   };
 });
 
+const convertFullNameToInitial = (): void => {
+  model.value =
+    getInititalName(
+      props.existingInitialNames,
+      props.fullName,
+      props.maxLength,
+    )?.slice(0, props.maxLength) || undefined;
+};
+
 watch(
   () => props.fullName,
   () => {
-    model.value =
-      getInititalName(
-        props.existingInitialNames,
-        props.fullName,
-        props.maxLength,
-      )?.slice(0, props.maxLength) || undefined;
+    convertFullNameToInitial();
   },
-  {
-    immediate: true,
+);
+
+watch(
+  () => props.value,
+  () => {
+    model.value = props.value;
   },
+  { once: true },
 );
 </script>
 <template>
