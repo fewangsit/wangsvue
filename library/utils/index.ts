@@ -4,6 +4,7 @@ import filterOptions from './filterOptions.util';
 import exportToExcel from './exportToExcel.util';
 import getImageURL from './getImageURL.util';
 import genPlaceholder from './genPlaceholder.util';
+import getStatusSeverity from './statusSeverity.util';
 
 const getNestedProperyValue = (
   object: object,
@@ -57,4 +58,5 @@ export {
   getImageURL,
   genPlaceholder,
   getInititalName,
+  getStatusSeverity,
 };
