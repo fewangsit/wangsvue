@@ -86,6 +86,7 @@ export type WangsIcons =
   | 'image-add'
   | 'indeterminate-circle-fill'
   | 'info'
+  | 'information-line'
   | 'list-check'
   | 'link-unlink-m'
   | 'list-settings'
