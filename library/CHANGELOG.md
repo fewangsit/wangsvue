@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.123
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.122...v1.4.123)
+
+### 🩹 Fixes
+
+- Input initial name module value beomes empty stirng that triggers invalid field ([04703d3](https://github.com/fewangsit/wangsvue/commit/04703d3))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.122
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.121...v1.4.122)
