@@ -1,6 +1,34 @@
 # Changelog
 
 
+## v1.4.126
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.120...v1.4.126)
+
+### 🚀 Enhancements
+
+- Add timeline for event logs ([19b6cc7](https://github.com/fewangsit/wangsvue/commit/19b6cc7))
+- **FilterContainer:** Update grid layout fields when props fields changes dynamicaly ([6e6ed17](https://github.com/fewangsit/wangsvue/commit/6e6ed17))
+
+### 🩹 Fixes
+
+- Input initial name module value beomes empty stirng that triggers invalid field ([04703d3](https://github.com/fewangsit/wangsvue/commit/04703d3))
+- Type errror on InputInitialName ([17814c1](https://github.com/fewangsit/wangsvue/commit/17814c1))
+- **router:** Failed to resolve dynamicaly module ([9bf0674](https://github.com/fewangsit/wangsvue/commit/9bf0674))
+- **router:** Failed to resolve dynamicaly module #2 ([#2](https://github.com/fewangsit/wangsvue/issues/2))
+
+### 🏡 Chore
+
+- **release:** V1.4.121 ([0e6f6ba](https://github.com/fewangsit/wangsvue/commit/0e6f6ba))
+- **release:** V1.4.122 ([54cac6d](https://github.com/fewangsit/wangsvue/commit/54cac6d))
+- **release:** V1.4.123 ([73208fd](https://github.com/fewangsit/wangsvue/commit/73208fd))
+- **release:** V1.4.124 ([7340915](https://github.com/fewangsit/wangsvue/commit/7340915))
+- **release:** V1.4.125 ([a1c896f](https://github.com/fewangsit/wangsvue/commit/a1c896f))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.125
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.124...v1.4.125)
