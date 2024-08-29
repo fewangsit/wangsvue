@@ -140,6 +140,10 @@ const wangsIconsArray: WangsIcons[] = [
   'user-settings',
   'user-shared-2-line',
   'verification',
+  'pdf',
+  'xls',
+  'data',
+  'doc',
 ];
 </script>
 
