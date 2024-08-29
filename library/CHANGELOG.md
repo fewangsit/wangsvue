@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.131
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.130...v1.4.131)
+
+### 🚀 Enhancements
+
+- **InputInitialValue:** Add value prop to set initital value form validation ([e446944](https://github.com/fewangsit/wangsvue/commit/e446944))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.130
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.129...v1.4.130)
