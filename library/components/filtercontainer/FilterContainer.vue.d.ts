@@ -3,6 +3,7 @@ import { DefineComponent, Slot } from 'vue';
 import { MultiSelectProps } from '../multiselect/MultiSelect.vue.d';
 import { InputRangeNumberProps } from '../inputrangenumber/InputRangeNumber.vue.d';
 import { CalendarProps } from '../calendar/Calendar.vue.d';
+import { QueryParams } from '../datatable/DataTable.vue.d';
 
 // More specific filter field types
 export interface MultiSelectFilterField extends MultiSelectProps {
@@ -72,6 +73,10 @@ export type FilterContainerSlots = {
   default: Slot;
 };
 
+export type FilterContainerEmits = {
+  apply: [filter: QueryParams];
+};
+
 /**
  * **WangsVue - FilterContainer**
  *
@@ -86,7 +91,7 @@ export type FilterContainerSlots = {
  */
 declare const FilterContainer: DefineComponent<
   FilterContainerProps,
-  unknown,
+  FilterContainerEmits,
   FilterContainerSlots
 >;
 

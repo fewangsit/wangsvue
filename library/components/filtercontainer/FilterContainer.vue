@@ -2,6 +2,7 @@
 import { onBeforeUnmount, onMounted, ref, shallowRef } from 'vue';
 import Button from '../button/Button.vue';
 import {
+  FilterContainerEmits,
   FilterContainerProps,
   FilterOptions,
   LoadingFilters,
@@ -19,6 +20,8 @@ const props = withDefaults(defineProps<FilterContainerProps>(), {
   tableName: 'datatable',
   fieldsPerRow: 4,
 });
+
+const emit = defineEmits<FilterContainerEmits>();
 
 const { resetForm, handleSubmit } = useForm();
 const loading = ref<LoadingFilters>({});
@@ -86,6 +89,7 @@ const clear = (): void => {
 
 const apply = handleSubmit((values) => {
   applyFilter(values, props.tableName);
+  emit('apply', values);
 });
 
 defineOptions({
