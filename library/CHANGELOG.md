@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v1.4.128
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.127...v1.4.128)
+
+### 🚀 Enhancements
+
+- Add new icon `information-line` ([7242f85](https://github.com/fewangsit/wangsvue/commit/7242f85))
+- **Icon:** Add link icon ([d6de92c](https://github.com/fewangsit/wangsvue/commit/d6de92c))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.4.127
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.126...v1.4.127)
