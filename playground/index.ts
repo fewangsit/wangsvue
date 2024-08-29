@@ -99,7 +99,7 @@ const routes: Readonly<RouteRecordRaw[]> = [
       },
       {
         path: 'imagecompressor',
-        name: 'Image Docs',
+        name: 'Image Compressor Docs',
         component: ImageCompressorDocs,
       },
       {

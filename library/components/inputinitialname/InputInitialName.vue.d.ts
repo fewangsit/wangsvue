@@ -18,6 +18,7 @@ export interface InputInitialNameProps {
    * A list of initital names to be compared with new inputed
    */
   existingInitialNames: string[];
+  maxLength?: number;
   /**
    * Label for the input field
    */

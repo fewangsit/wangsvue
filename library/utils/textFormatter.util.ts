@@ -23,6 +23,7 @@ export const formatUserName = (name?: string): string => {
 export const getInititalName = (
   existing: string[],
   fullName?: string,
+  maxLength = 3,
 ): string => {
   if (!fullName) return '';
 
@@ -40,12 +41,13 @@ export const getInititalName = (
 
   if (!existing?.length || !existing.includes(initials)) return initials;
 
-  return getInitialsByConsonant(existing, fullName);
+  return getInitialsByConsonant(existing, fullName, maxLength);
 };
 
 export const getInitialsByConsonant = (
   existingInitials: string[],
   fullName: string,
+  maxLength: number,
 ): string => {
   if (!fullName) return '';
 
@@ -55,9 +57,9 @@ export const getInitialsByConsonant = (
   const getInitial = (): void => {
     for (const word of words) {
       const consonants = word.match(/[bcdfghjklmnpqrstvwxyz]/gi);
-      if (consonants && consonants.length > 0 && initials.length < 3) {
+      if (consonants && consonants.length > 0 && initials.length < maxLength) {
         const currentLength = initials.length;
-        const remaining = 3 - currentLength;
+        const remaining = maxLength - currentLength;
 
         initials += consonants.slice(0, remaining).join('');
       }
@@ -74,12 +76,13 @@ export const getInitialsByConsonant = (
     }
   });
 
-  return getInitialsBy3FirstLetter(existingInitials, fullName);
+  return getInitialsBy3FirstLetter(existingInitials, fullName, maxLength);
 };
 
 export const getInitialsBy3FirstLetter = (
   existingInitials: string[],
   fullName: string,
+  maxLength: number,
 ): string => {
   if (!fullName) return '';
 
@@ -87,7 +90,7 @@ export const getInitialsBy3FirstLetter = (
   let initials = '';
 
   const getInitial = (word: string): string => {
-    return word.slice(0, 3).toUpperCase();
+    return word.slice(0, maxLength).toUpperCase();
   };
 
   for (const word of words) {

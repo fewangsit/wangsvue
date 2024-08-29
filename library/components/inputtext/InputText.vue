@@ -109,13 +109,12 @@ const validateEmail = (
 
 const onUpdateModelValue = (e?: string): void => {
   if (
-    (e &&
-      props.blurOnReachMaxLength &&
-      props.maxLength &&
-      e.length > props.maxLength) ||
-    (props.type === 'initialname' && e && e.length > 3)
+    e &&
+    props.blurOnReachMaxLength &&
+    props.maxLength &&
+    e.length > props.maxLength
   ) {
-    const max = props.type === 'initialname' ? 3 : props.maxLength;
+    const max = props.maxLength;
     const sliced = e.slice(0, max);
     emit('update:modelValue', sliced);
     if (props.useValidator) field.value = sliced;

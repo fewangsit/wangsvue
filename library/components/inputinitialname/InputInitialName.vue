@@ -8,15 +8,19 @@ import type {
 } from './InputInitialName.vue.d';
 import { getInititalName } from 'lib/utils';
 
-const props = defineProps<InputInitialNameProps>();
+const props = withDefaults(defineProps<InputInitialNameProps>(), {
+  maxLength: 3,
+  existingInitialNames: () => [],
+});
+
 const emit = defineEmits<InputInitialNameEmits>();
 
 const model = computed({
   get() {
-    return props.modelValue?.toUpperCase() ?? '';
+    return props.modelValue?.slice(0, props.maxLength).toUpperCase();
   },
-  set(value: string | null) {
-    emit('update:modelValue', value?.toUpperCase());
+  set(value: string | undefined) {
+    emit('update:modelValue', value?.slice(0, props.maxLength).toUpperCase());
   },
 });
 
@@ -35,7 +39,11 @@ watch(
   () => props.fullName,
   () => {
     model.value =
-      getInititalName(props.existingInitialNames, props.fullName) || null;
+      getInititalName(
+        props.existingInitialNames,
+        props.fullName,
+        props.maxLength,
+      )?.slice(0, props.maxLength) || undefined;
   },
   {
     immediate: true,
@@ -53,6 +61,7 @@ watch(
     :label="label"
     :label-class="labelClass"
     :manual-invalid-container="manualInvalidContainer"
+    :max-length="maxLength"
     :placeholder="placeholder"
     :use-validator="true"
     :validator-message="errorMessage"

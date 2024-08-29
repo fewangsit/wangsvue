@@ -9,7 +9,7 @@ import InputInitialName from 'lib/components/inputinitialname/InputInitialName.v
 
 const { values } = useForm();
 
-const fullName = shallowRef('Zain Kurnia');
+const fullName = shallowRef();
 const initialName = shallowRef();
 const existingInitialNames = ['ZK', 'ZNK', 'KRN', 'ZAI'];
 </script>
@@ -37,6 +37,7 @@ const existingInitialNames = ['ZK', 'ZNK', 'KRN', 'ZAI'];
           v-model="initialName"
           :existing-initial-names="existingInitialNames"
           :full-name="fullName"
+          :max-length="4"
           class="mb-4 w-[20vw]"
           field-name="initialName"
           label="Initial Name"
