@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, shallowRef } from 'vue';
+import { onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue';
 import Button from '../button/Button.vue';
 import {
   FilterContainerEmits,
@@ -32,25 +32,7 @@ const showFilter = shallowRef(false);
 const fieldsKey = shallowRef(0);
 
 onMounted(() => {
-  if (container.value) {
-    const { children } = container.value;
-    const childCount = container.value.childElementCount;
-    const isOdd = childCount % props.fieldsPerRow;
-
-    let [rowPos, colPos] = [1, 1];
-    for (const i in Array.from({ length: childCount })) {
-      const isLast = Number(i) === childCount - 1;
-      children[i].setAttribute(
-        'style',
-        `grid-area: ${rowPos}/${isLast && isOdd ? props.fieldsPerRow : colPos}`,
-      );
-
-      if (++colPos > props.fieldsPerRow) {
-        colPos = 1;
-        rowPos++;
-      }
-    }
-  }
+  setGridFieldsLayout();
 
   eventBus.on('show-filter', udpateShowFIlter);
 });
@@ -82,6 +64,28 @@ const getOptions = async (
   }
 };
 
+const setGridFieldsLayout = (): void => {
+  if (container.value) {
+    const { children } = container.value;
+    const childCount = container.value.childElementCount;
+    const isOdd = childCount % props.fieldsPerRow;
+
+    let [rowPos, colPos] = [1, 1];
+    for (const i in Array.from({ length: childCount })) {
+      const isLast = Number(i) === childCount - 1;
+      children[i].setAttribute(
+        'style',
+        `grid-area: ${rowPos}/${isLast && isOdd ? props.fieldsPerRow : colPos}`,
+      );
+
+      if (++colPos > props.fieldsPerRow) {
+        colPos = 1;
+        rowPos++;
+      }
+    }
+  }
+};
+
 const clear = (): void => {
   resetForm();
   fieldsKey.value++;
@@ -91,6 +95,8 @@ const apply = handleSubmit((values) => {
   applyFilter(values, props.tableName);
   emit('apply', values);
 });
+
+watch(() => props.fields, setGridFieldsLayout);
 
 defineOptions({
   inheritAttrs: false,
