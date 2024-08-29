@@ -34,14 +34,14 @@ const fieldsKey = shallowRef(0);
 onMounted(() => {
   setGridFieldsLayout();
 
-  eventBus.on('show-filter', udpateShowFIlter);
+  eventBus.on('show-filter', updateShowFIlter);
 });
 
 onBeforeUnmount(() => {
-  eventBus.off('show-filter', udpateShowFIlter);
+  eventBus.off('show-filter', updateShowFIlter);
 });
 
-const udpateShowFIlter = (e: Events['show-filter']): void => {
+const updateShowFIlter = (e: Events['show-filter']): void => {
   if (e.tableName === props.tableName) {
     showFilter.value = e.show;
   }
@@ -92,8 +92,7 @@ const clear = (): void => {
 };
 
 const apply = handleSubmit((values) => {
-  applyFilter(values, props.tableName);
-  emit('apply', values);
+  applyFilter(values, props.tableName, emit);
 });
 
 watch(() => props.fields, setGridFieldsLayout);

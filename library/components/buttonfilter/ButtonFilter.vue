@@ -4,7 +4,9 @@ import Icon from '../icon/Icon.vue';
 import eventBus from 'lib/event-bus';
 import { buttonFocusClass } from 'lib/preset/button';
 
-const { tableName } = defineProps<ButtonFilterProps>();
+const { tableName } = withDefaults(defineProps<ButtonFilterProps>(), {
+  tableName: 'datatable',
+});
 
 const showFilter = defineModel<boolean>('showFilter', { default: false });
 

@@ -35,7 +35,6 @@ import Changelog from 'lib/components/changelog/Changelog.vue';
 
 const dataSelected = shallowRef();
 const actionData = ref();
-const showFilter = shallowRef(false);
 const showDialog = shallowRef(false);
 const usePaginator = shallowRef(true);
 const useOption = shallowRef(true);
@@ -261,11 +260,11 @@ const filters = ref<any>({
         />
         <ButtonSearch @search="filters.global.value = $event" class="ml-auto" />
         <ButtonDownload file-name="Download" />
-        <ButtonFilter v-model:show-filter="showFilter" />
+        <ButtonFilter />
         <Changelog object="groupMember" />
       </div>
 
-      <FilterContainer v-show="showFilter" :fields="filterFields" />
+      <FilterContainer :fields="filterFields" @apply="console.log" />
       <QuickFilter :fields="quickFilterField" />
 
       <TreeTable
