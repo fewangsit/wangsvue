@@ -73,6 +73,7 @@ import {
   UserName,
   Icon,
   ButtonDownload,
+  OverlayPanel,
   ButtonFilter,
   FilterContainer,
   DialogConfirm,
@@ -146,6 +147,7 @@ export default {
     app.component('Loading', Loading);
     app.component('SummaryAccordion', SummaryAccordion);
     app.component('InputURL', InputURL);
+    app.component('OverlayPanel', OverlayPanel);
 
     app.directive('tooltip', Tooltip);
   },
@@ -185,6 +187,7 @@ export {
   UserName,
   Icon,
   InputPassword,
+  OverlayPanel,
   ButtonDownload,
   ButtonFilter,
   InputPhoneNumber,

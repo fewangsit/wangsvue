@@ -37,6 +37,7 @@ import Loading from './loading/Loading.vue';
 import DataTable from './treetable/TreeTable.vue';
 import SummaryAccordion from './summaryaccordion/SummaryAccordion.vue';
 import InputURL from './inputurl/InputURL.vue';
+import OverlayPanel from './overlaypanel/OverlayPanel.vue';
 
 export {
   Badge,
@@ -78,4 +79,5 @@ export {
   Loading,
   SummaryAccordion,
   InputURL,
+  OverlayPanel,
 };
