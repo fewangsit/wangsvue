@@ -1,6 +1,41 @@
-import { Component } from 'vue';
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+
+import TreeTableDocs from './docs/datatable/TreeTableDocs.vue';
+import DropdownDocs from './docs/dropdown/DropdownDocs.vue';
+import CalendarDocs from './docs/calendar/CalendarDocs.vue';
+import ProjectSummaryDocs from './docs/projectsummary/ProjectSummaryDocs.vue';
+import InputURLDocs from './docs/inputurl/InputURLDocs.vue';
+import UserNameDocs from './docs/username/UserNameDocs.vue';
+import DialogFormDocs from './docs/dialog/DialogFormDocs.vue';
+import EditorDocs from './docs/editor/EditorDocs.vue';
+import DialogConfirmDocs from './docs/dialog/DialogConfirmDocs.vue';
+import ButtonDocs from './docs/button/ButtonDocs.vue';
 import TimeLineDocs from './docs/timeline/TimeLineDocs.vue';
+import ImageCompressorDocs from './docs/image/ImageCompressorDocs.vue';
+import TypographyDocs from './docs/typography/TypographyDocs.vue';
+import CardDocs from './docs/card/CardDocs.vue';
+import TabMenuDocs from './docs/tabmenu/TabMenuDocs.vue';
+import MenuDocs from './docs/menu/MenuDocs.vue';
+import FilterContainerDocs from './docs/filtercontainer/FilterContainerDocs.vue';
+import QuickFilterDocs from './docs/quickfilter/QuickFilterDocs.vue';
+import BreadcrumbDocs from './docs/breadcrumb/BreadcrumbDocs.vue';
+import DataTableDocs from './docs/datatable/DataTableDocs.vue';
+import CheckboxDocs from './docs/checkbox/CheckboxDocs.vue';
+import ToastDocs from './docs/toast/ToastDocs.vue';
+import InputTextDocs from './docs/inputtext/InputTextDocs.vue';
+import ImageDocs from './docs/image/ImageDocs.vue';
+import BadgeDocs from './docs/badge/BadgeDocs.vue';
+import FormDocs from './docs/form/FormDocs.vue';
+import WorkCalendarDocs from './docs/calendar/WorkCalendarDocs.vue';
+import MultiSelectDocs from './docs/multiselect/MultiSelectDocs.vue';
+import InputRangeNumberDocs from './docs/inputrangenumber/InputRangeNumberDocs.vue';
+import InputNumberDocs from './docs/inputnumber/InputNumberDocs.vue';
+import InputPhoneNumberDocs from './docs/inputphonenumber/InputPhoneNumberDocs.vue';
+import InputEmailDocs from './docs/inputemail/InputEmailDocs.vue';
+import ButtonToggleDocs from './docs/buttontoggle/ButtonToggleDocs.vue';
+import InputPasswordDocs from './docs/inputpassword/InputPasswordDocs.vue';
+import IconDocs from './docs/icon/IconDocs.vue';
+import ChangelogDocs from './docs/changelog/ChangelogDocs.vue';
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
@@ -8,270 +43,185 @@ const routes: Readonly<RouteRecordRaw[]> = [
     redirect: '/table',
     children: [
       {
-        path: 'table', // X
+        path: 'table',
         name: 'Tree Table Docs',
-        component: (): Promise<Component> =>
-          import('./docs/datatable/TreeTableDocs.vue'),
+        component: TreeTableDocs,
       },
       {
         path: 'dropdown',
         name: 'Dropdown Docs',
-        component: (): Promise<Component> =>
-          import('./docs/dropdown/DropdownDocs.vue'),
+        component: DropdownDocs,
       },
       {
         path: 'calendar',
         name: 'Calendar Docs',
-        component: (): Promise<Component> =>
-          import('./docs/calendar/CalendarDocs.vue'),
+        component: CalendarDocs,
       },
       {
         path: 'projectsummary',
         name: 'Project Summary Docs',
-        component: (): Promise<Component> =>
-          import('./docs/projectsummary/ProjectSummaryDocs.vue'),
+        component: ProjectSummaryDocs,
       },
       {
         path: 'inputurl',
         name: 'Input URL Docs',
-        component: (): Promise<Component> =>
-          import('./docs/inputurl/InputURLDocs.vue'),
+        component: InputURLDocs,
       },
       {
         path: 'username',
         name: 'UserName Docs',
-        component: (): Promise<Component> =>
-          import('./docs/username/UserNameDocs.vue'),
+        component: UserNameDocs,
       },
       {
         path: 'dialogform',
         name: 'Dialog Form Docs',
-        component: (): Promise<Component> =>
-          import('./docs/dialog/DialogFormDocs.vue'),
+        component: DialogFormDocs,
       },
       {
         path: 'editor',
         name: 'Editor Docs',
-        component: (): Promise<Component> =>
-          import('./docs/editor/EditorDocs.vue'),
+        component: EditorDocs,
       },
       {
         path: 'dialogconfirm',
         name: 'Dialog Confirmation Docs',
-        component: (): Promise<Component> =>
-          import('./docs/dialog/DialogConfirmDocs.vue'),
+        component: DialogConfirmDocs,
       },
-
       {
         path: 'button',
         name: 'ButtonDocs',
-        component: (): Promise<Component> =>
-          import('./docs/button/ButtonDocs.vue'),
+        component: ButtonDocs,
       },
       {
         path: 'timeline',
         name: 'TimelineDocs',
         component: TimeLineDocs,
       },
-
-      /*
-       * {
-       *   path: 'imagecompressor',
-       *   name: 'Image Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/image/ImageCompressorDocs.vue'),
-       * },
-       */
-      /*
-       * {
-       *   path: 'button',
-       *   name: 'ButtonDocs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/button/ButtonDocs.vue'),
-       * },
-       * {
-       *   path: 'typo',
-       *   name: 'Typography Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/typography/TypographyDocs.vue'),
-       * },
-       * {
-       *   path: 'card',
-       *   name: 'Card Docs',
-       *   component: (): Promise<Component> => import('./docs/card/CardDocs.vue'),
-       * },
-       * {
-       *   path: 'tabmenu',
-       *   name: 'Tab Menu Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/tabmenu/TabMenuDocs.vue'),
-       * },
-       * {
-       *   path: 'menu',
-       *   name: 'Menu Docs',
-       *   component: (): Promise<Component> => import('./docs/menu/MenuDocs.vue'),
-       * },
-       * {
-       *   path: 'filtercontainer',
-       *   name: 'Filter Container Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/filtercontainer/FilterContainerDocs.vue'),
-       * },
-       * {
-       *   path: 'quickfilter',
-       *   name: 'Quick Filter Container Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/quickfilter/QuickFilterDocs.vue'),
-       * },
-       * {
-       *   path: 'breadcrumb',
-       *   name: 'Breadcrumb Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/breadcrumb/BreadcrumbDocs.vue'),
-       * },
-       * {
-       *   path: 'dialogconfirm',
-       *   name: 'Dialog Confirmation Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/dialog/DialogConfirmDocs.vue'),
-       * },
-       * {
-       *   path: 'dialog',
-       *   name: 'Dialog Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/dialog/DialogDocs.vue'),
-       * },
-       * {
-       *   path: 'datatable', // X
-       *   name: 'DataTable Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/datatable/DataTableDocs.vue'),
-       * },
-       * {
-       *   path: 'table', // X
-       *   name: 'Tree Table Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/datatable/TreeTableDocs.vue'),
-       * },
-       * {
-       *   path: 'checkbox',
-       *   name: 'Checbox Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/checkbox/CheckboxDocs.vue'),
-       * },
-       * {
-       *   path: 'toast',
-       *   name: 'Toast Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/toast/ToastDocs.vue'),
-       * },
-       * {
-       *   path: 'inputtext',
-       *   name: 'InputText Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/inputtext/InputTextDocs.vue'),
-       * },
-       * {
-       *   path: 'image', // X
-       *   name: 'Image Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/image/ImageDocs.vue'),
-       * },
-       * {
-       *   path: 'imagecompressor',
-       *   name: 'Image Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/image/ImageCompressorDocs.vue'),
-       * },
-       * {
-       *   path: 'badge',
-       *   name: 'Badge Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/badge/BadgeDocs.vue'),
-       * },
-       * {
-       *   path: 'username',
-       *   name: 'UserName Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/username/UserNameDocs.vue'),
-       * },
-       * {
-       *   path: 'form',
-       *   name: 'Form Docs',
-       *   component: (): Promise<Component> => import('./docs/form/FormDocs.vue'),
-       * },
-       * {
-       *   path: 'calendar',
-       *   name: 'Calendar Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/calendar/CalendarDocs.vue'),
-       * },
-       * {
-       *   path: 'workcalendar',
-       *   name: 'Work Calendar Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/calendar/WorkCalendarDocs.vue'),
-       * },
-       * {
-       *   path: 'multiselect',
-       *   name: 'MultiSelect Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/multiselect/MultiSelectDocs.vue'),
-       * },
-       * {
-       *   path: 'inputrangenumber',
-       *   name: 'Input Range Number Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/inputrangenumber/InputRangeNumberDocs.vue'),
-       * },
-       * {
-       *   path: 'dropdown',
-       *   name: 'Dropdown Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/dropdown/DropdownDocs.vue'),
-       * },
-       * {
-       *   path: 'inputnumber',
-       *   name: 'Input Number Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/inputnumber/InputNumberDocs.vue'),
-       * },
-       * {
-       *   path: 'inputphonenumber',
-       *   name: 'Input Phone Number Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/inputphonenumber/InputPhoneNumberDocs.vue'),
-       * },
-       * {
-       *   path: 'inputemail',
-       *   name: 'Input Email Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/inputemail/InputEmailDocs.vue'),
-       * },
-       * {
-       *   path: 'toggle',
-       *   name: 'ButtonToggle Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/buttontoggle/ButtonToggleDocs.vue'),
-       * },
-       * {
-       *   path: 'inputpassword',
-       *   name: 'Input Password Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/inputpassword/InputPasswordDocs.vue'),
-       * },
-       * {
-       *   path: 'icon',
-       *   name: 'Icon Docs',
-       *   component: (): Promise<Component> => import('./docs/icon/IconDocs.vue'),
-       * },
-       * {
-       *   path: 'changelog', // X
-       *   name: 'Changelog Docs',
-       *   component: (): Promise<Component> =>
-       *     import('./docs/changelog/ChangelogDocs.vue'),
-       * },
-       */
+      {
+        path: 'imagecompressor',
+        name: 'Image Docs',
+        component: ImageCompressorDocs,
+      },
+      {
+        path: 'typo',
+        name: 'Typography Docs',
+        component: TypographyDocs,
+      },
+      {
+        path: 'card',
+        name: 'Card Docs',
+        component: CardDocs,
+      },
+      {
+        path: 'tabmenu',
+        name: 'Tab Menu Docs',
+        component: TabMenuDocs,
+      },
+      {
+        path: 'menu',
+        name: 'Menu Docs',
+        component: MenuDocs,
+      },
+      {
+        path: 'filtercontainer',
+        name: 'Filter Container Docs',
+        component: FilterContainerDocs,
+      },
+      {
+        path: 'quickfilter',
+        name: 'Quick Filter Container Docs',
+        component: QuickFilterDocs,
+      },
+      {
+        path: 'breadcrumb',
+        name: 'Breadcrumb Docs',
+        component: BreadcrumbDocs,
+      },
+      {
+        path: 'datatable',
+        name: 'DataTable Docs',
+        component: DataTableDocs,
+      },
+      {
+        path: 'checkbox',
+        name: 'Checbox Docs',
+        component: CheckboxDocs,
+      },
+      {
+        path: 'toast',
+        name: 'Toast Docs',
+        component: ToastDocs,
+      },
+      {
+        path: 'inputtext',
+        name: 'InputText Docs',
+        component: InputTextDocs,
+      },
+      {
+        path: 'image',
+        name: 'Image Docs',
+        component: ImageDocs,
+      },
+      {
+        path: 'badge',
+        name: 'Badge Docs',
+        component: BadgeDocs,
+      },
+      {
+        path: 'form',
+        name: 'Form Docs',
+        component: FormDocs,
+      },
+      {
+        path: 'workcalendar',
+        name: 'Work Calendar Docs',
+        component: WorkCalendarDocs,
+      },
+      {
+        path: 'multiselect',
+        name: 'MultiSelect Docs',
+        component: MultiSelectDocs,
+      },
+      {
+        path: 'inputrangenumber',
+        name: 'Input Range Number Docs',
+        component: InputRangeNumberDocs,
+      },
+      {
+        path: 'inputnumber',
+        name: 'Input Number Docs',
+        component: InputNumberDocs,
+      },
+      {
+        path: 'inputphonenumber',
+        name: 'Input Phone Number Docs',
+        component: InputPhoneNumberDocs,
+      },
+      {
+        path: 'inputemail',
+        name: 'Input Email Docs',
+        component: InputEmailDocs,
+      },
+      {
+        path: 'toggle',
+        name: 'ButtonToggle Docs',
+        component: ButtonToggleDocs,
+      },
+      {
+        path: 'inputpassword',
+        name: 'Input Password Docs',
+        component: InputPasswordDocs,
+      },
+      {
+        path: 'icon',
+        name: 'Icon Docs',
+        component: IconDocs,
+      },
+      {
+        path: 'changelog',
+        name: 'Changelog Docs',
+        component: ChangelogDocs,
+      },
     ],
   },
 ];
