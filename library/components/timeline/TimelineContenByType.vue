@@ -23,7 +23,7 @@ defineProps<{
     | DetailText;
 }>();
 
-const getFileIcon = (type: string): string => {
+const getFileIcon = (type: string): string | undefined => {
   return {
     pdf,
     csv,
@@ -33,7 +33,7 @@ const getFileIcon = (type: string): string => {
   }[type];
 };
 
-const getAttchmentFileName = (detail: AttachmentFile): string => {
+const getAttchmentFileName = (detail: AttachmentFile): string | undefined => {
   return detail.filePath?.slice((detail.filePath?.lastIndexOf('/') ?? 0) + 1);
 };
 </script>
