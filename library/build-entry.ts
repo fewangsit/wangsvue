@@ -96,6 +96,7 @@ import {
   InputPassword,
   Loading,
   InputURL,
+  Timeline,
   SummaryAccordion,
 } from './components';
 
@@ -116,6 +117,7 @@ export default {
     app.component('ButtonDownload', ButtonDownload);
     app.component('ButtonFilter', ButtonFilter);
     app.component('FilterContainer', FilterContainer);
+    app.component('Timeline', Timeline);
     app.component('Dialog', Dialog);
     app.component('InputInitialName', InputInitialName);
     app.component('DialogConfirm', DialogConfirm);
@@ -193,6 +195,7 @@ export {
   InputPhoneNumber,
   FilterContainer,
   ImageCompressor,
+  Timeline,
   DialogConfirm,
   Checkbox,
   Menu,

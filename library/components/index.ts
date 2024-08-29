@@ -38,6 +38,7 @@ import DataTable from './treetable/TreeTable.vue';
 import SummaryAccordion from './summaryaccordion/SummaryAccordion.vue';
 import InputURL from './inputurl/InputURL.vue';
 import OverlayPanel from './overlaypanel/OverlayPanel.vue';
+import Timeline from './timeline/Timeline.vue';
 
 export {
   Badge,
@@ -80,4 +81,5 @@ export {
   SummaryAccordion,
   InputURL,
   OverlayPanel,
+  Timeline,
 };

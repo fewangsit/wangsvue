@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.124
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.123...v1.4.124)
+
+### 🚀 Enhancements
+
+- Add timeline for event logs ([19b6cc7](https://github.com/fewangsit/wangsvue/commit/19b6cc7))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.123
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.122...v1.4.123)
