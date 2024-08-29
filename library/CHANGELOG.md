@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v1.4.130
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.129...v1.4.130)
+
+### 🚀 Enhancements
+
+- **InputNumber:** Add customValidation exist - to check exisiting number ([8906d2c](https://github.com/fewangsit/wangsvue/commit/8906d2c))
+
+### 🩹 Fixes
+
+- **InputInititalName:** Error message always shown on mounted - add props maxLength ([b0f6794](https://github.com/fewangsit/wangsvue/commit/b0f6794))
+
+### 🏡 Chore
+
+- **release:** V1.4.129 ([0ca0207](https://github.com/fewangsit/wangsvue/commit/0ca0207))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.129
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.128...v1.4.129)
