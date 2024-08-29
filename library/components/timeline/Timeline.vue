@@ -46,12 +46,8 @@ const formatActionTitle = (action: string): string => {
         {{ item.date }}
       </div>
 
-      <template v-if="item.showDetail">
-        <p v-if="typeof item.detail === 'string'">
-          {{ item.detail }}
-        </p>
-
-        <template v-else-if="'type' in item.detail">
+      <template v-if="item.showDetail && item.detail">
+        <template v-if="'type' in item.detail">
           <TimelineContenByType :detail="item.detail" />
         </template>
 

@@ -2,6 +2,7 @@
 import {
   AttachmentFile,
   AttachmentLink,
+  DetailText,
   LinkTaskIframeEmbed,
   LinkTaskURL,
 } from './Timeline.vue.d';
@@ -14,7 +15,12 @@ import data from 'lib/assets/icons/data.svg';
 import Icon from '../icon/Icon.vue';
 
 defineProps<{
-  detail: AttachmentFile | LinkTaskIframeEmbed | LinkTaskURL | AttachmentLink;
+  detail:
+    | AttachmentFile
+    | LinkTaskIframeEmbed
+    | LinkTaskURL
+    | AttachmentLink
+    | DetailText;
 }>();
 
 const getFileIcon = (type: string): string => {
@@ -32,7 +38,11 @@ const getAttchmentFileName = (detail: AttachmentFile): string => {
 };
 </script>
 <template>
-  <span v-if="detail.type === 'taskUrl'" class="grid">
+  <p v-if="detail.type === 'text'">
+    {{ detail.value }}
+  </p>
+
+  <span v-else-if="detail.type === 'taskUrl'" class="grid">
     <a
       :class="['w-full truncate hover:underline text-[#0000EE]']"
       :href="detail.url"

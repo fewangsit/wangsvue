@@ -20,6 +20,11 @@ export interface LinkTaskIframeEmbed {
   code: string;
 }
 
+export interface DetailText {
+  type: 'text';
+  value: string;
+}
+
 export type Attachment =
   | AttachmentLink
   | AttachmentFile
@@ -46,7 +51,7 @@ export type TimelineItem = {
     position: string;
     email: string;
   };
-  detail?: string | KeyValue | Attachment | LinkTaskEditAction;
+  detail?: KeyValue | Attachment | LinkTaskEditAction | DetailText;
 };
 
 export type TimelineProps = {
