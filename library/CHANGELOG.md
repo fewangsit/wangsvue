@@ -1,6 +1,36 @@
 # Changelog
 
 
+## v1.4.129
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.128...v1.4.129)
+
+### 🚀 Enhancements
+
+- **FilterContainer:** Update grid layout fields when props fields changes dynamicaly ([6e6ed17](https://github.com/fewangsit/wangsvue/commit/6e6ed17))
+- **DialogForm:** Add emit hide and show ([d6b4b08](https://github.com/fewangsit/wangsvue/commit/d6b4b08))
+- **Icon:** Add link icon ([d6de92c](https://github.com/fewangsit/wangsvue/commit/d6de92c))
+- **TimeLine:** Add support for various type of event logs ([87a1781](https://github.com/fewangsit/wangsvue/commit/87a1781))
+
+### 🩹 Fixes
+
+- Type error on TimelIne ([aa71c5e](https://github.com/fewangsit/wangsvue/commit/aa71c5e))
+- **FilterContainer:** Null and empty array should not be stringified on apply filter ([757179c](https://github.com/fewangsit/wangsvue/commit/757179c))
+
+### 📖 Documentation
+
+- Update timeline docs ([49790dd](https://github.com/fewangsit/wangsvue/commit/49790dd))
+
+### 🏡 Chore
+
+- **release:** V1.4.126 ([ebc7d19](https://github.com/fewangsit/wangsvue/commit/ebc7d19))
+- **release:** V1.4.127 ([3ca4930](https://github.com/fewangsit/wangsvue/commit/3ca4930))
+- **release:** V1.4.128 ([2f25a92](https://github.com/fewangsit/wangsvue/commit/2f25a92))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.128
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.127...v1.4.128)
