@@ -1,16 +1,12 @@
+import { isEmptyObject } from 'lib/utils';
+
 export default {
   root: ({ props }) => ({
-    class: [
-      'flex grow',
-      {
-        'flex-col': props.layout === 'vertical',
-        'flex-row flex-1': props.layout === 'horizontal',
-      },
-    ],
+    class: ['flex flex-col grow', 'text-xs font-normal text-grayscale-900'],
   }),
   event: ({ props, context }) => ({
     class: [
-      'flex relative min-h-[31px]',
+      'flex relative min-h-[31px] gap-[10px]',
       {
         'flex-row-reverse':
           props.align === 'right' ||
@@ -27,25 +23,7 @@ export default {
     ],
   }),
   opposite: ({ props, context }) => ({
-    class: [
-      // 'flex-1',
-      // {
-      //   'px-4': props.layout === 'vertical',
-      //   'py-4': props.layout === 'horizontal',
-      // },
-      {
-        'text-right':
-          props.align === 'left' ||
-          (props.layout === 'vertical' &&
-            props.align === 'alternate' &&
-            context.index % 2 === 0),
-        'text-left':
-          props.align === 'right' ||
-          (props.layout === 'vertical' &&
-            props.align === 'alternate' &&
-            context.index % 2 === 1),
-      },
-    ],
+    class: 'hidden',
   }),
   separator: ({ props }) => ({
     class: [
@@ -58,50 +36,26 @@ export default {
   }),
   marker: {
     class: [
-      // Display & Flexbox
-      'flex self-baseline',
+      'w-max',
+      'rounded-full',
+      'bg-transparent',
+      'ring-2 ring-inset ring-primary-400 p-0.5',
 
-      // Size
-      'w-[22px] h-[22px]',
-
-      // Appearance
-      'rounded-full border border-general-100 bg-white dark:bg-white',
+      'flex items-center justify-center',
     ],
   },
-  connector: ({ props }) => ({
-    class: [
-      'grow bg-general-100 dark:bg-general-500',
-      {
-        'w-[1px]': props.layout === 'vertical',
-        'w-full h-[1px]': props.layout === 'horizontal',
-      },
+  markerArrow: (item) => ({
+    'class': [
+      'w-4 h-4 invisible transition-transform duration-200 ease-in-out text-grayscale-900',
+      { '!visible': item.detail && !isEmptyObject(item.detail) },
+      { 'rotate-180': item.showDetail },
     ],
+    'data-wv-section': 'markerArrow',
+  }),
+  connector: ({ props }) => ({
+    class: ['w-[2px] grow bg-grayscale-900'],
   }),
   content: ({ props, context }) => ({
-    class: [
-      'flex-1',
-      {
-        'px-4': props.layout === 'vertical',
-        'py-4': props.layout === 'horizontal',
-      },
-      {
-        'text-left':
-          props.align === 'left' ||
-          (props.layout === 'vertical' &&
-            props.align === 'alternate' &&
-            context.index % 2 === 0),
-        'text-right':
-          props.align === 'right' ||
-          (props.layout === 'vertical' &&
-            props.align === 'alternate' &&
-            context.index % 2 === 1),
-      },
-      {
-        'min-h-0':
-          props.layout === 'vertical' && context.index === context.count - 1,
-        'grow-0':
-          props.layout === 'horizontal' && context.index === context.count - 1,
-      },
-    ],
+    class: ['flex-1 text-left'],
   }),
 };
