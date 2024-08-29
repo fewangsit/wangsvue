@@ -44,4 +44,8 @@
     "./library/colors.config.json",
     "**/*.vue"
   ],
+  "exclude": [
+    "dist/*.js",
+    "node_modules"
+  ]
 }

@@ -7,9 +7,7 @@ import Button from 'lib/components/button/Button.vue';
 import getStatusSeverity from 'lib/utils/statusSeverity.util';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';
 
-const props = withDefaults(defineProps<BadgeProps>(), {
-  format: 'nowrap',
-});
+const props = withDefaults(defineProps<BadgeProps>(), {});
 const emit = defineEmits<BadgeEmits>();
 
 const hasValue = computed(() => {
