@@ -1,6 +1,35 @@
 # Changelog
 
 
+## v1.4.132
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.130...v1.4.132)
+
+### 🚀 Enhancements
+
+- **InputNumber:** Add customValidation exist - to check exisiting number ([8906d2c](https://github.com/fewangsit/wangsvue/commit/8906d2c))
+- **InputInitialValue:** Add value prop to set initital value form validation ([e446944](https://github.com/fewangsit/wangsvue/commit/e446944))
+- Code Snippet component ([9977f1c](https://github.com/fewangsit/wangsvue/commit/9977f1c))
+- **ProjectSummary:** Add loading state when the summary is undeinfed ([0f5e909](https://github.com/fewangsit/wangsvue/commit/0f5e909))
+
+### 🩹 Fixes
+
+- **InputInititalName:** Error message always shown on mounted - add props maxLength ([b0f6794](https://github.com/fewangsit/wangsvue/commit/b0f6794))
+- Type error ([d5d1d62](https://github.com/fewangsit/wangsvue/commit/d5d1d62))
+
+### 💅 Refactors
+
+- **InputInitialName:** Update validator message ([8b380c6](https://github.com/fewangsit/wangsvue/commit/8b380c6))
+
+### 🏡 Chore
+
+- **release:** V1.4.130 ([70b453c](https://github.com/fewangsit/wangsvue/commit/70b453c))
+- **release:** V1.4.131 ([0ca670a](https://github.com/fewangsit/wangsvue/commit/0ca670a))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.131
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.130...v1.4.131)
