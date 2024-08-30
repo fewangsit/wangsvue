@@ -3,6 +3,7 @@ import App from './App.vue';
 
 // Style
 import './library/assets/css/main.css';
+import 'highlight.js/styles/stackoverflow-light.css';
 
 // PrimeVue
 import PrimeVue from 'primevue/config';

@@ -36,6 +36,7 @@ import ButtonToggleDocs from './docs/buttontoggle/ButtonToggleDocs.vue';
 import InputPasswordDocs from './docs/inputpassword/InputPasswordDocs.vue';
 import IconDocs from './docs/icon/IconDocs.vue';
 import ChangelogDocs from './docs/changelog/ChangelogDocs.vue';
+import CodeSnippetDocs from './docs/codesnippet/CodeSnippetDocs.vue';
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
@@ -146,6 +147,11 @@ const routes: Readonly<RouteRecordRaw[]> = [
         path: 'checkbox',
         name: 'Checbox Docs',
         component: CheckboxDocs,
+      },
+      {
+        path: 'codesnippet',
+        name: 'Code Snippet Docs',
+        component: CodeSnippetDocs,
       },
       {
         path: 'toast',

@@ -3,6 +3,7 @@ import eventBus from './event-bus';
 
 // Style
 import './assets/css/main.css';
+import 'highlight.js/styles/stackoverflow-light.css';
 
 // PrimeVue
 import WangsVue from 'primevue/config';
