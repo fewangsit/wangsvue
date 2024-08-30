@@ -20,12 +20,15 @@ onMounted(() => {
   else if (props.value) model.value = props.value;
 });
 
-const model = computed({
+const model = computed<Nullable<string>>({
   get() {
-    return props.modelValue?.slice(0, props.maxLength).toUpperCase();
+    return props.modelValue?.slice(0, props.maxLength).toUpperCase() ?? null;
   },
-  set(value: string | undefined) {
-    emit('update:modelValue', value?.slice(0, props.maxLength).toUpperCase());
+  set(value: Nullable<string>) {
+    emit(
+      'update:modelValue',
+      value?.slice(0, props.maxLength).toUpperCase() ?? null,
+    );
   },
 });
 
@@ -35,9 +38,9 @@ const isExist = computed(() => {
 
 const errorMessage = computed(() => {
   if (isExist.value)
-    return props.validatorMessage.exist ?? 'Inisial nama sudah ada';
+    return props.validatorMessage?.exist ?? 'Inisial nama sudah ada';
   return {
-    empty: props.validatorMessage.empty ?? 'Inisial nama tidak boleh kosong',
+    empty: props.validatorMessage?.empty ?? 'Inisial nama tidak boleh kosong',
   };
 });
 

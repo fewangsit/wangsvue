@@ -68,7 +68,7 @@ const subModuleSummary = reactive<SubModuleSummary>({
           totalBacklogTask: 500,
         }"
       />
-      <ProjectSummaryAccordion :summary="summary" />
+      <ProjectSummaryAccordion />
       <ProjectSummaryAccordion
         :summary="{
           ...summary,

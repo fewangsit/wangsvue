@@ -12,6 +12,7 @@ import Button from '../button/Button.vue';
 import { IconProps, WangsIcons } from '../icon/Icon.vue.d';
 import Icon from '../icon/Icon.vue';
 import getStatusSeverity from 'lib/utils/statusSeverity.util';
+import Skeleton from 'primevue/skeleton';
 
 interface SummaryItem {
   icon: WangsIcons;
@@ -26,19 +27,19 @@ const props = defineProps<SummaryAccordionProps>();
 const expanded = shallowRef(false);
 
 const name = computed(() => {
-  switch (props.summary.type) {
+  switch (props.summary?.type) {
     case 'module':
       return 'Modul ' + props.summary.name;
     case 'submodule':
       return 'Sub Modul ' + props.summary.name;
     default:
-      return props.summary.name;
+      return props.summary?.name;
   }
 });
 
 const progressSubModule = computed(() => {
   const { statusWeb, progressWeb, statusMobile, progressMobile } =
-    props.summary.type === 'submodule'
+    props.summary?.type === 'submodule'
       ? props.summary
       : ({} as SubModuleSummary);
 
@@ -51,6 +52,8 @@ const progressSubModule = computed(() => {
 });
 
 const progress = computed(() => {
+  if (!props.summary) return {};
+
   const { totalCompletedTask, totalSprintTask, totalBacklogTask } =
     props.summary;
 
@@ -68,6 +71,8 @@ const progress = computed(() => {
 });
 
 const summaryItems = computed<SummaryItem[]>(() => {
+  if (!props.summary) return [];
+
   const {
     totalCompletedTask,
     totalSprintTask,
@@ -159,99 +164,105 @@ const summaryItems = computed<SummaryItem[]>(() => {
     data-wv-name="projectsummary"
     data-wv-section="root"
   >
-    <div
-      @click="expanded = !expanded"
-      class="flex items-center gap-[10px] cursor-pointer"
-      data-wv-section="projectmeta"
-    >
-      <h2
-        class="font-semibold text-base leading-4"
-        data-wv-section="projectname"
-      >
-        <template v-if="summary.type != 'submodule'">
-          {{ name }} ({{ summary.initialName }})
-        </template>
-        <template v-else>
-          {{ name }}
-        </template>
-      </h2>
-
-      <div class="flex items-center gap-2">
-        <ProgressBar
-          :severity="getStatusSeverity(summary.status)"
-          :show-value="false"
-          :value="progress.task"
-          class="w-[20vw] max-w-[200px]"
-        />
-        <span class="font-medium text-[14px] leading-4">
-          {{ progress.task }}%
-        </span>
-      </div>
-
-      <Badge :label="summary.status" format="nowrap" />
-
-      <Button
-        :class="[
-          '!p-0 !m-0 !w-auto !h-auto !ml-auto',
-          { 'rotate-180': expanded },
-        ]"
-        @click.stop="expanded = !expanded"
-        icon="arrow-down"
-        icon-class="w-6 h-6 text-general-800"
-        text
-      />
-    </div>
-
-    <div
-      v-if="summary.type === 'submodule'"
-      v-show="expanded"
-      class="flex gap-3 items-center"
-    >
+    <template v-if="summary">
       <div
-        class="grid grid-cols-[max-content,150px,max-content,max-content] items-center gap-2"
+        @click="expanded = !expanded"
+        class="flex items-center gap-[10px] cursor-pointer"
+        data-wv-section="projectmeta"
       >
-        Web
-        <ProgressBar
-          :severity="getStatusSeverity(progressSubModule.statusWeb)"
-          :show-value="false"
-          :value="progressSubModule.progressWeb"
+        <h2
+          class="font-semibold text-base leading-4"
+          data-wv-section="projectname"
+        >
+          <template v-if="summary.type != 'submodule'">
+            {{ name }} ({{ summary.initialName }})
+          </template>
+          <template v-else>
+            {{ name }}
+          </template>
+        </h2>
+
+        <div class="flex items-center gap-2">
+          <ProgressBar
+            :severity="getStatusSeverity(summary.status)"
+            :show-value="false"
+            :value="progress.task"
+            class="w-[20vw] max-w-[200px]"
+          />
+          <span class="font-medium text-[14px] leading-4">
+            {{ progress.task }}%
+          </span>
+        </div>
+
+        <Badge :label="summary.status" format="nowrap" />
+
+        <Button
+          :class="[
+            '!p-0 !m-0 !w-auto !h-auto !ml-auto',
+            { 'rotate-180': expanded },
+          ]"
+          @click.stop="expanded = !expanded"
+          icon="arrow-down"
+          icon-class="w-6 h-6 text-general-800"
+          text
         />
-        <span class="font-medium text-[14px] leading-4">
-          {{ progressSubModule.progressWeb }}%
-        </span>
-        <Badge :label="progressSubModule.statusWeb" format="nowrap" />
       </div>
 
       <div
-        class="grid grid-cols-[max-content,150px,max-content,max-content] items-center gap-2"
+        v-if="summary.type === 'submodule'"
+        v-show="expanded"
+        class="flex gap-3 items-center"
       >
-        Mobile
-        <ProgressBar
-          :severity="getStatusSeverity(progressSubModule.statusMobile)"
-          :show-value="false"
-          :value="progressSubModule.progressMobile"
-        />
-        <span class="font-medium text-[14px] leading-4">
-          {{ progressSubModule.progressMobile }}%
-        </span>
-        <Badge :label="progressSubModule.statusMobile" format="nowrap" />
-      </div>
-    </div>
+        <div
+          class="grid grid-cols-[max-content,150px,max-content,max-content] items-center gap-2"
+        >
+          Web
+          <ProgressBar
+            :severity="getStatusSeverity(progressSubModule.statusWeb)"
+            :show-value="false"
+            :value="progressSubModule.progressWeb"
+          />
+          <span class="font-medium text-[14px] leading-4">
+            {{ progressSubModule.progressWeb }}%
+          </span>
+          <Badge :label="progressSubModule.statusWeb" format="nowrap" />
+        </div>
 
-    <div
-      v-show="expanded"
-      :class="['grid grid-cols-3 grid-rows-2 gap-3']"
-      data-wv-section="summary"
-    >
-      <span
-        :key="item.label"
-        v-for="item of summaryItems"
-        class="flex items-center gap-1 text-xs font-normal"
+        <div
+          class="grid grid-cols-[max-content,150px,max-content,max-content] items-center gap-2"
+        >
+          Mobile
+          <ProgressBar
+            :severity="getStatusSeverity(progressSubModule.statusMobile)"
+            :show-value="false"
+            :value="progressSubModule.progressMobile"
+          />
+          <span class="font-medium text-[14px] leading-4">
+            {{ progressSubModule.progressMobile }}%
+          </span>
+          <Badge :label="progressSubModule.statusMobile" format="nowrap" />
+        </div>
+      </div>
+
+      <div
+        v-show="expanded"
+        :class="['grid grid-cols-3 grid-rows-2 gap-3']"
+        data-wv-section="summary"
       >
-        <Icon :icon="item.icon" :severity="item.severity" />
-        <span>{{ item.label }}:</span>
-        <span>{{ item.value }}</span>
-      </span>
+        <span
+          :key="item.label"
+          v-for="item of summaryItems"
+          class="flex items-center gap-1 text-xs font-normal"
+        >
+          <Icon :icon="item.icon" :severity="item.severity" />
+          <span>{{ item.label }}:</span>
+          <span>{{ item.value }}</span>
+        </span>
+      </div>
+    </template>
+
+    <div v-else>
+      <Skeleton class="w-full" />
     </div>
   </div>
 </template>

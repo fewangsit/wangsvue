@@ -48,5 +48,5 @@ export interface SubModuleSummary extends Summary {
 }
 
 export interface SummaryAccordionProps {
-  summary: ProjectSummary | ModuleSummary | SubModuleSummary;
+  summary?: ProjectSummary | ModuleSummary | SubModuleSummary;
 }
