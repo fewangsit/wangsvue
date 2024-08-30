@@ -52,13 +52,14 @@ export interface ImageCompressorProps {
   /**
    * Specify the size image input and preview size.
    *
-   * - small: unknown
+   * - small: 30px
+   * - medium: 80px
    * - big: 125*125 px
    *
    * @todo Add small size. Currently only support big size.
    * @default 'big'
    */
-  imagePreviewSize?: 'small' | 'big';
+  imagePreviewSize?: 'small' | 'medium' | 'big';
   /**
    * Specify the rounded level.
    *

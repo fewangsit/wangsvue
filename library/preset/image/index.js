@@ -1,7 +1,7 @@
 export default {
   root: ({ props }) => ({
     class: [
-      'relative inline-block w-[125px] h-[125px]',
+      'relative inline-block',
       'shrink-0',
       { 'rounded-full': props.rounded },
       { 'rounded-lg': !props.rounded },

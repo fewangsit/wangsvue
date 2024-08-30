@@ -542,7 +542,11 @@ watch(
           data-wv-section="preview"
         >
           <div
-            class="flex flex-col gap-1"
+            :class="[
+              'flex flex-col gap-1 items-center',
+              { 'max-w-[80px]': imagePreviewSize === 'medium' },
+              { 'max-w-[125px]': imagePreviewSize === 'big' },
+            ]"
             data-wv-section="preview-image-wrapper"
           >
             <div
@@ -551,12 +555,18 @@ watch(
                   '[&>span]:hover:opacity-30 [&>[data-wv-section=input-image-trigger]]:hover:opacity-100':
                     isInitialImage(index),
                 },
-                'relative w-[125px] h-[125px]',
+                'relative',
+                {
+                  'w-[125px] h-[125px]': imagePreviewSize === 'big',
+                  'w-[30px] h-[30px]': imagePreviewSize === 'small',
+                  'w-[80px] h-[80px]': imagePreviewSize === 'medium',
+                },
               ]"
               data-wv-section="image-wrapper"
             >
               <ImagePreview
                 :rounded="rounded"
+                :size="imagePreviewSize"
                 :thumbnail="previewImage"
                 class="transition-opacity duration-300"
                 data-wv-section="preview-image"
@@ -579,27 +589,31 @@ watch(
                 />
               </button>
             </div>
-            <div
-              v-if="!props.disabled && !isInitialImage(index)"
-              class="flex gap-0.5 justify-center"
-              data-wv-section="preview-buttons"
-            >
-              <Button
-                @click="editImage(index)"
-                class="!py-0.5 !px-1 !h-max"
-                icon="pencil"
-                label="Edit"
-                severity="secondary"
-                text
-              />
-              <Button
-                @click="onBeforeDeleteImage(index)"
-                class="!py-0.5 !px-1 !h-max"
-                icon="delete-bin"
-                label="Delete"
-                severity="danger"
-                text
-              />
+            <template v-if="!props.disabled && !isInitialImage(index)">
+              <div
+                :class="[
+                  'flex gap-0.5 justify-center',
+                  { 'scale-75': imagePreviewSize === 'medium' },
+                ]"
+                data-wv-section="preview-buttons"
+              >
+                <Button
+                  @click="editImage(index)"
+                  class="!py-0.5 !px-1 !h-max"
+                  icon="pencil"
+                  label="Edit"
+                  severity="secondary"
+                  text
+                />
+                <Button
+                  @click="onBeforeDeleteImage(index)"
+                  class="!py-0.5 !px-1 !h-max"
+                  icon="delete-bin"
+                  label="Delete"
+                  severity="danger"
+                  text
+                />
+              </div>
               <DialogConfirm
                 v-model:visible="showDeleteConfirm[index]"
                 :closable="false"
@@ -609,7 +623,7 @@ watch(
                 header="Delete Photo"
                 severity="danger"
               />
-            </div>
+            </template>
           </div>
           <ImageInputInfo
             :show-add-button="previewImages.length === 1 && props.multiple"
@@ -631,7 +645,11 @@ watch(
         <div class="flex gap-1 items-start">
           <button
             :class="[
-              'w-[125px] h-[125px]',
+              {
+                'w-[125px] h-[125px]': imagePreviewSize === 'big',
+                'w-[30px] h-[30px]': imagePreviewSize === 'small',
+                'w-[80px] h-[80px]': imagePreviewSize === 'medium',
+              },
               'flex items-center justify-center',
               'ring-inset',
               'cursor-pointer',

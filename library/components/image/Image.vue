@@ -131,6 +131,11 @@ const getGalleryImageSrc = (
       $props.rounded ? '!rounded-full' : '!rounded-lg',
       '[&:has(:focus)_button]:opacity-50 [&:has(:focus)_button]:bg-header-weak',
       ...(Array.isArray($props.class) ? $props.class : [$props.class]),
+      {
+        'w-[125px] h-[125px]': size === 'big',
+        'w-[30px] h-[30px]': size === 'small',
+        'w-[80px] h-[80px]': size === 'medium',
+      },
     ]"
     :preview="usePreview"
   >

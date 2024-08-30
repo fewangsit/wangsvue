@@ -197,6 +197,12 @@ export interface ImageProps {
    */
   thumbnail?: string | Blob;
   /**
+   * The thumbnail image width.
+   *
+   * @default 'big' - For other size use class
+   */
+  size?: 'small' | 'medium' | 'big';
+  /**
    * The path to full size image for image preview.
    * @defaultValue thumbnail
    */
