@@ -17,6 +17,7 @@ const emit = defineEmits<InputInitialNameEmits>();
 
 onMounted(() => {
   if (!props.value) convertFullNameToInitial();
+  else if (props.value) model.value = props.value;
 });
 
 const model = computed({
@@ -33,9 +34,10 @@ const isExist = computed(() => {
 });
 
 const errorMessage = computed(() => {
-  if (isExist.value) return 'Inisial nama sudah ada';
+  if (isExist.value)
+    return props.validatorMessage.exist ?? 'Inisial nama sudah ada';
   return {
-    empty: 'Inisial nama tidak boleh kosong',
+    empty: props.validatorMessage.empty ?? 'Inisial nama tidak boleh kosong',
   };
 });
 

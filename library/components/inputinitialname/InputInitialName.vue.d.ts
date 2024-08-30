@@ -56,7 +56,7 @@ export interface InputInitialNameProps {
   /**
    * Validator message for the input field
    */
-  validatorMessage?: string | CustomValidation;
+  validatorMessage?: CustomValidation;
 
   /**
    * Classes for validator message in input field
