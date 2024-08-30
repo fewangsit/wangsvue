@@ -224,7 +224,7 @@ const secondsToDHM = (seconds: number): string => {
     :class="[
       {
         'grid grid-rows-[max-content,auto] grid-cols-[max-content,1fr] gap-x-3':
-          summary?.type === 'profile',
+          summary?.type === 'profile' && expanded,
       },
       'bg-primary-50 rounded-lg p-3 w-full text-grayscale-900',
     ]"
@@ -233,7 +233,7 @@ const secondsToDHM = (seconds: number): string => {
   >
     <template v-if="summary">
       <ImageCompressor
-        v-if="summary?.type === 'profile'"
+        v-if="summary?.type === 'profile' && expanded"
         :image-preview-url="summary.profilePicture"
         :show-info="false"
         image-preview-size="medium"
