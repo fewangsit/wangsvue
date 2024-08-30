@@ -261,8 +261,14 @@ const summaryItems = computed<SummaryItem[]>(() => {
       </div>
     </template>
 
-    <div v-else>
-      <Skeleton class="w-full" />
+    <div
+      v-else
+      class="grid grid-cols-[3fr,2fr,5fr,1fr,auto,30px] gap-[10px] max-w-[600px]"
+    >
+      <Skeleton class="!h-[30px]" />
+      <Skeleton class="!h-[30px]" />
+      <Skeleton class="!h-[30px]" />
+      <Skeleton class="!h-[30px]" />
     </div>
   </div>
 </template>

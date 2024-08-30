@@ -13,7 +13,7 @@ export default {
       },
 
       // Colors
-      'bg-primary-50',
+      'bg-general-50',
     ],
   }),
 };
