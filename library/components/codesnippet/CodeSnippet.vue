@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref, shallowRef, computed, onMounted } from 'vue';
+import { watch, ref, shallowRef, computed, onMounted } from 'vue';
 import { CodeSnippetProps } from './CodeSnippet.vue.d';
 import hljs from 'highlight.js';
 import Button from '../button/Button.vue';
 
 const props = withDefaults(defineProps<CodeSnippetProps>(), {
-  lang: 'javascript',
+  lang: 'json',
 });
 
 const codeSnippet = defineModel<string>('code', { default: '' });
@@ -39,6 +39,10 @@ const copyCode = (): void => {
 };
 
 onMounted(() => {
+  updateTextareaLeftPosition();
+});
+
+const updateTextareaLeftPosition = (): void => {
   if (codesnippet.value) {
     const linenumber = codesnippet.value.querySelector(
       '[data-wv-section=linenumber]',
@@ -46,6 +50,10 @@ onMounted(() => {
 
     lineNumberWidth.value = linenumber.offsetWidth;
   }
+};
+
+watch(formattedLines, () => {
+  updateTextareaLeftPosition();
 });
 </script>
 
