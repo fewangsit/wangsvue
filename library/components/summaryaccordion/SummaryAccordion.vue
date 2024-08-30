@@ -5,6 +5,7 @@ import {
   ProjectSummary,
   SubModuleSummary,
   SummaryAccordionProps,
+  UserProfileSummary,
 } from './SummaryAccordion.vue.d';
 import ProgressBar from '../progressbar/ProgressBar.vue';
 import Badge from '../badge/Badge.vue';
@@ -13,6 +14,8 @@ import { IconProps, WangsIcons } from '../icon/Icon.vue.d';
 import Icon from '../icon/Icon.vue';
 import getStatusSeverity from 'lib/utils/statusSeverity.util';
 import Skeleton from 'primevue/skeleton';
+import { WangsitStatus } from 'lib/types/wangsStatus.type';
+import ImageCompressor from '../imagecompressor/ImageCompressor.vue';
 
 interface SummaryItem {
   icon: WangsIcons;
@@ -32,6 +35,8 @@ const name = computed(() => {
       return 'Modul ' + props.summary.name;
     case 'submodule':
       return 'Sub Modul ' + props.summary.name;
+    case 'profile':
+      return props.summary?.fullName;
     default:
       return props.summary?.name;
   }
@@ -61,8 +66,8 @@ const progress = computed(() => {
     props.summary.type === 'project' ? props.summary : ({} as ProjectSummary);
 
   const totalTask = totalCompletedTask + totalSprintTask + totalBacklogTask;
-  const task = Math.round((totalCompletedTask / totalTask) * 100);
-  const module = Math.round((totalCompletedModule / totalModule) * 100);
+  const task = Math.floor((totalCompletedTask / totalTask) * 100);
+  const module = Math.floor((totalCompletedModule / totalModule) * 100);
 
   return {
     task,
@@ -77,7 +82,7 @@ const summaryItems = computed<SummaryItem[]>(() => {
     totalCompletedTask,
     totalSprintTask,
     totalBacklogTask,
-    totalSprintPoint,
+    totalSprintPoint = 0,
     totalBugHistories,
   } = props.summary;
 
@@ -92,9 +97,49 @@ const summaryItems = computed<SummaryItem[]>(() => {
       ? props.summary
       : ({} as SubModuleSummary);
 
+  const {
+    phoneNumber,
+    teams,
+    email,
+    totalSprintTaskDuration,
+    sprintPoint = 0,
+  } = props.summary.type === 'profile'
+    ? props.summary
+    : ({} as UserProfileSummary);
+
   const totalTask = totalCompletedTask + totalSprintTask + totalBacklogTask;
 
+  const sprintDurationText = secondsToDHM(totalSprintTaskDuration);
+
   const items: SummaryItem[] = [
+    {
+      icon: 'whatsapp',
+      severity: 'primary',
+      label: 'Telepon (WA)',
+      value: phoneNumber,
+      show: props.summary.type === 'profile',
+    },
+    {
+      icon: 'team',
+      severity: 'primary',
+      label: 'Tim',
+      value: teams?.join(', '),
+      show: props.summary.type === 'profile',
+    },
+    {
+      icon: 'mail',
+      severity: 'primary',
+      label: 'Email',
+      value: email,
+      show: props.summary.type === 'profile',
+    },
+    {
+      icon: 'star',
+      severity: 'primary',
+      label: 'Progress Poin',
+      value: `${Math.floor((sprintPoint / totalSprintPoint) * 100)}% (${sprintPoint}/${totalSprintPoint})`,
+      show: props.summary.type == 'profile',
+    },
     {
       icon: 'check-double-fill',
       severity: 'primary',
@@ -124,11 +169,18 @@ const summaryItems = computed<SummaryItem[]>(() => {
       show: true,
     },
     {
+      icon: 'timer',
+      severity: 'primary',
+      label: 'Durasi Task Aktif',
+      value: sprintDurationText,
+      show: props.summary.type === 'profile',
+    },
+    {
       icon: 'star',
       severity: 'primary',
       label: 'Total Poin',
       value: totalSprintPoint,
-      show: true,
+      show: props.summary.type != 'profile',
     },
     {
       icon: 'list-check',
@@ -155,109 +207,147 @@ const summaryItems = computed<SummaryItem[]>(() => {
 
   return items.filter((item) => item.show);
 });
+
+const userStatus = (profile: UserProfileSummary): WangsitStatus =>
+  profile.isActive ? 'Aktif' : 'Nonaktif';
+
+const secondsToDHM = (seconds: number): string => {
+  const days = Math.floor(seconds / 86400);
+  const hours = Math.floor((seconds % 86400) / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+
+  return `${days}h ${hours}j ${minutes}m`;
+};
 </script>
 <template>
   <div
     :class="[
-      'bg-primary-50 rounded-lg p-3 w-full flex flex-col gap-3 text-grayscale-900',
+      {
+        'grid grid-rows-[max-content,auto] grid-cols-[max-content,1fr] gap-x-3':
+          summary?.type === 'profile',
+      },
+      'bg-primary-50 rounded-lg p-3 w-full text-grayscale-900',
     ]"
     data-wv-name="projectsummary"
     data-wv-section="root"
   >
     <template v-if="summary">
-      <div
-        @click="expanded = !expanded"
-        class="flex items-center gap-[10px] cursor-pointer"
-        data-wv-section="projectmeta"
-      >
-        <h2
-          class="font-semibold text-base leading-4"
-          data-wv-section="projectname"
-        >
-          <template v-if="summary.type != 'submodule'">
-            {{ name }} ({{ summary.initialName }})
-          </template>
-          <template v-else>
-            {{ name }}
-          </template>
-        </h2>
-
-        <div class="flex items-center gap-2">
-          <ProgressBar
-            :severity="getStatusSeverity(summary.status)"
-            :show-value="false"
-            :value="progress.task"
-            class="w-[20vw] max-w-[200px]"
-          />
-          <span class="font-medium text-[14px] leading-4">
-            {{ progress.task }}%
-          </span>
-        </div>
-
-        <Badge :label="summary.status" format="nowrap" />
-
-        <Button
-          :class="[
-            '!p-0 !m-0 !w-auto !h-auto !ml-auto',
-            { 'rotate-180': expanded },
-          ]"
-          @click.stop="expanded = !expanded"
-          icon="arrow-down"
-          icon-class="w-6 h-6 text-general-800"
-          text
-        />
-      </div>
-
-      <div
-        v-if="summary.type === 'submodule'"
-        v-show="expanded"
-        class="flex gap-3 items-center"
-      >
+      <ImageCompressor
+        v-if="summary?.type === 'profile'"
+        :image-preview-url="summary.profilePicture"
+        :show-info="false"
+        image-preview-size="medium"
+        rounded
+      />
+      <div class="flex flex-col gap-2">
         <div
-          class="grid grid-cols-[max-content,150px,max-content,max-content] items-center gap-2"
+          @click="expanded = !expanded"
+          class="flex items-center gap-[10px] cursor-pointer"
+          data-wv-section="projectmeta"
         >
-          Web
-          <ProgressBar
-            :severity="getStatusSeverity(progressSubModule.statusWeb)"
-            :show-value="false"
-            :value="progressSubModule.progressWeb"
+          <h2
+            class="font-semibold text-base leading-4"
+            data-wv-section="projectname"
+          >
+            <template v-if="summary.type === 'profile'">
+              {{ name }}
+              <span class="font-normal">
+                ({{ summary.position }}, {{ summary.division }})
+              </span>
+            </template>
+            <template v-else-if="summary.type != 'submodule'">
+              {{ name }} ({{ summary.initialName }})
+            </template>
+            <template v-else>
+              {{ name }}
+            </template>
+          </h2>
+
+          <div
+            v-if="summary.type !== 'profile'"
+            class="flex items-center gap-2"
+          >
+            <ProgressBar
+              :severity="getStatusSeverity(summary.status)"
+              :show-value="false"
+              :value="progress.task"
+              class="w-[20vw] max-w-[200px]"
+            />
+            <span class="font-medium text-[14px] leading-4">
+              {{ progress.task }}%
+            </span>
+          </div>
+
+          <Badge
+            :label="
+              summary.type === 'profile' ? userStatus(summary) : summary.status
+            "
+            format="nowrap"
           />
-          <span class="font-medium text-[14px] leading-4">
-            {{ progressSubModule.progressWeb }}%
-          </span>
-          <Badge :label="progressSubModule.statusWeb" format="nowrap" />
+
+          <Button
+            :class="[
+              '!p-0 !m-0 !w-auto !h-auto !ml-auto',
+              { 'rotate-180': expanded },
+            ]"
+            @click.stop="expanded = !expanded"
+            icon="arrow-down"
+            icon-class="w-6 h-6 text-general-800"
+            text
+          />
         </div>
 
         <div
-          class="grid grid-cols-[max-content,150px,max-content,max-content] items-center gap-2"
+          v-if="summary.type === 'submodule'"
+          v-show="expanded"
+          class="flex gap-3 items-center"
         >
-          Mobile
-          <ProgressBar
-            :severity="getStatusSeverity(progressSubModule.statusMobile)"
-            :show-value="false"
-            :value="progressSubModule.progressMobile"
-          />
-          <span class="font-medium text-[14px] leading-4">
-            {{ progressSubModule.progressMobile }}%
-          </span>
-          <Badge :label="progressSubModule.statusMobile" format="nowrap" />
-        </div>
-      </div>
+          <div
+            class="grid grid-cols-[max-content,150px,max-content,max-content] items-center gap-2"
+          >
+            Web
+            <ProgressBar
+              :severity="getStatusSeverity(progressSubModule.statusWeb)"
+              :show-value="false"
+              :value="progressSubModule.progressWeb"
+            />
+            <span class="font-medium text-[14px] leading-4">
+              {{ progressSubModule.progressWeb }}%
+            </span>
+            <Badge :label="progressSubModule.statusWeb" format="nowrap" />
+          </div>
 
-      <div
-        v-show="expanded"
-        :class="['grid grid-cols-3 grid-rows-2 gap-3']"
-        data-wv-section="summary"
-      >
-        <span
-          :key="item.label"
-          v-for="item of summaryItems"
-          class="flex items-center gap-1 text-xs font-normal"
+          <div
+            class="grid grid-cols-[max-content,150px,max-content,max-content] items-center gap-2"
+          >
+            Mobile
+            <ProgressBar
+              :severity="getStatusSeverity(progressSubModule.statusMobile)"
+              :show-value="false"
+              :value="progressSubModule.progressMobile"
+            />
+            <span class="font-medium text-[14px] leading-4">
+              {{ progressSubModule.progressMobile }}%
+            </span>
+            <Badge :label="progressSubModule.statusMobile" format="nowrap" />
+          </div>
+        </div>
+
+        <div
+          v-show="expanded"
+          :class="['grid grid-cols-3 grid-rows-2 gap-3']"
+          data-wv-section="summary"
         >
-          <Icon :icon="item.icon" :severity="item.severity" />
-          <span>{{ item.label }}:</span>
-          <span>{{ item.value }}</span>
-        </span>
+          <span
+            :key="item.label"
+            v-for="item of summaryItems"
+            class="flex items-center gap-1 text-xs font-normal"
+          >
+            <Icon :icon="item.icon" :severity="item.severity" />
+            <span>{{ item.label }}:</span>
+            <span>{{ item.value }}</span>
+          </span>
+        </div>
       </div>
     </template>
 

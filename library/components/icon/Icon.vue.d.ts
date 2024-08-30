@@ -153,7 +153,11 @@ export type WangsIcons =
   | 'user-search'
   | 'user-settings'
   | 'user-shared-2-line'
-  | 'verification';
+  | 'verification'
+  | 'team'
+  | 'mail'
+  | 'timer'
+  | 'whatsapp';
 
 export interface IconProps {
   icon: WangsIcons;

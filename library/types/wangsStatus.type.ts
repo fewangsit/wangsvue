@@ -1,3 +1,4 @@
+export type UserStatus = 'Aktif' | 'Nonaktif';
 export type ProjectStatus = 'Sprint' | 'Backlog' | 'Selesai';
 export type TaskStatus =
   | 'Waiting Approval'
@@ -31,6 +32,7 @@ export type StatusSeverity =
 
 export type WangsitStatus =
   | ProjectStatus
+  | UserStatus
   | TaskStatus
   | DeploymentStatus
   | DevelopmentStatus;

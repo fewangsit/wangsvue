@@ -4,8 +4,31 @@ import {
   ModuleSummary,
   ProjectSummary,
   SubModuleSummary,
+  UserProfileSummary,
 } from 'lib/components/summaryaccordion/SummaryAccordion.vue.d';
 import { reactive } from 'vue';
+
+const userProfileSummary = reactive<UserProfileSummary>({
+  type: 'profile',
+  nickName: 'Kur',
+  fullName: 'Zain Kurnia',
+  initialName: 'KUR',
+  division: 'RnD',
+  position: 'Front End Developer',
+  isActive: true,
+  profilePicture:
+    'https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:50961b54-29e8-4a94-8982-6cb6735b6a98/7ae11d7d-18c4-43b7-a63f-fc33fa80efe3/512',
+  email: 'zainkurnia@mailnesia.com',
+  phoneNumber: '+62 81234567890',
+  teams: ['Front End Web', 'Back End'],
+  sprintPoint: 4998,
+  totalSprintTaskDuration: 288945,
+  totalSprintPoint: 5000,
+  totalSprintTask: 250,
+  totalCompletedTask: 200,
+  totalBugHistories: 1,
+  totalBacklogTask: 50,
+});
 
 const summary = reactive<ProjectSummary>({
   type: 'project',
@@ -58,6 +81,11 @@ const subModuleSummary = reactive<SubModuleSummary>({
 <template>
   <div class="flex flex-col gap-3">
     <div class="flex flex-col gap-4">
+      <span>Summary Profile</span>
+      <ProjectSummaryAccordion :summary="userProfileSummary" />
+    </div>
+
+    <div class="flex flex-col gap-4 mt-4">
       <span>Project</span>
       <ProjectSummaryAccordion
         :summary="{

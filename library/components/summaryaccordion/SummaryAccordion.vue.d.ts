@@ -47,6 +47,27 @@ export interface SubModuleSummary extends Summary {
   statusMobile: DevelopmentStatus;
 }
 
+export interface UserProfileSummary
+  extends Omit<Summary, 'name' | 'priority' | 'status'> {
+  type: 'profile';
+  nickName: string;
+  fullName: string;
+  aliasName?: string;
+  division: string;
+  position: string;
+  isActive: boolean;
+  profilePicture?: string;
+  email: string;
+  phoneNumber: string;
+  teams: string[];
+  sprintPoint: number;
+  totalSprintTaskDuration: number;
+}
+
 export interface SummaryAccordionProps {
-  summary?: ProjectSummary | ModuleSummary | SubModuleSummary;
+  summary?:
+    | ProjectSummary
+    | ModuleSummary
+    | SubModuleSummary
+    | UserProfileSummary;
 }
