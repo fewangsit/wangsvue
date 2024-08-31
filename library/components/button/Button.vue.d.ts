@@ -12,6 +12,7 @@ import { ComponentHooks } from '../basecomponent';
 import { PassThroughOptions } from '../passthrough';
 import { ClassComponent, PassThrough, HintedString } from '../ts-helpers';
 import { WangsIcons } from '../icon/Icon.vue.d';
+import { TooltipOptions } from 'primevue/tooltip';
 
 export declare type ButtonPassThroughOptionType<T = any> =
   | ButtonPassThroughAttributes
@@ -119,7 +120,7 @@ export interface ButtonProps extends /* @vue-ignore */ ButtonHTMLAttributes {
   /**
    * Tooltip/information to show on button hover.
    */
-  tooltip?: string;
+  tooltip?: string | TooltipOptions;
   /**
    * Set the position of tooltip.
    * @default bottom

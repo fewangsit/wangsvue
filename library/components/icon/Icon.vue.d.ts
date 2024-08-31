@@ -157,6 +157,14 @@ export type WangsIcons =
   | 'team'
   | 'mail'
   | 'timer'
+  | 'format-clear'
+  | 'code-line'
+  | 'link-m'
+  | 'list-ordered'
+  | 'bold'
+  | 'italic'
+  | 'underline'
+  | 'list-unordered'
   | 'whatsapp';
 
 export interface IconProps {
