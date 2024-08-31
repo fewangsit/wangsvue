@@ -7,14 +7,14 @@ import {
   SummaryAccordionProps,
   UserProfileSummary,
 } from './SummaryAccordion.vue.d';
+import { IconProps, WangsIcons } from '../icon/Icon.vue.d';
+import { WangsitStatus } from 'lib/types/wangsStatus.type';
 import ProgressBar from '../progressbar/ProgressBar.vue';
 import Badge from '../badge/Badge.vue';
 import Button from '../button/Button.vue';
-import { IconProps, WangsIcons } from '../icon/Icon.vue.d';
 import Icon from '../icon/Icon.vue';
 import getStatusSeverity from 'lib/utils/statusSeverity.util';
 import Skeleton from 'primevue/skeleton';
-import { WangsitStatus } from 'lib/types/wangsStatus.type';
 import ImageCompressor from '../imagecompressor/ImageCompressor.vue';
 
 interface SummaryItem {
@@ -47,6 +47,8 @@ const progressSubModule = computed(() => {
     props.summary?.type === 'submodule'
       ? props.summary
       : ({} as SubModuleSummary);
+
+  if (progressWeb == null || progressMobile == null) return undefined;
 
   return {
     statusWeb,
@@ -298,7 +300,7 @@ const secondsToDHM = (seconds: number): string => {
         </div>
 
         <div
-          v-if="summary.type === 'submodule'"
+          v-if="summary.type === 'submodule' && progressSubModule"
           v-show="expanded"
           class="flex gap-3 items-center"
         >

@@ -140,6 +140,19 @@ const subModuleSummary = reactive<SubModuleSummary>({
           totalCompletedTask: 0,
           totalSprintTask: 0,
           totalBacklogTask: 500,
+          progressMobile: undefined,
+          progressWeb: 40,
+          statusWeb: 'Backlog',
+          statusMobile: undefined,
+        }"
+      />
+      <ProjectSummaryAccordion
+        :summary="{
+          ...subModuleSummary,
+          status: 'Backlog',
+          totalCompletedTask: 0,
+          totalSprintTask: 0,
+          totalBacklogTask: 500,
           progressMobile: 0,
           progressWeb: 0,
           statusWeb: 'Backlog',

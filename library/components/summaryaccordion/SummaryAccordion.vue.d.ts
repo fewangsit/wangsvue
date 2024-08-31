@@ -41,10 +41,10 @@ export interface ModuleSummary extends Summary {
 export interface SubModuleSummary extends Summary {
   type: 'submodule';
   moduleName: string;
-  progressWeb: number;
-  progressMobile: number;
-  statusWeb: DevelopmentStatus;
-  statusMobile: DevelopmentStatus;
+  progressWeb?: number;
+  progressMobile?: number;
+  statusWeb?: DevelopmentStatus;
+  statusMobile?: DevelopmentStatus;
 }
 
 export interface UserProfileSummary
