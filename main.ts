@@ -11,6 +11,8 @@ import Tooltip from 'primevue/tooltip';
 import ToastService from 'primevue/toastservice';
 import router from './playground';
 
+import Focus from 'lib/directives/focus';
+
 // Preset
 import Preset from 'lib/preset';
 
@@ -26,5 +28,6 @@ app.use(router);
 
 app.use(ToastService);
 app.directive('tooltip', Tooltip);
+app.directive('focus', Focus);
 
 app.mount('#app');

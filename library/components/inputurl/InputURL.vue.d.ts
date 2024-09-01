@@ -1,5 +1,6 @@
 import { Slot } from 'vue';
 import { ClassComponent, Nullable } from '../ts-helpers';
+import { CustomValidation } from '../form/Form.vue.d';
 
 /**
  * InputURL component props
@@ -33,7 +34,7 @@ export interface InputURLProps {
   /**
    * Validator message for the input field
    */
-  validatorMessage?: string;
+  validatorMessage?: string | CustomValidation;
 
   /**
    * Custom invalid state.

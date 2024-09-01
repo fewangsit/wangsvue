@@ -705,3 +705,8 @@
 .ic-format-clear {
   --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M12.651 14.065L11.605 20H9.574l1.35-7.661l-7.41-7.41L4.93 3.515L20.485 19.07l-1.414 1.414zm-.878-6.535l.27-1.53h-1.8l-2-2H20v2h-5.927L13.5 9.257z'/%3E%3C/svg%3E");
 }
+
+.ic-external-link {
+  /* ri--external-link-line */
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M10 6v2H5v11h11v-5h2v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zm11-3v8h-2V6.413l-7.793 7.794l-1.414-1.414L17.585 5H13V3z'/%3E%3C/svg%3E");
+}

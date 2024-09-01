@@ -165,6 +165,7 @@ export type WangsIcons =
   | 'italic'
   | 'underline'
   | 'list-unordered'
+  | 'external-link'
   | 'whatsapp';
 
 export interface IconProps {

@@ -54,6 +54,7 @@ import { useToast, getNestedProperyValue } from 'lib/utils';
 
 // Directives
 import Tooltip from 'primevue/tooltip';
+import Focus from './directives/focus';
 
 import useLoadingStore from './components/loading/store/loading.store';
 
@@ -153,6 +154,7 @@ export default {
     app.component('OverlayPanel', OverlayPanel);
 
     app.directive('tooltip', Tooltip);
+    app.directive('focus', Focus);
   },
 };
 

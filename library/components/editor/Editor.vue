@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { computed, ref, shallowRef } from 'vue';
 import { ButtonProps } from '../button/Button.vue.d';
-import { EditorContent, useEditor } from '@tiptap/vue-3';
+import { EditorContent, FloatingMenu, useEditor } from '@tiptap/vue-3';
 import { MenuItem } from '../menuitem';
+import { FormPayload } from '../form/Form.vue.d';
+
 import Button from '../button/Button.vue';
 import Heading from '@tiptap/extension-heading';
 import Document from '@tiptap/extension-document';
@@ -20,11 +22,20 @@ import CodeBlock from '@tiptap/extension-code-block';
 import ListItem from '@tiptap/extension-list-item';
 import Paragraph from '@tiptap/extension-paragraph';
 import History from '@tiptap/extension-history';
+import FloatingMenuExt from '@tiptap/extension-floating-menu';
 import Menu from 'primevue/menu';
 import MenuPreset from 'lib/preset/menu';
+import OverlayPanel from 'primevue/overlaypanel';
+import InputURL from '../inputurl/InputURL.vue';
+import InputText from '../inputtext/InputText.vue';
+import Form from '../form/Form.vue';
+import EditorButton from './EditorButton.vue';
 
 const textContent = shallowRef<string>();
+const linkFormShown = shallowRef(false);
 const headingMenu = ref<Menu>();
+const editLinkOverlay = ref<OverlayPanel>();
+const root = ref<HTMLDivElement>();
 
 const editor = useEditor({
   content: null,
@@ -73,45 +84,85 @@ const editor = useEditor({
     Link.extend({
       addKeyboardShortcuts() {
         return {
-          'Mod-k': (): boolean => setLinkFunction(),
+          'Mod-k': (): boolean => openLinkForm(),
         };
       },
     }).configure({
       openOnClick: false,
     }),
     History,
+
+    FloatingMenuExt,
   ],
 });
 
-const setLinkFunction = (): boolean => {
-  const { setLink, unsetLink, insertContent, focus } =
-    editor.value?.commands ?? {};
-  const isLink = editor.value?.isActive('link');
+const openLinkForm = (e?: Event): boolean => {
+  linkFormShown.value = true;
 
-  if (isLink) unsetLink();
-  else {
-    const href = window.prompt('Masukan link:');
+  const event =
+    e ??
+    ({
+      currentTarget: root.value?.querySelector('.ic-link-m').closest('button'),
+    } as unknown as Event);
 
-    if (href) {
-      const { state } = editor.value; // Assume editor is available in scope
+  const { dom } = editor.value?.view ?? {};
+  editLinkOverlay.value?.toggle(event, dom);
 
-      focus();
+  return true;
+};
 
-      // Apply the link to the selected or inserted text
-      setLink({
-        href,
-        target: '_blank',
-        rel: 'nofollow',
-      });
+const setLinkFunction = ({
+  formValues,
+}: FormPayload<{ url: string; text?: string }>): boolean => {
+  const { setLink, insertContent, focus } = editor.value?.commands ?? {};
+  const { url, text } = formValues;
+  const { state } = editor.value;
 
-      if (state.selection.empty) {
-        insertContent(href);
-      }
+  focus();
 
-      return true;
-    }
-    return false;
+  // Apply the link to the selected or inserted text
+  setLink({
+    href: url,
+    target: '_blank',
+    rel: 'nofollow',
+  });
+
+  // On edit link: Replace Entire Anchor text with the new one
+  if (editor.value?.isActive('link')) {
+    editor.value
+      .chain()
+      .focus()
+      .command(({ tr, state: currState }) => {
+        const { $from, $to } = currState.selection;
+
+        // Find the start and end of the link mark
+        const linkMark = state.schema.marks.link;
+        let start = $from.start(),
+          end = $to.end();
+
+        // Adjust the range to cover the entire link
+        state.doc.nodesBetween($from.pos, $to.pos, (node, pos) => {
+          if (
+            node.isText &&
+            node.marks.some((mark) => mark.type === linkMark)
+          ) {
+            start = Math.min(start, pos);
+            end = Math.max(end, pos + node.nodeSize);
+          }
+        });
+
+        // Replace the text within the link without affecting the link itself
+        tr.insertText(text || url, start, end);
+
+        return true;
+      })
+      .run();
+  } else if (state.selection.empty) {
+    insertContent(text || url);
   }
+
+  editLinkOverlay.value?.hide();
+  linkFormShown.value = false;
 
   return true;
 };
@@ -142,6 +193,8 @@ const toolbars = computed<(ButtonProps & { active?: boolean })[]>(() => {
     clearNodes,
   } = editor.value?.commands ?? {};
 
+  const isInlineCode = editor.value?.isActive('code');
+
   return [
     {
       label: 'Aa',
@@ -152,8 +205,9 @@ const toolbars = computed<(ButtonProps & { active?: boolean })[]>(() => {
     },
     {
       icon: 'bold',
-      tooltip: 'Bold | Ctrl + B',
+      tooltipText: 'Bold | Ctrl + B',
       active: editor.value?.isActive('bold'),
+      disabled: isInlineCode,
       onClick: (): void => {
         focus();
         toggleBold();
@@ -161,8 +215,9 @@ const toolbars = computed<(ButtonProps & { active?: boolean })[]>(() => {
     },
     {
       icon: 'italic',
-      tooltip: 'Italic | Ctrl + I',
+      tooltipText: 'Italic | Ctrl + I',
       active: editor.value?.isActive('italic'),
+      disabled: isInlineCode,
       onClick: (): void => {
         focus();
         toggleItalic();
@@ -172,7 +227,8 @@ const toolbars = computed<(ButtonProps & { active?: boolean })[]>(() => {
       icon: 'underline',
       class: 'mr-3',
       active: editor.value?.isActive('underline'),
-      tooltip: 'Underline | Ctrl + U',
+      tooltipText: 'Underline | Ctrl + U',
+      disabled: isInlineCode,
       onClick: (): void => {
         focus();
         toggleUnderline();
@@ -180,7 +236,7 @@ const toolbars = computed<(ButtonProps & { active?: boolean })[]>(() => {
     },
     {
       icon: 'list-unordered',
-      tooltip: 'Bullet List | Ctrl + 7',
+      tooltipText: 'Bullet List | Ctrl + 7',
       active: editor.value?.isActive('bullet-list'),
       onClick: (): void => {
         focus();
@@ -189,7 +245,7 @@ const toolbars = computed<(ButtonProps & { active?: boolean })[]>(() => {
     },
     {
       icon: 'list-ordered',
-      tooltip: 'Numbered List | Ctrl + 8',
+      tooltipText: 'Numbered List | Ctrl + 8',
       active: editor.value?.isActive('ordered-list'),
       class: 'mr-3',
       onClick: (): void => {
@@ -199,20 +255,20 @@ const toolbars = computed<(ButtonProps & { active?: boolean })[]>(() => {
     },
     {
       icon: 'link-m',
-      tooltip: 'Link | Ctrl + K',
-      active: editor.value?.isActive('link'),
-      onClick: (): boolean => setLinkFunction(),
+      tooltipText: 'Link | Ctrl + K',
+      disabled: editor.value?.isActive('link') || linkFormShown.value,
+      onClick: openLinkForm,
     },
     {
       icon: 'image-add',
       active: editor.value?.isActive('image'),
-      tooltip: 'Image | Insert',
+      tooltipText: 'Image | Insert',
       onClick: (): boolean => setImageFunction(setImage, focus),
     },
     {
       icon: 'code-line',
       active: editor.value?.isActive('code'),
-      tooltip: 'Inline Code | Ctrl + E',
+      tooltipText: 'Inline Code | Ctrl + E',
       onClick: (): void => {
         focus();
         toggleCode();
@@ -220,7 +276,13 @@ const toolbars = computed<(ButtonProps & { active?: boolean })[]>(() => {
     },
     {
       icon: 'format-clear',
-      tooltip: 'Clear Formatting Ctrl + \\',
+      tooltipText: 'Clear Formatting Ctrl + \\',
+      disabled:
+        !editor.value?.isActive('bold') &&
+        !editor.value?.isActive('underline') &&
+        !editor.value?.isActive('italic') &&
+        !editor.value?.isActive('code') &&
+        !editor.value?.isActive('heading'),
       onClick: (): void => {
         focus();
         clearNodes();
@@ -295,10 +357,55 @@ const headings = shallowRef<MenuItem[]>([
     },
   },
 ]);
+
+const currentActiveLink = computed(() => {
+  return editor.value?.getAttributes('link');
+});
+
+/**
+ * Get the current active Link Node anchor text for Link form Text Input initial value
+ */
+const getInitialAnchorText = (): string => {
+  const { href } = currentActiveLink.value;
+  const anchor = editor.value?.view.dom.querySelector(`[href="${href}"]`);
+
+  return (
+    getSelectedText() ||
+    (anchor?.textContent !== href ? anchor.textContent : null)
+  );
+};
+
+const openLinkInNewTab = (): void => {
+  window.open(currentActiveLink.value?.href, '_blank');
+};
+
+const copyLink = (): void => {
+  window.navigator.clipboard.writeText(currentActiveLink.value?.href);
+};
+
+const unsetLinkFunction = (): void => {
+  if (editor.value) {
+    const { unsetLink, focus } = editor.value.commands;
+
+    focus();
+    unsetLink();
+  }
+};
+
+const getSelectedText = (): string => {
+  const { state } = editor.value;
+  const { from, to } = state.selection;
+
+  // Get the selected text between the 'from' and 'to' positions
+  const selectedText = state.doc.textBetween(from, to, ' ');
+
+  return selectedText;
+};
 </script>
 
 <template>
   <div
+    ref="root"
     :class="[
       'rounded-b text-grayscale-900 border-[0.5px]',
       '[&:has(:focus)]:border-general-200 border-general-100',
@@ -316,24 +423,11 @@ const headings = shallowRef<MenuItem[]>([
       class="border-b-[0.5px] border-inherit px-3 py-1 flex gap-1"
       data-wv-section="toolbar"
     >
-      <Button
+      <EditorButton
         v-bind="tool"
         :key="tool.icon"
         v-for="tool of toolbars"
-        :class="['!rounded !h-6 !w-6 !p-1', { '!bg-primary-50': tool.active }]"
-        :tooltip="{
-          pt: {
-            text: {
-              style:
-                'font-size: 9px !important; padding: 2px 6px; border-radius: 8px',
-            },
-          },
-          value: tool.tooltip,
-        }"
-        icon-class="!w-4 !h-4"
-        severity="secondary"
-        text
-        tooltip-pos="top"
+        :class="[{ '!bg-primary-50': tool.active }]"
       />
     </div>
 
@@ -371,6 +465,99 @@ const headings = shallowRef<MenuItem[]>([
       :editor="editor"
       spellcheck="false"
     />
+
+    <OverlayPanel
+      ref="editLinkOverlay"
+      :pt="{
+        content: {
+          class: '',
+        },
+      }"
+      @hide="linkFormShown = false"
+      append-to="self"
+      class="w-[342px] bg-white p-4"
+    >
+      <Form @submit="setLinkFunction" class="!gap-0" hide-stay-checkbox>
+        <template #fields>
+          <InputURL
+            v-focus
+            :validator-message="{ empty: 'Masukan tautan yang valid' }"
+            :value="currentActiveLink.href"
+            field-name="url"
+            label="Tempel Tautan"
+            mandatory
+            placeholder="Tempel tautan baru"
+            use-validator
+          />
+          <InputText
+            :value="getInitialAnchorText()"
+            field-name="text"
+            label="Teks Tampilan"
+            placeholder="Teks untuk ditampilkan"
+            use-validator
+          />
+
+          <Button
+            :label="editor?.isActive('link') ? 'Simpan' : 'Tambahkan'"
+            class="w-max ml-auto"
+            severity="secondary"
+            type="submit"
+          />
+        </template>
+      </Form>
+    </OverlayPanel>
+
+    <FloatingMenu
+      v-if="editor && !linkFormShown"
+      :editor="editor"
+      :should-show="() => editor.isActive('link')"
+      :tippy-options="{ placement: 'bottom', zIndex: 9 }"
+      class="-mt-1.5 shadow-panel"
+      plugin-key="editLinkToolbar"
+    >
+      <div
+        :class="[
+          'flex gap-2 bg-white border-[0.5px] px-2 py-1 rounded-sm',
+
+          `[&_.separator::after]:content-['|']`,
+          `[&_.separator::after]:text-xl`,
+          `[&_.separator::after]:font-thin`,
+          `[&_.separator]:h-6`,
+        ]"
+      >
+        <EditorButton
+          @click="openLinkForm"
+          class="!w-max"
+          label="Edit Tautan"
+          severity="secondary"
+          text
+        />
+        <span class="separator" />
+        <EditorButton
+          @click="openLinkInNewTab"
+          icon="external-link"
+          severity="secondary"
+          text
+          tooltip-text="Buka di tab baru"
+        />
+        <span class="separator" />
+        <EditorButton
+          @click="unsetLinkFunction"
+          icon="link-unlink-m"
+          severity="secondary"
+          text
+          tooltip-text="Lepas tautan"
+        />
+        <span class="separator" />
+        <EditorButton
+          @click="copyLink"
+          icon="file-copy"
+          severity="secondary"
+          text
+          tooltip-text="Salin tautan"
+        />
+      </div>
+    </FloatingMenu>
 
     <Menu ref="headingMenu" :model="headings" popup>
       <template #item="{ item }">
