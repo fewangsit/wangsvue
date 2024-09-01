@@ -102,7 +102,7 @@ const openLinkForm = (e?: Event): boolean => {
   const event =
     e ??
     ({
-      currentTarget: root.value?.querySelector('.ic-link-m').closest('button'),
+      currentTarget: root.value?.querySelector('.ic-link-m')?.closest('button'),
     } as unknown as Event);
 
   const { dom } = editor.value?.view ?? {};
@@ -111,11 +111,11 @@ const openLinkForm = (e?: Event): boolean => {
   return true;
 };
 
-const setLinkFunction = ({
-  formValues,
-}: FormPayload<{ url: string; text?: string }>): boolean => {
-  const { setLink, insertContent, focus } = editor.value?.commands ?? {};
-  const { url, text } = formValues;
+const setLinkFunction = ({ formValues }: FormPayload): boolean => {
+  if (!editor.value) return false;
+
+  const { setLink, insertContent, focus } = editor.value.commands;
+  const { url, text } = formValues as { url: string; text?: string };
   const { state } = editor.value;
 
   focus();
@@ -177,9 +177,13 @@ const setImageFunction = (
     focus();
     return setImage({ src: url });
   }
+
+  return false;
 };
 
 const toolbars = computed<(ButtonProps & { active?: boolean })[]>(() => {
+  if (!editor.value) return [];
+
   const {
     toggleBold,
     focus,
@@ -191,7 +195,7 @@ const toolbars = computed<(ButtonProps & { active?: boolean })[]>(() => {
     unsetAllMarks,
     setImage,
     clearNodes,
-  } = editor.value?.commands ?? {};
+  } = editor.value.commands;
 
   const isInlineCode = editor.value?.isActive('code');
 
@@ -359,19 +363,21 @@ const headings = shallowRef<MenuItem[]>([
 ]);
 
 const currentActiveLink = computed(() => {
-  return editor.value?.getAttributes('link');
+  return editor.value?.getAttributes('link') as { href: string };
 });
 
 /**
  * Get the current active Link Node anchor text for Link form Text Input initial value
  */
-const getInitialAnchorText = (): string => {
+const getInitialAnchorText = (): string | undefined => {
   const { href } = currentActiveLink.value;
   const anchor = editor.value?.view.dom.querySelector(`[href="${href}"]`);
 
   return (
     getSelectedText() ||
-    (anchor?.textContent !== href ? anchor.textContent : null)
+    (anchor && anchor?.textContent !== href
+      ? anchor.textContent || undefined
+      : undefined)
   );
 };
 
@@ -385,21 +391,22 @@ const copyLink = (): void => {
 
 const unsetLinkFunction = (): void => {
   if (editor.value) {
-    const { unsetLink, focus } = editor.value.commands;
+    const { unsetLink, focus } = editor.value?.commands ?? {};
 
     focus();
     unsetLink();
   }
 };
 
-const getSelectedText = (): string => {
-  const { state } = editor.value;
-  const { from, to } = state.selection;
+const getSelectedText = (): string | undefined => {
+  if (editor.value) {
+    const { state } = editor.value;
+    const { from, to } = state.selection;
 
-  // Get the selected text between the 'from' and 'to' positions
-  const selectedText = state.doc.textBetween(from, to, ' ');
-
-  return selectedText;
+    // Get the selected text between the 'from' and 'to' positions
+    const selectedText = state?.doc.textBetween(from, to, ' ');
+    return selectedText;
+  }
 };
 </script>
 
@@ -482,7 +489,7 @@ const getSelectedText = (): string => {
           <InputURL
             v-focus
             :validator-message="{ empty: 'Masukan tautan yang valid' }"
-            :value="currentActiveLink.href"
+            :value="currentActiveLink?.href"
             field-name="url"
             label="Tempel Tautan"
             mandatory
@@ -510,7 +517,7 @@ const getSelectedText = (): string => {
     <FloatingMenu
       v-if="editor && !linkFormShown"
       :editor="editor"
-      :should-show="() => editor.isActive('link')"
+      :should-show="() => !!editor?.isActive('link')"
       :tippy-options="{ placement: 'bottom', zIndex: 9 }"
       class="-mt-1.5 shadow-panel"
       plugin-key="editLinkToolbar"

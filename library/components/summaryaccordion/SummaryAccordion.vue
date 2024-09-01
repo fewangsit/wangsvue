@@ -309,14 +309,19 @@ const secondsToDHM = (seconds: number): string => {
           >
             Web
             <ProgressBar
-              :severity="getStatusSeverity(progressSubModule.statusWeb)"
+              :severity="
+                getStatusSeverity(progressSubModule.statusWeb ?? 'Backlog')
+              "
               :show-value="false"
               :value="progressSubModule.progressWeb"
             />
             <span class="font-medium text-[14px] leading-4">
               {{ progressSubModule.progressWeb }}%
             </span>
-            <Badge :label="progressSubModule.statusWeb" format="nowrap" />
+            <Badge
+              :label="progressSubModule.statusWeb ?? 'Backlog'"
+              format="nowrap"
+            />
           </div>
 
           <div
@@ -324,14 +329,19 @@ const secondsToDHM = (seconds: number): string => {
           >
             Mobile
             <ProgressBar
-              :severity="getStatusSeverity(progressSubModule.statusMobile)"
+              :severity="
+                getStatusSeverity(progressSubModule.statusMobile ?? 'Backlog')
+              "
               :show-value="false"
               :value="progressSubModule.progressMobile"
             />
             <span class="font-medium text-[14px] leading-4">
               {{ progressSubModule.progressMobile }}%
             </span>
-            <Badge :label="progressSubModule.statusMobile" format="nowrap" />
+            <Badge
+              :label="progressSubModule.statusMobile ?? 'Backlog'"
+              format="nowrap"
+            />
           </div>
         </div>
 

@@ -12,7 +12,7 @@ import Button from '../button/Button.vue';
             'font-size: 9px !important; padding: 2px 6px; border-radius: 8px',
         },
       },
-      value: $attrs['tooltipText'] ?? $attrs['tooltip-text'],
+      value: ($attrs['tooltipText'] ?? $attrs['tooltip-text']) as string,
     }"
     icon-class="!w-4 !h-4"
     severity="secondary"
