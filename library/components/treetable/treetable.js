@@ -1,13 +1,16 @@
 export default {
-  root: {
+  root: ({ scrollHeight }) => ({
     'class': [
       'overflow-auto relative',
       'rounded-lg rounded-br-none rounded-bl-none',
+      {
+        '!overflow-y-auto': !!scrollHeight,
+      },
     ],
     'data-wv-name': 'treetable',
     'data-wv-section': 'root',
-    'style': 'scrollbar-width: none',
-  },
+    'style': `max-height: ${scrollHeight}; scrollbar-width: ${scrollHeight ? 'thin' : 'none'}`,
+  }),
   table: {
     'class': [
       'min-w-max w-full',
@@ -34,7 +37,10 @@ export default {
       // State
       {
         'focus:outline-none focus:outline-offset-0': props.selectionType,
-        'hover:bg-primary-50': props.selectionType && props.selectionType !== 'none' && !context.disabled,
+        'hover:bg-primary-50':
+          props.selectionType &&
+          props.selectionType !== 'none' &&
+          !context.disabled,
       },
 
       // Transition

@@ -670,9 +670,9 @@ const listenUpdateTableEvent = (): void => {
 </script>
 
 <template>
-  <div v-bind="Preset.root">
+  <div v-bind="Preset.root(props)">
     <table :id="dataTableID" v-bind="Preset.table" :key="tableKey">
-      <thead>
+      <thead class="sticky top-0">
         <tr class="border-b border-primary-100">
           <th
             v-if="selectionType === 'checkbox'"
@@ -1002,7 +1002,7 @@ const listenUpdateTableEvent = (): void => {
       :rows-per-page-options="rowsPerPageOptions"
       :total-records="totalRecords"
       @page="handlePageChange"
-      class="sticky left-0"
+      class="sticky left-0 bottom-0"
       template="FirstPageLink PrevPageLink PageLinks JumpToPageInput NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
     >
       <template #firstpagelinkicon>

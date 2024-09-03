@@ -29,6 +29,11 @@ export interface TreeTableProps extends Omit<DataTableProps, 'columns'> {
    * Properties to be passed into sub table
    */
   childTableProps?: Partial<TreeTableProps>;
+  /**
+   * Props to set scroll height, this will make table content scrollable
+   * @example '50vh' or '300px'
+   */
+  scrollHeight?: string;
 }
 
 export type TreeTableEmits = DataTableEmits & {
