@@ -38,15 +38,7 @@ export type FieldValidation<T = FieldValue | undefined> =
       value: T;
     });
 
-export type FormValue =
-  | string
-  | string[]
-  | number
-  | number[]
-  | boolean
-  | boolean[]
-  | Record<string, unknown>
-  | Record<string, unknown>[];
+export type FormValue = Record<string, unknown> | Record<string, unknown>[];
 
 export type FormPayload<T = Record<string, FormValue>> = {
   stayAfterSubmit: boolean;
