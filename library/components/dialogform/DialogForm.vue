@@ -216,7 +216,7 @@ defineExpose({ form, clearField });
               <Button
                 v-if="closable"
                 @click="closeDialog"
-                class="!p-0.5"
+                class="!p-0.5 !text-general-200 dark:!text-general-200"
                 data-wv-section="closebutton"
                 icon="close"
                 icon-class="w-[22px] h-[22px]"
