@@ -6,12 +6,14 @@ import { FormValue } from 'lib/components/form/Form.vue.d';
 import InputText from 'lib/components/inputtext/InputText.vue';
 import InputEmail from 'lib/components/inputemail/InputEmail.vue';
 import InputNumber from 'lib/components/inputnumber/InputNumber.vue';
+import ButtonRadio from 'lib/components/buttonradio/ButtonRadio.vue';
 import { ref, shallowRef } from 'vue';
 import DocTitle from '../DocTitle.vue';
 
 const showForm = shallowRef<boolean>(false);
 const formValues = ref<FormValue>();
 const showResult = ref<boolean>(false);
+const kananKiri = ref<string>();
 
 const apply = (e: {
   formValues: FormValue;
@@ -43,7 +45,7 @@ const apply = (e: {
           />
         </div>
         <template v-if="showResult === true && formValues">
-          <pre>{{ formValues }}</pre>
+          <pre>{{ { ...formValues, radio: kananKiri } }}</pre>
         </template>
       </div>
       <DialogForm
@@ -79,6 +81,14 @@ const apply = (e: {
             placeholder="Masukkan email"
             use-validator
           />
+          <div class="flex flex-col gap-1 justify-between">
+            <span>Kanan atau kiri?</span>
+            <div class="flex gap-1 jusitfy-betweeb">
+              <ButtonRadio v-model="kananKiri" label="kanan" value="kanan" />
+              <ButtonRadio v-model="kananKiri" label="kiri" value="kiri" />
+            </div>
+          </div>
+          <ButtonRadio disabled label="sama aja tapi disabled" />
           <InputText
             :validator-message="{
               exceed: 'Max char 30',
