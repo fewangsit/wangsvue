@@ -4,6 +4,9 @@ import vue from '@vitejs/plugin-vue';
 import dts from 'vite-plugin-dts';
 
 export default defineConfig({
+  define: {
+    'process.env.NODE_ENV': JSON.stringify('production'),
+  },
   plugins: [
     vue(),
     dts({
@@ -11,21 +14,22 @@ export default defineConfig({
     }),
   ],
   build: {
+    cssMinify: true,
+    minify: true,
     cssCodeSplit: true,
     sourcemap: false,
     outDir: 'dist',
     lib: {
-      // Could also be a dictionary or array of multiple entry points
       entry: 'build-entry.ts',
-      formats: ['es'],
-      fileName: 'wangsvue.es',
+      formats: ['system', 'es'],
+      fileName: (format) => `wangsvue.${format}.js`,
     },
     rollupOptions: {
       /*
        * Make sure to externalize deps that should not be bundled
        * into your library
        */
-      external: ['vue'],
+      external: ['vue', 'axios', 'vue-router', 'xlsx'],
       output: {
         assetFileNames: (assetInfo): string => {
           if (assetInfo.name === 'build-entry.css') return 'style.css';

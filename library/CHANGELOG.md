@@ -1,6 +1,80 @@
 # Changelog
 
 
+## v1.4.145
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.144...v1.4.145)
+
+## v1.4.144
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.143...v1.4.144)
+
+## v1.4.143
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.142...v1.4.143)
+
+## v1.4.142
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.141...v1.4.142)
+
+## v1.4.141
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.140...v1.4.141)
+
+## v1.4.140
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.139...v1.4.140)
+
+## v1.4.139
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.138...v1.4.139)
+
+## v1.4.138
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.137...v1.4.138)
+
+## v1.4.137
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.136...v1.4.137)
+
+## v1.4.136
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.135...v1.4.136)
+
+## v1.4.135
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.134...v1.4.135)
+
+## v1.4.134
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.133...v1.4.134)
+
+## v1.4.133
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.132...v1.4.133)
+
+### 🚀 Enhancements
+
+- Add image size props for image compressor and image component ([77d42a5](https://github.com/fewangsit/wangsvue/commit/77d42a5))
+- **SummaryAccordion:** Add profile summary ([63afea3](https://github.com/fewangsit/wangsvue/commit/63afea3))
+- **CodeSnippet:** Update textarea left position on input ([7e29fcc](https://github.com/fewangsit/wangsvue/commit/7e29fcc))
+- **SummaryAccordion:** Show progress bar mobile and web only when the both data is available ([0a63a9a](https://github.com/fewangsit/wangsvue/commit/0a63a9a))
+- **Editor:** Add functionality with tiptap library ([02f0df8](https://github.com/fewangsit/wangsvue/commit/02f0df8))
+- **Editor:** Add functionality to insert, edit, opens, unlink and copy link ([e1c6fee](https://github.com/fewangsit/wangsvue/commit/e1c6fee))
+
+### 🩹 Fixes
+
+- **SummaryAccordion:** Profile user should be only shown when state expanded ([ef9d335](https://github.com/fewangsit/wangsvue/commit/ef9d335))
+- Types error on Editor and Summary accordion ([ef224be](https://github.com/fewangsit/wangsvue/commit/ef224be))
+
+### 🏡 Chore
+
+- **release:** V1.4.132 ([d32b1fe](https://github.com/fewangsit/wangsvue/commit/d32b1fe))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.132
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.130...v1.4.132)
