@@ -115,7 +115,7 @@ const setLinkFunction = ({ formValues }: FormPayload): boolean => {
   if (!editor.value) return false;
 
   const { setLink, insertContent, focus } = editor.value.commands;
-  const { url, text } = formValues as { url: string; text?: string };
+  const { url, text } = formValues as unknown as { url: string; text?: string };
   const { state } = editor.value;
 
   focus();
