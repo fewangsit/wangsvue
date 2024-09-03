@@ -58,10 +58,12 @@ export default {
     ],
   },
   title: {
-    class: ['text-general-800 text-sm font-bold leading-[19.12px] tracking-[0.24px]'],
+    class: [
+      'text-general-800 text-sm font-bold leading-[19.12px] tracking-[0.24px]',
+    ],
   },
   icons: {
-    class: ['flex items-center'],
+    class: ['flex items-center ml-auto'],
   },
   closeButton: {
     class: [
@@ -166,7 +168,7 @@ export default {
       'overflow-y-auto',
 
       {
-        'grow': state?.maximized,
+        grow: state?.maximized,
       },
     ],
   }),
