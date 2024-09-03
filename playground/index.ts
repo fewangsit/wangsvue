@@ -36,6 +36,7 @@ import ButtonToggleDocs from './docs/buttontoggle/ButtonToggleDocs.vue';
 import InputPasswordDocs from './docs/inputpassword/InputPasswordDocs.vue';
 import IconDocs from './docs/icon/IconDocs.vue';
 import ChangelogDocs from './docs/changelog/ChangelogDocs.vue';
+import ChangelogPageDocs from './docs/changelogpage/ChangelogPageDocs.vue';
 import CodeSnippetDocs from './docs/codesnippet/CodeSnippetDocs.vue';
 
 const routes: Readonly<RouteRecordRaw[]> = [
@@ -227,6 +228,11 @@ const routes: Readonly<RouteRecordRaw[]> = [
         path: 'changelog',
         name: 'Changelog Docs',
         component: ChangelogDocs,
+      },
+      {
+        path: 'changelogpage',
+        name: 'ChangelogPage Docs',
+        component: ChangelogPageDocs,
       },
     ],
   },

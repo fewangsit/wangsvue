@@ -8,15 +8,13 @@ import { MultiSelectOption } from 'lib/types/options.type';
 import {
   ChangelogFilter,
   ChangelogOptionQuery,
-  ChangelogProps,
-} from './Changelog.vue.d';
+  ChangelogPageProps,
+} from './ChangelogPage.vue.d';
 import LogServices from 'lib/services/log.service';
 
 const toast = useToast();
 
-const props = defineProps<
-  ChangelogProps & { tableName: string; changelogColumnHeader: string }
->();
+const props = defineProps<ChangelogPageProps & { tableName: string }>();
 
 const fields = computed<FilterField[]>(() => {
   return [
@@ -38,7 +36,7 @@ const fields = computed<FilterField[]>(() => {
       },
     },
     {
-      label: props.changelogColumnHeader,
+      label: props.objectNameColumn,
       type: 'multiselect',
       field: 'assetName',
       visible: true,

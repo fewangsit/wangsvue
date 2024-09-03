@@ -3,5 +3,9 @@ import Changelog from 'lib/components/changelog/Changelog.vue';
 </script>
 
 <template>
-  <Changelog object="Tim" />
+  <Changelog
+    header="Changelog: coding > testing"
+    object="Tim"
+    object-name-column="Custom Column Name"
+  />
 </template>

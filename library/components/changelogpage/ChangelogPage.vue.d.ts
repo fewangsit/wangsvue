@@ -50,20 +50,18 @@ export type ChangelogOptionFilter = {
 /**
  * Props for Changelog component
  */
-export interface ChangelogProps {
+export interface ChangelogPageProps {
   /**
-   * Props to determine whether this component should using button or not
-   * For ChangelogPage
+   * Note: Dont use this props since it's just for changelog dialog purpose
    * @ignore
    */
-  useButton?: boolean;
+  isDialog?: boolean;
   /**
    * To set custom name for specific column in changelog table
    */
   objectNameColumn?: string;
   /**
    * Title content of the dialog.
-   * @example 'Changelog: Roles > Transfer'
    */
   header?: string | undefined;
   /**
@@ -89,7 +87,7 @@ export interface ChangelogProps {
 /**
  * Emits for Changelog component
  */
-export type ChangelogEmits = {
+export type ChangelogPageEmits = {
   hide: [];
 };
 
@@ -104,16 +102,16 @@ export type ChangelogEmits = {
  *
  * @group components
  */
-declare class Changelog extends ClassComponent<
-  ChangelogProps,
+declare class ChangelogPage extends ClassComponent<
+  ChangelogPageProps,
   unknown,
-  ChangelogEmits
+  ChangelogPageEmits
 > {}
 
 declare module '@vue/runtime-core' {
   interface GlobalComponents {
-    Changelog: GlobalComponentConstructor<Changelog>;
+    Changelog: GlobalComponentConstructor<ChangelogPage>;
   }
 }
 
-export default Changelog;
+export default ChangelogPage;
