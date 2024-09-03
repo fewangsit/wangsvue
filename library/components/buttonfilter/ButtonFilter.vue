@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { shallowRef } from 'vue';
 import { ButtonFilterProps } from './ButtonFilter.vue.d';
 import Icon from '../icon/Icon.vue';
 import eventBus from 'lib/event-bus';
@@ -8,11 +9,15 @@ const { tableName } = withDefaults(defineProps<ButtonFilterProps>(), {
   tableName: 'datatable',
 });
 
-const showFilter = defineModel<boolean>('showFilter', { default: false });
+const emit = defineEmits<{
+  showFilter: [payload: boolean];
+}>();
+
+const showFilter = shallowRef<boolean>(false);
 
 const toggleFilterPanel = (): void => {
   showFilter.value = !showFilter.value;
-
+  emit('showFilter', showFilter.value);
   eventBus.emit('show-filter', { tableName, show: showFilter.value });
 };
 </script>
