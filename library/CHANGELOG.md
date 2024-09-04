@@ -1,6 +1,39 @@
 # Changelog
 
 
+## v1.4.150
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.149...v1.4.150)
+
+### 🚀 Enhancements
+
+- Add new component InputRepositoryName that automatically replace ' ' to '-' and to lower case ([1489396](https://github.com/fewangsit/wangsvue/commit/1489396))
+
+### 💅 Refactors
+
+- Refactor InputRepositoryName ([4cbb27a](https://github.com/fewangsit/wangsvue/commit/4cbb27a))
+
+### 🏡 Chore
+
+- **release:** V1.4.149 ([100fb5a](https://github.com/fewangsit/wangsvue/commit/100fb5a))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
+## v1.4.149
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.148...v1.4.149)
+
+### 💅 Refactors
+
+- Change from token to jwt ([0ecfeec](https://github.com/fewangsit/wangsvue/commit/0ecfeec))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.4.148
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.147...v1.4.148)
