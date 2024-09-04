@@ -121,6 +121,11 @@ const routes: Readonly<RouteRecordRaw[]> = [
         component: TabMenuDocs,
       },
       {
+        path: 'tabmenu/second-link',
+        name: 'Tab Menu Second Link Docs',
+        component: TabMenuDocs,
+      },
+      {
         path: 'menu',
         name: 'Menu Docs',
         component: MenuDocs,

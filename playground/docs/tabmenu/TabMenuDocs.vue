@@ -17,6 +17,10 @@ const menu: MenuItem[] = [
   {
     label: 'Without Link',
   },
+  {
+    label: 'With Link to current page',
+    route: '/tabmenu/second-link',
+  },
 ];
 
 const activeIndex = shallowRef(0);
@@ -26,7 +30,16 @@ const activeIndex = shallowRef(0);
   <Card>
     <template #header>
       <DocTitle name="Tab Menu" />
-      <TabMenu v-model:active-index="activeIndex" :menu="menu" />
+      <div class="flex flex-col gap-4">
+        <span>With Trailing Line</span>
+        <TabMenu v-model:active-index="activeIndex" :menu="menu" />
+        <span>Without Trailing Line</span>
+        <TabMenu
+          v-model:active-index="activeIndex"
+          :menu="menu"
+          :use-trailing-line="false"
+        />
+      </div>
     </template>
     <template #subtitle>
       You are currently on tab {{ activeIndex + 1 }}.

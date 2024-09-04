@@ -170,16 +170,15 @@ export interface TabMenuProps {
    */
   menu?: MenuItem[] | undefined;
   /**
-   * Defines if active route highlight should match the exact route path.
-   * @deprecated since v3.40.0.
-   * @defaultValue true
-   */
-  exact?: boolean | undefined;
-  /**
    * Active index of menuitem.
    * @defaultValue 0
    */
   activeIndex?: number | undefined;
+  /**
+   * Whether to use trailing line at the end of tab menu.
+   * @defaultValue true
+   */
+  useTrailingLine?: boolean | undefined;
   /**
    * Defines a string value that labels an interactive element.
    */
