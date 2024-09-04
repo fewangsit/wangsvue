@@ -14,7 +14,11 @@ const emit = defineEmits<InputRepositoryNameEmits>();
 const model = defineModel<string>('model');
 
 const formattingRepositoryName = (name?: string): void => {
-  const splittedName = name?.trim()?.toLowerCase()?.split(/[/ ]+/) ?? [];
+  const splittedName =
+    name
+      ?.trim()
+      ?.toLowerCase()
+      ?.split(/[/_ ]+/) ?? [];
   model.value = splittedName?.join('-') ?? '';
 };
 
