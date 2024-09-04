@@ -112,6 +112,5 @@
     "vite-plugin-istanbul": "6.0.2",
     "vue-tsc": "2.0.29",
     "wait-on": "7.2.0"
-  },
-  "packageManager": "pnpm@8.14.1+sha1.d039b38e0b20ad012ed548e44267b8d4c88b447a"
+  }
 }
