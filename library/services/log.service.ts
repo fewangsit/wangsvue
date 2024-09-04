@@ -16,7 +16,7 @@ const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
     baseURL: BASE_URL,
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + user.token,
+      'Authorization': 'Bearer ' + user.jwt,
       ...headers,
     },
     params,
