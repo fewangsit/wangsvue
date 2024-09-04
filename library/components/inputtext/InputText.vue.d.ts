@@ -159,7 +159,7 @@ export interface InputTextProps extends /* @vue-ignore */ InputHTMLAttributes {
   /**
    * Specify the validation type. Wether 'email' or 'text' validation.
    */
-  type?: 'email' | 'text' | 'url' | 'initialname';
+  type?: 'email' | 'text' | 'url' | 'initialname' | 'repositoryname';
   /**
    * Disabled the input.
    */

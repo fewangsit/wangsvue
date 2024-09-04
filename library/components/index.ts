@@ -39,6 +39,8 @@ import SummaryAccordion from './summaryaccordion/SummaryAccordion.vue';
 import InputURL from './inputurl/InputURL.vue';
 import OverlayPanel from './overlaypanel/OverlayPanel.vue';
 import Timeline from './timeline/Timeline.vue';
+import ButtonRadio from './buttonradio/ButtonRadio.vue';
+import InputRepositoryName from './inputrepositoryname/InputRepositoryName.vue';
 
 export {
   Badge,
@@ -82,4 +84,6 @@ export {
   InputURL,
   OverlayPanel,
   Timeline,
+  ButtonRadio,
+  InputRepositoryName,
 };
