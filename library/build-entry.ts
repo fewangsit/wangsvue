@@ -100,6 +100,8 @@ import {
   InputURL,
   Timeline,
   SummaryAccordion,
+  ButtonRadio,
+  InputRepositoryName,
 } from './components';
 
 export default {
@@ -152,6 +154,8 @@ export default {
     app.component('SummaryAccordion', SummaryAccordion);
     app.component('InputURL', InputURL);
     app.component('OverlayPanel', OverlayPanel);
+    app.component('ButtonRadio', ButtonRadio);
+    app.component('InputRepositoryName', InputRepositoryName);
 
     app.directive('tooltip', Tooltip);
     app.directive('focus', Focus);

@@ -38,6 +38,7 @@ import IconDocs from './docs/icon/IconDocs.vue';
 import ChangelogDocs from './docs/changelog/ChangelogDocs.vue';
 import ChangelogPageDocs from './docs/changelogpage/ChangelogPageDocs.vue';
 import CodeSnippetDocs from './docs/codesnippet/CodeSnippetDocs.vue';
+import InputRepositoryNameDocs from './docs/inputrepositoryname/InputRepositoryNameDocs.vue';
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
@@ -233,6 +234,11 @@ const routes: Readonly<RouteRecordRaw[]> = [
         path: 'changelogpage',
         name: 'ChangelogPage Docs',
         component: ChangelogPageDocs,
+      },
+      {
+        path: 'inputrepositoryname',
+        name: 'InputRepositoryName Docs',
+        component: InputRepositoryNameDocs,
       },
     ],
   },

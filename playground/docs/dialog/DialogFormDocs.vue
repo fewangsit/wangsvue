@@ -7,6 +7,7 @@ import InputText from 'lib/components/inputtext/InputText.vue';
 import InputEmail from 'lib/components/inputemail/InputEmail.vue';
 import InputNumber from 'lib/components/inputnumber/InputNumber.vue';
 import ButtonRadio from 'lib/components/buttonradio/ButtonRadio.vue';
+import InputRepositoryName from 'lib/components/inputrepositoryname/InputRepositoryName.vue';
 import { ref, shallowRef } from 'vue';
 import DocTitle from '../DocTitle.vue';
 
@@ -14,6 +15,7 @@ const showForm = shallowRef<boolean>(false);
 const formValues = ref<FormValue>();
 const showResult = ref<boolean>(false);
 const kananKiri = ref<string>();
+const repositoryName = ref<string>('');
 
 const apply = (e: {
   formValues: FormValue;
@@ -98,6 +100,11 @@ const apply = (e: {
             label="Nama Depan"
             mandatory
             use-validator
+          />
+          <InputRepositoryName
+            v-model="repositoryName"
+            field-name="repository"
+            label="Repository Name"
           />
           <InputText
             :validator-message="{
