@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.4.151
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.150...v1.4.151)
+
+### 💅 Refactors
+
+- Add regex to input repository name ([bede014](https://github.com/fewangsit/wangsvue/commit/bede014))
+
+### 🏡 Chore
+
+- **release:** V1.4.150 ([672d829](https://github.com/fewangsit/wangsvue/commit/672d829))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.150
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.149...v1.4.150)
