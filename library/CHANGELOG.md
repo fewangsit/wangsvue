@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.152
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.151...v1.4.152)
+
+### 🏡 Chore
+
+- **release:** V1.4.151 ([edcb967](https://github.com/fewangsit/wangsvue/commit/edcb967))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.151
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.150...v1.4.151)

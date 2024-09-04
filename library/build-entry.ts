@@ -220,6 +220,8 @@ export {
   Loading,
   SummaryAccordion,
   InputURL,
+  InputRepositoryName,
+  ButtonRadio,
 
   // Component store
   useLoadingStore,
