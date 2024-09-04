@@ -29,7 +29,7 @@ export default defineConfig({
        * Make sure to externalize deps that should not be bundled
        * into your library
        */
-      external: ['vue', 'axios', 'vue-router', 'xlsx'],
+      external: ['vue', 'axios', 'vue-router'],
       output: {
         assetFileNames: (assetInfo): string => {
           if (assetInfo.name === 'build-entry.css') return 'style.css';

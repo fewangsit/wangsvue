@@ -1,6 +1,44 @@
 # Changelog
 
 
+## v1.4.148
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.147...v1.4.148)
+
+## v1.4.147
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.146...v1.4.147)
+
+## v1.4.146
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.145...v1.4.146)
+
+### 🚀 Enhancements
+
+- Add component ButtonRadio ([b7712ef](https://github.com/fewangsit/wangsvue/commit/b7712ef))
+
+### 🩹 Fixes
+
+- Fix assertion in Editor ([cb6d3c9](https://github.com/fewangsit/wangsvue/commit/cb6d3c9))
+- Fix incorrect gap between icon and dialog header ([cc7b675](https://github.com/fewangsit/wangsvue/commit/cc7b675))
+- Fix styling for close icon in dialog header ([b3cdfc3](https://github.com/fewangsit/wangsvue/commit/b3cdfc3))
+
+### 💅 Refactors
+
+- Refactor type for FormValue ([9d9faf4](https://github.com/fewangsit/wangsvue/commit/9d9faf4))
+- Change from model to shallow ref ([b1d45d7](https://github.com/fewangsit/wangsvue/commit/b1d45d7))
+- Refactor changelog component as well as add new component to represents changelog in page view ([f3a08b7](https://github.com/fewangsit/wangsvue/commit/f3a08b7))
+- Adjust styling in tree table ([ffaf3db](https://github.com/fewangsit/wangsvue/commit/ffaf3db))
+
+### 🏡 Chore
+
+- Setup configuration for shared dependencies ([7fca33a](https://github.com/fewangsit/wangsvue/commit/7fca33a))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.145
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.144...v1.4.145)
