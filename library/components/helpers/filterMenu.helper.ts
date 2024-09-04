@@ -9,7 +9,7 @@ import { MenuItem } from '../menuitem';
  */
 const filterVisibleMenu = (menuItems: MenuItem[]): MenuItem[] => {
   const emptyMenu: MenuItem = {
-    label: 'No Option Available',
+    label: 'Tidak ada aksi',
     disabled: true,
   };
 
