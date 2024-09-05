@@ -10,7 +10,8 @@ import { WangsIcons } from '../icon/Icon.vue.d';
 const route = useRoute();
 
 onBeforeMount(() => {
-  const index = props.menu.findIndex((item) => item.route === route.path);
+  const index =
+    props.menu?.findIndex((item) => item.route === route.path) ?? -1;
 
   if (index !== -1) {
     activeIndex.value = index;
