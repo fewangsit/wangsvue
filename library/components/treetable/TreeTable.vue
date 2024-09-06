@@ -670,303 +670,318 @@ const listenUpdateTableEvent = (): void => {
 </script>
 
 <template>
-  <div v-bind="Preset.root(props)">
-    <table :id="dataTableID" v-bind="Preset.table" :key="tableKey">
-      <thead class="sticky top-0">
-        <tr class="border-b border-primary-100">
-          <th
-            v-if="selectionType === 'checkbox'"
-            @click="toggleAllDataSelection(!isSelectedAll)"
-            v-bind="headerCellPreset()"
-            class="w-[40px] text-center"
-            data-wv-section="headercheckbox"
-          >
-            <Checkbox
-              v-bind="Preset.headercheckbox"
-              :class="[
-                {
-                  '[&_[data-pc-section=box]]:!border-white [&_[data-pc-section=box]]:!bg-transparent':
-                    !isSelectedAll,
-                },
-              ]"
-              :model-value="isSelectedAll"
-              binary
-              data-wv-section="headercheckbox"
-            />
-          </th>
-
-          <th
-            v-if="treeTable"
-            class="w-[40px] text-center !py-1"
-            v-bind="headerCellPreset()"
-            data-wv-section="headertoggler"
-          >
-            <Button
-              :class="[
-                '!p-0 !m-0 !w-auto !h-auto',
-                { 'rotate-180': isExpandedAll },
-                { 'rotate-0': !isExpandedAll },
-              ]"
-              @click="toggleExpandAll"
-              icon="arrow-down"
-              icon-class="w-6 h-6 text-white"
-              text
-            />
-          </th>
-
-          <th
-            :key="col.field"
-            v-for="col in visibleColumns"
-            v-bind="headerCellPreset(col)"
-            @click="sortColumn(col.field)"
-          >
-            <span class="inline-flex gap-2 items-center leading-[18px]">
-              {{ col.header }}
-
-              <Icon
-                v-if="col.sortable"
-                :icon="
-                  !sortBy || sortBy != col.field
-                    ? 'arrow-up-down'
-                    : sortOrder == 1
-                      ? 'sort-asc'
-                      : 'sort-desc'
-                "
-                class="text-base"
-              />
-            </span>
-          </th>
-
-          <th
-            v-if="props.customColumn || props.useOption"
-            @click="customColumn?.toggleMenu"
-            v-bind="headerCellPreset(undefined, props.customColumn)"
-            class="sticky right-0"
-          >
-            <Icon
-              v-if="props.customColumn"
-              class="!w-4 !h-4 !mx-auto"
-              icon="ellipsis-h"
-              info="Visibilitas Kolom"
-              tooltip-pos="left"
-            />
-          </th>
-        </tr>
-      </thead>
-
-      <tbody v-if="!loadingTable" :="Preset.tbody">
-        <template :key="index" v-for="(item, index) in currentPageTableData">
-          <tr
-            @click="toggleRowSelection(item)"
-            @dblclick="treeTable ? toggleRowExpand(item, index) : null"
-            class="border-b border-general-100"
-            v-bind="
-              Preset.bodyrow({
-                context: {
-                  selected: isRowSelected(item[dataKey]),
-                  disabled: isRowDisabled(item[dataKey]),
-                },
-                props,
-              })
-            "
-          >
-            <td
+  <div v-bind="Preset.root">
+    <div
+      :class="[
+        {
+          '!overflow-y-auto': !!props.scrollHeight,
+        },
+        'scrollbar-w-none',
+      ]"
+      :style="`max-height: ${props.scrollHeight}`"
+    >
+      <table :id="dataTableID" v-bind="Preset.table" :key="tableKey">
+        <thead class="sticky top-0 z-50">
+          <tr class="border-b border-primary-100">
+            <th
               v-if="selectionType === 'checkbox'"
-              @click.stop=""
-              v-bind="Preset.bodycell"
+              @click="toggleAllDataSelection(!isSelectedAll)"
+              v-bind="headerCellPreset()"
               class="w-[40px] text-center"
+              data-wv-section="headercheckbox"
             >
               <Checkbox
-                v-if="!item.childRow && !item.childRowHeader"
-                v-bind="Preset.rowcheckbox"
-                v-model="checkboxSelection"
-                :disabled="isRowDisabled(item[dataKey])"
-                :value="item"
+                v-bind="Preset.headercheckbox"
+                :class="[
+                  {
+                    '[&_[data-pc-section=box]]:!border-white [&_[data-pc-section=box]]:!bg-transparent':
+                      !isSelectedAll,
+                  },
+                ]"
+                :model-value="isSelectedAll"
+                binary
+                data-wv-section="headercheckbox"
               />
-            </td>
+            </th>
 
-            <td
+            <th
               v-if="treeTable"
-              @click="
-                (e) => {
-                  if (item.childRow || item.childRowHeader) e.stopPropagation();
-                }
-              "
-              v-bind="Preset.bodycell"
-              class="w-[40px] text-center"
+              class="w-[40px] text-center !py-1"
+              v-bind="headerCellPreset()"
+              data-wv-section="headertoggler"
             >
               <Button
-                v-if="item.children?.length"
                 :class="[
                   '!p-0 !m-0 !w-auto !h-auto',
-                  { 'rotate-180': isRowExpanded(item[dataKey]) },
-                  { 'rotate-0': !isRowExpanded(item[dataKey]) },
+                  { 'rotate-180': isExpandedAll },
+                  { 'rotate-0': !isExpandedAll },
                 ]"
-                @click.stop="toggleRowExpand(item, index)"
+                @click="toggleExpandAll"
                 icon="arrow-down"
-                icon-class="w-6 h-6"
+                icon-class="w-6 h-6 text-white"
                 text
               />
-            </td>
+            </th>
 
-            <td
-              v-if="item.childRowHeader"
-              :class="[Preset.bodycell.class, 'font-semibold text-xs']"
-              :colspan="props.columns.length"
-              @click.stop=""
+            <th
+              :key="col.field"
+              v-for="col in visibleColumns"
+              v-bind="headerCellPreset(col)"
+              @click="sortColumn(col.field)"
             >
-              {{ item.header }}
-            </td>
+              <span class="inline-flex gap-2 items-center leading-[18px]">
+                {{ col.header }}
 
-            <template v-else>
+                <Icon
+                  v-if="col.sortable"
+                  :icon="
+                    !sortBy || sortBy != col.field
+                      ? 'arrow-up-down'
+                      : sortOrder == 1
+                        ? 'sort-asc'
+                        : 'sort-desc'
+                  "
+                  class="text-base"
+                />
+              </span>
+            </th>
+
+            <th
+              v-if="props.customColumn || props.useOption"
+              @click="customColumn?.toggleMenu"
+              v-bind="headerCellPreset(undefined, props.customColumn)"
+              class="sticky right-0"
+            >
+              <Icon
+                v-if="props.customColumn"
+                class="!w-4 !h-4 !mx-auto"
+                icon="ellipsis-h"
+                info="Visibilitas Kolom"
+                tooltip-pos="left"
+              />
+            </th>
+          </tr>
+        </thead>
+
+        <tbody v-if="!loadingTable" :="Preset.tbody">
+          <template :key="index" v-for="(item, index) in currentPageTableData">
+            <tr
+              @click="toggleRowSelection(item)"
+              @dblclick="treeTable ? toggleRowExpand(item, index) : null"
+              class="border-b border-general-100"
+              v-bind="
+                Preset.bodyrow({
+                  context: {
+                    selected: isRowSelected(item[dataKey]),
+                    disabled: isRowDisabled(item[dataKey]),
+                  },
+                  props,
+                })
+              "
+            >
               <td
-                :key="col.field"
-                v-for="col in item.childRow
-                  ? (props.childTableProps?.columns ?? columns)
-                  : visibleColumns"
-                :colspan="col.colspan"
+                v-if="selectionType === 'checkbox'"
+                @click.stop=""
                 v-bind="Preset.bodycell"
+                class="w-[40px] text-center"
               >
-                <template v-if="col.preset?.type === 'toggle'">
-                  <InputSwitch
-                    v-model="item[col.field]"
-                    :disabled="isRowDisabled(item[dataKey])"
-                    :input-id="item[dataKey]"
-                    @click.stop=""
-                    @update:model-value="
-                      async (e) => {
-                        col.preset?.onToggle?.(
-                          e,
-                          item,
-                          () => (item[col.field] = !item[col.field]),
-                        );
+                <Checkbox
+                  v-if="!item.childRow && !item.childRowHeader"
+                  v-bind="Preset.rowcheckbox"
+                  v-model="checkboxSelection"
+                  :disabled="isRowDisabled(item[dataKey])"
+                  :value="item"
+                />
+              </td>
 
-                        if (col.preset?.confirmDialogProps) {
-                          const { showWhen } = col.preset?.confirmDialogProps;
+              <td
+                v-if="treeTable"
+                @click="
+                  (e) => {
+                    if (item.childRow || item.childRowHeader)
+                      e.stopPropagation();
+                  }
+                "
+                v-bind="Preset.bodycell"
+                class="w-[40px] text-center"
+              >
+                <Button
+                  v-if="item.children?.length"
+                  :class="[
+                    '!p-0 !m-0 !w-auto !h-auto',
+                    { 'rotate-180': isRowExpanded(item[dataKey]) },
+                    { 'rotate-0': !isRowExpanded(item[dataKey]) },
+                  ]"
+                  @click.stop="toggleRowExpand(item, index)"
+                  icon="arrow-down"
+                  icon-class="w-6 h-6"
+                  text
+                />
+              </td>
 
-                          if (typeof showWhen === 'function') {
-                            showConfirmToggle[item[dataKey]] =
-                              await showWhen(item);
-                          } else {
-                            showConfirmToggle[item[dataKey]] =
-                              !showWhen ||
-                              (showWhen === 'active' && e) ||
-                              (showWhen === 'inactive' && !e);
-                          }
-                        }
-                      }
-                    "
-                  />
+              <td
+                v-if="item.childRowHeader"
+                :class="[Preset.bodycell.class, 'font-semibold text-xs']"
+                :colspan="props.columns.length"
+                @click.stop=""
+              >
+                {{ item.header }}
+              </td>
 
-                  <DialogConfirm
-                    v-if="col.preset?.confirmDialogProps"
-                    :list="[item]"
-                    :visible="showConfirmToggle[item[dataKey]]"
-                    @close="
-                      () => {
-                        if (!col.preset?.confirmDialogProps?.actionable) {
-                          col.preset?.onConfirm?.(
-                            item[col.field],
+              <template v-else>
+                <td
+                  :key="col.field"
+                  v-for="col in item.childRow
+                    ? (props.childTableProps?.columns ?? columns)
+                    : visibleColumns"
+                  :colspan="col.colspan"
+                  v-bind="Preset.bodycell"
+                >
+                  <template v-if="col.preset?.type === 'toggle'">
+                    <InputSwitch
+                      v-model="item[col.field]"
+                      :disabled="isRowDisabled(item[dataKey])"
+                      :input-id="item[dataKey]"
+                      @click.stop=""
+                      @update:model-value="
+                        async (e) => {
+                          col.preset?.onToggle?.(
+                            e,
                             item,
                             () => (item[col.field] = !item[col.field]),
                           );
+
+                          if (col.preset?.confirmDialogProps) {
+                            const { showWhen } = col.preset?.confirmDialogProps;
+
+                            if (typeof showWhen === 'function') {
+                              showConfirmToggle[item[dataKey]] =
+                                await showWhen(item);
+                            } else {
+                              showConfirmToggle[item[dataKey]] =
+                                !showWhen ||
+                                (showWhen === 'active' && e) ||
+                                (showWhen === 'inactive' && !e);
+                            }
+                          }
                         }
-                      }
-                    "
-                    @confirm="
-                      col.preset.onConfirm?.(
-                        item[col.field],
-                        item,
-                        () => (item[col.field] = !item[col.field]),
-                      )
-                    "
-                    @update:visible="showConfirmToggle[item[dataKey]] = $event"
-                    actionable
-                    v-bind="col.preset?.confirmDialogProps"
-                  />
-                </template>
+                      "
+                    />
 
-                <template
-                  v-else-if="
-                    col.bodyComponent || col.bodyClass || col.bodyTemplate
-                  "
-                >
-                  <component
-                    :is="col.bodyComponent!(item).component"
-                    v-if="col.bodyComponent"
-                    v-model="col.bodyComponent!(item).model"
-                    :disabled="col.bodyComponent!(item).disabled"
-                    v-bind="col.bodyComponent!(item).props"
-                    v-on="
-                      col.bodyComponent!(item).events
-                        ? col.bodyComponent!(item).events
-                        : {}
-                    "
-                    @change="col.bodyComponent!(item).onChange?.(item)"
-                    @click.stop=""
-                    @update:model-value="
-                      col.bodyComponent!(item).onChange?.(item)
-                    "
-                  />
+                    <DialogConfirm
+                      v-if="col.preset?.confirmDialogProps"
+                      :list="[item]"
+                      :visible="showConfirmToggle[item[dataKey]]"
+                      @close="
+                        () => {
+                          if (!col.preset?.confirmDialogProps?.actionable) {
+                            col.preset?.onConfirm?.(
+                              item[col.field],
+                              item,
+                              () => (item[col.field] = !item[col.field]),
+                            );
+                          }
+                        }
+                      "
+                      @confirm="
+                        col.preset.onConfirm?.(
+                          item[col.field],
+                          item,
+                          () => (item[col.field] = !item[col.field]),
+                        )
+                      "
+                      @update:visible="
+                        showConfirmToggle[item[dataKey]] = $event
+                      "
+                      actionable
+                      v-bind="col.preset?.confirmDialogProps"
+                    />
+                  </template>
 
-                  <span
-                    v-else
-                    :class="
-                      typeof col.bodyClass === 'function'
-                        ? col.bodyClass(item)
-                        : col.bodyClass
+                  <template
+                    v-else-if="
+                      col.bodyComponent || col.bodyClass || col.bodyTemplate
                     "
                   >
-                    <template v-if="col.bodyTemplate">
-                      {{ (col.bodyTemplate && col.bodyTemplate(item)) || '-' }}
-                    </template>
-                    <template v-else>
-                      {{ getNestedProperyValue(item, col.field) || '-' }}
-                    </template>
-                  </span>
-                </template>
+                    <component
+                      :is="col.bodyComponent!(item).component"
+                      v-if="col.bodyComponent"
+                      v-model="col.bodyComponent!(item).model"
+                      :disabled="col.bodyComponent!(item).disabled"
+                      v-bind="col.bodyComponent!(item).props"
+                      v-on="
+                        col.bodyComponent!(item).events
+                          ? col.bodyComponent!(item).events
+                          : {}
+                      "
+                      @change="col.bodyComponent!(item).onChange?.(item)"
+                      @click.stop=""
+                      @update:model-value="
+                        col.bodyComponent!(item).onChange?.(item)
+                      "
+                    />
 
-                <template v-else>
-                  {{ getNestedProperyValue(item, col.field) ?? '-' }}
-                </template>
-              </td>
+                    <span
+                      v-else
+                      :class="
+                        typeof col.bodyClass === 'function'
+                          ? col.bodyClass(item)
+                          : col.bodyClass
+                      "
+                    >
+                      <template v-if="col.bodyTemplate">
+                        {{
+                          (col.bodyTemplate && col.bodyTemplate(item)) || '-'
+                        }}
+                      </template>
+                      <template v-else>
+                        {{ getNestedProperyValue(item, col.field) || '-' }}
+                      </template>
+                    </span>
+                  </template>
 
-              <td
-                v-if="useOption"
-                v-bind="Preset.bodycell"
-                :class="[{ 'sticky right-0 bg-white': useOption }]"
-              >
-                <div
-                  class="relative w-full h-full flex items-center justify-center"
-                  data-wv-section="single-action-wrapper"
+                  <template v-else>
+                    {{ getNestedProperyValue(item, col.field) ?? '-' }}
+                  </template>
+                </td>
+
+                <td
+                  v-if="useOption"
+                  v-bind="Preset.bodycell"
+                  :class="[{ 'sticky right-0 bg-white': useOption }]"
                 >
-                  <Button
-                    :id="'button-action-' + item[props.dataKey]"
-                    :class="[
-                      {
-                        'pointer-events-none !border-general-100 [&>i]:text-general-200':
-                          disableAllRows,
-                      },
-                      { 'pointer-events-auto': !disableAllRows },
-                    ]"
-                    :disabled="disableAllRows"
-                    @click.stop="toggleOptions($event, item)"
-                    data-wv-section="button-action"
-                    icon="ellipsis-h"
-                    outlined
-                    severity="secondary"
-                    size="small"
-                    tooltip="Aksi"
-                    tooltip-pos="left"
-                    type="button"
-                  />
-                </div>
-              </td>
-            </template>
-          </tr>
-        </template>
-      </tbody>
-    </table>
+                  <div
+                    class="relative w-full h-full flex items-center justify-center"
+                    data-wv-section="single-action-wrapper"
+                  >
+                    <Button
+                      :id="'button-action-' + item[props.dataKey]"
+                      :class="[
+                        {
+                          'pointer-events-none !border-general-100 [&>i]:text-general-200':
+                            disableAllRows,
+                        },
+                        { 'pointer-events-auto': !disableAllRows },
+                      ]"
+                      :disabled="disableAllRows"
+                      @click.stop="toggleOptions($event, item)"
+                      data-wv-section="button-action"
+                      icon="ellipsis-h"
+                      outlined
+                      severity="secondary"
+                      size="small"
+                      tooltip="Aksi"
+                      tooltip-pos="left"
+                      type="button"
+                    />
+                  </div>
+                </td>
+              </template>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
 
     <template v-if="!loadingTable && !currentPageTableData?.length">
       <div class="w-full p-4 flex items-center justify-center">
@@ -1042,3 +1057,9 @@ const listenUpdateTableEvent = (): void => {
     />
   </div>
 </template>
+
+<style scoped>
+.scrollbar-w-none {
+  scrollbar-width: none;
+}
+</style>

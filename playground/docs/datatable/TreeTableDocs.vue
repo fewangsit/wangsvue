@@ -32,6 +32,7 @@ import useLoadingStore from 'lib/components/loading/store/loading.store';
 import Checkbox from 'lib/components/checkbox/Checkbox.vue';
 import Dropdown from 'lib/components/dropdown/Dropdown.vue';
 import Changelog from 'lib/components/changelog/Changelog.vue';
+import UserName from 'lib/components/username/UserName.vue';
 
 const dataSelected = shallowRef();
 const actionData = ref();
@@ -107,6 +108,24 @@ const tableColumns = computed<TableColumn[]>(() => {
       },
     },
 
+    {
+      field: 'name.nameWithSequence',
+      header: 'Asset Name',
+      sortable: true,
+      reorderable: false,
+      fixed: true,
+      bodyClass: 'text-primary',
+      bodyComponent: (): TableCellComponent => {
+        return {
+          component: UserName,
+          props: {
+            thumbnail:
+              'https://fastly.picsum.photos/id/643/500/500.jpg?hmac=WKnFpxUsXkNv_FNZmgh2ALm7Kd2z3vg0RtJeDxExpJQ',
+            userNameField: 'name.nameWithSequence',
+          },
+        };
+      },
+    },
     {
       field: 'name.nameWithSequence',
       header: 'Asset Name',
@@ -286,6 +305,7 @@ const filters = ref<any>({
         @update:single-selection="console.log"
         data-key="_id"
         lazy
+        scroll-height="50vh"
       />
 
       <DialogConfirm

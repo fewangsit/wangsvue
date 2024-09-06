@@ -1,16 +1,13 @@
 export default {
-  root: ({ scrollHeight }) => ({
+  root: {
     'class': [
       'overflow-auto relative',
       'rounded-lg rounded-br-none rounded-bl-none',
-      {
-        '!overflow-y-auto': !!scrollHeight,
-      },
+      ,
     ],
     'data-wv-name': 'treetable',
     'data-wv-section': 'root',
-    'style': `max-height: ${scrollHeight}; scrollbar-width: ${scrollHeight ? 'thin' : 'none'}`,
-  }),
+  },
   table: {
     'class': [
       'min-w-max w-full',
