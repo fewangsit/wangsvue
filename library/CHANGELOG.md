@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v1.4.154
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.153...v1.4.154)
+
+### 🚀 Enhancements
+
+- Add new component Textarea ([d7a5dc6](https://github.com/fewangsit/wangsvue/commit/d7a5dc6))
+- Add component Textarea to build-entry ([1122d30](https://github.com/fewangsit/wangsvue/commit/1122d30))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.4.153
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.152...v1.4.153)
