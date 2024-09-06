@@ -8,6 +8,7 @@ import InputEmail from 'lib/components/inputemail/InputEmail.vue';
 import InputNumber from 'lib/components/inputnumber/InputNumber.vue';
 import ButtonRadio from 'lib/components/buttonradio/ButtonRadio.vue';
 import InputRepositoryName from 'lib/components/inputrepositoryname/InputRepositoryName.vue';
+import Textarea from 'lib/components/textarea/Textarea.vue';
 import { ref, shallowRef } from 'vue';
 import DocTitle from '../DocTitle.vue';
 
@@ -105,6 +106,17 @@ const apply = (e: {
             v-model="repositoryName"
             field-name="repository"
             label="Repository Name"
+          />
+          <Textarea
+            :max-input="30"
+            :validator-message="{
+              exceed: 'Max char 30',
+              empty: 'Should not empty',
+            }"
+            field-name="textareaVal"
+            label="Example Textarea"
+            mandatory
+            use-validator
           />
           <InputText
             :validator-message="{
