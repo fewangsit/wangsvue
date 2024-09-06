@@ -156,7 +156,7 @@ defineExpose({ form, clearField });
     :pt="{
       root: {
         class: [...DialogPreset.root({ state: {} }).class, 'max-w-[90vw]'],
-        style: `width: ${computedWidth}; transition: width 0.1s ease-in;`,
+        style: `width: ${computedWidth};`,
       },
       header: {
         'class': [...DialogPreset.header.class],
