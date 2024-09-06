@@ -102,6 +102,7 @@ import {
   SummaryAccordion,
   ButtonRadio,
   InputRepositoryName,
+  Textarea,
 } from './components';
 
 export default {
@@ -156,6 +157,7 @@ export default {
     app.component('OverlayPanel', OverlayPanel);
     app.component('ButtonRadio', ButtonRadio);
     app.component('InputRepositoryName', InputRepositoryName);
+    app.component('Textarea', Textarea);
 
     app.directive('tooltip', Tooltip);
     app.directive('focus', Focus);
@@ -222,6 +224,7 @@ export {
   InputURL,
   InputRepositoryName,
   ButtonRadio,
+  Textarea,
 
   // Component store
   useLoadingStore,

@@ -41,6 +41,7 @@ import OverlayPanel from './overlaypanel/OverlayPanel.vue';
 import Timeline from './timeline/Timeline.vue';
 import ButtonRadio from './buttonradio/ButtonRadio.vue';
 import InputRepositoryName from './inputrepositoryname/InputRepositoryName.vue';
+import Textarea from './textarea/Textarea.vue';
 
 export {
   Badge,
@@ -86,4 +87,5 @@ export {
   Timeline,
   ButtonRadio,
   InputRepositoryName,
+  Textarea,
 };
