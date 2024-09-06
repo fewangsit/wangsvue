@@ -185,7 +185,12 @@ defineExpose({ form, clearField });
     modal
   >
     <template #container>
-      <div :class="['flex', { 'gap-6': expanded }]">
+      <div
+        :class="[
+          'flex overflow-y-auto overflow-x-hidden scrollbar-thin',
+          { 'gap-6': expanded },
+        ]"
+      >
         <main class="flex flex-col gap-3 w-full">
           <div class="flex items-center gap-2" data-wv-section="header">
             <slot name="header">
@@ -232,6 +237,7 @@ defineExpose({ form, clearField });
             :column-per-row="columnPerRow"
             :reset-after-submit="resetAfterSubmit"
             @submit="onSubmitDialogForm"
+            class="overflow-y-auto scrollbar-w-thin"
             hide-footer
           >
             <template #fields="{ formValues }">
@@ -309,3 +315,9 @@ defineExpose({ form, clearField });
     </template>
   </Dialog>
 </template>
+
+<style scoped>
+.scrollbar-w-thin {
+  scrollbar-width: none;
+}
+</style>
