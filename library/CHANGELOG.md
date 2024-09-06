@@ -1,6 +1,33 @@
 # Changelog
 
 
+## v1.4.153
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.152...v1.4.153)
+
+### 🚀 Enhancements
+
+- TabMenu automatically set the activeIndex according to current route path & added new props useTrailingLine ([c88fd73](https://github.com/fewangsit/wangsvue/commit/c88fd73))
+- Implement scrollable dialog form ([80ef183](https://github.com/fewangsit/wangsvue/commit/80ef183))
+
+### 🩹 Fixes
+
+- Fix incorrect text when no option available ([7dd6340](https://github.com/fewangsit/wangsvue/commit/7dd6340))
+- Vite build error ([96f3b7f](https://github.com/fewangsit/wangsvue/commit/96f3b7f))
+- **dialogform:** Enter and leave transition ([e1bb5c6](https://github.com/fewangsit/wangsvue/commit/e1bb5c6))
+- Fix thead z-index was lower than other component inside table ([04fcb58](https://github.com/fewangsit/wangsvue/commit/04fcb58))
+
+### 🏡 Chore
+
+- **release:** V1.4.152 ([3816816](https://github.com/fewangsit/wangsvue/commit/3816816))
+- Removed packageManager in package.json ([8434bdd](https://github.com/fewangsit/wangsvue/commit/8434bdd))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Programmer-fe6 ([@programmer-fe6](http://github.com/programmer-fe6))
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.152
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.151...v1.4.152)
