@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import { computed, ref, shallowRef } from 'vue';
-import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
-import ButtonFilter from '../buttonfilter/ButtonFilter.vue';
-import ChangelogFilter from './ChangelogFilter.vue';
-import TreeTable from '../treetable/TreeTable.vue';
-import LogServices from 'lib/services/log.service';
-import { FetchResponse } from '../datatable/DataTable.vue.d';
 import { useToast } from 'lib/utils';
+import { FetchResponse } from '../datatable/DataTable.vue.d';
+import { TreeTableColumns } from '../treetable/TreeTable.vue.d';
 
 import {
   ChangelogFilterQuery,
@@ -15,9 +11,19 @@ import {
   ChangelogType,
 } from './ChangelogPage.vue.d';
 
+import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
+import ButtonFilter from '../buttonfilter/ButtonFilter.vue';
+import ChangelogFilter from './ChangelogFilter.vue';
+import TreeTable from '../treetable/TreeTable.vue';
+import LogServices from 'lib/services/log.service';
+import ButtonDownload from '../buttondownload/ButtonDownload.vue';
+
 const toast = useToast();
 
-const props = defineProps<ChangelogPageProps>();
+const props = withDefaults(defineProps<ChangelogPageProps>(), {
+  useButtonDownload: false,
+});
+
 defineEmits<ChangelogPageEmits>();
 
 const dataTableKey = shallowRef<number>(0);
@@ -27,7 +33,12 @@ const showChangelogFilter = shallowRef<boolean>(false);
  * Define the default params
  */
 const defaultParamsQuery = ref<ChangelogFilterQuery>({
-  object: props.objects ? undefined : props.object,
+  moduleId: props.moduleId,
+  subModuleId: props.subModuleId,
+  object:
+    props.objects || props.moduleId || props.subModuleId
+      ? undefined
+      : props.object,
   objects: props.objects ? JSON.stringify(props.objects) : undefined,
   ...props.customParams,
 });
@@ -39,12 +50,12 @@ const scrollHeight = computed<string | undefined>(() => {
   return undefined;
 });
 
-const tableName = computed(
+const tableName = computed<string>(
   () =>
-    `changelog-page-${defaultParamsQuery.value.object?.toLowerCase().split(' ').join('-')}`,
+    `changelog-page-${(defaultParamsQuery.value.object ?? props.moduleId ?? props.subModuleId)?.toLowerCase().split(' ').join('-')}`,
 );
 
-const changelogColumn = computed(() => [
+const changelogColumn = computed<TreeTableColumns[]>(() => [
   {
     field: 'createdAt',
     header: 'Tanggal',
@@ -65,8 +76,21 @@ const changelogColumn = computed(() => [
     },
   },
   {
+    field: 'object',
+    header: 'Objek',
+    sortable: true,
+    fixed: true,
+    visible: !!props.moduleId || !!props.subModuleId,
+    bodyTemplate: (data: ChangelogType): string => {
+      return data.object ?? '-';
+    },
+  },
+  {
     field: 'objectName',
-    header: props.objectNameColumn ?? props.object,
+    header:
+      props.moduleId || props.subModuleId
+        ? 'Nama Objek'
+        : (props.objectNameColumn ?? props.object),
     sortable: true,
     fixed: true,
     visible: true,
@@ -145,13 +169,22 @@ const fetchChangelogs = async (
         @show-filter="showChangelogFilter = $event"
         data-wv-section="changelog-dialog-button-filter"
       />
+      <ButtonDownload
+        v-if="props.useButtonDownload"
+        :file-name="fileName ?? 'Changelog'"
+        :table-name="tableName"
+        data-wv-section="changelog-dialog-button-download"
+      />
     </div>
     <ChangelogFilter
       :custom-params="props.customParams"
+      :default-params-query="defaultParamsQuery"
+      :module-id="moduleId"
       :object="props.object"
       :object-id="defaultParamsQuery.objectId"
       :object-name-column="props.objectNameColumn"
       :objects="props.objects"
+      :sub-module-id="subModuleId"
       :table-name="tableName"
     />
     <TreeTable
