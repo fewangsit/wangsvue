@@ -50,7 +50,7 @@ const useField = <T>(
 import Preset from 'lib/preset';
 
 // Utils
-import { useToast, getNestedProperyValue } from 'lib/utils';
+import { useToast, getNestedProperyValue, checkRouteAccess } from 'lib/utils';
 
 // Directives
 import Tooltip from 'primevue/tooltip';
@@ -179,6 +179,7 @@ export {
   // Utils
   getNestedProperyValue,
   useToast,
+  checkRouteAccess,
 
   // Components
   Badge,
