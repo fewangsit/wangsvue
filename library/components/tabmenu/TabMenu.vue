@@ -10,8 +10,20 @@ import { WangsIcons } from '../icon/Icon.vue.d';
 const route = useRoute();
 
 onBeforeMount(() => {
+  /**
+   * Find index from the last element where the route.path includes the item.route.
+   *
+   * using findLastIndex because there might be case where there are route menu like these:
+   * ['/route/first', '/route/first/second']
+   *
+   * If our current route is '/route/first/second', the findIndex will take the '/route/first' as true,
+   * even though we are aiming to set the '/route/first/second' as the current index.
+   *
+   * following Left to Right (LTR) writing convention. It can't cover the opposite (RTL), though.
+   * Maybe we should add a prop to use findIndex or findLastIndex for that. (Default to findLastIndex (LTR))
+   */
   const index =
-    props.menu?.findIndex((item) => item.route === route.path) ?? -1;
+    props.menu?.findLastIndex((item) => route.path.includes(item.route)) ?? -1;
 
   if (index !== -1) {
     activeIndex.value = index;

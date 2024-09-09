@@ -24,6 +24,7 @@ const menu: MenuItem[] = [
 ];
 
 const activeIndex = shallowRef(0);
+const subActiveIndex = shallowRef(0);
 </script>
 
 <template>
@@ -37,6 +38,16 @@ const activeIndex = shallowRef(0);
         <TabMenu
           v-model:active-index="activeIndex"
           :menu="menu"
+          :use-trailing-line="false"
+        />
+        <TabMenu
+          v-model:active-index="subActiveIndex"
+          :menu="[
+            {
+              label: 'With Link to current page > children',
+              route: '/tabmenu/second-link/children',
+            },
+          ]"
           :use-trailing-line="false"
         />
       </div>
