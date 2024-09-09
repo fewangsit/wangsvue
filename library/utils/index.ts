@@ -5,6 +5,7 @@ import exportToExcel from './exportToExcel.util';
 import getImageURL from './getImageURL.util';
 import genPlaceholder from './genPlaceholder.util';
 import getStatusSeverity from './statusSeverity.util';
+import { checkRouteAccess } from './role.util';
 
 const getNestedProperyValue = (
   object: object,
@@ -48,6 +49,7 @@ const isEmptyObject = (obj: any): boolean => {
 };
 
 export {
+  checkRouteAccess,
   formatUserName,
   convertToArrayClass,
   getNestedProperyValue,

@@ -84,6 +84,16 @@ export interface ChangelogProps {
    * Changelog custom params, contains stringified filter query needed.
    */
   customParams?: ChangelogFilterQuery;
+  /**
+   * Use this props if changelog need button download
+   * @default false
+   */
+  useButtonDownload?: boolean;
+  /**
+   * File name is a must if there's button download
+   * @default 'Changelog' only
+   */
+  fileName?: string;
 }
 
 /**

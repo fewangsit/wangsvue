@@ -36,6 +36,8 @@ export type ChangelogOptionQuery = {
   assetNameOptions?: boolean;
   object?: string;
   objects?: string;
+  moduleId?: string;
+  subModuleId?: string;
 };
 
 export type ChangelogOptionFilter = {
@@ -50,7 +52,7 @@ export type ChangelogOptionFilter = {
 /**
  * Props for Changelog component
  */
-export interface ChangelogPageProps {
+export interface BaseChangelogPageProps {
   /**
    * Note: Dont use this props since it's just for changelog dialog purpose
    * @ignore
@@ -65,8 +67,17 @@ export interface ChangelogPageProps {
    */
   header?: string | undefined;
   /**
+   * Changelog module Id.
+   */
+  moduleId?: string;
+  /**
+   * Changelog sub module Id.
+   */
+  subModuleId?: string;
+  /**
    * Changelog object.
    * Note: Even if this props is mandatory, if you fill props `objects` then props `object` will not be processed in component.
+   * @description If changelog using moduleId or subModuleId, just fill props object with any string (will not be used)
    */
   object: string;
   /**
@@ -81,8 +92,38 @@ export interface ChangelogPageProps {
   /**
    * Changelog custom params, contains stringified filter query needed.
    */
+  defaultParamsQuery?: ChangelogFilterQuery;
+  /**
+   * Changelog custom params, contains stringified filter query needed.
+   */
   customParams?: ChangelogFilterQuery;
 }
+
+export interface ButtonDownloadTrue extends BaseChangelogPageProps {
+  /**
+   * Use this props if changelog need button download
+   */
+  useButtonDownload: true;
+  /**
+   * File name is a must if there's button download
+   * @default 'Changelog' only
+   */
+  fileName: string;
+}
+
+export interface ButtonDownloadFalse extends BaseChangelogPageProps {
+  /**
+   * Use this props if changelog need button download
+   */
+  useButtonDownload: false;
+  /**
+   * File name is a must if there's button download
+   * @default 'Changelog' only
+   */
+  fileName?: string;
+}
+
+export type ChangelogPageProps = ButtonDownloadFalse | ButtonDownloadTrue;
 
 /**
  * Emits for Changelog component
