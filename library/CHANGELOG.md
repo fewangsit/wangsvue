@@ -1,6 +1,38 @@
 # Changelog
 
 
+## v1.4.160
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.159...v1.4.160)
+
+### 💅 Refactors
+
+- Add generic type for dialog form ([fa71126](https://github.com/fewangsit/wangsvue/commit/fa71126))
+
+### 🏡 Chore
+
+- Export checkRouteAccess util ([d8748bd](https://github.com/fewangsit/wangsvue/commit/d8748bd))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.4.159
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.158...v1.4.159)
+
+### 🚀 Enhancements
+
+- **InputPassword:** Assign modelValue into field.value on monted ([8418a48](https://github.com/fewangsit/wangsvue/commit/8418a48))
+
+### 🏡 Chore
+
+- **release:** V1.4.158 ([1884888](https://github.com/fewangsit/wangsvue/commit/1884888))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.158
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.157...v1.4.158)
