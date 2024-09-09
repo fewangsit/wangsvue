@@ -1,15 +1,11 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, watch } from 'vue';
 
 import Dialog from '../dialog/Dialog.vue';
 import Icon from '../icon/Icon.vue';
 import ChangelogPage from '../changelogpage/ChangelogPage.vue';
 
-import {
-  ChangelogFilterQuery,
-  ChangelogEmits,
-  ChangelogProps,
-} from './Changelog.vue.d';
+import { ChangelogEmits, ChangelogProps } from './Changelog.vue.d';
 import { buttonFocusClass } from 'lib/preset/button';
 import eventBus from 'lib/event-bus';
 
@@ -25,8 +21,7 @@ const visible = defineModel<boolean>('visible', {
 });
 
 const tableName = computed(
-  () =>
-    `changelog-${defaultParamsQuery.value.object?.toLowerCase().split(' ').join('-')}`,
+  () => `changelog-${props.object?.toLowerCase().split(' ').join('-')}`,
 );
 
 const changelogColumnHeader = computed<string>(() => {
@@ -51,15 +46,6 @@ const changelogColumnHeader = computed<string>(() => {
 const header = computed<string>(() => {
   if (props.header) return props.header;
   return 'Changelog: ' + changelogColumnHeader.value;
-});
-
-/**
- * Define the default params
- */
-const defaultParamsQuery = ref<ChangelogFilterQuery>({
-  object: props.objects ? undefined : props.object,
-  objects: props.objects ? JSON.stringify(props.objects) : undefined,
-  ...props.customParams,
 });
 
 /**
@@ -100,11 +86,6 @@ watch(visible, (newValue) => {
     data-wv-name="changelog-dialog"
     modal
   >
-    <ChangelogPage
-      v-if="visible"
-      v-bind="$props"
-      :default-params-query="defaultParamsQuery"
-      :is-dialog="visible"
-    />
+    <ChangelogPage v-if="visible" v-bind="$props" :is-dialog="visible" />
   </Dialog>
 </template>

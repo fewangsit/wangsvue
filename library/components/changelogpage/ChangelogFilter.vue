@@ -8,13 +8,13 @@ import { MultiSelectOption } from 'lib/types/options.type';
 import {
   ChangelogFilter,
   ChangelogOptionQuery,
-  ChangelogPageProps,
+  BaseChangelogPageProps,
 } from './ChangelogPage.vue.d';
 import LogServices from 'lib/services/log.service';
 
 const toast = useToast();
 
-const props = defineProps<ChangelogPageProps & { tableName: string }>();
+const props = defineProps<BaseChangelogPageProps & { tableName: string }>();
 
 const fields = computed<FilterField[]>(() => {
   return [
@@ -36,7 +36,21 @@ const fields = computed<FilterField[]>(() => {
       },
     },
     {
-      label: props.objectNameColumn,
+      label: 'Objek',
+      type: 'multiselect',
+      field: 'object',
+      visible: props.moduleId || props.subModuleId,
+      fetchOptionFn: async (
+        params?: ChangelogOptionQuery,
+      ): Promise<MultiSelectOption[]> => {
+        return await fetchOptions('objectOptions', params);
+      },
+    },
+    {
+      label:
+        props.moduleId || props.subModuleId
+          ? 'Objek Name'
+          : (props.objectNameColumn ?? props.object),
       type: 'multiselect',
       field: 'assetName',
       visible: true,
@@ -90,8 +104,7 @@ const fetchOptions = async (
   try {
     const { data } = await LogServices.getChangelogOptions({
       [field]: true,
-      object: props.objects ? undefined : props.object,
-      objects: props.objects ? JSON.stringify(props.objects) : undefined,
+      ...props.defaultParamsQuery,
       ...props.customParams,
     });
 
@@ -133,7 +146,7 @@ watch(filter, () => {
 <template>
   <FilterContainer
     :fields="fields"
-    :fields-per-row="3"
+    :fields-per-row="props.moduleId || props.subModuleId ? 4 : 3"
     :table-name="props.tableName"
     @clear="clearFilter"
     data-wv-name="changelog-filter"
