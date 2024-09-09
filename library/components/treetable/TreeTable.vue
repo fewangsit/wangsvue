@@ -971,19 +971,8 @@ const listenUpdateTableEvent = (): void => {
                     ? (props.childTableProps?.columns ?? columns)
                     : visibleColumns"
                   :colspan="col.colspan"
-                  :contenteditable="col.editable"
                   v-bind="Preset.bodycell"
-                  @input="
-                    (e: InputEvent) => {
-                      console.log(e);
-                      $emit('input', {
-                        item,
-                        index,
-                        value: (e.target as HTMLElement).innerText,
-                      } as EditedContent);
-                    }
-                  "
-                  class="focus:outline-grayscale-600 focus:outline-1"
+                  class="!py-0"
                 >
                   <template v-if="col.preset?.type === 'toggle'">
                     <InputSwitch
@@ -1044,6 +1033,26 @@ const listenUpdateTableEvent = (): void => {
                       actionable
                       v-bind="col.preset?.confirmDialogProps"
                     />
+                  </template>
+
+                  <template v-else-if="col.editable">
+                    <span
+                      :class="['focus:px-2']"
+                      :contenteditable="col.editable"
+                      @input="
+                        (e: InputEvent) => {
+                          console.log(e);
+                          $emit('input', {
+                            item,
+                            index,
+                            value: (e.target as HTMLElement).innerText,
+                          } as EditedContent);
+                        }
+                      "
+                      class="w-full inline-block py-2 focus:outline-grayscale-600 focus:outline-1"
+                    >
+                      {{ getNestedProperyValue(item, col.field) || '-' }}
+                    </span>
                   </template>
 
                   <template
