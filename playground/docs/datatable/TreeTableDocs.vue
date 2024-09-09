@@ -44,6 +44,8 @@ const customColumn = shallowRef(true);
 const tableKey = shallowRef(0);
 const noRecord = shallowRef(false);
 const treetable = shallowRef(true);
+const reorderable = shallowRef(true);
+const scrollHeight = shallowRef(true);
 const singleSelection = shallowRef();
 const { setLoading } = useLoadingStore();
 
@@ -109,19 +111,24 @@ const tableColumns = computed<TableColumn[]>(() => {
     },
 
     {
-      field: 'name.nameWithSequence',
-      header: 'Asset Name',
+      field: 'name',
+      header: 'Name',
       sortable: true,
       reorderable: false,
       fixed: true,
       bodyClass: 'text-primary',
-      bodyComponent: (): TableCellComponent => {
+      bodyComponent: (data: any): TableCellComponent => {
         return {
           component: UserName,
           props: {
-            thumbnail:
-              'https://fastly.picsum.photos/id/643/500/500.jpg?hmac=WKnFpxUsXkNv_FNZmgh2ALm7Kd2z3vg0RtJeDxExpJQ',
             userNameField: 'name.nameWithSequence',
+            user: {
+              name: {
+                nameWithSequence: data.name.nameWithSequence,
+              },
+              profilePicture:
+                'https://fastly.picsum.photos/id/643/500/500.jpg?hmac=WKnFpxUsXkNv_FNZmgh2ALm7Kd2z3vg0RtJeDxExpJQ',
+            },
           },
         };
       },
@@ -178,12 +185,14 @@ const tableColumns = computed<TableColumn[]>(() => {
       header: 'Asset Value',
       sortable: true,
       fixed: true,
+      editable: true,
     },
 
     {
       field: 'lastModifier.fullName',
       header: 'User',
       sortable: true,
+      editable: true,
     },
   ];
 });
@@ -252,6 +261,8 @@ const filters = ref<any>({
     </template>
     <template #content>
       <Checkbox v-model="treetable" label="Tree Table" />
+      <Checkbox v-model="reorderable" label="Reorderable" />
+      <Checkbox v-model="scrollHeight" label="Scrollable" />
       <Checkbox v-model="usePaginator" label="Use Pagination" />
       <Checkbox v-model="customColumn" label="Use Column Visibility" />
       <Checkbox v-model="useOption" label="Use Single Action" />
@@ -294,6 +305,8 @@ const filters = ref<any>({
         :custom-column="customColumn"
         :fetch-function="getTableData"
         :options="singleAction"
+        :reorderable="reorderable"
+        :scroll-height="scrollHeight ? '50vh' : undefined"
         :selection-type="
           selectionType.toLowerCase() as TreeTableProps['selectionType']
         "
@@ -301,11 +314,12 @@ const filters = ref<any>({
         :tree-table="treetable"
         :use-option="useOption"
         :use-paginator="usePaginator"
+        @input="console.log($event)"
+        @row-reorder="console.log($event)"
         @toggle-option="console.log"
         @update:single-selection="console.log"
         data-key="_id"
         lazy
-        scroll-height="50vh"
       />
 
       <DialogConfirm

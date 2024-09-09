@@ -75,6 +75,7 @@ export type ColumnPreset = ColumnTogglePreset;
 export type TableColumn = {
   header?: string;
   field: string;
+  editable?: boolean;
   sortable?: boolean;
   /**
    * Wether the column can be re-ordered by column visibilty.

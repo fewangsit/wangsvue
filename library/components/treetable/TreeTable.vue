@@ -10,6 +10,8 @@ import {
 } from 'vue';
 import { DataTableExpandedRows } from 'primevue/datatable';
 import {
+  DraggedItem,
+  EditedContent,
   TreeTableColumns,
   TreeTableEmits,
   TreeTableProps,
@@ -37,6 +39,8 @@ import { Booleanish } from '../ts-helpers';
 import useLoadingStore from '../loading/store/loading.store';
 import InputSwitch from 'primevue/inputswitch';
 import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
+
+type DragableRow = Data & { draggable?: boolean; order?: number };
 
 const props = withDefaults(defineProps<TreeTableProps>(), {
   tableName: 'datatable',
@@ -74,6 +78,18 @@ const customColumnKey = shallowRef(0);
 // Components Instance REFs
 const customColumn = ref<CustomColumnInstance>();
 const optionMenu = ref<MenuInstance>();
+
+const emittedValue = ref<DraggedItem>();
+const draggedRow = shallowRef<DragableRow>();
+const dragging = shallowRef<boolean>(false);
+
+/**
+ * Clone of default row to be used in reorder and toggle visibility without mutating the default rows.
+ * This `rowReorderData` ref will store the reordered table rows.
+ *
+ * On component loaded, we need to load the config to re-order the row list.
+ */
+const rowReorderData = ref<DragableRow[]>([]);
 
 // Stores filter from event bus FilterContainer
 const filterQueryParams = shallowRef<QueryParams>({});
@@ -290,6 +306,87 @@ const toggleOptions = async (event: MouseEvent, data: Data): Promise<void> => {
   });
 };
 
+const draggable = (item: DragableRow): boolean => {
+  return item.draggable !== false;
+};
+
+/**
+ * Starts the reordering of rows. Fired when user drag an item.
+ *
+ * @param {DragEvent} event - The drag event object.
+ * @param {DragableRow} item - The row item being dragged.
+ * @param {number} index - The index of the row item being dragged.
+ */
+const startReorderRow = (
+  event: DragEvent,
+  item: DragableRow,
+  index: number,
+): void => {
+  const { dataTransfer } = event;
+  draggedRow.value = item;
+
+  emittedValue.value = { item, fromIndex: index };
+
+  if (dataTransfer) {
+    dataTransfer.dropEffect = 'move';
+    dataTransfer.effectAllowed = 'move';
+    dataTransfer.setData('id', item._id);
+    dataTransfer.setData('index', index.toString());
+  }
+};
+
+const onDragEnter = (e: DragEvent, row: DragableRow): void => {
+  e.preventDefault(); // <-- Still essential
+
+  if (draggable(row)) {
+    const target = e.target as HTMLElement;
+    const dropTargetTr =
+      target.tagName === 'TR' ? target : target.closest('tr');
+
+    dropTargetTr?.classList.add('bg-primary-50');
+    dropTargetTr?.nextElementSibling?.classList.remove('bg-primary-50');
+    dropTargetTr?.previousElementSibling?.classList.remove('bg-primary-50');
+
+    if (!dropTargetTr || !draggedRow.value) return; // Safety checks
+
+    const draggedIndex = rowReorderData.value.findIndex(
+      (item) => item._id === draggedRow.value?._id,
+    );
+
+    const dropTargetIndex = rowReorderData.value.findIndex(
+      (item) => item._id === dropTargetTr.id,
+    );
+
+    if (draggedIndex !== -1 && dropTargetIndex !== -1) {
+      emittedValue.value.toIndex = dropTargetIndex;
+
+      // Swap the items in columnReorderData
+      [
+        rowReorderData.value[draggedIndex],
+        rowReorderData.value[dropTargetIndex],
+      ] = [
+        rowReorderData.value[dropTargetIndex],
+        rowReorderData.value[draggedIndex],
+      ];
+
+      reorderVisibleColumn();
+    }
+  }
+};
+
+/**
+ * Handles the reordering of columns. Fired when user release the pointer.
+ */
+const onRowReorder = (): void => {
+  emit('rowReorder', emittedValue.value as DraggedItem);
+  draggedRow.value = undefined;
+  dragging.value = false;
+};
+
+const reorderVisibleColumn = (): void => {
+  currentPageTableData.value = [...rowReorderData.value];
+};
+
 /**
  * Removes the active class from all buttons that have it.
  *
@@ -381,6 +478,7 @@ const refetch = async (): Promise<void> => {
     const { data = [], totalRecords: total = 0 } = response?.data ?? {};
     updateTotalRecordBulkAction(total);
     currentPageTableData.value = data;
+    rowReorderData.value = [...currentPageTableData.value];
     totalRecords.value = total;
   } catch (error) {
     console.error('🚀 ~ refetch ~ error:', error);
@@ -684,6 +782,12 @@ const listenUpdateTableEvent = (): void => {
         <thead class="sticky top-0 z-50">
           <tr class="border-b border-primary-100">
             <th
+              v-if="reorderable"
+              class="w-[40px] !py-1"
+              v-bind="headerCellPreset()"
+              data-wv-section="headerreorderable"
+            />
+            <th
               v-if="selectionType === 'checkbox'"
               @click="toggleAllDataSelection(!isSelectedAll)"
               v-bind="headerCellPreset()"
@@ -766,8 +870,33 @@ const listenUpdateTableEvent = (): void => {
         <tbody v-if="!loadingTable" :="Preset.tbody">
           <template :key="index" v-for="(item, index) in currentPageTableData">
             <tr
+              :id="item._id"
+              :class="[
+                'py-[7px] px-4 transition-transform',
+                { 'select-none': dragging, 'select-auto': !dragging },
+                { '!cursor-grab [&_label]:!cursor-grab': draggable(item) },
+              ]"
+              :draggable="draggable(item)"
               @click="toggleRowSelection(item)"
               @dblclick="treeTable ? toggleRowExpand(item, index) : null"
+              @drag="dragging = true"
+              @dragenter.prevent="onDragEnter($event, item)"
+              @dragleave.prevent=""
+              @dragover.prevent=""
+              @dragstart="startReorderRow($event, item, index)"
+              @drop="onRowReorder"
+              @mouseenter="
+                ($event.target as HTMLLIElement).classList.add(
+                  'bg-primary-50',
+                  'dark:bg-primary-50',
+                )
+              "
+              @mouseleave="
+                ($event.target as HTMLLIElement).classList.remove(
+                  'bg-primary-50',
+                  'dark:bg-primary-50',
+                )
+              "
               class="border-b border-general-100"
               v-bind="
                 Preset.bodyrow({
@@ -779,6 +908,13 @@ const listenUpdateTableEvent = (): void => {
                 })
               "
             >
+              <td v-if="reorderable" v-bind="Preset.bodycell" class="w-[40px]">
+                <Icon
+                  class="w-6 h-6 !p-0 !m-0 !cursor-grab [&_label]:!cursor-grab"
+                  icon="dragable-menu"
+                />
+              </td>
+
               <td
                 v-if="selectionType === 'checkbox'"
                 @click.stop=""
@@ -835,7 +971,19 @@ const listenUpdateTableEvent = (): void => {
                     ? (props.childTableProps?.columns ?? columns)
                     : visibleColumns"
                   :colspan="col.colspan"
+                  :contenteditable="col.editable"
                   v-bind="Preset.bodycell"
+                  @input="
+                    (e: InputEvent) => {
+                      console.log(e);
+                      $emit('input', {
+                        item,
+                        index,
+                        value: (e.target as HTMLElement).innerText,
+                      } as EditedContent);
+                    }
+                  "
+                  class="focus:outline-grayscale-600 focus:outline-1"
                 >
                   <template v-if="col.preset?.type === 'toggle'">
                     <InputSwitch
