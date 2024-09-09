@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.160
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.159...v1.4.160)
+
+### 💅 Refactors
+
+- Add generic type for dialog form ([fa71126](https://github.com/fewangsit/wangsvue/commit/fa71126))
+
+### 🏡 Chore
+
+- Export checkRouteAccess util ([d8748bd](https://github.com/fewangsit/wangsvue/commit/d8748bd))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.4.159
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.158...v1.4.159)
