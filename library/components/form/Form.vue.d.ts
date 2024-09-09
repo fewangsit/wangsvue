@@ -40,9 +40,9 @@ export type FieldValidation<T = FieldValue | undefined> =
 
 export type FormValue = Record<string, unknown> | Record<string, unknown>[];
 
-export type FormPayload<T = Record<string, FormValue>> = {
+export type FormPayload<FormValuesType = Record<string, FormValue>> = {
   stayAfterSubmit: boolean;
-  formValues: T;
+  formValues: FormValuesType;
 };
 
 /**

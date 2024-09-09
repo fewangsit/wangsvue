@@ -14,9 +14,11 @@ export type DialogFormValue =
   | Record<string, unknown>
   | Record<string, unknown>[];
 
-export type DialogFormPayload = {
+export type DialogFormPayload<
+  FormValuesType = Record<string, DialogFormValue>,
+> = {
   stayAfterSubmit: boolean;
-  formValues: Record<string, DialogFormValue>;
+  formValues: FormValuesType;
 };
 
 /**
