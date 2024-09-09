@@ -1,6 +1,39 @@
 # Changelog
 
 
+## v1.4.158
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.157...v1.4.158)
+
+## v1.4.157
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.156...v1.4.157)
+
+### 🩹 Fixes
+
+- **tabmenu:** Initial active index takes precedence from the last menu ([335726b](https://github.com/fewangsit/wangsvue/commit/335726b))
+
+### 💅 Refactors
+
+- Refactor changelog page ([523062c](https://github.com/fewangsit/wangsvue/commit/523062c))
+
+### ❤️ Contributors
+
+- Programmer-fe6 ([@programmer-fe6](http://github.com/programmer-fe6))
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.4.156
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.155...v1.4.156)
+
+### 🚀 Enhancements
+
+- Add checkRouteAccess ([4008a3b](https://github.com/fewangsit/wangsvue/commit/4008a3b))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.155
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.154...v1.4.155)
