@@ -141,6 +141,7 @@ export type WangsIcons =
   | 'subtract'
   | 'team'
   | 'time'
+  | 'ticket'
   | 'tools'
   | 'tracking'
   | 'unassign'
