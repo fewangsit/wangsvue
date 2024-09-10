@@ -191,7 +191,7 @@ defineExpose({ form, clearField });
           { 'gap-6': expanded },
         ]"
       >
-        <main class="flex flex-col gap-3 w-full">
+        <section id="main" class="flex flex-col gap-3 w-full">
           <div class="flex items-center gap-2" data-wv-section="header">
             <slot name="header">
               <Icon
@@ -298,7 +298,7 @@ defineExpose({ form, clearField });
               </slot>
             </div>
           </div>
-        </main>
+        </section>
 
         <aside
           v-if="$slots['aside-right'] && expanded"
