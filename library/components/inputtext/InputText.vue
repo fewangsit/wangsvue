@@ -85,7 +85,7 @@ const validateURL = (
   invalidFormat?: string,
 ): boolean | string => {
   const urlRegExp = new RegExp(
-    `^(https?:\\/\\/)${useProtocol ? '' : '?'}` + // Protocol
+    `^(https?:\\/\\/)${props.useProtocol ? '' : '?'}` + // Protocol
       '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // Domain name and extension
       '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
       '(\\:\\d+)?' + // Port
