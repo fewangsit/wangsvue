@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v1.4.163
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.162...v1.4.163)
+
+### 💅 Refactors
+
+- Refactor Image and UserName ([2b1e760](https://github.com/fewangsit/wangsvue/commit/2b1e760))
+- Change main to section to fix styele dialog form ([a27f0a0](https://github.com/fewangsit/wangsvue/commit/a27f0a0))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.4.162
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.160...v1.4.162)
