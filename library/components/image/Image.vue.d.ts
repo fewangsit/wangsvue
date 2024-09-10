@@ -184,8 +184,7 @@ export interface ImageState {
 }
 
 export type ImageGallery = {
-  thumbnail?: ImageProps['thumbnail'];
-  preview?: ImageProps['preview'];
+  src?: ImageProps['src'];
 };
 
 /**
@@ -195,18 +194,13 @@ export interface ImageProps {
   /**
    * The thumbnail image.
    */
-  thumbnail?: string | Blob;
+  src?: string | Blob;
   /**
    * The thumbnail image width.
    *
    * @default 'big' - For other size use class
    */
   size?: 'small' | 'medium' | 'big';
-  /**
-   * The path to full size image for image preview.
-   * @defaultValue thumbnail
-   */
-  preview?: string;
   /**
    * Specify the rounded level.
    *

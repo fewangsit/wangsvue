@@ -36,7 +36,7 @@ const adjustPosition = (): void => {
   >
     <Image
       v-if="type == 'picture'"
-      :thumbnail="
+      :src="
         getNestedProperyValue(props.user ?? {}, profilePictureField) as string
       "
       @click.stop=""
@@ -63,7 +63,7 @@ const adjustPosition = (): void => {
         <div class="bg-primary-100 absolute top-0 h-[42px] w-full" />
 
         <Image
-          :thumbnail="props.user?.profilePicture"
+          :src="props.user?.profilePicture"
           class="w-[60px] h-[60px]"
           rounded
         />
