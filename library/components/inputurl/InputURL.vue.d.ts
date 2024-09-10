@@ -55,6 +55,13 @@ export interface InputURLProps {
    * Show information to user about the field.
    */
   fieldInfo?: string;
+
+  /**
+   * Whether validate the protocol http/https
+   *
+   * @default true
+   */
+  useProtocol?: boolean;
 }
 
 /**

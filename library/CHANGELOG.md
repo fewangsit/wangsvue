@@ -1,6 +1,61 @@
 # Changelog
 
 
+## v1.4.162
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.160...v1.4.162)
+
+### 🚀 Enhancements
+
+- Implement editable cell and reorderable row in TreeTable component ([dba5af9](https://github.com/fewangsit/wangsvue/commit/dba5af9))
+- **InputUrl:** Add prop useProtocol for input url validation ([c850828](https://github.com/fewangsit/wangsvue/commit/c850828))
+- Add ticket icon ([ae52cad](https://github.com/fewangsit/wangsvue/commit/ae52cad))
+
+### 🩹 Fixes
+
+- Http should be required as prefix for inputurl ([ea0b933](https://github.com/fewangsit/wangsvue/commit/ea0b933))
+- **InputURL:** UseProtocol is not defined, use props.useProtocol ([e2140c9](https://github.com/fewangsit/wangsvue/commit/e2140c9))
+
+### 💅 Refactors
+
+- Refactor styling for editable cell ([653be59](https://github.com/fewangsit/wangsvue/commit/653be59))
+
+### 🏡 Chore
+
+- **release:** V1.4.160 ([f929f72](https://github.com/fewangsit/wangsvue/commit/f929f72))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
+## v1.4.161
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.160...v1.4.161)
+
+### 🚀 Enhancements
+
+- Implement editable cell and reorderable row in TreeTable component ([dba5af9](https://github.com/fewangsit/wangsvue/commit/dba5af9))
+
+### 🩹 Fixes
+
+- Http should be required as prefix for inputurl ([ea0b933](https://github.com/fewangsit/wangsvue/commit/ea0b933))
+
+### 💅 Refactors
+
+- Refactor styling for editable cell ([653be59](https://github.com/fewangsit/wangsvue/commit/653be59))
+
+### 🏡 Chore
+
+- **release:** V1.4.160 ([f929f72](https://github.com/fewangsit/wangsvue/commit/f929f72))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.160
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.159...v1.4.160)

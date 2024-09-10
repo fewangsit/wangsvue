@@ -4,6 +4,7 @@ import type { InputURLEmits, InputURLProps } from './InputURL.vue.d';
 
 const props = withDefaults(defineProps<InputURLProps>(), {
   useValidator: true,
+  useProtocol: true,
 });
 
 const emit = defineEmits<InputURLEmits>();
