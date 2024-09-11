@@ -37,6 +37,8 @@ onMounted(() => {
         return setValidatorMessage(value);
       }),
     );
+
+    if (props.modelValue != null) field.value = props.modelValue;
   }
 });
 

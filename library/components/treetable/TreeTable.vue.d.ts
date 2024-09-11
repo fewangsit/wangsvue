@@ -12,6 +12,18 @@ interface TreeTableColumns extends TableColumn {
   colspan?: number;
 }
 
+export interface EditedContent {
+  item: Data;
+  index: number;
+  value?: string;
+}
+
+export interface DraggedItem {
+  item: Data;
+  fromIndex?: number;
+  toIndex?: number;
+}
+
 export interface TreeTableProps extends Omit<DataTableProps, 'columns'> {
   /**
    * V-model single selection. Works with selectionType 'single'
@@ -34,8 +46,14 @@ export interface TreeTableProps extends Omit<DataTableProps, 'columns'> {
    * @example '50vh' or '300px'
    */
   scrollHeight?: string;
+  /**
+   * To determine if row table is reorderable
+   */
+  reorderable?: boolean;
 }
 
 export type TreeTableEmits = DataTableEmits & {
   'update:singleSelection': [data: Data];
+  'input': [payload: EditedContent];
+  'rowReorder': [payload?: DraggedItem];
 };

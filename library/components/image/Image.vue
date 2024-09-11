@@ -31,8 +31,7 @@ const errorLoadImage = shallowRef<boolean>(false);
 const usePreview = computed(() => {
   return (
     !errorLoadImage.value &&
-    (!!props.preview ||
-      !imageThumbnail.value?.toString().includes('data:image/png;base64'))
+    !imageThumbnail.value?.toString().includes('data:image/png;base64')
   );
 });
 
@@ -71,19 +70,19 @@ const stopInterval = (): void => {
 };
 
 const imageThumbnail = computed((): string | Blob | undefined => {
-  if (!props.thumbnail || errorLoadImage.value) return Placeholder;
-  if (typeof props.thumbnail === 'string') {
-    return props.thumbnail.includes('http') ||
-      props.thumbnail.includes('data:image/png;base64')
-      ? props.thumbnail
-      : getImageURL(props.thumbnail);
+  if (!props.src || errorLoadImage.value) return Placeholder;
+  if (typeof props.src === 'string') {
+    return props.src.includes('http') ||
+      props.src.includes('data:image/png;base64')
+      ? props.src
+      : getImageURL(props.src);
   }
 
-  return props.thumbnail;
+  return props.src;
 });
 
 const imagePreview = computed(() => {
-  const preview = props.preview || imageThumbnail.value;
+  const preview = imageThumbnail.value;
 
   if (typeof preview === 'string') {
     return preview.includes('http') || preview.includes('data:image/svg+xml')
@@ -109,11 +108,8 @@ const onErrorLoadImage = (e: Event): void => {
   }
 };
 
-const getGalleryImageSrc = (
-  preview?: string,
-  thumbnail?: string | Blob,
-): string | undefined => {
-  const image = (preview || thumbnail) as string;
+const getGalleryImageSrc = (src?: string | Blob): string | undefined => {
+  const image = src as string;
 
   if (typeof image === 'string') {
     return image.includes('http') ? image : getImageURL(image);
@@ -163,9 +159,9 @@ const getGalleryImageSrc = (
         <img
           :key="index"
           v-show="index === currentGalleryImage"
-          v-for="({ preview, thumbnail }, index) in galleries"
+          v-for="({ src }, index) in galleries"
           :onerror="onErrorLoadImage"
-          :src="getGalleryImageSrc(preview, thumbnail)"
+          :src="getGalleryImageSrc(src)"
           :style="slotProps.style"
           alt=""
           data-wv-section="image-gallery"
@@ -191,13 +187,13 @@ const getGalleryImageSrc = (
           />
           <img
             :key="index"
-            v-for="({ thumbnail }, index) in galleries"
+            v-for="({ src }, index) in galleries"
             :class="[
               'h-10 w-10 object-cover cursor-pointer opacity-50 hover:opacity-100 transition-opacity',
               { '!opacity-100': currentGalleryImage == index },
             ]"
             :onerror="onErrorLoadImage"
-            :src="getImageURL(thumbnail as string)"
+            :src="getImageURL(src as string)"
             :style="slotProps.style"
             @click.stop="handleThumbnailClick(index)"
             alt=""

@@ -1,6 +1,148 @@
 # Changelog
 
 
+## v1.4.165
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.164...v1.4.165)
+
+## v1.4.164
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.163...v1.4.164)
+
+## v1.4.163
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.162...v1.4.163)
+
+### 💅 Refactors
+
+- Refactor Image and UserName ([2b1e760](https://github.com/fewangsit/wangsvue/commit/2b1e760))
+- Change main to section to fix styele dialog form ([a27f0a0](https://github.com/fewangsit/wangsvue/commit/a27f0a0))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.4.162
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.160...v1.4.162)
+
+### 🚀 Enhancements
+
+- Implement editable cell and reorderable row in TreeTable component ([dba5af9](https://github.com/fewangsit/wangsvue/commit/dba5af9))
+- **InputUrl:** Add prop useProtocol for input url validation ([c850828](https://github.com/fewangsit/wangsvue/commit/c850828))
+- Add ticket icon ([ae52cad](https://github.com/fewangsit/wangsvue/commit/ae52cad))
+
+### 🩹 Fixes
+
+- Http should be required as prefix for inputurl ([ea0b933](https://github.com/fewangsit/wangsvue/commit/ea0b933))
+- **InputURL:** UseProtocol is not defined, use props.useProtocol ([e2140c9](https://github.com/fewangsit/wangsvue/commit/e2140c9))
+
+### 💅 Refactors
+
+- Refactor styling for editable cell ([653be59](https://github.com/fewangsit/wangsvue/commit/653be59))
+
+### 🏡 Chore
+
+- **release:** V1.4.160 ([f929f72](https://github.com/fewangsit/wangsvue/commit/f929f72))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
+## v1.4.161
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.160...v1.4.161)
+
+### 🚀 Enhancements
+
+- Implement editable cell and reorderable row in TreeTable component ([dba5af9](https://github.com/fewangsit/wangsvue/commit/dba5af9))
+
+### 🩹 Fixes
+
+- Http should be required as prefix for inputurl ([ea0b933](https://github.com/fewangsit/wangsvue/commit/ea0b933))
+
+### 💅 Refactors
+
+- Refactor styling for editable cell ([653be59](https://github.com/fewangsit/wangsvue/commit/653be59))
+
+### 🏡 Chore
+
+- **release:** V1.4.160 ([f929f72](https://github.com/fewangsit/wangsvue/commit/f929f72))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
+## v1.4.160
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.159...v1.4.160)
+
+### 💅 Refactors
+
+- Add generic type for dialog form ([fa71126](https://github.com/fewangsit/wangsvue/commit/fa71126))
+
+### 🏡 Chore
+
+- Export checkRouteAccess util ([d8748bd](https://github.com/fewangsit/wangsvue/commit/d8748bd))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.4.159
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.158...v1.4.159)
+
+### 🚀 Enhancements
+
+- **InputPassword:** Assign modelValue into field.value on monted ([8418a48](https://github.com/fewangsit/wangsvue/commit/8418a48))
+
+### 🏡 Chore
+
+- **release:** V1.4.158 ([1884888](https://github.com/fewangsit/wangsvue/commit/1884888))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
+## v1.4.158
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.157...v1.4.158)
+
+## v1.4.157
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.156...v1.4.157)
+
+### 🩹 Fixes
+
+- **tabmenu:** Initial active index takes precedence from the last menu ([335726b](https://github.com/fewangsit/wangsvue/commit/335726b))
+
+### 💅 Refactors
+
+- Refactor changelog page ([523062c](https://github.com/fewangsit/wangsvue/commit/523062c))
+
+### ❤️ Contributors
+
+- Programmer-fe6 ([@programmer-fe6](http://github.com/programmer-fe6))
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.4.156
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.155...v1.4.156)
+
+### 🚀 Enhancements
+
+- Add checkRouteAccess ([4008a3b](https://github.com/fewangsit/wangsvue/commit/4008a3b))
+
+### ❤️ Contributors
+
+- Zainkurnia_ <programmer-fe3@qwertysystem.net>
+
 ## v1.4.155
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.154...v1.4.155)
