@@ -55,7 +55,7 @@ const startInterval = (): void => {
 
   if (props.galleries?.length) {
     intervalId.value = window.setInterval(() => {
-      const images = props.galleries ?? [];
+    const images = props.galleries ?? [];
       currentGalleryImage.value =
         (currentGalleryImage.value + 1) % images.length;
     }, 3000);

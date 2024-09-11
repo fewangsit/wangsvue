@@ -43,6 +43,7 @@ import ButtonRadio from './buttonradio/ButtonRadio.vue';
 import InputRepositoryName from './inputrepositoryname/InputRepositoryName.vue';
 import Textarea from './textarea/Textarea.vue';
 import LiteDropdown from './litedropdown/LiteDropdown.vue';
+import ChangelogPage from './changelogpage/ChangelogPage.vue';
 
 export {
   Badge,
@@ -90,4 +91,5 @@ export {
   InputRepositoryName,
   Textarea,
   LiteDropdown,
+  ChangelogPage,
 };

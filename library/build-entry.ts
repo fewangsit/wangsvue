@@ -67,6 +67,7 @@ import {
   Breadcrumb,
   Card,
   Changelog,
+  ChangelogPage,
   DataTable,
   Dropdown,
   MultiSelect,
@@ -104,6 +105,7 @@ import {
   InputRepositoryName,
   Textarea,
   LiteDropdown,
+  ChangelogPage,
 } from './components';
 
 export default {
@@ -160,6 +162,7 @@ export default {
     app.component('InputRepositoryName', InputRepositoryName);
     app.component('Textarea', Textarea);
     app.component('LiteDropdown', LiteDropdown);
+    app.component('ChangelogPage', ChangelogPage;
 
     app.directive('tooltip', Tooltip);
     app.directive('focus', Focus);
