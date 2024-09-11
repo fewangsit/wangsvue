@@ -42,6 +42,7 @@ import Timeline from './timeline/Timeline.vue';
 import ButtonRadio from './buttonradio/ButtonRadio.vue';
 import InputRepositoryName from './inputrepositoryname/InputRepositoryName.vue';
 import Textarea from './textarea/Textarea.vue';
+import LiteDropdown from './litedropdown/LiteDropdown.vue';
 
 export {
   Badge,
@@ -88,4 +89,5 @@ export {
   ButtonRadio,
   InputRepositoryName,
   Textarea,
+  LiteDropdown,
 };
