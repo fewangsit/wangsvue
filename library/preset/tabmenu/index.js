@@ -40,7 +40,8 @@ export default {
 
       // Colors and Conditions
       {
-        'bg-transparent dark:bg-transparent': state.d_activeIndex !== context.index,
+        'bg-transparent dark:bg-transparent':
+          state.d_activeIndex !== context.index,
         'text-grayscale-900 dark:text-grayscale-900':
           state.d_activeIndex !== context.index,
 
@@ -62,6 +63,12 @@ export default {
           state.d_activeIndex !== context.index,
       },
 
+      // Disabled States
+      {
+        'pointer-events-none': context.item?.disabled,
+        'opacity-60': context.item?.disabled,
+      },
+
       // Transitions
       'transition-all duration-200',
 
@@ -77,6 +84,6 @@ export default {
     class: 'mr-2',
   },
   inkbar: {
-    class: 'grow border-b-2 border-primary-100 dark:border-primary-100'
-  }
+    class: 'grow border-b-2 border-primary-100 dark:border-primary-100',
+  },
 };

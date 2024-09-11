@@ -103,6 +103,7 @@ import {
   ButtonRadio,
   InputRepositoryName,
   Textarea,
+  LiteDropdown,
 } from './components';
 
 export default {
@@ -158,6 +159,7 @@ export default {
     app.component('ButtonRadio', ButtonRadio);
     app.component('InputRepositoryName', InputRepositoryName);
     app.component('Textarea', Textarea);
+    app.component('LiteDropdown', LiteDropdown);
 
     app.directive('tooltip', Tooltip);
     app.directive('focus', Focus);
@@ -226,6 +228,7 @@ export {
   InputRepositoryName,
   ButtonRadio,
   Textarea,
+  LiteDropdown,
 
   // Component store
   useLoadingStore,
