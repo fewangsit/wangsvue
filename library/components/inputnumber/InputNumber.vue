@@ -155,11 +155,21 @@ const isExceedMaxDigits = (value: number | undefined): boolean => {
 };
 
 const increment = (): void => {
-  onUpdateValue(+(field.value ?? 0) + 1, 'modelValue');
+  const currentValue = +(field.value ?? 0);
+
+  onUpdateValue(
+    currentValue < props.max ? currentValue + 1 : currentValue,
+    'modelValue',
+  );
 };
 
 const decrement = (): void => {
-  onUpdateValue(+(field.value ?? 0) - 1, 'modelValue');
+  const currentValue = +(field.value ?? 0);
+
+  onUpdateValue(
+    currentValue > props.min ? currentValue - 1 : currentValue,
+    'modelValue',
+  );
 };
 
 /**
