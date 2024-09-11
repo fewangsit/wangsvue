@@ -14,6 +14,7 @@ interface TreeTableColumns extends TableColumn {
 
 export interface EditedContent {
   item: Data;
+  field: string;
   index: number;
   value?: string;
 }

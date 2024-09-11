@@ -1044,6 +1044,7 @@ const listenUpdateTableEvent = (): void => {
                           console.log(e);
                           $emit('input', {
                             item,
+                            field: col.field,
                             index,
                             value: (e.target as HTMLElement).innerText,
                           } as EditedContent);
