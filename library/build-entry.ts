@@ -67,7 +67,6 @@ import {
   Breadcrumb,
   Card,
   Changelog,
-  ChangelogPage,
   DataTable,
   Dropdown,
   MultiSelect,
@@ -232,6 +231,7 @@ export {
   ButtonRadio,
   Textarea,
   LiteDropdown,
+  ChangelogPage,
 
   // Component store
   useLoadingStore,

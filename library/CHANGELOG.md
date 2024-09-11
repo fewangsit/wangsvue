@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.167
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.166...v1.4.167)
+
+### 🚀 Enhancements
+
+- Export changelog page component ([7cbd868](https://github.com/fewangsit/wangsvue/commit/7cbd868))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.166
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.165...v1.4.166)
