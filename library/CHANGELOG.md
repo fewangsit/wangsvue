@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.170
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.169...v1.4.170)
+
+### 💅 Refactors
+
+- Change props usage for Image in ImageCompressor ([dc01b83](https://github.com/fewangsit/wangsvue/commit/dc01b83))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.4.169
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.168...v1.4.169)
