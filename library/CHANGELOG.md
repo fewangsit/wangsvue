@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v1.4.166
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.165...v1.4.166)
+
+### 🚀 Enhancements
+
+- **tabmenu:** Added tabmenu item disabled style ([b923c6d](https://github.com/fewangsit/wangsvue/commit/b923c6d))
+- **litedropdown:** Added new component litedropdown ([513038d](https://github.com/fewangsit/wangsvue/commit/513038d))
+
+### 🩹 Fixes
+
+- **inputnumber:** Added additional check if value is greater than or less than in increment and decrement button ([7bb005f](https://github.com/fewangsit/wangsvue/commit/7bb005f))
+- **LiteDropdown:** Added litedropdown to build-entry ([e6f582e](https://github.com/fewangsit/wangsvue/commit/e6f582e))
+
+### 💅 Refactors
+
+- Add field to emitted event when edit cell ([dbb64ba](https://github.com/fewangsit/wangsvue/commit/dbb64ba))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Programmer-fe6 ([@programmer-fe6](http://github.com/programmer-fe6))
+
 ## v1.4.165
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.164...v1.4.165)
