@@ -920,7 +920,7 @@ watch(dataSelected, (newSelectedData: Data[]) => {
         />
       </template>
 
-      <template #body="{ data: itemData, field }">
+      <template #body="{ data: itemData, field, index }">
         <template v-if="itemData.role === 'childheader'">
           <template v-if="firstColumn(field)">{{ itemData.header }}</template>
         </template>
@@ -954,7 +954,7 @@ watch(dataSelected, (newSelectedData: Data[]) => {
               "
             >
               <template v-if="col.bodyTemplate">
-                {{ (col.bodyTemplate && col.bodyTemplate(itemData)) || '-' }}
+                {{ (col.bodyTemplate && col.bodyTemplate(itemData, index)) || '-' }}
               </template>
               <template v-else>
                 {{ getNestedProperyValue(itemData, col.field) || '-' }}

@@ -105,6 +105,7 @@ import {
   Textarea,
   LiteDropdown,
   ChangelogPage,
+  Editor,
 } from './components';
 
 export default {
@@ -162,6 +163,7 @@ export default {
     app.component('Textarea', Textarea);
     app.component('LiteDropdown', LiteDropdown);
     app.component('ChangelogPage', ChangelogPage);
+    app.component('Editor', Editor);
 
     app.directive('tooltip', Tooltip);
     app.directive('focus', Focus);
@@ -232,6 +234,7 @@ export {
   Textarea,
   LiteDropdown,
   ChangelogPage,
+  Editor,
 
   // Component store
   useLoadingStore,
