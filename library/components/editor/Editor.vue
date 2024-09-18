@@ -42,11 +42,11 @@ const headingMenu = ref<Menu>();
 const editLinkOverlay = ref<OverlayPanel>();
 const root = ref<HTMLDivElement>();
 const previewImages = ref<string[]>([]);
-const imageDialogUploader = ref<boolean>(false);
-const inputURLImage = ref<string>();
+const imageDialogUploader = shallowRef<boolean>(false);
+const inputURLImage = shallowRef<string>();
 
 const editor = useEditor({
-  content: props.textContentInitialValue,
+  content: props.modelValue,
   onUpdate: () => {
     emit('update:modelValue', editor.value.getJSON());
   },

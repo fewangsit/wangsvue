@@ -2,10 +2,6 @@ import { ClassComponent } from '../ts-helpers';
 
 export interface EditorProps {
   /**
-   * Initial Value For Content
-   */
-  textContentInitialValue: JSONContent;
-  /**
    * Model Value For Editor Content
    */
   modelValue: JSONContent;

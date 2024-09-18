@@ -5,9 +5,7 @@ import Editor from 'lib/components/editor/Editor.vue';
 import { ref } from 'vue';
 import { PostImage } from 'lib/components/editor/Editor.vue.d';
 
-const editorContent = ref();
-
-const data = {
+const editorContent = ref({
   type: 'doc',
   content: [
     {
@@ -41,7 +39,7 @@ const data = {
       type: 'paragraph',
     },
   ],
-};
+});
 
 const sendImage = (value: PostImage): void => {
   value.setImageCb('https://www.svgrepo.com/show/452030/avatar-default.svg');
@@ -56,7 +54,6 @@ const sendImage = (value: PostImage): void => {
     <template #content>
       <Editor
         v-model:model-value="editorContent"
-        :text-content-initial-value="data"
         @post-image-local="sendImage"
       />
     </template>
