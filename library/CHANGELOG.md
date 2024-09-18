@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.171
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.170...v1.4.171)
+
+### 🩹 Fixes
+
+- Props & ref ([b636225](https://github.com/fewangsit/wangsvue/commit/b636225))
+
+### ❤️ Contributors
+
+- Programmer-mob5 <programmer-mob5@qwertysystem.net>
+
 ## v1.4.170
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.169...v1.4.170)
