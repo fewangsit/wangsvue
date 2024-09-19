@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.172
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.171...v1.4.172)
+
+### 🚀 Enhancements
+
+- Export editor component ([6eeb5a0](https://github.com/fewangsit/wangsvue/commit/6eeb5a0))
+
+### ❤️ Contributors
+
+- Programmer-mob5 <programmer-mob5@qwertysystem.net>
+
 ## v1.4.171
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.170...v1.4.171)
