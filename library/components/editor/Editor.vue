@@ -630,11 +630,14 @@ const setPreviewImages = (data: {
       <template #default>
         <div class="flex flex-col gap-4">
           <div class="flex gap-2">
-            <InputURL
-              v-model:model-value="inputURLImage"
-              class="w-[269px]"
-              label="URL Gambar"
-            />
+            <div class="flex-1">
+              <InputURL
+                v-model:model-value="inputURLImage"
+                class="w-[269px]"
+                label="URL Gambar"
+              />
+            </div>
+
             <div class="flex items-end">
               <Button
                 @click="setImageFunction(null)"

@@ -44,6 +44,7 @@ import InputRepositoryName from './inputrepositoryname/InputRepositoryName.vue';
 import Textarea from './textarea/Textarea.vue';
 import LiteDropdown from './litedropdown/LiteDropdown.vue';
 import ChangelogPage from './changelogpage/ChangelogPage.vue';
+import Editor from './editor/Editor.vue';
 
 export {
   Badge,
@@ -92,4 +93,5 @@ export {
   Textarea,
   LiteDropdown,
   ChangelogPage,
+  Editor,
 };
