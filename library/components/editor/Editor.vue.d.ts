@@ -39,4 +39,4 @@ export type JSONContent = {
   [key: string]: any;
 };
 
-declare class Dropdown extends ClassComponent<EditorProps, unknown, unknown> {}
+declare class Editor extends ClassComponent<EditorProps, unknown, unknown> {}
