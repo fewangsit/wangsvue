@@ -42,6 +42,7 @@ const adjustPosition = (): void => {
       @click.stop=""
       class="w-[30px] h-[30px]"
       rounded
+      width="30"
     />
 
     <Icon v-else class="text-general-300 text-base" icon="user" />
@@ -86,9 +87,9 @@ const adjustPosition = (): void => {
 
         <a
           :href="`/user/${props.user?._id}`"
-          alt="link to user detail"
           class="underline text-primary-400 text-[10px] leading-4 cursor-pointer hover:text-primary-500 transition-colors duration-100"
           target="_blank"
+          title="link to user detail"
         >
           Detail Member
         </a>

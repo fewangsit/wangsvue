@@ -20,6 +20,12 @@ const user = ref({
   email: 'zainkurnia@mailnesia.com',
   phoneNumber: '+62 81234567890',
 });
+
+const testUser = {
+  _id: '66d1771c1ebe5344bc2b9dab',
+  name: 'Super Admins',
+  photo: '/members/1726721700029-big.webp',
+};
 </script>
 
 <template>
@@ -34,6 +40,12 @@ const user = ref({
         <div class="flex gap-4">
           <UserName :user="user" user-name-field="fullName" />
           <UserName :user="user" type="icon" user-name-field="fullName" />
+          <UserName
+            :user="testUser"
+            profile-picture-field="photo"
+            type="picture"
+            user-name-field="name"
+          />
         </div>
       </div>
     </template>

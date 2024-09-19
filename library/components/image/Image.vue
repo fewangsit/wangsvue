@@ -55,7 +55,7 @@ const startInterval = (): void => {
 
   if (props.galleries?.length) {
     intervalId.value = window.setInterval(() => {
-    const images = props.galleries ?? [];
+      const images = props.galleries ?? [];
       currentGalleryImage.value =
         (currentGalleryImage.value + 1) % images.length;
     }, 3000);
@@ -69,13 +69,20 @@ const stopInterval = (): void => {
   }
 };
 
+const imageSize = computed(() => {
+  if (props.width != null) return props.width;
+  else if (props.size === 'small') return 30;
+  else if (props.size === 'medium') return 80;
+  return 125;
+});
+
 const imageThumbnail = computed((): string | Blob | undefined => {
   if (!props.src || errorLoadImage.value) return Placeholder;
   if (typeof props.src === 'string') {
     return props.src.includes('http') ||
       props.src.includes('data:image/png;base64')
       ? props.src
-      : getImageURL(props.src);
+      : getImageURL(props.src, imageSize.value);
   }
 
   return props.src;
@@ -83,11 +90,15 @@ const imageThumbnail = computed((): string | Blob | undefined => {
 
 const imagePreview = computed(() => {
   const preview = imageThumbnail.value;
+  const isFromFiles = preview.includes(
+    import.meta.env.VITE_APP_WANGSIT_FILES_API,
+  );
 
   if (typeof preview === 'string') {
-    return preview.includes('http') || preview.includes('data:image/svg+xml')
+    return (preview.includes('http') && !isFromFiles) || // From public resource
+      preview.includes('data:image/svg+xml') // Thumbnail
       ? preview
-      : getImageURL(preview);
+      : getImageURL(props.src); // Get the full size for preview
   }
 
   return preview;
