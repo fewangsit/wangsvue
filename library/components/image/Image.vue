@@ -90,11 +90,12 @@ const imageThumbnail = computed((): string | Blob | undefined => {
 
 const imagePreview = computed(() => {
   const preview = imageThumbnail.value;
-  const isFromFiles = preview.includes(
-    import.meta.env.VITE_APP_WANGSIT_FILES_API,
-  );
 
   if (typeof preview === 'string') {
+    const isFromFiles = preview.includes(
+      import.meta.env.VITE_APP_WANGSIT_FILES_API,
+    );
+
     return (preview.includes('http') && !isFromFiles) || // From public resource
       preview.includes('data:image/svg+xml') // Thumbnail
       ? preview
