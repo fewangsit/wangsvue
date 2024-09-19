@@ -1,6 +1,59 @@
 # Changelog
 
 
+## v1.4.171
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.170...v1.4.171)
+
+### 🩹 Fixes
+
+- Props & ref ([b636225](https://github.com/fewangsit/wangsvue/commit/b636225))
+
+### ❤️ Contributors
+
+- Programmer-mob5 <programmer-mob5@qwertysystem.net>
+
+## v1.4.170
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.169...v1.4.170)
+
+### 💅 Refactors
+
+- Change props usage for Image in ImageCompressor ([dc01b83](https://github.com/fewangsit/wangsvue/commit/dc01b83))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.4.169
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.168...v1.4.169)
+
+### 🚀 Enhancements
+
+- **treetable:** Add index on body template ([6b64e16](https://github.com/fewangsit/wangsvue/commit/6b64e16))
+- Export editor component ([75b2c23](https://github.com/fewangsit/wangsvue/commit/75b2c23))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.168
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.167...v1.4.168)
+
+## v1.4.167
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.166...v1.4.167)
+
+### 🚀 Enhancements
+
+- Export changelog page component ([7cbd868](https://github.com/fewangsit/wangsvue/commit/7cbd868))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.166
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.165...v1.4.166)

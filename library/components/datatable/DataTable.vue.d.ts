@@ -145,7 +145,7 @@ export type TableColumn = {
    * Convert boolean into text Yes/No
    */
   booleanValue?: boolean;
-  bodyTemplate?: (data: any) => string | undefined;
+  bodyTemplate?: (data: any, index: number) => string | undefined;
   bodyComponent?: (data: any) => TableCellComponent;
   headerTemplate?: () => string;
   headerComponent?: () => {

@@ -1089,7 +1089,7 @@ const listenUpdateTableEvent = (): void => {
                     >
                       <template v-if="col.bodyTemplate">
                         {{
-                          (col.bodyTemplate && col.bodyTemplate(item)) || '-'
+                          (col.bodyTemplate && col.bodyTemplate(item, index)) || '-'
                         }}
                       </template>
                       <template v-else>
