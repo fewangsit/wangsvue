@@ -39,10 +39,10 @@ const adjustPosition = (): void => {
       :src="
         getNestedProperyValue(props.user ?? {}, profilePictureField) as string
       "
+      :width="30"
       @click.stop=""
       class="w-[30px] h-[30px]"
       rounded
-      width="30"
     />
 
     <Icon v-else class="text-general-300 text-base" icon="user" />

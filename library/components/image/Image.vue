@@ -98,7 +98,7 @@ const imagePreview = computed(() => {
     return (preview.includes('http') && !isFromFiles) || // From public resource
       preview.includes('data:image/svg+xml') // Thumbnail
       ? preview
-      : getImageURL(props.src); // Get the full size for preview
+      : getImageURL(props.src as string); // Get the full size for preview
   }
 
   return preview;
