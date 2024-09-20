@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.174
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.173...v1.4.174)
+
+### 🚀 Enhancements
+
+- **Table:** Add option useColumnsHeader to use the child columns header as row header ([b43abad](https://github.com/fewangsit/wangsvue/commit/b43abad))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.173
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.172...v1.4.173)
