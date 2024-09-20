@@ -101,6 +101,20 @@ const tableRows = shallowRef(10);
 const totalRecords = shallowRef(0);
 const showConfirmToggle = ref<Record<string, boolean>>({});
 
+const visibleChildTableColumns = computed(() => {
+  if (props.childTableProps?.columns)
+    return props.childTableProps?.columns.filter((col) => {
+      return (
+        !col.parentColumnsFields ||
+        col.parentColumnsFields?.some((field) =>
+          visibleColumns.value.some((c) => c.field === field),
+        )
+      );
+    });
+
+  return visibleColumns.value;
+});
+
 const queryParams = computed<QueryParams>(() => ({
   ...props.defaultQueryParams,
   search: props.lazy ? searchQueryParam.value : props.search,
@@ -955,8 +969,22 @@ const listenUpdateTableEvent = (): void => {
                 />
               </td>
 
+              <template
+                v-if="item.childRowHeader && childTableProps?.useColumnsHeader"
+              >
+                <td
+                  :key="col.header"
+                  v-for="col in visibleChildTableColumns"
+                  :class="[Preset.bodycell.class, 'font-semibold text-xs']"
+                  :colspan="col.colspan ?? col.parentColumnsFields?.length"
+                  @click.stop=""
+                >
+                  {{ col.header }}
+                </td>
+              </template>
+
               <td
-                v-if="item.childRowHeader"
+                v-else-if="item.childRowHeader"
                 :class="[Preset.bodycell.class, 'font-semibold text-xs']"
                 :colspan="props.columns.length"
                 @click.stop=""
@@ -968,9 +996,9 @@ const listenUpdateTableEvent = (): void => {
                 <td
                   :key="col.field"
                   v-for="col in item.childRow
-                    ? (props.childTableProps?.columns ?? columns)
+                    ? visibleChildTableColumns
                     : visibleColumns"
-                  :colspan="col.colspan"
+                  :colspan="col.colspan ?? col.parentColumnsFields?.length"
                   v-bind="Preset.bodycell"
                   class="!py-0"
                 >
@@ -1089,7 +1117,8 @@ const listenUpdateTableEvent = (): void => {
                     >
                       <template v-if="col.bodyTemplate">
                         {{
-                          (col.bodyTemplate && col.bodyTemplate(item, index)) || '-'
+                          (col.bodyTemplate && col.bodyTemplate(item, index)) ||
+                          '-'
                         }}
                       </template>
                       <template v-else>

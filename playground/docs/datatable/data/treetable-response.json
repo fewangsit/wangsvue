@@ -269,7 +269,20 @@
           "key": 1
         },
         "isSelfService": false,
-        "sequence": 10
+        "sequence": 10,
+        "children": [
+          {
+            "groupHeader": "Child Group",
+            "groupItems": [
+              {
+                "_id": "664af669adad15716b3e30f",
+                "bugDetail": "This is the detail of the bug",
+                "actualResult": "Bug everywhere",
+                "testSteps": "Test Steps: 1. 2. 3."
+              }
+            ]
+          }
+        ]
       },
       {
         "_id": "6668feaf253a2c8521dd9d04",
