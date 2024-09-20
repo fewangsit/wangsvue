@@ -970,7 +970,9 @@ const listenUpdateTableEvent = (): void => {
               </td>
 
               <template
-                v-if="item.childRowHeader && childTableProps?.useColumnsHeader"
+                v-if="
+                  item.childRowHeader && props.childTableProps?.useColumnsHeader
+                "
               >
                 <td
                   :key="col.header"
