@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue';
 import { useField } from 'vee-validate';
+import Badge from 'lib/components/badge/Badge.vue';
 
 import type {
   DropdownEmits,
@@ -24,6 +25,7 @@ const props = withDefaults(defineProps<DropdownProps>(), {
   filterPlaceholder: 'Cari',
   modelValue: undefined,
   formatValidatorMessage: true,
+  valueType: 'plain',
 });
 
 const emit = defineEmits<DropdownEmits>();
@@ -162,6 +164,7 @@ defineExpose({
       ]"
       :disabled="props.disabled"
       :invalid="invalidInput"
+      :ring="inputBorder"
     >
       <InputGroupAddon v-if="$slots['addon-left']" :disabled="props.disabled">
         <slot name="addon-left" />
@@ -180,9 +183,16 @@ defineExpose({
         @show="$emit('show'), (isShowOverlay = true)"
       >
         <template #value="slotProps">
-          <div v-if="slotProps.value" class="flex align-items-center">
-            {{ getOptionLabel() }}
-          </div>
+          <template v-if="slotProps.value">
+            <Badge
+              v-if="valueType === 'badge'"
+              v-bind="badgeValueProps"
+              :label="getOptionLabel()"
+            />
+            <div v-else class="flex items-center">
+              {{ getOptionLabel() }}
+            </div>
+          </template>
           <template v-else>
             {{ slotProps.placeholder }}
           </template>

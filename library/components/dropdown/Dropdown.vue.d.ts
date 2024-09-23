@@ -2,6 +2,7 @@ import { Slot } from 'vue';
 import { DropdownOption, OptionValue } from 'lib/types/options.type';
 import { CustomValidation } from '../form/Form.vue.d';
 import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
+import { BadgeProps } from 'lib/components/badge/Badge.vue';
 
 /**
  * Dropdown component props
@@ -36,6 +37,22 @@ export interface DropdownProps {
    * @default undefined - the value will be sets to the option itself.
    */
   optionValue?: string;
+  /**
+   * Define the value style, whether badge or plain text
+   *
+   * @default 'plain'
+   */
+  valueType?: 'badge' | 'plain';
+  /**
+   * Bind the badge property to the dropdown value
+   */
+  badgeValueProps?: Omit<BadgeProps, 'label'>;
+  /**
+   * Set the input border style
+   *
+   * @default 'default'
+   */
+  inputBorder?: 'none' | 'default';
   /**
    * A property to uniquely identify an option.
    */
