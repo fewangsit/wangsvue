@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.175
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.174...v1.4.175)
+
+### 🚀 Enhancements
+
+- **Dropdown:** Add method showOverlay and expose it ([306fa47](https://github.com/fewangsit/wangsvue/commit/306fa47))
+
+### 🩹 Fixes
+
+- Type error on TreeTable.vue ([6d3246a](https://github.com/fewangsit/wangsvue/commit/6d3246a))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.174
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.173...v1.4.174)
