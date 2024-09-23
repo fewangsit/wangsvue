@@ -143,15 +143,9 @@ declare class Dropdown extends ClassComponent<
   /**
    * Shows the overlay.
    *
-   * @memberof Dropdown
+   * @memberof MultiSelect
    */
-  showOverlayClassComponent(): void;
-  /**
-   * Hides the overlay.
-   *
-   * @memberof Dropdown
-   */
-  hideHideOverlayClassComponent(): void;
+  showOverlay(): void;
 }
 
 declare module '@vue/runtime-core' {

@@ -32,6 +32,7 @@ onMounted(() => {
   setValidator();
 });
 
+const dropdown = ref<Dropdown>();
 const isShowOverlay = ref<boolean>(false);
 
 const invalidInput = computed(() => props.invalid || !!field.errorMessage);
@@ -115,6 +116,13 @@ const getOptionLabel = (): string => {
   return field.value as string;
 };
 
+/**
+ * Method to show the overlay with template ref.
+ */
+const showOverlay = (): void => {
+  if (dropdown.value) dropdown.value.show();
+};
+
 watch(
   () => props.initialValue,
   (value) => {
@@ -129,6 +137,10 @@ watch(
     field.value = value;
   },
 );
+
+defineExpose({
+  showOverlay,
+});
 </script>
 
 <template>
@@ -156,6 +168,7 @@ watch(
       </InputGroupAddon>
 
       <Dropdown
+        ref="dropdown"
         v-bind="props"
         v-model="field.value"
         :aria-describedby="props.label + 'error'"
