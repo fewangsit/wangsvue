@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.176
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.175...v1.4.176)
+
+### 🚀 Enhancements
+
+- **Dropdown:** Add option to show value as badge and option to remove the input border ([62c3d5b](https://github.com/fewangsit/wangsvue/commit/62c3d5b))
+
+### 🩹 Fixes
+
+- Type error on Dropdown.vue.d.ts ([626db4d](https://github.com/fewangsit/wangsvue/commit/626db4d))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.175
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.174...v1.4.175)
