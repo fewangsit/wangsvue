@@ -2,7 +2,7 @@ import { Slot } from 'vue';
 import { DropdownOption, OptionValue } from 'lib/types/options.type';
 import { CustomValidation } from '../form/Form.vue.d';
 import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
-import { BadgeProps } from 'lib/components/badge/Badge.vue';
+import { BadgeProps } from 'lib/components/badge/Badge.vue.d';
 
 /**
  * Dropdown component props
@@ -46,7 +46,7 @@ export interface DropdownProps {
   /**
    * Bind the badge property to the dropdown value
    */
-  badgeValueProps?: Omit<BadgeProps, 'label'>;
+  badgeValueProps?: BadgeProps;
   /**
    * Set the input border style
    *
