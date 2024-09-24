@@ -10,7 +10,7 @@ import {
 } from 'vue';
 import { DataTableExpandedRows } from 'primevue/datatable';
 import {
-  DraggedItem,
+  DataTableRowReorderEvent,
   EditedContent,
   TreeTableColumns,
   TreeTableEmits,
@@ -79,7 +79,7 @@ const customColumnKey = shallowRef(0);
 const customColumn = ref<CustomColumnInstance>();
 const optionMenu = ref<MenuInstance>();
 
-const emittedValue = ref<DraggedItem>();
+const rowReorderEventPayload = ref<DataTableRowReorderEvent>();
 const draggedRow = shallowRef<DragableRow>();
 const dragging = shallowRef<boolean>(false);
 
@@ -281,7 +281,7 @@ const toggleOptions = async (event: MouseEvent, data: Data): Promise<void> => {
   };
 
   removeClassActive();
-  nextTick(() => {
+  await nextTick(() => {
     if (button?.classList.contains('option-button-active')) {
       removeClassActive();
     } else {
@@ -321,7 +321,7 @@ const toggleOptions = async (event: MouseEvent, data: Data): Promise<void> => {
 };
 
 const draggable = (item: DragableRow): boolean => {
-  return item.draggable !== false;
+  return item.draggable !== false && !item.childRow && !item.childRowHeader;
 };
 
 /**
@@ -336,10 +336,13 @@ const startReorderRow = (
   item: DragableRow,
   index: number,
 ): void => {
+  if (item.childRow || item.childRowHeader) return;
+  expandedRows.value = {}; // Collapse the expanded rows on Row Reorder
+
   const { dataTransfer } = event;
   draggedRow.value = item;
 
-  emittedValue.value = { item, fromIndex: index };
+  rowReorderEventPayload.value = { item, fromIndex: index };
 
   if (dataTransfer) {
     dataTransfer.dropEffect = 'move';
@@ -372,7 +375,7 @@ const onDragEnter = (e: DragEvent, row: DragableRow): void => {
     );
 
     if (draggedIndex !== -1 && dropTargetIndex !== -1) {
-      emittedValue.value.toIndex = dropTargetIndex;
+      rowReorderEventPayload.value.toIndex = dropTargetIndex;
 
       // Swap the items in columnReorderData
       [
@@ -392,9 +395,13 @@ const onDragEnter = (e: DragEvent, row: DragableRow): void => {
  * Handles the reordering of columns. Fired when user release the pointer.
  */
 const onRowReorder = (): void => {
-  emit('rowReorder', emittedValue.value as DraggedItem);
+  if (rowReorderEventPayload.value) {
+    emit('rowReorder', rowReorderEventPayload.value);
+  }
+
   draggedRow.value = undefined;
   dragging.value = false;
+  rowReorderEventPayload.value = undefined;
 };
 
 const reorderVisibleColumn = (): void => {
@@ -652,7 +659,7 @@ const downloadExcel = async ({
       return body;
     });
 
-    exportToExcel({
+    await exportToExcel({
       headers,
       data: excelBody,
       fileName: formatFileName(),
@@ -924,6 +931,7 @@ const listenUpdateTableEvent = (): void => {
             >
               <td v-if="reorderable" v-bind="Preset.bodycell" class="w-[40px]">
                 <Icon
+                  v-if="!item.childRow && !item.childRowHeader"
                   class="w-6 h-6 !p-0 !m-0 !cursor-grab [&_label]:!cursor-grab"
                   icon="dragable-menu"
                 />
@@ -1071,7 +1079,6 @@ const listenUpdateTableEvent = (): void => {
                       :contenteditable="col.editable"
                       @input="
                         (e: InputEvent) => {
-                          console.log(e);
                           $emit('input', {
                             item,
                             field: col.field,

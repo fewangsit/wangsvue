@@ -32,10 +32,10 @@ export interface EditedContent {
   value?: string;
 }
 
-export interface DraggedItem {
+export interface DataTableRowReorderEvent {
   item: Data;
-  fromIndex?: number;
-  toIndex?: number;
+  fromIndex: number;
+  toIndex: number;
 }
 
 export type ChildTableProps = Partial<TreeTableProps> & {
@@ -78,5 +78,5 @@ export interface TreeTableProps extends Omit<DataTableProps, 'columns'> {
 export type TreeTableEmits = DataTableEmits & {
   'update:singleSelection': [data: Data];
   'input': [payload: EditedContent];
-  'rowReorder': [payload?: DraggedItem];
+  'rowReorder': [payload?: DataTableRowReorderEvent];
 };
