@@ -1144,7 +1144,13 @@ const listenUpdateTableEvent = (): void => {
                 <td
                   v-if="useOption"
                   v-bind="Preset.bodycell"
-                  :class="[{ 'sticky right-0 bg-white': useOption }]"
+                  :class="[
+                    {
+                      'sticky right-0 bg-white group-hover:!bg-primary-50':
+                        useOption,
+                      '!bg-primary-100': isRowSelected(item[dataKey]),
+                    },
+                  ]"
                 >
                   <div
                     class="relative w-full h-full flex items-center justify-center"
