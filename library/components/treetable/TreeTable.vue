@@ -474,7 +474,7 @@ const handlePageChange = async (event: PageState): Promise<void> => {
 };
 
 const sortColumn = (field: string): void => {
-  if (field !== sortBy.value) sortOrder.value = undefined; // Resets the sortorder when the column sorted changed
+  if (field !== sortBy.value) sortOrder.value = undefined; // Resets the sort order when the column sorted changed
 
   sortBy.value = field;
 
@@ -852,7 +852,7 @@ const listenUpdateTableEvent = (): void => {
               :key="col.field"
               v-for="col in visibleColumns"
               v-bind="headerCellPreset(col)"
-              @click="sortColumn(col.field)"
+              @click="col.sortable ? sortColumn(col.field) : null"
             >
               <span class="inline-flex gap-2 items-center leading-[18px]">
                 {{ col.header }}

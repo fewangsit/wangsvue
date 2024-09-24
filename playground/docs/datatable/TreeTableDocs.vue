@@ -191,7 +191,6 @@ const tableColumns = computed<TableColumn[]>(() => {
     {
       field: 'lastModifier.fullName',
       header: 'User',
-      sortable: true,
       editable: true,
     },
   ];
