@@ -203,7 +203,7 @@ defineExpose({ form, clearField });
                 data-wv-section="headericon"
               />
               <h3
-                class="mr-auto text-grayscale-900 dark:text-general-100 text-center text-[0.9rem] leading-[1.125rem] font-bold tracking-[0.28px]"
+                class="mr-auto text-grayscale-900 dark:text-general-100 text-center text-[0.9rem] leading-[1.125rem] !font-semibold tracking-[0.28px]"
                 data-wv-section="dialog-form-title"
               >
                 {{ header }}
