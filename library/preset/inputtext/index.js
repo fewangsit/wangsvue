@@ -10,7 +10,7 @@ export default {
       },
 
       // Font
-      'text-grayscale-900 text-xs',
+      'text-grayscale-900 text-xs font-normal',
       'placeholder:text-general-200 dark:placeholder:text-general-200',
       'placeholder:!font-normal',
 
