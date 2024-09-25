@@ -154,6 +154,8 @@ export type WangsIcons =
   | 'user-search'
   | 'user-settings'
   | 'user-shared-2-line'
+  | 'user-star'
+  | 'user-unfollow'
   | 'verification'
   | 'team'
   | 'mail'
