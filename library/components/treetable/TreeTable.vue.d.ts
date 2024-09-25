@@ -34,8 +34,8 @@ export interface EditedContent {
 
 export interface DataTableRowReorderEvent {
   item: Data;
-  fromIndex: number;
-  toIndex: number;
+  fromIndex?: number;
+  toIndex?: number;
 }
 
 export type ChildTableProps = Partial<TreeTableProps> & {
