@@ -321,7 +321,13 @@ const toggleOptions = async (event: MouseEvent, data: Data): Promise<void> => {
 };
 
 const draggable = (item: DragableRow): boolean => {
-  return item.draggable !== false && !item.childRow && !item.childRowHeader;
+  return (
+    item.draggable !== false &&
+    !item.childRow &&
+    !item.childRowHeader &&
+    props.reorderable &&
+    !sortOrder.value
+  );
 };
 
 /**
@@ -803,7 +809,7 @@ const listenUpdateTableEvent = (): void => {
         <thead class="sticky top-0 z-50">
           <tr class="border-b border-primary-100">
             <th
-              v-if="reorderable"
+              v-if="reorderable && !sortOrder"
               class="w-[40px] !py-1"
               v-bind="headerCellPreset()"
               data-wv-section="headerreorderable"
@@ -929,7 +935,11 @@ const listenUpdateTableEvent = (): void => {
                 })
               "
             >
-              <td v-if="reorderable" v-bind="Preset.bodycell" class="w-[40px]">
+              <td
+                v-if="reorderable && !sortOrder"
+                v-bind="Preset.bodycell"
+                class="w-[40px]"
+              >
                 <Icon
                   v-if="!item.childRow && !item.childRowHeader"
                   class="w-6 h-6 !p-0 !m-0 !cursor-grab [&_label]:!cursor-grab"
@@ -1008,9 +1018,9 @@ const listenUpdateTableEvent = (): void => {
                   v-for="col in item.childRow
                     ? visibleChildTableColumns
                     : visibleColumns"
+                  :class="[{ '!py-0': col.editable }]"
                   :colspan="col.colspan ?? col.parentColumnsFields?.length"
                   v-bind="Preset.bodycell"
-                  class="!py-0"
                 >
                   <template v-if="col.preset?.type === 'toggle'">
                     <InputSwitch

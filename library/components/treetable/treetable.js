@@ -48,7 +48,7 @@ export default {
       },
 
       // Misc
-      { 'cursor-pointer': props.selectionType && !context.disabled },
+      { 'cursor-pointer': props.selectionType !== 'none' && !context.disabled },
     ],
   }),
   headercell: ({ context }) => {
