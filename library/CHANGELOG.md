@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v1.4.177
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.176...v1.4.177)
+
+### 🩹 Fixes
+
+- **Table:** Column that not sortable still sorted when clicked ([5793a38](https://github.com/fewangsit/wangsvue/commit/5793a38))
+- Type error on TreeTable.vue.d.ts ([5810d28](https://github.com/fewangsit/wangsvue/commit/5810d28))
+
+### 💅 Refactors
+
+- **Table:** Exclude child row for being reordered - collapse all expanded rows when reorder ([3548728](https://github.com/fewangsit/wangsvue/commit/3548728))
+
+### 🎨 Styles
+
+- Update bg button single action td for hover and selected state ([8d8afab](https://github.com/fewangsit/wangsvue/commit/8d8afab))
+- **Inputtext:** Font weight should be normal ([fa20d47](https://github.com/fewangsit/wangsvue/commit/fa20d47))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.176
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.175...v1.4.176)
