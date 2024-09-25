@@ -191,7 +191,6 @@ const tableColumns = computed<TableColumn[]>(() => {
     {
       field: 'lastModifier.fullName',
       header: 'User',
-      sortable: true,
       editable: true,
     },
   ];
@@ -207,6 +206,28 @@ const childrenColumns = computed(() => {
 
   return columns;
 });
+
+const subColumns: TreeTableColumns[] = [
+  {
+    field: 'bugDetail',
+    header: 'Bug Detail',
+    parentColumnsFields: ['group'],
+    fixed: true,
+  },
+  {
+    field: 'actualResult',
+    header: 'Actual Result',
+    parentColumnsFields: ['name', 'name.nameWithSequence'],
+    fixed: true,
+  },
+  {
+    field: 'testSteps',
+    header: 'Test Steps',
+    parentColumnsFields: ['group.name', 'brand.name'],
+    colspan: 7,
+    fixed: true,
+  },
+];
 
 const getTableData = async (
   params: QueryParams,
@@ -300,7 +321,7 @@ const filters = ref<any>({
       <TreeTable
         :key="tableKey"
         v-model:single-selection="singleSelection"
-        :child-table-props="{ columns: childrenColumns }"
+        :child-table-props="{ columns: subColumns, useColumnsHeader: true }"
         :columns="tableColumns"
         :custom-column="customColumn"
         :fetch-function="getTableData"

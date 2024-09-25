@@ -7,8 +7,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "rimraf dist && vue-tsc && vite build",
-    "build:dev": "vue-tsc && vite build --watch",
+    "build": "rimraf dist && vite build",
+    "build:dev": "vite build --watch",
     "build:lib": "pnpm --filter wangsvue build",
     "release": "pnpm --filter wangsvue release",
     "release:patch": "pnpm --filter wangsvue release:patch",

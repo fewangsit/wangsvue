@@ -83,6 +83,10 @@ export interface InputGroupProps {
    */
   ptOptions?: PassThroughOptions;
   /**
+   * @default default
+   */
+  ring?: 'none' | 'default';
+  /**
    * When enabled, it removes component related styles in the core.
    * @defaultValue false
    */

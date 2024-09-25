@@ -25,7 +25,7 @@ export default {
   bodyrow: ({ context, props }) => ({
     class: [
       // Color
-      'text-genenral-800 text-xs font-normal',
+      'text-general-800 text-xs font-normal',
       {
         'bg-transparent': !context.selected,
         'bg-primary-100': context.selected,
@@ -34,7 +34,8 @@ export default {
       // State
       {
         'focus:outline-none focus:outline-offset-0': props.selectionType,
-        'hover:bg-primary-50':
+        // To sets the bg to single action td
+        'hover:bg-primary-50 group':
           props.selectionType &&
           props.selectionType !== 'none' &&
           !context.disabled,

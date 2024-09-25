@@ -4,6 +4,7 @@ import { ButtonProps } from '../button/Button.vue.d';
 import { EditorContent, FloatingMenu, useEditor } from '@tiptap/vue-3';
 import { MenuItem } from '../menuitem';
 import { FormPayload } from '../form/Form.vue.d';
+import { EditorProps, EditorEmits } from './Editor.vue.d';
 
 import Button from '../button/Button.vue';
 import Heading from '@tiptap/extension-heading';
@@ -30,15 +31,25 @@ import InputURL from '../inputurl/InputURL.vue';
 import InputText from '../inputtext/InputText.vue';
 import Form from '../form/Form.vue';
 import EditorButton from './EditorButton.vue';
+import Dialog from '../dialog/Dialog.vue';
+import Icon from '../icon/Icon.vue';
 
-const textContent = shallowRef<string>();
+const props = defineProps<EditorProps>();
+const emit = defineEmits<EditorEmits>();
+
 const linkFormShown = shallowRef(false);
 const headingMenu = ref<Menu>();
 const editLinkOverlay = ref<OverlayPanel>();
 const root = ref<HTMLDivElement>();
+const previewImages = ref<string[]>([]);
+const imageDialogUploader = shallowRef<boolean>(false);
+const inputURLImage = shallowRef<string>();
 
 const editor = useEditor({
-  content: null,
+  content: props.modelValue,
+  onUpdate: () => {
+    emit('update:modelValue', editor.value.getJSON());
+  },
   extensions: [
     Placeholder.configure({
       placeholder: 'Tulis komentar',
@@ -63,11 +74,7 @@ const editor = useEditor({
     Image.extend({
       addKeyboardShortcuts() {
         return {
-          Insert: (): boolean =>
-            setImageFunction(
-              this.editor.commands.setImage,
-              this.editor.commands.focus,
-            ),
+          ShowDialog: (): boolean => setImageDialog(),
         };
       },
     }),
@@ -167,18 +174,18 @@ const setLinkFunction = ({ formValues }: FormPayload): boolean => {
   return true;
 };
 
-const setImageFunction = (
-  setImage: (attr: { src: string; alt?: string; title?: string }) => boolean,
-  focus: () => boolean,
-): boolean => {
-  const url = window.prompt('Masukan URL Gambar:');
-
-  if (url) {
-    focus();
-    return setImage({ src: url });
+const setImageFunction = (imageUrl?: string): void => {
+  editor.value.commands.focus();
+  if (imageUrl) {
+    editor.value.commands.setImage({ src: imageUrl });
+    previewImages.value = [...previewImages.value, imageUrl];
+  }
+  if (inputURLImage.value) {
+    editor.value.commands.setImage({ src: inputURLImage.value });
+    previewImages.value = [...previewImages.value, inputURLImage.value];
   }
 
-  return false;
+  inputURLImage.value = undefined;
 };
 
 const toolbars = computed<(ButtonProps & { active?: boolean })[]>(() => {
@@ -193,7 +200,6 @@ const toolbars = computed<(ButtonProps & { active?: boolean })[]>(() => {
     toggleCode,
     toggleOrderedList,
     unsetAllMarks,
-    setImage,
     clearNodes,
   } = editor.value.commands;
 
@@ -267,7 +273,7 @@ const toolbars = computed<(ButtonProps & { active?: boolean })[]>(() => {
       icon: 'image-add',
       active: editor.value?.isActive('image'),
       tooltipText: 'Image | Insert',
-      onClick: (): boolean => setImageFunction(setImage, focus),
+      onClick: (): boolean => setImageDialog(),
     },
     {
       icon: 'code-line',
@@ -408,6 +414,22 @@ const getSelectedText = (): string | undefined => {
     return selectedText;
   }
 };
+
+const setImageDialog = (): boolean => {
+  imageDialogUploader.value = true;
+  return false;
+};
+
+const setPreviewImages = (data: {
+  target: {
+    files: File[];
+  };
+}): void => {
+  emit('postImageLocal', {
+    image: data.target.files[0],
+    setImageCb: setImageFunction,
+  });
+};
 </script>
 
 <template>
@@ -439,7 +461,6 @@ const getSelectedText = (): string | undefined => {
     </div>
 
     <EditorContent
-      v-model="textContent"
       :class="[
         'px-3 py-2 [&_*]:outline-none',
         '[&_.is-editor-empty:first-child::before]:text-general-200',
@@ -600,5 +621,64 @@ const getSelectedText = (): string | undefined => {
         </a>
       </template>
     </Menu>
+
+    <Dialog
+      v-model:visible="imageDialogUploader"
+      class="w-[400px]"
+      header="Pilih Gambar"
+    >
+      <template #default>
+        <div class="flex flex-col gap-4">
+          <div class="flex gap-2">
+            <div class="flex-1">
+              <InputURL
+                v-model:model-value="inputURLImage"
+                class="w-[269px]"
+                label="URL Gambar"
+              />
+            </div>
+
+            <div class="flex items-end">
+              <Button
+                @click="setImageFunction(null)"
+                label="Simpan"
+                severity="secondary"
+              />
+            </div>
+          </div>
+          <div>
+            <p>Baru Saja Ditambahkan</p>
+            <div class="flex flex-wrap justify-center gap-2">
+              <Img
+                :key="index"
+                v-for="(previewImage, index) in previewImages"
+                :src="previewImage"
+                alt="preview"
+                class="w-28 h-28 rounded-lg"
+              />
+              <div class="flex flex-col justify-center w-28 h-28 items-center">
+                <Icon
+                  class="w-[70px] h-[70px]"
+                  icon="upload-2"
+                  severity="primary"
+                />
+                <Button severity="secondary">
+                  <template #default>
+                    <div class="relative py-[7px] px-3">
+                      <p>Cari Gambar</p>
+                      <Input
+                        @change="setPreviewImages"
+                        class="opacity-0 absolute top-0 bottom-0 left-0 right-0"
+                        type="file"
+                      />
+                    </div>
+                  </template>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </Dialog>
   </div>
 </template>
