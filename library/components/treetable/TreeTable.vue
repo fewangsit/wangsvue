@@ -39,6 +39,7 @@ import { Booleanish } from '../ts-helpers';
 import useLoadingStore from '../loading/store/loading.store';
 import InputSwitch from 'primevue/inputswitch';
 import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
+import Toast from '../toast/Toast.vue';
 
 type DragableRow = Data & { draggable?: boolean; order?: number };
 
@@ -1257,6 +1258,8 @@ const listenUpdateTableEvent = (): void => {
       :default-columns="columns.filter((col) => col.visible !== false)"
       :table-id="dataTableID"
     />
+
+    <Toast group="download" />
   </div>
 </template>
 
