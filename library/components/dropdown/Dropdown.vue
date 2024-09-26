@@ -27,6 +27,7 @@ const props = withDefaults(defineProps<DropdownProps>(), {
   modelValue: undefined,
   formatValidatorMessage: true,
   valueType: 'plain',
+  showOptionalText: true,
 });
 
 const emit = defineEmits<DropdownEmits>();
@@ -151,6 +152,7 @@ defineExpose({
     :info="fieldInfo"
     :label="props.label"
     :mandatory="props.mandatory"
+    :show-optional-text="showOptionalText"
   >
     <InputGroup
       :class="[
