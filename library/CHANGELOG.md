@@ -1,6 +1,38 @@
 # Changelog
 
 
+## v1.4.181
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.180...v1.4.181)
+
+### 🚀 Enhancements
+
+- Form compatibility, unset image, mention ([7a31b5b](https://github.com/fewangsit/wangsvue/commit/7a31b5b))
+- **Dropdown:** Add showOptionalText to hide the opsional text when the field is not mandatory ([f74fac0](https://github.com/fewangsit/wangsvue/commit/f74fac0))
+
+### 🩹 Fixes
+
+- Fix type DropdownSlots not correctly assigned in declaration ([b1c7495](https://github.com/fewangsit/wangsvue/commit/b1c7495))
+- Fix file not found ([5125a17](https://github.com/fewangsit/wangsvue/commit/5125a17))
+- Type error on Changelog.vue.d.ts ([fb18173](https://github.com/fewangsit/wangsvue/commit/fb18173))
+- **ChangelogFilter:** Type error 'fetchOptionFn' does not exist in type 'RangeNumberFilterField' ([6f3b9ac](https://github.com/fewangsit/wangsvue/commit/6f3b9ac))
+
+### 💅 Refactors
+
+- Adjust table name ([c84d179](https://github.com/fewangsit/wangsvue/commit/c84d179))
+- Implement dynamic additional columns & filter fields ([46629d3](https://github.com/fewangsit/wangsvue/commit/46629d3))
+
+### 🏡 Chore
+
+- Add docs how to use template ([d8f4162](https://github.com/fewangsit/wangsvue/commit/d8f4162))
+- Adjust docs ([091b9d8](https://github.com/fewangsit/wangsvue/commit/091b9d8))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Programmer-mob5 <programmer-mob5@qwertysystem.net>
+
 ## v1.4.180
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.179...v1.4.180)
