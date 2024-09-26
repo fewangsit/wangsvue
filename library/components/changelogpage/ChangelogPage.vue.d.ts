@@ -1,5 +1,9 @@
 import { MultiSelectOption } from 'lib/types/options.type';
 import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
+import {
+  ChangelogTemplateColumn,
+  ChangelogTemplateFilter,
+} from '../changelog/Changelog.vue';
 
 export type ChangelogType = {
   _id: string;
@@ -59,6 +63,14 @@ export interface BaseChangelogPageProps {
    */
   isDialog?: boolean;
   /**
+   * To give additional columns in changelog table
+   */
+  additionalTemplateColumns?: ChangelogTemplateColumn[];
+  /**
+   * To give additional filters in changelog filter
+   */
+  additionalTemplateFilters?: ChangelogTemplateFilter[];
+  /**
    * To set custom name for specific column in changelog table
    */
   objectNameColumn?: string;
@@ -97,6 +109,10 @@ export interface BaseChangelogPageProps {
    * Changelog custom params, contains stringified filter query needed.
    */
   customParams?: ChangelogFilterQuery;
+  /**
+   * Now changelog support custom table name from outside
+   */
+  tableName?: string;
 }
 
 export interface ButtonDownloadTrue extends BaseChangelogPageProps {

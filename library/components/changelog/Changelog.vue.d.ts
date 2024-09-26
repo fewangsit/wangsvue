@@ -1,5 +1,10 @@
 import { MultiSelectOption } from 'lib/types/options.type';
 import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
+import { TableColumn } from '../datatable/DataTable.vue';
+import { FilterField } from '../filtercontainer/FilterContainer.vue';
+
+export type ChangelogTemplateColumn = { index: number; column: TableColumn };
+export type ChangelogTemplateFilter = { index: number; filter: FilterField };
 
 export type ChangelogType = {
   _id: string;
@@ -67,6 +72,14 @@ export interface ChangelogProps {
    */
   header?: string | undefined;
   /**
+   * To give additional columns in changelog table
+   */
+  additionalTemplateColumns?: ChangelogTemplateColumn[];
+  /**
+   * To give additional filters in changelog filter
+   */
+  additionalTemplateFilters?: ChangelogTemplateFilter[];
+  /**
    * Changelog object.
    * Note: Even if this props is mandatory, if you fill props `objects` then props `object` will not be processed in component.
    */
@@ -94,6 +107,10 @@ export interface ChangelogProps {
    * @default 'Changelog' only
    */
   fileName?: string;
+  /**
+   * Now changelog support custom table name from outside
+   */
+  tableName?: string;
 }
 
 /**

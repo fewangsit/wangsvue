@@ -20,9 +20,12 @@ const visible = defineModel<boolean>('visible', {
   default: false,
 });
 
-const tableName = computed(
-  () => `changelog-${props.object?.toLowerCase().split(' ').join('-')}`,
-);
+const tableName = computed(() => {
+  return (
+    props.tableName ??
+    `changelog-${props.object?.toLowerCase().split(' ').join('-')}`
+  );
+});
 
 const changelogColumnHeader = computed<string>(() => {
   const splittedObj = props.object?.split('>');
