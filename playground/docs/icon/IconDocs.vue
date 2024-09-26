@@ -140,6 +140,8 @@ const wangsIconsArray: WangsIcons[] = [
   'user-search',
   'user-settings',
   'user-shared-2-line',
+  'user-star',
+  'user-unfollow',
   'verification',
   'pdf',
   'xls',
