@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.180
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.179...v1.4.180)
+
+### 💅 Refactors
+
+- WithDefaults it compiler macro and no longer need to be imported ([dad7173](https://github.com/fewangsit/wangsvue/commit/dad7173))
+
+### 🎨 Styles
+
+- **Dropdown:** Make the wrapper full rounded-lg when the 'props.filter' is false ([5362dfd](https://github.com/fewangsit/wangsvue/commit/5362dfd))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.179
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.178...v1.4.179)
