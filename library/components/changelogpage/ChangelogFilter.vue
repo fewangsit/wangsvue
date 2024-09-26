@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { reactive, watch } from 'vue';
 import FilterContainer from '../filtercontainer/FilterContainer.vue';
-import { FilterField } from '../filtercontainer/FilterContainer.vue.d';
+import {
+  FilterField,
+  MultiSelectFilterField,
+} from '../filtercontainer/FilterContainer.vue.d';
 import { useToast } from 'lib/utils';
 import { MultiSelectOption } from 'lib/types/options.type';
 
@@ -17,7 +20,7 @@ const toast = useToast();
 const props = defineProps<BaseChangelogPageProps & { tableName: string }>();
 
 const fields = ((): FilterField[] => {
-  const tempFields = [
+  const tempFields: FilterField[] = [
     {
       label: 'Tanggal',
       type: 'calendar',
@@ -90,11 +93,18 @@ const fields = ((): FilterField[] => {
     props.additionalTemplateFilters?.forEach((each) => {
       tempFields.splice(each.index, 0, {
         ...each.filter,
-        fetchOptionFn: async (
-          params?: ChangelogOptionQuery,
-        ): Promise<MultiSelectOption[]> => {
-          return await fetchOptions(each.filter.options, params);
-        },
+        ...(each.filter.type === 'multiselect'
+          ? {
+              fetchOptionFn: async (
+                params?: ChangelogOptionQuery,
+              ): Promise<MultiSelectOption[]> => {
+                const filter = each.filter as MultiSelectFilterField;
+                const optionField = (filter.field +
+                  'Options') as keyof ChangelogOptionQuery;
+                return await fetchOptions(optionField, params);
+              },
+            }
+          : {}),
       });
     });
   }
