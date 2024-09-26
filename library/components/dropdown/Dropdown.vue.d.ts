@@ -154,7 +154,7 @@ export type DropdownEmits = {
  */
 declare class Dropdown extends ClassComponent<
   DropdownProps,
-  unknown,
+  DropdownSlots,
   DropdownEmits
 > {
   /**
