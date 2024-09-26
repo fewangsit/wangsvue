@@ -3,7 +3,7 @@ import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
 import {
   ChangelogTemplateColumn,
   ChangelogTemplateFilter,
-} from '../changelog/Changelog.vue';
+} from '../changelog/Changelog.vue.d';
 
 export type ChangelogType = {
   _id: string;

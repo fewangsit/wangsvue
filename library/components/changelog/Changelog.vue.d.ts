@@ -1,7 +1,7 @@
 import { MultiSelectOption } from 'lib/types/options.type';
 import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
-import { TableColumn } from '../datatable/DataTable.vue';
-import { FilterField } from '../filtercontainer/FilterContainer.vue';
+import { TableColumn } from '../datatable/DataTable.vue.d';
+import { FilterField } from '../filtercontainer/FilterContainer.vue.d';
 
 export type ChangelogTemplateColumn = { index: number; column: TableColumn };
 export type ChangelogTemplateFilter = { index: number; filter: FilterField };
