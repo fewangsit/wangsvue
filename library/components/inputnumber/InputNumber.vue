@@ -21,11 +21,13 @@ const props = withDefaults(defineProps<InputNumberProps>(), {
   maxDigit: 16,
   padStart: 0,
   showValidatorMessage: true,
+  allowEmptyValue: true,
 });
 
 const emit = defineEmits<InputNumberEmits>();
 
 const inputKey = ref<number>(0);
+const inputNumber = ref<InputNumber>();
 
 const field = reactive<FieldValidation<number | undefined>>({
   value: props.value ?? props.modelValue,
@@ -48,11 +50,11 @@ onMounted(() => {
         },
       ),
     );
-
-    // Check if props.value is not null or undefined
-    // eslint-disable-next-line eqeqeq
-    if (props.value != null) field.value = props.value;
   }
+
+  const initialValue = props.value ?? props.modelValue;
+  if (initialValue != null && props.allowEmptyValue) field.value = initialValue;
+  else if (!props.allowEmptyValue) field.value = initialValue ?? props.min ?? 0; // Falls back to Zero or Min value when the empty value not allowed
 });
 
 const invalidInput = computed(() => props.invalid || !!field.errorMessage);
@@ -110,12 +112,35 @@ const onUpdateValue = (
     handleNumberValue(type, value);
     // eslint-disable-next-line eqeqeq
   } else if (value == null && typeof value !== 'string') {
-    field.value = value;
+    /*
+     * When the value is empty and empty value is not allowed,
+     * falls back to min value if exists, zero otherwise
+     */
+    const emptyOrMinValue = !props.allowEmptyValue
+      ? (value ?? props.min ?? 0)
+      : value;
+
+    field.value = emptyOrMinValue;
 
     if (type === 'input') {
-      emit('input', undefined);
+      if (!props.allowEmptyValue && inputNumber.value) {
+        inputKey.value++;
+
+        nextTick(() => {
+          const inputWrapper = inputNumber.value[
+            '$el' as keyof InputNumber
+          ] as HTMLSpanElement;
+
+          const input: HTMLInputElement | null =
+            inputWrapper?.querySelector('input');
+
+          input?.focus();
+        });
+      }
+
+      emit('input', emptyOrMinValue);
     } else {
-      emit('update:modelValue', undefined);
+      emit('update:modelValue', emptyOrMinValue);
     }
   }
 };
@@ -251,6 +276,7 @@ watch(
 
         <InputNumber
           :key="inputKey"
+          ref="inputNumber"
           v-bind="$props"
           :class="[
             inputNumberClass,

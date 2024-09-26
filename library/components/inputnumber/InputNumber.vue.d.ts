@@ -142,6 +142,13 @@ export interface InputNumberProps {
    * @default false
    */
   autoResize?: boolean;
+  /**
+   * Allow input to have value null or undefined.
+   * If it sets to 'false', when the value is empty, it will fall back to min value if exists, zero otherwise
+   *
+   * @default true
+   */
+  allowEmptyValue?: boolean;
 }
 
 /**
