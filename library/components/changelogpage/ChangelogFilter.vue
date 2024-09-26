@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, watch } from 'vue';
+import { reactive, watch } from 'vue';
 import FilterContainer from '../filtercontainer/FilterContainer.vue';
 import { FilterField } from '../filtercontainer/FilterContainer.vue.d';
 import { useToast } from 'lib/utils';
@@ -16,8 +16,8 @@ const toast = useToast();
 
 const props = defineProps<BaseChangelogPageProps & { tableName: string }>();
 
-const fields = computed<FilterField[]>(() => {
-  return [
+const fields = ((): FilterField[] => {
+  const tempFields = [
     {
       label: 'Tanggal',
       type: 'calendar',
@@ -39,7 +39,9 @@ const fields = computed<FilterField[]>(() => {
       label: 'Objek',
       type: 'multiselect',
       field: 'object',
-      visible: props.moduleId || props.subModuleId,
+      visible:
+        (props.moduleId || props.subModuleId) &&
+        !props.additionalTemplateFilters?.length,
       fetchOptionFn: async (
         params?: ChangelogOptionQuery,
       ): Promise<MultiSelectOption[]> => {
@@ -53,7 +55,7 @@ const fields = computed<FilterField[]>(() => {
           : (props.objectNameColumn ?? props.object),
       type: 'multiselect',
       field: 'assetName',
-      visible: true,
+      visible: !props.additionalTemplateFilters?.length,
       fetchOptionFn: async (
         params?: ChangelogOptionQuery,
       ): Promise<MultiSelectOption[]> => {
@@ -83,7 +85,22 @@ const fields = computed<FilterField[]>(() => {
       },
     },
   ].filter((field) => field.visible) as FilterField[];
-});
+
+  if (props.additionalTemplateFilters?.length) {
+    props.additionalTemplateFilters?.forEach((each) => {
+      tempFields.splice(each.index, 0, {
+        ...each.filter,
+        fetchOptionFn: async (
+          params?: ChangelogOptionQuery,
+        ): Promise<MultiSelectOption[]> => {
+          return await fetchOptions(each.filter.options, params);
+        },
+      });
+    });
+  }
+
+  return tempFields;
+})();
 
 const filter = reactive<ChangelogFilter>({});
 
