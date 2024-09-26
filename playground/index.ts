@@ -40,7 +40,6 @@ import ChangelogPageDocs from './docs/changelogpage/ChangelogPageDocs.vue';
 import CodeSnippetDocs from './docs/codesnippet/CodeSnippetDocs.vue';
 import InputRepositoryNameDocs from './docs/inputrepositoryname/InputRepositoryNameDocs.vue';
 import TextareaDocs from './docs/textarea/TextareaDocs.vue';
-import CommentDocs from './docs/comment/CommentDocs.vue';
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
@@ -258,11 +257,6 @@ const routes: Readonly<RouteRecordRaw[]> = [
         path: 'textarea',
         name: 'Textarea Docs',
         component: TextareaDocs,
-      },
-      {
-        path: 'comment',
-        name: 'Comment Docs',
-        component: CommentDocs,
       },
     ],
   },
