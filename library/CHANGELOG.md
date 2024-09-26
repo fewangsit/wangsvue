@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.182
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.181...v1.4.182)
+
+### 🚀 Enhancements
+
+- **InputNumber:** Add option allowEmptyValue to specify whether input is allowed to have value null or undefined ([bf35070](https://github.com/fewangsit/wangsvue/commit/bf35070))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.181
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.180...v1.4.181)
