@@ -1,26 +1,10 @@
 <script setup lang="ts">
-import {
-  computed,
-  onMounted,
-  reactive,
-  ref,
-  shallowRef,
-  watch,
-  nextTick,
-} from 'vue';
+import { computed, ref, shallowRef } from 'vue';
 import { ButtonProps } from '../button/Button.vue.d';
-import {
-  EditorContent,
-  FloatingMenu,
-  JSONContent,
-  useEditor,
-  EditorEvents,
-} from '@tiptap/vue-3';
+import { EditorContent, FloatingMenu, useEditor } from '@tiptap/vue-3';
 import { MenuItem } from '../menuitem';
-import { FormPayload, FieldValidation } from '../form/Form.vue.d';
-import { EditorProps, EditorEmits, ImageProperties } from './Editor.vue.d';
-import { Nullable } from '../ts-helpers';
-import { useField } from 'vee-validate';
+import { FormPayload } from '../form/Form.vue.d';
+import { EditorProps, EditorEmits } from './Editor.vue.d';
 
 import Button from '../button/Button.vue';
 import Heading from '@tiptap/extension-heading';
@@ -40,26 +24,17 @@ import ListItem from '@tiptap/extension-list-item';
 import Paragraph from '@tiptap/extension-paragraph';
 import History from '@tiptap/extension-history';
 import FloatingMenuExt from '@tiptap/extension-floating-menu';
-import Mention from '@tiptap/extension-mention';
 import Menu from 'primevue/menu';
 import MenuPreset from 'lib/preset/menu';
 import OverlayPanel from 'primevue/overlaypanel';
 import InputURL from '../inputurl/InputURL.vue';
 import InputText from '../inputtext/InputText.vue';
+import Form from '../form/Form.vue';
 import EditorButton from './EditorButton.vue';
 import Dialog from '../dialog/Dialog.vue';
 import Icon from '../icon/Icon.vue';
-import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
-import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
-import Form from '../form/Form.vue';
-import suggestion from './suggestion';
 
-const props = withDefaults(defineProps<EditorProps>(), {
-  placeholder: 'Tulis',
-  editorState: 'editable',
-  borderLess: false,
-  showOptionalText: true,
-});
+const props = defineProps<EditorProps>();
 const emit = defineEmits<EditorEmits>();
 
 const linkFormShown = shallowRef(false);
@@ -69,65 +44,18 @@ const root = ref<HTMLDivElement>();
 const previewImages = ref<string[]>([]);
 const imageDialogUploader = shallowRef<boolean>(false);
 const inputURLImage = shallowRef<string>();
-const selectedImage = shallowRef<ImageProperties>();
-
-const field = reactive<FieldValidation<Nullable<JSONContent>>>({
-  value: props.modelValue,
-});
-
-const inputPlaceholder = computed(
-  () =>
-    props.placeholder ??
-    'Tulis ' + (props.label ? props.label?.toLowerCase() : ''),
-);
-
-onMounted(() => {
-  if (props.useValidator) {
-    Object.assign(
-      field,
-      useField(
-        () => props.fieldName ?? 'editorInput',
-        (value: JSONContent) => {
-          return nextTick(() => {
-            return setValidatorMessage(value);
-          }); // Waits props.invalid changed
-        },
-      ),
-    );
-    if (props.initialValue != null) field.value = props.initialValue;
-    if (props.modelValue != null) field.value = props.modelValue;
-  }
-});
-
-const setValidatorMessage = (value: JSONContent): boolean | string => {
-  if (typeof props.validatorMessage === 'string' && props.invalid) {
-    return props.validatorMessage;
-  } else if (typeof props.validatorMessage !== 'string') {
-    const { empty } = props.validatorMessage ?? {};
-    if (value.content[0].content === undefined && props.mandatory) {
-      return empty;
-    }
-  }
-  return true;
-};
 
 const editor = useEditor({
-  content: props.initialValue ?? props.modelValue,
+  content: props.modelValue,
   onUpdate: () => {
     emit('update:modelValue', editor.value.getJSON());
-    field.value = editor.value.getJSON();
   },
-  onSelectionUpdate(selectedEvent: EditorEvents['selectionUpdate']) {
-    selectedImage.value = selectedEvent.editor.getAttributes(
-      'image',
-    ) as ImageProperties;
-  },
-  editable: props.editorState === 'editable',
   extensions: [
     Placeholder.configure({
-      placeholder: inputPlaceholder.value,
+      placeholder: 'Tulis komentar',
       includeChildren: false,
     }),
+
     Document.extend({
       addKeyboardShortcuts() {
         return {
@@ -146,25 +74,13 @@ const editor = useEditor({
     Image.extend({
       addKeyboardShortcuts() {
         return {
-          Insert: (): boolean => setImageDialog(),
+          ShowDialog: (): boolean => setImageDialog(),
         };
-      },
-    }).configure({
-      HTMLAttributes: {
-        class: 'h-[50px] w-[50px]',
       },
     }),
     CodeBlock,
-    OrderedList.configure({
-      HTMLAttributes: {
-        class: 'list-decimal px-3',
-      },
-    }),
-    BulletList.configure({
-      HTMLAttributes: {
-        class: 'list-disc px-3',
-      },
-    }),
+    OrderedList,
+    BulletList,
     ListItem,
 
     // Marks
@@ -182,16 +98,14 @@ const editor = useEditor({
       openOnClick: false,
     }),
     History,
-    Mention.configure({
-      HTMLAttributes: {
-        class: 'mention-class-ini-nih',
-      },
-      suggestion,
-    }),
+
     FloatingMenuExt,
   ],
 });
+
 const openLinkForm = (e?: Event): boolean => {
+  linkFormShown.value = true;
+
   const event =
     e ??
     ({
@@ -263,16 +177,12 @@ const setLinkFunction = ({ formValues }: FormPayload): boolean => {
 const setImageFunction = (imageUrl?: string): void => {
   editor.value.commands.focus();
   if (imageUrl) {
-    editor.value.commands.setImage({ src: imageUrl, title: 'localImage' });
-    previewImages.value = Array.from(
-      new Set([...previewImages.value, imageUrl]),
-    );
+    editor.value.commands.setImage({ src: imageUrl });
+    previewImages.value = [...previewImages.value, imageUrl];
   }
   if (inputURLImage.value) {
     editor.value.commands.setImage({ src: inputURLImage.value });
-    previewImages.value = Array.from(
-      new Set([...previewImages.value, inputURLImage.value]),
-    );
+    previewImages.value = [...previewImages.value, inputURLImage.value];
   }
 
   inputURLImage.value = undefined;
@@ -520,309 +430,255 @@ const setPreviewImages = (data: {
     setImageCb: setImageFunction,
   });
 };
-
-const unsetImage = (): void => {
-  if (selectedImage.value.title === 'localImage') {
-    emit('deleteImageLocal', selectedImage.value);
-  }
-  editor.value.commands.deleteSelection();
-};
-
-watch(
-  () => props.modelValue,
-  (value) => {
-    field.value = value;
-  },
-);
-
-watch(
-  () => props.invalid,
-  () => {
-    field.validate?.();
-  },
-);
 </script>
 
 <template>
-  <FieldWrapper
-    :info="fieldInfo"
-    :label="props.label"
-    :label-class="props.labelClass"
-    :mandatory="props.mandatory"
-    :show-optional-text="props.showOptionalText"
+  <div
+    ref="root"
+    :class="[
+      'rounded-b text-grayscale-900 border-[0.5px]',
+      '[&:has(:focus)]:border-general-200 border-general-100',
+
+      // Inline Code
+      '[&_code]:bg-primary-100',
+      '[&_code]:rounded-md',
+      '[&_code]:p-[0.25em_0.3em]',
+      '[&_code]:text-[0.85rem]',
+      '[&_code]:!font-source-code-pro',
+    ]"
+    data-wv-name="editor"
   >
     <div
-      ref="root"
+      class="border-b-[0.5px] border-inherit px-3 py-1 flex gap-1"
+      data-wv-section="toolbar"
+    >
+      <EditorButton
+        v-bind="tool"
+        :key="tool.icon"
+        v-for="tool of toolbars"
+        :class="[{ '!bg-primary-50': tool.active }]"
+      />
+    </div>
+
+    <EditorContent
       :class="[
-        'rounded-b text-grayscale-900 w-full',
-        '[&:has(:focus)]:border-general-200 border-general-100',
-        `${borderLess || editorState === 'readonly' ? 'border-none' : 'border-[0.5px]'}`,
+        'px-3 py-2 [&_*]:outline-none',
+        '[&_.is-editor-empty:first-child::before]:text-general-200',
+        '[&_.is-editor-empty:first-child::before]:content-[attr(data-placeholder)]',
+        '[&_.is-editor-empty:first-child::before]:content-[attr(data-placeholder)]',
+        '[&_.is-editor-empty:first-child::before]:font-normal',
+        '[&_.is-editor-empty:first-child::before]:pointer-events-none',
+        '[&_.is-editor-empty:first-child::before]:float-left',
+        '[&_.is-editor-empty:first-child::before]:h-0',
+
+        // Anchor
+        '[&_a]:hover:underline transition-transform duration-75',
+        '[&_a]:text-link',
+        '[&_a]:cursor-pointer',
+
+        // Bold
+        '[&_b]:font-bold',
+        '[&_strong]:font-bold',
+
+        // Image
+        '[&_img.ProseMirror-selectednode]:!outline-[0.5px]',
+        '[&_img.ProseMirror-selectednode]:!outline-link',
+        '[&_img.ProseMirror-selectednode]:!outline-offset-1',
+        '[&_img.ProseMirror-selectednode]:!rounded-sm',
+        '[&_img]:my-2',
+
         // Inline Code
-        '[&_code]:bg-primary-100',
-        '[&_code]:rounded-md',
-        '[&_code]:p-[0.25em_0.3em]',
-        '[&_code]:text-[0.85rem]',
-        '[&_code]:!font-source-code-pro',
+        '[&_*:has(code)]:my-[0.25rem]',
       ]"
-      data-wv-name="editor"
+      :editor="editor"
+      spellcheck="false"
+    />
+
+    <OverlayPanel
+      ref="editLinkOverlay"
+      :pt="{
+        content: {
+          class: '',
+        },
+      }"
+      @hide="linkFormShown = false"
+      append-to="self"
+      class="w-[342px] bg-white p-4"
+    >
+      <Form @submit="setLinkFunction" class="!gap-0" hide-stay-checkbox>
+        <template #fields>
+          <InputURL
+            v-focus
+            :validator-message="{ empty: 'Masukan tautan yang valid' }"
+            :value="currentActiveLink?.href"
+            field-name="url"
+            label="Tempel Tautan"
+            mandatory
+            placeholder="Tempel tautan baru"
+            use-validator
+          />
+          <InputText
+            :value="getInitialAnchorText()"
+            field-name="text"
+            label="Teks Tampilan"
+            placeholder="Teks untuk ditampilkan"
+            use-validator
+          />
+
+          <Button
+            :label="editor?.isActive('link') ? 'Simpan' : 'Tambahkan'"
+            class="w-max ml-auto"
+            severity="secondary"
+            type="submit"
+          />
+        </template>
+      </Form>
+    </OverlayPanel>
+
+    <FloatingMenu
+      v-if="editor && !linkFormShown"
+      :editor="editor"
+      :should-show="() => !!editor?.isActive('link')"
+      :tippy-options="{ placement: 'bottom', zIndex: 9 }"
+      class="-mt-1.5 shadow-panel"
+      plugin-key="editLinkToolbar"
     >
       <div
-        v-if="props.editorState === 'editable'"
-        class="border-b-[0.5px] border-inherit px-3 py-1 flex gap-1 bg-general-50"
-        data-wv-section="toolbar"
+        :class="[
+          'flex gap-2 bg-white border-[0.5px] px-2 py-1 rounded-sm',
+
+          `[&_.separator::after]:content-['|']`,
+          `[&_.separator::after]:text-xl`,
+          `[&_.separator::after]:font-thin`,
+          `[&_.separator]:h-6`,
+        ]"
       >
         <EditorButton
-          v-bind="tool"
-          :key="tool.icon"
-          v-for="tool of toolbars"
-          :class="[{ '!bg-primary-50': tool.active }]"
+          @click="openLinkForm"
+          class="!w-max"
+          label="Edit Tautan"
+          severity="secondary"
+          text
+        />
+        <span class="separator" />
+        <EditorButton
+          @click="openLinkInNewTab"
+          icon="external-link"
+          severity="secondary"
+          text
+          tooltip-text="Buka di tab baru"
+        />
+        <span class="separator" />
+        <EditorButton
+          @click="unsetLinkFunction"
+          icon="link-unlink-m"
+          severity="secondary"
+          text
+          tooltip-text="Lepas tautan"
+        />
+        <span class="separator" />
+        <EditorButton
+          @click="copyLink"
+          icon="file-copy"
+          severity="secondary"
+          text
+          tooltip-text="Salin tautan"
         />
       </div>
-      <EditorContent
-        :class="[
-          `${props.editorState === 'editable' ? 'px-3 py-2' : ''} [&_*]:outline-none`,
-          '[&_.is-editor-empty:first-child::before]:text-general-200',
-          '[&_.is-editor-empty:first-child::before]:content-[attr(data-placeholder)]',
-          '[&_.is-editor-empty:first-child::before]:content-[attr(data-placeholder)]',
-          '[&_.is-editor-empty:first-child::before]:font-normal',
-          '[&_.is-editor-empty:first-child::before]:pointer-events-none',
-          '[&_.is-editor-empty:first-child::before]:float-left',
-          '[&_.is-editor-empty:first-child::before]:h-0',
+    </FloatingMenu>
 
-          // Anchor
-          '[&_a]:hover:underline transition-transform duration-75',
-          '[&_a]:text-link',
-          '[&_a]:cursor-pointer',
-
-          // Bold
-          '[&_b]:font-bold',
-          '[&_strong]:font-bold',
-
-          // Image
-          '[&_img.ProseMirror-selectednode]:!outline-[0.5px]',
-          '[&_img.ProseMirror-selectednode]:!outline-link',
-          '[&_img.ProseMirror-selectednode]:!outline-offset-1',
-          '[&_img.ProseMirror-selectednode]:!rounded-sm',
-          '[&_img]:my-2',
-
-          // Inline Code
-          '[&_*:has(code)]:my-[0.25rem]',
-        ]"
-        :editor="editor"
-        spellcheck="false"
-      />
-
-      <FloatingMenu
-        v-if="editor && !linkFormShown"
-        :editor="editor"
-        :should-show="() => !!editor?.isActive('link')"
-        :tippy-options="{ placement: 'bottom', zIndex: 9 }"
-        class="-mt-1.5 shadow-panel"
-        plugin-key="editLinkToolbar"
-      >
-        <div
+    <Menu ref="headingMenu" :model="headings" popup>
+      <template #item="{ item }">
+        <a
+          :alt="item.label"
           :class="[
-            'flex gap-2 bg-white border-[0.5px] px-2 py-1 rounded-sm',
-
-            `[&_.separator::after]:content-['|']`,
-            `[&_.separator::after]:text-xl`,
-            `[&_.separator::after]:font-thin`,
-            `[&_.separator]:h-6`,
+            ...MenuPreset.action.class,
+            item.class,
+            'flex items-center !justify-between h-[30px]',
+            {
+              'bg-primary-50':
+                (editor?.isActive('heading', { level: 1 }) &&
+                  item.label === 'Heading 1') ||
+                (editor?.isActive('heading', { level: 2 }) &&
+                  item.label === 'Heading 2') ||
+                (editor?.isActive('heading', { level: 3 }) &&
+                  item.label === 'Heading 3') ||
+                (editor?.isActive('heading', { level: 4 }) &&
+                  item.label === 'Heading 4') ||
+                (editor?.isActive('heading', { level: 5 }) &&
+                  item.label === 'Heading 5') ||
+                (editor?.isActive('heading', { level: 6 }) &&
+                  item.label === 'Heading 6') ||
+                (editor?.isActive('paragraph') && item.label === 'Paragraf'),
+            },
           ]"
+          @click="item.command?.({ item, originalEvent: $event })"
         >
-          <EditorButton
-            @click="openLinkForm"
-            class="!w-max"
-            label="Edit Tautan"
-            severity="secondary"
-            text
-          />
-          <span class="separator" />
-          <EditorButton
-            @click="openLinkInNewTab"
-            icon="external-link"
-            severity="secondary"
-            text
-            tooltip-text="Buka di tab baru"
-          />
-          <span class="separator" />
-          <EditorButton
-            @click="unsetLinkFunction"
-            icon="link-unlink-m"
-            severity="secondary"
-            text
-            tooltip-text="Lepas tautan"
-          />
-          <span class="separator" />
-          <EditorButton
-            @click="copyLink"
-            icon="file-copy"
-            severity="secondary"
-            text
-            tooltip-text="Salin tautan"
-          />
-        </div>
-      </FloatingMenu>
+          {{ item.label }}
+          <code class="!text-[9px] !leading-3 !h-max !font-normal">
+            {{ item.shortCut }}
+          </code>
+        </a>
+      </template>
+    </Menu>
 
-      <Menu ref="headingMenu" :model="headings" popup>
-        <template #item="{ item }">
-          <a
-            :alt="item.label"
-            :class="[
-              ...MenuPreset.action.class,
-              item.class,
-              'flex items-center !justify-between h-[30px]',
-              {
-                'bg-primary-50':
-                  (editor?.isActive('heading', { level: 1 }) &&
-                    item.label === 'Heading 1') ||
-                  (editor?.isActive('heading', { level: 2 }) &&
-                    item.label === 'Heading 2') ||
-                  (editor?.isActive('heading', { level: 3 }) &&
-                    item.label === 'Heading 3') ||
-                  (editor?.isActive('heading', { level: 4 }) &&
-                    item.label === 'Heading 4') ||
-                  (editor?.isActive('heading', { level: 5 }) &&
-                    item.label === 'Heading 5') ||
-                  (editor?.isActive('heading', { level: 6 }) &&
-                    item.label === 'Heading 6') ||
-                  (editor?.isActive('paragraph') && item.label === 'Paragraf'),
-              },
-            ]"
-            @click="item.command?.({ item, originalEvent: $event })"
-          >
-            {{ item.label }}
-            <code class="!text-[9px] !leading-3 !h-max !font-normal">
-              {{ item.shortCut }}
-            </code>
-          </a>
-        </template>
-      </Menu>
-
-      <Dialog
-        v-model:visible="imageDialogUploader"
-        class="w-[400px]"
-        header="Pilih Gambar"
-      >
-        <template #default>
-          <div class="flex flex-col gap-4">
-            <div class="flex gap-2">
-              <div class="flex-1">
-                <InputURL
-                  v-model:model-value="inputURLImage"
-                  class="w-[269px]"
-                  label="URL Gambar"
-                />
-              </div>
-
-              <div class="flex items-end">
-                <Button
-                  @click="setImageFunction(null)"
-                  label="Simpan"
-                  severity="secondary"
-                />
-              </div>
+    <Dialog
+      v-model:visible="imageDialogUploader"
+      class="w-[400px]"
+      header="Pilih Gambar"
+    >
+      <template #default>
+        <div class="flex flex-col gap-4">
+          <div class="flex gap-2">
+            <div class="flex-1">
+              <InputURL
+                v-model:model-value="inputURLImage"
+                class="w-[269px]"
+                label="URL Gambar"
+              />
             </div>
-            <div>
-              <p>Baru Saja Ditambahkan</p>
-              <div class="flex flex-wrap justify-center gap-2">
-                <Img
-                  :key="index"
-                  v-for="(previewImage, index) in previewImages"
-                  :src="previewImage"
-                  alt="preview"
-                  class="w-28 h-28 rounded-lg"
+
+            <div class="flex items-end">
+              <Button
+                @click="setImageFunction(null)"
+                label="Simpan"
+                severity="secondary"
+              />
+            </div>
+          </div>
+          <div>
+            <p>Baru Saja Ditambahkan</p>
+            <div class="flex flex-wrap justify-center gap-2">
+              <Img
+                :key="index"
+                v-for="(previewImage, index) in previewImages"
+                :src="previewImage"
+                alt="preview"
+                class="w-28 h-28 rounded-lg"
+              />
+              <div class="flex flex-col justify-center w-28 h-28 items-center">
+                <Icon
+                  class="w-[70px] h-[70px]"
+                  icon="upload-2"
+                  severity="primary"
                 />
-                <div
-                  class="flex flex-col justify-center w-28 h-28 items-center"
-                >
-                  <Icon
-                    class="w-[70px] h-[70px]"
-                    icon="upload-2"
-                    severity="primary"
-                  />
-                  <Button severity="secondary">
-                    <template #default>
-                      <div class="relative py-[7px] px-3">
-                        <p>Cari Gambar</p>
-                        <Input
-                          @change="setPreviewImages"
-                          class="opacity-0 absolute top-0 bottom-0 left-0 right-0"
-                          type="file"
-                        />
-                      </div>
-                    </template>
-                  </Button>
-                </div>
+                <Button severity="secondary">
+                  <template #default>
+                    <div class="relative py-[7px] px-3">
+                      <p>Cari Gambar</p>
+                      <Input
+                        @change="setPreviewImages"
+                        class="opacity-0 absolute top-0 bottom-0 left-0 right-0"
+                        type="file"
+                      />
+                    </div>
+                  </template>
+                </Button>
               </div>
             </div>
           </div>
-        </template>
-      </Dialog>
-
-      <FloatingMenu
-        v-if="editor"
-        :editor="editor"
-        :should-show="() => !!editor?.isActive('image')"
-        :tippy-options="{ placement: 'right', zIndex: 9 }"
-        class="-mt-1.5 shadow-panel"
-        plugin-key="editImageToolbar"
-      >
-        <div>
-          <EditorButton
-            @click="unsetImage"
-            icon="delete-bin"
-            severity="secondary"
-            text
-            tooltip-text="Unset Image"
-          />
         </div>
-      </FloatingMenu>
-    </div>
-    <ValidatorMessage
-      :class="validatorMessageClass"
-      :message="field.errorMessage"
-    />
-  </FieldWrapper>
-
-  <OverlayPanel
-    ref="editLinkOverlay"
-    :pt="{
-      content: {
-        class: '',
-      },
-    }"
-    @hide="linkFormShown = false"
-    append-to="self"
-    class="w-[342px] bg-white p-4"
-  >
-    <Form @submit="setLinkFunction" class="!gap-0" hide-stay-checkbox>
-      <template #fields>
-        <InputURL
-          v-focus
-          :validator-message="{ empty: 'Masukan tautan yang valid' }"
-          :value="currentActiveLink?.href"
-          field-name="url"
-          label="Tempel Tautan"
-          mandatory
-          placeholder="Tempel tautan baru"
-          use-validator
-        />
-        <InputText
-          :value="getInitialAnchorText()"
-          field-name="text"
-          label="Teks Tampilan"
-          placeholder="Teks untuk ditampilkan"
-          use-validator
-        />
-
-        <Button
-          :label="editor?.isActive('link') ? 'Simpan' : 'Tambahkan'"
-          class="w-max ml-auto"
-          severity="secondary"
-          type="submit"
-        />
       </template>
-    </Form>
-  </OverlayPanel>
+    </Dialog>
+  </div>
 </template>
