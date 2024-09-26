@@ -114,7 +114,7 @@ export default {
       // 'ring-1 ring-inset ring-surface-300 dark:ring-surface-700',
     ],
   },
-  wrapper: {
+  wrapper: ({ props }) => ({
     class: [
       // Sizing
       'max-h-[15rem]',
@@ -128,10 +128,12 @@ export default {
 
       // Misc
       'overflow-auto',
-      'rounded-br-lg',
-      'rounded-bl-lg',
+      {
+        'rounded-lg': !props.filter,
+        'rounded-br-lg rounded-bl-lg': props.filter,
+      },
     ],
-  },
+  }),
   list: {
     class: 'list-none m-0',
   },

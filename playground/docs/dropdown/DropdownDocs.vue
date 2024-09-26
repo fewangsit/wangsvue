@@ -62,6 +62,13 @@ const model = ref<OptionValue>();
             validator-message="Ga boleh kosong"
             value-type="badge"
           />
+          <Dropdown
+            v-model="model"
+            :options="['Waiting for Approval', 'Waiting for Handover']"
+            label="Dropdown No Filter"
+            :filter="false"
+            placeholder="Pilih status"
+          />
         </template>
       </Form>
     </template>
