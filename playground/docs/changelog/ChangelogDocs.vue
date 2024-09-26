@@ -59,7 +59,6 @@ const additionalTemplateFilters = [
       :additional-template-filters="additionalTemplateFilters"
       header="Changelog: dengan additional template columns dan filters"
       object="Tim"
-      object-name-column="Custom Column Name"
       table-name="additonal-template-changelog"
     />
   </div>
