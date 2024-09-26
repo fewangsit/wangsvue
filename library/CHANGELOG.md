@@ -1,6 +1,32 @@
 # Changelog
 
 
+## v1.4.178
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.177...v1.4.178)
+
+### 🚀 Enhancements
+
+- Add icons ([2e0ff1e](https://github.com/fewangsit/wangsvue/commit/2e0ff1e))
+
+### 🩹 Fixes
+
+- **jumuyiLN:** Fix styling in DialogForm ([74343fe](https://github.com/fewangsit/wangsvue/commit/74343fe))
+- **TreeTable:** Toast download excel does not appeared ([0e46c6b](https://github.com/fewangsit/wangsvue/commit/0e46c6b))
+
+### 💅 Refactors
+
+- Refactor reorderable in tree table and adjust styling ([96510e0](https://github.com/fewangsit/wangsvue/commit/96510e0))
+
+### 🏡 Chore
+
+- Remove vue-tsc on build ([fbdbac4](https://github.com/fewangsit/wangsvue/commit/fbdbac4))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.4.177
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.176...v1.4.177)
