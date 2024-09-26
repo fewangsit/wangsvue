@@ -1,6 +1,101 @@
 # Changelog
 
 
+## v1.4.177
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.176...v1.4.177)
+
+### 🩹 Fixes
+
+- **Table:** Column that not sortable still sorted when clicked ([5793a38](https://github.com/fewangsit/wangsvue/commit/5793a38))
+- Type error on TreeTable.vue.d.ts ([5810d28](https://github.com/fewangsit/wangsvue/commit/5810d28))
+
+### 💅 Refactors
+
+- **Table:** Exclude child row for being reordered - collapse all expanded rows when reorder ([3548728](https://github.com/fewangsit/wangsvue/commit/3548728))
+
+### 🎨 Styles
+
+- Update bg button single action td for hover and selected state ([8d8afab](https://github.com/fewangsit/wangsvue/commit/8d8afab))
+- **Inputtext:** Font weight should be normal ([fa20d47](https://github.com/fewangsit/wangsvue/commit/fa20d47))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.176
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.175...v1.4.176)
+
+### 🚀 Enhancements
+
+- **Dropdown:** Add option to show value as badge and option to remove the input border ([62c3d5b](https://github.com/fewangsit/wangsvue/commit/62c3d5b))
+
+### 🩹 Fixes
+
+- Type error on Dropdown.vue.d.ts ([626db4d](https://github.com/fewangsit/wangsvue/commit/626db4d))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.175
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.174...v1.4.175)
+
+### 🚀 Enhancements
+
+- **Dropdown:** Add method showOverlay and expose it ([306fa47](https://github.com/fewangsit/wangsvue/commit/306fa47))
+
+### 🩹 Fixes
+
+- Type error on TreeTable.vue ([6d3246a](https://github.com/fewangsit/wangsvue/commit/6d3246a))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.174
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.173...v1.4.174)
+
+### 🚀 Enhancements
+
+- **Table:** Add option useColumnsHeader to use the child columns header as row header ([b43abad](https://github.com/fewangsit/wangsvue/commit/b43abad))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.173
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.172...v1.4.173)
+
+### 🚀 Enhancements
+
+- **Image:** Add new base url for getImageURL.util.ts - add prop width for Image.vue ([b3db819](https://github.com/fewangsit/wangsvue/commit/b3db819))
+
+### 🩹 Fixes
+
+- Type error on Image and UserName component ([9fcb941](https://github.com/fewangsit/wangsvue/commit/9fcb941))
+- Type error on Image component ([d21d366](https://github.com/fewangsit/wangsvue/commit/d21d366))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.172
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.171...v1.4.172)
+
+### 🚀 Enhancements
+
+- Export editor component ([6eeb5a0](https://github.com/fewangsit/wangsvue/commit/6eeb5a0))
+
+### ❤️ Contributors
+
+- Programmer-mob5 <programmer-mob5@qwertysystem.net>
+
 ## v1.4.171
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.170...v1.4.171)

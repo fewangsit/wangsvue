@@ -25,14 +25,20 @@ const focusToInput = (e: MouseEvent): void => {
     :class="[
       {
         '!ring-danger-500 !dark:ring-danger-500 [&_.inputgroupaddon]:ring-danger-500 [&_.inputgroupaddon]:dark:ring-danger-500':
-          $props.invalid,
-        '[&_.inputgroupaddon]:ring-general-400': !$props.invalid,
+          $props.invalid && ring != 'none',
+        '[&_.inputgroupaddon]:ring-general-400':
+          !$props.invalid && ring != 'none',
         '!bg-general-50 ': $props.disabled,
       },
-      '[&:has(:focus)]:!ring-primary-400 [&:has(:focus)_.inputgroupaddon]:!ring-primary-400',
       {
-        'ring-[1px] [&_.inputgroupaddon]:ring-[1px]': isFirefoxBased,
-        'ring-[0.5px] [&_.inputgroupaddon]:ring-[0.5px]': !isFirefoxBased,
+        '[&:has(:focus)]:!ring-primary-400 [&:has(:focus)_.inputgroupaddon]:!ring-primary-400':
+          ring != 'none',
+      },
+      {
+        'ring-[1px] [&_.inputgroupaddon]:ring-[1px]':
+          isFirefoxBased && ring != 'none',
+        'ring-[0.5px] [&_.inputgroupaddon]:ring-[0.5px]':
+          !isFirefoxBased && ring != 'none',
       },
       '[&:has(input)]:cursor-text',
       'h-[30px]',

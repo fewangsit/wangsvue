@@ -198,9 +198,18 @@ export interface ImageProps {
   /**
    * The thumbnail image width.
    *
+   * small: 30
+   * medium: 80
+   * big: 125
+   *
    * @default 'big' - For other size use class
    */
   size?: 'small' | 'medium' | 'big';
+  /**
+   * Set custom size in pixels (without 'px')
+   * @example 30
+   */
+  width?: number;
   /**
    * Specify the rounded level.
    *

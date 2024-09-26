@@ -2,6 +2,7 @@ import { Slot } from 'vue';
 import { DropdownOption, OptionValue } from 'lib/types/options.type';
 import { CustomValidation } from '../form/Form.vue.d';
 import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
+import { BadgeProps } from 'lib/components/badge/Badge.vue.d';
 
 /**
  * Dropdown component props
@@ -36,6 +37,22 @@ export interface DropdownProps {
    * @default undefined - the value will be sets to the option itself.
    */
   optionValue?: string;
+  /**
+   * Define the value style, whether badge or plain text
+   *
+   * @default 'plain'
+   */
+  valueType?: 'badge' | 'plain';
+  /**
+   * Bind the badge property to the dropdown value
+   */
+  badgeValueProps?: BadgeProps;
+  /**
+   * Set the input border style
+   *
+   * @default 'default'
+   */
+  inputBorder?: 'none' | 'default';
   /**
    * A property to uniquely identify an option.
    */
@@ -143,15 +160,9 @@ declare class Dropdown extends ClassComponent<
   /**
    * Shows the overlay.
    *
-   * @memberof Dropdown
+   * @memberof MultiSelect
    */
-  showOverlayClassComponent(): void;
-  /**
-   * Hides the overlay.
-   *
-   * @memberof Dropdown
-   */
-  hideHideOverlayClassComponent(): void;
+  showOverlay(): void;
 }
 
 declare module '@vue/runtime-core' {
