@@ -66,6 +66,12 @@ export interface DropdownProps {
    */
   mandatory?: boolean;
   /**
+   * Show the text (opsional)
+   *
+   * @default true if mandatory true
+   */
+  showOptionalText?: boolean;
+  /**
    * Set custom validator message.
    * It is rarely use, this component has handled the validator message.
    */
@@ -108,9 +114,9 @@ export interface DropdownProps {
    */
   disabled?: boolean;
   /**
-   * Wether show the Dropdown option search or not.
+   * Whether show the Dropdown option search or not.
    *
-   * @default false,
+   * @default true,
    */
   filter?: boolean;
   /**
@@ -143,12 +149,12 @@ export type DropdownEmits = {
 };
 
 /**
- * **WangsVue - Dropwdown**
+ * **WangsVue - Dropdown**
  *
  * _Dropdown also known as Select, is used to choose an item from a collection of options._
  *
  * --- ---
- * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://www.wangs.id/wp-content/uploads/2023/12/cropped-Logo_Wangsid-removebg-preview-192x192.png)
  *
  * @group Component
  */

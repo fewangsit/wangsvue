@@ -17,8 +17,9 @@ import FieldWrapper from 'lib/components/fieldwrapper/FieldWrapper.vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import InputGroup from 'lib/components/inputgroup/InputGroup.vue';
 import InputGroupAddon from 'primevue/inputgroupaddon';
-import { filterOptions } from 'lib/utils';
 import { Nullable } from '../ts-helpers';
+import { filterOptions } from 'lib/utils';
+import Preset from 'lib/preset/dropdown';
 
 const props = withDefaults(defineProps<DropdownProps>(), {
   filter: true,
@@ -26,6 +27,7 @@ const props = withDefaults(defineProps<DropdownProps>(), {
   modelValue: undefined,
   formatValidatorMessage: true,
   valueType: 'plain',
+  showOptionalText: true,
 });
 
 const emit = defineEmits<DropdownEmits>();
@@ -150,6 +152,7 @@ defineExpose({
     :info="fieldInfo"
     :label="props.label"
     :mandatory="props.mandatory"
+    :show-optional-text="showOptionalText"
   >
     <InputGroup
       :class="[
@@ -178,6 +181,9 @@ defineExpose({
         :invalid="invalidInput"
         :options="visibleOptions"
         :placeholder="dropdownPlaceholder"
+        :pt="{
+          wrapper: Preset.wrapper({ props }),
+        }"
         @change="updateFieldValue"
         @hide="isShowOverlay = false"
         @show="$emit('show'), (isShowOverlay = true)"

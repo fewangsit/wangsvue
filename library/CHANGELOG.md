@@ -1,6 +1,84 @@
 # Changelog
 
 
+## v1.4.181
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.180...v1.4.181)
+
+### 🚀 Enhancements
+
+- Form compatibility, unset image, mention ([7a31b5b](https://github.com/fewangsit/wangsvue/commit/7a31b5b))
+- **Dropdown:** Add showOptionalText to hide the opsional text when the field is not mandatory ([f74fac0](https://github.com/fewangsit/wangsvue/commit/f74fac0))
+
+### 🩹 Fixes
+
+- Fix type DropdownSlots not correctly assigned in declaration ([b1c7495](https://github.com/fewangsit/wangsvue/commit/b1c7495))
+- Fix file not found ([5125a17](https://github.com/fewangsit/wangsvue/commit/5125a17))
+- Type error on Changelog.vue.d.ts ([fb18173](https://github.com/fewangsit/wangsvue/commit/fb18173))
+- **ChangelogFilter:** Type error 'fetchOptionFn' does not exist in type 'RangeNumberFilterField' ([6f3b9ac](https://github.com/fewangsit/wangsvue/commit/6f3b9ac))
+
+### 💅 Refactors
+
+- Adjust table name ([c84d179](https://github.com/fewangsit/wangsvue/commit/c84d179))
+- Implement dynamic additional columns & filter fields ([46629d3](https://github.com/fewangsit/wangsvue/commit/46629d3))
+
+### 🏡 Chore
+
+- Add docs how to use template ([d8f4162](https://github.com/fewangsit/wangsvue/commit/d8f4162))
+- Adjust docs ([091b9d8](https://github.com/fewangsit/wangsvue/commit/091b9d8))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Programmer-mob5 <programmer-mob5@qwertysystem.net>
+
+## v1.4.180
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.179...v1.4.180)
+
+### 💅 Refactors
+
+- WithDefaults it compiler macro and no longer need to be imported ([dad7173](https://github.com/fewangsit/wangsvue/commit/dad7173))
+
+### 🎨 Styles
+
+- **Dropdown:** Make the wrapper full rounded-lg when the 'props.filter' is false ([5362dfd](https://github.com/fewangsit/wangsvue/commit/5362dfd))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.179
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.178...v1.4.179)
+
+## v1.4.178
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.177...v1.4.178)
+
+### 🚀 Enhancements
+
+- Add icons ([2e0ff1e](https://github.com/fewangsit/wangsvue/commit/2e0ff1e))
+
+### 🩹 Fixes
+
+- **jumuyiLN:** Fix styling in DialogForm ([74343fe](https://github.com/fewangsit/wangsvue/commit/74343fe))
+- **TreeTable:** Toast download excel does not appeared ([0e46c6b](https://github.com/fewangsit/wangsvue/commit/0e46c6b))
+
+### 💅 Refactors
+
+- Refactor reorderable in tree table and adjust styling ([96510e0](https://github.com/fewangsit/wangsvue/commit/96510e0))
+
+### 🏡 Chore
+
+- Remove vue-tsc on build ([fbdbac4](https://github.com/fewangsit/wangsvue/commit/fbdbac4))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.4.177
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.176...v1.4.177)
