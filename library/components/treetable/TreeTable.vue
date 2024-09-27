@@ -1019,7 +1019,12 @@ const listenUpdateTableEvent = (): void => {
                   v-for="col in item.childRow
                     ? visibleChildTableColumns
                     : visibleColumns"
-                  :class="[{ '!py-0': col.editable }]"
+                  :class="[
+                    { '!py-0': col.editable },
+                    typeof col.bodyClass === 'function'
+                      ? col.bodyClass(item)
+                      : col.bodyClass,
+                  ]"
                   :colspan="col.colspan ?? col.parentColumnsFields?.length"
                   v-bind="Preset.bodycell"
                 >
@@ -1127,14 +1132,7 @@ const listenUpdateTableEvent = (): void => {
                       "
                     />
 
-                    <span
-                      v-else
-                      :class="
-                        typeof col.bodyClass === 'function'
-                          ? col.bodyClass(item)
-                          : col.bodyClass
-                      "
-                    >
+                    <span v-else>
                       <template v-if="col.bodyTemplate">
                         {{
                           (col.bodyTemplate && col.bodyTemplate(item, index)) ||
