@@ -1,10 +1,19 @@
 import { MultiSelectOption } from 'lib/types/options.type';
 import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
-import { TableColumn } from '../datatable/DataTable.vue';
-import { FilterField } from '../filtercontainer/FilterContainer.vue';
+import { TableColumn } from '../datatable/DataTable.vue.d';
+import { FilterField } from '../filtercontainer/FilterContainer.vue.d';
 
 export type ChangelogTemplateColumn = { index: number; column: TableColumn };
 export type ChangelogTemplateFilter = { index: number; filter: FilterField };
+
+export type ChangelogDefaultField =
+  | 'createdAt'
+  | 'action'
+  | 'object'
+  | 'field'
+  | 'oldValue'
+  | 'newValue'
+  | 'modifiedBy';
 
 export type ChangelogType = {
   _id: string;
@@ -79,6 +88,14 @@ export interface ChangelogProps {
    * To give additional filters in changelog filter
    */
   additionalTemplateFilters?: ChangelogTemplateFilter[];
+  /**
+   * Array to determine that these columns will be hidden
+   */
+  removedColumns?: ChangelogDefaultField[];
+  /**
+   * Array to determine that these filter fields will be hidden
+   */
+  removedFilters?: Omit<ChangelogDefaultField, 'oldValue' | 'newValue'>[];
   /**
    * Changelog object.
    * Note: Even if this props is mandatory, if you fill props `objects` then props `object` will not be processed in component.
