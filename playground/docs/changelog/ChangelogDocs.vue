@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Changelog from 'lib/components/changelog/Changelog.vue';
 import { ChangelogType } from 'lib/components/changelogpage/ChangelogPage.vue.d';
+import { ChangelogTemplateFilter } from 'lib/components/changelog/Changelog.vue.d';
 
 const additionalTemplateColumns = [
   {
@@ -30,14 +31,13 @@ const additionalTemplateColumns = [
   },
 ];
 
-const additionalTemplateFilters = [
+const additionalTemplateFilters: ChangelogTemplateFilter[] = [
   {
     index: 3,
     filter: {
       label: 'Custom Filter Aksi',
       type: 'multiselect',
       field: 'action',
-      options: 'actionOptions',
     },
   },
 ];
