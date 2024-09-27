@@ -114,9 +114,9 @@ const tableColumns = computed<TableColumn[]>(() => {
       field: 'name',
       header: 'Name',
       sortable: true,
-      reorderable: false,
-      fixed: true,
-      bodyClass: 'text-primary',
+      reorderable: true,
+      fixed: false,
+      bodyClass: '!py-0.5 !text-danger-500',
       bodyComponent: (data: any): TableCellComponent => {
         return {
           component: UserName,
