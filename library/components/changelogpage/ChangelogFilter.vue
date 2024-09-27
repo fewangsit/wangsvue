@@ -22,13 +22,13 @@ const fields = ((): FilterField[] => {
       label: 'Tanggal',
       type: 'calendar',
       field: 'createdAt',
-      visible: true,
+      visible: !props.removedFilters?.includes('createdAt'),
     },
     {
       label: 'Aksi',
       type: 'multiselect',
       field: 'action',
-      visible: true,
+      visible: !props.removedFilters?.includes('action'),
       fetchOptionFn: async (
         params?: ChangelogOptionQuery,
       ): Promise<MultiSelectOption[]> => {
@@ -41,7 +41,8 @@ const fields = ((): FilterField[] => {
       field: 'object',
       visible:
         (props.moduleId || props.subModuleId) &&
-        !props.additionalTemplateFilters?.length,
+        !props.additionalTemplateFilters?.length &&
+        !props.removedFilters?.includes('object'),
       fetchOptionFn: async (
         params?: ChangelogOptionQuery,
       ): Promise<MultiSelectOption[]> => {
@@ -66,7 +67,9 @@ const fields = ((): FilterField[] => {
       label: 'Field',
       type: 'multiselect',
       field: 'field',
-      visible: !/Testing/.test(props.object),
+      visible:
+        !/Testing/.test(props.object) &&
+        !props.removedFilters?.includes('field'),
       fetchOptionFn: async (
         params?: ChangelogOptionQuery,
       ): Promise<MultiSelectOption[]> => {
@@ -77,7 +80,7 @@ const fields = ((): FilterField[] => {
       label: 'Diubah Oleh',
       type: 'multiselect',
       field: 'modifiedBy',
-      visible: true,
+      visible: !props.removedFilters?.includes('modifiedBy'),
       fetchOptionFn: async (
         params?: ChangelogOptionQuery,
       ): Promise<MultiSelectOption[]> => {

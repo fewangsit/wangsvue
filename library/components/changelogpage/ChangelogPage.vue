@@ -63,7 +63,7 @@ const changelogColumn = ((): TreeTableColumns[] => {
       field: 'createdAt',
       header: 'Tanggal',
       sortable: true,
-      visible: true,
+      visible: !props.removedColumns?.includes('createdAt'),
       bodyTemplate: (data: ChangelogType): string => {
         return data.createdAt ?? '-';
       },
@@ -73,7 +73,7 @@ const changelogColumn = ((): TreeTableColumns[] => {
       header: 'Aksi',
       sortable: true,
       fixed: true,
-      visible: true,
+      visible: !props.removedColumns?.includes('action'),
       bodyTemplate: (data: ChangelogType): string => {
         return data.action ?? '-';
       },
@@ -85,7 +85,8 @@ const changelogColumn = ((): TreeTableColumns[] => {
       fixed: true,
       visible:
         (!!props.moduleId || !!props.subModuleId) &&
-        !props.additionalTemplateColumns?.length,
+        !props.additionalTemplateColumns?.length &&
+        !props.removedColumns?.includes('object'),
       bodyTemplate: (data: ChangelogType): string => {
         return data.object ?? '-';
       },
@@ -108,7 +109,9 @@ const changelogColumn = ((): TreeTableColumns[] => {
       header: 'Field',
       sortable: true,
       fixed: true,
-      visible: !/Testing/.test(props.object),
+      visible:
+        !/Testing/.test(props.object) &&
+        !props.removedColumns?.includes('field'),
       bodyTemplate: (data: ChangelogType): string => {
         return data.field ?? '-';
       },
@@ -117,7 +120,7 @@ const changelogColumn = ((): TreeTableColumns[] => {
       field: 'oldValue',
       header: 'Data Lama',
       sortable: true,
-      visible: true,
+      visible: !props.removedColumns?.includes('oldValue'),
       bodyTemplate: (data: ChangelogType): string => {
         return data.oldValue ?? '-';
       },
@@ -126,7 +129,7 @@ const changelogColumn = ((): TreeTableColumns[] => {
       field: 'newValue',
       header: 'Data Baru',
       sortable: true,
-      visible: true,
+      visible: !props.removedColumns?.includes('newValue'),
       bodyTemplate: (data: ChangelogType): string => {
         return data.newValue ?? '-';
       },
@@ -135,7 +138,7 @@ const changelogColumn = ((): TreeTableColumns[] => {
       field: 'modifiedBy',
       header: 'Diubah Oleh',
       sortable: true,
-      visible: true,
+      visible: !props.removedColumns?.includes('modifiedBy'),
       bodyTemplate: (data: ChangelogType): string => {
         return data.modifiedBy ?? '-';
       },
@@ -199,6 +202,7 @@ const fetchChangelogs = async (
       :object-id="defaultParamsQuery.objectId"
       :object-name-column="props.objectNameColumn"
       :objects="props.objects"
+      :removed-filters="removedFilters"
       :sub-module-id="subModuleId"
       :table-name="tableName"
     />
