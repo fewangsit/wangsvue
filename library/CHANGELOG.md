@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.4.183
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.182...v1.4.183)
+
+### 🩹 Fixes
+
+- Adjust types ([4f22f57](https://github.com/fewangsit/wangsvue/commit/4f22f57))
+- Fix ChangelogDocs ([a068a76](https://github.com/fewangsit/wangsvue/commit/a068a76))
+
+### 💅 Refactors
+
+- Implement removed columns & filters ([8c42fa8](https://github.com/fewangsit/wangsvue/commit/8c42fa8))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.4.182
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.181...v1.4.182)
