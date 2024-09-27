@@ -1,6 +1,7 @@
 import { MultiSelectOption } from 'lib/types/options.type';
 import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
 import {
+  ChangelogDefaultField,
   ChangelogTemplateColumn,
   ChangelogTemplateFilter,
 } from '../changelog/Changelog.vue.d';
@@ -70,6 +71,14 @@ export interface BaseChangelogPageProps {
    * To give additional filters in changelog filter
    */
   additionalTemplateFilters?: ChangelogTemplateFilter[];
+  /**
+   * Array to determine that these columns will be hidden
+   */
+  removedColumns?: ChangelogDefaultField[];
+  /**
+   * Array to determine that these filter fields will be hidden
+   */
+  removedFilters?: Omit<ChangelogDefaultField, 'oldValue' | 'newValue'>[];
   /**
    * To set custom name for specific column in changelog table
    */
