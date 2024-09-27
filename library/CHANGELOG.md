@@ -1,6 +1,32 @@
 # Changelog
 
 
+## v1.4.185
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.183...v1.4.185)
+
+### 💅 Refactors
+
+- Add class to table column ([38913bc](https://github.com/fewangsit/wangsvue/commit/38913bc))
+
+### 🏡 Chore
+
+- Update library package json - add repository field ([402f9e1](https://github.com/fewangsit/wangsvue/commit/402f9e1))
+
+### 🎨 Styles
+
+- **MultiSelect:** Update style for controls MultiSelect ([71446e2](https://github.com/fewangsit/wangsvue/commit/71446e2))
+
+### 🤖 CI
+
+- Add release.yaml to automate publishing npm package ([a588efc](https://github.com/fewangsit/wangsvue/commit/a588efc))
+- Change env for npm publish token ([98220ee](https://github.com/fewangsit/wangsvue/commit/98220ee))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.4.183
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.182...v1.4.183)
