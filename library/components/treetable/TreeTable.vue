@@ -31,13 +31,15 @@ import Menu from '../menu/Menu.vue';
 import eventBus, { Events, TableEvent } from 'lib/event-bus';
 import Paginator, { PageState } from 'primevue/paginator';
 import { isArrayIncluded } from './helpers';
+import { Vue3Lottie } from 'vue3-lottie';
+
+import nodataJson from './animations/nodata.json';
 import { cloneDeep } from 'lodash';
 import { Booleanish } from '../ts-helpers';
 import useLoadingStore from '../loading/store/loading.store';
 import InputSwitch from 'primevue/inputswitch';
 import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
 import Toast from '../toast/Toast.vue';
-import NoDataAnimation from './animations/NoDataAnimation.vue';
 
 type DragableRow = Data & { draggable?: boolean; order?: number };
 
@@ -1193,7 +1195,9 @@ const listenUpdateTableEvent = (): void => {
     </div>
 
     <template v-if="!loadingTable && !currentPageTableData?.length">
-      <NoDataAnimation />
+      <div class="w-full p-4 flex items-center justify-center">
+        <Vue3Lottie :animation-data="nodataJson" auto-play class="w-36" loop />
+      </div>
     </template>
 
     <template v-if="loadingTable">
