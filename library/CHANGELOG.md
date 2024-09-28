@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.189
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.188...v1.4.189)
+
+### 🚀 Enhancements
+
+- Replace nodata.json with new value ([f5d8d3a](https://github.com/fewangsit/wangsvue/commit/f5d8d3a))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.188
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.187...v1.4.188)
