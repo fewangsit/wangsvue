@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.190
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.189...v1.4.190)
+
+### 🩹 Fixes
+
+- No data animation has incorrect style on single-spa import map #1 ([#1](https://github.com/fewangsit/wangsvue/issues/1))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.189
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.188...v1.4.189)
