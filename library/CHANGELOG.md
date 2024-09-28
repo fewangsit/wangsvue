@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.188
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.187...v1.4.188)
+
+### 🚀 Enhancements
+
+- Export Image and getImageUrl util ([c354d66](https://github.com/fewangsit/wangsvue/commit/c354d66))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.187
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.185...v1.4.187)
