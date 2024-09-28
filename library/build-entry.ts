@@ -50,7 +50,12 @@ const useField = <T>(
 import Preset from 'lib/preset';
 
 // Utils
-import { useToast, getNestedProperyValue, checkRouteAccess } from 'lib/utils';
+import {
+  useToast,
+  getNestedProperyValue,
+  checkRouteAccess,
+  getImageURL,
+} from 'lib/utils';
 
 // Directives
 import Tooltip from 'primevue/tooltip';
@@ -106,6 +111,7 @@ import {
   LiteDropdown,
   ChangelogPage,
   Editor,
+  Image,
 } from './components';
 
 export default {
@@ -146,6 +152,7 @@ export default {
     app.component('InputText', InputText);
     app.component('MultiSelect', MultiSelect);
     app.component('TabMenu', TabMenu);
+    app.component('Image', Image);
     app.component('ImageCompressor', ImageCompressor);
     app.component('Toast', Toast);
     app.component('UserName', UserName);
@@ -186,6 +193,7 @@ export {
   getNestedProperyValue,
   useToast,
   checkRouteAccess,
+  getImageURL,
 
   // Components
   Badge,
@@ -210,6 +218,7 @@ export {
   ButtonFilter,
   InputPhoneNumber,
   FilterContainer,
+  Image,
   ImageCompressor,
   Timeline,
   DialogConfirm,
