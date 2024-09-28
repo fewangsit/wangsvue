@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.191
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.190...v1.4.191)
+
+### 💅 Refactors
+
+- Change package lottie-web-vue into vue3-lottie ([89d8d72](https://github.com/fewangsit/wangsvue/commit/89d8d72))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.190
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.189...v1.4.190)
