@@ -45,11 +45,11 @@ const additionalTemplateFilters: ChangelogTemplateFilter[] = [
 
 <template>
   <div class="flex flex-col">
-    <span>Normal Changelog</span>
+    <span>Normal Changelog with removed column</span>
     <Changelog
+      :removed-columns="['objectName']"
       header="Changelog: coding > testing"
       object="Tim"
-      object-name-column="Custom Column Name"
       table-name="normal-changelog"
     />
 

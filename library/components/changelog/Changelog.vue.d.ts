@@ -10,6 +10,7 @@ export type ChangelogDefaultField =
   | 'createdAt'
   | 'action'
   | 'object'
+  | 'objectName'
   | 'field'
   | 'oldValue'
   | 'newValue'

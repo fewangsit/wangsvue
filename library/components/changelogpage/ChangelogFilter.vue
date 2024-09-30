@@ -59,7 +59,9 @@ const fields = ((): FilterField[] => {
           : (props.objectNameColumn ?? props.object),
       type: 'multiselect',
       field: 'assetName',
-      visible: !props.additionalTemplateFilters?.length,
+      visible:
+        !props.additionalTemplateFilters?.length &&
+        !props.removedFilters?.includes('objectName'),
       fetchOptionFn: async (
         params?: ChangelogOptionQuery,
       ): Promise<MultiSelectOption[]> => {

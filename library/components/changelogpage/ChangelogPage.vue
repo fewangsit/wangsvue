@@ -99,7 +99,9 @@ const changelogColumn = ((): TreeTableColumns[] => {
           : (props.objectNameColumn ?? props.object),
       sortable: true,
       fixed: true,
-      visible: !props.additionalTemplateColumns?.length,
+      visible:
+        !props.additionalTemplateColumns?.length &&
+        !props.removedColumns?.includes('objectName'),
       bodyTemplate: (data: ChangelogType): string => {
         return data.objectName ?? '-';
       },
