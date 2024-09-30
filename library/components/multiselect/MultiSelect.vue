@@ -128,7 +128,7 @@ defineExpose({
     :show-optional-text="showOptionalText"
   >
     <InputGroup
-      :class="{ 'rounded-none border-none': controls }"
+      :class="{ 'rounded-none !ring-0 !w-max': controls }"
       :disabled="props.disabled"
       :invalid="!!field.errorMessage"
     >

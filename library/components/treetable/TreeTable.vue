@@ -31,7 +31,7 @@ import Menu from '../menu/Menu.vue';
 import eventBus, { Events, TableEvent } from 'lib/event-bus';
 import Paginator, { PageState } from 'primevue/paginator';
 import { isArrayIncluded } from './helpers';
-import { LottieAnimation } from 'lottie-web-vue';
+import { Vue3Lottie } from 'vue3-lottie';
 
 import nodataJson from './animations/nodata.json';
 import { cloneDeep } from 'lodash';
@@ -1196,12 +1196,7 @@ const listenUpdateTableEvent = (): void => {
 
     <template v-if="!loadingTable && !currentPageTableData?.length">
       <div class="w-full p-4 flex items-center justify-center">
-        <LottieAnimation
-          :animation-data="nodataJson"
-          auto-play
-          class="w-36"
-          loop
-        />
+        <Vue3Lottie :animation-data="nodataJson" auto-play class="w-36" loop />
       </div>
     </template>
 

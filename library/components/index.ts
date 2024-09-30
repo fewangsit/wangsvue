@@ -45,6 +45,7 @@ import Textarea from './textarea/Textarea.vue';
 import LiteDropdown from './litedropdown/LiteDropdown.vue';
 import ChangelogPage from './changelogpage/ChangelogPage.vue';
 import Editor from './editor/Editor.vue';
+import Image from './image/Image.vue';
 
 export {
   Badge,
@@ -55,6 +56,7 @@ export {
   Dropdown,
   ButtonBulkAction,
   ButtonFilter,
+  Image,
   ImageCompressor,
   ButtonDownload,
   Breadcrumb,
