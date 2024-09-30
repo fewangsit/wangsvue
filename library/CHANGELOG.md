@@ -1,6 +1,36 @@
 # Changelog
 
 
+## v1.4.192
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.191...v1.4.192)
+
+### 🩹 Fixes
+
+- Fix incorrect gap ([7f2294a](https://github.com/fewangsit/wangsvue/commit/7f2294a))
+- Missing `objectName` to be included in removable fields in Changelog ([cce4f5b](https://github.com/fewangsit/wangsvue/commit/cce4f5b))
+- Type error while importing .lottie file, assertion needed ([9778f48](https://github.com/fewangsit/wangsvue/commit/9778f48))
+
+### 💅 Refactors
+
+- **Lottie:** Change Vue3Lottie to DotLottieVue and change lottie asset animation to .lottie ([8ba3360](https://github.com/fewangsit/wangsvue/commit/8ba3360))
+- **TreeTable:** Now TreeTable able to receive class and headerClass as column attributes ([640f973](https://github.com/fewangsit/wangsvue/commit/640f973))
+- **ChangelogDocs:** Refactor changelog docs to give a better dynamic example to specific features ([ea0eeed](https://github.com/fewangsit/wangsvue/commit/ea0eeed))
+
+### 🏡 Chore
+
+- Add declaration for .lottie file ([b67dbe3](https://github.com/fewangsit/wangsvue/commit/b67dbe3))
+- Update package.json build script ([e1952b5](https://github.com/fewangsit/wangsvue/commit/e1952b5))
+
+### 🎨 Styles
+
+- **Changelog:** Add class `w-max` ([e348b65](https://github.com/fewangsit/wangsvue/commit/e348b65))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.4.191
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.190...v1.4.191)
