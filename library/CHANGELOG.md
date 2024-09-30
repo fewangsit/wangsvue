@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v1.4.195
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.194...v1.4.195)
+
+### 🏡 Chore
+
+- Update publish script ([003fc78](https://github.com/fewangsit/wangsvue/commit/003fc78))
+- Update publish script - cd to dist before publishing ([088a4b9](https://github.com/fewangsit/wangsvue/commit/088a4b9))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.194
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.193...v1.4.194)
