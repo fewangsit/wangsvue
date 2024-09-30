@@ -858,6 +858,7 @@ const listenUpdateTableEvent = (): void => {
             <th
               :key="col.field"
               v-for="col in visibleColumns"
+              :class="[col.headerClass, col.class]"
               v-bind="headerCellPreset(col)"
               @click="col.sortable ? sortColumn(col.field) : null"
             >
@@ -1024,6 +1025,7 @@ const listenUpdateTableEvent = (): void => {
                     typeof col.bodyClass === 'function'
                       ? col.bodyClass(item)
                       : col.bodyClass,
+                    col.class,
                   ]"
                   :colspan="col.colspan ?? col.parentColumnsFields?.length"
                   v-bind="Preset.bodycell"
