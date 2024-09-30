@@ -22,6 +22,8 @@
     "cy:test-all": "pnpm tailwind && start-server-and-test dev cy:run-e2e && pnpm cy:run-ct"
   },
   "dependencies": {
+    "@lottiefiles/dotlottie-vue": "^0.4.15",
+    "@lottiefiles/vue-lottie-player": "^1.1.0",
     "@tiptap/extension-blockquote": "^2.6.6",
     "@tiptap/extension-bold": "^2.6.6",
     "@tiptap/extension-bullet-list": "^2.6.6",
@@ -52,6 +54,7 @@
     "debounce": "2.1.0",
     "idb": "8.0.0",
     "lodash": "4.17.21",
+    "lottie-web-vue": "2.0.7",
     "moment-timezone": "^0.5.45",
     "pnpm": "^9.9.0",
     "primevue": "^3.53.0",
@@ -63,7 +66,6 @@
     "vue-advanced-cropper": "2.8.9",
     "vue-i18n": "9.13.1",
     "vue-router": "^4.4.3",
-    "vue3-lottie": "^3.3.1",
     "vuex": "4.1.0",
     "xlsx": "0.18.5"
   },

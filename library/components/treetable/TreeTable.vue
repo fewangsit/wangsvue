@@ -31,15 +31,15 @@ import Menu from '../menu/Menu.vue';
 import eventBus, { Events, TableEvent } from 'lib/event-bus';
 import Paginator, { PageState } from 'primevue/paginator';
 import { isArrayIncluded } from './helpers';
-import { Vue3Lottie } from 'vue3-lottie';
-
-import nodataJson from './animations/nodata.json';
 import { cloneDeep } from 'lodash';
 import { Booleanish } from '../ts-helpers';
 import useLoadingStore from '../loading/store/loading.store';
 import InputSwitch from 'primevue/inputswitch';
 import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
 import Toast from '../toast/Toast.vue';
+import { DotLottieVue } from '@lottiefiles/dotlottie-vue';
+import loadingTableLottie from 'lib/assets/lottie/loading-table.lottie';
+import noDataLottie from 'lib/assets/lottie/no-data.lottie';
 
 type DragableRow = Data & { draggable?: boolean; order?: number };
 
@@ -1196,16 +1196,17 @@ const listenUpdateTableEvent = (): void => {
 
     <template v-if="!loadingTable && !currentPageTableData?.length">
       <div class="w-full p-4 flex items-center justify-center">
-        <Vue3Lottie :animation-data="nodataJson" auto-play class="w-36" loop />
+        <DotLottieVue :src="noDataLottie" autoplay class="w-44 h-auto" loop />
       </div>
     </template>
 
     <template v-if="loadingTable">
       <div class="sticky left-0 w-full p-4 flex items-center justify-center">
-        <img
-          alt="Table is loading data"
-          class="w-14 h-auto"
-          src="../../assets/loading.gif"
+        <DotLottieVue
+          :src="loadingTableLottie"
+          autoplay
+          class="w-20 h-auto"
+          loop
         />
       </div>
     </template>
