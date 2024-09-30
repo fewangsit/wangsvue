@@ -1198,14 +1198,19 @@ const listenUpdateTableEvent = (): void => {
 
     <template v-if="!loadingTable && !currentPageTableData?.length">
       <div class="w-full p-4 flex items-center justify-center">
-        <DotLottieVue :src="noDataLottie" autoplay class="w-44 h-auto" loop />
+        <DotLottieVue
+          :src="noDataLottie as string"
+          autoplay
+          class="w-44 h-auto"
+          loop
+        />
       </div>
     </template>
 
     <template v-if="loadingTable">
       <div class="sticky left-0 w-full p-4 flex items-center justify-center">
         <DotLottieVue
-          :src="loadingTableLottie"
+          :src="loadingTableLottie as string"
           autoplay
           class="w-20 h-auto"
           loop
