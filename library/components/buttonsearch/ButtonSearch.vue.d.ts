@@ -23,7 +23,7 @@ export interface ButtonSearchProps {
  * _Search button with searchbox for table._
  *
  * --- ---
- * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://www.wangs.id/wp-content/uploads/2023/12/cropped-Logo_Wangsid-removebg-preview-192x192.png)
  *
  * @group form
  */

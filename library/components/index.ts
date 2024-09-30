@@ -43,6 +43,9 @@ import ButtonRadio from './buttonradio/ButtonRadio.vue';
 import InputRepositoryName from './inputrepositoryname/InputRepositoryName.vue';
 import Textarea from './textarea/Textarea.vue';
 import LiteDropdown from './litedropdown/LiteDropdown.vue';
+import ChangelogPage from './changelogpage/ChangelogPage.vue';
+import Editor from './editor/Editor.vue';
+import Image from './image/Image.vue';
 
 export {
   Badge,
@@ -53,6 +56,7 @@ export {
   Dropdown,
   ButtonBulkAction,
   ButtonFilter,
+  Image,
   ImageCompressor,
   ButtonDownload,
   Breadcrumb,
@@ -90,4 +94,6 @@ export {
   InputRepositoryName,
   Textarea,
   LiteDropdown,
+  ChangelogPage,
+  Editor,
 };

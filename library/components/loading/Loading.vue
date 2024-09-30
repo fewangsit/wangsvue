@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import useLoadingStore from './store/loading.store';
-import { LottieAnimation } from 'lottie-web-vue';
-import loadingJson from './loading.json';
+import { DotLottieVue } from '@lottiefiles/dotlottie-vue';
+import loadingPlane from 'lib/assets/lottie/loading-plane.lottie';
 
 const { loading, message } = useLoadingStore();
 </script>
@@ -18,10 +18,10 @@ const { loading, message } = useLoadingStore();
       data-wv-name="loading-overlay"
       data-wv-section="overlay"
     >
-      <LottieAnimation
-        :animation-data="loadingJson"
-        auto-play
-        class="w-96"
+      <DotLottieVue
+        :src="loadingPlane"
+        autoplay
+        class="w-[450px] h-auto"
         loop
       />
 

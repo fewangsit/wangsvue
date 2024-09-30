@@ -9,15 +9,6 @@ export interface UserNameProps {
    */
   type?: 'icon' | 'picture';
   /**
-   * The thumbnail UserName.
-   */
-  thumbnail?: string | Blob;
-  /**
-   * The path to full size UserName for UserName preview.
-   * @defaultValue thumbnail
-   */
-  preview?: string;
-  /**
    * The full user Object
    */
   user?: Record<string, any>;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, withDefaults } from 'vue';
+import { onMounted, ref } from 'vue';
 import { GenericObject, useForm } from 'vee-validate';
 import Button from '../button/Button.vue';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';

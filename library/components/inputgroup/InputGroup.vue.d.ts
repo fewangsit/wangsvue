@@ -83,6 +83,10 @@ export interface InputGroupProps {
    */
   ptOptions?: PassThroughOptions;
   /**
+   * @default default
+   */
+  ring?: 'none' | 'default';
+  /**
    * When enabled, it removes component related styles in the core.
    * @defaultValue false
    */
@@ -118,7 +122,7 @@ export interface InputGroupSlots {
  * _InputGroup displays text, icon, buttons and other content can be grouped next to an input._
  *
  * --- ---
- * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://www.wangs.id/wp-content/uploads/2023/12/cropped-Logo_Wangsid-removebg-preview-192x192.png)
  *
  * @group Component
  */

@@ -33,6 +33,12 @@ const model = ref<OptionValue[]>();
           />
         </div>
       </div>
+
+      <MultiSelect
+        :options="['Waiting for Approval', 'Waiting for Handover']"
+        controls
+        label="Multi Select Controls"
+      />
     </template>
   </Card>
 </template>

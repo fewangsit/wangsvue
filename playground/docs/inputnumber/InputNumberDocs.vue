@@ -59,6 +59,20 @@ const numberlimit = shallowRef();
           field-info="Input Number"
           label="Input Number"
         />
+        Non Empty Input Value fallbacks to zero
+        <InputNumber
+          :allow-empty-value="false"
+          field-info="Input Number"
+          label="Input Number"
+        />
+
+        Non Empty Input Value fallbacks to min value (2)
+        <InputNumber
+          :allow-empty-value="false"
+          :min="2"
+          field-info="Input Number with Min Value 2"
+          label="Min 2"
+        />
       </div>
     </template>
   </Card>

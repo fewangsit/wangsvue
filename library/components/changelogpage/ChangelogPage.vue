@@ -50,92 +50,111 @@ const scrollHeight = computed<string | undefined>(() => {
   return undefined;
 });
 
-const tableName = computed<string>(
-  () =>
-    `changelog-page-${(defaultParamsQuery.value.object ?? props.moduleId ?? props.subModuleId)?.toLowerCase().split(' ').join('-')}`,
-);
+const tableName = computed<string>(() => {
+  return (
+    props.tableName ??
+    `changelog-page-${(defaultParamsQuery.value.object ?? props.moduleId ?? props.subModuleId)?.toLowerCase().split(' ').join('-')}`
+  );
+});
 
-const changelogColumn = computed<TreeTableColumns[]>(() => [
-  {
-    field: 'createdAt',
-    header: 'Tanggal',
-    sortable: true,
-    visible: true,
-    bodyTemplate: (data: ChangelogType): string => {
-      return data.createdAt ?? '-';
+const changelogColumn = ((): TreeTableColumns[] => {
+  const tempColumns = [
+    {
+      field: 'createdAt',
+      header: 'Tanggal',
+      sortable: true,
+      visible: !props.removedColumns?.includes('createdAt'),
+      bodyTemplate: (data: ChangelogType): string => {
+        return data.createdAt ?? '-';
+      },
     },
-  },
-  {
-    field: 'action',
-    header: 'Aksi',
-    sortable: true,
-    fixed: true,
-    visible: true,
-    bodyTemplate: (data: ChangelogType): string => {
-      return data.action ?? '-';
+    {
+      field: 'action',
+      header: 'Aksi',
+      sortable: true,
+      fixed: true,
+      visible: !props.removedColumns?.includes('action'),
+      bodyTemplate: (data: ChangelogType): string => {
+        return data.action ?? '-';
+      },
     },
-  },
-  {
-    field: 'object',
-    header: 'Objek',
-    sortable: true,
-    fixed: true,
-    visible: !!props.moduleId || !!props.subModuleId,
-    bodyTemplate: (data: ChangelogType): string => {
-      return data.object ?? '-';
+    {
+      field: 'object',
+      header: 'Objek',
+      sortable: true,
+      fixed: true,
+      visible:
+        (!!props.moduleId || !!props.subModuleId) &&
+        !props.additionalTemplateColumns?.length &&
+        !props.removedColumns?.includes('object'),
+      bodyTemplate: (data: ChangelogType): string => {
+        return data.object ?? '-';
+      },
     },
-  },
-  {
-    field: 'objectName',
-    header:
-      props.moduleId || props.subModuleId
-        ? 'Nama Objek'
-        : (props.objectNameColumn ?? props.object),
-    sortable: true,
-    fixed: true,
-    visible: true,
-    bodyTemplate: (data: ChangelogType): string => {
-      return data.objectName ?? '-';
+    {
+      field: 'objectName',
+      header:
+        props.moduleId || props.subModuleId
+          ? 'Nama Objek'
+          : (props.objectNameColumn ?? props.object),
+      sortable: true,
+      fixed: true,
+      visible:
+        !props.additionalTemplateColumns?.length &&
+        !props.removedColumns?.includes('objectName'),
+      bodyTemplate: (data: ChangelogType): string => {
+        return data.objectName ?? '-';
+      },
     },
-  },
-  {
-    field: 'field',
-    header: 'Field',
-    sortable: true,
-    fixed: true,
-    visible: !/Testing/.test(props.object),
-    bodyTemplate: (data: ChangelogType): string => {
-      return data.field ?? '-';
+    {
+      field: 'field',
+      header: 'Field',
+      sortable: true,
+      fixed: true,
+      visible:
+        !/Testing/.test(props.object) &&
+        !props.removedColumns?.includes('field'),
+      bodyTemplate: (data: ChangelogType): string => {
+        return data.field ?? '-';
+      },
     },
-  },
-  {
-    field: 'oldValue',
-    header: 'Data Lama',
-    sortable: true,
-    visible: true,
-    bodyTemplate: (data: ChangelogType): string => {
-      return data.oldValue ?? '-';
+    {
+      field: 'oldValue',
+      header: 'Data Lama',
+      sortable: true,
+      visible: !props.removedColumns?.includes('oldValue'),
+      bodyTemplate: (data: ChangelogType): string => {
+        return data.oldValue ?? '-';
+      },
     },
-  },
-  {
-    field: 'newValue',
-    header: 'Data Baru',
-    sortable: true,
-    visible: true,
-    bodyTemplate: (data: ChangelogType): string => {
-      return data.newValue ?? '-';
+    {
+      field: 'newValue',
+      header: 'Data Baru',
+      sortable: true,
+      visible: !props.removedColumns?.includes('newValue'),
+      bodyTemplate: (data: ChangelogType): string => {
+        return data.newValue ?? '-';
+      },
     },
-  },
-  {
-    field: 'modifiedBy',
-    header: 'Diubah Oleh',
-    sortable: true,
-    visible: true,
-    bodyTemplate: (data: ChangelogType): string => {
-      return data.modifiedBy ?? '-';
+    {
+      field: 'modifiedBy',
+      header: 'Diubah Oleh',
+      sortable: true,
+      visible: !props.removedColumns?.includes('modifiedBy'),
+      bodyTemplate: (data: ChangelogType): string => {
+        return data.modifiedBy ?? '-';
+      },
     },
-  },
-]);
+  ].filter((col) => col.visible) as TreeTableColumns[];
+
+  if (props.additionalTemplateColumns?.length) {
+    props.additionalTemplateColumns?.forEach((each) => {
+      tempColumns.splice(each.index, 0, each.column);
+    });
+  }
+
+  return tempColumns;
+})();
 
 const fetchChangelogs = async (
   params?: ChangelogFilterQuery,
@@ -177,6 +196,7 @@ const fetchChangelogs = async (
       />
     </div>
     <ChangelogFilter
+      :additional-template-filters="additionalTemplateFilters"
       :custom-params="props.customParams"
       :default-params-query="defaultParamsQuery"
       :module-id="moduleId"
@@ -184,6 +204,7 @@ const fetchChangelogs = async (
       :object-id="defaultParamsQuery.objectId"
       :object-name-column="props.objectNameColumn"
       :objects="props.objects"
+      :removed-filters="removedFilters"
       :sub-module-id="subModuleId"
       :table-name="tableName"
     />

@@ -1,6 +1,362 @@
 # Changelog
 
 
+## v1.4.191
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.190...v1.4.191)
+
+### 💅 Refactors
+
+- Change package lottie-web-vue into vue3-lottie ([89d8d72](https://github.com/fewangsit/wangsvue/commit/89d8d72))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.190
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.189...v1.4.190)
+
+### 🩹 Fixes
+
+- No data animation has incorrect style on single-spa import map #1 ([#1](https://github.com/fewangsit/wangsvue/issues/1))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.189
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.188...v1.4.189)
+
+### 🚀 Enhancements
+
+- Replace nodata.json with new value ([f5d8d3a](https://github.com/fewangsit/wangsvue/commit/f5d8d3a))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.188
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.187...v1.4.188)
+
+### 🚀 Enhancements
+
+- Export Image and getImageUrl util ([c354d66](https://github.com/fewangsit/wangsvue/commit/c354d66))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.187
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.185...v1.4.187)
+
+## v1.4.185
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.183...v1.4.185)
+
+### 💅 Refactors
+
+- Add class to table column ([38913bc](https://github.com/fewangsit/wangsvue/commit/38913bc))
+
+### 🏡 Chore
+
+- Update library package json - add repository field ([402f9e1](https://github.com/fewangsit/wangsvue/commit/402f9e1))
+
+### 🎨 Styles
+
+- **MultiSelect:** Update style for controls MultiSelect ([71446e2](https://github.com/fewangsit/wangsvue/commit/71446e2))
+
+### 🤖 CI
+
+- Add release.yaml to automate publishing npm package ([a588efc](https://github.com/fewangsit/wangsvue/commit/a588efc))
+- Change env for npm publish token ([98220ee](https://github.com/fewangsit/wangsvue/commit/98220ee))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.4.183
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.182...v1.4.183)
+
+### 🩹 Fixes
+
+- Adjust types ([4f22f57](https://github.com/fewangsit/wangsvue/commit/4f22f57))
+- Fix ChangelogDocs ([a068a76](https://github.com/fewangsit/wangsvue/commit/a068a76))
+
+### 💅 Refactors
+
+- Implement removed columns & filters ([8c42fa8](https://github.com/fewangsit/wangsvue/commit/8c42fa8))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.4.182
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.181...v1.4.182)
+
+### 🚀 Enhancements
+
+- **InputNumber:** Add option allowEmptyValue to specify whether input is allowed to have value null or undefined ([bf35070](https://github.com/fewangsit/wangsvue/commit/bf35070))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.181
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.180...v1.4.181)
+
+### 🚀 Enhancements
+
+- Form compatibility, unset image, mention ([7a31b5b](https://github.com/fewangsit/wangsvue/commit/7a31b5b))
+- **Dropdown:** Add showOptionalText to hide the opsional text when the field is not mandatory ([f74fac0](https://github.com/fewangsit/wangsvue/commit/f74fac0))
+
+### 🩹 Fixes
+
+- Fix type DropdownSlots not correctly assigned in declaration ([b1c7495](https://github.com/fewangsit/wangsvue/commit/b1c7495))
+- Fix file not found ([5125a17](https://github.com/fewangsit/wangsvue/commit/5125a17))
+- Type error on Changelog.vue.d.ts ([fb18173](https://github.com/fewangsit/wangsvue/commit/fb18173))
+- **ChangelogFilter:** Type error 'fetchOptionFn' does not exist in type 'RangeNumberFilterField' ([6f3b9ac](https://github.com/fewangsit/wangsvue/commit/6f3b9ac))
+
+### 💅 Refactors
+
+- Adjust table name ([c84d179](https://github.com/fewangsit/wangsvue/commit/c84d179))
+- Implement dynamic additional columns & filter fields ([46629d3](https://github.com/fewangsit/wangsvue/commit/46629d3))
+
+### 🏡 Chore
+
+- Add docs how to use template ([d8f4162](https://github.com/fewangsit/wangsvue/commit/d8f4162))
+- Adjust docs ([091b9d8](https://github.com/fewangsit/wangsvue/commit/091b9d8))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Programmer-mob5 <programmer-mob5@qwertysystem.net>
+
+## v1.4.180
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.179...v1.4.180)
+
+### 💅 Refactors
+
+- WithDefaults it compiler macro and no longer need to be imported ([dad7173](https://github.com/fewangsit/wangsvue/commit/dad7173))
+
+### 🎨 Styles
+
+- **Dropdown:** Make the wrapper full rounded-lg when the 'props.filter' is false ([5362dfd](https://github.com/fewangsit/wangsvue/commit/5362dfd))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.179
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.178...v1.4.179)
+
+## v1.4.178
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.177...v1.4.178)
+
+### 🚀 Enhancements
+
+- Add icons ([2e0ff1e](https://github.com/fewangsit/wangsvue/commit/2e0ff1e))
+
+### 🩹 Fixes
+
+- **jumuyiLN:** Fix styling in DialogForm ([74343fe](https://github.com/fewangsit/wangsvue/commit/74343fe))
+- **TreeTable:** Toast download excel does not appeared ([0e46c6b](https://github.com/fewangsit/wangsvue/commit/0e46c6b))
+
+### 💅 Refactors
+
+- Refactor reorderable in tree table and adjust styling ([96510e0](https://github.com/fewangsit/wangsvue/commit/96510e0))
+
+### 🏡 Chore
+
+- Remove vue-tsc on build ([fbdbac4](https://github.com/fewangsit/wangsvue/commit/fbdbac4))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.4.177
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.176...v1.4.177)
+
+### 🩹 Fixes
+
+- **Table:** Column that not sortable still sorted when clicked ([5793a38](https://github.com/fewangsit/wangsvue/commit/5793a38))
+- Type error on TreeTable.vue.d.ts ([5810d28](https://github.com/fewangsit/wangsvue/commit/5810d28))
+
+### 💅 Refactors
+
+- **Table:** Exclude child row for being reordered - collapse all expanded rows when reorder ([3548728](https://github.com/fewangsit/wangsvue/commit/3548728))
+
+### 🎨 Styles
+
+- Update bg button single action td for hover and selected state ([8d8afab](https://github.com/fewangsit/wangsvue/commit/8d8afab))
+- **Inputtext:** Font weight should be normal ([fa20d47](https://github.com/fewangsit/wangsvue/commit/fa20d47))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.176
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.175...v1.4.176)
+
+### 🚀 Enhancements
+
+- **Dropdown:** Add option to show value as badge and option to remove the input border ([62c3d5b](https://github.com/fewangsit/wangsvue/commit/62c3d5b))
+
+### 🩹 Fixes
+
+- Type error on Dropdown.vue.d.ts ([626db4d](https://github.com/fewangsit/wangsvue/commit/626db4d))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.175
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.174...v1.4.175)
+
+### 🚀 Enhancements
+
+- **Dropdown:** Add method showOverlay and expose it ([306fa47](https://github.com/fewangsit/wangsvue/commit/306fa47))
+
+### 🩹 Fixes
+
+- Type error on TreeTable.vue ([6d3246a](https://github.com/fewangsit/wangsvue/commit/6d3246a))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.174
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.173...v1.4.174)
+
+### 🚀 Enhancements
+
+- **Table:** Add option useColumnsHeader to use the child columns header as row header ([b43abad](https://github.com/fewangsit/wangsvue/commit/b43abad))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.173
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.172...v1.4.173)
+
+### 🚀 Enhancements
+
+- **Image:** Add new base url for getImageURL.util.ts - add prop width for Image.vue ([b3db819](https://github.com/fewangsit/wangsvue/commit/b3db819))
+
+### 🩹 Fixes
+
+- Type error on Image and UserName component ([9fcb941](https://github.com/fewangsit/wangsvue/commit/9fcb941))
+- Type error on Image component ([d21d366](https://github.com/fewangsit/wangsvue/commit/d21d366))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.172
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.171...v1.4.172)
+
+### 🚀 Enhancements
+
+- Export editor component ([6eeb5a0](https://github.com/fewangsit/wangsvue/commit/6eeb5a0))
+
+### ❤️ Contributors
+
+- Programmer-mob5 <programmer-mob5@qwertysystem.net>
+
+## v1.4.171
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.170...v1.4.171)
+
+### 🩹 Fixes
+
+- Props & ref ([b636225](https://github.com/fewangsit/wangsvue/commit/b636225))
+
+### ❤️ Contributors
+
+- Programmer-mob5 <programmer-mob5@qwertysystem.net>
+
+## v1.4.170
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.169...v1.4.170)
+
+### 💅 Refactors
+
+- Change props usage for Image in ImageCompressor ([dc01b83](https://github.com/fewangsit/wangsvue/commit/dc01b83))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.4.169
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.168...v1.4.169)
+
+### 🚀 Enhancements
+
+- **treetable:** Add index on body template ([6b64e16](https://github.com/fewangsit/wangsvue/commit/6b64e16))
+- Export editor component ([75b2c23](https://github.com/fewangsit/wangsvue/commit/75b2c23))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.168
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.167...v1.4.168)
+
+## v1.4.167
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.166...v1.4.167)
+
+### 🚀 Enhancements
+
+- Export changelog page component ([7cbd868](https://github.com/fewangsit/wangsvue/commit/7cbd868))
+
+### ❤️ Contributors
+
+- Zainkurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.166
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.165...v1.4.166)
+
+### 🚀 Enhancements
+
+- **tabmenu:** Added tabmenu item disabled style ([b923c6d](https://github.com/fewangsit/wangsvue/commit/b923c6d))
+- **litedropdown:** Added new component litedropdown ([513038d](https://github.com/fewangsit/wangsvue/commit/513038d))
+
+### 🩹 Fixes
+
+- **inputnumber:** Added additional check if value is greater than or less than in increment and decrement button ([7bb005f](https://github.com/fewangsit/wangsvue/commit/7bb005f))
+- **LiteDropdown:** Added litedropdown to build-entry ([e6f582e](https://github.com/fewangsit/wangsvue/commit/e6f582e))
+
+### 💅 Refactors
+
+- Add field to emitted event when edit cell ([dbb64ba](https://github.com/fewangsit/wangsvue/commit/dbb64ba))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Programmer-fe6 ([@programmer-fe6](http://github.com/programmer-fe6))
+
 ## v1.4.165
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.164...v1.4.165)

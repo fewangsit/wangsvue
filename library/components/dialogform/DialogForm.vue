@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, shallowRef, useSlots, withDefaults } from 'vue';
+import { computed, ref, shallowRef, useSlots } from 'vue';
 import Form from '../form/Form.vue';
 import Dialog from 'primevue/dialog';
 import Button from '../button/Button.vue';
@@ -203,7 +203,7 @@ defineExpose({ form, clearField });
                 data-wv-section="headericon"
               />
               <h3
-                class="mr-auto text-grayscale-900 dark:text-general-100 text-center text-[0.9rem] leading-[1.125rem] font-bold tracking-[0.28px]"
+                class="mr-auto text-grayscale-900 dark:text-general-100 text-center text-[0.9rem] leading-[1.125rem] !font-semibold tracking-[0.28px]"
                 data-wv-section="dialog-form-title"
               >
                 {{ header }}

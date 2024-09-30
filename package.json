@@ -7,8 +7,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "rimraf dist && vue-tsc && vite build",
-    "build:dev": "vue-tsc && vite build --watch",
+    "build": "rimraf dist && vite build",
+    "build:dev": "vite build --watch",
     "build:lib": "pnpm --filter wangsvue build",
     "release": "pnpm --filter wangsvue release",
     "release:patch": "pnpm --filter wangsvue release:patch",
@@ -22,6 +22,8 @@
     "cy:test-all": "pnpm tailwind && start-server-and-test dev cy:run-e2e && pnpm cy:run-ct"
   },
   "dependencies": {
+    "@lottiefiles/dotlottie-vue": "^0.4.15",
+    "@lottiefiles/vue-lottie-player": "^1.1.0",
     "@tiptap/extension-blockquote": "^2.6.6",
     "@tiptap/extension-bold": "^2.6.6",
     "@tiptap/extension-bullet-list": "^2.6.6",
@@ -52,7 +54,7 @@
     "debounce": "2.1.0",
     "idb": "8.0.0",
     "lodash": "4.17.21",
-    "lottie-web-vue": "^2.0.7",
+    "lottie-web-vue": "2.0.7",
     "moment-timezone": "^0.5.45",
     "pnpm": "^9.9.0",
     "primevue": "^3.53.0",

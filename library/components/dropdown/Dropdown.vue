@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue';
 import { useField } from 'vee-validate';
+import Badge from 'lib/components/badge/Badge.vue';
 
 import type {
   DropdownEmits,
@@ -16,14 +17,17 @@ import FieldWrapper from 'lib/components/fieldwrapper/FieldWrapper.vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import InputGroup from 'lib/components/inputgroup/InputGroup.vue';
 import InputGroupAddon from 'primevue/inputgroupaddon';
-import { filterOptions } from 'lib/utils';
 import { Nullable } from '../ts-helpers';
+import { filterOptions } from 'lib/utils';
+import Preset from 'lib/preset/dropdown';
 
 const props = withDefaults(defineProps<DropdownProps>(), {
   filter: true,
   filterPlaceholder: 'Cari',
   modelValue: undefined,
   formatValidatorMessage: true,
+  valueType: 'plain',
+  showOptionalText: true,
 });
 
 const emit = defineEmits<DropdownEmits>();
@@ -32,6 +36,7 @@ onMounted(() => {
   setValidator();
 });
 
+const dropdown = ref<Dropdown>();
 const isShowOverlay = ref<boolean>(false);
 
 const invalidInput = computed(() => props.invalid || !!field.errorMessage);
@@ -115,6 +120,13 @@ const getOptionLabel = (): string => {
   return field.value as string;
 };
 
+/**
+ * Method to show the overlay with template ref.
+ */
+const showOverlay = (): void => {
+  if (dropdown.value) dropdown.value.show();
+};
+
 watch(
   () => props.initialValue,
   (value) => {
@@ -129,6 +141,10 @@ watch(
     field.value = value;
   },
 );
+
+defineExpose({
+  showOverlay,
+});
 </script>
 
 <template>
@@ -136,6 +152,7 @@ watch(
     :info="fieldInfo"
     :label="props.label"
     :mandatory="props.mandatory"
+    :show-optional-text="showOptionalText"
   >
     <InputGroup
       :class="[
@@ -150,26 +167,38 @@ watch(
       ]"
       :disabled="props.disabled"
       :invalid="invalidInput"
+      :ring="inputBorder"
     >
       <InputGroupAddon v-if="$slots['addon-left']" :disabled="props.disabled">
         <slot name="addon-left" />
       </InputGroupAddon>
 
       <Dropdown
+        ref="dropdown"
         v-bind="props"
         v-model="field.value"
         :aria-describedby="props.label + 'error'"
         :invalid="invalidInput"
         :options="visibleOptions"
         :placeholder="dropdownPlaceholder"
+        :pt="{
+          wrapper: Preset.wrapper({ props }),
+        }"
         @change="updateFieldValue"
         @hide="isShowOverlay = false"
         @show="$emit('show'), (isShowOverlay = true)"
       >
         <template #value="slotProps">
-          <div v-if="slotProps.value" class="flex align-items-center">
-            {{ getOptionLabel() }}
-          </div>
+          <template v-if="slotProps.value">
+            <Badge
+              v-if="valueType === 'badge'"
+              v-bind="badgeValueProps"
+              :label="getOptionLabel()"
+            />
+            <div v-else class="flex items-center">
+              {{ getOptionLabel() }}
+            </div>
+          </template>
           <template v-else>
             {{ slotProps.placeholder }}
           </template>

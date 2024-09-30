@@ -39,6 +39,7 @@ const adjustPosition = (): void => {
       :src="
         getNestedProperyValue(props.user ?? {}, profilePictureField) as string
       "
+      :width="30"
       @click.stop=""
       class="w-[30px] h-[30px]"
       rounded
@@ -86,9 +87,9 @@ const adjustPosition = (): void => {
 
         <a
           :href="`/user/${props.user?._id}`"
-          alt="link to user detail"
           class="underline text-primary-400 text-[10px] leading-4 cursor-pointer hover:text-primary-500 transition-colors duration-100"
           target="_blank"
+          title="link to user detail"
         >
           Detail Member
         </a>

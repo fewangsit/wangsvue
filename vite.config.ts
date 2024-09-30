@@ -10,4 +10,5 @@ export default defineConfig({
       lib: resolve(__dirname, 'library'),
     },
   },
+  assetsInclude: ['**/*.lottie'],
 });

@@ -69,13 +69,20 @@ const stopInterval = (): void => {
   }
 };
 
+const imageSize = computed(() => {
+  if (props.width != null) return props.width;
+  else if (props.size === 'small') return 30;
+  else if (props.size === 'medium') return 80;
+  return 125;
+});
+
 const imageThumbnail = computed((): string | Blob | undefined => {
   if (!props.src || errorLoadImage.value) return Placeholder;
   if (typeof props.src === 'string') {
     return props.src.includes('http') ||
       props.src.includes('data:image/png;base64')
       ? props.src
-      : getImageURL(props.src);
+      : getImageURL(props.src, imageSize.value);
   }
 
   return props.src;
@@ -85,9 +92,14 @@ const imagePreview = computed(() => {
   const preview = imageThumbnail.value;
 
   if (typeof preview === 'string') {
-    return preview.includes('http') || preview.includes('data:image/svg+xml')
+    const isFromFiles = preview.includes(
+      import.meta.env.VITE_APP_WANGSIT_FILES_API,
+    );
+
+    return (preview.includes('http') && !isFromFiles) || // From public resource
+      preview.includes('data:image/svg+xml') // Thumbnail
       ? preview
-      : getImageURL(preview);
+      : getImageURL(props.src as string); // Get the full size for preview
   }
 
   return preview;

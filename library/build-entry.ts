@@ -50,7 +50,12 @@ const useField = <T>(
 import Preset from 'lib/preset';
 
 // Utils
-import { useToast, getNestedProperyValue, checkRouteAccess } from 'lib/utils';
+import {
+  useToast,
+  getNestedProperyValue,
+  checkRouteAccess,
+  getImageURL,
+} from 'lib/utils';
 
 // Directives
 import Tooltip from 'primevue/tooltip';
@@ -104,6 +109,9 @@ import {
   InputRepositoryName,
   Textarea,
   LiteDropdown,
+  ChangelogPage,
+  Editor,
+  Image,
 } from './components';
 
 export default {
@@ -144,6 +152,7 @@ export default {
     app.component('InputText', InputText);
     app.component('MultiSelect', MultiSelect);
     app.component('TabMenu', TabMenu);
+    app.component('Image', Image);
     app.component('ImageCompressor', ImageCompressor);
     app.component('Toast', Toast);
     app.component('UserName', UserName);
@@ -160,6 +169,8 @@ export default {
     app.component('InputRepositoryName', InputRepositoryName);
     app.component('Textarea', Textarea);
     app.component('LiteDropdown', LiteDropdown);
+    app.component('ChangelogPage', ChangelogPage);
+    app.component('Editor', Editor);
 
     app.directive('tooltip', Tooltip);
     app.directive('focus', Focus);
@@ -182,6 +193,7 @@ export {
   getNestedProperyValue,
   useToast,
   checkRouteAccess,
+  getImageURL,
 
   // Components
   Badge,
@@ -206,6 +218,7 @@ export {
   ButtonFilter,
   InputPhoneNumber,
   FilterContainer,
+  Image,
   ImageCompressor,
   Timeline,
   DialogConfirm,
@@ -229,6 +242,8 @@ export {
   ButtonRadio,
   Textarea,
   LiteDropdown,
+  ChangelogPage,
+  Editor,
 
   // Component store
   useLoadingStore,

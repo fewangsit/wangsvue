@@ -567,7 +567,7 @@ watch(
               <ImagePreview
                 :rounded="rounded"
                 :size="imagePreviewSize"
-                :thumbnail="previewImage"
+                :src="previewImage"
                 class="transition-opacity duration-300"
                 data-wv-section="preview-image"
               />

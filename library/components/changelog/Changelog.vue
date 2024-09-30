@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue';
 
+import ChangelogPage from '../changelogpage/ChangelogPage.vue';
 import Dialog from '../dialog/Dialog.vue';
 import Icon from '../icon/Icon.vue';
-import ChangelogPage from '../changelogpage/ChangelogPage.vue';
 
-import { ChangelogEmits, ChangelogProps } from './Changelog.vue.d';
-import { buttonFocusClass } from 'lib/preset/button';
 import eventBus from 'lib/event-bus';
+import { buttonFocusClass } from 'lib/preset/button';
+import { ChangelogEmits, ChangelogProps } from './Changelog.vue.d';
 
 const props = withDefaults(defineProps<ChangelogProps>(), {
   useButton: true,
@@ -20,9 +20,12 @@ const visible = defineModel<boolean>('visible', {
   default: false,
 });
 
-const tableName = computed(
-  () => `changelog-${props.object?.toLowerCase().split(' ').join('-')}`,
-);
+const tableName = computed(() => {
+  return (
+    props.tableName ??
+    `changelog-${props.object?.toLowerCase().split(' ').join('-')}`
+  );
+});
 
 const changelogColumnHeader = computed<string>(() => {
   const splittedObj = props.object?.split('>');
@@ -63,7 +66,7 @@ watch(visible, (newValue) => {
 <template>
   <button
     v-if="props.useButton"
-    :class="buttonFocusClass"
+    :class="[buttonFocusClass, 'w-max']"
     @click="visible = true"
     data-wv-section="changelog-button"
     type="button"

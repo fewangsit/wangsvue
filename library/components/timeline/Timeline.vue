@@ -35,7 +35,7 @@ const formatActionTitle = (action: string): string => {
         <h3
           v-html="formatActionTitle(item.action)"
           @click="item.showDetail = !item.showDetail"
-          class="leading-5 cursor-pointer truncate"
+          class="leading-5 cursor-pointer truncate !text-xs"
         />
         <UserName
           :user="item.user"

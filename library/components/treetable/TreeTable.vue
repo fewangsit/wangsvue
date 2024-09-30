@@ -10,7 +10,7 @@ import {
 } from 'vue';
 import { DataTableExpandedRows } from 'primevue/datatable';
 import {
-  DraggedItem,
+  DataTableRowReorderEvent,
   EditedContent,
   TreeTableColumns,
   TreeTableEmits,
@@ -31,14 +31,15 @@ import Menu from '../menu/Menu.vue';
 import eventBus, { Events, TableEvent } from 'lib/event-bus';
 import Paginator, { PageState } from 'primevue/paginator';
 import { isArrayIncluded } from './helpers';
-import { LottieAnimation } from 'lottie-web-vue';
-
-import nodataJson from './animations/nodata.json';
 import { cloneDeep } from 'lodash';
 import { Booleanish } from '../ts-helpers';
 import useLoadingStore from '../loading/store/loading.store';
 import InputSwitch from 'primevue/inputswitch';
 import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
+import Toast from '../toast/Toast.vue';
+import { DotLottieVue } from '@lottiefiles/dotlottie-vue';
+import loadingTableLottie from 'lib/assets/lottie/loading-table.lottie';
+import noDataLottie from 'lib/assets/lottie/no-data.lottie';
 
 type DragableRow = Data & { draggable?: boolean; order?: number };
 
@@ -79,7 +80,7 @@ const customColumnKey = shallowRef(0);
 const customColumn = ref<CustomColumnInstance>();
 const optionMenu = ref<MenuInstance>();
 
-const emittedValue = ref<DraggedItem>();
+const rowReorderEventPayload = ref<DataTableRowReorderEvent>();
 const draggedRow = shallowRef<DragableRow>();
 const dragging = shallowRef<boolean>(false);
 
@@ -100,6 +101,20 @@ const tablePage = shallowRef(1);
 const tableRows = shallowRef(10);
 const totalRecords = shallowRef(0);
 const showConfirmToggle = ref<Record<string, boolean>>({});
+
+const visibleChildTableColumns = computed(() => {
+  if (props.childTableProps?.columns)
+    return props.childTableProps?.columns.filter((col) => {
+      return (
+        !col.parentColumnsFields ||
+        col.parentColumnsFields?.some((field) =>
+          visibleColumns.value.some((c) => c.field === field),
+        )
+      );
+    });
+
+  return visibleColumns.value;
+});
 
 const queryParams = computed<QueryParams>(() => ({
   ...props.defaultQueryParams,
@@ -267,7 +282,7 @@ const toggleOptions = async (event: MouseEvent, data: Data): Promise<void> => {
   };
 
   removeClassActive();
-  nextTick(() => {
+  await nextTick(() => {
     if (button?.classList.contains('option-button-active')) {
       removeClassActive();
     } else {
@@ -307,7 +322,13 @@ const toggleOptions = async (event: MouseEvent, data: Data): Promise<void> => {
 };
 
 const draggable = (item: DragableRow): boolean => {
-  return item.draggable !== false;
+  return (
+    item.draggable !== false &&
+    !item.childRow &&
+    !item.childRowHeader &&
+    props.reorderable &&
+    !sortOrder.value
+  );
 };
 
 /**
@@ -322,10 +343,13 @@ const startReorderRow = (
   item: DragableRow,
   index: number,
 ): void => {
+  if (item.childRow || item.childRowHeader) return;
+  expandedRows.value = {}; // Collapse the expanded rows on Row Reorder
+
   const { dataTransfer } = event;
   draggedRow.value = item;
 
-  emittedValue.value = { item, fromIndex: index };
+  rowReorderEventPayload.value = { item, fromIndex: index };
 
   if (dataTransfer) {
     dataTransfer.dropEffect = 'move';
@@ -358,7 +382,7 @@ const onDragEnter = (e: DragEvent, row: DragableRow): void => {
     );
 
     if (draggedIndex !== -1 && dropTargetIndex !== -1) {
-      emittedValue.value.toIndex = dropTargetIndex;
+      rowReorderEventPayload.value.toIndex = dropTargetIndex;
 
       // Swap the items in columnReorderData
       [
@@ -378,9 +402,13 @@ const onDragEnter = (e: DragEvent, row: DragableRow): void => {
  * Handles the reordering of columns. Fired when user release the pointer.
  */
 const onRowReorder = (): void => {
-  emit('rowReorder', emittedValue.value as DraggedItem);
+  if (rowReorderEventPayload.value) {
+    emit('rowReorder', rowReorderEventPayload.value);
+  }
+
   draggedRow.value = undefined;
   dragging.value = false;
+  rowReorderEventPayload.value = undefined;
 };
 
 const reorderVisibleColumn = (): void => {
@@ -453,7 +481,7 @@ const handlePageChange = async (event: PageState): Promise<void> => {
 };
 
 const sortColumn = (field: string): void => {
-  if (field !== sortBy.value) sortOrder.value = undefined; // Resets the sortorder when the column sorted changed
+  if (field !== sortBy.value) sortOrder.value = undefined; // Resets the sort order when the column sorted changed
 
   sortBy.value = field;
 
@@ -638,7 +666,7 @@ const downloadExcel = async ({
       return body;
     });
 
-    exportToExcel({
+    await exportToExcel({
       headers,
       data: excelBody,
       fileName: formatFileName(),
@@ -782,7 +810,7 @@ const listenUpdateTableEvent = (): void => {
         <thead class="sticky top-0 z-50">
           <tr class="border-b border-primary-100">
             <th
-              v-if="reorderable"
+              v-if="reorderable && !sortOrder"
               class="w-[40px] !py-1"
               v-bind="headerCellPreset()"
               data-wv-section="headerreorderable"
@@ -830,8 +858,9 @@ const listenUpdateTableEvent = (): void => {
             <th
               :key="col.field"
               v-for="col in visibleColumns"
+              :class="[col.headerClass, col.class]"
               v-bind="headerCellPreset(col)"
-              @click="sortColumn(col.field)"
+              @click="col.sortable ? sortColumn(col.field) : null"
             >
               <span class="inline-flex gap-2 items-center leading-[18px]">
                 {{ col.header }}
@@ -908,8 +937,13 @@ const listenUpdateTableEvent = (): void => {
                 })
               "
             >
-              <td v-if="reorderable" v-bind="Preset.bodycell" class="w-[40px]">
+              <td
+                v-if="reorderable && !sortOrder"
+                v-bind="Preset.bodycell"
+                class="w-[40px]"
+              >
                 <Icon
+                  v-if="!item.childRow && !item.childRowHeader"
                   class="w-6 h-6 !p-0 !m-0 !cursor-grab [&_label]:!cursor-grab"
                   icon="dragable-menu"
                 />
@@ -955,8 +989,24 @@ const listenUpdateTableEvent = (): void => {
                 />
               </td>
 
+              <template
+                v-if="
+                  item.childRowHeader && props.childTableProps?.useColumnsHeader
+                "
+              >
+                <td
+                  :key="col.header"
+                  v-for="col in visibleChildTableColumns"
+                  :class="[Preset.bodycell.class, 'font-semibold text-xs']"
+                  :colspan="col.colspan ?? col.parentColumnsFields?.length"
+                  @click.stop=""
+                >
+                  {{ col.header }}
+                </td>
+              </template>
+
               <td
-                v-if="item.childRowHeader"
+                v-else-if="item.childRowHeader"
                 :class="[Preset.bodycell.class, 'font-semibold text-xs']"
                 :colspan="props.columns.length"
                 @click.stop=""
@@ -968,11 +1018,17 @@ const listenUpdateTableEvent = (): void => {
                 <td
                   :key="col.field"
                   v-for="col in item.childRow
-                    ? (props.childTableProps?.columns ?? columns)
+                    ? visibleChildTableColumns
                     : visibleColumns"
-                  :colspan="col.colspan"
+                  :class="[
+                    { '!py-0': col.editable },
+                    typeof col.bodyClass === 'function'
+                      ? col.bodyClass(item)
+                      : col.bodyClass,
+                    col.class,
+                  ]"
+                  :colspan="col.colspan ?? col.parentColumnsFields?.length"
                   v-bind="Preset.bodycell"
-                  class="!py-0"
                 >
                   <template v-if="col.preset?.type === 'toggle'">
                     <InputSwitch
@@ -1041,9 +1097,9 @@ const listenUpdateTableEvent = (): void => {
                       :contenteditable="col.editable"
                       @input="
                         (e: InputEvent) => {
-                          console.log(e);
                           $emit('input', {
                             item,
+                            field: col.field,
                             index,
                             value: (e.target as HTMLElement).innerText,
                           } as EditedContent);
@@ -1078,17 +1134,11 @@ const listenUpdateTableEvent = (): void => {
                       "
                     />
 
-                    <span
-                      v-else
-                      :class="
-                        typeof col.bodyClass === 'function'
-                          ? col.bodyClass(item)
-                          : col.bodyClass
-                      "
-                    >
+                    <span v-else>
                       <template v-if="col.bodyTemplate">
                         {{
-                          (col.bodyTemplate && col.bodyTemplate(item)) || '-'
+                          (col.bodyTemplate && col.bodyTemplate(item, index)) ||
+                          '-'
                         }}
                       </template>
                       <template v-else>
@@ -1105,7 +1155,13 @@ const listenUpdateTableEvent = (): void => {
                 <td
                   v-if="useOption"
                   v-bind="Preset.bodycell"
-                  :class="[{ 'sticky right-0 bg-white': useOption }]"
+                  :class="[
+                    {
+                      'sticky right-0 bg-white group-hover:!bg-primary-50':
+                        useOption,
+                      '!bg-primary-100': isRowSelected(item[dataKey]),
+                    },
+                  ]"
                 >
                   <div
                     class="relative w-full h-full flex items-center justify-center"
@@ -1142,21 +1198,17 @@ const listenUpdateTableEvent = (): void => {
 
     <template v-if="!loadingTable && !currentPageTableData?.length">
       <div class="w-full p-4 flex items-center justify-center">
-        <LottieAnimation
-          :animation-data="nodataJson"
-          auto-play
-          class="w-36"
-          loop
-        />
+        <DotLottieVue :src="noDataLottie" autoplay class="w-44 h-auto" loop />
       </div>
     </template>
 
     <template v-if="loadingTable">
       <div class="sticky left-0 w-full p-4 flex items-center justify-center">
-        <img
-          alt="Table is loading data"
-          class="w-14 h-auto"
-          src="../../assets/loading.gif"
+        <DotLottieVue
+          :src="loadingTableLottie"
+          autoplay
+          class="w-20 h-auto"
+          loop
         />
       </div>
     </template>
@@ -1212,6 +1264,8 @@ const listenUpdateTableEvent = (): void => {
       :default-columns="columns.filter((col) => col.visible !== false)"
       :table-id="dataTableID"
     />
+
+    <Toast group="download" />
   </div>
 </template>
 

@@ -142,6 +142,13 @@ export interface InputNumberProps {
    * @default false
    */
   autoResize?: boolean;
+  /**
+   * Allow input to have value null or undefined.
+   * If it sets to 'false', when the value is empty, it will fall back to min value if exists, zero otherwise
+   *
+   * @default true
+   */
+  allowEmptyValue?: boolean;
 }
 
 /**
@@ -172,7 +179,7 @@ export interface InputNumberSlots {
  * _Handle input number with form validation._
  *
  * --- ---
- * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://www.wangs.id/wp-content/uploads/2023/12/cropped-Logo_Wangsid-removebg-preview-192x192.png)
  *
  * @group form
  */

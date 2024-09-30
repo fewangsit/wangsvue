@@ -42,6 +42,7 @@ export default defineConfig({
       },
     },
   },
+  assetsInclude: ['**/*.lottie'],
   server: {
     port: 8888,
     hmr: {

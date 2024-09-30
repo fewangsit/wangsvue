@@ -1,5 +1,20 @@
 import { MultiSelectOption } from 'lib/types/options.type';
 import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
+import { TableColumn } from '../datatable/DataTable.vue.d';
+import { FilterField } from '../filtercontainer/FilterContainer.vue.d';
+
+export type ChangelogTemplateColumn = { index: number; column: TableColumn };
+export type ChangelogTemplateFilter = { index: number; filter: FilterField };
+
+export type ChangelogDefaultField =
+  | 'createdAt'
+  | 'action'
+  | 'object'
+  | 'objectName'
+  | 'field'
+  | 'oldValue'
+  | 'newValue'
+  | 'modifiedBy';
 
 export type ChangelogType = {
   _id: string;
@@ -67,6 +82,22 @@ export interface ChangelogProps {
    */
   header?: string | undefined;
   /**
+   * To give additional columns in changelog table
+   */
+  additionalTemplateColumns?: ChangelogTemplateColumn[];
+  /**
+   * To give additional filters in changelog filter
+   */
+  additionalTemplateFilters?: ChangelogTemplateFilter[];
+  /**
+   * Array to determine that these columns will be hidden
+   */
+  removedColumns?: ChangelogDefaultField[];
+  /**
+   * Array to determine that these filter fields will be hidden
+   */
+  removedFilters?: Omit<ChangelogDefaultField, 'oldValue' | 'newValue'>[];
+  /**
    * Changelog object.
    * Note: Even if this props is mandatory, if you fill props `objects` then props `object` will not be processed in component.
    */
@@ -94,6 +125,10 @@ export interface ChangelogProps {
    * @default 'Changelog' only
    */
   fileName?: string;
+  /**
+   * Now changelog support custom table name from outside
+   */
+  tableName?: string;
 }
 
 /**
@@ -110,7 +145,7 @@ export type ChangelogEmits = {
  * You need to install vee-validate while using this component._
  *
  * --- ---
- * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://www.wangs.id/wp-content/uploads/2023/12/cropped-Logo_Wangsid-removebg-preview-192x192.png)
  *
  * @group components
  */

@@ -46,17 +46,28 @@ const model = ref<OptionValue>();
             validator-message="Ga boleh kosong"
           />
           <Dropdown
+            :badge-value-props="{ severity: 'primary', format: 'nowrap' }"
             :options="[
               { label: 'Waiting for Approval', value: 'Approval' },
               { label: 'Waiting for Handover', value: 'Handover' },
             ]"
+            class="w-max"
             field-name="status2"
+            input-border="none"
             label="Status"
             mandatory
             option-label="label"
             placeholder="Pilih status"
             use-validator
             validator-message="Ga boleh kosong"
+            value-type="badge"
+          />
+          <Dropdown
+            v-model="model"
+            :options="['Waiting for Approval', 'Waiting for Handover']"
+            label="Dropdown No Filter"
+            :filter="false"
+            placeholder="Pilih status"
           />
         </template>
       </Form>

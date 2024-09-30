@@ -1,5 +1,10 @@
 import { MultiSelectOption } from 'lib/types/options.type';
 import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
+import {
+  ChangelogDefaultField,
+  ChangelogTemplateColumn,
+  ChangelogTemplateFilter,
+} from '../changelog/Changelog.vue.d';
 
 export type ChangelogType = {
   _id: string;
@@ -59,6 +64,22 @@ export interface BaseChangelogPageProps {
    */
   isDialog?: boolean;
   /**
+   * To give additional columns in changelog table
+   */
+  additionalTemplateColumns?: ChangelogTemplateColumn[];
+  /**
+   * To give additional filters in changelog filter
+   */
+  additionalTemplateFilters?: ChangelogTemplateFilter[];
+  /**
+   * Array to determine that these columns will be hidden
+   */
+  removedColumns?: ChangelogDefaultField[];
+  /**
+   * Array to determine that these filter fields will be hidden
+   */
+  removedFilters?: Omit<ChangelogDefaultField, 'oldValue' | 'newValue'>[];
+  /**
    * To set custom name for specific column in changelog table
    */
   objectNameColumn?: string;
@@ -97,6 +118,10 @@ export interface BaseChangelogPageProps {
    * Changelog custom params, contains stringified filter query needed.
    */
   customParams?: ChangelogFilterQuery;
+  /**
+   * Now changelog support custom table name from outside
+   */
+  tableName?: string;
 }
 
 export interface ButtonDownloadTrue extends BaseChangelogPageProps {
@@ -139,7 +164,7 @@ export type ChangelogPageEmits = {
  * You need to install vee-validate while using this component._
  *
  * --- ---
- * ![WangsVue](https://ik.imagekit.io/kurniadev/TS-HEAD-BLACK.png)
+ * ![WangsVue](https://www.wangs.id/wp-content/uploads/2023/12/cropped-Logo_Wangsid-removebg-preview-192x192.png)
  *
  * @group components
  */
