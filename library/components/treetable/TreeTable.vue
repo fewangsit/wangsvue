@@ -51,6 +51,7 @@ const props = withDefaults(defineProps<TreeTableProps>(), {
   selectionType: 'checkbox',
   customColumn: true,
   useOption: true,
+  rowHeight: 'fixed',
 });
 
 const emit = defineEmits<TreeTableEmits>();
@@ -901,11 +902,20 @@ const listenUpdateTableEvent = (): void => {
             <tr
               :id="item._id"
               :class="[
-                'py-[7px] px-4 transition-transform',
+                'px-4 transition-transform',
                 { 'select-none': dragging, 'select-auto': !dragging },
                 { '!cursor-grab [&_label]:!cursor-grab': draggable(item) },
               ]"
               :draggable="draggable(item)"
+              v-bind="
+                Preset.bodyrow({
+                  context: {
+                    selected: isRowSelected(item[dataKey]),
+                    disabled: isRowDisabled(item[dataKey]),
+                  },
+                  props,
+                })
+              "
               @click="toggleRowSelection(item)"
               @dblclick="treeTable ? toggleRowExpand(item, index) : null"
               @drag="dragging = true"
@@ -926,16 +936,6 @@ const listenUpdateTableEvent = (): void => {
                   'dark:bg-primary-50',
                 )
               "
-              class="border-b border-general-100"
-              v-bind="
-                Preset.bodyrow({
-                  context: {
-                    selected: isRowSelected(item[dataKey]),
-                    disabled: isRowDisabled(item[dataKey]),
-                  },
-                  props,
-                })
-              "
             >
               <td
                 v-if="reorderable && !sortOrder"
@@ -944,7 +944,7 @@ const listenUpdateTableEvent = (): void => {
               >
                 <Icon
                   v-if="!item.childRow && !item.childRowHeader"
-                  class="w-6 h-6 !p-0 !m-0 !cursor-grab [&_label]:!cursor-grab"
+                  class="w-[18px] h-[18px] !p-0 !m-0 !cursor-grab [&_label]:!cursor-grab"
                   icon="dragable-menu"
                 />
               </td>

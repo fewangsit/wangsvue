@@ -70,7 +70,13 @@ export interface TreeTableProps extends Omit<DataTableProps, 'columns'> {
    */
   scrollHeight?: string;
   /**
-   * To determine if row table is reorderable
+   * When the row height sets to fixed, it will have 35px height
+   *
+   * @defaultValue 'fixed'
+   */
+  rowHeight?: 'fixed' | 'auto';
+  /**
+   * To determine if row table is reorder-able
    */
   reorderable?: boolean;
 }

@@ -2,7 +2,7 @@ export default {
   root: ({ props }) => ({
     class: [
       // Alignments
-      'inline-flex relative',
+      'inline-flex relative align-middle',
       'shrink-0',
 
       // Shape
@@ -62,8 +62,6 @@ export default {
           props.modelValue == props.trueValue && !props.disabled,
         'bg-primary-100 dark:bg-primary-100':
           props.modelValue == props.trueValue && props.disabled,
-        'bg-primary-100 dark:bg-primary-100':
-          props.modelValue == props.trueValue && props.disabled,
         'bg-general-100 dark:bg-general-100':
           props.modelValue !== props.trueValue && props.disabled,
       },
@@ -114,7 +112,7 @@ export default {
       'border-2 border-surface-300 dark:border-surface-700',
 
       // Misc
-      'appareance-none',
+      'appearance-none',
       {
         'cursor-default': props.disabled,
         'cursor-pointer': !props.disabled,

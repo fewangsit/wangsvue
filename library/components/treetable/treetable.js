@@ -3,7 +3,6 @@ export default {
     'class': [
       'overflow-auto relative',
       'rounded-lg rounded-br-none rounded-bl-none',
-      ,
     ],
     'data-wv-name': 'treetable',
     'data-wv-section': 'root',
@@ -24,6 +23,10 @@ export default {
   },
   bodyrow: ({ context, props }) => ({
     class: [
+      'border-b border-general-100',
+      {
+        '!h-[35px]': props.rowHeight === 'fixed', // Style(DXJCiX2e): set table row height to fixed 35px
+      },
       // Color
       'text-general-800 text-xs font-normal',
       {
@@ -77,7 +80,7 @@ export default {
   },
   bodycell: {
     'class': [
-      'text-xs px-2 py-1.5',
+      'text-xs px-2 py-0.5',
       'border-0 !border-b !border-solid border-primary-100 dark:border-primary-100',
     ],
     'data-wv-section': 'bodycell',

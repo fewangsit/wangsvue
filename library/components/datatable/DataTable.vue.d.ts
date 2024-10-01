@@ -240,7 +240,7 @@ export interface DataTableProps {
    */
   columns: TableColumn[];
   /**
-   * Wether show single action option.
+   * Whether show single action option.
    * @default true;
    */
   useOption?: boolean;
@@ -255,11 +255,11 @@ export interface DataTableProps {
    */
   dataKey?: string;
   /**
-   * The key of the data object to determine wether the row data should be disabled.
+   * The key of the data object to determine whether the row data should be disabled.
    */
   disableKey?: string;
   /**
-   * Boolean to specify wether all rows should be disabled.
+   * Boolean to specify whether all rows should be disabled.
    */
   disableAllRows?: boolean;
   /**
