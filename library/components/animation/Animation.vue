@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, shallowRef } from 'vue';
 import { DotLottieVue } from '@lottiefiles/dotlottie-vue';
+import { AnimationProps } from './Animation.vue.d';
 
 const props = defineProps<AnimationProps>();
 
