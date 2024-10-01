@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.199
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.198...v1.4.199)
+
+### 🚀 Enhancements
+
+- Add Component Animation to play lottie animation ([38535a6](https://github.com/fewangsit/wangsvue/commit/38535a6))
+
+### 🩹 Fixes
+
+- **Animation.vue:** Cannot resolve AnimationProps ([ac4718a](https://github.com/fewangsit/wangsvue/commit/ac4718a))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.198
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.197...v1.4.198)
