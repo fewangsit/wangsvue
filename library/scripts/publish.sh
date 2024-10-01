@@ -6,5 +6,6 @@ npm link
 npm publish
 
 cd ../
+rm -r dist
 
 echo "Publish tasks completed successfully!"
