@@ -190,14 +190,16 @@ defineExpose({
       >
         <template #value="slotProps">
           <template v-if="slotProps.value">
-            <Badge
-              v-if="valueType === 'badge'"
-              v-bind="badgeValueProps"
-              :label="getOptionLabel()"
-            />
-            <div v-else class="flex items-center">
-              {{ getOptionLabel() }}
-            </div>
+            <slot name="value" :value="getOptionLabel()">
+              <Badge
+                v-if="valueType === 'badge'"
+                v-bind="badgeValueProps"
+                :label="getOptionLabel()"
+              />
+              <div v-else class="flex items-center">
+                {{ getOptionLabel() }}
+              </div>
+            </slot>
           </template>
           <template v-else>
             {{ slotProps.placeholder }}

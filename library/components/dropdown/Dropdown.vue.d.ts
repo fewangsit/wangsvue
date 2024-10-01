@@ -129,6 +129,7 @@ export interface DropdownProps {
 }
 
 export interface DropdownSlots {
+  'value': Slot<{ value: string }>;
   'option': Slot<{ option: DropdownOption }>;
   'addon-left': Slot;
   'addon-right': Slot;

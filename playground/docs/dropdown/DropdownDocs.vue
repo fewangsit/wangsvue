@@ -5,6 +5,7 @@ import Dropdown from 'lib/components/dropdown/Dropdown.vue';
 import { ref } from 'vue';
 import { OptionValue } from 'lib/types/options.type';
 import Form from 'lib/components/form/Form.vue';
+import Badge from 'lib/components/badge/Badge.vue';
 
 const model = ref<OptionValue>();
 </script>
@@ -62,6 +63,25 @@ const model = ref<OptionValue>();
             validator-message="Ga boleh kosong"
             value-type="badge"
           />
+          <Dropdown
+            :options="[
+              { label: 'Waiting for Approval', value: 'Approval' },
+              { label: 'Waiting for Handover', value: 'Handover' },
+            ]"
+            class="w-max"
+            field-name="status2"
+            input-border="none"
+            label="Status"
+            mandatory
+            option-label="label"
+            placeholder="Pilih status"
+            use-validator
+            validator-message="Ga boleh kosong"
+          >
+            <template #value="{ value }">
+              <Badge :label="value" />
+            </template>
+          </Dropdown>
           <Dropdown
             v-model="model"
             :options="['Waiting for Approval', 'Waiting for Handover']"
