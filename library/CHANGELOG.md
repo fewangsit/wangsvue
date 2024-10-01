@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.197
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.196...v1.4.197)
+
+### 🎨 Styles
+
+- **9Id4F4DB:** Update single action td style when useOption false ([e562c44](https://github.com/fewangsit/wangsvue/commit/e562c44))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.196
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.195...v1.4.196)
