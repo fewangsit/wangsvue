@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.196
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.195...v1.4.196)
+
+### 🚀 Enhancements
+
+- **Table:** Add options rowHeight to determine the row height whether fixed 35px or auto grow ([ee978dd](https://github.com/fewangsit/wangsvue/commit/ee978dd))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.195
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.194...v1.4.195)
