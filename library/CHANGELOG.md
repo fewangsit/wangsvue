@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.198
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.197...v1.4.198)
+
+### 🚀 Enhancements
+
+- **Dropdown:** Add slot value ([6b288d8](https://github.com/fewangsit/wangsvue/commit/6b288d8))
+
+### 🏡 Chore
+
+- **library:** Remove dist after successfully release ([a79a8d2](https://github.com/fewangsit/wangsvue/commit/a79a8d2))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.197
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.196...v1.4.197)
