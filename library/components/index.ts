@@ -46,6 +46,7 @@ import LiteDropdown from './litedropdown/LiteDropdown.vue';
 import ChangelogPage from './changelogpage/ChangelogPage.vue';
 import Editor from './editor/Editor.vue';
 import Image from './image/Image.vue';
+import Animation from './animation/Animation.vue';
 
 export {
   Badge,
@@ -96,4 +97,5 @@ export {
   LiteDropdown,
   ChangelogPage,
   Editor,
+  Animation,
 };

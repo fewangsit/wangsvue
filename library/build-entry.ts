@@ -112,6 +112,7 @@ import {
   ChangelogPage,
   Editor,
   Image,
+  Animation,
 } from './components';
 
 export default {
@@ -124,6 +125,7 @@ export default {
     app.use(ToastService);
 
     app.component('Badge', Badge);
+    app.component('Animation', Animation);
     app.component('BadgeGroup', BadgeGroup);
     app.component('Button', Button);
     app.component('ButtonToggle', ButtonToggle);
@@ -244,6 +246,7 @@ export {
   LiteDropdown,
   ChangelogPage,
   Editor,
+  Animation,
 
   // Component store
   useLoadingStore,

@@ -40,6 +40,7 @@ import ChangelogPageDocs from './docs/changelogpage/ChangelogPageDocs.vue';
 import CodeSnippetDocs from './docs/codesnippet/CodeSnippetDocs.vue';
 import InputRepositoryNameDocs from './docs/inputrepositoryname/InputRepositoryNameDocs.vue';
 import TextareaDocs from './docs/textarea/TextareaDocs.vue';
+import AnimationDocs from './docs/animation/AnimationDocs.vue';
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
@@ -50,6 +51,11 @@ const routes: Readonly<RouteRecordRaw[]> = [
         path: 'table',
         name: 'Tree Table Docs',
         component: TreeTableDocs,
+      },
+      {
+        path: 'animation',
+        name: 'Lottie Animation Docs',
+        component: AnimationDocs,
       },
       {
         path: 'dropdown',
