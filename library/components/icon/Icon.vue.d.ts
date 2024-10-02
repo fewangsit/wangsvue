@@ -170,7 +170,8 @@ export type WangsIcons =
   | 'list-unordered'
   | 'external-link'
   | 'whatsapp'
-  | 'chat-1-line';
+  | 'chat-1-line'
+  | 'attachment-2';
 
 export interface IconProps {
   icon: WangsIcons;
