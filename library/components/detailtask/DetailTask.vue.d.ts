@@ -23,9 +23,13 @@ export type DetailTaskEmits = {
    */
   show: [];
   /**
-   * Emits when there is a change on the task.
+   * Emits when new task is created.
    */
-  change: [];
+  create: [];
+  /**
+   * Emits when there is an update on the task.
+   */
+  update: [];
 };
 
 /**

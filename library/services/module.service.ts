@@ -1,14 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { getBaseURL } from 'lib/utils/getBaseURL.util';
 
-// Const user = JSON.parse(localStorage.getItem('user')!);
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
   const user = JSON.parse(localStorage.getItem('user') as string) ?? {};
 
   // TODO: Remove this on production.
   user.jwt =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzgzM2YwMjg3NTRjNGY3NTUzMmYwMCIsImlhdCI6MTcyNDM5NjcxOX0._2YP7q8kZNmJdegSwpFNRcIHs2P-DV9EUhsr9HOmvaw';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZDE3NzFjMWViZTUzNDRiYzJiOWRhYiIsImlhdCI6MTcyNjU0MjI3Nn0.euXnP_TUc5kv2236kGv2zsFvwgp6ZlT8QCdY8nUaypk';
 
   const BASE_URL = getBaseURL('APP_PROJECT_MODULE_API');
 

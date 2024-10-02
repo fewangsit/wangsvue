@@ -16,17 +16,21 @@ import { ProjectProcess } from 'lib/types/projectProcess.type';
 import { ProjectModule } from 'lib/types/projectModule.type';
 import { ProjectSubModule } from 'lib/types/projectSubmodule.type';
 import Textarea from 'primevue/textarea';
+import eventBus from 'lib/event-bus';
+import { TaskDetail } from 'lib/types/task.type';
 
 const toast = useToast();
 
+const taskId = inject<Ref<string>>('taskId');
+const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
 const isNewTask = inject<Ref<boolean>>('isNewTask');
 
 // TODO: Remove the fallback project id when it's no longer needed.
 const projectId =
-  localStorage.getItem('projectId') ?? '66e901c165b533fbe0c72c03';
+  sessionStorage.getItem('projectId') ?? '66fa406bdff16ba7dd2382fa';
 
 export type TaskLegend = {
-  process: Pick<ProjectProcess, '_id' | 'name' | 'default'>;
+  process: Pick<ProjectProcess, '_id' | 'name' | 'team'>;
   module?: Pick<ProjectModule, '_id' | 'name'>;
   submodule?: Pick<ProjectSubModule, '_id' | 'name'>;
   title: string;
@@ -74,7 +78,11 @@ const getProcessOptions = async (): Promise<void> => {
 
     legendOptions.value.process = data.data.processProjects.map((d) => ({
       label: d.name,
-      value: d,
+      value: {
+        _id: d._id,
+        name: d.name,
+        team: d.team.map((team) => ({ initial: team.initial })),
+      },
     }));
   } catch (error) {
     toast.add({
@@ -96,7 +104,10 @@ const getModuleOptions = async (): Promise<void> => {
 
     legendOptions.value.module = data.data.map((d) => ({
       label: d.name,
-      value: d,
+      value: {
+        _id: d._id,
+        name: d.name,
+      },
     }));
   } catch (error) {
     toast.add({
@@ -118,11 +129,15 @@ const getSubmoduleOptions = async (): Promise<void> => {
       module: JSON.stringify([legendForm.value.module._id]),
     });
 
-    legendOptions.value.submodule = data.data.map((d) => ({
+    legendOptions.value.submodule = data.data?.data.map((d) => ({
       label: d.name,
-      value: d,
+      value: {
+        _id: d._id,
+        name: d.name,
+      },
     }));
   } catch (error) {
+    console.error(error);
     toast.add({
       message: 'Data Sub Modul gagal diambil.',
       severity: 'error',
@@ -135,46 +150,45 @@ const getSubmoduleOptions = async (): Promise<void> => {
 
 /**
  * Disable Rules:
- * 1. If the selected process is unique (the default process, eg. Pengonsepan, Komponen Web, etc), set module dropdown to disabled.
- * 2. If the selected process is NOT unique, set process dropdown to NOT disabled.
+ * 1. If the process hasn't been selected.
  */
 const isModuleDropdownDisabled = computed<boolean>(() => {
-  return (
-    (legendForm.value.process && legendForm.value.process.default) ||
-    !legendForm.value.process
-  );
+  return !legendForm.value.process;
 });
 
 /**
  * Disable Rules:
- * 1. If the selected process is unique (the default process, eg. Pengonsepan, Komponen Web, etc), set submodule dropdown to disabled.
- * 2. If the selected process is NOT unique & module has not been selected, set submodule dropdown to disabled.
+ * 1. If the selected process is for UIUX, set submodule dropdown to disabled.
+ * 2. If the selected process is NOT for UIUX & module has not been selected, set submodule dropdown to disabled.
  */
 const isSubmoduleDropdownDisabled = computed<boolean>(() => {
   return (
-    (legendForm.value.process && legendForm.value.process.default) ||
+    (legendForm.value.process &&
+      legendForm.value.process.team[0].initial === 'UIUX') ||
     !legendForm.value.module
   );
 });
 
 /**
  * Disable Rules:
- * 1. If the selected process is unique (the default process, eg. Pengonsepan, Komponen Web, etc), IMMEDIATELY set title input to NOT disabled.
- * 2. If the selected process is NOT unique & module + submodule has not been selected, set title input to disabled.
+ * 1. If the selected process is for UIUX, IMMEDIATELY set title input to NOT disabled.
+ * 2. If the selected process is NOT for UIUX & module + submodule has not been selected, set title input to disabled.
  */
 const isTitleInputDisabled = computed<boolean>(() => {
-  const isProcessDefault =
-    !!legendForm.value.process && legendForm.value.process.default;
+  const isProcessUIUX =
+    !!legendForm.value.process &&
+    legendForm.value.process.team[0].initial === 'UIUX';
 
-  const isProcessNotDefault =
-    !!legendForm.value.process && !legendForm.value.process.default;
+  const isProcessNotUIUX =
+    !!legendForm.value.process &&
+    legendForm.value.process.team[0].initial !== 'UIUX';
 
-  if (isProcessDefault) {
-    return false;
+  if (isProcessUIUX) {
+    return !legendForm.value.module;
   }
 
   if (
-    isProcessNotDefault &&
+    isProcessNotUIUX &&
     legendForm.value.process &&
     legendForm.value.module &&
     legendForm.value.submodule
@@ -184,29 +198,24 @@ const isTitleInputDisabled = computed<boolean>(() => {
   return true;
 });
 
-// TODO: Get Detail Task API
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const getDetailTask = async (): Promise<void> => {
-  try {
-    // PASS
-  } catch {
-    // PASS
-  }
-};
-
 const createTask = async (): Promise<void> => {
   if (!legendForm.value.process || !legendForm.value.title) return;
   try {
-    const data: CreateTaskDTO = {
+    const dataDTO: CreateTaskDTO = {
       project: projectId,
       process: legendForm.value.process._id,
       module: legendForm.value.module?._id,
       subModule: legendForm.value?.submodule?._id,
       name: legendForm.value.title,
-      assignedTo: [],
+      team: legendForm.value.process.team.map((team) => team.initial),
     };
 
-    await TaskServices.postCreateTask(data);
+    await TaskServices.postCreateTask(dataDTO);
+
+    // TODO: Replace with _id from create task
+    taskId.value = '66fb6b394374e14b8768debf';
+
+    eventBus.emit('detail-task:create', { taskId: taskId.value });
 
     isNewTask.value = false;
   } catch (error) {
@@ -222,7 +231,7 @@ const createTask = async (): Promise<void> => {
 // TODO: Edit Task API
 const editTask = async (): Promise<void> => {
   try {
-    // PASS
+    eventBus.emit('detail-task:update', { taskId: taskId.value });
   } catch {
     // PASS
   }
@@ -230,9 +239,11 @@ const editTask = async (): Promise<void> => {
 
 /**
  * This function is called whenever there will be changes in the detail task. (including create task and edit task)
- *
  */
 const handleTaskChange = async (): Promise<void> => {
+  // Skip this function when title input is disabled.
+  if (isTitleInputDisabled.value) return;
+
   if (isNewTask.value) {
     await createTask();
   } else {
@@ -250,13 +261,55 @@ const handleTitleInput = (e: KeyboardEvent): void => {
 };
 
 watch(
+  taskDetail,
+  () => {
+    // Fill the initial legend options values
+    legendOptions.value = {
+      process: [
+        {
+          label: taskDetail.value.process.name,
+          value: taskDetail.value.process,
+        },
+      ],
+      module: [
+        {
+          label: taskDetail.value.module.name,
+          value: taskDetail.value.module,
+        },
+      ],
+    };
+
+    if (taskDetail.value.subModule) {
+      legendOptions.value.submodule = [
+        {
+          label: taskDetail.value.subModule.name,
+          value: taskDetail.value.subModule,
+        },
+      ];
+    }
+
+    // Fill the initial legend form values
+    legendForm.value = {
+      process: taskDetail.value.process,
+      module: taskDetail.value.module,
+      title: taskDetail.value.name,
+    };
+
+    if (taskDetail.value.subModule) {
+      legendForm.value.submodule = taskDetail.value.subModule;
+    }
+  },
+  { deep: true },
+);
+
+watch(
   computedLegendForm,
   (value, oldValue) => {
-    if (value.process !== oldValue.process) {
+    if (oldValue.process !== undefined && value.process !== oldValue.process) {
       legendForm.value.module = undefined;
     }
 
-    if (value.module !== oldValue.module) {
+    if (oldValue.process !== undefined && value.module !== oldValue.module) {
       legendForm.value.submodule = undefined;
     }
   },
@@ -269,13 +322,13 @@ watch(
     <DialogNilaiPrioritas
       v-model:visible="showDialogNilaiPrioritas"
       :legend="legendForm as TaskLegend"
-      :parent-task="[
+      :tasks="[
         // TODO: Remove and replace this with detail task's data.
         {
           process: {
             _id: '1',
             name: 'Pengonsepan',
-            default: true,
+            team: [],
           },
           title: 'Process',
           priorityValue: 1,
@@ -284,7 +337,7 @@ watch(
           process: {
             _id: '2',
             name: 'Detailing',
-            default: true,
+            team: [],
           },
           title: 'Process',
           priorityValue: 5,
@@ -293,7 +346,7 @@ watch(
           process: {
             _id: '3',
             name: 'Slicing Komponen Web',
-            default: true,
+            team: [],
           },
           title: 'Process',
           priorityValue: 10,
@@ -349,7 +402,16 @@ watch(
         </div>
       </div>
       <Button
-        :disabled="!legendForm.title && isNewTask"
+        v-if="taskDetail && taskDetail.priority"
+        :disabled="isNewTask"
+        :label="taskDetail.priority.toString()"
+        @click="showDialogNilaiPrioritas = true"
+        class="!min-w-8"
+        data-wv-section="add-nilai-prioritas-button"
+      />
+      <Button
+        v-else
+        :disabled="isNewTask"
         @click="showDialogNilaiPrioritas = true"
         data-wv-section="add-nilai-prioritas-button"
         icon="add"
@@ -373,7 +435,7 @@ watch(
           unstyled
         />
       </div>
-      <Badge label="Backlog" />
+      <Badge :label="taskDetail?.status ?? 'Backlog'" />
     </div>
   </div>
 </template>

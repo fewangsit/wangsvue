@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { CreateTaskDTO } from 'lib/dto/task.dto';
 import { getBaseURL } from 'lib/utils/getBaseURL.util';
 
-// Const user = JSON.parse(localStorage.getItem('user')!);
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
   const user = JSON.parse(localStorage.getItem('user') as string) ?? {};
 
@@ -29,6 +27,12 @@ const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
 const TaskServices = {
   postCreateTask: (data: CreateTaskDTO): Promise<AxiosResponse> => {
     return API().post('/api/tasks', data);
+  },
+  getTaskList: (params?: Record<string, string>): Promise<AxiosResponse> => {
+    return API({ params }).get('/api/tasks');
+  },
+  getTaskDetail: (taskId: string): Promise<AxiosResponse> => {
+    return API().get(`/api/tasks/${taskId}`);
   },
 };
 

@@ -27,7 +27,7 @@ const ProcessServices = {
   getProcessList: (
     projectId: string,
     params?: Record<string, string>,
-    isActive: boolean = true,
+    isActive: 'active' | 'nonactive' = 'active',
   ): Promise<AxiosResponse> => {
     return API({ params }).get(
       `/project-details/process/${projectId}/${isActive}`,

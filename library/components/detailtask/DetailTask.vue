@@ -1,14 +1,23 @@
 <script setup lang="ts">
-import { computed, provide, ref, shallowRef } from 'vue';
+import { computed, onMounted, onUnmounted, provide, ref } from 'vue';
 
 import Dialog from 'primevue/dialog';
 import DialogPreset from 'lib/preset/dialog';
 import Legend from './blocks/Legend.vue';
 import Button from '../button/Button.vue';
-import { DetailTaskProps } from './DetailTask.vue.d';
+import { DetailTaskEmits, DetailTaskProps } from './DetailTask.vue.d';
 import { MenuItem } from '../menuitem';
 import TabMenu from '../tabmenu/TabMenu.vue';
 import InfoTaskTab from './blocks/Tabs/InfoTaskTab.vue';
+import { TaskDetail } from 'lib/types/task.type';
+import eventBus from 'lib/event-bus';
+import useLoadingStore from '../loading/store/loading.store';
+import { useToast } from 'lib/utils';
+import TaskServices from 'lib/services/task.service';
+import DescriptionTab from './blocks/Tabs/DescriptionTab.vue';
+
+const { setLoading } = useLoadingStore();
+const toast = useToast();
 
 const visible = defineModel<boolean>('visible', { required: true });
 
@@ -16,9 +25,30 @@ const props = withDefaults(defineProps<DetailTaskProps>(), {
   taskId: undefined,
 });
 
-const isNewTask = ref<boolean>(!props.taskId);
+const emit = defineEmits<DetailTaskEmits>();
 
-const taskMenuIndex = shallowRef<number>(0);
+onMounted(async () => {
+  attachEventListener();
+
+  if (props.taskId) {
+    taskId.value = props.taskId;
+
+    await getDetailTask();
+  } else {
+    isNewTask.value = true;
+  }
+});
+
+onUnmounted(() => {
+  removeEventListener();
+});
+
+const firstFetch = ref<boolean>(true);
+const taskId = ref<string>();
+const taskDetail = ref<TaskDetail>();
+const isNewTask = ref<boolean>(false);
+
+const taskMenuIndex = ref<number>(0);
 const taskMenu = computed<MenuItem[]>(() => {
   return [
     {
@@ -40,6 +70,97 @@ const taskMenu = computed<MenuItem[]>(() => {
   ];
 });
 
+const getDetailTask = async (): Promise<void> => {
+  try {
+    if (!taskId.value) return;
+    if (firstFetch.value) setLoading(true);
+
+    const { data } = await TaskServices.getTaskDetail(taskId.value);
+
+    // Parse task detail data to synchronize legend form data.
+    taskDetail.value = {
+      ...data.data,
+      process: {
+        _id: data.data.process._id,
+        name: data.data.process.name,
+        team: data.data.team.map((team) => ({
+          initial: team,
+        })),
+      },
+      module: {
+        _id: data.data.module._id,
+        name: data.data.module.name,
+      },
+    };
+
+    taskId.value = data.data._id;
+
+    firstFetch.value = false;
+  } catch (error) {
+    console.error(error);
+    toast.add({
+      message: 'Data Task Detail gagal diambil.',
+      severity: 'error',
+      error,
+    });
+  } finally {
+    setLoading(false);
+  }
+};
+
+const refreshAndEmitHandler = async (
+  eventName: keyof DetailTaskEmits,
+  id?: string,
+): Promise<void> => {
+  try {
+    // Skip this function if id doesn't equal the task id.
+    if (id !== taskId.value) return;
+
+    await getDetailTask();
+
+    switch (eventName) {
+      case 'show':
+        emit('show');
+        break;
+      case 'create':
+        emit('create');
+        break;
+      case 'update':
+        emit('update');
+        break;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const attachEventListener = (): void => {
+  eventBus.on('detail-task:show', (event) =>
+    refreshAndEmitHandler('show', event.taskId),
+  );
+  eventBus.on('detail-task:create', (event) =>
+    refreshAndEmitHandler('create', event.taskId),
+  );
+  eventBus.on('detail-task:update', (event) =>
+    refreshAndEmitHandler('update', event.taskId),
+  );
+};
+
+const removeEventListener = (): void => {
+  eventBus.off('detail-task:show');
+  eventBus.off('detail-task:create');
+  eventBus.off('detail-task:update');
+};
+
+/**
+ * Reset dialog state
+ */
+const reset = (): void => {
+  firstFetch.value = true;
+};
+
+provide('taskId', taskId);
+provide('taskDetail', taskDetail);
 provide('isNewTask', isNewTask);
 </script>
 
@@ -88,6 +209,8 @@ provide('isNewTask', isNewTask);
         class: [...DialogPreset.footer.class],
       },
     }"
+    @hide="reset"
+    @show="eventBus.emit('detail-task:show', { taskId })"
     modal
   >
     <template #header>
@@ -111,6 +234,7 @@ provide('isNewTask', isNewTask);
       <TabMenu v-model:active-index="taskMenuIndex" :menu="taskMenu" />
       <div>
         <InfoTaskTab v-if="taskMenuIndex === 0" />
+        <DescriptionTab v-if="taskMenuIndex === 1" />
       </div>
     </template>
   </Dialog>
