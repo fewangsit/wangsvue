@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import TaskAttachment from '../TaskAttachment.vue';
+import TaskChecklist from '../TaskChecklist.vue';
 import TaskDescription from '../TaskDescription.vue';
 import TaskLink from '../TaskLink.vue';
 </script>
@@ -10,6 +11,7 @@ import TaskLink from '../TaskLink.vue';
       <TaskDescription />
       <TaskAttachment />
       <TaskLink />
+      <TaskChecklist />
     </div>
   </div>
 </template>

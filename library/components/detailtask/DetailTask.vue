@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, provide, ref } from 'vue';
+import { computed, onMounted, onUnmounted, provide, ref, watch } from 'vue';
 
 import Dialog from 'primevue/dialog';
 import DialogPreset from 'lib/preset/dialog';
@@ -32,8 +32,6 @@ onMounted(async () => {
 
   if (props.taskId) {
     taskId.value = props.taskId;
-
-    await getDetailTask();
   } else {
     isNewTask.value = true;
   }
@@ -43,6 +41,9 @@ onUnmounted(() => {
   removeEventListener();
 });
 
+/**
+ * To be used for the first initial loading.
+ */
 const firstFetch = ref<boolean>(true);
 const taskId = ref<string>();
 const taskDetail = ref<TaskDetail>();
@@ -162,6 +163,17 @@ const reset = (): void => {
 provide('taskId', taskId);
 provide('taskDetail', taskDetail);
 provide('isNewTask', isNewTask);
+
+watch(
+  () => props.taskId,
+  () => {
+    if (props.taskId) {
+      taskId.value = props.taskId;
+    } else {
+      isNewTask.value = true;
+    }
+  },
+);
 </script>
 
 <template>
