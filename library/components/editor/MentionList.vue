@@ -3,18 +3,12 @@ import { ref, watch, defineProps } from 'vue';
 import Button from '../button/Button.vue';
 
 const props = defineProps<{
-  items: string[];
-  command: (arg: { id: string }) => void;
+  items: { id: string; label: string }[];
+  command: (arg: { id: string; label: string }) => void;
+  selectedItemsCb: (data: any) => void;
 }>();
 
 const selectedIndex = ref(0);
-
-watch(
-  () => props.items,
-  () => {
-    selectedIndex.value = 0;
-  },
-);
 
 const onKeyDown = (event: KeyboardEvent): boolean => {
   if (event.key === 'ArrowUp') {
@@ -48,13 +42,26 @@ const enterHandler = (): void => {
 const selectItem = (index: number): void => {
   const item = props.items[index];
   if (item) {
-    props.command({ id: item });
+    props.command({
+      id: item.id,
+      label: item.label,
+    });
+    if (props.selectedItemsCb) {
+      props.selectedItemsCb(item);
+    }
   }
 };
 
 defineExpose({
   onKeyDown,
 });
+
+watch(
+  () => props.items,
+  () => {
+    selectedIndex.value = 0;
+  },
+);
 </script>
 <template>
   <div
@@ -66,10 +73,10 @@ defineExpose({
         v-for="(item, index) in items"
         :class="{
           'flex items-center gap-1 text-left w-full': true,
-          'bg-gray-400': index === selectedIndex,
+          'bg-gray-400 ': index === selectedIndex,
           'hover:bg-gray-100': true,
         }"
-        :label="item"
+        :label="item.label"
         @click="selectItem(index)"
         severity="secondary"
       />

@@ -66,8 +66,20 @@ export interface EditorProps {
   invalid?: boolean;
   /**
    * Showing Optional value text on Label.
+   * @default true
    */
   showOptionalText?: boolean;
+  /**
+   * Determine for image upload from local machine if value is true, no need to use postImageLocal emitter
+   * @default false
+   */
+  isImageUploadBase64?: boolean;
+  /**
+   * Fetch function for mention this will get triger if putting @ in editor
+   */
+  fetchMentionSuggestionFunction?: () => Promise<GetMentionSuggestionResponse>;
+
+  mentionedList?: string[];
 }
 
 export type EditorEmits = {
@@ -84,6 +96,8 @@ export type EditorEmits = {
    * but this only get triger if selected image get set by postImageLocal function
    */
   'deleteImageLocal': [value: ImageProperties];
+
+  'update:mentionedList': [value: string[]];
 };
 
 export type PostImage = {
@@ -113,6 +127,21 @@ export type ImageProperties = {
   title: string;
 };
 
+export type GetMentionSuggestionResponse = {
+  status: number;
+  message: string;
+  data: MentionSuggestion[];
+};
+
+export type MentionSuggestion = {
+  _id: string;
+  fullName: string;
+};
+
 export type EditorState = 'editable' | 'readonly';
 
-declare class Editor extends ClassComponent<EditorProps, unknown, unknown> {}
+declare class Editor extends ClassComponent<
+  EditorProps,
+  unknown,
+  EditorEmits
+> {}
