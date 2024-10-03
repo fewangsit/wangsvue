@@ -81,7 +81,7 @@ const setJWTToken = (): void => {
     severity: 'success',
   });
 
-  eventBus.emit('data-table:update', { tableName: 'task-table' });
+  refreshTable();
 };
 
 const getTaskList = async (
@@ -101,6 +101,10 @@ const getTaskList = async (
   }
 };
 
+const refreshTable = (): void => {
+  eventBus.emit('data-table:update', { tableName: 'task-table' });
+};
+
 watch(taskId, () => {
   invalidTaskInput.value = false;
   invalidMessage.value = undefined;
@@ -114,8 +118,17 @@ watch(jwtToken, () => {
 
 <template>
   <Toast />
-  <DetailTask v-model:visible="showDetailTask" :task-id="taskId" />
-  <DetailTask v-model:visible="showNewTask" />
+  <DetailTask
+    v-model:visible="showDetailTask"
+    :task-id="taskId"
+    @create="refreshTable"
+    @update="refreshTable"
+  />
+  <DetailTask
+    v-model:visible="showNewTask"
+    @create="refreshTable"
+    @update="refreshTable"
+  />
   <Card>
     <template #header>
       <DocTitle name="Detail Task" />

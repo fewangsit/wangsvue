@@ -179,6 +179,7 @@ watch(
 <template>
   <Dialog
     v-model:visible="visible"
+    :block-scroll="false"
     :closable="false"
     :draggable="false"
     :pt="{

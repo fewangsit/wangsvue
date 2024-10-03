@@ -171,7 +171,8 @@ export type WangsIcons =
   | 'external-link'
   | 'whatsapp'
   | 'chat-1-line'
-  | 'attachment-2';
+  | 'attachment-2'
+  | 'save';
 
 export interface IconProps {
   icon: WangsIcons;
