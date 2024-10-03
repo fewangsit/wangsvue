@@ -47,6 +47,7 @@ import ChangelogPage from './changelogpage/ChangelogPage.vue';
 import Editor from './editor/Editor.vue';
 import Image from './image/Image.vue';
 import Animation from './animation/Animation.vue';
+import Comment from 'lib/components/comment/Comment.vue';
 
 export {
   Badge,
@@ -98,4 +99,5 @@ export {
   ChangelogPage,
   Editor,
   Animation,
+  Comment,
 };
