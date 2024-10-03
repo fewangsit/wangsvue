@@ -169,7 +169,9 @@ export type WangsIcons =
   | 'underline'
   | 'list-unordered'
   | 'external-link'
-  | 'whatsapp';
+  | 'whatsapp'
+  | 'code-box-line'
+  | 'emotion-happy-line';
 
 export interface IconProps {
   icon: WangsIcons;
