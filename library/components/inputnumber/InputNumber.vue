@@ -127,7 +127,7 @@ const onUpdateValue = (
         inputKey.value++;
 
         nextTick(() => {
-          const inputWrapper = inputNumber.value[
+          const inputWrapper = inputNumber.value?.[
             '$el' as keyof InputNumber
           ] as HTMLSpanElement;
 
@@ -183,7 +183,9 @@ const increment = (): void => {
   const currentValue = +(field.value ?? 0);
 
   onUpdateValue(
-    currentValue < props.max ? currentValue + 1 : currentValue,
+    props.max != null && currentValue < props.max
+      ? currentValue + 1
+      : currentValue,
     'modelValue',
   );
 };
@@ -192,7 +194,9 @@ const decrement = (): void => {
   const currentValue = +(field.value ?? 0);
 
   onUpdateValue(
-    currentValue > props.min ? currentValue - 1 : currentValue,
+    props.min != null && currentValue > props.min
+      ? currentValue - 1
+      : currentValue,
     'modelValue',
   );
 };

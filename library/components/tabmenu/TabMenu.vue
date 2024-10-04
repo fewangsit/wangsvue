@@ -23,7 +23,9 @@ onBeforeMount(() => {
    * Maybe we should add a prop to use findIndex or findLastIndex for that. (Default to findLastIndex (LTR))
    */
   const index =
-    props.menu?.findLastIndex((item) => route.path.includes(item.route)) ?? -1;
+    props.menu?.findLastIndex(
+      (item) => item.route && route.path.includes(item.route),
+    ) ?? -1;
 
   if (index !== -1) {
     activeIndex.value = index;

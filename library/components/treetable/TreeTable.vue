@@ -383,7 +383,8 @@ const onDragEnter = (e: DragEvent, row: DragableRow): void => {
     );
 
     if (draggedIndex !== -1 && dropTargetIndex !== -1) {
-      rowReorderEventPayload.value.toIndex = dropTargetIndex;
+      if (rowReorderEventPayload.value)
+        rowReorderEventPayload.value.toIndex = dropTargetIndex;
 
       // Swap the items in columnReorderData
       [
@@ -1096,7 +1097,7 @@ const listenUpdateTableEvent = (): void => {
                       :class="['focus:px-2']"
                       :contenteditable="col.editable"
                       @input="
-                        (e: InputEvent) => {
+                        (e: Event) => {
                           $emit('input', {
                             item,
                             field: col.field,
