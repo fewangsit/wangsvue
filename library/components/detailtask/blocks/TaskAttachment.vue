@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { inject, onMounted, Ref, ref } from 'vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import Changelog from 'lib/components/changelog/Changelog.vue';
 import Button from 'lib/components/button/Button.vue';
@@ -12,7 +12,7 @@ onMounted(() => {
   getAttachments();
 });
 
-const taskId = ref('66f28111ccfbaa1233f79028');
+const taskId = inject<Ref<string>>('taskId');
 
 const attachments = ref<AttachmentItemData[]>([]);
 
@@ -47,7 +47,7 @@ const getAttachments = async (): Promise<void> => {
         />
       </div>
     </div>
-    <div class="pl-8 py-2 flex flex-col gap-2">
+    <div v-show="attachments.length" class="pl-8 py-2 flex flex-col gap-2">
       <AttachmentItem
         :key="index"
         v-for="(item, index) in attachments"
