@@ -11,7 +11,7 @@ import ModuleServices from 'lib/services/module.service';
 import SubModuleServices from 'lib/services/submodule.service';
 import DialogNilaiPrioritas from './Dialog/DialogNilaiPrioritas.vue';
 import TaskServices from 'lib/services/task.service';
-import { CreateTaskDTO } from 'lib/dto/task.dto';
+import { CreateTaskDTO, EditTaskDTO } from 'lib/dto/task.dto';
 import { ProjectProcess } from 'lib/types/projectProcess.type';
 import { ProjectModule } from 'lib/types/projectModule.type';
 import { ProjectSubModule } from 'lib/types/projectSubmodule.type';
@@ -25,9 +25,7 @@ const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
 const isNewTask = inject<Ref<boolean>>('isNewTask');
 
-// TODO: Remove the fallback project id when it's no longer needed.
-const projectId =
-  sessionStorage.getItem('projectId') ?? '66fa406bdff16ba7dd2382fa';
+const projectId = sessionStorage.getItem('projectId');
 
 export type TaskLegend = {
   process: Pick<ProjectProcess, '_id' | 'name' | 'team'>;
@@ -228,12 +226,26 @@ const createTask = async (): Promise<void> => {
   }
 };
 
-// TODO: Edit Task API
 const editTask = async (): Promise<void> => {
   try {
+    const dataDTO: EditTaskDTO = {
+      project: projectId,
+      process: legendForm.value.process._id,
+      module: legendForm.value.module?._id,
+      subModule: legendForm.value?.submodule?._id,
+      name: legendForm.value.title,
+    };
+
+    await TaskServices.putEditTask(taskId.value, dataDTO);
+
     eventBus.emit('detail-task:update', { taskId: taskId.value });
-  } catch {
-    // PASS
+  } catch (error) {
+    console.error(error);
+    toast.add({
+      message: 'Data Task gagal diubah.',
+      severity: 'error',
+      error,
+    });
   }
 };
 
@@ -263,7 +275,6 @@ const handleTitleInput = (e: KeyboardEvent): void => {
 watch(
   taskDetail,
   () => {
-    // Fill the initial legend options values
     legendOptions.value = {
       process: [
         {
@@ -305,6 +316,7 @@ watch(
 watch(
   computedLegendForm,
   (value, oldValue) => {
+    if (!isNewTask.value) return;
     if (oldValue.process !== undefined && value.process !== oldValue.process) {
       legendForm.value.module = undefined;
     }
@@ -420,7 +432,7 @@ watch(
       />
     </div>
     <div class="flex justify-between items-start">
-      <div class="w-4/5" data-wv-section="detailtask-title-wrapper">
+      <div class="w-8/10" data-wv-section="detailtask-title-wrapper">
         <Textarea
           v-model="legendForm.title"
           :disabled="isTitleInputDisabled"
@@ -435,7 +447,14 @@ watch(
           unstyled
         />
       </div>
-      <Badge :label="taskDetail?.status ?? 'Backlog'" />
+      <div class="flex items-center gap-2">
+        <Badge :label="taskDetail?.status ?? 'Backlog'" />
+        <!-- TODO: 
+          - Only show task button action when there are action to be made
+          - Show button according to their respective action
+        -->
+        <Button label="Tandai Selesai" severity="secondary" />
+      </div>
     </div>
   </div>
 </template>

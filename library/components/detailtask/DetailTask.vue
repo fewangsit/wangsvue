@@ -9,12 +9,13 @@ import { DetailTaskEmits, DetailTaskProps } from './DetailTask.vue.d';
 import { MenuItem } from '../menuitem';
 import TabMenu from '../tabmenu/TabMenu.vue';
 import InfoTaskTab from './blocks/Tabs/InfoTaskTab.vue';
-import { TaskDetail } from 'lib/types/task.type';
+import { TaskDependency, TaskDetail } from 'lib/types/task.type';
 import eventBus from 'lib/event-bus';
 import useLoadingStore from '../loading/store/loading.store';
 import { useToast } from 'lib/utils';
 import TaskServices from 'lib/services/task.service';
 import DescriptionTab from './blocks/Tabs/DescriptionTab.vue';
+import TaskMore from './blocks/TaskMore.vue';
 
 const { setLoading } = useLoadingStore();
 const toast = useToast();
@@ -47,6 +48,7 @@ onUnmounted(() => {
 const firstFetch = ref<boolean>(true);
 const taskId = ref<string>();
 const taskDetail = ref<TaskDetail>();
+const taskDependencies = ref<TaskDependency[]>();
 const isNewTask = ref<boolean>(false);
 
 const taskMenuIndex = ref<number>(0);
@@ -74,7 +76,6 @@ const taskMenu = computed<MenuItem[]>(() => {
 const getDetailTask = async (): Promise<void> => {
   try {
     if (!taskId.value) return;
-    if (firstFetch.value) setLoading(true);
 
     const { data } = await TaskServices.getTaskDetail(taskId.value);
 
@@ -95,8 +96,6 @@ const getDetailTask = async (): Promise<void> => {
     };
 
     taskId.value = data.data._id;
-
-    firstFetch.value = false;
   } catch (error) {
     console.error(error);
     toast.add({
@@ -104,8 +103,23 @@ const getDetailTask = async (): Promise<void> => {
       severity: 'error',
       error,
     });
-  } finally {
-    setLoading(false);
+  }
+};
+
+const getTaskDependency = async (): Promise<void> => {
+  try {
+    if (!taskId.value) return;
+
+    const { data } = await TaskServices.getTaskDependencies(taskId.value);
+
+    taskDependencies.value = data.data;
+  } catch (error) {
+    console.error(error);
+    toast.add({
+      message: 'Data Task Dependensi gagal diambil.',
+      severity: 'error',
+      error,
+    });
   }
 };
 
@@ -117,7 +131,13 @@ const refreshAndEmitHandler = async (
     // Skip this function if id doesn't equal the task id.
     if (id !== taskId.value) return;
 
+    if (firstFetch.value) setLoading(true);
+
     await getDetailTask();
+    await getTaskDependency();
+
+    firstFetch.value = false;
+    setLoading(false);
 
     switch (eventName) {
       case 'show':
@@ -188,8 +208,9 @@ watch(
           ...DialogPreset.root({ state: {} }).class,
 
           //   Customs
-          '!w-[clamp(800px,800px,1200px)]',
+          '!w-[clamp(800px,800px,95vw)]',
           '!h-[648px]',
+          '!max-w-none',
           '!border-grayscale-900 !border',
           '!p-0',
           '!gap-0',
@@ -216,6 +237,7 @@ watch(
           // Customs
           '!p-0 !m-0',
           '!pl-6 !py-3 !pr-3 !mr-3',
+          'detailtask-scrollbar-hide',
         ],
       },
       footer: {
@@ -231,6 +253,13 @@ watch(
         <span class="text-lg font-semibold leading-4">Detail Task</span>
         <div class="flex items-center gap-1.5">
           <Button
+            icon="chat-1-line"
+            icon-class="!w-6 !h-6"
+            severity="secondary"
+            text
+          />
+          <TaskMore />
+          <Button
             @click="visible = false"
             class="!p-0.5 !text-general-200 dark:!text-general-200"
             data-wv-section="closebutton"
@@ -243,12 +272,26 @@ watch(
       </div>
     </template>
     <template #default>
-      <Legend />
-      <TabMenu v-model:active-index="taskMenuIndex" :menu="taskMenu" />
-      <div>
-        <InfoTaskTab v-if="taskMenuIndex === 0" />
-        <DescriptionTab v-if="taskMenuIndex === 1" />
+      <div class="flex flex-col gap-3">
+        <Legend />
+        <TabMenu v-model:active-index="taskMenuIndex" :menu="taskMenu" />
+        <div>
+          <InfoTaskTab v-show="taskMenuIndex === 0" />
+          <DescriptionTab v-show="taskMenuIndex === 1" />
+        </div>
       </div>
     </template>
   </Dialog>
 </template>
+<style>
+/* Hide scrollbar for Chrome, Safari and Opera */
+.detailtask-scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.detailtask-scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+</style>

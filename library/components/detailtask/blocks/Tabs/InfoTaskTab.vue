@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, Ref, ref } from 'vue';
+import { computed, inject, Ref, ref } from 'vue';
 
 import Button from 'lib/components/button/Button.vue';
 import DialogAssignMember from '../Dialog/DialogAssignMember.vue';
@@ -16,6 +16,12 @@ const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
 const showDialogAssignMember = ref<boolean>(false);
 const showDialogSetDuration = ref<boolean>(false);
 const showDialogCustomDependency = ref<boolean>(false);
+
+const memberNicknames = computed(() =>
+  taskDetail.value.assignedTo.map((member) => member.nickName).join(', '),
+);
+
+const memberTeams = computed(() => taskDetail.value.team.join(', '));
 </script>
 
 <template>
@@ -29,20 +35,18 @@ const showDialogCustomDependency = ref<boolean>(false);
           <Button
             :disabled="isNewTask"
             :label="
-              taskDetail?.assignedTo.length > 0
-                ? taskDetail.assignedTo.join(', ')
-                : 'Member'
+              taskDetail?.assignedTo.length > 0 ? memberNicknames : 'Member'
             "
             @click="showDialogAssignMember = true"
-            class="!w-[150px] !h-[30px] !text-left !rounded"
+            class="!min-w-[150px] !h-[30px] !text-left !rounded"
             icon="user"
             severity="success"
           />
           <Button
             :disabled="isNewTask"
+            :label="taskDetail?.team.length > 0 ? memberTeams : 'Tim'"
             class="!w-[150px] !h-[30px] !text-left !rounded pointer-events-none"
             icon="team"
-            label="Tim"
             severity="success"
           />
         </div>

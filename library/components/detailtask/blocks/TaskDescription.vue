@@ -1,17 +1,31 @@
 <script setup lang="ts">
+import { formatTimeAgo } from '@vueuse/core';
 import Button from 'lib/components/button/Button.vue';
 import Editor from 'lib/components/editor/Editor.vue';
 import { EditorState, JSONContent } from 'lib/components/editor/Editor.vue.d';
 import Icon from 'lib/components/icon/Icon.vue';
+import UserName from 'lib/components/username/UserName.vue';
+import { EditDescriptionTaskDTO } from 'lib/dto/task.dto';
 import eventBus from 'lib/event-bus';
+import TaskServices from 'lib/services/task.service';
+import { TaskDescription, TaskDetail } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
-import { computed, inject, Ref, ref, toRaw } from 'vue';
+import { computed, inject, onMounted, Ref, ref, toRaw, watch } from 'vue';
 
 const toast = useToast();
 
+onMounted(async () => {
+  if (!taskId.value) return;
+
+  await getDescription();
+});
+
+const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
 const taskId = inject<Ref<string>>('taskId');
 
 const editor = ref<typeof Editor>();
+
+const taskDescription = ref<TaskDescription>();
 
 const editorState = ref<EditorState>('readonly');
 const isCurrentlyFocused = ref<boolean>(false);
@@ -22,6 +36,25 @@ const initialContent = ref<JSONContent>();
 const isContentEmpty = computed<boolean>(() => {
   return !(content.value && content.value.content[0].content);
 });
+
+const getDescription = async (): Promise<void> => {
+  try {
+    const { data } = await TaskServices.getTaskDescription(taskId.value);
+
+    if (data.data.description) {
+      content.value = JSON.parse(data.data.description);
+
+      taskDescription.value = data.data;
+    }
+  } catch (error) {
+    console.error(error);
+    toast.add({
+      message: 'Data Task Description gagal diambil.',
+      severity: 'error',
+      error,
+    });
+  }
+};
 
 const handleOnFocus = (): void => {
   editorState.value = 'editable';
@@ -37,9 +70,14 @@ const handleOnBlur = (): void => {
   initialContent.value = undefined;
 };
 
-// TODO: Handle save description changes
 const handleSave = async (): Promise<void> => {
   try {
+    const dataDTO: EditDescriptionTaskDTO = {
+      description: JSON.stringify(content.value),
+    };
+
+    await TaskServices.putTaskDescription(taskId.value, dataDTO);
+
     eventBus.emit('detail-task:update', { taskId: taskId.value });
 
     handleOnBlur();
@@ -58,6 +96,12 @@ const handleCancel = (): void => {
 
   handleOnBlur();
 };
+
+watch(taskDetail, async () => {
+  if (!taskId.value) return;
+
+  await getDescription();
+});
 </script>
 
 <template>
@@ -71,25 +115,13 @@ const handleCancel = (): void => {
         <div class="text-xs font-semibold">Deskripsi</div>
       </div>
       <div class="flex items-center gap-2">
-        <!-- TODO: Handle chat icon click -->
-        <Button
-          icon="chat-1-line"
-          icon-class="!w-6 !h-6"
-          severity="secondary"
-          text
-        />
-        <!-- TODO: Handle description changelog on click -->
-        <Button
-          icon="file-history"
-          icon-class="!w-6 !h-6"
-          severity="secondary"
-          text
-        />
-        <Button
-          :disabled="isCurrentlyFocused"
-          @click="handleOnFocus"
-          label="Edit"
-          severity="secondary"
+        <span v-if="taskDescription?.updatedAt">
+          {{ formatTimeAgo(new Date(taskDescription.updatedAt)) }}
+        </span>
+        <UserName
+          v-if="taskDescription?.updatedBy"
+          :user="taskDescription.updatedBy"
+          type="icon"
         />
       </div>
     </div>

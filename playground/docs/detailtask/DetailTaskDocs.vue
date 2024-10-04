@@ -32,18 +32,26 @@ const showDetailTask = ref<boolean>(false);
 const showNewTask = ref<boolean>(false);
 const invalidTaskInput = ref<boolean>(false);
 const invalidTokenInput = ref<boolean>(false);
+const invalidProjectInput = ref<boolean>(false);
 const invalidMessage = ref<CustomValidation>();
 
 const taskId = ref<string>('66fb6b394374e14b8768debf');
 const jwtToken = ref<string>(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZDE3NzFjMWViZTUzNDRiYzJiOWRhYiIsImlhdCI6MTcyNjU0MjI3Nn0.euXnP_TUc5kv2236kGv2zsFvwgp6ZlT8QCdY8nUaypk',
 );
+const projectId = ref<string>('66e901c165b533fbe0c72c03');
 
 const handleShowTask = (): void => {
   if (!jwtToken.value) {
     invalidTokenInput.value = true;
     invalidMessage.value = {
       empty: 'JWT Token harus diisi.',
+    };
+  }
+
+  if (!projectId.value) {
+    invalidMessage.value = {
+      empty: 'Project ID harus diisi.',
     };
   }
 
@@ -54,7 +62,7 @@ const handleShowTask = (): void => {
     };
   }
 
-  if (!jwtToken.value || !taskId.value) return;
+  if (!jwtToken.value || !projectId.value || !taskId.value) return;
 
   showDetailTask.value = true;
 };
@@ -78,6 +86,26 @@ const setJWTToken = (): void => {
 
   toast.add({
     message: 'JWT Token berhasil disimpan.',
+    severity: 'success',
+  });
+
+  refreshTable();
+};
+
+const setProjectId = (): void => {
+  if (!jwtToken.value) {
+    invalidProjectInput.value = true;
+    invalidMessage.value = {
+      empty: 'Project ID harus diisi.',
+    };
+
+    return;
+  }
+
+  sessionStorage.setItem('projectId', projectId.value);
+
+  toast.add({
+    message: 'Project ID berhasil disimpan.',
     severity: 'success',
   });
 
@@ -112,6 +140,11 @@ watch(taskId, () => {
 
 watch(jwtToken, () => {
   invalidTokenInput.value = false;
+  invalidMessage.value = undefined;
+});
+
+watch(projectId, () => {
+  invalidProjectInput.value = false;
   invalidMessage.value = undefined;
 });
 </script>
@@ -167,6 +200,22 @@ watch(jwtToken, () => {
             <Button
               @click="setJWTToken"
               label="Set JWT Token"
+              severity="success"
+            />
+            <div>
+              <InputText
+                v-model="projectId"
+                :invalid="invalidProjectInput"
+                :validator-message="invalidMessage"
+                label="Project ID"
+                mandatory
+                placeholder="Paste Project ID"
+                use-validator
+              />
+            </div>
+            <Button
+              @click="setProjectId"
+              label="Set Project ID"
               severity="success"
             />
             <div>

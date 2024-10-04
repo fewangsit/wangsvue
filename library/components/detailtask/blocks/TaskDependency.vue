@@ -76,7 +76,7 @@ const getTaskOptions = async (): Promise<void> => {
           <span>{{ pTask.subModule.name }}</span>
         </div>
         <MultiSelect
-          :initial-value="pTask.tasks"
+          :initial-value="pTask.task"
           :loading="taskLoading"
           :options="taskOptions"
           @change="handleChange"

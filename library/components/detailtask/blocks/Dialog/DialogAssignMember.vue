@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, Ref, ref, watch } from 'vue';
+import { computed, inject, Ref, ref, watch } from 'vue';
 
 import DialogForm from 'lib/components/dialogform/DialogForm.vue';
 import Dropdown from 'lib/components/dropdown/Dropdown.vue';
@@ -9,6 +9,9 @@ import MemberServices from 'lib/services/member.service';
 import { DropdownOption } from 'lib/types/options.type';
 import { TaskDetail } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
+import TaskServices from 'lib/services/task.service';
+import { EditTaskDTO } from 'lib/dto/task.dto';
+import { FormPayload } from 'lib/components/form/Form.vue.d';
 
 const { setLoading } = useLoadingStore();
 const toast = useToast();
@@ -21,7 +24,14 @@ const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
 const memberOptions = ref<DropdownOption[]>();
 const memberLoading = ref<boolean>(false);
 
-// TODO: Filter based on the team of the selected process.
+const initialMemberValue = computed(() => {
+  if (taskDetail.value?.assignedTo.length === 1) {
+    return taskDetail.value.assignedTo[0]._id;
+  }
+
+  return undefined;
+});
+
 const getMemberOptions = async (): Promise<void> => {
   try {
     memberLoading.value = true;
@@ -46,10 +56,15 @@ const getMemberOptions = async (): Promise<void> => {
   }
 };
 
-// TODO: Handle assign member submit
-const handleSubmit = async (): Promise<void> => {
+const handleSubmit = async (payload: FormPayload): Promise<void> => {
   try {
     setLoading(true);
+
+    const dataDTO: EditTaskDTO = {
+      assignedTo: payload.formValues.member as unknown as string[],
+    };
+
+    await TaskServices.putEditTask(taskId.value, dataDTO);
 
     eventBus.emit('detail-task:update', { taskId: taskId.value });
 
@@ -78,7 +93,7 @@ watch(
       value: member._id,
     }));
   },
-  { once: true },
+  { deep: true },
 );
 </script>
 
@@ -95,6 +110,7 @@ watch(
   >
     <template #fields>
       <Dropdown
+        :initial-value="initialMemberValue"
         :loading="memberLoading"
         :options="memberOptions"
         @show="getMemberOptions"
