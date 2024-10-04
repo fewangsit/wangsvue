@@ -514,6 +514,7 @@ const refetch = async (): Promise<void> => {
     console.error('🚀 ~ refetch ~ error:', error);
   } finally {
     loadingTable.value = false;
+    expandedRows.value = {};
   }
 };
 
@@ -571,7 +572,7 @@ const handleUpdateTableEvent = (event: TableEvent): void => {
     nextTick(() => {
       columnKey.value++;
       refetch();
-    }); // Waits untill computed queryparams ready
+    }); // Waits until computed queryparams ready
   }
 };
 
