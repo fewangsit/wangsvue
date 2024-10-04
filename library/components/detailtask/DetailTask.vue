@@ -178,6 +178,7 @@ const removeEventListener = (): void => {
  */
 const reset = (): void => {
   firstFetch.value = true;
+  taskMenuIndex.value = 0;
 };
 
 provide('taskId', taskId);
