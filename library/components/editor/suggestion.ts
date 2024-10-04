@@ -3,8 +3,6 @@ import tippy from 'tippy.js';
 import MentionList from './MentionList.vue';
 
 const suggestion = (): any => {
-  const selectedItemsCb = (data: any): void => {};
-
   return {
     render: (): any => {
       let component: any;
@@ -14,7 +12,6 @@ const suggestion = (): any => {
         onStart(props: any): void {
           component = new VueRenderer(MentionList, {
             props: {
-              selectedItemsCb: selectedItemsCb,
               items: props.items,
               command: props.command,
             },

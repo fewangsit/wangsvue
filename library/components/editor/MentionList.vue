@@ -5,7 +5,6 @@ import Button from '../button/Button.vue';
 const props = defineProps<{
   items: { id: string; label: string }[];
   command: (arg: { id: string; label: string }) => void;
-  selectedItemsCb: (data: any) => void;
 }>();
 
 const selectedIndex = ref(0);
@@ -46,9 +45,6 @@ const selectItem = (index: number): void => {
       id: item.id,
       label: item.label,
     });
-    if (props.selectedItemsCb) {
-      props.selectedItemsCb(item);
-    }
   }
 };
 

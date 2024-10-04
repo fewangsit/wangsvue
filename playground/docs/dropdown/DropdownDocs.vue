@@ -84,9 +84,9 @@ const model = ref<OptionValue>();
           </Dropdown>
           <Dropdown
             v-model="model"
+            :filter="false"
             :options="['Waiting for Approval', 'Waiting for Handover']"
             label="Dropdown No Filter"
-            :filter="false"
             placeholder="Pilih status"
           />
         </template>

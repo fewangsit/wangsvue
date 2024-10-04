@@ -196,6 +196,7 @@ const tableColumns = computed<TableColumn[]>(() => {
   ];
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const childrenColumns = computed(() => {
   const columns: TreeTableColumns[] = cloneDeep(tableColumns.value);
   columns.splice(1, 1);

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import {
   PostImage,
   GetMentionSuggestionResponse,
 } from 'lib/components/editor/Editor.vue.d';
-import { FormPayload } from 'lib/components/form/Form.vue.d';
 import Editor from 'lib/components/editor/Editor.vue';
 import Form from 'lib/components/form/Form.vue';
 import Card from 'lib/components/card/Card.vue';
+import DocTitle from '../DocTitle.vue';
 
 const editorContent = ref({
   type: 'doc',
@@ -34,8 +34,8 @@ const sendImage = (value: PostImage): void => {
   value.setImageCb('https://www.svgrepo.com/show/452030/avatar-default.svg');
 };
 
-const submitForm = (data: FormPayload): void => {
-  console.log(data);
+const submitForm = (): void => {
+  //
 };
 
 const fetchMentionSuggestion =
@@ -55,10 +55,6 @@ const fetchMentionSuggestion =
       status: 200,
     };
   };
-
-watch(mentionedList, () => {
-  console.log(mentionedList.value);
-});
 </script>
 
 <template>

@@ -15,7 +15,6 @@ import {
   useEditor,
   EditorEvents,
 } from '@tiptap/vue-3';
-import { NodeSelection } from '@tiptap/pm/state';
 import { MenuItem } from '../menuitem';
 import { FormPayload, FieldValidation } from '../form/Form.vue.d';
 import {
@@ -168,7 +167,7 @@ const editor = useEditor({
         return {
           Insert: (): boolean => setImageDialog(),
           Backspace: (): boolean => {
-            const selection = this.editor.state.selection as NodeSelection;
+            const { selection } = this.editor.state;
             if (
               selection.node &&
               selection.node.type.name === 'image' &&
@@ -179,7 +178,7 @@ const editor = useEditor({
             }
           },
           Delete: (): boolean => {
-            const selection = this.editor.state.selection as NodeSelection;
+            const { selection } = this.editor.state;
             if (
               selection.node &&
               selection.node.type.name === 'image' &&

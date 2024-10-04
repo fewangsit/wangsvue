@@ -190,7 +190,7 @@ defineExpose({
       >
         <template #value="slotProps">
           <template v-if="slotProps.value">
-            <slot name="value" :value="getOptionLabel()">
+            <slot :value="getOptionLabel()" name="value">
               <Badge
                 v-if="valueType === 'badge'"
                 v-bind="badgeValueProps"

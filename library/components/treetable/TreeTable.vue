@@ -1136,10 +1136,7 @@ const listenUpdateTableEvent = (): void => {
 
                     <span v-else>
                       <template v-if="col.bodyTemplate">
-                        {{
-                          (col.bodyTemplate && col.bodyTemplate(item, index)) ||
-                          '-'
-                        }}
+                        {{ col.bodyTemplate?.(item, index) || '-' }}
                       </template>
                       <template v-else>
                         {{ getNestedProperyValue(item, col.field) || '-' }}

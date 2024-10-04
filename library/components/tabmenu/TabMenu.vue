@@ -33,25 +33,26 @@ onBeforeMount(() => {
 const props = withDefaults(defineProps<TabMenuProps>(), {
   useTrailingLine: true,
 });
+
 const emit = defineEmits<TabMenuEmits>();
 const activeIndex = defineModel<number>('activeIndex', {
   default: 0,
 });
+
+const menuPassThrough = props.useTrailingLine
+  ? undefined
+  : {
+      inkbar: {
+        class: 'hidden',
+      },
+    };
 </script>
 
 <template>
   <PrimeTabMenu
     v-model:activeIndex="activeIndex"
     :model="menu"
-    :pt="
-      useTrailingLine
-        ? undefined
-        : {
-            inkbar: {
-              class: 'hidden',
-            },
-          }
-    "
+    :pt="menuPassThrough"
     @tab-change="emit('tab-change', $event)"
     data-wv-name="tabmenu"
   >
