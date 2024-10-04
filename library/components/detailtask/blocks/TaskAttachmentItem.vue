@@ -6,7 +6,7 @@ import UserName from 'lib/components/username/UserName.vue';
 import {
   AttachmentItemProps,
   AttachmentItemEmits,
-} from './AttachmentItem.vue.d';
+} from './TaskAttachmentItem.vue.d';
 import Form from 'lib/components/form/Form.vue';
 import { FormPayload } from 'lib/components/form/Form.vue.d';
 import InputText from 'lib/components/inputtext/InputText.vue';

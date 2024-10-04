@@ -1,15 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { CreateTaskDTO } from 'lib/dto/task.dto';
+import {
+  CreateTaskDTO,
+  EditDescriptionTaskDTO,
+  EditTaskDTO,
+} from 'lib/dto/task.dto';
 import { getBaseURL } from 'lib/utils/getBaseURL.util';
 
-// Const user = JSON.parse(localStorage.getItem('user')!);
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
   const user = JSON.parse(localStorage.getItem('user') as string) ?? {};
-
-  // TODO: Remove this on production.
-  user.jwt =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzgzM2YwMjg3NTRjNGY3NTUzMmYwMCIsImlhdCI6MTcyNDM5NjcxOX0._2YP7q8kZNmJdegSwpFNRcIHs2P-DV9EUhsr9HOmvaw';
 
   const BASE_URL = getBaseURL('APP_TASK_API');
 
@@ -29,6 +27,33 @@ const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
 const TaskServices = {
   postCreateTask: (data: CreateTaskDTO): Promise<AxiosResponse> => {
     return API().post('/api/tasks', data);
+  },
+
+  putEditTask: (taskId: string, data: EditTaskDTO): Promise<AxiosResponse> => {
+    return API().put(`/api/tasks/${taskId}`, data);
+  },
+
+  getTaskList: (params?: Record<string, string>): Promise<AxiosResponse> => {
+    return API({ params }).get('/api/tasks');
+  },
+
+  getTaskDetail: (taskId: string): Promise<AxiosResponse> => {
+    return API().get(`/api/tasks/${taskId}`);
+  },
+
+  getTaskDescription: (taskId: string): Promise<AxiosResponse> => {
+    return API().get(`/api/tasks/${taskId}/description`);
+  },
+
+  putTaskDescription: (
+    taskId: string,
+    data: EditDescriptionTaskDTO,
+  ): Promise<AxiosResponse> => {
+    return API().put(`/api/tasks/${taskId}/description`, data);
+  },
+
+  getTaskDependencies: (taskId: string): Promise<AxiosResponse> => {
+    return API().get(`/api/task-dependency/task/${taskId}`);
   },
 };
 

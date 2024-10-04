@@ -7,13 +7,8 @@ import {
 } from 'lib/dto/taskAttachment.dto';
 import { getBaseURL } from 'lib/utils/getBaseURL.util';
 
-// Const user = JSON.parse(localStorage.getItem('user')!);
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
   const user = JSON.parse(localStorage.getItem('user') as string) ?? {};
-
-  // TODO: Remove this on production.
-  user.jwt =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZDE3NzFjMWViZTUzNDRiYzJiOWRhYiIsImlhdCI6MTcyODAyNDY0OCwiZXhwIjoxNzI4MTExMDQ4fQ.gb6uduDurMDMsLN81unm1a6muDSMaVucZ7xq0jMD-WM';
 
   const BASE_URL = getBaseURL('APP_TASK_API');
 

@@ -3,9 +3,9 @@ import { onMounted, ref } from 'vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import Changelog from 'lib/components/changelog/Changelog.vue';
 import Button from 'lib/components/button/Button.vue';
-import AttachmentItem from './AttachmentItem.vue';
-import { AttachmentItemData } from './AttachmentItem.vue.d';
-import DialogAddAttachment from '../../Dialog/DialogAddAttachment.vue';
+import AttachmentItem from './TaskAttachmentItem.vue';
+import { AttachmentItemData } from './TaskAttachmentItem.vue.d';
+import DialogAddAttachment from './Dialog/DialogAddAttachment.vue';
 import TaskAttachmentServices from 'lib/services/taskAttachment.service';
 
 onMounted(() => {
@@ -41,7 +41,8 @@ const getAttachments = async (): Promise<void> => {
         <Changelog object="objects" />
         <Button
           @click="dialogAddAttachment = true"
-          label="+ Attachment"
+          icon="add"
+          label="Attachment"
           severity="secondary"
         />
       </div>

@@ -147,6 +147,10 @@ const wangsIconsArray: WangsIcons[] = [
   'xls',
   'data',
   'doc',
+  'chat-1-line',
+  'attachment-2',
+  'save',
+  'chat-new-line',
 ];
 </script>
 

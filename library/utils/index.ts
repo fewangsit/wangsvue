@@ -6,6 +6,7 @@ import getImageURL from './getImageURL.util';
 import genPlaceholder from './genPlaceholder.util';
 import getStatusSeverity from './statusSeverity.util';
 import { checkRouteAccess } from './role.util';
+import getAttachmentIcon from './getAttachmentIcon.util';
 
 const getNestedProperyValue = (
   object: object,
@@ -61,4 +62,5 @@ export {
   genPlaceholder,
   getInititalName,
   getStatusSeverity,
+  getAttachmentIcon,
 };

@@ -24,9 +24,9 @@ const props = defineProps<{
   legend: TaskLegend;
 
   /**
-   * The Task's parent(s) Legend
+   * The Task's list
    */
-  parentTask: TaskLegend[];
+  tasks: TaskLegend[];
 }>();
 
 const priorityValue = shallowRef<number>();
@@ -83,8 +83,7 @@ watch(priorityValue, () => {
         'data-wv-name': 'dialog-nilai-prioritas',
       }),
       header: {
-        'class': [...DialogPreset.header.class],
-        'data-wv-section': 'detailtask-header',
+        class: [...DialogPreset.header.class],
       },
       content: {
         class: [
@@ -149,7 +148,7 @@ watch(priorityValue, () => {
           />
         </div>
       </div>
-      <TaskList :parent-task="props.parentTask" />
+      <TaskList :tasks="props.tasks" type="parent" />
     </template>
   </Dialog>
 </template>
