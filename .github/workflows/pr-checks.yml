@@ -1,0 +1,29 @@
+name: Pull Request Checks
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  Checks:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PNPM
+        run: npm i -g pnpm
+
+      - name: Install Dependencies
+        run: pnpm i
+
+      - name: Linter
+        run: pnpm lint
+
+      - name: Build for Docs
+        run: pnpm build
+
+      - name: Build for Release
+        run: pnpm build:lib
