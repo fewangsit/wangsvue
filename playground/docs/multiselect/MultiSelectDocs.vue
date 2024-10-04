@@ -4,6 +4,7 @@ import DocTitle from '../DocTitle.vue';
 import MultiSelect from 'lib/components/multiselect/MultiSelect.vue';
 import { ref } from 'vue';
 import { OptionValue } from 'lib/types/options.type';
+import Button from 'lib/components/button/Button.vue';
 
 const model = ref<OptionValue[]>();
 </script>
@@ -31,6 +32,8 @@ const model = ref<OptionValue[]>();
             :options="['Waiting for Approval', 'Waiting for Handover']"
             label="Status"
           />
+
+          <Button @click="model = undefined" label="Empty Model" />
         </div>
       </div>
 

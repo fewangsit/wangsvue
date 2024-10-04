@@ -106,6 +106,13 @@ watch(
 );
 
 watch(
+  () => props.modelValue,
+  (value) => {
+    field.value = value;
+  },
+);
+
+watch(
   () => props.initialValue,
   (value) => {
     field.value = value;
