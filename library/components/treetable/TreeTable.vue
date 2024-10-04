@@ -1151,6 +1151,7 @@ const listenUpdateTableEvent = (): void => {
                 </td>
 
                 <td
+                  v-if="useOption || customColumn"
                   v-bind="Preset.bodycell"
                   :class="[
                     'group-hover:!bg-primary-50',
