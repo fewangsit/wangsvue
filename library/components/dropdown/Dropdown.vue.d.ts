@@ -46,7 +46,7 @@ export interface DropdownProps {
   /**
    * Bind the badge property to the dropdown value
    */
-  badgeValueProps?: BadgeProps;
+  badgeValueProps?: Omit<BadgeProps, 'label'>;
   /**
    * Set the input border style
    *
