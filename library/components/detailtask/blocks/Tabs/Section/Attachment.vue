@@ -1,0 +1,65 @@
+<script setup lang="ts">
+import { onMounted, ref } from 'vue';
+import Icon from 'lib/components/icon/Icon.vue';
+import Changelog from 'lib/components/changelog/Changelog.vue';
+import Button from 'lib/components/button/Button.vue';
+import AttachmentItem from './AttachmentItem.vue';
+import { AttachmentItemData } from './AttachmentItem.vue.d';
+import DialogAddAttachment from '../../Dialog/DialogAddAttachment.vue';
+import TaskAttachmentServices from 'lib/services/taskAttachment.service';
+
+onMounted(() => {
+  getAttachments();
+});
+
+const taskId = ref('66f28111ccfbaa1233f79028');
+
+const attachments = ref<AttachmentItemData[]>([]);
+
+const dialogAddAttachment = ref(false);
+
+const getAttachments = async (): Promise<void> => {
+  try {
+    const { data: response } = await TaskAttachmentServices.getTaskAttachments(
+      taskId.value,
+    );
+    attachments.value = response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+</script>
+
+<template>
+  <div class="">
+    <div class="flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <Icon class="text-2xl" icon="attachment-2" />
+        <span class="text-xs font-semibold">Attachment</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <Changelog object="objects" />
+        <Button
+          @click="dialogAddAttachment = true"
+          label="+ Attachment"
+          severity="secondary"
+        />
+      </div>
+    </div>
+    <div class="pl-8 py-2 flex flex-col gap-2">
+      <AttachmentItem
+        :key="index"
+        v-for="(item, index) in attachments"
+        :item="item"
+        @deleted="getAttachments"
+        @update-caption="getAttachments"
+      />
+    </div>
+  </div>
+
+  <DialogAddAttachment
+    v-model:visible="dialogAddAttachment"
+    :task-id="taskId"
+    @hide="getAttachments"
+  />
+</template>

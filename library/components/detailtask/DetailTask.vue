@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, provide, ref, shallowRef } from 'vue';
+import { computed, DefineComponent, provide, ref, shallowRef } from 'vue';
 
 import Dialog from 'primevue/dialog';
 import DialogPreset from 'lib/preset/dialog';
@@ -9,6 +9,11 @@ import { DetailTaskProps } from './DetailTask.vue.d';
 import { MenuItem } from '../menuitem';
 import TabMenu from '../tabmenu/TabMenu.vue';
 import InfoTaskTab from './blocks/Tabs/InfoTaskTab.vue';
+import DescriptionTab from './blocks/Tabs/DescriptionTab.vue';
+
+type TaskMenu = MenuItem & {
+  component: DefineComponent<any, any, any>;
+};
 
 const visible = defineModel<boolean>('visible', { required: true });
 
@@ -19,23 +24,27 @@ const props = withDefaults(defineProps<DetailTaskProps>(), {
 const isNewTask = ref<boolean>(!props.taskId);
 
 const taskMenuIndex = shallowRef<number>(0);
-const taskMenu = computed<MenuItem[]>(() => {
+const taskMenu = computed<TaskMenu[]>(() => {
   return [
     {
       label: 'Info Task',
       disabled: isNewTask.value,
+      component: InfoTaskTab,
     },
     {
       label: 'Deskripsi',
       disabled: isNewTask.value,
+      component: DescriptionTab,
     },
     {
       label: 'Review',
       disabled: isNewTask.value,
+      component: InfoTaskTab,
     },
     {
       label: 'Event Log',
       disabled: isNewTask.value,
+      component: InfoTaskTab,
     },
   ];
 });
@@ -109,9 +118,7 @@ provide('isNewTask', isNewTask);
     <template #default>
       <Legend />
       <TabMenu v-model:active-index="taskMenuIndex" :menu="taskMenu" />
-      <div>
-        <InfoTaskTab v-if="taskMenuIndex === 0" />
-      </div>
+      <component :is="taskMenu[taskMenuIndex].component" />
     </template>
   </Dialog>
 </template>

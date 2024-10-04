@@ -12,7 +12,7 @@ const showDetailTask = shallowRef<boolean>(false);
 
 <template>
   <Toast />
-  <DetailTask v-model:visible="showDetailTask" />
+  <DetailTask v-model:visible="showDetailTask" task-id="id" />
   <Card>
     <template #header>
       <DocTitle name="Detail Task" />
