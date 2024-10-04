@@ -30,12 +30,6 @@ const emit = defineEmits<DetailTaskEmits>();
 
 onMounted(async () => {
   attachEventListener();
-
-  if (props.taskId) {
-    taskId.value = props.taskId;
-  } else {
-    isNewTask.value = true;
-  }
 });
 
 onUnmounted(() => {
@@ -173,6 +167,16 @@ const removeEventListener = (): void => {
   eventBus.off('detail-task:update');
 };
 
+const handleShow = (): void => {
+  if (props.taskId) {
+    taskId.value = props.taskId;
+  } else {
+    isNewTask.value = true;
+  }
+
+  eventBus.emit('detail-task:show', { taskId: taskId.value });
+};
+
 /**
  * Reset dialog state
  */
@@ -246,7 +250,7 @@ watch(
       },
     }"
     @hide="reset"
-    @show="eventBus.emit('detail-task:show', { taskId })"
+    @show="handleShow"
     modal
   >
     <template #header>

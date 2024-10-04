@@ -954,7 +954,9 @@ watch(dataSelected, (newSelectedData: Data[]) => {
               "
             >
               <template v-if="col.bodyTemplate">
-                {{ (col.bodyTemplate && col.bodyTemplate(itemData, index)) || '-' }}
+                {{
+                  (col.bodyTemplate && col.bodyTemplate(itemData, index)) || '-'
+                }}
               </template>
               <template v-else>
                 {{ getNestedProperyValue(itemData, col.field) || '-' }}

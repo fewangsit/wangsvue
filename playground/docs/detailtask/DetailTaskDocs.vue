@@ -17,6 +17,7 @@ import {
 import Badge from 'lib/components/badge/Badge.vue';
 import TaskServices from 'lib/services/task.service';
 import eventBus from 'lib/event-bus';
+import { TaskDetail } from 'lib/types/task.type';
 
 const toast = useToast();
 
@@ -28,6 +29,8 @@ onUnmounted(() => {
   localStorage.clear();
 });
 
+const selectedItem = ref<TaskDetail>();
+
 const showDetailTask = ref<boolean>(false);
 const showNewTask = ref<boolean>(false);
 const invalidTaskInput = ref<boolean>(false);
@@ -35,37 +38,10 @@ const invalidTokenInput = ref<boolean>(false);
 const invalidProjectInput = ref<boolean>(false);
 const invalidMessage = ref<CustomValidation>();
 
-const taskId = ref<string>('66fb6b394374e14b8768debf');
 const jwtToken = ref<string>(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZDE3NzFjMWViZTUzNDRiYzJiOWRhYiIsImlhdCI6MTcyNjU0MjI3Nn0.euXnP_TUc5kv2236kGv2zsFvwgp6ZlT8QCdY8nUaypk',
 );
 const projectId = ref<string>('66e901c165b533fbe0c72c03');
-
-const handleShowTask = (): void => {
-  if (!jwtToken.value) {
-    invalidTokenInput.value = true;
-    invalidMessage.value = {
-      empty: 'JWT Token harus diisi.',
-    };
-  }
-
-  if (!projectId.value) {
-    invalidMessage.value = {
-      empty: 'Project ID harus diisi.',
-    };
-  }
-
-  if (!taskId.value) {
-    invalidTaskInput.value = true;
-    invalidMessage.value = {
-      empty: 'Task ID harus diisi.',
-    };
-  }
-
-  if (!jwtToken.value || !projectId.value || !taskId.value) return;
-
-  showDetailTask.value = true;
-};
 
 const setJWTToken = (): void => {
   if (!jwtToken.value) {
@@ -133,11 +109,6 @@ const refreshTable = (): void => {
   eventBus.emit('data-table:update', { tableName: 'task-table' });
 };
 
-watch(taskId, () => {
-  invalidTaskInput.value = false;
-  invalidMessage.value = undefined;
-});
-
 watch(jwtToken, () => {
   invalidTokenInput.value = false;
   invalidMessage.value = undefined;
@@ -153,7 +124,7 @@ watch(projectId, () => {
   <Toast />
   <DetailTask
     v-model:visible="showDetailTask"
-    :task-id="taskId"
+    :task-id="selectedItem?._id ?? ''"
     @create="refreshTable"
     @update="refreshTable"
   />
@@ -218,27 +189,11 @@ watch(projectId, () => {
               label="Set Project ID"
               severity="success"
             />
-            <div>
-              <InputText
-                v-model="taskId"
-                :invalid="invalidTaskInput"
-                :validator-message="invalidMessage"
-                label="Task ID"
-                mandatory
-                placeholder="Paste Task ID"
-                use-validator
-              />
-            </div>
-            <Button
-              @click="handleShowTask"
-              label="Show Detail Task"
-              severity="secondary"
-            />
           </div>
           <div class="flex justify-start gap-3">
             <Button
               @click="showNewTask = true"
-              label="Show Detail Task (New Task)"
+              label="Create Task"
               severity="secondary"
             />
           </div>
@@ -273,7 +228,16 @@ watch(projectId, () => {
           ]"
           :custom-column="false"
           :fetch-function="getTaskList"
-          :use-option="false"
+          :options="[
+            {
+              label: 'Detail Task',
+              icon: 'file-list-2',
+              command: (): void => {
+                showDetailTask = true;
+              },
+            },
+          ]"
+          @toggle-option="selectedItem = $event as TaskDetail"
           data-key="_id"
           selection-type="none"
           table-name="task-table"
