@@ -147,6 +147,9 @@ const wangsIconsArray: WangsIcons[] = [
   'xls',
   'data',
   'doc',
+  'code-line',
+  'code-box-line',
+  'emotion-happy-line',
 ];
 </script>
 

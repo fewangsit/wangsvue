@@ -8,7 +8,6 @@ import {
   watch,
   nextTick,
 } from 'vue';
-import { ButtonProps } from '../button/Button.vue.d';
 import {
   EditorContent,
   FloatingMenu,
@@ -16,11 +15,18 @@ import {
   useEditor,
   EditorEvents,
 } from '@tiptap/vue-3';
+import { NodeSelection } from '@tiptap/pm/state';
 import { MenuItem } from '../menuitem';
 import { FormPayload, FieldValidation } from '../form/Form.vue.d';
-import { EditorProps, EditorEmits, ImageProperties } from './Editor.vue.d';
+import {
+  EditorProps,
+  EditorEmits,
+  ImageProperties,
+  MentionSuggestion,
+} from './Editor.vue.d';
 import { Nullable } from '../ts-helpers';
 import { useField } from 'vee-validate';
+import { ButtonProps } from '../button/Button.vue.d';
 
 import Button from '../button/Button.vue';
 import Heading from '@tiptap/extension-heading';
@@ -35,7 +41,6 @@ import BulletList from '@tiptap/extension-bullet-list';
 import Link from '@tiptap/extension-link';
 import Image from '@tiptap/extension-image';
 import Code from '@tiptap/extension-code';
-import CodeBlock from '@tiptap/extension-code-block';
 import ListItem from '@tiptap/extension-list-item';
 import Paragraph from '@tiptap/extension-paragraph';
 import History from '@tiptap/extension-history';
@@ -53,33 +58,18 @@ import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 import Form from '../form/Form.vue';
 import suggestion from './suggestion';
+import CodeSnippetExtension from './codeSnippetExtension';
 
 const props = withDefaults(defineProps<EditorProps>(), {
   placeholder: 'Tulis',
   editorState: 'editable',
   borderLess: false,
   showOptionalText: true,
+  isImageUploadBase64: false,
 });
 const emit = defineEmits<EditorEmits>();
-
-const linkFormShown = shallowRef(false);
-const headingMenu = ref<Menu>();
-const editLinkOverlay = ref<OverlayPanel>();
-const root = ref<HTMLDivElement>();
-const previewImages = ref<string[]>([]);
-const imageDialogUploader = shallowRef<boolean>(false);
-const inputURLImage = shallowRef<string>();
-const selectedImage = shallowRef<ImageProperties>();
-
-const field = reactive<FieldValidation<Nullable<JSONContent>>>({
-  value: props.modelValue,
-});
-
-const inputPlaceholder = computed(
-  () =>
-    props.placeholder ??
-    'Tulis ' + (props.label ? props.label?.toLowerCase() : ''),
-);
+defineModel<JSONContent>('modelValue');
+const modelMentionedList = defineModel<string[]>('mentionedList');
 
 onMounted(() => {
   if (props.useValidator) {
@@ -97,32 +87,62 @@ onMounted(() => {
     if (props.initialValue != null) field.value = props.initialValue;
     if (props.modelValue != null) field.value = props.modelValue;
   }
+  fetchMentionSuggestionFunction();
 });
 
-const setValidatorMessage = (value: JSONContent): boolean | string => {
-  if (typeof props.validatorMessage === 'string' && props.invalid) {
-    return props.validatorMessage;
-  } else if (typeof props.validatorMessage !== 'string') {
-    const { empty } = props.validatorMessage ?? {};
-    if (value.content[0].content === undefined && props.mandatory) {
-      return empty;
-    }
-  }
-  return true;
-};
+const linkFormShown = shallowRef(false);
+const headingMenu = ref<Menu>();
+const editLinkOverlay = ref<OverlayPanel>();
+const root = ref<HTMLDivElement>();
+const previewImages = ref<string[]>([]);
+const imageDialogUploader = shallowRef<boolean>(false);
+const inputURLImage = shallowRef<string>();
+const selectedImage = shallowRef<ImageProperties>();
+const mentionSuggestionList = shallowRef<MentionSuggestion[]>();
+const field = reactive<FieldValidation<Nullable<JSONContent>>>({
+  value: props.modelValue,
+});
+const isLoading = shallowRef<boolean>(false);
+const registeredMentionList = ref<string[]>([]);
+
+const inputPlaceholder = computed(
+  () =>
+    props.placeholder ??
+    'Tulis ' + (props.label ? props.label?.toLowerCase() : ''),
+);
 
 const editor = useEditor({
   content: props.initialValue ?? props.modelValue,
+
   onUpdate: () => {
     emit('update:modelValue', editor.value.getJSON());
     field.value = editor.value.getJSON();
   },
+
   onSelectionUpdate(selectedEvent: EditorEvents['selectionUpdate']) {
-    selectedImage.value = selectedEvent.editor.getAttributes(
+    const imageSelectedNode = selectedEvent.editor.getAttributes(
       'image',
     ) as ImageProperties;
+
+    editor.value.state.doc.descendants((node: any): void | boolean => {
+      if (node.type.name === 'mention') {
+        registeredMentionList.value.push(node.attrs.id);
+      }
+    });
+
+    registeredMentionList.value = Array.from(
+      new Set(registeredMentionList.value),
+    );
+
+    if (imageSelectedNode.title === 'localImage') {
+      selectedImage.value = imageSelectedNode;
+    } else {
+      selectedImage.value = undefined;
+    }
   },
+
   editable: props.editorState === 'editable',
+
   extensions: [
     Placeholder.configure({
       placeholder: inputPlaceholder.value,
@@ -147,22 +167,67 @@ const editor = useEditor({
       addKeyboardShortcuts() {
         return {
           Insert: (): boolean => setImageDialog(),
+          Backspace: (): boolean => {
+            const selection = this.editor.state.selection as NodeSelection;
+            if (
+              selection.node &&
+              selection.node.type.name === 'image' &&
+              selection.node.attrs.title === 'localImage'
+            ) {
+              unsetImage();
+              return true;
+            }
+          },
+          Delete: (): boolean => {
+            const selection = this.editor.state.selection as NodeSelection;
+            if (
+              selection.node &&
+              selection.node.type.name === 'image' &&
+              selection.node.attrs.title === 'localImage'
+            ) {
+              unsetImage();
+              return true;
+            }
+          },
         };
       },
     }).configure({
       HTMLAttributes: {
-        class: 'h-[50px] w-[50px]',
+        class: 'w-fit max-h-[300px] object-contain',
       },
     }),
-    CodeBlock,
+    CodeSnippetExtension.extend({
+      addCommands: (): any => {
+        return {
+          insertCodeSnippet:
+            () =>
+            ({ commands }): any => {
+              return commands.insertContent({
+                type: 'codeSnippet',
+                attrs: { code: 'Masukan Code' },
+              });
+            },
+          deleteCodeSnippet:
+            () =>
+            ({ commands }): any => {
+              return commands.deleteSelection();
+            },
+        };
+      },
+      addKeyboardShortcuts() {
+        return {
+          'Mod-alt-c': codeSnippetTrigger,
+        };
+      },
+    }),
     OrderedList.configure({
       HTMLAttributes: {
-        class: 'list-decimal px-3',
+        class: 'list-decimal px-3 py-1',
       },
     }),
     BulletList.configure({
       HTMLAttributes: {
-        class: 'list-disc px-3',
+        class: 'list-disc px-3 py-1',
       },
     }),
     ListItem,
@@ -184,99 +249,27 @@ const editor = useEditor({
     History,
     Mention.configure({
       HTMLAttributes: {
-        class: 'mention-class-ini-nih',
+        class: 'bg-primary-200 text-primary-800 rounded-[50px] p-[4px]',
       },
-      suggestion,
+      suggestion: {
+        items({ query }: { query: string }): any {
+          return mentionSuggestionList.value
+            .filter((item) => {
+              return item.fullName.toLowerCase().includes(query.toLowerCase());
+            })
+            .map((item) => {
+              return {
+                id: item._id,
+                label: item.fullName,
+              };
+            });
+        },
+        ...suggestion(),
+      },
     }),
     FloatingMenuExt,
   ],
 });
-const openLinkForm = (e?: Event): boolean => {
-  const event =
-    e ??
-    ({
-      currentTarget: root.value?.querySelector('.ic-link-m')?.closest('button'),
-    } as unknown as Event);
-
-  const { dom } = editor.value?.view ?? {};
-  editLinkOverlay.value?.toggle(event, dom);
-
-  return true;
-};
-
-const setLinkFunction = ({ formValues }: FormPayload): boolean => {
-  if (!editor.value) return false;
-
-  const { setLink, insertContent, focus } = editor.value.commands;
-  const { url, text } = formValues as unknown as { url: string; text?: string };
-  const { state } = editor.value;
-
-  focus();
-
-  // Apply the link to the selected or inserted text
-  setLink({
-    href: url,
-    target: '_blank',
-    rel: 'nofollow',
-  });
-
-  // On edit link: Replace Entire Anchor text with the new one
-  if (editor.value?.isActive('link')) {
-    editor.value
-      .chain()
-      .focus()
-      .command(({ tr, state: currState }) => {
-        const { $from, $to } = currState.selection;
-
-        // Find the start and end of the link mark
-        const linkMark = state.schema.marks.link;
-        let start = $from.start(),
-          end = $to.end();
-
-        // Adjust the range to cover the entire link
-        state.doc.nodesBetween($from.pos, $to.pos, (node, pos) => {
-          if (
-            node.isText &&
-            node.marks.some((mark) => mark.type === linkMark)
-          ) {
-            start = Math.min(start, pos);
-            end = Math.max(end, pos + node.nodeSize);
-          }
-        });
-
-        // Replace the text within the link without affecting the link itself
-        tr.insertText(text || url, start, end);
-
-        return true;
-      })
-      .run();
-  } else if (state.selection.empty) {
-    insertContent(text || url);
-  }
-
-  editLinkOverlay.value?.hide();
-  linkFormShown.value = false;
-
-  return true;
-};
-
-const setImageFunction = (imageUrl?: string): void => {
-  editor.value.commands.focus();
-  if (imageUrl) {
-    editor.value.commands.setImage({ src: imageUrl, title: 'localImage' });
-    previewImages.value = Array.from(
-      new Set([...previewImages.value, imageUrl]),
-    );
-  }
-  if (inputURLImage.value) {
-    editor.value.commands.setImage({ src: inputURLImage.value });
-    previewImages.value = Array.from(
-      new Set([...previewImages.value, inputURLImage.value]),
-    );
-  }
-
-  inputURLImage.value = undefined;
-};
 
 const toolbars = computed<(ButtonProps & { active?: boolean })[]>(() => {
   if (!editor.value) return [];
@@ -372,6 +365,14 @@ const toolbars = computed<(ButtonProps & { active?: boolean })[]>(() => {
       onClick: (): void => {
         focus();
         toggleCode();
+      },
+    },
+    {
+      icon: 'code-box-line',
+      active: editor.value?.isActive('codeSnippet'),
+      tooltipText: 'Code Block | Ctrl + Alt + C',
+      onClick: (): void => {
+        codeSnippetTrigger();
       },
     },
     {
@@ -510,22 +511,188 @@ const setImageDialog = (): boolean => {
   return false;
 };
 
-const setPreviewImages = (data: {
+const setPreviewImages = async (data: {
   target: {
     files: File[];
   };
-}): void => {
-  emit('postImageLocal', {
-    image: data.target.files[0],
-    setImageCb: setImageFunction,
+}): Promise<void> => {
+  if (props.isImageUploadBase64) {
+    const convertRes = await convertBase64(data.target.files[0]);
+    setImageFunction(convertRes as string);
+  } else {
+    emit('postImageLocal', {
+      image: data.target.files[0],
+      setImageCb: setImageFunction,
+    });
+  }
+};
+
+const setValidatorMessage = (value: JSONContent): boolean | string => {
+  if (typeof props.validatorMessage === 'string' && props.invalid) {
+    return props.validatorMessage;
+  } else if (typeof props.validatorMessage !== 'string') {
+    const { empty } = props.validatorMessage ?? {};
+    if (value.content[0].content === undefined && props.mandatory) {
+      return empty;
+    }
+  }
+  return true;
+};
+
+const openLinkForm = (e?: Event): boolean => {
+  const event =
+    e ??
+    ({
+      currentTarget: root.value?.querySelector('.ic-link-m')?.closest('button'),
+    } as unknown as Event);
+
+  const { dom } = editor.value?.view ?? {};
+  editLinkOverlay.value?.toggle(event, dom);
+
+  return true;
+};
+
+const setLinkFunction = ({ formValues }: FormPayload): boolean => {
+  if (!editor.value) return false;
+
+  const { setLink, insertContent, focus } = editor.value.commands;
+  const { url, text } = formValues as unknown as { url: string; text?: string };
+  const { state } = editor.value;
+
+  focus();
+
+  // Apply the link to the selected or inserted text
+  setLink({
+    href: url,
+    target: '_blank',
+    rel: 'nofollow',
   });
+
+  // On edit link: Replace Entire Anchor text with the new one
+  if (editor.value?.isActive('link')) {
+    editor.value
+      .chain()
+      .focus()
+      .command(({ tr, state: currState }) => {
+        const { $from, $to } = currState.selection;
+
+        // Find the start and end of the link mark
+        const linkMark = state.schema.marks.link;
+        let start = $from.start(),
+          end = $to.end();
+
+        // Adjust the range to cover the entire link
+        state.doc.nodesBetween($from.pos, $to.pos, (node, pos) => {
+          if (
+            node.isText &&
+            node.marks.some((mark) => mark.type === linkMark)
+          ) {
+            start = Math.min(start, pos);
+            end = Math.max(end, pos + node.nodeSize);
+          }
+        });
+
+        // Replace the text within the link without affecting the link itself
+        tr.insertText(text || url, start, end);
+
+        return true;
+      })
+      .run();
+  } else if (state.selection.empty) {
+    insertContent(text || url);
+  }
+
+  editLinkOverlay.value?.hide();
+  linkFormShown.value = false;
+
+  return true;
+};
+
+const setImageFunction = (imageUrl?: string): void => {
+  editor.value.commands.focus();
+
+  if (imageUrl) {
+    if (props.isImageUploadBase64) {
+      editor.value.commands.setImage({
+        src: imageUrl,
+        title: 'localImageBase64',
+      });
+    } else {
+      editor.value.commands.setImage({ src: imageUrl, title: 'localImage' });
+    }
+
+    previewImages.value = Array.from(
+      new Set([...previewImages.value, imageUrl]),
+    );
+  }
+
+  if (inputURLImage.value) {
+    editor.value.commands.setImage({ src: inputURLImage.value });
+    previewImages.value = Array.from(
+      new Set([...previewImages.value, inputURLImage.value]),
+    );
+  }
+
+  inputURLImage.value = undefined;
 };
 
 const unsetImage = (): void => {
-  if (selectedImage.value.title === 'localImage') {
+  if (selectedImage.value && selectedImage.value.title === 'localImage') {
     emit('deleteImageLocal', selectedImage.value);
   }
   editor.value.commands.deleteSelection();
+};
+
+const convertBase64 = (file: File): Promise<string | ArrayBuffer> => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+
+    fileReader.onload = (): void => {
+      resolve(fileReader.result);
+    };
+
+    fileReader.onerror = (error): void => {
+      reject(error);
+    };
+  });
+};
+
+const fetchMentionSuggestionFunction = async (): Promise<void> => {
+  if (props.fetchMentionSuggestionFunction) {
+    isLoading.value = !isLoading.value;
+    try {
+      const { data } = (await props.fetchMentionSuggestionFunction()) ?? {};
+      mentionSuggestionList.value = data;
+      isLoading.value = !isLoading.value;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
+
+const codeSnippetTrigger = (): boolean => {
+  const { insertCodeSnippet, deleteCodeSnippet } = editor.value.commands as any;
+  if (editor.value?.isActive('codeSnippet')) {
+    deleteCodeSnippet();
+  } else {
+    insertCodeSnippet();
+  }
+  return false;
+};
+
+const goToNextLine = (): void => {
+  const editorData = editor.value.getJSON();
+  editorData.content.push({
+    type: 'paragraph',
+    content: [
+      {
+        type: 'text',
+        text: '',
+      },
+    ],
+  });
+  editor.value.commands.setContent(editorData);
 };
 
 watch(
@@ -541,6 +708,10 @@ watch(
     field.validate?.();
   },
 );
+
+watch(registeredMentionList, () => {
+  modelMentionedList.value = registeredMentionList.value;
+});
 </script>
 
 <template>
@@ -575,10 +746,11 @@ watch(
           v-bind="tool"
           :key="tool.icon"
           v-for="tool of toolbars"
-          :class="[{ '!bg-primary-50': tool.active }]"
+          :class="[{ '!bg-primary-50 ': tool.active }]"
         />
       </div>
       <EditorContent
+        v-if="!isLoading"
         :class="[
           `${props.editorState === 'editable' ? 'px-3 py-2' : ''} [&_*]:outline-none`,
           '[&_.is-editor-empty:first-child::before]:text-general-200',
@@ -613,7 +785,35 @@ watch(
       />
 
       <FloatingMenu
-        v-if="editor && !linkFormShown"
+        v-if="editor && !linkFormShown && props.editorState === 'editable'"
+        :editor="editor"
+        :should-show="() => !!editor?.isActive('codeSnippet')"
+        :tippy-options="{ placement: 'top', zIndex: 9 }"
+        class="-mt-1.5 shadow-panel"
+        plugin-key="editLinkToolbar"
+      >
+        <div
+          :class="[
+            'flex gap-2 bg-white border-[0.5px] px-2 py-1 rounded-sm',
+
+            `[&_.separator::after]:content-['|']`,
+            `[&_.separator::after]:text-xl`,
+            `[&_.separator::after]:font-thin`,
+            `[&_.separator]:h-6`,
+          ]"
+        >
+          <EditorButton
+            @click="goToNextLine"
+            icon="close"
+            severity="secondary"
+            text
+            tooltip-text="Buat Text Di Luar Code Block"
+          />
+        </div>
+      </FloatingMenu>
+
+      <FloatingMenu
+        v-if="editor && !linkFormShown && props.editorState === 'editable'"
         :editor="editor"
         :should-show="() => !!editor?.isActive('link')"
         :tippy-options="{ placement: 'bottom', zIndex: 9 }"
@@ -731,7 +931,7 @@ watch(
                   v-for="(previewImage, index) in previewImages"
                   :src="previewImage"
                   alt="preview"
-                  class="w-28 h-28 rounded-lg"
+                  class="w-28 h-28 object-scale-down rounded-lg"
                 />
                 <div
                   class="flex flex-col justify-center w-28 h-28 items-center"
@@ -761,7 +961,7 @@ watch(
       </Dialog>
 
       <FloatingMenu
-        v-if="editor"
+        v-if="editor && props.editorState === 'editable'"
         :editor="editor"
         :should-show="() => !!editor?.isActive('image')"
         :tippy-options="{ placement: 'right', zIndex: 9 }"

@@ -24,6 +24,7 @@
   "dependencies": {
     "@lottiefiles/dotlottie-vue": "^0.4.15",
     "@lottiefiles/vue-lottie-player": "^1.1.0",
+    "@tiptap/core": "2.6.6",
     "@tiptap/extension-blockquote": "^2.6.6",
     "@tiptap/extension-bold": "^2.6.6",
     "@tiptap/extension-bullet-list": "^2.6.6",
@@ -60,6 +61,7 @@
     "primevue": "^3.53.0",
     "sharp": "^0.33.5",
     "single-spa": "6.0.1",
+    "socket.io-client": "^4.8.0",
     "tippy.js": "^6.3.7",
     "vee-validate": "4.13.2",
     "vue": "3.4.37",

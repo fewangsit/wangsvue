@@ -113,6 +113,7 @@ import {
   Editor,
   Image,
   Animation,
+  Comment,
 } from './components';
 
 export default {
@@ -173,6 +174,7 @@ export default {
     app.component('LiteDropdown', LiteDropdown);
     app.component('ChangelogPage', ChangelogPage);
     app.component('Editor', Editor);
+    app.component('Comment', Comment);
 
     app.directive('tooltip', Tooltip);
     app.directive('focus', Focus);
@@ -247,6 +249,7 @@ export {
   ChangelogPage,
   Editor,
   Animation,
+  Comment,
 
   // Component store
   useLoadingStore,
