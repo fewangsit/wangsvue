@@ -14,11 +14,16 @@ import Button from 'lib/components/button/Button.vue';
 import TaskAttachmentServices from 'lib/services/taskAttachment.service';
 import { UpdateTaskAttachmentCaptionDTO } from 'lib/dto/taskAttachment.dto';
 import { formatDateReadable } from 'lib/utils/date.util';
+import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
+import { useToast } from 'lib/utils';
+
+const toast = useToast();
 
 const props = defineProps<AttachmentItemProps>();
 const emit = defineEmits<AttachmentItemEmits>();
 
 const showInputCaption = ref(false);
+const dialogConfirmDelete = ref(false);
 
 const submitCaption = async (e: FormPayload): Promise<void> => {
   try {
@@ -44,10 +49,16 @@ const deleteAttachment = async (): Promise<void> => {
       props.item._id,
     );
     if (data) {
+      toast.add({
+        message: 'Attachment telah dihapus.',
+      });
       emit('deleted');
     }
   } catch (error) {
-    console.error(error);
+    toast.add({
+      error,
+      message: 'Attachment gagal dihapus.',
+    });
   }
 };
 </script>
@@ -92,7 +103,10 @@ const deleteAttachment = async (): Promise<void> => {
             <span>|</span>
             <a class="cursor-pointer text-primary-400">Download</a>
             <span>|</span>
-            <a @click="deleteAttachment" class="cursor-pointer text-danger-500">
+            <a
+              @click="dialogConfirmDelete = true"
+              class="cursor-pointer text-danger-500"
+            >
               Hapus
             </a>
           </div>
@@ -144,6 +158,16 @@ const deleteAttachment = async (): Promise<void> => {
       </Form>
     </div>
   </div>
+
+  <DialogConfirm
+    v-model:visible="dialogConfirmDelete"
+    :list="[item.displayName]"
+    @confirm="deleteAttachment"
+    confirm-label="Hapus"
+    header="Hapus Attachment"
+    message="Apakah kamu yakin ingin menghapusnya?"
+    severity="danger"
+  />
 </template>
 
 <style scoped>
