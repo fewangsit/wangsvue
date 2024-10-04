@@ -172,7 +172,8 @@ export type WangsIcons =
   | 'whatsapp'
   | 'chat-1-line'
   | 'attachment-2'
-  | 'save';
+  | 'save'
+  | 'chat-new-line';
 
 export interface IconProps {
   icon: WangsIcons;

@@ -11,7 +11,7 @@ const moreModel: MenuItem[] = [
     label: 'Hapus',
     icon: 'delete-bin',
     danger: true,
-    command(): void {
+    command: (): void => {
       // TODO: Delete Task
     },
   },
@@ -27,6 +27,7 @@ const handleMore = (e: Event): void => {
     <Menu ref="moreMenu" :model="moreModel" />
     <Button
       @click="handleMore"
+      class="!p-1"
       icon="more"
       icon-class="!w-6 !h-6 rotate-90"
       severity="secondary"

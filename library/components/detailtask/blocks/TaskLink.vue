@@ -18,6 +18,7 @@ const showDialogSetTaskLink = ref<boolean>(false);
       <div class="flex items-center gap-2">
         <!-- TODO: Handle chat icon on click -->
         <Button
+          class="!p-1"
           icon="chat-1-line"
           icon-class="!w-6 !h-6"
           severity="secondary"
@@ -25,6 +26,7 @@ const showDialogSetTaskLink = ref<boolean>(false);
         />
         <!-- TODO: Handle task link changelog on click -->
         <Button
+          class="!p-1"
           icon="file-history"
           icon-class="!w-6 !h-6"
           severity="secondary"

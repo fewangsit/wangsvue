@@ -13,8 +13,8 @@ import TaskServices from 'lib/services/task.service';
 import { EditTaskDTO } from 'lib/dto/task.dto';
 import { FormPayload } from 'lib/components/form/Form.vue.d';
 
-const { setLoading } = useLoadingStore();
 const toast = useToast();
+const { setLoading } = useLoadingStore();
 
 const visible = defineModel<boolean>('visible', { required: true });
 
@@ -36,6 +36,7 @@ const getMemberOptions = async (): Promise<void> => {
   try {
     memberLoading.value = true;
 
+    // TODO: Filter berdasarkan team, module, dan submodule dari task yang dipilih
     const { data } = await MemberServices.getMemberList({
       team: JSON.stringify(taskDetail.value.team),
     });
@@ -61,7 +62,7 @@ const handleSubmit = async (payload: FormPayload): Promise<void> => {
     setLoading(true);
 
     const dataDTO: EditTaskDTO = {
-      assignedTo: payload.formValues.member as unknown as string[],
+      assignedTo: [payload.formValues.member] as unknown as string[],
     };
 
     await TaskServices.putEditTask(taskId.value, dataDTO);

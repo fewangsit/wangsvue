@@ -253,6 +253,7 @@ watch(
         <span class="text-lg font-semibold leading-4">Detail Task</span>
         <div class="flex items-center gap-1.5">
           <Button
+            class="!p-1"
             icon="chat-1-line"
             icon-class="!w-6 !h-6"
             severity="secondary"

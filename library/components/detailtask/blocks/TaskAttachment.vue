@@ -13,6 +13,7 @@ import Icon from 'lib/components/icon/Icon.vue';
       <div class="flex items-center gap-2">
         <!-- TODO: Handle attachment changelog on click -->
         <Button
+          class="!p-1"
           icon="file-history"
           icon-class="!w-6 !h-6"
           severity="secondary"

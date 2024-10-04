@@ -98,6 +98,7 @@ const getModuleOptions = async (): Promise<void> => {
   try {
     legendLoading.value.module = true;
 
+    // TODO: Filter according to team selected in the process.
     const { data } = await ModuleServices.getModuleList(projectId);
 
     legendOptions.value.module = data.data.map((d) => ({
@@ -208,10 +209,9 @@ const createTask = async (): Promise<void> => {
       team: legendForm.value.process.team.map((team) => team.initial),
     };
 
-    await TaskServices.postCreateTask(dataDTO);
+    const { data } = await TaskServices.postCreateTask(dataDTO);
 
-    // TODO: Replace with _id from create task
-    taskId.value = '66fb6b394374e14b8768debf';
+    taskId.value = data.data;
 
     eventBus.emit('detail-task:create', { taskId: taskId.value });
 
@@ -451,7 +451,7 @@ watch(
         <Badge :label="taskDetail?.status ?? 'Backlog'" />
         <!-- TODO: 
           - Only show task button action when there are action to be made
-          - Show button according to their respective action
+          - Show button according to their respective available action
         -->
         <Button label="Tandai Selesai" severity="secondary" />
       </div>
