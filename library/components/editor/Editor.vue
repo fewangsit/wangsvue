@@ -1,25 +1,25 @@
 <script setup lang="ts">
 import {
   computed,
+  nextTick,
   onMounted,
   reactive,
   ref,
   shallowRef,
   watch,
-  nextTick,
 } from 'vue';
 import {
   EditorContent,
+  EditorEvents,
   FloatingMenu,
   JSONContent,
   useEditor,
-  EditorEvents,
 } from '@tiptap/vue-3';
 import { MenuItem } from '../menuitem';
-import { FormPayload, FieldValidation } from '../form/Form.vue.d';
+import { FieldValidation, FormPayload } from '../form/Form.vue.d';
 import {
-  EditorProps,
   EditorEmits,
+  EditorProps,
   ImageProperties,
   MentionSuggestion,
 } from './Editor.vue.d';
@@ -123,7 +123,7 @@ const editor = useEditor({
       'image',
     ) as ImageProperties;
 
-    editor.value.state.doc.descendants((node: any): void | boolean => {
+    editor.value.state.doc.descendants((node): void | boolean => {
       if (node.type.name === 'mention') {
         registeredMentionList.value.push(node.attrs.id);
       }
@@ -164,30 +164,23 @@ const editor = useEditor({
     Text,
     Image.extend({
       addKeyboardShortcuts() {
+        const deleteOrBackspace = (): boolean => {
+          const { node } = this.editor.state.selection as any;
+
+          if (
+            node &&
+            node.type.name === 'image' &&
+            node.attrs.title === 'localImage'
+          ) {
+            unsetImage();
+            return true;
+          }
+        };
+
         return {
           Insert: (): boolean => setImageDialog(),
-          Backspace: (): boolean => {
-            const { selection } = this.editor.state;
-            if (
-              selection.node &&
-              selection.node.type.name === 'image' &&
-              selection.node.attrs.title === 'localImage'
-            ) {
-              unsetImage();
-              return true;
-            }
-          },
-          Delete: (): boolean => {
-            const { selection } = this.editor.state;
-            if (
-              selection.node &&
-              selection.node.type.name === 'image' &&
-              selection.node.attrs.title === 'localImage'
-            ) {
-              unsetImage();
-              return true;
-            }
-          },
+          Backspace: deleteOrBackspace,
+          Delete: deleteOrBackspace,
         };
       },
     }).configure({
@@ -500,8 +493,7 @@ const getSelectedText = (): string | undefined => {
     const { from, to } = state.selection;
 
     // Get the selected text between the 'from' and 'to' positions
-    const selectedText = state?.doc.textBetween(from, to, ' ');
-    return selectedText;
+    return state?.doc.textBetween(from, to, ' ');
   }
 };
 
@@ -866,7 +858,6 @@ watch(registeredMentionList, () => {
       <Menu ref="headingMenu" :model="headings" popup>
         <template #item="{ item }">
           <a
-            :alt="item.label"
             :class="[
               ...MenuPreset.action.class,
               item.class,
@@ -888,6 +879,7 @@ watch(registeredMentionList, () => {
                   (editor?.isActive('paragraph') && item.label === 'Paragraf'),
               },
             ]"
+            :title="item.label as string"
             @click="item.command?.({ item, originalEvent: $event })"
           >
             {{ item.label }}

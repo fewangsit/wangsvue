@@ -73,7 +73,6 @@ import toolbar from './toolbar';
 import tooltip from './tooltip';
 import tree from './tree';
 import treeselect from './treeselect';
-import treetable from './treetable';
 import tristatecheckbox from './tristatecheckbox';
 
 export default {
@@ -125,7 +124,6 @@ export default {
   organizationchart,
   orderlist,
   picklist,
-  treetable,
   timeline,
 
   //Panels
