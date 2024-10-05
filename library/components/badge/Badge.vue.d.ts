@@ -1,4 +1,4 @@
-import { DefineComponent } from 'vue';
+import { ClassComponent } from '../ts-helpers.d';
 
 /**
  * Props for Badge component
@@ -9,7 +9,7 @@ export interface BadgeProps {
    */
   label: string;
   /**
-   * Wether the badge text is editable.
+   * Whether the badge text is editable.
    */
   editable?: boolean;
   /**
@@ -49,6 +49,8 @@ export type BadgeEmits = {
  *
  * @group components
  */
-declare const Badge: DefineComponent<BadgeProps, BadgeEmits>;
-
-export default Badge;
+export default class Badge extends ClassComponent<
+  BadgeProps,
+  unknown,
+  BadgeEmits
+> {}
