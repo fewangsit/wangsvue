@@ -12,7 +12,7 @@ export default {
   },
   scrollheightwrapper: ({ props }) => ({
     'class': [
-      'w-max overflow-hidden scrollbar-w-none',
+      'min-w-max w-full overflow-hidden scrollbar-w-none',
       {
         '!overflow-y-auto': !!props.scrollHeight,
       },
