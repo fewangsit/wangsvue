@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.204
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.203...v1.4.204)
+
+### 🎨 Styles
+
+- **Table:** Update table scrollheightwrapper ([6c0add0](https://github.com/fewangsit/wangsvue/commit/6c0add0))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.203
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.202...v1.4.203)
