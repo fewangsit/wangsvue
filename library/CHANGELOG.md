@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.203
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.202...v1.4.203)
+
+### 🚀 Enhancements
+
+- **UserName:** Get user detail on panel shown - add loading Skeleton while loading user data ([f5ce408](https://github.com/fewangsit/wangsvue/commit/f5ce408))
+
+### 🎨 Styles
+
+- **DialogForm:** Remove scoped style of scrollbar-w-thin ([15e2943](https://github.com/fewangsit/wangsvue/commit/15e2943))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.202
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.201...v1.4.202)
