@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue';
 import { useField } from 'vee-validate';
-import Badge from 'lib/components/badge/Badge.vue';
+import Badge, { BadgeProps } from 'lib/components/badge/Badge.vue.d';
 
 import type {
   DropdownEmits,
@@ -193,7 +193,7 @@ defineExpose({
             <slot :value="getOptionLabel()" name="value">
               <Badge
                 v-if="valueType === 'badge'"
-                v-bind="badgeValueProps"
+                v-bind="badgeValueProps as BadgeProps"
                 :label="getOptionLabel()"
               />
               <div v-else class="flex items-center">

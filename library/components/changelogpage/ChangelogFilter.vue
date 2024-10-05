@@ -15,6 +15,11 @@ import {
 } from './ChangelogPage.vue.d';
 import LogServices from 'lib/services/log.service';
 
+type ChangelogOptionFields = keyof Omit<
+  ChangelogOptionQuery,
+  'moduleId' | 'subModuleId' | 'objects' | 'object'
+>;
+
 const toast = useToast();
 
 const props = defineProps<BaseChangelogPageProps & { tableName: string }>();
@@ -93,7 +98,7 @@ const fields = ((): FilterField[] => {
               fetchOptionFn: async (): Promise<MultiSelectOption[]> => {
                 const filter = each.filter as MultiSelectFilterField;
                 const optionField = (filter.field +
-                  'Options') as keyof ChangelogOptionQuery;
+                  'Options') as ChangelogOptionFields;
                 return await fetchOptions(optionField);
               },
             }
@@ -117,10 +122,7 @@ const filter = reactive<ChangelogFilter>({});
  * @returns {Promise<void>}
  */
 const fetchOptions = async (
-  field: keyof Omit<
-    ChangelogOptionQuery,
-    'moduleId' | 'subModuleId' | 'objects' | 'object'
-  >,
+  field: ChangelogOptionFields,
 ): Promise<MultiSelectOption[]> => {
   try {
     const { data } = await LogServices.getChangelogOptions({
