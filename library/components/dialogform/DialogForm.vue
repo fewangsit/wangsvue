@@ -301,7 +301,8 @@ defineExpose({ form, clearField });
         </section>
 
         <aside
-          v-if="$slots['aside-right'] && expanded"
+          v-if="$slots['aside-right']"
+          v-show="expanded"
           :class="[
             'flex flex-col gap-3',
             { 'w-0 opacity-0': !expanded },
