@@ -1,6 +1,51 @@
 # Changelog
 
 
+## v1.4.200
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.199...v1.4.200)
+
+### 🚀 Enhancements
+
+- Resets expanded rows on table re fetched ([726473f](https://github.com/fewangsit/wangsvue/commit/726473f))
+- **DialogForm:** Add prop asideRightWidth accepts value in pixel to determine the width of aside right ([d8f4193](https://github.com/fewangsit/wangsvue/commit/d8f4193))
+
+### 🩹 Fixes
+
+- Eslint Errors ([63c212e](https://github.com/fewangsit/wangsvue/commit/63c212e))
+- Typescript errors ([6e401e2](https://github.com/fewangsit/wangsvue/commit/6e401e2))
+- **MultiSelect:** Should update field value on props.modelValue changed ([38e5188](https://github.com/fewangsit/wangsvue/commit/38e5188))
+- **Table:** Td for single action should only shown when eiter useOption or customColumn is true ([bd9b07c](https://github.com/fewangsit/wangsvue/commit/bd9b07c))
+- Type error on ChangelogFilter.vue and Dropdown.vue ([b495ec5](https://github.com/fewangsit/wangsvue/commit/b495ec5))
+- Type error on Editor.vue ([20ee856](https://github.com/fewangsit/wangsvue/commit/20ee856))
+
+### 💅 Refactors
+
+- **DialogForm:** Using v-show to hide the aside instead of v-if ([ba9894c](https://github.com/fewangsit/wangsvue/commit/ba9894c))
+- **TabMenu:** Find exact route match first, and find index again when route is changed ([08c7e39](https://github.com/fewangsit/wangsvue/commit/08c7e39))
+
+### 📖 Documentation
+
+- **Badge:** Omit property label of BadgeProps on props badgeValueProps ([4331957](https://github.com/fewangsit/wangsvue/commit/4331957))
+
+### 🏡 Chore
+
+- Run vue-tsc on build ([1862adb](https://github.com/fewangsit/wangsvue/commit/1862adb))
+
+### 🎨 Styles
+
+- Remove tailwind class dark on all preset ([3777a68](https://github.com/fewangsit/wangsvue/commit/3777a68))
+
+### 🤖 CI
+
+- Add Pull request checks for main branch ([db84681](https://github.com/fewangsit/wangsvue/commit/db84681))
+- Run jekyll-gh-pages on push main ([11090a8](https://github.com/fewangsit/wangsvue/commit/11090a8))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.4.199
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.198...v1.4.199)
