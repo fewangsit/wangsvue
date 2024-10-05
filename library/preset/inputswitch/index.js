@@ -36,11 +36,11 @@ export default {
       'before:duration-200 before:transition before:ease-in-out',
       'before:shadow',
       {
-        'before:bg-white before:dark:bg-white':
+        'before:bg-white before:bg-white':
           props.modelValue == props.trueValue,
-        'before:bg-primary-200 before:dark:bg-primary-200':
+        'before:bg-primary-200':
           props.modelValue !== props.trueValue && !props.disabled,
-        'before:bg-general-50 before:dark:bg-general-50':
+        'before:bg-general-50':
           props.modelValue !== props.trueValue && props.disabled,
       },
       {
@@ -56,26 +56,18 @@ export default {
         'border-transparent': props.modelValue == props.trueValue,
       },
       {
-        'bg-white dark:bg-white':
+        'bg-white':
           props.modelValue !== props.trueValue && !props.disabled,
-        'bg-primary-500 dark:bg-primary-500':
+        'bg-primary-500':
           props.modelValue == props.trueValue && !props.disabled,
-        'bg-primary-100 dark:bg-primary-100':
+        'bg-primary-100':
           props.modelValue == props.trueValue && props.disabled,
-        'bg-general-100 dark:bg-general-100':
+        'bg-general-100':
           props.modelValue !== props.trueValue && props.disabled,
       },
 
       // States
-      // {
-      //   'peer-hover:bg-surface-300 dark:peer-hover:bg-surface-600 ':
-      //     !(props.modelValue == props.trueValue) && !props.disabled,
-      // },
-      // {
-      //   'peer-hover:bg-primary-600 dark:peer-hover:bg-surface-300 ':
-      //     props.modelValue == props.trueValue && !props.disabled,
-      // },
-      'peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500 dark:peer-focus-visible:ring-primary-400',
+      'peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500',
 
       // Transition
       'transition-colors duration-200',
@@ -109,7 +101,7 @@ export default {
       'opacity-0',
       'rounded-md',
       'outline-none',
-      'border-2 border-surface-300 dark:border-surface-700',
+      'border-2 border-surface-300',
 
       // Misc
       'appearance-none',

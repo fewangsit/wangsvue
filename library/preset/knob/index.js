@@ -14,7 +14,7 @@ export default {
       'stroke-current',
 
       // Color
-      'stroke-surface-200 dark:stroke-surface-700',
+      'stroke-surface-200',
 
       // Fill
       'fill-none',
@@ -29,7 +29,7 @@ export default {
       'animate-dash-frame',
 
       // Color
-      'stroke-primary-500 dark:stroke-primary-400',
+      'stroke-primary-500',
 
       // Fill
       'fill-none',
@@ -41,7 +41,7 @@ export default {
       'text-center text-xl',
 
       // Color
-      'fill-surface-600 dark:fill-surface-200',
+      'fill-surface-600',
     ],
   },
 };

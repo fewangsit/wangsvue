@@ -15,7 +15,7 @@ export default {
       'p-0 m-0',
 
       // Colors
-      'text-general-100 dark:text-general-400',
+      'text-general-100',
     ],
   },
   menuitem: {
@@ -40,26 +40,21 @@ export default {
 
       // Colors and Conditions
       {
-        'bg-transparent dark:bg-transparent':
-          state.d_activeIndex !== context.index,
-        'text-grayscale-900 dark:text-grayscale-900':
-          state.d_activeIndex !== context.index,
+        'bg-transparent ': state.d_activeIndex !== context.index,
+        'text-grayscale-900': state.d_activeIndex !== context.index,
 
-        'border-primary-400 dark:border-primary-400':
-          state.d_activeIndex === context.index,
+        'border-primary-400': state.d_activeIndex === context.index,
 
-        'border-primary-100 dark:border-primary-100':
-          state.d_activeIndex !== context.index,
-        'text-primary-500 dark:text-primary-500':
-          state.d_activeIndex === context.index,
+        'border-primary-100': state.d_activeIndex !== context.index,
+        'text-primary-500': state.d_activeIndex === context.index,
       },
 
       // States
       'hover:bg-primary-50',
       'focus-visible:outline-none focus-visible:outline-offset-0',
-      'focus-visible:bg-primary-50 dark:focus-visible:bg-primary-50',
+      'focus-visible:bg-primary-50',
       {
-        'focus-visible:border-primary-200 dark:focus-visible:border-primary-200 focus-visible:text-primary-400 dark:focus-visible:text-primary-400 ':
+        'focus-visible:border-primary-200 focus-visible:text-primary-400':
           state.d_activeIndex !== context.index,
       },
 
@@ -84,6 +79,6 @@ export default {
     class: 'mr-2',
   },
   inkbar: {
-    class: 'grow border-b-2 border-primary-100 dark:border-primary-100',
+    class: 'grow border-b-2 border-primary-100',
   },
 };

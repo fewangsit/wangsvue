@@ -16,7 +16,7 @@ export default {
       'gap-3',
 
       // Background
-      'bg-white dark:bg-grayscale-900',
+      'bg-white',
 
       // Size
       'max-h-[90vh]',
@@ -26,10 +26,6 @@ export default {
       // Transitions
       'transform',
       'scale-100',
-
-      // Color
-      // 'dark:border',
-      // 'dark:border-surface-700',
 
       // Maximized State
       {
@@ -87,7 +83,7 @@ export default {
       'transition duration-200 ease-in-out',
 
       // States
-      'hover:bg-general-50 dark:hover:bg-grayscale-800 hover:text-general-300',
+      'hover:bg-general-50 hover:text-general-300',
 
       // Misc
       'overflow-hidden',
@@ -117,10 +113,10 @@ export default {
       'transition duration-200 ease-in-out',
 
       // States
-      'hover:text-surface-700 dark:hover:text-white/80',
-      'hover:bg-surface-100 dark:hover:bg-surface-800/80',
+      'hover:text-surface-700',
+      'hover:bg-surface-100',
       'focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-inset',
-      'focus:ring-primary-500 dark:focus:ring-primary-400',
+      'focus:ring-primary-500',
 
       // Misc
       'overflow-hidden',
@@ -132,7 +128,7 @@ export default {
       'inline-block',
 
       // Color
-      'text-general-200 dark:text-general-200',
+      'text-general-200',
 
       // Size
       'w-3.5',
@@ -162,7 +158,7 @@ export default {
       // Shape
 
       // Colors
-      'text-surface-600 dark:text-surface-0/70',
+      'text-surface-600',
 
       // Misc
       'overflow-y-auto',
@@ -185,8 +181,8 @@ export default {
       'rounded-b-lg',
 
       // Colors
-      'bg-inherit dark:bg-inherit',
-      'text-surface-700 dark:text-surface-0/80',
+      'bg-inherit',
+      'text-surface-700/80',
     ],
   },
   mask: ({ props }) => ({
@@ -198,7 +194,7 @@ export default {
 
       // Background and Effects
       {
-        'has-[.mask-active]:bg-transparent dark:has-[.mask-active]:bg-transparent bg-dialog-mask dark:dialog-mask':
+        'has-[.mask-active]:bg-transparent bg-dialog-mask':
           props.modal,
         'has-[.mask-active]:backdrop-blur-none backdrop-blur-sm': props.modal,
       },

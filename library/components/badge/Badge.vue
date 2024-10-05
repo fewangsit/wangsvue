@@ -26,30 +26,15 @@ const severityClasses = computed<string[]>(() => {
   if (!props.disabled) {
     switch (badgeSeverity.value) {
       case 'success':
-        return [
-          'text-success-800 bg-success-100',
-          'dark:bg-success-100 dark:text-success-800',
-        ];
+        return ['text-success-800 bg-success-100', ''];
       case 'danger':
-        return [
-          'text-danger-700 bg-danger-200',
-          'dark:bg-danger-200 dark:text-danger-700',
-        ];
+        return ['text-danger-700 bg-danger-200'];
       case 'warning':
-        return [
-          'text-warning-600 bg-warning-100',
-          'dark:bg-warning-100 dark:text-warning-600',
-        ];
+        return ['text-warning-600 bg-warning-100'];
       case 'dark':
-        return [
-          'text-grayscale-900 bg-grayscale-500',
-          'dark:bg-grayscale-500 dark:text-grayscale-900',
-        ];
+        return ['text-grayscale-900 bg-grayscale-500'];
       default:
-        return [
-          'text-primary-800 bg-primary-200',
-          'dark:bg-primary-200 dark:text-primary-800',
-        ];
+        return ['text-primary-800 bg-primary-200'];
     }
   } else {
     return ['text-general-400', 'bg-general-100'];
@@ -161,16 +146,11 @@ const updateLabel = (inputElement: HTMLElement, badgeEl: HTMLElement): void => {
       :class="[
         'remove-btn',
         {
-          'dark:hover:!text-primary-300 !text-primary-800 dark:!text-primary-800':
-            !badgeSeverity || badgeSeverity === 'primary',
-          'dark:hover:!text-success-200 !text-success-800 dark:!text-success-800':
-            badgeSeverity === 'success',
-          'dark:hover:!text-danger-200 !text-danger-700 dark:!text-danger-700':
-            badgeSeverity === 'danger',
-          'dark:hover:!text-warning-400 !text-warning-600 dark:!text-warning-600':
-            badgeSeverity === 'warning',
-          'dark:hover:!text-grayscale-800 !text-grayscale-900 dark:!text-grayscale-900':
-            badgeSeverity === 'dark',
+          '!text-primary-800': !badgeSeverity || badgeSeverity === 'primary',
+          '!text-success-800': badgeSeverity === 'success',
+          '!text-danger-700': badgeSeverity === 'danger',
+          '!text-warning-600': badgeSeverity === 'warning',
+          '!text-grayscale-900': badgeSeverity === 'dark',
         },
       ]"
       :disabled="props.disabled"

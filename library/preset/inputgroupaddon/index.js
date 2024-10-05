@@ -19,11 +19,11 @@ export default {
       'w-max',
 
       // Font
-      'text-general-800 dark:text-general-50',
+      'text-general-800',
       'text-xs font-medium leading-none tracking-tight',
 
       // Color
-      'bg-general-50 dark:bg-grayscale-600',
+      'bg-general-50',
     ],
   })
 };

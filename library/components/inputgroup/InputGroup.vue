@@ -24,7 +24,7 @@ const focusToInput = (e: MouseEvent): void => {
   <InputGroup
     :class="[
       {
-        '!ring-danger-500 !dark:ring-danger-500 [&_.inputgroupaddon]:ring-danger-500 [&_.inputgroupaddon]:dark:ring-danger-500':
+        '!ring-danger-500 [&_.inputgroupaddon]:ring-danger-500':
           $props.invalid && ring != 'none',
         '[&_.inputgroupaddon]:ring-general-400':
           !$props.invalid && ring != 'none',

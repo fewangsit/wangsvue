@@ -7,8 +7,8 @@ export default {
       'flex flex-col gap-y-3',
 
       //Color
-      'bg-white dark:bg-white',
-      'text-grayscale-900 dark:text-grayscale-900',
+      'bg-white',
+      'text-grayscale-900',
     ],
   },
   header: {
@@ -25,7 +25,7 @@ export default {
   },
   content: {
     class:
-      'flex flex-col gap-2 text-xs text-grayscale-900 dark:text-general-100',
+      'flex flex-col gap-2 text-xs text-grayscale-900',
   },
   footer: {
     class: ['inline-flex gap-1 text-xs items-center'],

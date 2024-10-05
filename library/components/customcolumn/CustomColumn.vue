@@ -335,16 +335,10 @@ defineExpose({
         @dragstart="startReorderColumn($event, item, index)"
         @drop="onColumnReorder"
         @mouseenter="
-          ($event.target as HTMLLIElement).classList.add(
-            'bg-primary-50',
-            'dark:bg-primary-50',
-          )
+          ($event.target as HTMLLIElement).classList.add('bg-primary-50')
         "
         @mouseleave="
-          ($event.target as HTMLLIElement).classList.remove(
-            'bg-primary-50',
-            'dark:bg-primary-50',
-          )
+          ($event.target as HTMLLIElement).classList.remove('bg-primary-50')
         "
         data-wv-section="custom-column-menu-item"
       >

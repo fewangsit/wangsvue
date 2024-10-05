@@ -10,13 +10,13 @@ export default {
       { 'h-1.5': props.mode !== 'indeterminate' && !props.showValue },
       // { 'h-1.5': props.mode !== 'indeterminate' && props.showValue },
       // {
-      //   'h-2 bg-surface-100 dark:bg-surface-700 ':
+      //   'h-2 bg-surface-100 ':
       //     props.mode == 'indeterminate' || !props.showValue,
       // },
 
       // Before & After (!indeterminate)
       {
-        'before:absolute before:w-full before:rounded-full before:h-1.5 before:top-0 before:left-0 before:bottom-0 before:bg-general-100 dark:before:bg-general-100':
+        'before:absolute before:w-full before:rounded-full before:h-1.5 before:top-0 before:left-0 before:bottom-0 before:bg-general-100':
           props.mode !== 'indeterminate',
       },
     ],
@@ -71,7 +71,7 @@ export default {
       'absolute inset-0 mr-1 -top-[1.15rem]',
 
       // Font and Text
-      'text-sm text-surface-600 dark:text-surface-0/60',
+      'text-sm text-surface-600/60',
       'leading-none',
     ],
   },

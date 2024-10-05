@@ -11,13 +11,13 @@ export default {
       'shadow-sm',
 
       // Color and Background
-      'bg-surface-0 dark:bg-surface-900',
+      'bg-surface-0',
 
       // States
       {
-        'ring-1 ring-inset ring-surface-300 dark:ring-surface-700':
+        'ring-1 ring-inset ring-surface-300':
           !state.focused,
-        'ring-2 ring-inset ring-primary-500 dark:ring-primary-400':
+        'ring-2 ring-inset ring-primary-500':
           state.focused,
       },
 
@@ -38,7 +38,7 @@ export default {
       'py-1.5 px-3',
 
       // Color
-      'text-surface-800 dark:text-white/80',
+      'text-surface-800/80',
 
       // Transition
       'transition duration-200',
@@ -80,9 +80,9 @@ export default {
       'shadow-md',
 
       // Color
-      'bg-surface-0 dark:bg-surface-800',
-      'text-surface-800 dark:text-white/80',
-      'ring-1 ring-inset ring-surface-300 dark:ring-surface-700',
+      'bg-surface-0',
+      'text-surface-800/80',
+      'ring-1 ring-inset ring-surface-300',
     ],
   },
   wrapper: {
@@ -119,7 +119,7 @@ export default {
       class: [
         'p-[2px]',
         'rounded-md',
-        'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-inset focus:ring-primary-500 dark:focus:ring-primary-400',
+        'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-inset focus:ring-primary-500',
       ],
     },
     content: ({ context, props }) => ({
@@ -134,15 +134,15 @@ export default {
         'p-2',
 
         // Colors
-        'text-surface-700 dark:text-surface-0',
+        'text-surface-700',
         {
-          'bg-surface-100 text-primary-500 dark:bg-surface-300/10 dark:text-primary-400':
+          'bg-surface-100 text-primary-500':
             context.selected,
         },
 
         // States
         {
-          'hover:bg-surface-200 dark:hover:bg-surface-400/10':
+          'hover:bg-surface-200':
             props.selectionMode == 'single' ||
             props.selectionMode == 'multiple',
         },
@@ -180,10 +180,10 @@ export default {
         },
 
         // States
-        'hover:text-surface-700 dark:hover:text-white/80',
-        'hover:bg-surface-100 dark:hover:bg-surface-800/80',
+        'hover:text-surface-700',
+        'hover:bg-surface-100',
         'focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-inset',
-        'focus:ring-primary-500 dark:focus:ring-primary-400',
+        'focus:ring-primary-500',
 
         // Transition
         'transition duration-200',
@@ -198,7 +198,7 @@ export default {
         'w-4 h-4',
 
         // Color
-        'text-surface-500 dark:text-white/70',
+        'text-surface-500/70',
       ],
     },
     nodeCheckbox: {
@@ -240,21 +240,21 @@ export default {
           // Colors
           'text-surface-600',
           {
-            'border-surface-300 bg-surface-0 dark:border-surface-700 dark:bg-surface-900':
+            'border-surface-300 bg-surface-0':
               !context.checked,
-            'border-primary-500 bg-primary-500 dark:border-primary-400 dark:bg-primary-400':
+            'border-primary-500 bg-primary-500':
               context.checked,
           },
 
           {
-            'ring-2 ring-primary-500 dark:ring-primary-400':
+            'ring-2 ring-primary-500':
               !props.disabled && context.focused,
             'cursor-default opacity-60': props.disabled,
           },
 
           // States
           {
-            'peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500 dark:peer-focus-visible:ring-primary-400':
+            'peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500':
               !props.disabled,
             'cursor-default opacity-60': props.disabled,
           },
@@ -289,7 +289,7 @@ export default {
           'opacity-0',
           'rounded-md',
           'outline-none',
-          'border-2 border-surface-300 dark:border-surface-700',
+          'border-2 border-surface-300',
 
           // Misc
           'appareance-none',
@@ -305,7 +305,7 @@ export default {
           'h-3',
 
           // Colors
-          'text-white dark:text-surface-900',
+          'text-white',
 
           // Transitions
           'transition-all',
@@ -319,7 +319,7 @@ export default {
         'mr-2',
 
         // Color
-        'text-surface-600 dark:text-white/70',
+        'text-surface-600/70',
       ],
     },
     subgroup: {
@@ -355,14 +355,14 @@ export default {
         'rounded-md',
 
         // Colors
-        'text-surface-900 dark:text-surface-0',
-        'placeholder:text-surface-400 dark:placeholder:text-surface-500',
-        'bg-surface-0 dark:bg-surface-900',
-        'ring-1 ring-inset ring-surface-300 dark:ring-surface-700 ring-offset-0',
+        'text-surface-900',
+        'placeholder:text-surface-400',
+        'bg-surface-0',
+        'ring-1 ring-inset ring-surface-300',
 
         // States
-        'hover:border-primary-500 dark:hover:border-primary-400',
-        'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-inset focus:ring-primary-500 dark:focus:ring-primary-400',
+        'hover:border-primary-500',
+        'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-inset focus:ring-primary-500',
 
         // Transition & Misc
         'appearance-none',
@@ -371,7 +371,7 @@ export default {
     },
     loadingicon: {
       class: [
-        'text-surface-500 dark:text-surface-0/70',
+        'text-surface-500',
         'absolute top-[50%] right-[50%] -mt-2 -mr-2 animate-spin',
       ],
     },
@@ -381,7 +381,7 @@ export default {
         'absolute top-1/2 -mt-2 right-3',
 
         // Color
-        'text-surface-600 dark:hover:text-white/70',
+        'text-surface-600',
       ],
     },
   },

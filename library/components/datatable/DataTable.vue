@@ -818,9 +818,7 @@ watch(dataSelected, (newSelectedData: Data[]) => {
     scrollable
   >
     <template #empty>
-      <span class="leading-[47px] text-inherit dark:text-general-50">
-        No Data Found
-      </span>
+      <span class="leading-[47px] text-inherit"> No Data Found </span>
     </template>
 
     <template #loadingicon>

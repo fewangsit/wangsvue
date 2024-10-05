@@ -17,14 +17,14 @@ export default {
       },
 
       //Colors
-      'text-white dark:text-surface-900',
+      'text-white',
       {
-        'bg-primary-500 dark:bg-primary-400':
+        'bg-primary-500':
           props.severity == null || props.severity == 'primary',
-        'bg-green-500 dark:bg-green-400': props.severity == 'success',
-        'bg-blue-500 dark:bg-blue-400': props.severity == 'info',
-        'bg-orange-500 dark:bg-orange-400': props.severity == 'warning',
-        'bg-red-500 dark:bg-red-400': props.severity == 'danger',
+        'bg-green-500': props.severity == 'success',
+        'bg-blue-500': props.severity == 'info',
+        'bg-orange-500': props.severity == 'warning',
+        'bg-red-500': props.severity == 'danger',
       },
     ],
   }),

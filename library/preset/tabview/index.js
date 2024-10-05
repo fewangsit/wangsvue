@@ -32,8 +32,8 @@ export default {
       'rounded-none',
 
       // Colors
-      'bg-surface-0 dark:bg-surface-800',
-      'text-primary-500 dark:text-primary-400',
+      'bg-surface-0',
+      'text-primary-500',
       'shadow-md',
     ],
   },
@@ -52,8 +52,8 @@ export default {
       'rounded-none',
 
       // Colors
-      'bg-surface-0 dark:bg-surface-800',
-      'text-primary-500 dark:text-primary-400',
+      'bg-surface-0',
+      'text-primary-500',
       'shadow-md',
     ],
   },
@@ -67,9 +67,9 @@ export default {
       'p-0 m-0',
 
       // Colors
-      'bg-surface-0 dark:bg-surface-800',
-      'border-b border-surface-200 dark:border-surface-700',
-      'text-surface-900 dark:text-surface-0/80',
+      'bg-surface-0',
+      'border-b border-surface-200',
+      'text-surface-900/80',
     ],
   },
   tabpanel: {
@@ -106,30 +106,30 @@ export default {
 
         // Colors and Conditions
         {
-          'border-surface-200 dark:border-surface-700':
+          'border-surface-200':
             parent.state.d_activeIndex !== context.index,
-          'bg-surface-0 dark:bg-surface-800':
+          'bg-surface-0':
             parent.state.d_activeIndex !== context.index,
-          'text-surface-700 dark:text-surface-0/80':
+          'text-surface-700/80':
             parent.state.d_activeIndex !== context.index,
 
-          'bg-surface-0 dark:bg-surface-800':
+          'bg-surface-0':
             parent.state.d_activeIndex === context.index,
-          'border-primary-500 dark:border-primary-400':
+          'border-primary-500':
             parent.state.d_activeIndex === context.index,
-          'text-primary-500 dark:text-primary-400':
+          'text-primary-500':
             parent.state.d_activeIndex === context.index,
         },
 
         // States
         'focus-visible:outline-none focus-visible:outline-offset-0 focus-visible:ring-2 focus-visible:ring-inset',
-        'focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
+        'focus-visible:ring-primary-500',
         {
-          'hover:bg-surface-0 dark:hover:bg-surface-800/80':
+          'hover:bg-surface-0':
             parent.state.d_activeIndex !== context.index,
-          'hover:border-surface-400 dark:hover:border-surface-600':
+          'hover:border-surface-400':
             parent.state.d_activeIndex !== context.index,
-          'hover:text-surface-900 dark:hover:text-surface-0':
+          'hover:text-surface-900':
             parent.state.d_activeIndex !== context.index,
         },
 
@@ -159,8 +159,8 @@ export default {
         'rounded-b-md',
 
         // Colors
-        'bg-surface-0 dark:bg-surface-800',
-        'text-surface-700 dark:text-surface-0/80',
+        'bg-surface-0',
+        'text-surface-700/80',
         'border-0',
       ],
     },

@@ -659,14 +659,13 @@ watch(
               },
               { 'rounded-full': rounded, 'rounded-lg': !rounded },
               {
-                'ring-general-400 dark:ring-general-400 focus-visible:ring-primary-500 focus-visible:dark:ring-primary-500':
+                'ring-general-400 focus-visible:ring-primary-500':
                   !invalidInput && !field.errorMessage,
-                'ring-danger-500 dark:ring-danger-500':
-                  invalidInput || field.errorMessage,
+                'ring-danger-500': invalidInput || field.errorMessage,
               },
               {
-                'bg-white dark:bg-grayscale-900': !props.disabled,
-                'bg-general-50 dark:bg-grayscale-800': props.disabled,
+                'bg-white': !props.disabled,
+                'bg-general-50': props.disabled,
               },
             ]"
             @click="pickImage(false)"

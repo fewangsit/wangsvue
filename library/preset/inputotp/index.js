@@ -41,18 +41,18 @@ export default {
         },
 
         // Colors
-        'text-general-800 dark:text-general-800',
-        'placeholder:text-surface-400 dark:placeholder:text-surface-500',
-        'bg-white dark:bg-white',
+        'text-general-800',
+        'placeholder:text-surface-400',
+        'bg-white',
         'border',
-        { 'border-general-200 dark:border-general-200': !props.invalid },
+        { 'border-general-200': !props.invalid },
 
         // Invalid State
-        { 'border-danger-500 dark:border-danger-500': props.invalid },
+        { 'border-danger-500': props.invalid },
 
         // States
         {
-          // 'hover:border-primary-500 dark:hover:border-primary-400': !context.disabled && !props.invalid,
+          // 'hover:border-primary-500': !context.disabled && !props.invalid,
           'focus:outline-none focus:outline-offset-0': !context.disabled,
           'opacity-60 select-none pointer-events-none cursor-default':
             context.disabled,

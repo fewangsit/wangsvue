@@ -31,7 +31,7 @@ export default {
 
       // Colors
       'bg-surface-0',
-      'dark:bg-transparent',
+      '',
 
       // Misc
       { 'cursor-pointer': !props.readonly },
@@ -39,11 +39,11 @@ export default {
       // After
       'after:border-t-2',
       {
-        'after:border-surface-200 after:dark:border-surface-700':
+        'after:border-surface-200':
           state.d_activeStep <= context.index,
       },
       {
-        'after:border-primary-500 after:dark:border-primary-400':
+        'after:border-primary-500':
           state.d_activeStep > context.index,
       },
       'after:w-full',
@@ -75,28 +75,28 @@ export default {
 
       // Colors
       {
-        'text-surface-400 dark:text-white/60':
+        'text-surface-400/60':
           !context.active && state.d_activeStep < context.index,
-        'border-surface-100 dark:border-surface-700':
+        'border-surface-100':
           !context.active && state.d_activeStep < context.index,
-        'bg-surface-0 dark:bg-surface-800': state.d_activeStep <= context.index,
+        'bg-surface-0': state.d_activeStep <= context.index,
       },
       {
-        'border-primary-500 dark:border-primary-400': context.active,
-        'text-primary-500 dark:text-primary-400': context.active,
+        'border-primary-500': context.active,
+        'text-primary-500': context.active,
       },
       {
-        'bg-primary-500 dark:bg-primary-400':
+        'bg-primary-500':
           state.d_activeStep > context.index,
-        'text-surface-0 dark:text-surface-900':
+        'text-surface-0':
           state.d_activeStep > context.index,
-        'border-primary-500 dark:border-primary-400':
+        'border-primary-500':
           state.d_activeStep > context.index,
       },
 
       // States
       {
-        'hover:border-surface-300 dark:hover:border-surface-500':
+        'hover:border-surface-300':
           !context.active && !props.readonly,
       },
 
@@ -119,8 +119,8 @@ export default {
 
       // Colors
       {
-        'text-surface-400 dark:text-white/60': !context.active,
-        'text-surface-800 dark:text-white/80': context.active,
+        'text-surface-400/60': !context.active,
+        'text-surface-800/80': context.active,
       },
 
       // Text and Overflow

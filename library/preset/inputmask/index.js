@@ -8,10 +8,10 @@ export default {
       'm-0 py-1.5 px-3 sm:text-sm',
 
       // Colors
-      'text-surface-900 dark:text-surface-0',
-      'placeholder:text-surface-400 dark:placeholder:text-surface-500',
-      'bg-surface-0 dark:bg-surface-900',
-      'ring-1 ring-inset ring-surface-300 dark:ring-surface-700 ring-offset-0',
+      'text-surface-900',
+      'placeholder:text-surface-400',
+      'bg-surface-0',
+      'ring-1 ring-inset ring-surface-300',
       'shadow-sm',
 
       // Shape
@@ -20,7 +20,7 @@ export default {
 
       // Interactions
       {
-        'outline-none focus:ring-primary-500 dark:focus:ring-primary-400':
+        'outline-none focus:ring-primary-500':
           !context.disabled,
         'opacity-60 select-none pointer-events-none cursor-default':
           context.disabled,

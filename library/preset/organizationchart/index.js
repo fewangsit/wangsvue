@@ -32,17 +32,17 @@ export default {
       'rounded',
 
       // Color
-      'border-surface-200 dark:border-surface-700',
+      'border-surface-200',
       {
-        'text-surface-600 dark:text-white/80': !context?.selected,
-        'bg-surface-0 dark:bg-surface-800': !context?.selected,
-        'text-surface-700 dark:text-surface-0': context?.selected,
-        'bg-surface-50 dark:bg-surface-700': context?.selected,
+        'text-surface-600/80': !context?.selected,
+        'bg-surface-0': !context?.selected,
+        'text-surface-700': context?.selected,
+        'bg-surface-50': context?.selected,
       },
 
       // States
       {
-        'hover:bg-surface-100 dark:hover:bg-surface-600/40':
+        'hover:bg-surface-100/40':
           context?.selectable,
       },
 
@@ -67,7 +67,7 @@ export default {
       'w-px h-[20px]',
 
       // Color
-      'bg-surface-200 dark:bg-surface-700',
+      'bg-surface-200',
     ],
   },
   lineleft: ({ context }) => ({
@@ -83,7 +83,7 @@ export default {
       { 'border-t': context.lineTop },
 
       // Color
-      'border-surface-200 dark:border-surface-700',
+      'border-surface-200',
     ],
   }),
   lineright: ({ context }) => ({
@@ -99,7 +99,7 @@ export default {
 
       // Color
       {
-        'border-t border-surface-200 dark:border-surface-700': context.lineTop,
+        'border-t border-surface-200': context.lineTop,
       },
     ],
   }),
@@ -125,7 +125,7 @@ export default {
       'bg-inherit text-inherit',
 
       // Focus
-      'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400',
+      'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-primary-500',
 
       // Misc
       'cursor-pointer no-underline select-none',

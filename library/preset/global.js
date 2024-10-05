@@ -4,7 +4,7 @@ export const ringClass = [
     'ring-[0.5px] p-[0.5px]': !navigator.userAgent.includes('Firefox'),
   },
   'ring-inset',
-  'ring-general-400 dark:ring-general-400',
+  'ring-general-400',
 ];
 
 export default {

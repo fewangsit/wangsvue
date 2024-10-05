@@ -24,9 +24,8 @@ export default {
       'overflow-hidden',
 
       // Colors
-      'bg-white dark:bg-white',
-      'text-general-800 dark:text-general-100',
-      // 'ring-1 ring-line dark:ring-line',
+      'bg-white',
+      'text-general-800',
     ],
   },
   menu: {
@@ -59,20 +58,11 @@ export default {
       'rounded-md',
 
       // Colors
-      'text-inherit dark:text-inherit',
-      // {
-      //   'text-surface-700 dark:text-surface-0': !context.focused,
-      //   'bg-surface-100 text-primary-500 dark:bg-surface-300/10 dark:text-primary-400':
-      //     context.focused,
-      // },
+      'text-inherit',
 
       // Transitions
       'transition-shadow',
       'duration-200',
-
-      // States
-      // 'hover:text-primary-600 dark:hover:text-primary-400',
-      // 'hover:bg-surface-100 dark:hover:bg-surface-400/10',
     ],
   }),
   action: {
@@ -116,19 +106,6 @@ export default {
     class: [
       // Font
       'text-inherit',
-
-      // Spacing
-      // 'm-0 ',
-      // 'py-1',
-      // 'px-3',
-
-      // Shape
-      // 'rounded-tl-none',
-      // 'rounded-tr-none',
-
-      // Colors
-      // 'bg-white dark:bg-white',
-      // 'text-general-800 dark:text-general-800',
     ],
   },
   transition: {

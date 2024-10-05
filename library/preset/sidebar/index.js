@@ -19,13 +19,13 @@ export default {
       },
 
       // Shape
-      'border-0 dark:border',
+      'border-0',
       'shadow-xl',
 
       // Colors
-      'bg-surface-0 dark:bg-surface-800',
-      'text-surface-700 dark:text-white/80',
-      'dark:border-surface-700',
+      'bg-surface-0',
+      'text-surface-700/80',
+      '',
 
       // Transitions
       'transition-transform',
@@ -45,8 +45,8 @@ export default {
       'px-6 pt-6',
 
       // Colors
-      'bg-surface-0 dark:bg-surface-800',
-      'text-surface-700 dark:text-surface-0/80',
+      'bg-surface-0',
+      'text-surface-700/80',
     ],
   },
   title: {
@@ -79,10 +79,10 @@ export default {
       'transition duration-200 ease-in-out',
 
       // States
-      'hover:text-surface-700 dark:hover:text-white/80',
-      'hover:bg-surface-100 dark:hover:bg-surface-800/80',
+      'hover:text-surface-700',
+      'hover:bg-surface-100',
       'focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-inset',
-      'focus:ring-primary-500 dark:focus:ring-primary-400',
+      'focus:ring-primary-500',
 
       // Misc
       'overflow-hidden',
@@ -120,7 +120,7 @@ export default {
 
       // Background and Effects
       {
-        'has-[.mask-active]:bg-transparent dark:has-[.mask-active]:bg-transparent bg-surface-500/70 dark:bg-surface-700/70':
+        'has-[.mask-active]:bg-transparent bg-surface-500/70/70':
           props.modal,
         'has-[.mask-active]:backdrop-blur-none backdrop-blur-sm': props.modal,
       },

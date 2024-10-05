@@ -301,7 +301,7 @@ watch(
       <InputGroupAddon
         v-if="$slots['addon-right'] || props.showButtons"
         :class="{
-          '!text-general-200 !dark:text-general-200': props.disabled,
+          '!text-general-200': props.disabled,
           '!px-2': props.showButtons,
         }"
       >

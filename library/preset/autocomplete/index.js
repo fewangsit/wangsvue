@@ -10,7 +10,7 @@ export default {
       { 'w-full': props.multiple },
 
       // Color
-      'text-surface-900 dark:text-surface-0',
+      'text-surface-900',
 
       //States
       {
@@ -39,17 +39,17 @@ export default {
       'appearance-none rounded-md',
 
       // Color
-      'text-surface-900 dark:text-surface-0',
-      'bg-surface-0 dark:bg-surface-900',
-      'placeholder:text-surface-400 dark:placeholder:text-surface-500',
+      'text-surface-900',
+      'bg-surface-0',
+      'placeholder:text-surface-400',
       'shadow-sm',
 
       // States
       'focus:outline-none focus:outline-offset-0',
       {
-        'ring-1 ring-inset ring-surface-300 dark:ring-surface-700 ring-offset-0':
+        'ring-1 ring-inset ring-surface-300':
           !state.focused,
-        'ring-2 ring-primary-500 dark:ring-primary-400': state.focused,
+        'ring-2 ring-primary-500': state.focused,
       },
 
       // Transition
@@ -84,16 +84,16 @@ export default {
       { 'py-1.5 px-3': !props.multiple, 'p-0': props.multiple },
 
       // Colors
-      'text-surface-700 dark:text-white/80',
+      'text-surface-700/80',
       {
-        'bg-surface-0 dark:bg-surface-900': !props.multiple,
-        'border border-surface-300 dark:border-surface-700': !props.multiple,
+        'bg-surface-0': !props.multiple,
+        'border border-surface-300': !props.multiple,
         'border-0 bg-transparent': props.multiple,
       },
 
       // States
       {
-        'focus:outline-none focus:outline-offset-0 focus:ring-inset focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400':
+        'focus:outline-none focus:outline-offset-0 focus:ring-inset focus:ring-2 focus:ring-primary-500':
           !props.multiple,
       },
 
@@ -113,8 +113,8 @@ export default {
       'rounded-[1.14rem]',
 
       // Colors
-      'text-surface-700 dark:text-white/70',
-      'bg-surface-200 dark:bg-surface-700',
+      'text-surface-700/70',
+      'bg-surface-200',
     ],
   },
   label: {
@@ -154,20 +154,20 @@ export default {
         '-ml-[1px]',
 
         // Colors
-        'text-surface-600 dark:text-surface-100',
-        'bg-surface-100 dark:bg-surface-800',
-        'ring-1 ring-inset ring-surface-300 dark:ring-surface-700',
+        'text-surface-600',
+        'bg-surface-100',
+        'ring-1 ring-inset ring-surface-300',
 
         // States
-        'hover:bg-surface-200 dark:hover:bg-surface-700',
+        'hover:bg-surface-200',
         'focus:outline-none focus:outline-offset-0 focus:ring-1',
-        'focus:ring-primary-500 dark:focus:ring-primary-400',
+        'focus:ring-primary-500',
       ],
     },
   },
   loadingicon: {
     class: [
-      'text-sm leading-none text-surface-500 dark:text-surface-0/70',
+      'text-sm leading-none text-surface-500',
       'absolute top-[50%] right-[0.5rem] -mt-2 animate-spin',
     ],
   },
@@ -185,9 +185,9 @@ export default {
       'overflow-auto',
 
       // Color
-      'bg-surface-0 dark:bg-surface-800',
-      'text-surface-800 dark:text-white/80',
-      'ring-1 ring-inset ring-surface-300 dark:ring-surface-700',
+      'bg-surface-0',
+      'text-surface-800/80',
+      'ring-1 ring-inset ring-surface-300',
     ],
   },
   list: {
@@ -213,24 +213,24 @@ export default {
 
       // Color
       {
-        'text-surface-700 dark:text-white/80':
+        'text-surface-700/80':
           !context.focused && !context.selected,
       },
       {
-        'bg-surface-200 dark:bg-surface-600/60 text-surface-700 dark:text-white/80':
+        'bg-surface-200 text-surface-700/80':
           context.focused && !context.selected,
       },
       {
-        'bg-primary-500 dark:bg-primary-400 text-white dark:text-surface-700':
+        'bg-primary-500 text-white':
           context.focused && context.selected,
       },
       {
-        'bg-transparent text-surface-700 dark:text-white/80':
+        'bg-transparent text-surface-700/80':
           !context.focused && context.selected,
       },
 
       //States
-      'hover:bg-primary-500 dark:hover:bg-primary-400 hover:text-white dark:hover:text-surface-700',
+      'hover:bg-primary-500 hover:text-white',
 
       // Misc
       'cursor-pointer',
@@ -249,8 +249,8 @@ export default {
       'py-2 px-4',
 
       // Color
-      'text-surface-800 dark:text-white/80',
-      'bg-surface-0 dark:bg-surface-600/80',
+      'text-surface-800/80',
+      'bg-surface-0',
 
       // Misc
       'cursor-auto',
@@ -266,7 +266,7 @@ export default {
       'py-2 px-4',
 
       // Color
-      'text-surface-800 dark:text-white/80',
+      'text-surface-800/80',
       'bg-transparent',
     ],
   },

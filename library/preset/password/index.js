@@ -21,7 +21,7 @@ export default {
       // 'flex flex-shrink-0 self-stretch',
       // 'text-xs leading-[133.333%] tracking-[0.24px]',
       // 'rounded shadow-sm',
-      // 'appearance-none outline-none focus:ring-primary-500 dark:focus:ring-primary-400',
+      // 'appearance-none outline-none focus:ring-primary-500',
     ],
   },
   panel: {
@@ -30,13 +30,13 @@ export default {
       'p-3',
 
       // Shape
-      'border-0 dark:border',
+      'border-0',
       'shadow-md rounded-md',
 
       // Colors
-      'bg-white dark:bg-white',
-      'text-general-800 dark:text-general-800',
-      'dark:border-general-800',
+      'bg-white',
+      'text-general-800',
+      '',
     ],
   },
   meter: {
@@ -54,7 +54,7 @@ export default {
       'mb-2',
 
       // Colors
-      'bg-surface-100 dark:bg-surface-700',
+      'bg-surface-100',
     ],
   },
   meterlabel: ({ instance }) => ({
@@ -64,10 +64,10 @@ export default {
 
       // Colors
       {
-        'bg-red-500 dark:bg-red-400/50': instance?.meter?.strength == 'weak',
-        'bg-orange-500 dark:bg-orange-400/50':
+        'bg-red-500/50': instance?.meter?.strength == 'weak',
+        'bg-orange-500/50':
           instance?.meter?.strength == 'medium',
-        'bg-green-500 dark:bg-green-400/50':
+        'bg-green-500/50':
           instance?.meter?.strength == 'strong',
       },
 
@@ -78,14 +78,14 @@ export default {
   showicon: {
     class: [
       'absolute top-[54%] right-3 -mt-2',
-      'text-general-200 dark:text-general-200',
+      'text-general-200',
       'focus-visible:text-general-500 hover:text-general-500',
     ],
   },
   hideicon: {
     class: [
       'absolute top-[54%] right-3 -mt-2',
-      'text-general-200 dark:text-general-200',
+      'text-general-200',
     ],
   },
   transition: {

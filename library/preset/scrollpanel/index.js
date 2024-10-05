@@ -38,7 +38,7 @@ export default {
       'h-[6px] bottom-0',
 
       // Appearance
-      'bg-surface-100 dark:bg-surface-700 rounded',
+      'bg-surface-100 rounded',
 
       // Interactivity
       'cursor-pointer',
@@ -59,7 +59,7 @@ export default {
       'w-[6px] top-0',
 
       // Appearance
-      'bg-surface-100 dark:bg-surface-700 rounded',
+      'bg-surface-100 rounded',
 
       // Interactivity
       'cursor-pointer',

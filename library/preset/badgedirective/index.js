@@ -28,22 +28,22 @@ export default {
       },
 
       // Color
-      'text-white dark:text-surface-900',
-      'ring-1 ring-white dark:ring-surface-900',
+      'text-white',
+      'ring-1 ring-white',
       {
-        'bg-primary-500 dark:bg-primary-400':
+        'bg-primary-500':
           !context.info &&
           !context.success &&
           !context.warning &&
           !context.danger &&
           !context.help &&
           !context.secondary,
-        'bg-surface-500 dark:bg-surface-400': context.secondary,
-        'bg-green-500 dark:bg-green-400': context.success,
-        'bg-blue-500 dark:bg-blue-400': context.info,
-        'bg-orange-500 dark:bg-orange-400': context.warning,
-        'bg-purple-500 dark:bg-purple-400': context.help,
-        'bg-red-500 dark:bg-red-400': context.danger,
+        'bg-surface-500': context.secondary,
+        'bg-green-500': context.success,
+        'bg-blue-500': context.info,
+        'bg-orange-500': context.warning,
+        'bg-purple-500': context.help,
+        'bg-red-500': context.danger,
       },
     ],
   }),

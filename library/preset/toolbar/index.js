@@ -14,8 +14,8 @@ export default {
       'shadow-md',
 
       // Color
-      'bg-surface-0 dark:bg-surface-900',
-      'ring-1 ring-surface-100 dark:ring-surface-700',
+      'bg-surface-0',
+      'ring-1 ring-surface-100',
     ],
   },
   start: {

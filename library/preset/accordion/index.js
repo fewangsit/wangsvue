@@ -10,7 +10,7 @@ export default {
         'border-x-0 border-b-0',
 
         // Color
-        'border border-surface-200 dark:border-surface-700',
+        'border border-surface-200',
 
         // State
         {
@@ -34,10 +34,10 @@ export default {
 
         // Color
         'bg-transparent',
-        'text-surface-900 dark:text-surface-0',
+        'text-surface-900',
 
         // States
-        'focus:outline-none focus:outline-offset-0 focus-visible:ring-2 focus-visible:ring-primary-600 ring-inset dark:focus-visible:ring-primary-500', // Focus
+        'focus:outline-none focus:outline-offset-0 focus-visible:ring-2 focus-visible:ring-primary-600 ring-inset', // Focus
 
         // Misc
         'cursor-pointer no-underline select-none',
@@ -58,7 +58,7 @@ export default {
         'pr-12 pt-2',
 
         // Color
-        'text-surface-600 dark:text-surface-0/70',
+        'text-surface-600',
       ],
     },
     transition: {

@@ -61,20 +61,15 @@ export default {
       // Colors
       'bg-transparent',
       {
-        'text-white dark:text-white': props.message.severity === 'success',
-        'text-danger dark:text-danger': props.message.severity === 'error',
-        'text-primary-500 dark:text-primary-500': props.message.severity === 'info',
+        'text-white': props.message.severity === 'success',
+        'text-danger': props.message.severity === 'error',
+        'text-primary-500': props.message.severity === 'info',
       },
 
       // Transitions
       'transition duration-200 ease-in-out',
 
       // States
-      // {
-      //   'hover:bg-success-100 dark:hover:bg-success-100': props.message.severity === 'success',
-      //   'hover:bg-danger-100 dark:hover:bg-danger-100': props.message.severity === 'error',
-      //   'hover:bg-primary-100 dark:hover:bg-primary-100': props.message.severity === 'info'
-      // },
 
       // Misc
       'overflow-hidden',

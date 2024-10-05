@@ -927,15 +927,11 @@ const listenUpdateTableEvent = (): void => {
               @dragstart="startReorderRow($event, item, index)"
               @drop="onRowReorder"
               @mouseenter="
-                ($event.target as HTMLLIElement).classList.add(
-                  'bg-primary-50',
-                  'dark:bg-primary-50',
-                )
+                ($event.target as HTMLLIElement).classList.add('bg-primary-50')
               "
               @mouseleave="
                 ($event.target as HTMLLIElement).classList.remove(
                   'bg-primary-50',
-                  'dark:bg-primary-50',
                 )
               "
             >

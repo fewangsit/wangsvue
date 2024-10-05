@@ -65,7 +65,7 @@ export default {
           '!cursor-default': !context.customColumn && !context.sortable,
         },
         'border-0 !border-b border-solid',
-        'border-primary-100 dark:border-primary-100',
+        'border-primary-100',
       ],
       'data-wv-section': 'headercell',
     };
@@ -81,7 +81,7 @@ export default {
   bodycell: {
     'class': [
       'text-xs px-2 py-0.5',
-      'border-0 !border-b !border-solid border-primary-100 dark:border-primary-100',
+      'border-0 !border-b !border-solid border-primary-100',
     ],
     'data-wv-section': 'bodycell',
   },

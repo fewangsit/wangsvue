@@ -14,7 +14,7 @@ export default {
       'border-0 rounded-lg',
 
       // Colors
-      'bg-surface-100 dark:bg-surface-700',
+      'bg-surface-100',
 
       // States
       {
@@ -42,7 +42,7 @@ export default {
       'rounded-lg',
 
       // Colors
-      'bg-primary-500 dark:bg-primary-400',
+      'bg-primary-500',
     ],
   }),
   handle: ({ props }) => ({
@@ -63,8 +63,8 @@ export default {
       'ring-2',
 
       // Colors
-      'bg-surface-0 dark:bg-surface-900',
-      'ring-primary-500 dark:ring-primary-400',
+      'bg-surface-0',
+      'ring-primary-500',
 
       // Transitions
       'transition duration-200',
@@ -92,8 +92,8 @@ export default {
       'ring-2',
 
       // Colors
-      'bg-surface-0 dark:bg-surface-900',
-      'ring-primary-500 dark:ring-primary-400',
+      'bg-surface-0',
+      'ring-primary-500',
 
       // Transitions
       'transition duration-200',
@@ -121,8 +121,8 @@ export default {
       'ring-2',
 
       // Colors
-      'bg-surface-0 dark:bg-surface-900',
-      'ring-primary-500 dark:ring-primary-400',
+      'bg-surface-0',
+      'ring-primary-500',
 
       // Transitions
       'transition duration-200',

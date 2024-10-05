@@ -6,7 +6,7 @@ defineProps<ValidatorMessageProps>();
 <template>
   <small
     v-show="message"
-    class="!mt-0 text-danger-500 dark:text-danger-500 text-xs font-light"
+    class="!mt-0 text-danger-500-500 text-xs font-light"
     data-wv-section="validator-message"
     role="alert"
   >

@@ -51,9 +51,9 @@ export default {
           !props.disabled,
         'peer-active:ring-8 peer-active:ring-offset-0 peer-active:ring-primary-400/[12%]':
           !props.disabled,
-        'cursor-default bg-general-50 border-general-200 dark:bg-general-50 dark:border-general-200':
+        'cursor-default bg-general-50 border-general-200':
           props.disabled && !context.checked,
-        'bg-general-200 dark:bg-general-200 border-general-200 dark:border-general-200':
+        'bg-general-200 border-general-200':
           props.disabled && context.checked,
       },
 
@@ -94,7 +94,7 @@ export default {
       'opacity-0',
       'rounded-md',
       'outline-none',
-      // 'border-2 border-surface-300 dark:border-surface-700',
+      // 'border-2 border-surface-300',
 
       // Misc
       'appareance-none',

@@ -25,17 +25,17 @@ export default {
       'rounded-md shadow-sm',
 
       // Colors
-      'text-surface-700 dark:text-white/80',
-      'ring-1 ring-surface-200 dark:ring-surface-700',
+      'text-surface-700/80',
+      'ring-1 ring-surface-200',
       {
-        'bg-surface-0 dark:bg-surface-900 ': !props.modelValue,
-        'bg-surface-100 dark:bg-surface-700': props.modelValue,
+        'bg-surface-0 ': !props.modelValue,
+        'bg-surface-100': props.modelValue,
       },
 
       // States
-      'peer-hover:bg-surface-200 dark:peer-hover:bg-surface-600/80',
+      'peer-hover:bg-surface-200',
       {
-        'peer-focus-visible:ring-2 peer-focus-visible:ring-inset peer-focus-visible:ring-primary-500 dark:peer-focus-visible:ring-primary-400':
+        'peer-focus-visible:ring-2 peer-focus-visible:ring-inset peer-focus-visible:ring-primary-500':
           !props.disabled,
       },
 
@@ -74,7 +74,7 @@ export default {
       'opacity-0',
       'rounded-md',
       'outline-none',
-      'border border-surface-200 dark:border-surface-700',
+      'border border-surface-200',
 
       // Misc
       'appareance-none',
@@ -82,6 +82,6 @@ export default {
     ],
   },
   icon: {
-    class: [' mr-2', 'text-surface-700 dark:text-white/80'],
+    class: [' mr-2', 'text-surface-700/80'],
   },
 };

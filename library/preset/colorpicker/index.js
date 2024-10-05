@@ -25,12 +25,12 @@ export default {
       'h-4',
 
       // Colors
-      'bg-surface-0 dark:bg-surface-900',
-      'border border-surface-300 dark:border-surface-700',
+      'bg-surface-0',
+      'border border-surface-300',
 
       // States
-      'hover:border-primary-500 dark:hover:border-primary-400',
-      'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400',
+      'hover:border-primary-500',
+      'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-primary-500',
 
       // Transition
       'transition-colors duration-200',
@@ -55,7 +55,7 @@ export default {
 
       // Colors
       'bg-surface-800',
-      'ring-1 ring-inset ring-surface-900 dark:ring-surface-600',
+      'ring-1 ring-inset ring-surface-900',
     ],
   }),
   selector: {

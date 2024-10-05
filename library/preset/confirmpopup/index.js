@@ -11,13 +11,12 @@ export default {
       'mt-3 absolute left-0 top-0',
 
       // Color
-      'dark:border',
-      'dark:border-surface-700',
-      'bg-surface-0 dark:bg-surface-800',
-      'text-surface-700 dark:text-surface-0/80',
+      '',
+      'bg-surface-0',
+      'text-surface-700/80',
 
       // Before: Arrow
-      'before:absolute before:w-0 before:-top-3 before:h-0 before:border-transparent before:border-solid before:ml-6 before:border-x-[0.75rem] before:border-b-[0.75rem] before:border-t-0 before:border-b-surface-0 dark:before:border-b-surface-800',
+      'before:absolute before:w-0 before:-top-3 before:h-0 before:border-transparent before:border-solid before:ml-6 before:border-x-[0.75rem] before:border-b-[0.75rem] before:border-t-0 before:border-b-surface-0',
     ],
   },
   content: {
@@ -30,8 +29,8 @@ export default {
       'py-3',
 
       // Colors
-      'bg-surface-0 dark:bg-surface-800',
-      'text-surface-600 dark:text-surface-0/70',
+      'bg-surface-0',
+      'text-surface-600',
 
       // Misc
       'overflow-y-auto',
@@ -57,8 +56,8 @@ export default {
       'rounded-b-lg',
 
       // Colors
-      'bg-surface-50 dark:bg-surface-700',
-      'text-surface-700 dark:text-surface-0/80',
+      'bg-surface-50',
+      'text-surface-700/80',
     ],
   },
   rejectbutton: {
@@ -77,12 +76,12 @@ export default {
         'rounded-md',
 
         // Color
-        'text-primary-500 dark:text-primary-400',
+        'text-primary-500',
 
         // States
         'hover:bg-primary-300/20',
         'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-inset',
-        'focus:ring-primary-500 dark:focus:ring-primary-400',
+        'focus:ring-primary-500',
       ],
     },
   },
@@ -102,14 +101,14 @@ export default {
         'rounded-md',
 
         // Color
-        'text-white dark:text-surface-900',
-        'bg-primary-500 dark:bg-primary-400',
-        'ring-1 ring-primary-500 dark:ring-primary-400',
+        'text-white',
+        'bg-primary-500',
+        'ring-1 ring-primary-500',
 
         // States
-        'hover:bg-primary-600 dark:hover:bg-primary-300 hover:border-primary-600 dark:hover:border-primary-300',
+        'hover:bg-primary-600 hover:border-primary-600',
         'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-offset-current',
-        'focus:ring-primary-500 dark:focus:ring-primary-400',
+        'focus:ring-primary-500',
       ],
     },
   },

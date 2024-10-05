@@ -231,7 +231,7 @@ defineExpose({
       <InputGroupAddon
         v-if="$slots['addon-right']"
         :class="{
-          '!text-general-200 !dark:text-general-200': props.disabled,
+          '!text-general-200': props.disabled,
         }"
       >
         <slot name="addon-right" />

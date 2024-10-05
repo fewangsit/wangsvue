@@ -53,9 +53,9 @@ export default {
 
       // Color
       {
-        'before:border-t before:border-surface-200 before:dark:border-surface-600':
+        'before:border-t before:border-surface-200':
           props.layout == 'horizontal',
-        'before:border-l before:border-surface-200 before:dark:border-surface-600':
+        'before:border-l before:border-surface-200':
           props.layout == 'vertical',
       },
     ],
@@ -66,7 +66,7 @@ export default {
       'p-2 z-10',
 
       // Color
-      'bg-surface-0 dark:bg-surface-800',
+      'bg-surface-0',
     ],
   },
 };

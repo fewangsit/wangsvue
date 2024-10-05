@@ -11,13 +11,13 @@ export default {
       'shadow-sm',
 
       // Color and Background
-      'bg-surface-0 dark:bg-surface-900',
+      'bg-surface-0',
 
       // States
       {
-        'ring-1 ring-inset ring-surface-300 dark:ring-surface-700':
+        'ring-1 ring-inset ring-surface-300':
           !state.focused,
-        'ring-2 ring-inset ring-primary-500 dark:ring-primary-400':
+        'ring-2 ring-inset ring-primary-500':
           state.focused,
       },
 
@@ -48,10 +48,10 @@ export default {
       'bg-transparent',
       'border-0',
       {
-        'text-surface-800 dark:text-white/80': props.modelValue,
-        'text-surface-400 dark:text-surface-500': !props.modelValue,
+        'text-surface-800/80': props.modelValue,
+        'text-surface-400': !props.modelValue,
       },
-      'placeholder:text-surface-400 dark:placeholder:text-surface-500',
+      'placeholder:text-surface-400',
 
       // Transitions
       'transition',
@@ -101,9 +101,9 @@ export default {
       'shadow-md',
 
       // Color
-      'bg-surface-0 dark:bg-surface-700',
-      'text-surface-800 dark:text-white/80',
-      'ring-1 ring-inset ring-surface-300 dark:ring-surface-700',
+      'bg-surface-0',
+      'text-surface-800/80',
+      'ring-1 ring-inset ring-surface-300',
     ],
   },
   wrapper: {
@@ -133,20 +133,20 @@ export default {
 
       //  Colors
       {
-        'text-surface-500 dark:text-white/70':
+        'text-surface-500/70':
           !context.focused && !context.active,
-        'text-surface-500 dark:text-white/70 bg-surface-200 dark:bg-black/70':
+        'text-surface-500/70 bg-surface-200':
           context.focused && !context.active,
-        'text-surface-900 dark:text-surface-0/80 bg-surface-50 dark:bg-black/70':
+        'text-surface-900/80 bg-surface-50':
           context.focused && context.active,
-        'text-surface-900 dark:text-surface-0/80 bg-surface-50 dark:bg-black/70':
+        'text-surface-900/80 bg-surface-50':
           !context.focused && context.active,
       },
 
       // Hover States
       {
-        'hover:bg-surface-50 dark:hover:bg-surface-800': !context.active,
-        'hover:bg-surface-100 dark:hover:bg-black/40 text-surface-900 dark:text-surface-0/80':
+        'hover:bg-surface-50': !context.active,
+        'hover:bg-surface-100 text-surface-900/80':
           context.active,
       },
 
@@ -203,11 +203,11 @@ export default {
       'z-10',
 
       // Color
-      'bg-surface-0 dark:bg-surface-700',
+      'bg-surface-0',
     ],
   },
   separator: {
-    class: 'border-t border-surface-200 dark:border-surface-600 my-1',
+    class: 'border-t border-surface-200 my-1',
   },
   transition: {
     enterFromClass: 'opacity-0 scale-y-[0.8]',

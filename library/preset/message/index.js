@@ -4,16 +4,16 @@ export default {
       // Spacing and Shape
       'my-2 mx-0',
       'rounded-md',
-      'ring-1 ring-inset ring-surface-200 dark:ring-surface-700 ring-offset-0',
+      'ring-1 ring-inset ring-surface-200',
 
       // Colors
-      'bg-surface-0 dark:bg-surface-800',
+      'bg-surface-0',
 
       {
-        'text-blue-500 dark:text-blue-300': props.severity == 'info',
-        'text-green-500 dark:text-green-300': props.severity == 'success',
-        'text-orange-500 dark:text-orange-300': props.severity == 'warn',
-        'text-red-500 dark:text-red-300': props.severity == 'error',
+        'text-blue-500': props.severity == 'info',
+        'text-green-500': props.severity == 'success',
+        'text-orange-500': props.severity == 'warn',
+        'text-red-500': props.severity == 'error',
       },
     ],
   }),
@@ -56,15 +56,15 @@ export default {
 
       // Colors
       'bg-transparent',
-      'text-surface-700 dark:text-surface-0/80',
+      'text-surface-700/80',
 
       // Transitions
       'transition duration-200 ease-in-out',
 
       // States
-      'hover:bg-surface-100 dark:hover:bg-surface-700',
+      'hover:bg-surface-100',
       'outline-none focus:ring-1 focus:ring-inset',
-      'focus:ring-primary-500 dark:focus:ring-primary-400',
+      'focus:ring-primary-500',
 
       // Misc
       'overflow-hidden',

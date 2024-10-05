@@ -18,9 +18,9 @@ export default {
       ...ringClass,
       // // States
       {
-        'bg-transparent text-general-800 dark:text-general-100':
+        'bg-transparent text-general-800':
           !context.disabled,
-        'bg-general-50 dark:bg-general-50 text-general-200 dark:text-general-200':
+        'bg-general-50 text-general-200':
           context.disabled,
       },
       'focus-visible:outline-none',

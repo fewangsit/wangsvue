@@ -205,7 +205,7 @@ defineExpose({ form, clearField });
                 data-wv-section="headericon"
               />
               <h3
-                class="mr-auto text-grayscale-900 dark:text-general-100 text-center text-[0.9rem] leading-[1.125rem] !font-semibold tracking-[0.28px]"
+                class="mr-auto text-grayscale-900 text-center text-[0.9rem] leading-[1.125rem] !font-semibold tracking-[0.28px]"
                 data-wv-section="dialog-form-title"
               >
                 {{ header }}
@@ -223,7 +223,7 @@ defineExpose({ form, clearField });
               <Button
                 v-if="closable"
                 @click="closeDialog"
-                class="!p-0.5 !text-general-200 dark:!text-general-200"
+                class="!p-0.5 !text-general-200"
                 data-wv-section="closebutton"
                 icon="close"
                 icon-class="w-[22px] h-[22px]"

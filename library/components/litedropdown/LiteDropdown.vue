@@ -42,8 +42,7 @@ const isShowOverlay = shallowRef<boolean>(false);
           class: [
             '!font-semibold',
             {
-              '!text-general-200 dark:!text-grayscale-800':
-                props.modelValue == null,
+              '!text-general-200': props.modelValue == null,
               '!text-grayscale-900': props.modelValue != null,
             },
           ],

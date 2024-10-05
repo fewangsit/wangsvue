@@ -168,7 +168,7 @@ defineExpose({
         <template #dropdownicon>
           <Icon
             :class="[
-              'w-full h-full transition-transform !text-general-500 dark:!text-general-100',
+              'w-full h-full transition-transform !text-general-500',
               { 'rotate-180': isShowOverlay },
             ]"
             icon="arrow-drop-down"

@@ -15,22 +15,22 @@ export default {
 
       // Colors
       {
-        'text-surface-700 dark:text-white/80':
+        'text-surface-700/80':
           props.value !== props.modelValue && props.value !== undefined,
-        'bg-white dark:bg-white':
+        'bg-white':
           props.value !== props.modelValue &&
           props.value !== undefined &&
           !props.disabled,
-        'bg-general-50 dark:bg-general-50': props.disabled,
-        'border-general-100 dark:border-general-100':
+        'bg-general-50': props.disabled,
+        'border-general-100':
           props.value !== props.modelValue &&
           props.value !== undefined &&
           !props.disabled,
-        'border-primary-500 dark:border-primary-500':
+        'border-primary-500':
           props.value == props.modelValue &&
           props.value !== undefined &&
           !props.disabled,
-        'border-general-200 dark:border-general-200': props.disabled,
+        'border-general-200': props.disabled,
       },
 
       // Misc
@@ -56,17 +56,17 @@ export default {
 
       // Colors
       {
-        'border-general-100 dark:border-general-100':
+        'border-general-100':
           props.value !== props.modelValue && props.value !== undefined,
-        'border-primary-500 dark:border-primary-400':
+        'border-primary-500':
           props.value == props.modelValue &&
           props.value !== undefined &&
           !props.disabled,
-        'bg-primary-500 dark:bg-primary-400':
+        'bg-primary-500':
           props.value == props.modelValue &&
           props.value !== undefined &&
           !props.disabled,
-        'bg-general-200 dark:bg-general-200':
+        'bg-general-200':
           props.value == props.modelValue &&
           props.value !== undefined &&
           props.disabled,
@@ -75,7 +75,7 @@ export default {
       // States
       {
         'outline-none outline-offset-0': !props.disabled,
-        'peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-surface-0 dark:focus-visible:ring-offset-surface-800 peer-focus-visible:ring-primary-500 dark:peer-focus-visible:ring-primary-400':
+        'peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-surface-0 peer-focus-visible:ring-primary-500':
           !props.disabled,
         // 'opacity-60 cursor-default': props.disabled,
       },
@@ -102,7 +102,7 @@ export default {
       'opacity-0',
       'rounded-md',
       'outline-none',
-      // 'border-2 border-surface-300 dark:border-surface-700',
+      // 'border-2 border-surface-300',
 
       // Misc
       'appareance-none',

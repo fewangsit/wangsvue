@@ -3,9 +3,9 @@ export const commonClasses = ({ isFirefoxBased, invalidInput }) => [
   { '!ring-danger-500': invalidInput },
   'ring-inset',
   'ring-general-400',
-  '[&:has(:focus)]:bg-none [&:has(:focus)]:dark:bg-none',
+  '[&:has(:focus)]:bg-none',
   '[&:has(:focus)]:ring-primary-400',
-  'bg-white dark:bg-white',
+  'bg-white',
   'z-[0] [&:has(:focus)]:z-[12]',
 ];
 

@@ -5,23 +5,22 @@ export default {
       // Shape
       'rounded-lg',
       'shadow-xl',
-      'border-0 dark:border',
+      'border-0',
 
       // Position
       'absolute left-0 top-0 mt-2',
       'z-40 transform origin-center',
 
       // Color
-      'bg-white dark:bg-white',
-      'text-general-800 dark:text-general-800',
-      'dark:border-general-100',
+      'bg-white',
+      'text-general-800',
 
       // Before: Triangle
       'before:absolute before:-top-2 before:ml-4 before:z-50',
       'before:w-0 before:h-0 before:shadow-xl',
       // 'before:border-transparent before:border-solid',
       // 'before:border-x-[0.5rem] before:border-b-[0.5rem]',
-      // 'before:border-t-0 before:border-b-surface-0 dark:before:border-b-surface-800',
+      // 'before:border-t-0 before:border-b-surface-0',
     ],
   },
   content: {

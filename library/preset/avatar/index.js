@@ -29,9 +29,9 @@ export default {
       { 'border-2': parent.instance.$style?.name == 'avatargroup' },
 
       // Colors
-      'bg-surface-100 dark:bg-surface-700',
+      'bg-surface-100',
       {
-        'border-white dark:border-surface-800':
+        'border-white':
           parent.instance.$style?.name == 'avatargroup',
       },
     ],

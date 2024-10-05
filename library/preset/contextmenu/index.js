@@ -10,9 +10,8 @@ export default {
       'p-1.5',
 
       // Colors
-      'bg-surface-0 dark:bg-surface-700',
-      'text-surface-700 dark:text-white/80',
-      'dark:border dark:border-surface-700',
+      'bg-surface-0',
+      'text-surface-700/80',
     ],
   },
   menu: {
@@ -34,20 +33,18 @@ export default {
 
       //  Colors
       {
-        'text-surface-500 dark:text-white/70':
+        'text-surface-500/70':
           !context.focused && !context.active,
-        'text-surface-500 dark:text-white/70 bg-surface-200 dark:bg-black/70':
+        'text-surface-500/70 bg-surface-200':
           context.focused && !context.active,
-        'text-surface-900 dark:text-surface-0/80 bg-surface-50 dark:bg-black/70':
-          context.focused && context.active,
-        'text-surface-900 dark:text-surface-0/80 bg-surface-50 dark:bg-black/70':
+        'text-surface-900/80 bg-surface-50':
           !context.focused && context.active,
       },
 
       // Hover States
       {
-        'hover:bg-surface-50 dark:hover:bg-surface-800': !context.active,
-        'hover:bg-surface-100 dark:hover:bg-black/40 text-surface-900 dark:text-surface-0/80':
+        'hover:bg-surface-50': !context.active,
+        'hover:bg-surface-100 text-surface-900/80':
           context.active,
       },
 
@@ -109,14 +106,14 @@ export default {
       { 'sm:absolute sm:left-full sm:top-0': props.level > 1 },
 
       // Color
-      'bg-surface-0 dark:bg-surface-700',
+      'bg-surface-0',
     ],
   }),
   submenuicon: {
     class: ['ml-auto'],
   },
   separator: {
-    class: 'border-t border-surface-200 dark:border-surface-600 my-1',
+    class: 'border-t border-surface-200 my-1',
   },
   transition: {
     enterFromClass: 'opacity-0',
