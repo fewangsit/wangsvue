@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.201
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.200...v1.4.201)
+
+### 🩹 Fixes
+
+- **Badge:** ReferenceError - Badge is not defined ([f53e26e](https://github.com/fewangsit/wangsvue/commit/f53e26e))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.200
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.199...v1.4.200)
