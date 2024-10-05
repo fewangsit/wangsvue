@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v1.4.202
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.201...v1.4.202)
+
+### 💅 Refactors
+
+- **Table:** Show horizontal scroll, hide vertical scroll ([cff89cf](https://github.com/fewangsit/wangsvue/commit/cff89cf))
+- **DialogForm:** Remove v-show directive on aside-right ([4bb7183](https://github.com/fewangsit/wangsvue/commit/4bb7183))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.201
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.200...v1.4.201)
