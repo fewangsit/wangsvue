@@ -108,6 +108,12 @@ export interface DialogFormProps extends FormProps {
    * @default 'small';
    */
   width?: 'small' | 'medium' | 'large' | 'semi-xlarge' | 'xlarge';
+  /**
+   * With in pixel
+   *
+   * @default 260
+   */
+  asideRightWidth: number;
   class?: string | string[];
   contentClass?: string | string[];
   /**

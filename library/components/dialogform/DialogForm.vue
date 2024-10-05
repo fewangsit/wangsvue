@@ -25,6 +25,7 @@ const props = withDefaults(defineProps<DialogFormProps>(), {
   resetAfterSubmit: true,
   width: 'small',
   columnPerRow: 1,
+  asideRightWidth: 260,
 });
 
 const emit = defineEmits<DialogFormEmits>();
@@ -43,7 +44,8 @@ const formPayload = ref<FormPayload>({
 });
 
 const computedWidth = computed(() => {
-  const asideRightWidth = slots['aside-right'] && expanded.value ? 260 : 0;
+  const asideRightWidth =
+    slots['aside-right'] && expanded.value ? props.asideRightWidth : 0;
   const baseWidth = {
     'small': 400,
     'medium': 500,
@@ -304,11 +306,11 @@ defineExpose({ form, clearField });
           v-if="$slots['aside-right']"
           v-show="expanded"
           :class="[
-            'flex flex-col gap-3',
-            { 'w-0 opacity-0': !expanded },
-            { 'w-[236px] opacity-100': expanded },
+            'flex flex-col gap-3 shrink-0',
+            { 'opacity-0': !expanded },
+            { 'opacity-100': expanded },
           ]"
-          style="transition: opacity 0.1s ease-in"
+          :style="`transition: opacity 0.1s ease-in; width: ${expanded ? asideRightWidth - 24 : 0}px`"
         >
           <slot name="aside-right" />
         </aside>
