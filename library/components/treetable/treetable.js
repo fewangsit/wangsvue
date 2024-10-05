@@ -1,12 +1,24 @@
 export default {
   root: {
-    'class': [
-      'overflow-auto relative',
-      'rounded-lg rounded-br-none rounded-bl-none',
-    ],
-    'data-wv-name': 'treetable',
+    'data-wv-name': 'datatable',
     'data-wv-section': 'root',
   },
+  tablewrapper: {
+    'class': [
+      'overflow-auto relative scrollbar-w-thin',
+      'rounded-lg rounded-br-none rounded-bl-none',
+    ],
+    'data-wv-section': 'tablewrapper',
+  },
+  scrollheightwrapper: ({ props }) => ({
+    'class': [
+      'w-max overflow-hidden scrollbar-w-none',
+      {
+        '!overflow-y-auto': !!props.scrollHeight,
+      },
+    ],
+    'data-wv-section': 'scrollheightwrapper',
+  }),
   table: {
     'class': [
       'min-w-max w-full',

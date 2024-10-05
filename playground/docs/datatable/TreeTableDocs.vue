@@ -328,7 +328,7 @@ const filters = ref<any>({
         :fetch-function="getTableData"
         :options="singleAction"
         :reorderable="reorderable"
-        :scroll-height="scrollHeight ? '50vh' : undefined"
+        :scroll-height="scrollHeight ? '20vh' : undefined"
         :selection-type="
           selectionType.toLowerCase() as TreeTableProps['selectionType']
         "

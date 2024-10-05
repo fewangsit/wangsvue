@@ -56,3 +56,13 @@ h6,
 .heading-6 {
   @apply !text-[10px] !font-semibold leading-3;
 }
+
+@layer utilities {
+  .scrollbar-w-none {
+    scrollbar-width: none;
+  }
+
+  .scrollbar-w-thin {
+    scrollbar-width: thin;
+  }
+}
