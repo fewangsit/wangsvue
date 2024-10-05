@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount } from 'vue';
+import { onBeforeMount, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 import PrimeTabMenu from 'primevue/tabmenu';
@@ -10,26 +10,7 @@ import { WangsIcons } from '../icon/Icon.vue.d';
 const route = useRoute();
 
 onBeforeMount(() => {
-  /**
-   * Find index from the last element where the route.path includes the item.route.
-   *
-   * using findLastIndex because there might be case where there are route menu like these:
-   * ['/route/first', '/route/first/second']
-   *
-   * If our current route is '/route/first/second', the findIndex will take the '/route/first' as true,
-   * even though we are aiming to set the '/route/first/second' as the current index.
-   *
-   * following Left to Right (LTR) writing convention. It can't cover the opposite (RTL), though.
-   * Maybe we should add a prop to use findIndex or findLastIndex for that. (Default to findLastIndex (LTR))
-   */
-  const index =
-    props.menu?.findLastIndex(
-      (item) => item.route && route.path.includes(item.route),
-    ) ?? -1;
-
-  if (index !== -1) {
-    activeIndex.value = index;
-  }
+  setActiveIndex(route.path);
 });
 
 const props = withDefaults(defineProps<TabMenuProps>(), {
@@ -48,6 +29,31 @@ const menuPassThrough = props.useTrailingLine
         class: 'hidden',
       },
     };
+
+const setActiveIndex = (routePath: string): void => {
+  // Find index from the element where routePath is exactly item.route
+  let index = props.menu?.findIndex(
+    (item) => item.route && routePath === item.route,
+  );
+
+  // If cannot find exact match, find index where routePath includes item.route
+  if (index === -1) {
+    index = props.menu?.findIndex(
+      (item) => item.route && routePath.includes(item.route),
+    );
+  }
+
+  if (index !== -1) {
+    activeIndex.value = index;
+  }
+};
+
+watch(
+  () => route.path,
+  (routePath) => {
+    setActiveIndex(routePath);
+  },
+);
 </script>
 
 <template>
