@@ -169,7 +169,7 @@ const fetchMentionSuggestionFunction =
 <template>
   <div class="flex gap-1 items-start">
     <Image
-      :src="getNestedProperyValue({ user }, 'profilePicture') as string"
+      :src="getNestedProperyValue(user, 'profilePicture') as string"
       @click.stop=""
       class="w-[30px] h-[30px]"
       rounded
