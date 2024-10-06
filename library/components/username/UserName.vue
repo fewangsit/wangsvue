@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { nextTick, shallowRef } from 'vue';
-import { getNestedProperyValue } from 'lib/utils';
+import { getImageURL, getNestedProperyValue } from 'lib/utils';
 import { UserNameProps } from './UserName.vue.d';
 import Image from '../image/Image.vue';
 import Icon from '../icon/Icon.vue';
@@ -82,7 +82,10 @@ const adjustPosition = async (): Promise<void> => {
 
         <Image
           :src="
-            fullUserObject?.profilePicture ?? fullUserObject?.profilePictureBig
+            getImageURL(
+              fullUserObject?.profilePicture ??
+                fullUserObject?.profilePictureBig,
+            )
           "
           class="w-[60px] h-[60px]"
           rounded
