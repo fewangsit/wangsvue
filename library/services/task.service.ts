@@ -3,7 +3,9 @@ import {
   CreateTaskDTO,
   EditDescriptionTaskDTO,
   EditTaskDTO,
+  EditTaskLinkDTO,
 } from 'lib/dto/task.dto';
+import { TaskLinkType } from 'lib/types/task.type';
 import { getBaseURL } from 'lib/utils/getBaseURL.util';
 
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
@@ -54,6 +56,17 @@ const TaskServices = {
 
   getTaskDependencies: (taskId: string): Promise<AxiosResponse> => {
     return API().get(`/api/task-dependency/task/${taskId}`);
+  },
+
+  getTaskLink: (taskId: string, type: TaskLinkType): Promise<AxiosResponse> => {
+    return API().get(`/api/task-link/task/${taskId}/${type}`);
+  },
+
+  putTaskLink: (
+    taskId: string,
+    data: EditTaskLinkDTO,
+  ): Promise<AxiosResponse> => {
+    return API().put(`/api/task-link/task/${taskId}`, data);
   },
 };
 

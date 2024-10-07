@@ -231,7 +231,7 @@ watch(projectId, () => {
           :options="[
             {
               label: 'Detail Task',
-              icon: 'file-list-2',
+              icon: 'file-copy-2-line',
               command: (): void => {
                 showDetailTask = true;
               },

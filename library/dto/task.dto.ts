@@ -1,3 +1,5 @@
+import { TaskLinkType, TaskLinkURLType } from 'lib/types/task.type';
+
 export interface CreateTaskDTO {
   project: string;
   process: string;
@@ -45,4 +47,13 @@ export interface EditDescriptionTaskDTO {
    * Stringified version of JSONContent from Editor
    */
   description: string;
+}
+
+export interface EditTaskLinkDTO {
+  /**
+   * The link, also the field to be used for embed.
+   */
+  link: string;
+  linkType: TaskLinkURLType;
+  type: TaskLinkType;
 }
