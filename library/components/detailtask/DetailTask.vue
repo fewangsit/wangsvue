@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, provide, ref, watch } from 'vue';
+import {
+  computed,
+  DefineComponent,
+  provide,
+  ref,
+  onMounted,
+  onUnmounted,
+  watch,
+} from 'vue';
 
 import Dialog from 'primevue/dialog';
 import DialogPreset from 'lib/preset/dialog';
@@ -28,6 +36,10 @@ const props = withDefaults(defineProps<DetailTaskProps>(), {
 
 const emit = defineEmits<DetailTaskEmits>();
 
+type TaskMenu = MenuItem & {
+  component: DefineComponent<any, any, any>;
+};
+
 onMounted(async () => {
   attachEventListener();
 });
@@ -46,23 +58,27 @@ const taskDependencies = ref<TaskDependency[]>();
 const isNewTask = ref<boolean>(false);
 
 const taskMenuIndex = ref<number>(0);
-const taskMenu = computed<MenuItem[]>(() => {
+const taskMenu = computed<TaskMenu[]>(() => {
   return [
     {
       label: 'Info Task',
       disabled: isNewTask.value,
+      component: InfoTaskTab,
     },
     {
       label: 'Deskripsi',
       disabled: isNewTask.value,
+      component: DescriptionTab,
     },
     {
       label: 'Review',
       disabled: isNewTask.value,
+      component: InfoTaskTab,
     },
     {
       label: 'Event Log',
       disabled: isNewTask.value,
+      component: InfoTaskTab,
     },
   ];
 });
@@ -281,10 +297,7 @@ watch(
       <div class="flex flex-col gap-3">
         <Legend />
         <TabMenu v-model:active-index="taskMenuIndex" :menu="taskMenu" />
-        <div>
-          <InfoTaskTab v-show="taskMenuIndex === 0" />
-          <DescriptionTab v-show="taskMenuIndex === 1" />
-        </div>
+        <component :is="taskMenu[taskMenuIndex].component" />
       </div>
     </template>
   </Dialog>

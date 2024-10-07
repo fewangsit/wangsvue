@@ -14,6 +14,8 @@ import type {
 
 const props = withDefaults(defineProps<FormProps>(), {
   resetAfterSubmit: true,
+  cancelBtnSeverity: 'secondary',
+  submitBtnSeverity: 'success',
 });
 
 const emit = defineEmits<FormEmits>();
@@ -148,10 +150,10 @@ defineExpose({
         <div class="button-wrapper">
           <Button
             v-if="props.buttonsTemplate?.includes('cancel')"
+            :severity="cancelBtnSeverity"
             @click="$emit('cancel')"
             data-test="cancel-button"
             label="Batal"
-            severity="secondary"
             text
             type="button"
           />
@@ -166,9 +168,9 @@ defineExpose({
           <Button
             v-if="props.buttonsTemplate?.includes('submit')"
             :label="submitBtnLabel ?? 'Simpan'"
+            :severity="submitBtnSeverity"
             @click="onSubmitClicked"
             data-test="submit-button"
-            severity="success"
             type="submit"
           />
         </div>

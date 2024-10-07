@@ -1,6 +1,10 @@
 import { Slot, Ref } from 'vue';
 import { FieldContext, GenericObject } from 'vee-validate';
-import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
+import {
+  ClassComponent,
+  GlobalComponentConstructor,
+  HintedString,
+} from '../ts-helpers';
 import { CheckboxModelValue } from '../checkbox/Checkbox.vue.d';
 
 import { Nullable } from 'primevue/ts-helpers';
@@ -89,6 +93,30 @@ export interface FormProps {
    * Invalid form state.
    */
   invalid?: boolean;
+  /**
+   * Defines the style of the cancel button.
+   */
+  cancelBtnSeverity?: HintedString<
+    | 'secondary'
+    | 'success'
+    | 'info'
+    | 'warning'
+    | 'help'
+    | 'danger'
+    | 'contrast'
+  >;
+  /**
+   * Defines the style of the submit button.
+   */
+  submitBtnSeverity?: HintedString<
+    | 'secondary'
+    | 'success'
+    | 'info'
+    | 'warning'
+    | 'help'
+    | 'danger'
+    | 'contrast'
+  >;
 }
 
 /**

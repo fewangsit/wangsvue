@@ -1,27 +1,66 @@
 <script setup lang="ts">
-import Button from 'lib/components/button/Button.vue';
+import { inject, onMounted, Ref, ref } from 'vue';
 import Icon from 'lib/components/icon/Icon.vue';
+import Changelog from 'lib/components/changelog/Changelog.vue';
+import Button from 'lib/components/button/Button.vue';
+import AttachmentItem from './TaskAttachmentItem.vue';
+import { AttachmentItemData } from './TaskAttachmentItem.vue.d';
+import DialogAddAttachment from './Dialog/DialogAddAttachment.vue';
+import TaskAttachmentServices from 'lib/services/taskAttachment.service';
+
+onMounted(() => {
+  getAttachments();
+});
+
+const taskId = inject<Ref<string>>('taskId');
+
+const attachments = ref<AttachmentItemData[]>([]);
+
+const dialogAddAttachment = ref(false);
+
+const getAttachments = async (): Promise<void> => {
+  try {
+    const { data: response } = await TaskAttachmentServices.getTaskAttachments(
+      taskId.value,
+    );
+    attachments.value = response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
 </script>
 
 <template>
-  <div class="flex flex-col gap-2" data-wv-section="detailtask-task-attachment">
-    <div class="flex items-center justify-between">
+  <div class="">
+    <div class="flex justify-between items-center">
       <div class="flex items-center gap-2">
-        <Icon class="w-6 h-6" icon="attachment-2" />
-        <div class="text-xs font-semibold">Attachment</div>
+        <Icon class="text-2xl" icon="attachment-2" />
+        <span class="text-xs font-semibold">Attachment</span>
       </div>
       <div class="flex items-center gap-2">
-        <!-- TODO: Handle attachment changelog on click -->
+        <Changelog object="objects" />
         <Button
-          class="!p-1"
-          icon="file-history"
-          icon-class="!w-6 !h-6"
+          @click="dialogAddAttachment = true"
+          icon="add"
+          label="Attachment"
           severity="secondary"
-          text
         />
-        <!-- TODO: Handle add attachment -->
-        <Button icon="add" label="Attachment" severity="secondary" />
       </div>
     </div>
+    <div v-show="attachments.length" class="pl-8 py-2 flex flex-col gap-2">
+      <AttachmentItem
+        :key="index"
+        v-for="(item, index) in attachments"
+        :item="item"
+        @deleted="getAttachments"
+        @update-caption="getAttachments"
+      />
+    </div>
   </div>
+
+  <DialogAddAttachment
+    v-model:visible="dialogAddAttachment"
+    :task-id="taskId"
+    @hide="getAttachments"
+  />
 </template>
