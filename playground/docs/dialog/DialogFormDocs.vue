@@ -53,10 +53,10 @@ const apply = (e: {
       </div>
       <DialogForm
         v-model:visible="showForm"
+        :aside-right-width="400"
         :buttons-template="['submit', 'cancel', 'clear']"
         :closable="false"
         @submit="apply"
-        aside-right-width="400"
         header="Buat Member"
         show-stay-checkbox
         width="small"

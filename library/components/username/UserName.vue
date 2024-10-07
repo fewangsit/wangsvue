@@ -32,7 +32,7 @@ const adjustPosition = async (): Promise<void> => {
   if (!fullUserObject.value) {
     try {
       loadingUser.value = true;
-      const { data } = await MemberServices.getMemberDetail(props.user._id);
+      const { data } = await MemberServices.getMemberDetail(props.user?._id);
 
       fullUserObject.value = data.data;
     } catch (error) {
