@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { nextTick, shallowRef } from 'vue';
-import { getImageURL, getNestedProperyValue } from 'lib/utils';
+import { getNestedProperyValue } from 'lib/utils';
 import { UserNameProps } from './UserName.vue.d';
 import Image from '../image/Image.vue';
 import Icon from '../icon/Icon.vue';
