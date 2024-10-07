@@ -182,7 +182,7 @@ watch(props, () => {
   <div>
     <div class="flex gap-1 items-center">
       <Image
-        :src="getNestedProperyValue({ sender }, 'name') as string"
+        :src="getNestedProperyValue(sender, 'profilePicture') as string"
         class="w-[30px] h-[30px]"
         rounded
       />
