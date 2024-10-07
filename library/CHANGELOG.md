@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v1.4.207
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.206...v1.4.207)
+
+### 🚀 Enhancements
+
+- **ColumnVisibility:** Adjust panel position on panel show ([51248d8](https://github.com/fewangsit/wangsvue/commit/51248d8))
+
+### 💅 Refactors
+
+- Add env to github workflow ([7db31f9](https://github.com/fewangsit/wangsvue/commit/7db31f9))
+- **Comment:** Add backslash to service URL ([5dfb699](https://github.com/fewangsit/wangsvue/commit/5dfb699))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.4.206
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.205...v1.4.206)
