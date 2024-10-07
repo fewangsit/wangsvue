@@ -28,7 +28,7 @@ const editorReplyData = ref<JSONContent>();
 const editorTypeInput = ref<'edit' | 'reply'>();
 const emojiOverlayPanel = ref<OverlayPanel>();
 const emojiByGroup = ref(emojiByGroupJson);
-const emojiQuerySearch = ref<string>();
+const emojiQuerySearch = ref<string>('');
 const isLoading = shallowRef<boolean>(false);
 const isLoadingEmojiContainer = shallowRef<boolean>(false);
 const isLoadingReactions = shallowRef<boolean>(false);
@@ -42,6 +42,9 @@ const setEditorInputVisibility = (): void => {
 };
 
 const postComment = async (): Promise<void> => {
+  if (editorReplyData.value === undefined) {
+    return;
+  }
   try {
     await CommentServices.postComments({
       content: editorReplyData.value,
@@ -59,7 +62,7 @@ const postComment = async (): Promise<void> => {
 const putCommentsById = async (): Promise<void> => {
   try {
     await CommentServices.putCommentsById(props._id, {
-      content: editorReplyData.value,
+      content: editorReplyData.value ?? {},
     });
     editorReplyData.value = [];
     setEditorInputVisibility();
@@ -119,6 +122,9 @@ const postReactions = async (
 };
 
 const searchEmoji = (): void => {
+  if (emojiQuerySearch.value === undefined) {
+    return;
+  }
   if (emojiQuerySearch.value.length === 0) {
     emojiByGroup.value = emojiByGroupJson;
   } else {
@@ -176,7 +182,7 @@ watch(props, () => {
   <div>
     <div class="flex gap-1 items-center">
       <Image
-        :src="getNestedProperyValue({ sender }, 'name') as string"
+        :src="getNestedProperyValue(sender, 'profilePicture') as string"
         class="w-[30px] h-[30px]"
         rounded
       />
@@ -211,7 +217,7 @@ watch(props, () => {
         </div>
 
         <Icon
-          @click="emojiOverlayPanel.toggle($event)"
+          @click="emojiOverlayPanel?.toggle($event)"
           icon="emotion-happy-line"
           severity="primary"
         />

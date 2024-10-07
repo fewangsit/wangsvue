@@ -44,7 +44,7 @@ const setActiveIndex = (routePath: string): void => {
   }
 
   if (index !== -1) {
-    activeIndex.value = index;
+    activeIndex.value = index as number;
   }
 };
 

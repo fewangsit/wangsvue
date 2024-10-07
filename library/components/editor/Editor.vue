@@ -114,8 +114,8 @@ const editor = useEditor({
   content: props.initialValue ?? props.modelValue,
 
   onUpdate: () => {
-    emit('update:modelValue', editor.value.getJSON());
-    field.value = editor.value.getJSON();
+    emit('update:modelValue', editor.value?.getJSON() ?? {});
+    field.value = editor.value?.getJSON() ?? {};
   },
 
   onSelectionUpdate(selectedEvent: EditorEvents['selectionUpdate']) {
@@ -123,7 +123,7 @@ const editor = useEditor({
       'image',
     ) as ImageProperties;
 
-    editor.value.state.doc.descendants((node): void | boolean => {
+    editor.value?.state.doc.descendants((node): void | boolean => {
       if (node.type.name === 'mention') {
         registeredMentionList.value.push(node.attrs.id);
       }
@@ -175,6 +175,7 @@ const editor = useEditor({
             unsetImage();
             return true;
           }
+          return false;
         };
 
         return {
@@ -189,23 +190,6 @@ const editor = useEditor({
       },
     }),
     CodeSnippetExtension.extend({
-      addCommands: (): any => {
-        return {
-          insertCodeSnippet:
-            () =>
-            ({ commands }): any => {
-              return commands.insertContent({
-                type: 'codeSnippet',
-                attrs: { code: 'Masukan Code' },
-              });
-            },
-          deleteCodeSnippet:
-            () =>
-            ({ commands }): any => {
-              return commands.deleteSelection();
-            },
-        };
-      },
       addKeyboardShortcuts() {
         return {
           'Mod-alt-c': codeSnippetTrigger,
@@ -245,14 +229,14 @@ const editor = useEditor({
       },
       suggestion: {
         items({ query }: { query: string }): any {
-          return mentionSuggestionList.value
+          return (mentionSuggestionList?.value ?? [])
             .filter((item) => {
-              return item.fullName.toLowerCase().includes(query.toLowerCase());
+              return item?.fullName.toLowerCase().includes(query.toLowerCase());
             })
             .map((item) => {
               return {
-                id: item._id,
-                label: item.fullName,
+                id: item?._id,
+                label: item?.fullName,
               };
             });
         },
@@ -518,13 +502,14 @@ const setPreviewImages = async (data: {
   }
 };
 
-const setValidatorMessage = (value: JSONContent): boolean | string => {
+const setValidatorMessage = (value: JSONContent = {}): boolean | string => {
   if (typeof props.validatorMessage === 'string' && props.invalid) {
     return props.validatorMessage;
   } else if (typeof props.validatorMessage !== 'string') {
     const { empty } = props.validatorMessage ?? {};
-    if (value.content[0].content === undefined && props.mandatory) {
-      return empty;
+
+    if (value.content === undefined && props.mandatory && empty) {
+      return empty ?? true;
     }
   }
   return true;
@@ -600,16 +585,16 @@ const setLinkFunction = ({ formValues }: FormPayload): boolean => {
 };
 
 const setImageFunction = (imageUrl?: string): void => {
-  editor.value.commands.focus();
+  editor.value?.commands.focus();
 
   if (imageUrl) {
     if (props.isImageUploadBase64) {
-      editor.value.commands.setImage({
+      editor.value?.commands.setImage({
         src: imageUrl,
         title: 'localImageBase64',
       });
     } else {
-      editor.value.commands.setImage({ src: imageUrl, title: 'localImage' });
+      editor.value?.commands.setImage({ src: imageUrl, title: 'localImage' });
     }
 
     previewImages.value = Array.from(
@@ -618,7 +603,7 @@ const setImageFunction = (imageUrl?: string): void => {
   }
 
   if (inputURLImage.value) {
-    editor.value.commands.setImage({ src: inputURLImage.value });
+    editor.value?.commands.setImage({ src: inputURLImage.value });
     previewImages.value = Array.from(
       new Set([...previewImages.value, inputURLImage.value]),
     );
@@ -631,10 +616,10 @@ const unsetImage = (): void => {
   if (selectedImage.value && selectedImage.value.title === 'localImage') {
     emit('deleteImageLocal', selectedImage.value);
   }
-  editor.value.commands.deleteSelection();
+  editor.value?.commands.deleteSelection();
 };
 
-const convertBase64 = (file: File): Promise<string | ArrayBuffer> => {
+const convertBase64 = (file: File): Promise<string | ArrayBuffer | null> => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
@@ -663,7 +648,8 @@ const fetchMentionSuggestionFunction = async (): Promise<void> => {
 };
 
 const codeSnippetTrigger = (): boolean => {
-  const { insertCodeSnippet, deleteCodeSnippet } = editor.value.commands as any;
+  const { insertCodeSnippet, deleteCodeSnippet } = editor.value
+    ?.commands as any;
   if (editor.value?.isActive('codeSnippet')) {
     deleteCodeSnippet();
   } else {
@@ -673,17 +659,20 @@ const codeSnippetTrigger = (): boolean => {
 };
 
 const goToNextLine = (): void => {
-  const editorData = editor.value.getJSON();
-  editorData.content.push({
-    type: 'paragraph',
-    content: [
-      {
-        type: 'text',
-        text: '',
-      },
-    ],
-  });
-  editor.value.commands.setContent(editorData);
+  const editorData = editor.value?.getJSON() ?? {};
+  if (editorData.content) {
+    editorData.content.push({
+      type: 'paragraph',
+      content: [
+        {
+          type: 'text',
+          text: 'a',
+        },
+      ],
+    });
+
+    editor.value?.commands.setContent(editorData);
+  }
 };
 
 watch(
@@ -908,7 +897,7 @@ watch(registeredMentionList, () => {
 
               <div class="flex items-end">
                 <Button
-                  @click="setImageFunction(null)"
+                  @click="setImageFunction()"
                   label="Simpan"
                   severity="secondary"
                 />
