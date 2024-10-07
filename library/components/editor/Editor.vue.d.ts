@@ -77,8 +77,12 @@ export interface EditorProps {
   /**
    * Fetch function for mention this will get triger if putting @ in editor
    */
-  fetchMentionSuggestionFunction?: () => Promise<GetMentionSuggestionResponse>;
-
+  fetchMentionSuggestionFunction?: () => Promise<
+    GetMentionSuggestionResponse | undefined
+  >;
+  /**
+   * Getting all mentioned list
+   */
   mentionedList?: string[];
 }
 
@@ -88,7 +92,10 @@ export type EditorEmits = {
    */
   'update:modelValue': [value: JSONContent];
   /**
-   * Event emitted when upload image from local file
+   * Event emitted when try to upload image from local machine,
+   * and need to send file image to server first using value.image params and then
+   * get back image url that already get hosted.
+   * to set the image url back to editor to be show up simply using value.setImageCb from params
    */
   'postImageLocal': [value: PostImage];
   /**
@@ -96,12 +103,21 @@ export type EditorEmits = {
    * but this only get triger if selected image get set by postImageLocal function
    */
   'deleteImageLocal': [value: ImageProperties];
-
+  /**
+   * Emited Everytime mentioned user in editor change
+   */
   'update:mentionedList': [value: string[]];
 };
 
 export type PostImage = {
+  /**
+   * This Is Image File that should be send to server
+   */
   image: File;
+  /**
+   * Set Image Cb Is Callback For setting back image url that get send back
+   *  from server through response
+   */
   setImageCb: (imageUrl: string) => void;
 };
 

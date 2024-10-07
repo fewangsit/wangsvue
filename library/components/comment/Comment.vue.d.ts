@@ -23,7 +23,7 @@ export interface PostCommentsBody {
   replyToId?: string;
   mentions?: string[];
   type: CommentType;
-  content: JSONContent;
+  content: JSONContent | object;
 }
 
 export interface PostCommentsReactionBody {
@@ -110,7 +110,9 @@ export interface CommentsReactionResponse {
 export interface CommentBlockProps extends CommentData {
   commentType: CommentType;
   user: User;
-  fetchMentionSuggestionFunction?: () => Promise<GetMentionSuggestionResponse>;
+  fetchMentionSuggestionFunction?: () => Promise<
+    GetMentionSuggestionResponse | undefined
+  >;
 }
 
 declare class Comment extends ClassComponent<CommentProps, any, any> {}

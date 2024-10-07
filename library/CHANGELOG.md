@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.205
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.204...v1.4.205)
+
+### 🩹 Fixes
+
+- **Table:** Single action and column visibility does not sticky ([4bda8fe](https://github.com/fewangsit/wangsvue/commit/4bda8fe))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.204
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.203...v1.4.204)
