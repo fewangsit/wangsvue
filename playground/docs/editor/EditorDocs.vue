@@ -8,6 +8,7 @@ import Editor from 'lib/components/editor/Editor.vue';
 import Form from 'lib/components/form/Form.vue';
 import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
+import { FormPayload } from 'lib/components/form/Form.vue.d';
 
 const editorContent = ref({
   type: 'doc',
@@ -34,8 +35,8 @@ const sendImage = (value: PostImage): void => {
   value.setImageCb('https://www.svgrepo.com/show/452030/avatar-default.svg');
 };
 
-const submitForm = (): void => {
-  //
+const submitForm = (data: FormPayload): void => {
+  console.error(data);
 };
 
 const fetchMentionSuggestion =

@@ -57,7 +57,7 @@ const fetchGetComments = async (): Promise<void> => {
 const postComment = async (): Promise<void> => {
   try {
     await CommentServices.postComments({
-      content: editorData.value,
+      content: editorData.value ?? {},
       objectId: props.objectId,
       type: props.commentType,
     });
@@ -149,21 +149,22 @@ const leaveRoom = (): void => {
   socket.emit('leaveRoom');
 };
 
-const fetchMentionSuggestionFunction =
-  async (): Promise<GetMentionSuggestionResponse> => {
-    if (mentionSuggestionList.value === undefined) {
-      try {
-        const { data } = await CommentServices.getCommentsMention({
-          objectID: props.objectId,
-          type: props.commentType,
-        });
-        mentionSuggestionList.value = data;
-      } catch (error) {
-        console.error(error);
-      }
+const fetchMentionSuggestionFunction = async (): Promise<
+  GetMentionSuggestionResponse | undefined
+> => {
+  if (mentionSuggestionList.value === undefined) {
+    try {
+      const { data } = await CommentServices.getCommentsMention({
+        objectID: props.objectId,
+        type: props.commentType,
+      });
+      mentionSuggestionList.value = data;
+    } catch (error) {
+      console.error(error);
     }
-    return mentionSuggestionList.value;
-  };
+  }
+  return mentionSuggestionList.value;
+};
 </script>
 
 <template>
