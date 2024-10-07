@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v1.4.206
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.205...v1.4.206)
+
+### 🩹 Fixes
+
+- **UserName:** Unable to get member detail ([10a5fc1](https://github.com/fewangsit/wangsvue/commit/10a5fc1))
+- **Comment:** Cannot get profile picture ([9604ebe](https://github.com/fewangsit/wangsvue/commit/9604ebe))
+- Unassignable type errors ([f2c7a90](https://github.com/fewangsit/wangsvue/commit/f2c7a90))
+
+### 💅 Refactors
+
+- **DialogForm:** Set aside right width props as optional ([c7a939d](https://github.com/fewangsit/wangsvue/commit/c7a939d))
+- **UserName:** Remove getImageURL ([4d31052](https://github.com/fewangsit/wangsvue/commit/4d31052))
+- **UserName:** Remove getImageURL import ([e37ece5](https://github.com/fewangsit/wangsvue/commit/e37ece5))
+- **comment service:** Put slash after BASE_URL ([bbb9935](https://github.com/fewangsit/wangsvue/commit/bbb9935))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.4.205
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.204...v1.4.205)
