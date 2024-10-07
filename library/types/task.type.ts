@@ -41,3 +41,16 @@ export type TaskDependencyDetail = {
   status: WangsitStatus;
   taskLink: string | null;
 };
+
+export type TaskLinkType = 'task' | 'service';
+export type TaskLinkURLType = 'url' | 'embedded';
+
+export type TaskLink = {
+  _id: string;
+  type: TaskLinkType;
+  link: string;
+  linkType: TaskLinkURLType;
+  updatedBy: Member;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+};
