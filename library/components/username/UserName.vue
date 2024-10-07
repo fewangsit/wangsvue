@@ -82,10 +82,7 @@ const adjustPosition = async (): Promise<void> => {
 
         <Image
           :src="
-            getImageURL(
-              fullUserObject?.profilePicture ??
-                fullUserObject?.profilePictureBig,
-            )
+            fullUserObject?.profilePicture ?? fullUserObject?.profilePictureBig
           "
           class="w-[60px] h-[60px]"
           rounded
