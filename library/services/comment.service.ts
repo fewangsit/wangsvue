@@ -17,7 +17,7 @@ const user = JSON.parse(localStorage.getItem('user') as string) ?? {};
 
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
   const instance = axios.create({
-    baseURL: `${BASE_URL}comments`,
+    baseURL: `${BASE_URL}/comments`,
     headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + user.jwt,
