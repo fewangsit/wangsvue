@@ -112,7 +112,7 @@ const tableColumns = computed<TableColumn[]>(() => {
 
     {
       field: 'name',
-      header: 'Name',
+      header: 'This Header will make the page overflows',
       sortable: true,
       reorderable: true,
       fixed: false,

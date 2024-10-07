@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, shallowRef } from 'vue';
+import { computed, nextTick, onMounted, ref, shallowRef } from 'vue';
 import { TableColumn } from '../datatable/DataTable.vue.d';
 import { CustomColumnProps } from './CustomColumn.vue.d';
 import { cloneDeep } from 'lodash';
@@ -23,12 +23,10 @@ const emit = defineEmits<{
 }>();
 
 onMounted(async () => {
-  const columnsConfig = await readConfig(
+  columnReorderData.value = await readConfig(
     props.tableId,
     cloneDeep(props.defaultColumns),
   );
-
-  columnReorderData.value = columnsConfig;
 
   updateVisibleColumnsModel();
 });
@@ -61,7 +59,38 @@ const columnVisibilityModel = computed({
 
 const toggleMenu = (event: Event): void => {
   if (visibilityMenu.value && 'toggle' in visibilityMenu.value) {
-    visibilityMenu.value.toggle(event);
+    const eventTarget = (event.currentTarget ?? event.target) as HTMLElement;
+
+    const currentTarget =
+      eventTarget.tagName.toLowerCase() === 'th'
+        ? eventTarget
+        : eventTarget.parentElement;
+
+    const toggleEvent: Event = {
+      ...event,
+      currentTarget,
+    };
+
+    visibilityMenu.value.toggle(toggleEvent);
+
+    nextTick(() => {
+      const panel = document.getElementById(visibilityMenuId.value);
+
+      if (panel) {
+        const windowWidth = window.innerWidth;
+
+        const targetDOM = document.getElementById(
+          `column-visibility-toggle-${props.tableId}`,
+        );
+
+        if (targetDOM) {
+          const { right, width } = targetDOM.getBoundingClientRect();
+
+          panel.style.right = `${windowWidth - (right + width / 2)}px`;
+          panel.style.left = 'auto';
+        }
+      }
+    });
   }
 };
 
@@ -182,7 +211,7 @@ const setColumnVisibilityConfig = async (): Promise<void> => {
   );
 
   const { setConfig } = await useDataTableStore();
-  setConfig(props.tableId, columnsConfig);
+  await setConfig(props.tableId, columnsConfig);
 };
 
 const teleportColumnList = (

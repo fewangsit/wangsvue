@@ -880,6 +880,7 @@ const listenUpdateTableEvent = (): void => {
 
               <th
                 v-if="props.customColumn || props.useOption"
+                :id="`column-visibility-toggle-${dataTableID}`"
                 @click="customColumn?.toggleMenu"
                 v-bind="headerCellPreset(undefined, props.customColumn)"
                 class="sticky right-0"
