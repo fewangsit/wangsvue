@@ -509,9 +509,8 @@ const setValidatorMessage = (value: JSONContent = {}): boolean | string => {
     const { empty } = props.validatorMessage ?? {};
 
     if (value.content === undefined && props.mandatory && empty) {
-      return empty;
+      return empty ?? true;
     }
-    return true;
   }
   return true;
 };

@@ -75,8 +75,12 @@ const fetchMentionSuggestion =
               v-model:mentioned-list="mentionedList"
               :fetch-mention-suggestion-function="fetchMentionSuggestion"
               :show-optional-text="false"
+              :validator-message="{
+                empty: 'Ga Boleh Kosong',
+              }"
               is-image-upload-base64
               label="Editor"
+              mandatory
               placeholder="asdsa"
               use-validator
             />
