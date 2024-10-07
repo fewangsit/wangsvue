@@ -113,7 +113,7 @@ export interface DialogFormProps extends FormProps {
    *
    * @default 260
    */
-  asideRightWidth: number;
+  asideRightWidth?: number;
   class?: string | string[];
   contentClass?: string | string[];
   /**
