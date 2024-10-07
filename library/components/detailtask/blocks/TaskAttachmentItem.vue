@@ -101,8 +101,10 @@ const deleteAttachment = async (): Promise<void> => {
               Caption
             </a>
             <span>|</span>
-            <a class="cursor-pointer text-primary-400">Download</a>
-            <span>|</span>
+            <template v-if="item.type !== 'link'">
+              <a class="cursor-pointer text-primary-400">Download</a>
+              <span>|</span>
+            </template>
             <a
               @click="dialogConfirmDelete = true"
               class="cursor-pointer text-danger-500"
