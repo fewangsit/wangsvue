@@ -990,8 +990,9 @@ const listenUpdateTableEvent = (): void => {
 
                 <template
                   v-if="
-                    item.childRowHeader &&
-                    props.childTableProps?.useColumnsHeader
+                    (() =>
+                      item.childRowHeader &&
+                      props.childTableProps?.useColumnsHeader)()
                   "
                 >
                   <td
