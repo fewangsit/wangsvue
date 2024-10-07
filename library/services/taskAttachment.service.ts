@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosProgressEvent, AxiosResponse } from 'axios';
 import {
   AddTaskAttachmentFileDTO,
   AddTaskAttachmentUrlDTO,
@@ -7,7 +7,14 @@ import {
 } from 'lib/dto/taskAttachment.dto';
 import { getBaseURL } from 'lib/utils/getBaseURL.util';
 
-const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
+type AxiosInstanceOptions = {
+  headers?: Record<string, string>;
+  params?: any;
+  onUploadProgress?: (progressEvent: AxiosProgressEvent) => void;
+  signal?: AbortSignal;
+};
+
+const API = (options?: AxiosInstanceOptions): AxiosInstance => {
   const user = JSON.parse(localStorage.getItem('user') as string) ?? {};
 
   const BASE_URL = getBaseURL('APP_TASK_API');
@@ -17,9 +24,11 @@ const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + user.jwt,
-      ...headers,
+      ...options?.headers,
     },
-    params,
+    params: options?.params,
+    onUploadProgress: options?.onUploadProgress,
+    signal: options?.signal,
   });
 
   return instance;
@@ -35,12 +44,18 @@ const TaskAttachmentServices = {
   ): Promise<AxiosResponse> => {
     return API().post(`/task/${taskId}/url`, body);
   },
-  addTaskAttachmentFile: (
-    taskId: string,
-    body: AddTaskAttachmentFileDTO,
-  ): Promise<AxiosResponse> => {
+  addTaskAttachmentFile: (payload: {
+    taskId: string;
+    body: AddTaskAttachmentFileDTO;
+    onUploadProgress: (progressEvent: AxiosProgressEvent) => void;
+    signal: AbortSignal;
+  }): Promise<AxiosResponse> => {
     const headers = { 'Content-Type': 'multipart/form-data' };
-    return API({ headers }).post(`/task/${taskId}/file`, body);
+    return API({
+      headers,
+      onUploadProgress: payload.onUploadProgress,
+      signal: payload.signal,
+    }).post(`/task/${payload.taskId}/file`, payload.body);
   },
   updateTaskAttachmentCaption: (
     taskId: string,

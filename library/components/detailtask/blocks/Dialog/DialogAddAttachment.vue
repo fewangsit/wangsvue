@@ -8,13 +8,15 @@ import Icon from 'lib/components/icon/Icon.vue';
 import Form from 'lib/components/form/Form.vue';
 import { FormPayload } from 'lib/components/form/Form.vue.d';
 import InputText from 'lib/components/inputtext/InputText.vue';
-import { FileType } from '../Tabs/Section/AttachmentItem.vue.d';
+import { FileType } from '../TaskAttachmentItem.vue.d';
 import Image from 'lib/components/image/Image.vue';
 import TaskAttachmentServices from 'lib/services/taskAttachment.service';
 import {
   AddTaskAttachmentFileDTO,
   AddTaskAttachmentUrlDTO,
 } from 'lib/dto/taskAttachment.dto';
+import axios, { AxiosProgressEvent } from 'axios';
+import { useToast } from 'lib/utils';
 
 type FormattedFile = {
   name: string;
@@ -24,7 +26,12 @@ type FormattedFile = {
   fileType: FileType;
   file: File;
   imgPreviewURL?: string;
+  uploadProgress?: number;
+  controller?: AbortController;
+  isCanceled?: boolean;
 };
+
+const toast = useToast();
 
 const visible = defineModel<boolean>('visible', { required: true });
 
@@ -51,6 +58,7 @@ const MAX_VIDEO_SIZE = 10 * 1024 * 1024; // 10 MB in bytes
 const activeIndex = ref(0);
 
 const fileInput = ref<HTMLInputElement | null>(null);
+const fileInputKey = ref(0);
 const isHighlighted = ref(false);
 const files = ref<FormattedFile[]>([]);
 
@@ -61,11 +69,28 @@ const files = ref<FormattedFile[]>([]);
  * @returns True if the file is under the maximum size limit, false otherwise.
  */
 const validateFileSize = (file: File): boolean => {
+  if (!file.type?.length) {
+    return false;
+  }
   const fileType = getFileType(file.type);
   if (fileType === 'video') {
     return file.size <= MAX_VIDEO_SIZE;
   }
   return file.size <= MAX_FILE_SIZE;
+};
+
+/**
+ * Checks if a file has a valid type.
+ * Make sure user doesn't upload a folder.
+ *
+ * @param file The file to be checked.
+ * @returns True if the file has a valid type, false otherwise.
+ */
+const validateFileType = (file: File): boolean => {
+  if (!file.type?.length) {
+    return false;
+  }
+  return true;
 };
 
 /**
@@ -135,12 +160,16 @@ const unhighlight = (): void => {
 };
 
 const handleFiles = async (event: Event): Promise<void> => {
+  fileInputKey.value++;
   const input = event.target as HTMLInputElement;
   if (input.files) {
-    const selectedFiles = Array.from(input.files);
+    const selectedFiles = Array.from(input.files).filter(validateFileType);
     const validFiles = selectedFiles.filter(validateFileSize).map(formatFile);
     if (validFiles.length < selectedFiles.length) {
-      console.log('Some files are too large and have been ignored.');
+      toast.add({
+        severity: 'error',
+        message: 'Ukuran file terlalu besar.',
+      });
     }
     files.value.push(...validFiles);
 
@@ -149,11 +178,17 @@ const handleFiles = async (event: Event): Promise<void> => {
 };
 
 const handleDrop = async (event: DragEvent): Promise<void> => {
+  fileInputKey.value++;
   if (event.dataTransfer) {
-    const droppedFiles = Array.from(event.dataTransfer.files);
+    const droppedFiles = Array.from(event.dataTransfer.files).filter(
+      validateFileType,
+    );
     const validFiles = droppedFiles.filter(validateFileSize).map(formatFile);
     if (validFiles.length < droppedFiles.length) {
-      console.log('Some files are too large and have been ignored.');
+      toast.add({
+        severity: 'error',
+        message: 'Ukuran file terlalu besar.',
+      });
     }
     files.value.push(...validFiles);
 
@@ -162,10 +197,48 @@ const handleDrop = async (event: DragEvent): Promise<void> => {
   unhighlight();
 };
 
-const addAttachment = async (body: AddTaskAttachmentFileDTO): Promise<void> => {
+/**
+ * Submits a single attachment to the server.
+ *
+ * @param {AddTaskAttachmentFileDTO} body - The attachment to submit.
+ * @param {number} uploadIndex - The index of the attachment in the array of files to upload.
+ * @param {number} uploadLength - The total number of files to upload.
+ * @returns {Promise<void>} A promise that resolves when the attachment is submitted successfully.
+ */
+const addAttachment = async (
+  body: AddTaskAttachmentFileDTO,
+  uploadIndex: number,
+  uploadLength: number,
+): Promise<void> => {
+  const index = files.value.length - uploadLength + uploadIndex;
   try {
-    await TaskAttachmentServices.addTaskAttachmentFile(props.taskId, body);
+    const controller = new AbortController();
+    files.value[index].controller = controller;
+
+    const onUploadProgress = (progressEvent: AxiosProgressEvent): void => {
+      const percentCompleted = Math.round(
+        (progressEvent.loaded * 100) / progressEvent.total,
+      );
+      files.value[index].uploadProgress = percentCompleted;
+
+      // eslint-disable-next-line no-undef
+      const progressBars: NodeListOf<HTMLElement> =
+        document.querySelectorAll('#progress-bar');
+      progressBars[index].style.width = percentCompleted + '%';
+    };
+
+    await TaskAttachmentServices.addTaskAttachmentFile({
+      taskId: props.taskId,
+      body: body,
+      onUploadProgress: onUploadProgress,
+      signal: controller.signal,
+    });
   } catch (error) {
+    // Handle cancellation
+    if (axios.isCancel(error)) {
+      files.value[index].isCanceled = true;
+      return;
+    }
     console.error(error);
   }
 };
@@ -184,7 +257,11 @@ const submitAttachmentFiles = async (
     type: file.fileType,
   }));
   try {
-    await Promise.all(formattedFiles.map(addAttachment));
+    await Promise.all(
+      formattedFiles.map(async (file, index) => {
+        await addAttachment(file, index, formattedFiles.length);
+      }),
+    );
   } catch (error) {
     console.error('Error submitting attachments:', error);
   }
@@ -212,6 +289,10 @@ const submitAttachmentURL = async (e: FormPayload): Promise<void> => {
   } catch (error) {
     console.error(error);
   }
+};
+
+const cancelUpload = (index: number): void => {
+  files.value[index].controller?.abort();
 };
 
 const onHideDialog = (): void => {
@@ -257,6 +338,7 @@ const onHideDialog = (): void => {
         class="flex flex-col gap-4"
       >
         <input
+          :key="fileInputKey"
           ref="fileInput"
           @change="handleFiles"
           multiple
@@ -291,11 +373,41 @@ const onHideDialog = (): void => {
                 class="w-[30px] h-[30px] object-cover"
               />
               <Image v-else class="w-[30px]" />
-              <div class="w-full flex justify-between items-center">
-                <span>{{ file.name }}</span>
-                <span>20%</span>
+              <div class="w-full flex flex-col gap-1">
+                <div class="w-full flex justify-between items-center">
+                  <span>{{ file.name }}</span>
+                  <span v-if="file.uploadProgress !== 100 && !file.isCanceled">
+                    {{ file.uploadProgress }}%
+                  </span>
+                  <span v-else-if="file.isCanceled" class="text-danger-500">
+                    Dibatalkan
+                  </span>
+                </div>
+                <div
+                  id="progress-bar-container"
+                  v-show="!file.isCanceled"
+                  class="w-full h-[2px] bg-general-100"
+                >
+                  <div
+                    id="progress-bar"
+                    class="w-0 h-[2px] bg-primary-400 transform transition-all duration-300 ease-in-out"
+                  />
+                </div>
               </div>
-              <Button icon="close" severity="danger" text />
+              <template v-if="!file.isCanceled">
+                <Button
+                  v-if="file.uploadProgress !== 100"
+                  @click="cancelUpload(index)"
+                  icon="close"
+                  severity="danger"
+                  text
+                />
+                <Icon
+                  v-else
+                  class="text-success-500 text-xl w-[30px]"
+                  icon="check"
+                />
+              </template>
             </div>
           </div>
         </div>
