@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.208
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.207...v1.4.208)
+
+### 🩹 Fixes
+
+- **ProgressBar:** Type error ([527e087](https://github.com/fewangsit/wangsvue/commit/527e087))
+
+### 💅 Refactors
+
+- **ProgressBar:** Override progressbar default value with custom value section, add ts declaration and export it ([1e3a26a](https://github.com/fewangsit/wangsvue/commit/1e3a26a))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.207
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.206...v1.4.207)
