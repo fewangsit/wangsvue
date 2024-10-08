@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.209
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.208...v1.4.209)
+
+### 🚀 Enhancements
+
+- Add virtual scroller MultiSelect dan Dropdown ([bdcd79c](https://github.com/fewangsit/wangsvue/commit/bdcd79c))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.208
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.207...v1.4.208)
