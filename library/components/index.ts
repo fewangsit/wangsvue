@@ -48,6 +48,7 @@ import Editor from './editor/Editor.vue';
 import Image from './image/Image.vue';
 import Animation from './animation/Animation.vue';
 import Comment from 'lib/components/comment/Comment.vue';
+import ProgressBar from './progressbar/ProgressBar.vue';
 
 export {
   Badge,
@@ -100,4 +101,5 @@ export {
   Editor,
   Animation,
   Comment,
+  ProgressBar,
 };

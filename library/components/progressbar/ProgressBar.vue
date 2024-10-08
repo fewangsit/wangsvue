@@ -1,15 +1,33 @@
 <script setup lang="ts">
-import ProgressBar, { ProgressBarProps } from 'primevue/progressbar';
-import { BadgeProps } from '../badge/Badge.vue.d';
+import ProgressBar from 'primevue/progressbar';
+import { ProgressBarProps } from './ProgressBar.vue.d';
 import Preset from 'lib/preset/progressbar';
 
-const props = defineProps<
-  ProgressBarProps & {
-    severity: BadgeProps['severity'];
-  }
->();
+const props = withDefaults(defineProps<ProgressBarProps>(), {
+  mode: 'determinate',
+  severity: 'primary',
+  showValue: true,
+});
 </script>
 
 <template>
-  <ProgressBar v-bind="props" :pt="{ value: Preset.value({ props }) }" />
+  <div
+    data-wv-name="progressbar"
+    data-wv-section="root"
+    v-bind="Preset.wrapper"
+  >
+    <ProgressBar
+      v-bind="props"
+      :pt="{ value: Preset.value({ props }) }"
+      :show-value="false"
+    />
+
+    <span
+      v-if="showValue"
+      v-bind="Preset['progressbar-value']"
+      data-wv-section="progressbar-value"
+    >
+      {{ value }}%
+    </span>
+  </div>
 </template>

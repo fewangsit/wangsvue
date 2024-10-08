@@ -114,6 +114,7 @@ import {
   Image,
   Animation,
   Comment,
+  ProgressBar,
 } from './components';
 
 export default {
@@ -175,6 +176,7 @@ export default {
     app.component('ChangelogPage', ChangelogPage);
     app.component('Editor', Editor);
     app.component('Comment', Comment);
+    app.component('ProgressBar', ProgressBar);
 
     app.directive('tooltip', Tooltip);
     app.directive('focus', Focus);
@@ -250,6 +252,7 @@ export {
   Editor,
   Animation,
   Comment,
+  ProgressBar,
 
   // Component store
   useLoadingStore,

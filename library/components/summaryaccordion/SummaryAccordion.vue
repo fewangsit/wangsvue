@@ -265,20 +265,12 @@ const secondsToDHM = (seconds: number): string => {
             </template>
           </h2>
 
-          <div
+          <ProgressBar
             v-if="summary.type !== 'profile'"
-            class="flex items-center gap-2"
-          >
-            <ProgressBar
-              :severity="getStatusSeverity(summary.status)"
-              :show-value="false"
-              :value="progress.task"
-              class="w-[20vw] max-w-[200px]"
-            />
-            <span class="font-medium text-[14px] leading-4">
-              {{ progress.task }}%
-            </span>
-          </div>
+            :severity="getStatusSeverity(summary.status)"
+            :value="progress.task"
+            class="w-[20vw] max-w-[200px]"
+          />
 
           <Badge
             :label="

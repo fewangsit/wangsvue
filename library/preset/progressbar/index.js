@@ -1,5 +1,8 @@
 export default {
-  root: ({ props }) => ({
+  'wrapper': {
+    class: ['grid grid-cols-[auto,max-content] items-center gap-2'],
+  },
+  'root': ({ props }) => ({
     class: [
       // Position and Overflow
       'relative overflow-hidden',
@@ -21,7 +24,7 @@ export default {
       },
     ],
   }),
-  value: ({ props }) => ({
+  'value': ({ props }) => ({
     class: [
       // Flexbox & Overflow & Position
       'rounded-full',
@@ -33,7 +36,9 @@ export default {
       // Colors
       {
         'bg-warning-500':
-          (props.value < 100 && props.value > 0 && props.severity != 'danger') ||
+          (props.value < 100 &&
+            props.value > 0 &&
+            props.severity != 'danger') ||
           props.severity === 'warning',
         'min-w-[6px] bg-grayscale-500': props.value == 0,
         'bg-success-1000': props.severity == 'success',
@@ -64,7 +69,7 @@ export default {
       },
     ],
   }),
-  label: {
+  'label': {
     class: [
       // Flexbox
       'inline-flex justify-end',
@@ -74,5 +79,8 @@ export default {
       'text-sm text-surface-600/60',
       'leading-none',
     ],
+  },
+  'progressbar-value': {
+    class: ['font-medium text-[14px] leading-4'],
   },
 };
