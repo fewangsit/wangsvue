@@ -2,7 +2,12 @@ import colors from './library/colors.config.json';
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: 'selector',
-  content: ['./index.html', './{library,playground}/**/*.{vue,js,ts,jsx,tsx}', './main.ts', './App.vue'],
+  content: [
+    './index.html',
+    './{library,playground,presets}/**/*.{vue,js,ts,jsx,tsx}',
+    './main.ts',
+    './App.vue',
+  ],
   theme: {
     extend: {
       colors,
