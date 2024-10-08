@@ -1,6 +1,6 @@
 {
   "name": "wangsvue-presets",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "author": "fewangsit",
   "description": "Wangsit VueJS Component Library Presets",
   "main": "presets/index.js",
