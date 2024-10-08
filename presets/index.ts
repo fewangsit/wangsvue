@@ -1,5 +1,5 @@
-import * as wangsvue from './wangsvue';
-import * as tagsamurai from './tagsamurai';
+import { default as wangsvue } from './wangsvue';
+import { default as tagsamurai } from './tagsamurai';
 
 export default {
   tagsamurai,

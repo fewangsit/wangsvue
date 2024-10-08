@@ -75,15 +75,13 @@ import tree from './tree/index.js';
 import treeselect from './treeselect/index.js';
 import tristatecheckbox from './tristatecheckbox/index.js';
 
-const directives = {
-  badge: badgedirective,
-  ripple,
-  tooltip,
-};
-
-export {
+export default {
   global,
-  directives,
+  directives: {
+    badge: badgedirective,
+    ripple,
+    tooltip,
+  },
 
   //Forms
   autocomplete,
