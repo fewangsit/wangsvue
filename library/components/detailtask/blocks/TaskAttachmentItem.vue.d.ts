@@ -1,13 +1,18 @@
 import { ClassComponent } from 'lib/components/ts-helpers';
 
 export type FileType =
-  | 'image'
   | 'link'
-  | 'video'
+  | 'image'
+  | 'txt'
   | 'doc'
   | 'xls'
   | 'pdf'
   | 'csv'
+  | 'html'
+  | 'json'
+  | 'mp4'
+  | 'mkv'
+  | 'compressed'
   | 'unknown';
 
 export interface AttachmentItemData {

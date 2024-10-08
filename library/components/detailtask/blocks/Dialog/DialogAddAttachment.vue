@@ -73,7 +73,7 @@ const validateFileSize = (file: File): boolean => {
     return false;
   }
   const fileType = getFileType(file.type);
-  if (fileType === 'video') {
+  if (fileType === 'mp4' || fileType === 'mkv') {
     return file.size <= MAX_VIDEO_SIZE;
   }
   return file.size <= MAX_FILE_SIZE;
@@ -128,9 +128,13 @@ const selectFiles = (): void => {
  */
 const getFileType = (mimeType: string): FileType => {
   if (mimeType.startsWith('image/')) return 'image';
-  if (mimeType.startsWith('video/')) return 'video';
-  if (mimeType === 'application/pdf') return 'pdf';
+  if (mimeType.includes('mp4')) return 'mp4';
+  if (mimeType === 'video/x-matroska') return 'mkv';
+  if (mimeType === 'text/plain') return 'txt';
   if (mimeType === 'text/csv') return 'csv';
+  if (mimeType === 'text/html') return 'html';
+  if (mimeType === 'application/json') return 'json';
+  if (mimeType === 'application/pdf') return 'pdf';
   if (
     mimeType === 'application/vnd.ms-excel' ||
     mimeType ===
@@ -143,11 +147,12 @@ const getFileType = (mimeType: string): FileType => {
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
   )
     return 'doc';
+  if (mimeType.startsWith('application/x-url')) return 'link';
   if (
-    mimeType.startsWith('text/html') ||
-    mimeType.startsWith('application/x-url')
+    mimeType.includes('application/x-zip-compressed') ||
+    mimeType.includes('application/x-compressed')
   )
-    return 'link';
+    return 'compressed';
   return 'unknown';
 };
 
@@ -386,11 +391,11 @@ const onHideDialog = (): void => {
                 <div
                   id="progress-bar-container"
                   v-show="!file.isCanceled"
-                  class="w-full h-[2px] bg-general-100"
+                  class="w-full h-[4px] bg-general-100 rounded"
                 >
                   <div
                     id="progress-bar"
-                    class="w-0 h-[2px] bg-primary-400 transform transition-all duration-300 ease-in-out"
+                    class="w-0 h-[4px] rounded bg-primary-400 transform transition-all duration-300 ease-in-out"
                   />
                 </div>
               </div>
