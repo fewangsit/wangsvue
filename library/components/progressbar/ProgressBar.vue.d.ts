@@ -1,6 +1,5 @@
 import { VNode } from 'vue';
-import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
-import { BadgeProps } from 'lib/components/badge/Badge.vue';
+import { ClassComponent } from '../ts-helpers';
 
 /**
  * Defines valid properties in ProgressBar component.
@@ -13,11 +12,9 @@ export interface ProgressBarProps {
   /**
    * The progress bar severity color
    *
-   * All Badge severity is supported, except 'dark'
-   *
    * @defaultValue 'primary'
    */
-  severity: Omit<BadgeProps['severity'], 'dark'>;
+  severity: 'success' | 'danger' | 'warning' | 'dark' | 'primary';
   /**
    * Defines the mode of the progress
    * @defaultValue determinate
@@ -57,11 +54,5 @@ declare class ProgressBar extends ClassComponent<
   ProgressBarSlots,
   null
 > {}
-
-declare module 'vue' {
-  export interface GlobalComponents {
-    ProgressBar: GlobalComponentConstructor<ProgressBar>;
-  }
-}
 
 export default ProgressBar;
