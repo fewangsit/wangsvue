@@ -61,6 +61,24 @@ const deleteAttachment = async (): Promise<void> => {
     });
   }
 };
+
+const downloadFile = async (url: string, fileName: string): Promise<void> => {
+  try {
+    const response = await fetch(url);
+    const blob = await response.blob(); // Convert the response to a Blob
+
+    const a = document.createElement('a');
+    const urlObject = URL.createObjectURL(blob);
+    a.href = urlObject;
+    a.download = fileName || url.split('/').pop(); // Use provided fileName or infer from URL
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(urlObject); // Release memory when done
+  } catch (error) {
+    console.error('Download failed:', error);
+  }
+};
 </script>
 
 <template>
@@ -102,7 +120,12 @@ const deleteAttachment = async (): Promise<void> => {
             </a>
             <span>|</span>
             <template v-if="item.type !== 'link'">
-              <a class="cursor-pointer text-primary-400">Download</a>
+              <a
+                @click="downloadFile(item.url, item.displayName)"
+                class="cursor-pointer text-primary-400"
+              >
+                Download
+              </a>
               <span>|</span>
             </template>
             <a
