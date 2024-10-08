@@ -6,7 +6,7 @@ import Dialog from '../dialog/Dialog.vue';
 import Icon from '../icon/Icon.vue';
 
 import eventBus from 'lib/event-bus';
-import { buttonFocusClass } from 'lib/preset/button';
+import { buttonFocusClass } from 'lib/preset/wangsvue/button';
 import { ChangelogEmits, ChangelogProps } from './Changelog.vue.d';
 
 const props = withDefaults(defineProps<ChangelogProps>(), {

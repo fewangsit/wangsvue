@@ -2,7 +2,7 @@
 import { shallowRef } from 'vue';
 
 import Dropdown from 'primevue/dropdown';
-import DropdownPreset from 'lib/preset/dropdown';
+import DropdownPreset from 'lib/preset/wangsvue/dropdown';
 import Icon from '../icon/Icon.vue';
 import { LiteDropdownEmits, LiteDropdownProps } from './LiteDropdown.vue.d';
 import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';

@@ -5,7 +5,7 @@ import { toArrayClass } from 'lib/components/helpers';
 import Icon from 'lib/components/icon/Icon.vue';
 import PrimeButton from 'primevue/button';
 import type { ButtonProps } from './Button.vue.d';
-import Preset from 'lib/preset/button';
+import Preset from 'lib/preset/wangsvue/button';
 
 const props = defineProps<ButtonProps>();
 

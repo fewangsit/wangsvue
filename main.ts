@@ -14,7 +14,7 @@ import router from './playground';
 import Focus from 'lib/directives/focus';
 
 // Preset
-import Preset from 'lib/preset';
+import Preset from 'lib/preset/fixedasset';
 
 const app = createApp(App);
 

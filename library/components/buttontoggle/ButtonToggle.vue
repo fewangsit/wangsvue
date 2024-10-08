@@ -6,7 +6,7 @@ import type {
   ButtonToggleEmits,
 } from 'lib/components/buttontoggle/ButtonToggle.vue.d';
 
-import InputSwitchPresets from 'lib/preset/inputswitch';
+import InputSwitchPresets from 'lib/preset/wangsvue/inputswitch';
 
 const props = withDefaults(defineProps<ButtonToggleProps>(), {
   triState: false,

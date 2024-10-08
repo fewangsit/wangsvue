@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue';
 import Dialog from 'primevue/dialog';
 
-import DialogPreset from 'lib/preset/dialog';
+import DialogPreset from 'lib/preset/wangsvue/dialog';
 import { getNestedProperyValue } from 'lib/utils';
 import {
   DialogConfirmEmits,

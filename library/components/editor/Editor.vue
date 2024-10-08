@@ -46,7 +46,7 @@ import History from '@tiptap/extension-history';
 import FloatingMenuExt from '@tiptap/extension-floating-menu';
 import Mention from '@tiptap/extension-mention';
 import Menu from 'primevue/menu';
-import MenuPreset from 'lib/preset/menu';
+import MenuPreset from 'lib/preset/wangsvue/menu';
 import OverlayPanel from 'primevue/overlaypanel';
 import InputURL from '../inputurl/InputURL.vue';
 import InputText from '../inputtext/InputText.vue';

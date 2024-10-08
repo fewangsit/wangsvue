@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { buttonFocusClass } from 'lib/preset/button';
+import { buttonFocusClass } from 'lib/preset/wangsvue/button';
 import type { ButtonDownloadProps } from './ButtonDownload.vue.d';
 import eventBus from 'lib/event-bus';
 import Icon from '../icon/Icon.vue';

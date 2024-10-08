@@ -3,7 +3,7 @@ import { computed, ref, shallowRef, useSlots } from 'vue';
 import Form from '../form/Form.vue';
 import Dialog from 'primevue/dialog';
 import Button from '../button/Button.vue';
-import DialogPreset from 'lib/preset/dialog';
+import DialogPreset from 'lib/preset/wangsvue/dialog';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 import FormInstance, { FormPayload } from '../form/Form.vue.d';
 import Checkbox from '../checkbox/Checkbox.vue';

@@ -8,7 +8,7 @@ import {
 import Timeline from 'primevue/timeline';
 import Icon from '../icon/Icon.vue';
 import UserName from '../username/UserName.vue';
-import Preset from 'lib/preset/timeline';
+import Preset from 'lib/preset/wangsvue/timeline';
 import TimelineContenByType from './TimelineContenByType.vue';
 
 defineProps<TimelineProps>();

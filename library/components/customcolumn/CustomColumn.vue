@@ -13,7 +13,7 @@ import Checkbox from '../checkbox/Checkbox.vue';
 import Menu from '../menu/Menu.vue';
 import Icon from '../icon/Icon.vue';
 import readConfig from '../datatable/helpers/readConfig.helper';
-import MenuPreset from 'lib/preset/menu';
+import MenuPreset from 'lib/preset/wangsvue/menu';
 
 type DragableColumn = TableColumn & { order?: number };
 const props = withDefaults(defineProps<CustomColumnProps>(), { type: 'menu' });

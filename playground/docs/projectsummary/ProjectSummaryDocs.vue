@@ -81,7 +81,7 @@ const subModuleSummary = reactive<SubModuleSummary>({
 
 <template>
   <span>Progress Bar</span>
-  <ProgressBar severity="dark" show-value value="2" />
+  <ProgressBar :value="2" severity="dark" show-value />
   <div class="flex flex-col gap-3 mt-4">
     <div class="flex flex-col gap-4">
       <span>Summary Profile</span>

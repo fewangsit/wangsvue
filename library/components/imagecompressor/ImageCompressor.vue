@@ -22,7 +22,7 @@ import Dialog from '../dialog/Dialog.vue';
 import Button from '../button/Button.vue';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
-import ImagePreset from 'lib/preset/image';
+import ImagePreset from 'lib/preset/wangsvue/image';
 
 import 'vue-advanced-cropper/dist/style.css';
 

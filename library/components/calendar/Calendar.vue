@@ -13,7 +13,7 @@ import { CalendarProps, CalendarEmits } from './Calendar.vue.d';
 import { FieldValidation } from '../form/Form.vue.d';
 
 import Calendar, { CalendarState } from 'primevue/calendar';
-import CalendarPresets from 'lib/preset/calendar';
+import CalendarPresets from 'lib/preset/wangsvue/calendar';
 import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
 import Icon from '../icon/Icon.vue';
 import InputGroup from '../inputgroup/InputGroup.vue';

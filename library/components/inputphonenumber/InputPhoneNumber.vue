@@ -18,7 +18,7 @@ import { FieldValidation } from '../form/Form.vue.d';
 import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 import Icon from '../icon/Icon.vue';
-import Preset from 'lib/preset/inputphonenumber';
+import Preset from 'lib/preset/wangsvue/inputphonenumber';
 
 import type {
   InputPhoneNumberProps,

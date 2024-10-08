@@ -36,7 +36,7 @@ import CustomColumn from '../customcolumn/CustomColumn.vue';
 import CustomColumnInstance from '../customcolumn/CustomColumn.vue.d';
 import useDataTableStore from './store/dataTable.store';
 import Checkbox from '../checkbox/Checkbox.vue';
-import CheckboxPreset from 'lib/preset/checkbox';
+import CheckboxPreset from 'lib/preset/wangsvue/checkbox';
 import Button from '../button/Button.vue';
 import MenuClass from '../menu/Menu.vue.d';
 import { Booleanish } from '../ts-helpers';

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Dialog from 'primevue/dialog';
-import DialogPreset from 'lib/preset/dialog';
+import DialogPreset from 'lib/preset/wangsvue/dialog';
 import { DialogProps, DialogEmits } from './Dialog.vue.d';
 
 withDefaults(defineProps<DialogProps>(), {

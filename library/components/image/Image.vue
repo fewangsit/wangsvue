@@ -5,7 +5,7 @@ import { getImageURL, genPlaceholder } from 'lib/utils';
 
 import Image from 'primevue/image';
 import Icon from '../icon/Icon.vue';
-import ImagePreset from 'lib/preset/image';
+import ImagePreset from 'lib/preset/wangsvue/image';
 import Button from '../button/Button.vue';
 
 const props = withDefaults(defineProps<ImageProps>(), {

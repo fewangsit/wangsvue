@@ -10,7 +10,7 @@ import { useField } from 'vee-validate';
 import { FieldValidation } from '../form/Form.vue.d';
 import Checkbox from 'primevue/checkbox';
 import Icon from '../icon/Icon.vue';
-import Preset from 'lib/preset/checkbox';
+import Preset from 'lib/preset/wangsvue/checkbox';
 
 const props = withDefaults(defineProps<CheckboxProps>(), {
   binary: true,

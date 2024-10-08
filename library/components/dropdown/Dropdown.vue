@@ -19,7 +19,7 @@ import InputGroup from 'lib/components/inputgroup/InputGroup.vue';
 import InputGroupAddon from 'primevue/inputgroupaddon';
 import { Nullable } from '../ts-helpers';
 import { filterOptions } from 'lib/utils';
-import Preset from 'lib/preset/dropdown';
+import Preset from 'lib/preset/wangsvue/dropdown';
 
 const props = withDefaults(defineProps<DropdownProps>(), {
   filter: true,
