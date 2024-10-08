@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, inject, ref } from 'vue';
 import Dialog from 'primevue/dialog';
 
-import DialogPreset from 'lib/preset/wangsvue/dialog';
 import { getNestedProperyValue } from 'lib/utils';
 import {
   DialogConfirmEmits,
@@ -11,6 +10,8 @@ import {
 } from './DialogConfirm.vue.d';
 import Icon from '../icon/Icon.vue';
 import Button from '../button/Button.vue';
+
+const DialogPreset = inject('preset')?.dialog;
 
 const props = withDefaults(defineProps<DialogConfirmProps>(), {
   list: undefined,

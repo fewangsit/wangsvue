@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
   computed,
+  inject,
   nextTick,
   onMounted,
   reactive,
@@ -46,7 +47,6 @@ import History from '@tiptap/extension-history';
 import FloatingMenuExt from '@tiptap/extension-floating-menu';
 import Mention from '@tiptap/extension-mention';
 import Menu from 'primevue/menu';
-import MenuPreset from 'lib/preset/wangsvue/menu';
 import OverlayPanel from 'primevue/overlaypanel';
 import InputURL from '../inputurl/InputURL.vue';
 import InputText from '../inputtext/InputText.vue';
@@ -58,6 +58,8 @@ import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 import Form from '../form/Form.vue';
 import suggestion from './suggestion';
 import CodeSnippetExtension from './codeSnippetExtension';
+
+const MenuPreset = inject('preset')?.menu;
 
 const props = withDefaults(defineProps<EditorProps>(), {
   placeholder: 'Tulis',

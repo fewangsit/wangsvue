@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { buttonFocusClass } from 'lib/preset/wangsvue/button';
+import { inject } from 'vue';
 import type { ButtonDownloadProps } from './ButtonDownload.vue.d';
 import eventBus from 'lib/event-bus';
 import Icon from '../icon/Icon.vue';
@@ -7,6 +7,8 @@ import Icon from '../icon/Icon.vue';
 const props = withDefaults(defineProps<ButtonDownloadProps>(), {
   tableName: 'datatable',
 });
+
+const { buttonFocusClass } = inject('preset')?.button;
 
 const downloadExcel = (): void => {
   const { fileName, tableName } = props;

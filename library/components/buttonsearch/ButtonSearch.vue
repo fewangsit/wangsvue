@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { nextTick, ref, shallowRef } from 'vue';
+import { inject, nextTick, ref, shallowRef } from 'vue';
 import Icon from '../icon/Icon.vue';
 import { ButtonSearchEmits, ButtonSearchProps } from './ButtonSearch.vue.d';
 import InputText from 'primevue/inputtext';
 import eventBus from 'lib/event-bus';
-import { buttonFocusClass } from 'lib/preset/wangsvue/button';
+
+const { buttonFocusClass } = inject('preset')?.button;
 
 withDefaults(defineProps<ButtonSearchProps>(), {
   tableName: 'datatable',

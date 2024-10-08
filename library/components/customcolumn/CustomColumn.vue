@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, shallowRef } from 'vue';
+import { computed, nextTick, onMounted, ref, shallowRef, inject } from 'vue';
 import { TableColumn } from '../datatable/DataTable.vue.d';
 import { CustomColumnProps } from './CustomColumn.vue.d';
 import { cloneDeep } from 'lodash';
@@ -13,9 +13,11 @@ import Checkbox from '../checkbox/Checkbox.vue';
 import Menu from '../menu/Menu.vue';
 import Icon from '../icon/Icon.vue';
 import readConfig from '../datatable/helpers/readConfig.helper';
-import MenuPreset from 'lib/preset/wangsvue/menu';
 
 type DragableColumn = TableColumn & { order?: number };
+
+const MenuPreset = inject('preset')?.menu;
+
 const props = withDefaults(defineProps<CustomColumnProps>(), { type: 'menu' });
 
 const emit = defineEmits<{

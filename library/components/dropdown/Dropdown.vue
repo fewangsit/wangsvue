@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue';
+import {
+  computed,
+  inject,
+  nextTick,
+  onMounted,
+  reactive,
+  ref,
+  watch,
+} from 'vue';
 import { useField } from 'vee-validate';
 import Badge, { BadgeProps } from 'lib/components/badge/Badge.vue.d';
 
@@ -19,7 +27,8 @@ import InputGroup from 'lib/components/inputgroup/InputGroup.vue';
 import InputGroupAddon from 'primevue/inputgroupaddon';
 import { Nullable } from '../ts-helpers';
 import { filterOptions } from 'lib/utils';
-import Preset from 'lib/preset/wangsvue/dropdown';
+
+const Preset = inject('preset')?.dropdown;
 
 const props = withDefaults(defineProps<DropdownProps>(), {
   filter: true,

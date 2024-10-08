@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 import {
   LinkTaskIframeEmbed,
   LinkTaskURL,
@@ -8,8 +8,9 @@ import {
 import Timeline from 'primevue/timeline';
 import Icon from '../icon/Icon.vue';
 import UserName from '../username/UserName.vue';
-import Preset from 'lib/preset/wangsvue/timeline';
 import TimelineContenByType from './TimelineContenByType.vue';
+
+const Preset = inject('preset')?.timeline;
 
 defineProps<TimelineProps>();
 

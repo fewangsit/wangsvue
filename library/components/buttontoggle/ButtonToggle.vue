@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue';
+import { computed, inject, ref, watch } from 'vue';
 import InputSwitch from 'primevue/inputswitch';
 import type {
   ButtonToggleProps,
   ButtonToggleEmits,
 } from 'lib/components/buttontoggle/ButtonToggle.vue.d';
 
-import InputSwitchPresets from 'lib/preset/wangsvue/inputswitch';
+const InputSwitchPresets = inject('preset')?.inputswitch;
 
 const props = withDefaults(defineProps<ButtonToggleProps>(), {
   triState: false,

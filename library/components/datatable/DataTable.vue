@@ -7,6 +7,7 @@ import {
   onBeforeUnmount,
   nextTick,
   shallowRef,
+  inject,
 } from 'vue';
 
 import PrimeDataTable, {
@@ -24,7 +25,7 @@ import {
   TableColumn,
 } from './DataTable.vue.d';
 
-import { DownloadEvent } from '../../custom-events.d';
+import { DownloadEvent } from 'lib/custom-events';
 import { filterVisibleMenu } from '../helpers';
 import { exportToExcel, getNestedProperyValue, useToast } from 'lib/utils';
 import { FilterMatchMode, FilterService } from 'primevue/api';
@@ -36,7 +37,6 @@ import CustomColumn from '../customcolumn/CustomColumn.vue';
 import CustomColumnInstance from '../customcolumn/CustomColumn.vue.d';
 import useDataTableStore from './store/dataTable.store';
 import Checkbox from '../checkbox/Checkbox.vue';
-import CheckboxPreset from 'lib/preset/wangsvue/checkbox';
 import Button from '../button/Button.vue';
 import MenuClass from '../menu/Menu.vue.d';
 import { Booleanish } from '../ts-helpers';
@@ -48,6 +48,8 @@ type Data = Record<string, any>;
 type QueryParams = {
   [key: string]: any;
 };
+
+const CheckboxPreset = inject('preset')?.checkbox;
 
 const props = withDefaults(defineProps<DataTableProps>(), {
   selectionType: 'checkbox',

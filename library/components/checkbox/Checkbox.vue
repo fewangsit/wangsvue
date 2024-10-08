@@ -5,12 +5,13 @@ import type {
   CheckboxModelValue,
 } from './Checkbox.vue.d';
 
-import { onMounted, reactive, watch } from 'vue';
+import { inject, onMounted, reactive, watch } from 'vue';
 import { useField } from 'vee-validate';
 import { FieldValidation } from '../form/Form.vue.d';
 import Checkbox from 'primevue/checkbox';
 import Icon from '../icon/Icon.vue';
-import Preset from 'lib/preset/wangsvue/checkbox';
+
+const Preset = inject('preset')?.checkbox;
 
 const props = withDefaults(defineProps<CheckboxProps>(), {
   binary: true,

@@ -8,6 +8,7 @@ import {
   onBeforeMount,
   shallowRef,
   ref,
+  inject,
 } from 'vue';
 import axios from 'axios';
 
@@ -18,7 +19,8 @@ import { FieldValidation } from '../form/Form.vue.d';
 import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 import Icon from '../icon/Icon.vue';
-import Preset from 'lib/preset/wangsvue/inputphonenumber';
+
+const Preset = inject('preset')?.inputphonenumber;
 
 import type {
   InputPhoneNumberProps,

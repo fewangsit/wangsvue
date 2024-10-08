@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { inject } from 'vue';
 import Dialog from 'primevue/dialog';
-import DialogPreset from 'lib/preset/wangsvue/dialog';
 import { DialogProps, DialogEmits } from './Dialog.vue.d';
+
+const DialogPreset = inject('preset')?.dialog;
 
 withDefaults(defineProps<DialogProps>(), {
   header: undefined,

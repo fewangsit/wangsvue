@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue';
+import { computed, inject, watch } from 'vue';
 
 import ChangelogPage from '../changelogpage/ChangelogPage.vue';
 import Dialog from '../dialog/Dialog.vue';
 import Icon from '../icon/Icon.vue';
 
 import eventBus from 'lib/event-bus';
-import { buttonFocusClass } from 'lib/preset/wangsvue/button';
 import { ChangelogEmits, ChangelogProps } from './Changelog.vue.d';
+
+const { buttonFocusClass } = inject('preset')?.button;
 
 const props = withDefaults(defineProps<ChangelogProps>(), {
   useButton: true,

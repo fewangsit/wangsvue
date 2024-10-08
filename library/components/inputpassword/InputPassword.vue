@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref, watch } from 'vue';
+import { computed, onMounted, reactive, ref, watch, inject } from 'vue';
 import Password from 'primevue/password';
 import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
 import InputGroup from '../inputgroup/InputGroup.vue';
@@ -12,7 +12,8 @@ import { FieldValidation } from '../form/Form.vue.d';
 import { useField } from 'vee-validate';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 import Icon from '../icon/Icon.vue';
-import Preset from 'lib/preset/wangsvue/password';
+
+const Preset = inject('preset')?.password;
 
 const props = defineProps<InputPasswordProps>();
 

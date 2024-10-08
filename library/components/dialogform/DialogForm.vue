@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { computed, ref, shallowRef, useSlots } from 'vue';
+import { computed, inject, ref, shallowRef, useSlots } from 'vue';
 import Form from '../form/Form.vue';
 import Dialog from 'primevue/dialog';
 import Button from '../button/Button.vue';
-import DialogPreset from 'lib/preset/wangsvue/dialog';
+
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 import FormInstance, { FormPayload } from '../form/Form.vue.d';
 import Checkbox from '../checkbox/Checkbox.vue';
 import Icon from '../icon/Icon.vue';
 import { convertToArrayClass } from 'lib/utils';
+
+const DialogPreset = inject('preset')?.dialog;
 
 import {
   DialogFormEmits,

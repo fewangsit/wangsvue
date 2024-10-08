@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { shallowRef } from 'vue';
+import { inject, shallowRef } from 'vue';
 
 import Dropdown from 'primevue/dropdown';
-import DropdownPreset from 'lib/preset/wangsvue/dropdown';
 import Icon from '../icon/Icon.vue';
 import { LiteDropdownEmits, LiteDropdownProps } from './LiteDropdown.vue.d';
 import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
 import { OptionValue } from 'lib/types/options.type';
+
+const DropdownPreset = inject('preset')?.dropdown;
 
 const model = defineModel<OptionValue>({ required: true });
 

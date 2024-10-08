@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, inject } from 'vue';
 import { toArrayClass } from 'lib/components/helpers';
+import type { ButtonProps } from './Button.vue.d';
 
 import Icon from 'lib/components/icon/Icon.vue';
 import PrimeButton from 'primevue/button';
-import type { ButtonProps } from './Button.vue.d';
-import Preset from 'lib/preset/wangsvue/button';
 
 const props = defineProps<ButtonProps>();
+const Preset = inject('preset')?.button;
 
 const iconProps = computed(() => ({
   icon: props.icon ?? 'check',

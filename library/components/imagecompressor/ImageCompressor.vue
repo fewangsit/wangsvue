@@ -7,6 +7,7 @@ import {
   reactive,
   shallowRef,
   computed,
+  inject,
 } from 'vue';
 
 import BackgroundImageCropper from './BackgroundImageCropper.vue';
@@ -22,7 +23,6 @@ import Dialog from '../dialog/Dialog.vue';
 import Button from '../button/Button.vue';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
-import ImagePreset from 'lib/preset/wangsvue/image';
 
 import 'vue-advanced-cropper/dist/style.css';
 
@@ -36,6 +36,8 @@ import ImageInputInfo from './ImageInputInfo.vue';
 import ButtonRadio from 'primevue/radiobutton';
 import { genPlaceholder } from 'lib/utils';
 import { genRandomPlaceholderBg } from 'lib/utils/genPlaceholder.util';
+
+const ImagePreset = inject('preset')?.image;
 
 const props = withDefaults(defineProps<ImageCompressorProps>(), {
   disabled: false,

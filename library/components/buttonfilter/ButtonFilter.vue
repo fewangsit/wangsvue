@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { shallowRef } from 'vue';
+import { inject, shallowRef } from 'vue';
 import { ButtonFilterProps } from './ButtonFilter.vue.d';
 import Icon from '../icon/Icon.vue';
 import eventBus from 'lib/event-bus';
-import { buttonFocusClass } from 'lib/preset/wangsvue/button';
+
+const { buttonFocusClass } = inject('preset')?.button;
 
 const { tableName } = withDefaults(defineProps<ButtonFilterProps>(), {
   tableName: 'datatable',

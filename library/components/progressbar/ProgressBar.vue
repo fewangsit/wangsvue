@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import ProgressBar from 'primevue/progressbar';
+import { inject } from 'vue';
 import { ProgressBarProps } from './ProgressBar.vue.d';
-import Preset from 'lib/preset/wangsvue/progressbar';
+import ProgressBar from 'primevue/progressbar';
+
+const Preset = inject('preset')?.progressbar;
 
 const props = withDefaults(defineProps<ProgressBarProps>(), {
   mode: 'determinate',

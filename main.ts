@@ -14,7 +14,7 @@ import router from './playground';
 import Focus from 'lib/directives/focus';
 
 // Preset
-import Preset from 'lib/preset/fixedasset';
+import Preset from './presets/wangsvue/index';
 
 const app = createApp(App);
 
@@ -23,6 +23,8 @@ app.use(PrimeVue, {
   unstyled: true,
   pt: Preset,
 });
+
+app.provide('preset', Preset);
 
 app.use(router);
 

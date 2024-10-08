@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, shallowRef } from 'vue';
+import { computed, inject, onMounted, onUnmounted, shallowRef } from 'vue';
 import { ImageProps } from './Image.vue.d';
 import { getImageURL, genPlaceholder } from 'lib/utils';
 
 import Image from 'primevue/image';
 import Icon from '../icon/Icon.vue';
-import ImagePreset from 'lib/preset/wangsvue/image';
 import Button from '../button/Button.vue';
+
+const ImagePreset = inject('preset')?.image;
 
 const props = withDefaults(defineProps<ImageProps>(), {
   rounded: false,
