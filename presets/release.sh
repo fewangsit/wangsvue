@@ -1,3 +1,6 @@
+# Bump/Update version in package.json
+changelogen --bump --patch --no-output
+
 cp package.json dist
 cd dist
 

@@ -1,7 +1,7 @@
-import { default as wangsvue } from './wangsvue';
-import { default as tagsamurai } from './tagsamurai';
+import * as wangsvue from './wangsvue';
+import * as tagsamurai from './tagsamurai';
 
 export default {
-  tagsamurai,
-  wangsvue,
+  tagsamurai: tagsamurai,
+  wangsvue: wangsvue,
 };

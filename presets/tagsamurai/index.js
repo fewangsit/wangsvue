@@ -81,13 +81,9 @@ const directives = {
   tooltip,
 };
 
-const wangsvue = {
+export {
   global,
-  directives: {
-    badge: badgedirective,
-    ripple,
-    tooltip,
-  },
+  directives,
 
   //Forms
   autocomplete,
@@ -179,5 +175,3 @@ const wangsvue = {
   terminal,
   image,
 };
-
-export default wangsvue;

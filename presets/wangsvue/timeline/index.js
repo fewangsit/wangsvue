@@ -1,4 +1,4 @@
-import isEmptyObject from '../../../library/utils/object.util';
+import { isEmpty } from 'lodash';
 
 export default {
   root: ({ props }) => ({
@@ -32,7 +32,7 @@ export default {
   markerArrow: (item) => ({
     'class': [
       'w-4 h-4 invisible transition-transform duration-200 ease-in-out text-grayscale-900',
-      { '!visible': item.detail && !isEmptyObject(item.detail) },
+      { '!visible': item.detail && !isEmpty(item.detail) },
       { 'rotate-180': item.showDetail },
     ],
     'data-wv-section': 'markerArrow',

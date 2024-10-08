@@ -12,6 +12,7 @@
     "build:lib": "pnpm --filter wangsvue build",
     "release": "pnpm --filter wangsvue release",
     "release:patch": "pnpm --filter wangsvue release:patch",
+    "build:presets": "pnpm --filter wangsvue-presets build",
     "release:presets": "pnpm --filter wangsvue-presets release",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.ts --fix --ignore-path .gitignore",
