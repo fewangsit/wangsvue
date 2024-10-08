@@ -1,4 +1,4 @@
-import { ringClass } from '../global';
+import { ringClass } from '../global.js';
 
 export default {
   root: ({ context }) => ({

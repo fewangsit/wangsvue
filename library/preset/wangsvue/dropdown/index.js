@@ -1,4 +1,4 @@
-import MultiSelectPreset from '../multiselect';
+import MultiSelectPreset from '../multiselect/index.js';
 
 export default {
   root: ({ props, state }) => ({

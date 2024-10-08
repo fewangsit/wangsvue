@@ -1,4 +1,4 @@
-import presetCheckbox from '../checkbox';
+import presetCheckbox from '../checkbox/index.js';
 
 export default {
   root: ({ props }) => ({

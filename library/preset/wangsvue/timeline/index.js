@@ -1,4 +1,4 @@
-import { isEmptyObject } from 'lib/utils';
+import { isEmptyObject } from 'lib/utils/index.js';
 
 export default {
   root: ({ props }) => ({

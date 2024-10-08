@@ -1,4 +1,4 @@
-import { commonClasses } from '../inputphonenumber';
+import { commonClasses } from '../inputphonenumber/index.js';
 
 export default {
   currency: (ctx) => ({
