@@ -76,7 +76,10 @@ const downloadFile = async (url: string, fileName: string): Promise<void> => {
     document.body.removeChild(a);
     URL.revokeObjectURL(urlObject); // Release memory when done
   } catch (error) {
-    console.error('Download failed:', error);
+    toast.add({
+      error,
+      message: 'Attachment gagal didownload.',
+    });
   }
 };
 </script>
