@@ -19,6 +19,7 @@ import FieldWrapper from 'lib/components/fieldwrapper/FieldWrapper.vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import InputGroup from 'lib/components/inputgroup/InputGroup.vue';
 import eventBus from 'lib/event-bus';
+import Dropdown from 'lib/components/dropdown/Dropdown.vue';
 
 const props = withDefaults(defineProps<MultiSelectProps>(), {
   display: 'chip',
@@ -155,6 +156,9 @@ defineExpose({
         :placeholder="multiSelectPlaceholder"
         :selected-items-label="props.selectedItemsLabel"
         :show-toggle-all="props.filter"
+        :virtual-scroller-options="{
+          itemSize: 32,
+        }"
         @hide="(isShowOverlay = false), $emit('hide')"
         @show="$emit('show'), (isShowOverlay = true)"
       >

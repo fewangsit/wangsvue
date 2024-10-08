@@ -8,6 +8,10 @@ import Form from 'lib/components/form/Form.vue';
 import Badge from 'lib/components/badge/Badge.vue';
 
 const model = ref<OptionValue>();
+
+const items = ref(
+  Array.from({ length: 100000 }, (_, i) => ({ label: `Item #${i}`, value: i })),
+);
 </script>
 
 <template>
@@ -22,8 +26,10 @@ const model = ref<OptionValue>();
         <div class="flex flex-col gap-1">
           <Dropdown
             v-model="model"
-            :options="['Waiting for Approval', 'Waiting for Handover']"
+            :options="items"
             label="Status"
+            option-label="label"
+            option-value="value"
             placeholder="Pilih status"
           />
         </div>
