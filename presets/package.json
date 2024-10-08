@@ -1,10 +1,10 @@
 {
   "name": "wangsvue-presets",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "author": "fewangsit",
   "description": "Wangsit VueJS Component Library Presets",
   "type": "module",
-  "main": "index.js",
+  "main": "presets/index.js",
   "repository": "https://github.com/fewangsit/wangsvue",
   "scripts": {
     "release": "rimraf dist && tsc ./index.js --declaration --allowJs --outDir dist && changelogen --bump --patch --no-output && sh ./release.sh"
