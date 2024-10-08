@@ -1,12 +1,12 @@
 {
   "name": "wangsvue-presets",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "author": "fewangsit",
   "description": "Wangsit VueJS Component Library Presets",
   "type": "module",
-  "main": "index.js",
+  "main": "index.ts",
   "repository": "https://github.com/fewangsit/wangsvue",
   "scripts": {
-    "release": "changelogen --bump --patch --publish --no-output && sh ./post-release.sh"
+    "release": "vue-tsc ./index.ts && changelogen --bump --patch --publish --no-output && sh ./post-release.sh"
   }
 }
