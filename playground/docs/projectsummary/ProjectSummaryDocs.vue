@@ -7,6 +7,7 @@ import {
   UserProfileSummary,
 } from 'lib/components/summaryaccordion/SummaryAccordion.vue.d';
 import { reactive } from 'vue';
+import ProgressBar from 'lib/components/progressbar/ProgressBar.vue';
 
 const userProfileSummary = reactive<UserProfileSummary>({
   type: 'profile',
@@ -79,7 +80,9 @@ const subModuleSummary = reactive<SubModuleSummary>({
 </script>
 
 <template>
-  <div class="flex flex-col gap-3">
+  <span>Progress Bar</span>
+  <ProgressBar severity="dark" show-value value="2" />
+  <div class="flex flex-col gap-3 mt-4">
     <div class="flex flex-col gap-4">
       <span>Summary Profile</span>
       <ProjectSummaryAccordion :summary="userProfileSummary" />
