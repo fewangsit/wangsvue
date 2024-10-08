@@ -1,4 +1,4 @@
-import type { App, MaybeRef, MaybeRefOrGetter } from 'vue';
+import type { MaybeRef, MaybeRefOrGetter } from 'vue';
 import eventBus from './event-bus';
 
 // Style
@@ -52,6 +52,7 @@ import {
   getNestedProperyValue,
   checkRouteAccess,
   getImageURL,
+  isEmptyObject,
 } from 'lib/utils';
 
 // Directives
@@ -131,6 +132,7 @@ export {
   useToast,
   checkRouteAccess,
   getImageURL,
+  isEmptyObject,
 
   // Components
   Badge,
