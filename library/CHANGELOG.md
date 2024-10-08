@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v1.4.210
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.0.1...v1.4.210)
+
+### 🚀 Enhancements
+
+- Export isEmptyObject util ([98f4ed7](https://github.com/fewangsit/wangsvue/commit/98f4ed7))
+- Add script to release presets ([3e7bb82](https://github.com/fewangsit/wangsvue/commit/3e7bb82))
+
+### 💅 Refactors
+
+- Change preset inport into inject ([6fa997d](https://github.com/fewangsit/wangsvue/commit/6fa997d))
+
+### 🏡 Chore
+
+- **presets:** Update version ([0fe74c1](https://github.com/fewangsit/wangsvue/commit/0fe74c1))
+- Add post-release.sh for presets publish ([142fcc2](https://github.com/fewangsit/wangsvue/commit/142fcc2))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.209
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.208...v1.4.209)
