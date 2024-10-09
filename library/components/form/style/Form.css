@@ -1,42 +1,24 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+.ts-form-stay-checkbox-wrapper {
+  @apply cursor-pointer flex gap-2 w-max ml-auto items-center justify-end;
 
-.ts-form {
-  @apply flex flex-col gap-3 text-general-900 text-[0.75rem] font-medium leading-[16.8px];
-
-  .ts-formts-form-fields {
-    @apply grid gap-y-5 gap-x-6 grid-cols-2;
+  .p-checkbox {
+    @apply w-max h-max;
   }
 
-  .ts-form-stay-checkbox {
-    .ts-form-stay-checkbox-wrapper {
-      @apply cursor-pointer flex gap-2 w-max ml-auto items-center justify-end;
-
-      .p-checkbox {
-        @apply w-max h-max;
-      }
-
-      label {
-        @apply cursor-pointer;
-      }
-    }
-  }
-
-  .ts-form-footer {
-    @apply flex flex-col self-end gap-3;
-  }
-
-  .ts-form-action-buttons {
-    @apply relative flex flex-col items-end justify-end gap-1;
-
-    .button-wrapper {
-      @apply flex items-end justify-end gap-1;
-    }
+  label {
+    @apply cursor-pointer;
   }
 }
 
-.ts-form.sticky-buttons {
+.ts-form-action-buttons {
+  @apply relative flex flex-col items-end justify-end gap-1;
+
+  .button-wrapper {
+    @apply flex items-end justify-end gap-1;
+  }
+}
+
+.sticky-buttons {
   @apply h-full relative;
 
   .ts-form-fields-outer-wrapper {
@@ -62,8 +44,4 @@
   .p-dialog-content {
     @apply mb-auto;
   }
-}
-
-.ts-form-validator-message {
-  @apply static w-max transform-none;
 }

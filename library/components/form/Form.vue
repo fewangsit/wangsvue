@@ -42,6 +42,8 @@ onMounted(() => {
   }
 });
 
+const Preset = inject('preset').form;
+
 const { handleSubmit, values, resetForm, errors } = useForm();
 
 const formElement = ref<HTMLFormElement>();
@@ -125,7 +127,7 @@ defineExpose({
 <template>
   <form
     ref="formElement"
-    :class="['ts-form', { 'sticky-buttons': props.stickyButtons }]"
+    v-bind="Preset.root({ props })"
     @input="showValidator = false"
     @submit.prevent="submit"
   >
@@ -133,19 +135,19 @@ defineExpose({
       <div
         ref="fieldsWrapper"
         class="grid gap-y-3 gap-x-6"
-        data-pc-section="form-fields"
+        data-wv-section="fields"
       >
         <slot :key="fieldsKey" :form-values="values" name="fields" />
       </div>
     </div>
 
-    <div ref="footer" v-if="!hideFooter" class="ts-form-footer">
-      <div v-if="!hideStayCheckbox" class="ts-form-stay-checkbox">
+    <div ref="footer" v-if="!hideFooter" v-bind="Preset.footer">
+      <div v-if="!hideStayCheckbox" v-bind="Preset.staycheckbox">
         <Checkbox v-model="stayAfterSubmit" label="Tetap di halaman ini" />
       </div>
 
-      <div class="ts-form-action-buttons">
-        <div class="button-wrapper">
+      <div data-wv-section="action-buttons" v-bind="Preset['action-buttons']">
+        <div data-wv-section="button-wrapper" v-bind="Preset['button-wrapper']">
           <Button
             v-if="props.buttonsTemplate?.includes('cancel')"
             @click="$emit('cancel')"
@@ -174,8 +176,8 @@ defineExpose({
         </div>
         <ValidatorMessage
           v-show="showValidator || props.invalid"
+          v-bind="Preset['validator-message']"
           :message="validatorMessage ?? 'Please input all required field!'"
-          class="ts-form-validator-message"
         />
       </div>
     </div>
