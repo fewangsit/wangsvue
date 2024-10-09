@@ -7,7 +7,7 @@ import Icon from 'lib/components/icon/Icon.vue';
 import PrimeButton from 'primevue/button';
 
 const props = defineProps<ButtonProps>();
-const Preset = inject('preset')?.button;
+const Preset = inject<Record<string, any>>('preset').button;
 
 const iconProps = computed(() => ({
   icon: props.icon ?? 'check',

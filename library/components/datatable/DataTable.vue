@@ -49,7 +49,7 @@ type QueryParams = {
   [key: string]: any;
 };
 
-const CheckboxPreset = inject('preset')?.checkbox;
+const CheckboxPreset = inject<Record<string, any>>('preset').checkbox;
 
 const props = withDefaults(defineProps<DataTableProps>(), {
   selectionType: 'checkbox',

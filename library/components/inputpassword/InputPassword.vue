@@ -13,7 +13,7 @@ import { useField } from 'vee-validate';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 import Icon from '../icon/Icon.vue';
 
-const Preset = inject('preset')?.password;
+const Preset = inject<Record<string, any>>('preset').password;
 
 const props = defineProps<InputPasswordProps>();
 

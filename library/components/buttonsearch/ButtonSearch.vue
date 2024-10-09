@@ -5,7 +5,7 @@ import { ButtonSearchEmits, ButtonSearchProps } from './ButtonSearch.vue.d';
 import InputText from 'primevue/inputtext';
 import eventBus from 'lib/event-bus';
 
-const { buttonFocusClass } = inject('preset')?.button;
+const { buttonFocusClass } = inject<Record<string, any>>('preset').button;
 
 withDefaults(defineProps<ButtonSearchProps>(), {
   tableName: 'datatable',
