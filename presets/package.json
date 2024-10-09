@@ -1,12 +1,12 @@
 {
   "name": "wangsvue-presets",
-  "version": "1.0.26",
+  "version": "1.0.27",
   "author": "fewangsit",
   "description": "Wangsit VueJS Component Library Presets",
   "main": "index.js",
   "repository": "https://github.com/fewangsit/wangsvue",
   "scripts": {
-    "build": "build.sh",
-    "release": "build.sh && release.sh"
+    "build": "sh build.sh",
+    "release": "sh build.sh && sh release.sh"
   }
 }
