@@ -3,6 +3,7 @@
 
 @import './icons.css';
 
+@tailwind components;
 @tailwind utilities;
 
 * {

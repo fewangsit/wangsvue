@@ -6,7 +6,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "pnpm build:presets && vite",
     "build": "rimraf dist && vite build",
     "build:dev": "vite build --watch",
     "build:lib": "pnpm --filter wangsvue build",

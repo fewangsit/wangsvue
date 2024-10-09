@@ -81,7 +81,7 @@ const directives = {
   tooltip,
 };
 
-export {
+const tagsamurai = {
   global,
   directives,
 
@@ -175,3 +175,5 @@ export {
   terminal,
   image,
 };
+
+export default tagsamurai;
