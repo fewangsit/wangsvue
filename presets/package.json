@@ -6,7 +6,7 @@
   "main": "index.js",
   "repository": "https://github.com/fewangsit/wangsvue",
   "scripts": {
-    "build": "sh build.sh",
-    "release": "sh build.sh && sh release.sh"
+    "build": "build.sh",
+    "release": "build.sh && release.sh"
   }
 }
