@@ -96,7 +96,7 @@ const subModuleSummary = reactive<SubModuleSummary>({
           status: 'Backlog',
           totalCompletedTask: 0,
           totalSprintTask: 0,
-          totalBacklogTask: 500,
+          totalBacklogTask: 0,
         }"
       />
       <ProjectSummaryAccordion />

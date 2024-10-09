@@ -68,8 +68,8 @@ const progress = computed(() => {
     props.summary.type === 'project' ? props.summary : ({} as ProjectSummary);
 
   const totalTask = totalCompletedTask + totalSprintTask + totalBacklogTask;
-  const task = Math.floor((totalCompletedTask / totalTask) * 100);
-  const module = Math.floor((totalCompletedModule / totalModule) * 100);
+  const task = Math.floor((totalCompletedTask / (totalTask || 1)) * 100);
+  const module = Math.floor((totalCompletedModule / (totalModule || 1)) * 100);
 
   return {
     task,
@@ -139,7 +139,7 @@ const summaryItems = computed<SummaryItem[]>(() => {
       icon: 'star',
       severity: 'primary',
       label: 'Progress Poin',
-      value: `${Math.floor((sprintPoint / totalSprintPoint) * 100)}% (${sprintPoint}/${totalSprintPoint})`,
+      value: `${Math.floor((sprintPoint / (totalSprintPoint || 1)) * 100)}% (${sprintPoint}/${totalSprintPoint})`,
       show: props.summary.type == 'profile',
     },
     {
