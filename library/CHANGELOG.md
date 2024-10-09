@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.212
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.211...v1.4.212)
+
+### 🩹 Fixes
+
+- 'Dropdown' is defined but never used ([b5a0956](https://github.com/fewangsit/wangsvue/commit/b5a0956))
+
+### 💅 Refactors
+
+- **summaryAccordion:** Progress cannot be NaN ([b8511f1](https://github.com/fewangsit/wangsvue/commit/b8511f1))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.4.211
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.210...v1.4.211)
