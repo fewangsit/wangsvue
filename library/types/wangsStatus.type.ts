@@ -30,9 +30,15 @@ export type StatusSeverity =
   | 'danger'
   | 'info';
 
+export type ProductBacklogItemStatus =
+  | DevelopmentStatus
+  | 'Overdue'
+  | 'Pending E2E Testing';
+
 export type WangsitStatus =
   | ProjectStatus
   | UserStatus
   | TaskStatus
   | DeploymentStatus
-  | DevelopmentStatus;
+  | DevelopmentStatus
+  | ProductBacklogItemStatus;
