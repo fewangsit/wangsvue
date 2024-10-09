@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v1.4.213
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.212...v1.4.213)
+
+### 🩹 Fixes
+
+- Add missing import `inject` and add optional chaining ([222a016](https://github.com/fewangsit/wangsvue/commit/222a016))
+
+### 🏡 Chore
+
+- **Presets:** Update build config - copy each presets colors.config.json into dist ([762d421](https://github.com/fewangsit/wangsvue/commit/762d421))
+- **presets:** Update version ([8610994](https://github.com/fewangsit/wangsvue/commit/8610994))
+- Update build script to build presets first ([ac5a88a](https://github.com/fewangsit/wangsvue/commit/ac5a88a))
+- Adjust pnpm lock ([2ae55af](https://github.com/fewangsit/wangsvue/commit/2ae55af))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.212
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.211...v1.4.212)
