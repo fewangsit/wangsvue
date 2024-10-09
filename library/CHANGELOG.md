@@ -1,6 +1,56 @@
 # Changelog
 
 
+## v1.4.211
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.210...v1.4.211)
+
+### 🩹 Fixes
+
+- **Presets:** Update the way how to import default ([1ca7598](https://github.com/fewangsit/wangsvue/commit/1ca7598))
+
+### 💅 Refactors
+
+- Move isEmptyObject into new file ([bd9fc1a](https://github.com/fewangsit/wangsvue/commit/bd9fc1a))
+- Update export preset ([616d94a](https://github.com/fewangsit/wangsvue/commit/616d94a))
+
+### 🏡 Chore
+
+- **presets:** Update version ([1fb324f](https://github.com/fewangsit/wangsvue/commit/1fb324f))
+- **presets:** Update version ([bcef67b](https://github.com/fewangsit/wangsvue/commit/bcef67b))
+- **presets:** Update version ([2a2bb16](https://github.com/fewangsit/wangsvue/commit/2a2bb16))
+- **presets:** Update version ([ea807ef](https://github.com/fewangsit/wangsvue/commit/ea807ef))
+- **presets:** Update version ([8c46ddc](https://github.com/fewangsit/wangsvue/commit/8c46ddc))
+- **presets:** Update version ([99b88e9](https://github.com/fewangsit/wangsvue/commit/99b88e9))
+- **presets:** Update version ([1c0fa95](https://github.com/fewangsit/wangsvue/commit/1c0fa95))
+- **presets:** Update version ([b062cad](https://github.com/fewangsit/wangsvue/commit/b062cad))
+- **presets:** Update version ([0fc9b9b](https://github.com/fewangsit/wangsvue/commit/0fc9b9b))
+- **presets:** Update version ([24e5ffe](https://github.com/fewangsit/wangsvue/commit/24e5ffe))
+- **presets:** Update version ([e54a5ef](https://github.com/fewangsit/wangsvue/commit/e54a5ef))
+- **presets:** Update version ([11d7fde](https://github.com/fewangsit/wangsvue/commit/11d7fde))
+- **presets:** Update version ([a7a41e5](https://github.com/fewangsit/wangsvue/commit/a7a41e5))
+- **presets:** Update version ([21bbf98](https://github.com/fewangsit/wangsvue/commit/21bbf98))
+- Update import presets in main.ts ([58970c5](https://github.com/fewangsit/wangsvue/commit/58970c5))
+- **presets:** Update version ([1a8f3ee](https://github.com/fewangsit/wangsvue/commit/1a8f3ee))
+- **presets:** Update version ([ec08c15](https://github.com/fewangsit/wangsvue/commit/ec08c15))
+- **presets:** Update version ([c4bc6d8](https://github.com/fewangsit/wangsvue/commit/c4bc6d8))
+- **presets:** Update version ([7702c1f](https://github.com/fewangsit/wangsvue/commit/7702c1f))
+- **presets:** Update version ([b2d263a](https://github.com/fewangsit/wangsvue/commit/b2d263a))
+- **presets:** Update version ([263be38](https://github.com/fewangsit/wangsvue/commit/263be38))
+- **Presets:** Update configuration and update build and release script ([0f2ec98](https://github.com/fewangsit/wangsvue/commit/0f2ec98))
+- **presets:** Update version ([12baceb](https://github.com/fewangsit/wangsvue/commit/12baceb))
+- **presets:** Update version ([c2100e3](https://github.com/fewangsit/wangsvue/commit/c2100e3))
+- **Presets:** Update build config ([f1c46b1](https://github.com/fewangsit/wangsvue/commit/f1c46b1))
+- **presets:** Update version ([41fa83c](https://github.com/fewangsit/wangsvue/commit/41fa83c))
+
+### 🎨 Styles
+
+- Convert form css into preset ([d9839ee](https://github.com/fewangsit/wangsvue/commit/d9839ee))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.210
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.0.1...v1.4.210)
