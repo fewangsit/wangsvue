@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
 import { GenericObject, useForm } from 'vee-validate';
+import { inject, onMounted, ref } from 'vue';
 import Button from '../button/Button.vue';
-import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 import Checkbox from '../checkbox/Checkbox.vue';
+import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 
 import type {
-  FormProps,
   FormEmits,
-  FormSlots,
   FormPayload,
+  FormProps,
+  FormSlots,
 } from './Form.vue.d';
 
 const props = withDefaults(defineProps<FormProps>(), {
@@ -42,7 +42,7 @@ onMounted(() => {
   }
 });
 
-const Preset = inject('preset').form;
+const Preset = inject('preset')?.form;
 
 const { handleSubmit, values, resetForm, errors } = useForm();
 
@@ -127,7 +127,7 @@ defineExpose({
 <template>
   <form
     ref="formElement"
-    v-bind="Preset.root({ props })"
+    v-bind="Preset?.root({ props })"
     @input="showValidator = false"
     @submit.prevent="submit"
   >
