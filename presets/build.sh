@@ -11,9 +11,11 @@ presetNames=("wangsvue")
 
 # Loop through the array and run Tailwind CSS for each preset
 for preset in "${presetNames[@]}"; do
-  input="./${preset}/index.css"
-  output="./dist/${preset}/style.css"
+  inputDir="./${preset}"
+  outputDir="./dist/${preset}"
+
+  cp "${inputDir}/colors.config.json" "${outputDir}/colors.config.json"
 
   # Run Tailwind CSS
-  tailwind -i "${input}" -o "${output}" --config "./${preset}/tailwind.config.js"
+  tailwind -i "${inputDir}/index.css" -o "${outputDir}/style.css" --config "./${preset}/tailwind.config.js"
 done
