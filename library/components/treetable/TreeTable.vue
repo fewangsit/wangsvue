@@ -1,6 +1,17 @@
 <script setup lang="ts">
+import { DotLottieVue } from '@lottiefiles/dotlottie-vue';
+import loadingTableLottie from 'lib/assets/lottie/loading-table.lottie';
+import noDataLottie from 'lib/assets/lottie/no-data.lottie';
+import eventBus, { Events, TableEvent } from 'lib/event-bus';
+import { exportToExcel, getNestedProperyValue, useToast } from 'lib/utils';
+import { cloneDeep } from 'lodash';
+import Checkbox from 'primevue/checkbox';
+import { DataTableExpandedRows } from 'primevue/datatable';
+import InputSwitch from 'primevue/inputswitch';
+import Paginator, { PageState } from 'primevue/paginator';
 import {
   computed,
+  inject,
   nextTick,
   onMounted,
   onUnmounted,
@@ -8,7 +19,20 @@ import {
   shallowRef,
   watch,
 } from 'vue';
-import { DataTableExpandedRows } from 'primevue/datatable';
+import Button from '../button/Button.vue';
+import CustomColumn from '../customcolumn/CustomColumn.vue';
+import CustomColumnInstance from '../customcolumn/CustomColumn.vue.d';
+import { Data, FetchResponse, QueryParams } from '../datatable/DataTable.vue.d';
+import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
+import { filterVisibleMenu } from '../helpers';
+import Icon from '../icon/Icon.vue';
+import useLoadingStore from '../loading/store/loading.store';
+import Menu from '../menu/Menu.vue';
+import MenuInstance from '../menu/Menu.vue.d';
+import Toast from '../toast/Toast.vue';
+import { Booleanish } from '../ts-helpers';
+import { isArrayIncluded } from './helpers';
+import adjustMenuPositionHelper from './helpers/adjustMenuPosition.helper';
 import {
   DataTableRowReorderEvent,
   EditedContent,
@@ -16,30 +40,6 @@ import {
   TreeTableEmits,
   TreeTableProps,
 } from './TreeTable.vue.d';
-import { Data, FetchResponse, QueryParams } from '../datatable/DataTable.vue.d';
-import { exportToExcel, getNestedProperyValue, useToast } from 'lib/utils';
-import { filterVisibleMenu } from '../helpers';
-import Icon from '../icon/Icon.vue';
-import Checkbox from 'primevue/checkbox';
-import Preset from './treetable';
-import Button from '../button/Button.vue';
-import adjustMenuPositionHelper from './helpers/adjustMenuPosition.helper';
-import CustomColumn from '../customcolumn/CustomColumn.vue';
-import CustomColumnInstance from '../customcolumn/CustomColumn.vue.d';
-import MenuInstance from '../menu/Menu.vue.d';
-import Menu from '../menu/Menu.vue';
-import eventBus, { Events, TableEvent } from 'lib/event-bus';
-import Paginator, { PageState } from 'primevue/paginator';
-import { isArrayIncluded } from './helpers';
-import { cloneDeep } from 'lodash';
-import { Booleanish } from '../ts-helpers';
-import useLoadingStore from '../loading/store/loading.store';
-import InputSwitch from 'primevue/inputswitch';
-import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
-import Toast from '../toast/Toast.vue';
-import { DotLottieVue } from '@lottiefiles/dotlottie-vue';
-import loadingTableLottie from 'lib/assets/lottie/loading-table.lottie';
-import noDataLottie from 'lib/assets/lottie/no-data.lottie';
 
 type DragableRow = Data & { draggable?: boolean; order?: number };
 
@@ -66,6 +66,8 @@ const dataTableID = ((): string => {
 })();
 
 const singleSelection = defineModel<Data>('singleSelection');
+
+const Preset = inject<Record<string, any>>('preset', {}).treetable;
 
 const currentPageTableData = ref<Data[]>(props.data ?? []);
 const expandedRows = ref<DataTableExpandedRows>({});
@@ -800,7 +802,7 @@ const listenUpdateTableEvent = (): void => {
 
 <template>
   <div v-bind="Preset?.root">
-    <div v-bind="Preset?.tablewrapper">
+    <div v-bind="Preset?.tablewrapper" style="scrollbar-width: thin !important">
       <div
         v-bind="Preset?.scrollheightwrapper({ props })"
         :style="`max-height: ${props.scrollHeight}`"
