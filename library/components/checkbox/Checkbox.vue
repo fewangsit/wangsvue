@@ -78,7 +78,7 @@ watch(
     >
       <template #icon>
         <Icon
-          :class="[...Preset.icon.class, { 'text-transparent': !modelValue }]"
+          :class="[...Preset?.icon.class, { 'text-transparent': !modelValue }]"
           icon="check"
         />
       </template>

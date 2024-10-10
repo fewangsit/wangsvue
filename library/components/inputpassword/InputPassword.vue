@@ -114,7 +114,7 @@ watch(
       >
         <template #showicon="{ toggleCallback }">
           <button
-            :class="Preset.showicon.class"
+            :class="Preset?.showicon.class"
             @click="toggleCallback(), focusInput($event)"
             class="unset"
           >
@@ -124,7 +124,7 @@ watch(
 
         <template #hideicon="{ toggleCallback }">
           <button
-            :class="Preset.showicon.class"
+            :class="Preset?.showicon.class"
             @click="toggleCallback(), focusInput($event)"
             class="unset"
           >

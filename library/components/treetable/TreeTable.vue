@@ -558,7 +558,7 @@ const headerCellPreset = (
   col?: TreeTableColumns,
   useCustomColumn?: boolean,
 ): object => {
-  return Preset.headercell({
+  return Preset?.headercell({
     context: {
       customColumn: useCustomColumn,
       sorted: sortBy.value && sortBy.value === col?.field,
@@ -799,13 +799,13 @@ const listenUpdateTableEvent = (): void => {
 </script>
 
 <template>
-  <div v-bind="Preset.root">
-    <div v-bind="Preset.tablewrapper">
+  <div v-bind="Preset?.root">
+    <div v-bind="Preset?.tablewrapper">
       <div
-        v-bind="Preset.scrollheightwrapper({ props })"
+        v-bind="Preset?.scrollheightwrapper({ props })"
         :style="`max-height: ${props.scrollHeight}`"
       >
-        <table :id="dataTableID" v-bind="Preset.table" :key="tableKey">
+        <table :id="dataTableID" v-bind="Preset?.table" :key="tableKey">
           <thead class="sticky top-0 z-50">
             <tr class="border-b border-primary-100">
               <th
@@ -822,7 +822,7 @@ const listenUpdateTableEvent = (): void => {
                 data-wv-section="headercheckbox"
               >
                 <Checkbox
-                  v-bind="Preset.headercheckbox"
+                  v-bind="Preset?.headercheckbox"
                   :class="[
                     {
                       '[&_[data-pc-section=box]]:!border-white [&_[data-pc-section=box]]:!bg-transparent':
@@ -896,7 +896,7 @@ const listenUpdateTableEvent = (): void => {
             </tr>
           </thead>
 
-          <tbody v-if="!loadingTable" v-bind="Preset.tbody">
+          <tbody v-if="!loadingTable" v-bind="Preset?.tbody">
             <template
               :key="index"
               v-for="(item, index) in currentPageTableData"
@@ -910,7 +910,7 @@ const listenUpdateTableEvent = (): void => {
                 ]"
                 :draggable="draggable(item)"
                 v-bind="
-                  Preset.bodyrow({
+                  Preset?.bodyrow({
                     context: {
                       selected: isRowSelected(item[dataKey]),
                       disabled: isRowDisabled(item[dataKey]),
@@ -939,7 +939,7 @@ const listenUpdateTableEvent = (): void => {
               >
                 <td
                   v-if="reorderable && !sortOrder"
-                  v-bind="Preset.bodycell"
+                  v-bind="Preset?.bodycell"
                   class="w-[40px]"
                 >
                   <Icon
@@ -952,12 +952,12 @@ const listenUpdateTableEvent = (): void => {
                 <td
                   v-if="selectionType === 'checkbox'"
                   @click.stop=""
-                  v-bind="Preset.bodycell"
+                  v-bind="Preset?.bodycell"
                   class="w-[40px] text-center"
                 >
                   <Checkbox
                     v-if="!item.childRow && !item.childRowHeader"
-                    v-bind="Preset.rowcheckbox"
+                    v-bind="Preset?.rowcheckbox"
                     v-model="checkboxSelection"
                     :disabled="isRowDisabled(item[dataKey])"
                     :value="item"
@@ -972,7 +972,7 @@ const listenUpdateTableEvent = (): void => {
                         e.stopPropagation();
                     }
                   "
-                  v-bind="Preset.bodycell"
+                  v-bind="Preset?.bodycell"
                   class="w-[40px] text-center"
                 >
                   <Button
@@ -999,7 +999,7 @@ const listenUpdateTableEvent = (): void => {
                   <td
                     :key="col.header"
                     v-for="col in visibleChildTableColumns"
-                    :class="[Preset.bodycell.class, 'font-semibold text-xs']"
+                    :class="[Preset?.bodycell.class, 'font-semibold text-xs']"
                     :colspan="col.colspan ?? col.parentColumnsFields?.length"
                     @click.stop=""
                   >
@@ -1009,7 +1009,7 @@ const listenUpdateTableEvent = (): void => {
 
                 <td
                   v-else-if="item.childRowHeader"
-                  :class="[Preset.bodycell.class, 'font-semibold text-xs']"
+                  :class="[Preset?.bodycell.class, 'font-semibold text-xs']"
                   :colspan="props.columns.length"
                   @click.stop=""
                 >
@@ -1030,7 +1030,7 @@ const listenUpdateTableEvent = (): void => {
                       col.class,
                     ]"
                     :colspan="col.colspan ?? col.parentColumnsFields?.length"
-                    v-bind="Preset.bodycell"
+                    v-bind="Preset?.bodycell"
                   >
                     <template v-if="col.preset?.type === 'toggle'">
                       <InputSwitch
@@ -1080,7 +1080,7 @@ const listenUpdateTableEvent = (): void => {
                           }
                         "
                         @confirm="
-                          col.preset.onConfirm?.(
+                          col.Preset?.onConfirm?.(
                             item[col.field],
                             item,
                             () => (item[col.field] = !item[col.field]),
@@ -1154,7 +1154,7 @@ const listenUpdateTableEvent = (): void => {
 
                   <td
                     v-if="useOption || customColumn"
-                    v-bind="Preset.bodycell"
+                    v-bind="Preset?.bodycell"
                     :class="[
                       'group-hover:!bg-primary-50',
                       {

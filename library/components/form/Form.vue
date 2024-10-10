@@ -146,8 +146,8 @@ defineExpose({
         <Checkbox v-model="stayAfterSubmit" label="Tetap di halaman ini" />
       </div>
 
-      <div data-wv-section="action-buttons" v-bind="Preset['action-buttons']">
-        <div data-wv-section="button-wrapper" v-bind="Preset['button-wrapper']">
+      <div data-wv-section="action-buttons" v-bind="Preset?.['action-buttons']">
+        <div data-wv-section="button-wrapper" v-bind="Preset?.['button-wrapper']">
           <Button
             v-if="props.buttonsTemplate?.includes('cancel')"
             @click="$emit('cancel')"
@@ -176,7 +176,7 @@ defineExpose({
         </div>
         <ValidatorMessage
           v-show="showValidator || props.invalid"
-          v-bind="Preset['validator-message']"
+          v-bind="Preset?.['validator-message']"
           :message="validatorMessage ?? 'Please input all required field!'"
         />
       </div>

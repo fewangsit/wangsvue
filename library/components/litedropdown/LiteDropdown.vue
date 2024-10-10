@@ -31,7 +31,7 @@ const isShowOverlay = shallowRef<boolean>(false);
       :pt="{
         root: ({ state, props }) => ({
           'class': [
-            ...DropdownPreset.root({ state, props }).class,
+            ...DropdownPreset?.root({ state, props }).class,
             'text-base',
             {
               'cursor-pointer': !props.disabled,

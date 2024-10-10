@@ -101,7 +101,7 @@ export interface MultiSelectProps {
   display?: 'comma' | 'chip';
   /**
    * Defines the placeholder (label in input) as medium font.
-   * Used in preset.
+   * Used in Preset?.
    *
    * @default false
    */

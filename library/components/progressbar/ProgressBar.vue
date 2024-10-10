@@ -16,17 +16,17 @@ const props = withDefaults(defineProps<ProgressBarProps>(), {
   <div
     data-wv-name="progressbar"
     data-wv-section="root"
-    v-bind="Preset.wrapper"
+    v-bind="Preset?.wrapper"
   >
     <ProgressBar
       v-bind="props"
-      :pt="{ value: Preset.value({ props }) }"
+      :pt="{ value: Preset?.value({ props }) }"
       :show-value="false"
     />
 
     <span
       v-if="showValue"
-      v-bind="Preset['progressbar-value']"
+      v-bind="Preset?.['progressbar-value']"
       data-wv-section="progressbar-value"
     >
       {{ value }}%

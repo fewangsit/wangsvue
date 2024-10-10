@@ -191,7 +191,7 @@ defineExpose({
         :options="visibleOptions"
         :placeholder="dropdownPlaceholder"
         :pt="{
-          wrapper: Preset.wrapper({ props }),
+          wrapper: Preset?.wrapper({ props }),
         }"
         :virtual-scroller-options="{
           itemSize: 32,

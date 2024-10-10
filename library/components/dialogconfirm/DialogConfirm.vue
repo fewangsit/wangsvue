@@ -59,26 +59,26 @@ const confirm = (): void => {
     :pt="{
       root: {
         'class': [
-          ...DialogPreset.root({ state: {} }).class,
+          ...DialogPreset?.root({ state: {} }).class,
           '!w-[clamp(360px,75vw,400px)]',
         ],
         'data-wv-section': $attrs['data-wv-section'] ?? 'root',
         'data-wv-name': $attrs['data-wv-name'] ?? 'dialogconfirm',
       },
       header: {
-        'class': [...DialogPreset.header.class],
+        'class': [...DialogPreset?.header.class],
         'data-wv-section': 'dialog-confirm-header',
       },
       content: {
         'class': [
-          ...DialogPreset.content({ state: {}, instance: {} }).class,
+          ...DialogPreset?.content({ state: {}, instance: {} }).class,
           '[&_ul]:list-inside [&_ul]:list-disc [&_ul_li]:pl-[6px]',
         ],
         'data-wv-section': 'dialog-confirm-content',
       },
       footer: {
         'class': [
-          ...DialogPreset.footer.class,
+          ...DialogPreset?.footer.class,
           'flex items-end justify-end gap-1 !mt-0',
         ],
         'data-wv-section': 'dialog-confirm-footer',

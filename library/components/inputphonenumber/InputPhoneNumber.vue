@@ -189,7 +189,7 @@ watch(rawValue, (val) => {
     >
       <Dropdown
         v-model="selectedDialCode"
-        :class="Preset.dialcode({ isFirefoxBased, invalidInput }).class"
+        :class="Preset?.dialcode({ isFirefoxBased, invalidInput }).class"
         :disabled="props.disabled"
         :filter-fields="['dial_code', 'name']"
         :options="dialCodes"
@@ -220,7 +220,7 @@ watch(rawValue, (val) => {
         :key="phoneKey"
         v-bind="$props"
         v-model="rawValue"
-        :class="Preset.inputnumber({ isFirefoxBased, invalidInput }).class"
+        :class="Preset?.inputnumber({ isFirefoxBased, invalidInput }).class"
         :disabled="props.disabled"
         :use-grouping="false"
         @input="grabValue"

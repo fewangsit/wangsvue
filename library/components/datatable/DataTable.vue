@@ -860,7 +860,7 @@ watch(dataSelected, (newSelectedData: Data[]) => {
         <Icon
           :aria-checked="checked"
           :class="[
-            ...CheckboxPreset.icon.class,
+            ...CheckboxPreset?.icon.class,
             { 'text-transparent': !checked },
           ]"
           icon="check"

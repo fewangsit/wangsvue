@@ -850,7 +850,7 @@ watch(registeredMentionList, () => {
         <template #item="{ item }">
           <a
             :class="[
-              ...MenuPreset.action.class,
+              ...MenuPreset?.action.class,
               item.class,
               'flex items-center !justify-between h-[30px]',
               {

@@ -576,7 +576,7 @@ watch(
               <button
                 v-if="isInitialImage(index)"
                 :class="[
-                  ImagePreset.button.class,
+                  ImagePreset?.button.class,
                   'hover:bg-opacity-0 rounded-lg opacity-0',
                 ]"
                 @click="pickImage(false)"

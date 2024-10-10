@@ -202,10 +202,10 @@ export default {
       'bg-transparent',
     ],
   },
-  header: MultiSelectPreset.header,
-  filtercontainer: MultiSelectPreset.filtercontainer,
-  filterinput: MultiSelectPreset.filterinput,
-  filtericon: MultiSelectPreset.filtericon,
+  header: MultiSelectPreset?.header,
+  filtercontainer: MultiSelectPreset?.filtercontainer,
+  filterinput: MultiSelectPreset?.filterinput,
+  filtericon: MultiSelectPreset?.filtericon,
   clearicon: {
     class: [
       // Color

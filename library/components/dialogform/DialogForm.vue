@@ -159,23 +159,23 @@ defineExpose({ form, clearField });
     :header="header"
     :pt="{
       root: {
-        class: [...DialogPreset.root({ state: {} }).class, 'max-w-[90vw]'],
+        class: [...DialogPreset?.root({ state: {} }).class, 'max-w-[90vw]'],
         style: `width: ${computedWidth};`,
       },
       header: {
-        'class': [...DialogPreset.header.class],
+        'class': [...DialogPreset?.header.class],
         'data-wv-section': 'dialog-form-header',
       },
       content: {
         'class': [
-          ...DialogPreset.content({ state: {}, instance: {} }).class,
+          ...DialogPreset?.content({ state: {}, instance: {} }).class,
           ...convertToArrayClass(contentClass),
         ],
         'data-wv-section': 'dialog-form-content',
       },
       footer: {
         'class': [
-          ...DialogPreset.footer.class,
+          ...DialogPreset?.footer.class,
           'flex flex-col !items-end justify-end !gap-1',
         ],
         'data-wv-section': 'dialog-form-footer',

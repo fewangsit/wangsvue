@@ -49,13 +49,13 @@ defineEmits<DialogEmits>();
     :pt="{
       root: {
         class: [
-          ...DialogPreset.root({ state: {} }).class,
+          ...DialogPreset?.root({ state: {} }).class,
           ...(Array.isArray($props.class) ? $props.class : [$props.class]),
         ],
       },
       header: {
         'class': [
-          ...DialogPreset.header.class,
+          ...DialogPreset?.header.class,
           ...(Array.isArray($props.headerClass)
             ? $props.headerClass
             : [$props.headerClass]),
@@ -64,7 +64,7 @@ defineEmits<DialogEmits>();
       },
       content: {
         class: [
-          ...DialogPreset.content({ state: {}, instance: {} }).class,
+          ...DialogPreset?.content({ state: {}, instance: {} }).class,
           ...(Array.isArray($props.contentClass)
             ? $props.contentClass
             : [$props.contentClass]),
@@ -72,7 +72,7 @@ defineEmits<DialogEmits>();
       },
       footer: {
         class: [
-          ...DialogPreset.footer.class,
+          ...DialogPreset?.footer.class,
           ...(Array.isArray($props.footerClass)
             ? $props.footerClass
             : [$props.footerClass]),

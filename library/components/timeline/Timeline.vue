@@ -24,10 +24,10 @@ const formatActionTitle = (action: string): string => {
     <template #marker="{ item }">
       <div
         @click="item.showDetail = !item.showDetail"
-        v-bind="Preset.marker"
+        v-bind="Preset?.marker"
         data-wv-section="timelinemarker"
       >
-        <Icon v-bind="Preset.markerArrow(item)" icon="arrow-down" />
+        <Icon v-bind="Preset?.markerArrow(item)" icon="arrow-down" />
       </div>
     </template>
 

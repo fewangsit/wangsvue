@@ -136,7 +136,7 @@ const getGalleryImageSrc = (src?: string | Blob): string | undefined => {
   <Image
     v-bind="$props"
     :class="[
-      ...ImagePreset.root({ props: $props }).class,
+      ...ImagePreset?.root({ props: $props }).class,
       $props.rounded ? '!rounded-full' : '!rounded-lg',
       '[&:has(:focus)_button]:opacity-50 [&:has(:focus)_button]:bg-header-weak',
       ...(Array.isArray($props.class) ? $props.class : [$props.class]),
@@ -150,7 +150,7 @@ const getGalleryImageSrc = (src?: string | Blob): string | undefined => {
   >
     <template #image>
       <img
-        :class="ImagePreset.image({ props: $props }).class"
+        :class="ImagePreset?.image({ props: $props }).class"
         :onerror="onErrorLoadImage"
         :src="imageThumbnail as unknown as string"
         alt=""
