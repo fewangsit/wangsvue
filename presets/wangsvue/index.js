@@ -23,6 +23,7 @@ import divider from './divider/index.js';
 import dock from './dock/index.js';
 import dropdown from './dropdown/index.js';
 import fieldset from './fieldset/index.js';
+import form from './form/index';
 import global from './global.js';
 import image from './image/index.js';
 import inlinemessage from './inlinemessage/index.js';
@@ -86,6 +87,7 @@ const wangsvue = {
   directives,
 
   //Forms
+  form,
   autocomplete,
   dropdown,
   inputnumber,
