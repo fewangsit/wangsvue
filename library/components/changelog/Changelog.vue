@@ -8,7 +8,7 @@ import Icon from '../icon/Icon.vue';
 import eventBus from 'lib/event-bus';
 import { ChangelogEmits, ChangelogProps } from './Changelog.vue.d';
 
-const { buttonFocusClass } = inject('preset')?.button;
+const { buttonFocusClass } = inject<Record<string, any>>('preset').button;
 
 const props = withDefaults(defineProps<ChangelogProps>(), {
   useButton: true,

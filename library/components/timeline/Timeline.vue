@@ -10,7 +10,7 @@ import Icon from '../icon/Icon.vue';
 import UserName from '../username/UserName.vue';
 import TimelineContenByType from './TimelineContenByType.vue';
 
-const Preset = inject('preset')?.timeline;
+const Preset = inject<Record<string, any>>('preset').timeline;
 
 defineProps<TimelineProps>();
 

@@ -59,7 +59,7 @@ import Form from '../form/Form.vue';
 import suggestion from './suggestion';
 import CodeSnippetExtension from './codeSnippetExtension';
 
-const MenuPreset = inject('preset')?.menu;
+const MenuPreset = inject<Record<string, any>>('preset').menu;
 
 const props = withDefaults(defineProps<EditorProps>(), {
   placeholder: 'Tulis',

@@ -3,7 +3,7 @@ import { inject } from 'vue';
 import { ProgressBarProps } from './ProgressBar.vue.d';
 import ProgressBar from 'primevue/progressbar';
 
-const Preset = inject('preset')?.progressbar;
+const Preset = inject<Record<string, any>>('preset').progressbar;
 
 const props = withDefaults(defineProps<ProgressBarProps>(), {
   mode: 'determinate',

@@ -19,10 +19,12 @@ export default function getStatusSeverity(
     case 'Ready to Deploy':
     case 'Pending E2E Testing Dev':
     case 'Pending E2E Testing Staging':
+    case 'Pending E2E Testing':
       return 'primary';
 
     case 'Fixing Bug':
     case 'Reported Bug':
+    case 'Overdue':
       return 'danger';
 
     case 'Finish Deployment':
