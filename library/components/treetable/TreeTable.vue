@@ -1080,7 +1080,7 @@ const listenUpdateTableEvent = (): void => {
                           }
                         "
                         @confirm="
-                          col.Preset?.onConfirm?.(
+                          col.preset?.onConfirm?.(
                             item[col.field],
                             item,
                             () => (item[col.field] = !item[col.field]),
