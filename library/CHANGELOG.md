@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.217
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.216...v1.4.217)
+
+### 💅 Refactors
+
+- **ButtonRadio:** Update structure and add proper declaration typescript ([ce71b60](https://github.com/fewangsit/wangsvue/commit/ce71b60))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.216
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.215...v1.4.216)
