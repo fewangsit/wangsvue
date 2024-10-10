@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v1.4.214
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.213...v1.4.214)
+
+### 🩹 Fixes
+
+- Add optional chaining in usage of Form Preset ([ca02e26](https://github.com/fewangsit/wangsvue/commit/ca02e26))
+
+### 🏡 Chore
+
+- **Presets:** Update presets scripts in package json ([bf9d9ce](https://github.com/fewangsit/wangsvue/commit/bf9d9ce))
+
+### 🤖 CI
+
+- Change runner into windows-latest ([7f98083](https://github.com/fewangsit/wangsvue/commit/7f98083))
+- **gh pages:** Change runner into ubuntu-latest because the runner only support linux ([779975d](https://github.com/fewangsit/wangsvue/commit/779975d))
+- Change back runner to ubuntu-latest ([791e006](https://github.com/fewangsit/wangsvue/commit/791e006))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.213
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.212...v1.4.213)
