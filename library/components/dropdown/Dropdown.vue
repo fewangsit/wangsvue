@@ -28,7 +28,7 @@ import InputGroupAddon from 'primevue/inputgroupaddon';
 import { Nullable } from '../ts-helpers';
 import { filterOptions } from 'lib/utils';
 
-const Preset = inject<Record<string, any>>('preset').dropdown;
+const Preset = inject<Record<string, any>>('preset', {}).dropdown;
 
 const props = withDefaults(defineProps<DropdownProps>(), {
   filter: true,

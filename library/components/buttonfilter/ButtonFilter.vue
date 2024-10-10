@@ -4,7 +4,7 @@ import { ButtonFilterProps } from './ButtonFilter.vue.d';
 import Icon from '../icon/Icon.vue';
 import eventBus from 'lib/event-bus';
 
-const { buttonFocusClass } = inject<Record<string, any>>('preset').button;
+const { buttonFocusClass } = inject<Record<string, any>>('preset', {}).button;
 
 const { tableName } = withDefaults(defineProps<ButtonFilterProps>(), {
   tableName: 'datatable',

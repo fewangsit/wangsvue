@@ -7,7 +7,7 @@ import { LiteDropdownEmits, LiteDropdownProps } from './LiteDropdown.vue.d';
 import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
 import { OptionValue } from 'lib/types/options.type';
 
-const DropdownPreset = inject<Record<string, any>>('preset').dropdown;
+const DropdownPreset = inject<Record<string, any>>('preset', {}).dropdown;
 
 const model = defineModel<OptionValue>({ required: true });
 

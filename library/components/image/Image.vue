@@ -7,7 +7,7 @@ import Image from 'primevue/image';
 import Icon from '../icon/Icon.vue';
 import Button from '../button/Button.vue';
 
-const ImagePreset = inject<Record<string, any>>('preset').image;
+const ImagePreset = inject<Record<string, any>>('preset', {}).image;
 
 const props = withDefaults(defineProps<ImageProps>(), {
   rounded: false,

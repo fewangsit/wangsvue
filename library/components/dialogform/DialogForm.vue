@@ -10,7 +10,7 @@ import Checkbox from '../checkbox/Checkbox.vue';
 import Icon from '../icon/Icon.vue';
 import { convertToArrayClass } from 'lib/utils';
 
-const DialogPreset = inject<Record<string, any>>('preset').dialog;
+const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 
 import {
   DialogFormEmits,

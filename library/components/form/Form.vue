@@ -42,7 +42,7 @@ onMounted(() => {
   }
 });
 
-const Preset = inject<Record<string, any>>('preset').form;
+const Preset = inject<Record<string, any>>('preset', {}).form;
 
 const { handleSubmit, values, resetForm, errors } = useForm();
 

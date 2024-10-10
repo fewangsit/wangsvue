@@ -16,7 +16,7 @@ import readConfig from '../datatable/helpers/readConfig.helper';
 
 type DragableColumn = TableColumn & { order?: number };
 
-const MenuPreset = inject<Record<string, any>>('preset').menu;
+const MenuPreset = inject<Record<string, any>>('preset', {}).menu;
 
 const props = withDefaults(defineProps<CustomColumnProps>(), { type: 'menu' });
 

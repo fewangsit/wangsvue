@@ -11,7 +11,7 @@ import {
 import Icon from '../icon/Icon.vue';
 import Button from '../button/Button.vue';
 
-const DialogPreset = inject<Record<string, any>>('preset').dialog;
+const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 
 const props = withDefaults(defineProps<DialogConfirmProps>(), {
   list: undefined,

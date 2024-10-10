@@ -20,7 +20,7 @@ import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 import Icon from '../icon/Icon.vue';
 
-const Preset = inject<Record<string, any>>('preset').inputphonenumber;
+const Preset = inject<Record<string, any>>('preset', {}).inputphonenumber;
 
 import type {
   InputPhoneNumberProps,

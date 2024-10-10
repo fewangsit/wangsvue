@@ -19,7 +19,7 @@ import Icon from '../icon/Icon.vue';
 import InputGroup from '../inputgroup/InputGroup.vue';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 
-const CalendarPresets = inject<Record<string, any>>('preset').calendar;
+const CalendarPresets = inject<Record<string, any>>('preset', {}).calendar;
 
 const props = withDefaults(defineProps<CalendarProps>(), {
   view: 'date',

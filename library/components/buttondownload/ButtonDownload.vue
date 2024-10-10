@@ -8,7 +8,7 @@ const props = withDefaults(defineProps<ButtonDownloadProps>(), {
   tableName: 'datatable',
 });
 
-const { buttonFocusClass } = inject<Record<string, any>>('preset').button;
+const { buttonFocusClass } = inject<Record<string, any>>('preset', {}).button;
 
 const downloadExcel = (): void => {
   const { fileName, tableName } = props;

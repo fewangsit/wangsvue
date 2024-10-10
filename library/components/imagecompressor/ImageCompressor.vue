@@ -37,7 +37,7 @@ import ButtonRadio from 'primevue/radiobutton';
 import { genPlaceholder } from 'lib/utils';
 import { genRandomPlaceholderBg } from 'lib/utils/genPlaceholder.util';
 
-const ImagePreset = inject<Record<string, any>>('preset').image;
+const ImagePreset = inject<Record<string, any>>('preset', {}).image;
 
 const props = withDefaults(defineProps<ImageCompressorProps>(), {
   disabled: false,

@@ -11,7 +11,7 @@ import { FieldValidation } from '../form/Form.vue.d';
 import Checkbox from 'primevue/checkbox';
 import Icon from '../icon/Icon.vue';
 
-const Preset = inject<Record<string, any>>('preset').checkbox;
+const Preset = inject<Record<string, any>>('preset', {}).checkbox;
 
 const props = withDefaults(defineProps<CheckboxProps>(), {
   binary: true,
