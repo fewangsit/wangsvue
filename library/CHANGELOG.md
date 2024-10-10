@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.216
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.215...v1.4.216)
+
+### 🚀 Enhancements
+
+- Add optional chaining on every injection preset ([7486882](https://github.com/fewangsit/wangsvue/commit/7486882))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.215
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.214...v1.4.215)
