@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.220
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.219...v1.4.220)
+
+### 🚀 Enhancements
+
+- Export InputBadge ([fef9bc6](https://github.com/fewangsit/wangsvue/commit/fef9bc6))
+
+### 🏡 Chore
+
+- **presets:** Update version ([b4e16a0](https://github.com/fewangsit/wangsvue/commit/b4e16a0))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.219
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.218...v1.4.219)
