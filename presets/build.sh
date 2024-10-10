@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Remove previous build
-rimraf dist
+rm -rf dist
 
 # Create type declaration
 tsc ./index.ts --declaration --allowJs --outDir dist
