@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v1.4.215
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.214...v1.4.215)
+
+### 🚀 Enhancements
+
+- Add default value on every injection preset ([237f583](https://github.com/fewangsit/wangsvue/commit/237f583))
+
+### 🩹 Fixes
+
+- Unsafe usage of optional chaining ([35c9901](https://github.com/fewangsit/wangsvue/commit/35c9901))
+
+### 💅 Refactors
+
+- **Badge:** Add PBI status severity ([dbe7037](https://github.com/fewangsit/wangsvue/commit/dbe7037))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.4.214
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.213...v1.4.214)
