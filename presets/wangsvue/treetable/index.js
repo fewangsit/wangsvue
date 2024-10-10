@@ -5,18 +5,20 @@ export default {
   },
   tablewrapper: {
     'class': [
-      'overflow-auto relative scrollbar-w-thin',
+      'overflow-auto relative',
       'rounded-lg rounded-br-none rounded-bl-none',
     ],
+    'style': 'scrollbar-width: thin',
     'data-wv-section': 'tablewrapper',
   },
   scrollheightwrapper: ({ props }) => ({
     'class': [
-      'overflow-hidden overflow-x-auto scrollbar-w-none',
+      'overflow-hidden overflow-x-auto',
       {
         '!overflow-y-auto': !!props.scrollHeight,
       },
     ],
+    'style': 'scrollbar-width: none',
     'data-wv-section': 'scrollheightwrapper',
   }),
   table: {

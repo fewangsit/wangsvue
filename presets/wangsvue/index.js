@@ -27,11 +27,13 @@ import form from './form/index';
 import global from './global.js';
 import image from './image/index.js';
 import inlinemessage from './inlinemessage/index.js';
+import inputbadge from './inputbadge/index.js';
 import inputgroup from './inputgroup/index.js';
 import inputgroupaddon from './inputgroupaddon/index.js';
 import inputmask from './inputmask/index.js';
 import inputnumber from './inputnumber/index.js';
 import inputotp from './inputotp/index.js';
+import inputphonenumber from './inputphonenumber/index.js';
 import inputswitch from './inputswitch/index.js';
 import inputtext from './inputtext/index.js';
 import knob from './knob/index.js';
@@ -74,8 +76,8 @@ import toolbar from './toolbar/index.js';
 import tooltip from './tooltip/index.js';
 import tree from './tree/index.js';
 import treeselect from './treeselect/index.js';
+import treetable from './treetable/index.js';
 import tristatecheckbox from './tristatecheckbox/index.js';
-import inputbadge from './inputbadge/index.js';
 
 const directives = {
   badge: badgedirective,
@@ -92,6 +94,7 @@ const wangsvue = {
   autocomplete,
   dropdown,
   inputnumber,
+  inputphonenumber,
   inputotp,
   inputtext,
   inputbadge,
@@ -124,6 +127,7 @@ const wangsvue = {
   //Data
   paginator,
   datatable,
+  treetable,
   tree,
   dataview,
   dataviewlayoutoptions,
