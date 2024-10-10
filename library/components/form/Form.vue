@@ -141,8 +141,8 @@ defineExpose({
       </div>
     </div>
 
-    <div ref="footer" v-if="!hideFooter" v-bind="Preset.footer">
-      <div v-if="!hideStayCheckbox" v-bind="Preset.staycheckbox">
+    <div ref="footer" v-if="!hideFooter" v-bind="Preset?.footer">
+      <div v-if="!hideStayCheckbox" v-bind="Preset?.staycheckbox">
         <Checkbox v-model="stayAfterSubmit" label="Tetap di halaman ini" />
       </div>
 
