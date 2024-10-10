@@ -49,9 +49,11 @@ import Image from './image/Image.vue';
 import Animation from './animation/Animation.vue';
 import Comment from 'lib/components/comment/Comment.vue';
 import ProgressBar from './progressbar/ProgressBar.vue';
+import InputBadge from './inputbadge/InputBadge.vue';
 
 export {
   Badge,
+  InputBadge,
   BadgeGroup,
   Button,
   ButtonToggle,

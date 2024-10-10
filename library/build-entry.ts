@@ -113,6 +113,7 @@ import {
   Animation,
   Comment,
   ProgressBar,
+  InputBadge,
 } from './components';
 
 export {
@@ -152,6 +153,7 @@ export {
   UserName,
   Icon,
   InputPassword,
+  InputBadge,
   OverlayPanel,
   ButtonDownload,
   ButtonFilter,
