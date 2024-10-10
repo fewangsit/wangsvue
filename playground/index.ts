@@ -42,6 +42,7 @@ import InputRepositoryNameDocs from './docs/inputrepositoryname/InputRepositoryN
 import TextareaDocs from './docs/textarea/TextareaDocs.vue';
 import AnimationDocs from './docs/animation/AnimationDocs.vue';
 import CommentDocs from './docs/comment/CommentDocs.vue';
+import ButtonRadioDocs from './docs/buttonradio/ButtonRadioDocs.vue';
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
@@ -102,6 +103,11 @@ const routes: Readonly<RouteRecordRaw[]> = [
         path: 'button',
         name: 'ButtonDocs',
         component: ButtonDocs,
+      },
+      {
+        path: 'buttonradio',
+        name: 'ButtonRadioDocs',
+        component: ButtonRadioDocs,
       },
       {
         path: 'timeline',

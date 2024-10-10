@@ -42,7 +42,7 @@ export interface ProgressBarSlots {
  *
  * ProgressBar is a process status indicator._
  *
- * Live Demo https://fewangsit.github.io/wangsvue/projectsummary
+ * [Live Demo](https://fewangsit.github.io/wangsvue/projectsummary)
  *
  * --- ---
  * ![WangsVue](https://www.wangs.id/wp-content/uploads/2023/12/cropped-Logo_Wangsid-removebg-preview-192x192.png)

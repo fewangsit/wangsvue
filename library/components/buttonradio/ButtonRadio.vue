@@ -1,17 +1,23 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
 import RadioButton from 'primevue/radiobutton';
+import {
+  ButtonRadioEmits,
+  ButtonRadioProps,
+} from 'lib/components/buttonradio/ButtonRadio.vue.d';
 
-const props = defineProps<{ label?: string; labelId?: string }>();
-
-const labelId = computed(
-  () => props.labelId ?? props.label?.split(' ')?.join('-') ?? undefined,
-);
+defineProps<ButtonRadioProps>();
+defineEmits<ButtonRadioEmits>();
 </script>
 
 <template>
-  <div class="flex items-center gap-1">
-    <RadioButton v-bind="$attrs" :input-id="labelId" />
-    <label v-if="label" :for="labelId" class="text-xs">{{ label }}</label>
-  </div>
+  <label class="flex items-center gap-1 cursor-pointer">
+    <RadioButton
+      v-bind="$props"
+      @blur="$emit('blur', $event)"
+      @change="$emit('change', $event)"
+      @focus="$emit('focus', $event)"
+      @update:model-value="$emit('update:model-value', $event)"
+    />
+    <span v-if="label" class="text-xs">{{ label }}</span>
+  </label>
 </template>
