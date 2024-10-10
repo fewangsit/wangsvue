@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v1.4.218
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.217...v1.4.218)
+
+### 🚀 Enhancements
+
+- **preset:** Import form preset to index.js ([c183764](https://github.com/fewangsit/wangsvue/commit/c183764))
+- **InputBadge:** Add component, preset, and docs ([70251c1](https://github.com/fewangsit/wangsvue/commit/70251c1))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.217
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.216...v1.4.217)
