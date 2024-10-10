@@ -75,6 +75,7 @@ import tooltip from './tooltip/index.js';
 import tree from './tree/index.js';
 import treeselect from './treeselect/index.js';
 import tristatecheckbox from './tristatecheckbox/index.js';
+import inputbadge from './inputbadge/index.js';
 
 const directives = {
   badge: badgedirective,
@@ -93,6 +94,7 @@ const wangsvue = {
   inputnumber,
   inputotp,
   inputtext,
+  inputbadge,
   calendar,
   checkbox,
   radiobutton,

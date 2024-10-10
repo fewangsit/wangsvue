@@ -2,10 +2,10 @@
 import { computed, shallowRef } from 'vue';
 import { BadgeProps, BadgeEmits } from 'lib/components/badge/Badge.vue.d';
 import { formatUserName } from 'lib/utils';
+import { WangsitStatus } from 'lib/types/wangsStatus.type';
 
 import Button from 'lib/components/button/Button.vue';
 import getStatusSeverity from 'lib/utils/statusSeverity.util';
-import { WangsitStatus } from 'lib/types/wangsStatus.type';
 
 const props = withDefaults(defineProps<BadgeProps>(), {});
 const emit = defineEmits<BadgeEmits>();

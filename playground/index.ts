@@ -43,6 +43,7 @@ import TextareaDocs from './docs/textarea/TextareaDocs.vue';
 import AnimationDocs from './docs/animation/AnimationDocs.vue';
 import CommentDocs from './docs/comment/CommentDocs.vue';
 import ButtonRadioDocs from './docs/buttonradio/ButtonRadioDocs.vue';
+import InputBadgeDocs from './docs/inputbadge/InputBadgeDocs.vue';
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
@@ -190,6 +191,11 @@ const routes: Readonly<RouteRecordRaw[]> = [
         path: 'inputtext',
         name: 'InputText Docs',
         component: InputTextDocs,
+      },
+      {
+        path: 'inputbadge',
+        name: 'InputBadgeDocs',
+        component: InputBadgeDocs,
       },
       {
         path: 'image',
