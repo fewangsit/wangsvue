@@ -44,7 +44,7 @@ onMounted(() => {
 
 const Preset = inject<Record<string, any>>('preset', {}).form;
 
-const { handleSubmit, values, resetForm, errors } = useForm();
+const { handleSubmit, values, resetForm, errors, resetField } = useForm();
 
 const formElement = ref<HTMLFormElement>();
 const showValidator = ref<boolean>(false);
@@ -120,6 +120,7 @@ defineExpose({
   showValidator,
   formElement,
   clearField,
+  resetField,
   errors,
 });
 </script>
@@ -147,7 +148,10 @@ defineExpose({
       </div>
 
       <div data-wv-section="action-buttons" v-bind="Preset?.['action-buttons']">
-        <div data-wv-section="button-wrapper" v-bind="Preset?.['button-wrapper']">
+        <div
+          data-wv-section="button-wrapper"
+          v-bind="Preset?.['button-wrapper']"
+        >
           <Button
             v-if="props.buttonsTemplate?.includes('cancel')"
             @click="$emit('cancel')"
