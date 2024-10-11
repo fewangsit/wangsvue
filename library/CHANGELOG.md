@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.221
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.220...v1.4.221)
+
+### 💅 Refactors
+
+- **Dropdown:** Implement usage of props.dataKey and use cloneDeep before comparing object value ([e443a7a](https://github.com/fewangsit/wangsvue/commit/e443a7a))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.4.220
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.219...v1.4.220)
