@@ -1,41 +1,41 @@
 <script lang="ts" setup>
 import {
-  ref,
-  watch,
-  onUnmounted,
-  onMounted,
-  reactive,
-  shallowRef,
   computed,
   inject,
+  onMounted,
+  onUnmounted,
+  reactive,
+  ref,
+  shallowRef,
+  watch,
 } from 'vue';
 
-import BackgroundImageCropper from './BackgroundImageCropper.vue';
-import { Cropper, CropperResult } from 'vue-advanced-cropper';
 import { useField } from 'vee-validate';
+import { Cropper, CropperResult } from 'vue-advanced-cropper';
 import { FieldValidation } from '../form/Form.vue.d';
+import BackgroundImageCropper from './BackgroundImageCropper.vue';
 
 import base64toblob from 'base64toblob';
 import ImagePreview from 'lib/components/image/Image.vue';
+import Button from '../button/Button.vue';
+import Dialog from '../dialog/Dialog.vue';
+import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
 import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
 import Icon from '../icon/Icon.vue';
-import Dialog from '../dialog/Dialog.vue';
-import Button from '../button/Button.vue';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
-import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
 
 import 'vue-advanced-cropper/dist/style.css';
 
-import type {
-  ImageCompressorPayload,
-  ImageCompressorProps,
-  ImageCompressorEmits,
-  Image,
-} from './ImageCompressor.vue.d';
-import ImageInputInfo from './ImageInputInfo.vue';
-import ButtonRadio from 'primevue/radiobutton';
 import { genPlaceholder } from 'lib/utils';
 import { genRandomPlaceholderBg } from 'lib/utils/genPlaceholder.util';
+import ButtonRadio from 'primevue/radiobutton';
+import type {
+  Image,
+  ImageCompressorEmits,
+  ImageCompressorPayload,
+  ImageCompressorProps,
+} from './ImageCompressor.vue.d';
+import ImageInputInfo from './ImageInputInfo.vue';
 
 const ImagePreset = inject<Record<string, any>>('preset', {}).image;
 
@@ -195,18 +195,26 @@ const loadImage = async (file: File, index: number): Promise<void> => {
       // Check file type
       if (!isImageType(file.type)) {
         invalidInput.value = true;
-        invalidMessage.value = 'Tipe file harus berupa gambar!';
+        invalidMessage.value =
+          typeof props.validatorMessage !== 'string' &&
+          props.validatorMessage?.invalidFormat
+            ? props.validatorMessage.invalidFormat
+            : 'Tipe file harus berupa gambar!';
         /*
          * Preview.value = { message: 'Tipe file harus berupa gambar!' };
          * imageUploadErrorMessage.value = preview.value.message;
          */
-        previewImages.value[index] = undefined;
+        assignPreviewImagesFromProp();
         showImageCropper.value = false;
         revokeObjectURL(index);
         reject('Tipe file harus berupa gambar!');
       } else if (isExceededLimit(file.size)) {
         invalidInput.value = true;
-        invalidMessage.value = 'Ukuran gambar terlalu besar! Maks. 1 MB';
+        invalidMessage.value =
+          typeof props.validatorMessage !== 'string' &&
+          props.validatorMessage?.exceed
+            ? props.validatorMessage.exceed
+            : 'Ukuran gambar terlalu besar! Maks. 1 MB';
         assignPreviewImagesFromProp();
         showImageCropper.value = false;
         revokeObjectURL(index);
@@ -276,6 +284,13 @@ const setField = (): void => {
       field,
       useField(props.fieldName, (value: string | Blob) => {
         if (!value && props.mandatory) {
+          if (
+            typeof props.validatorMessage !== 'string' &&
+            props.validatorMessage?.empty
+          ) {
+            return props.validatorMessage.empty;
+          }
+
           return (props.label ?? 'Photo') + ' must be uploaded';
         } else if (props.invalid && props.validatorMessage) {
           return props.validatorMessage;

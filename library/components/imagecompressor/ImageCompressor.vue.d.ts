@@ -1,3 +1,4 @@
+import { CustomValidation } from '../form/Form.vue.d';
 import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
 
 export type Image = {
@@ -65,7 +66,6 @@ export interface ImageCompressorProps {
    *
    * If true, the image will be full rounded.
    *
-   * @todo add rounded full support.
    * @default 'false'
    */
   rounded?: boolean;
@@ -85,7 +85,7 @@ export interface ImageCompressorProps {
   /**
    * Set custom validation message.
    */
-  validatorMessage?: string;
+  validatorMessage?: string | CustomValidation;
   /**
    * The field label.
    *
