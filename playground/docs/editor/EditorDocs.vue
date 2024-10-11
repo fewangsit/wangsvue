@@ -46,10 +46,14 @@ const fetchMentionSuggestion =
         {
           _id: '1',
           fullName: 'Sir Alex',
+          nickName: 'alex',
+          profilePicture: '',
         },
         {
           _id: '2',
-          fullName: 'Cak Rusdi',
+          fullName: 'Cak Rudi',
+          nickName: 'rudi',
+          profilePicture: '',
         },
       ],
       message: 'Successs',
@@ -82,6 +86,7 @@ const fetchMentionSuggestion =
               label="Editor"
               mandatory
               placeholder="asdsa"
+              toolbar-wrapper-class="bg-transparent"
               use-validator
             />
           </template>

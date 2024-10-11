@@ -10,7 +10,10 @@ import {
   UpdatedCommentReponse,
   CommentsReactionResponse,
 } from './Comment.vue.d';
-import { GetMentionSuggestionResponse } from '../editor/Editor.vue.d';
+import {
+  GetMentionSuggestionResponse,
+  PostImage,
+} from '../editor/Editor.vue.d';
 
 import Image from '../image/Image.vue';
 import InputText from '../inputtext/InputText.vue';
@@ -18,6 +21,7 @@ import Editor from '../editor/Editor.vue';
 import CommentBlock from './CommentBlock.vue';
 import Skeleton from 'primevue/skeleton';
 import Button from '../button/Button.vue';
+import { getBaseURL } from 'lib/utils/getBaseURL.util';
 
 onMounted(() => {
   joinRoom();
@@ -29,12 +33,13 @@ onUnmounted(() => {
 });
 
 const props = withDefaults(defineProps<CommentProps>(), {});
-const editorVisibility = shallowRef(true);
+const editorVisibility = shallowRef<boolean>(true);
 const editorData = ref<JSONContent>();
 const commentsList = reactive<CommentData[]>([]);
 const isLoading = shallowRef<boolean>(true);
 const mentionSuggestionList = shallowRef<GetMentionSuggestionResponse>();
-const mentionedList = ref();
+const mentionedList = ref<string[]>();
+const socket = CommentServices.commentSocketIo();
 
 const setEditorVisibility = (): void => {
   editorVisibility.value = !editorVisibility.value;
@@ -60,6 +65,7 @@ const postComment = async (): Promise<void> => {
       content: editorData.value ?? {},
       objectId: props.objectId,
       type: props.commentType,
+      mentions: mentionedList.value,
     });
     setEditorVisibility();
     editorData.value = [];
@@ -67,8 +73,6 @@ const postComment = async (): Promise<void> => {
     console.error(error);
   }
 };
-
-const socket = CommentServices.commentSocketIo();
 
 const joinRoom = (): void => {
   socket.on('connect', () => {
@@ -147,6 +151,7 @@ const updateEditedMessage = (data: UpdatedCommentReponse): void => {
 
 const leaveRoom = (): void => {
   socket.emit('leaveRoom');
+  socket.disconnect();
 };
 
 const fetchMentionSuggestionFunction = async (): Promise<
@@ -164,6 +169,17 @@ const fetchMentionSuggestionFunction = async (): Promise<
     }
   }
   return mentionSuggestionList.value;
+};
+
+const uploadImage = async (value: PostImage): Promise<void> => {
+  try {
+    const { data } = await CommentServices.postCommentsUpload({
+      images: [value.image],
+    });
+    value.setImageCb(`${getBaseURL('APP_FILES_API')}/files${data.data[0]}`);
+  } catch (error) {
+    console.error(error);
+  }
 };
 </script>
 
@@ -188,11 +204,12 @@ const fetchMentionSuggestionFunction = async (): Promise<
         v-model:mentioned-list="mentionedList"
         v-model:model-value="editorData"
         :fetch-mention-suggestion-function="fetchMentionSuggestionFunction"
+        @post-image-local="uploadImage"
         placeholder="Tulis Komentar"
       />
 
       <div v-if="!editorVisibility" class="mt-2 flex gap-1">
-        <Button @click="postComment" label="Kirim" severity="success" />
+        <Button @click="postComment()" label="Kirim" severity="success" />
 
         <Button
           @click="setEditorVisibility"

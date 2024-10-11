@@ -23,6 +23,7 @@ const props = withDefaults(defineProps<CommentBlockProps>(), {
 });
 
 const replyMessageVisibility = ref(false);
+const mentionedList = ref<string[]>();
 const editorInputVisibility = ref(false);
 const editorReplyData = ref<JSONContent>();
 const editorTypeInput = ref<'edit' | 'reply'>();
@@ -51,6 +52,7 @@ const postComment = async (): Promise<void> => {
       objectId: props.objectId,
       type: props.commentType,
       replyToId: props._id,
+      mentions: mentionedList.value,
     });
     editorReplyData.value = [];
     setEditorInputVisibility();
@@ -88,7 +90,7 @@ const uploadImage = async (value: PostImage): Promise<void> => {
     const { data } = await CommentServices.postCommentsUpload({
       images: [value.image],
     });
-    value.setImageCb(`${getBaseURL('APP_FILES_API')}/images${data.data[0]}`);
+    value.setImageCb(`${getBaseURL('APP_FILES_API')}/files${data.data[0]}`);
   } catch (error) {
     console.error(error);
   }
@@ -242,7 +244,8 @@ watch(props, () => {
 
     <div v-if="editorInputVisibility" class="ml-[34px] my-2">
       <Editor
-        v-model="editorReplyData"
+        v-model:mentioned-list="mentionedList"
+        v-model:model-value="editorReplyData"
         :fetch-mention-suggestion-function="fetchMentionSuggestionFunction"
         @post-image-local="uploadImage"
       />
