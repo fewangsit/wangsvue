@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.222
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.221...v1.4.222)
+
+### 💅 Refactors
+
+- **Form:** Expose resetField from useForm ([930efcf](https://github.com/fewangsit/wangsvue/commit/930efcf))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.4.221
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.220...v1.4.221)
