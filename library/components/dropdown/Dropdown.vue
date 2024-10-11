@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Badge, { BadgeProps } from 'lib/components/badge/Badge.vue.d';
+import { useField } from 'vee-validate';
 import {
   computed,
   inject,
@@ -8,8 +10,6 @@ import {
   ref,
   watch,
 } from 'vue';
-import { useField } from 'vee-validate';
-import Badge, { BadgeProps } from 'lib/components/badge/Badge.vue.d';
 
 import type {
   DropdownEmits,
@@ -19,14 +19,15 @@ import type {
 import { DropdownOption, OptionValue } from 'lib/types/options.type';
 import { FieldValidation } from '../form/Form.vue.d';
 
-import ValidatorMessage from 'lib/components/validatormessage/ValidatorMessage.vue';
-import Dropdown, { DropdownChangeEvent } from 'primevue/dropdown';
 import FieldWrapper from 'lib/components/fieldwrapper/FieldWrapper.vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import InputGroup from 'lib/components/inputgroup/InputGroup.vue';
+import ValidatorMessage from 'lib/components/validatormessage/ValidatorMessage.vue';
+import { filterOptions } from 'lib/utils';
+import { cloneDeep } from 'lodash';
+import Dropdown, { DropdownChangeEvent } from 'primevue/dropdown';
 import InputGroupAddon from 'primevue/inputgroupaddon';
 import { Nullable } from '../ts-helpers';
-import { filterOptions } from 'lib/utils';
 
 const Preset = inject<Record<string, any>>('preset', {}).dropdown;
 
@@ -102,12 +103,14 @@ const updateFieldValue = (event: DropdownChangeEvent): void => {
 };
 
 const getOptionLabel = (): string => {
-  if (props.optionValue) {
+  if (props.dataKey) {
+    return field.value[props.dataKey] as string;
+  } else if (props.optionValue) {
     const matchOption = visibleOptions.value.find((op) => {
       if (typeof op != 'string') {
         return (
-          op[(props.optionValue ?? '') as keyof DropdownOption] ===
-          (field.value as string)
+          cloneDeep(op[(props.optionValue ?? '') as keyof DropdownOption]) ==
+          cloneDeep(field.value as string)
         );
       }
     });
