@@ -1,6 +1,45 @@
 # Changelog
 
 
+## v1.4.220
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.219...v1.4.220)
+
+### 🚀 Enhancements
+
+- Export InputBadge ([fef9bc6](https://github.com/fewangsit/wangsvue/commit/fef9bc6))
+
+### 🏡 Chore
+
+- **presets:** Update version ([b4e16a0](https://github.com/fewangsit/wangsvue/commit/b4e16a0))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.219
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.218...v1.4.219)
+
+### 🩹 Fixes
+
+- **typeerror:** Property 'Preset' does not exist on type 'TreeTableColumns ([1914595](https://github.com/fewangsit/wangsvue/commit/1914595))
+
+### 💅 Refactors
+
+- **TreeTable:** Implement inject Preset ([5da369c](https://github.com/fewangsit/wangsvue/commit/5da369c))
+
+### 🏡 Chore
+
+- **presets:** Update version ([4880f74](https://github.com/fewangsit/wangsvue/commit/4880f74))
+- **Presets:** Update build.sh to run rm -rf instead if rimraf ([6bb820c](https://github.com/fewangsit/wangsvue/commit/6bb820c))
+- **presets:** Move treetable presets ([f381447](https://github.com/fewangsit/wangsvue/commit/f381447))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.4.218
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.217...v1.4.218)
