@@ -66,7 +66,6 @@ export interface ImageCompressorProps {
    *
    * If true, the image will be full rounded.
    *
-   * @todo add rounded full support.
    * @default 'false'
    */
   rounded?: boolean;
