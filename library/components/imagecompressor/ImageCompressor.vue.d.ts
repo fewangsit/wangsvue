@@ -1,3 +1,4 @@
+import { CustomValidation } from '../form/Form.vue.d';
 import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
 
 export type Image = {
@@ -85,7 +86,7 @@ export interface ImageCompressorProps {
   /**
    * Set custom validation message.
    */
-  validatorMessage?: string;
+  validatorMessage?: string | CustomValidation;
   /**
    * The field label.
    *
