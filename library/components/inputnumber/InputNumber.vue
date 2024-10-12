@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue';
+import {
+  computed,
+  inject,
+  nextTick,
+  onMounted,
+  reactive,
+  ref,
+  watch,
+} from 'vue';
 import { useField } from 'vee-validate';
 import { FieldValidation } from '../form/Form.vue.d';
 
@@ -25,6 +33,11 @@ const props = withDefaults(defineProps<InputNumberProps>(), {
 });
 
 const emit = defineEmits<InputNumberEmits>();
+
+const InputGroupAddonPreset = inject<Record<string, any>>(
+  'preset',
+  {},
+).inputgroupaddon;
 
 const inputKey = ref<number>(0);
 const inputNumber = ref<InputNumber>();
@@ -249,13 +262,19 @@ watch(
     >
       <InputGroupAddon
         v-if="$slots['addon-left'] || props.showButtons"
-        :class="[
-          {
-            '!px-2': props.showButtons,
-          },
-          addonLeftClass,
-        ]"
         :disabled="disabled"
+        :pt="{
+          root: InputGroupAddonPreset.root({
+            props: {
+              class: [
+                {
+                  '!px-2': props.showButtons,
+                },
+                addonLeftClass,
+              ],
+            },
+          }),
+        }"
       >
         <slot name="addon-left">
           <Icon
@@ -300,9 +319,17 @@ watch(
 
       <InputGroupAddon
         v-if="$slots['addon-right'] || props.showButtons"
-        :class="{
-          '!text-general-200': props.disabled,
-          '!px-2': props.showButtons,
+        :pt="{
+          root: InputGroupAddonPreset.root({
+            props: {
+              class: [
+                {
+                  '!text-general-200': props.disabled,
+                  '!px-2': props.showButtons,
+                },
+              ],
+            },
+          }),
         }"
       >
         <slot name="addon-right">
