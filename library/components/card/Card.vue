@@ -3,7 +3,7 @@ import PrimevueCard from 'primevue/card';
 </script>
 
 <template>
-  <PrimevueCard :pt="{ content: { style: 'gap: 12px' } }">
+  <PrimevueCard>
     <template #header v-if="$slots.header">
       <slot name="header" />
     </template>
