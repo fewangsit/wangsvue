@@ -1,9 +1,11 @@
-import { Slot, Ref } from 'vue';
-import { FieldContext, GenericObject } from 'vee-validate';
-import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
+import { FieldContext, FieldState, GenericObject } from 'vee-validate';
+import { Ref, Slot } from 'vue';
 import { CheckboxModelValue } from '../checkbox/Checkbox.vue.d';
-
-import { Nullable } from 'primevue/ts-helpers';
+import {
+  ClassComponent,
+  GlobalComponentConstructor,
+  Nullable,
+} from '../ts-helpers';
 
 export type Condition =
   | 'empty'
@@ -40,6 +42,9 @@ export type FieldValidation<T = FieldValue | undefined> =
 
 export type FormValue = Record<string, unknown> | Record<string, unknown>[];
 
+/**
+ * Generic form payload, able to receive types from outside
+ */
 export type FormPayload<FormValuesType = Record<string, FormValue>> = {
   stayAfterSubmit: boolean;
   formValues: FormValuesType;
@@ -50,45 +55,52 @@ export type FormPayload<FormValuesType = Record<string, FormValue>> = {
  */
 export interface FormProps {
   /**
-   * The number of columns per row.
-   * @default 1;
-   */
-  columnPerRow?: number;
-  /**
    * The template for form buttons.
    */
   buttonsTemplate?: ('clear' | 'submit' | 'cancel')[];
   /**
-   * Custom button submit label.
+   * Custom button cancel label.
    */
-  submitBtnLabel?: string;
+  cancelBtnLabel?: string;
   /**
    * Custom button clear label.
    */
   clearBtnLabel?: string;
   /**
+   * The number of columns per row.
+   * @default 1;
+   */
+  columnPerRow?: number;
+  /**
+   * Determines whether form footer should be hidden or not
+   */
+  hideFooter?: boolean;
+  /**
    * Determines if the stay checkbox should be hidden.
    */
   hideStayCheckbox?: boolean;
   /**
-   * Prevent form resets after submitted. Default is resetted.
+   * Invalid form state.
+   */
+  invalid?: boolean;
+  /**
+   * Prevent form resets after submitted. Default behaviour is form resetted after submit.
    *
    * @default true
    */
   resetAfterSubmit?: boolean;
   /**
-   * Determines if the buttons should be sticky.
+   * Custom button submit label.
    */
-  stickyButtons?: boolean;
-  hideFooter?: boolean;
+  submitBtnLabel?: string;
+  /**
+   * Custom label for stay checkbox.
+   */
+  stayCheckboxLabel?: string;
   /**
    * Custom submit form validator message.
    */
   validatorMessage?: string;
-  /**
-   * Invalid form state.
-   */
-  invalid?: boolean;
 }
 
 /**
@@ -105,9 +117,18 @@ export interface FormSlots {
  * Emits for Form component
  */
 export type FormEmits = {
-  submit: [values: FormPayload];
-  clear: [];
+  /**
+   * Emitted when button template `Cancel` clicked (doesn't matter its label)
+   */
   cancel: [];
+  /**
+   * Emitted when button template `Clear` clicked (doesn't matter its label)
+   */
+  clear: [];
+  /**
+   * Emitted when button template `Submit` clicked (doesn't matter its label)
+   */
+  submit: [values: FormPayload];
 };
 
 /**
@@ -123,18 +144,33 @@ export type FormEmits = {
  */
 declare class Form extends ClassComponent<FormProps, FormSlots, FormEmits> {
   /**
-   * Wether to keep the dialog remains visible or not after submit.
+   * Exposed errors of form
    */
-  stayAfterSubmit: CheckboxModelValue;
+  errors: Partial<Record<string, string>>;
   /**
    * The ref of form element.
    */
   formElement: HTMLFormElement;
-  submit: (e?: Event | undefined) => Promise<void | undefined>;
   /**
-   * Clears the form fields.
+   * Whether to show validator or not
+   */
+  showValidator: boolean;
+  /**
+   * Whether to keep the dialog remains visible or not after submit.
+   */
+  stayAfterSubmit: CheckboxModelValue;
+  /**
+   * Exposed function to clears the form fields.
    */
   clearField: () => void;
+  /**
+   * Exposed function to clears the specific field.
+   */
+  resetField: (field: string, state?: Partial<FieldState>) => void;
+  /**
+   * Exposed function that handle submit inside form component
+   */
+  submit: (e?: Event | undefined) => Promise<void | undefined>;
 }
 
 declare module '@vue/runtime-core' {
