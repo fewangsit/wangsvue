@@ -5,10 +5,13 @@ import avatargroup from './avatargroup/index.js';
 import badge from './badge/index.js';
 import badgedirective from './badgedirective/index.js';
 import button from './button/index.js';
+import buttonfilter from './buttonfilter/index.js';
+import buttonsearch from './buttonsearch/index.js';
 import calendar from './calendar/index.js';
 import card from './card/index.js';
 import carousel from './carousel/index.js';
 import cascadeselect from './cascadeselect/index.js';
+import changelog from './changelog/index.js';
 import checkbox from './checkbox/index.js';
 import chip from './chip/index.js';
 import chips from './chips/index.js';
@@ -19,6 +22,7 @@ import datatable from './datatable/index.js';
 import dataview from './dataview/index.js';
 import dataviewlayoutoptions from './dataviewlayoutoptions/index.js';
 import dialog from './dialog/index.js';
+import dialogconfirm from './dialogconfirm/index.js';
 import dialogform from './dialogform/index.js';
 import divider from './divider/index.js';
 import dock from './dock/index.js';
@@ -122,6 +126,8 @@ const wangsvue = {
 
   //Buttons
   button,
+  buttonsearch,
+  buttonfilter,
   splitbutton,
 
   //Data
@@ -134,6 +140,7 @@ const wangsvue = {
   orderlist,
   picklist,
   timeline,
+  changelog,
 
   //Panels
   accordion,
@@ -158,6 +165,7 @@ const wangsvue = {
 
   //Overlays
   dialog,
+  dialogconfirm,
   dialogform,
   overlaypanel,
   sidebar,

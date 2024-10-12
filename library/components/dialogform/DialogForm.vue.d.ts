@@ -235,7 +235,16 @@ declare class DialogForm extends ClassComponent<
   DialogFormProps,
   DialogFormSlots,
   DialogFormEmits
-> {}
+> {
+  /**
+   * Exposed function to clears the form fields.
+   */
+  clearField: () => void;
+  /**
+   * The ref of form element.
+   */
+  form: HTMLFormElement;
+}
 
 declare module '@vue/runtime-core' {
   interface GlobalComponents {

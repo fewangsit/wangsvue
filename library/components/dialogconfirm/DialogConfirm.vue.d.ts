@@ -1,5 +1,6 @@
-import { DefineComponent, Slot } from 'vue';
+import { Slot } from 'vue';
 import { WangsIcons } from '../icon/Icon.vue.d';
+import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
 
 type ConfirmDialogSeverity = 'success' | 'danger';
 
@@ -8,31 +9,45 @@ type ConfirmDialogSeverity = 'success' | 'danger';
  */
 export interface DialogConfirmProps {
   /**
-   * The boolean modelValue to show dialog.
-   */
-  visible: boolean;
-  /**
    * The header of the dialog.
    */
   header: string;
-  /**
-   * Custom header icon. Default is 'error' icon for danger severity, and 'cehckbox-circle' for success severity.
-   */
-  headerIcon?: WangsIcons;
   /**
    * The severity of the dialog.
    * The severity will determine the dialog icons and color scheme.
    */
   severity: ConfirmDialogSeverity;
   /**
+   * The boolean modelValue to show dialog.
+   */
+  visible: boolean;
+
+  /**
+   * Determines if the dialog should close after confirm.
+   * @default true
+   */
+  closeAfterConfirm?: boolean;
+  /**
    * The label of the close/cancel button.
    */
   closeLabel?: string;
+  /**
+   * To hide/show the confirm button.
+   *
+   * Set to 'false' Make the confirm dialog cannot be confirmed.
+   *
+   * @default true;
+   */
+  actionable?: boolean;
   /**
    * The label of the confirm button.
    * @default 'Yes, Continue'
    */
   confirmLabel?: string;
+  /**
+   * Custom header icon. Default is 'error' icon for danger severity, and 'checkbox-circle' for success severity.
+   */
+  headerIcon?: WangsIcons;
   /**
    * The lists to be displayed in the dialog.
    */
@@ -46,19 +61,6 @@ export interface DialogConfirmProps {
    * The confirmation message.
    */
   message?: string;
-  /**
-   * Determines if the dialog should close after confirm.
-   * @default true
-   */
-  closeAfterConfirm?: boolean;
-  /**
-   * To hide/show the confirm button.
-   *
-   * Set to 'false' Make the confirm dialog cannot be confirmed.
-   *
-   * @default true;
-   */
-  actionable?: boolean;
   /**
    * Wether show icon header or not.
    * @default true;
@@ -86,13 +88,13 @@ export interface DialogConfirmSlots {
  */
 export type DialogConfirmEmits = {
   /**
-   * Emits when Confirm button clicked.
-   */
-  'confirm': [];
-  /**
    * Emits when close button clicked.
    */
   'close': [];
+  /**
+   * Emits when Confirm button clicked.
+   */
+  'confirm': [];
   /**
    * Emits when dialog closed.
    */
@@ -113,10 +115,16 @@ export type DialogConfirmEmits = {
  *
  * @group components
  */
-declare const DialogConfirm: DefineComponent<
+declare class DialogConfirm extends ClassComponent<
   DialogConfirmProps,
   DialogConfirmSlots,
   DialogConfirmEmits
->;
+> {}
+
+declare module '@vue/runtime-core' {
+  interface GlobalComponents {
+    DialogForm: GlobalComponentConstructor<DialogConfirm>;
+  }
+}
 
 export default DialogConfirm;
