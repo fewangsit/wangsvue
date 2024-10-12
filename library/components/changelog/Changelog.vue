@@ -9,6 +9,7 @@ import eventBus from 'lib/event-bus';
 import { ChangelogEmits, ChangelogProps } from './Changelog.vue.d';
 
 const { buttonFocusClass } = inject<Record<string, any>>('preset', {}).button;
+const Preset = inject<Record<string, any>>('preset', {}).changelog;
 
 const props = withDefaults(defineProps<ChangelogProps>(), {
   useButton: true,
@@ -67,27 +68,24 @@ watch(visible, (newValue) => {
 <template>
   <button
     v-if="props.useButton"
-    :class="[buttonFocusClass, 'w-max']"
+    v-bind="Preset?.button(buttonFocusClass)"
     @click="visible = true"
-    data-wv-section="changelog-button"
     type="button"
   >
     <Icon
+      v-bind="Preset?.icon"
       :icon="visible ? 'file-history-fill' : 'file-history'"
-      class="text-2xl"
       info="Changelog"
       severity="secondary"
       tooltip-pos="bottom"
     />
   </button>
   <Dialog
+    v-bind="Preset?.dialog"
     v-model:visible="visible"
     :base-z-index="3000"
     :header="header"
     @hide="$emit('hide')"
-    class="w-[800px] !z-50"
-    content-class="-mr-3 pr-3"
-    data-wv-name="changelog-dialog"
     modal
   >
     <ChangelogPage v-if="visible" v-bind="$props" :is-dialog="visible" />
