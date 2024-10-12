@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import Button from '../button/Button.vue';
+
+defineProps<{ classButton?: string[] }>();
 </script>
 
 <template>
   <Button
-    :class="['!rounded !h-6 !w-6 !p-1']"
+    :class="[classButton, `!rounded h-6 w-6 p-1`]"
     :tooltip="{
       pt: {
         text: {

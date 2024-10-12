@@ -84,6 +84,21 @@ export interface EditorProps {
    * Getting all mentioned list
    */
   mentionedList?: string[];
+  /**
+   * Add custom class tailwind for editor wrapper/container
+   * and preferred for using "!" bang! for your tailwind class just to make sure it apply
+   */
+  editorWrapperClass?: string;
+  /**
+   * Add custom class tailwind for editor toolbar wrapper/container
+   * and preferred for using "!" bang! for your tailwind class just to make sure it apply
+   */
+  toolbarWrapperClass?: string;
+  /**
+   * Add custom class tailwind for editor content wrapper/container
+   * and preferred for using "!" bang! for your tailwind class just to make sure it apply
+   */
+  contentWrapperClass?: string;
 }
 
 export type EditorEmits = {
@@ -152,6 +167,8 @@ export type GetMentionSuggestionResponse = {
 export type MentionSuggestion = {
   _id: string;
   fullName: string;
+  nickName: string;
+  profilePicture: string;
 };
 
 export type EditorState = 'editable' | 'readonly';
