@@ -1,12 +1,3 @@
-/**
- *
- * Button is an extension to standard button element with icons and theming.
- *
- * [Live Demo](https://www.primevue.org/button/)
- *
- * @module button
- *
- */
 import { ButtonHTMLAttributes, VNode } from 'vue';
 import { ComponentHooks } from '../basecomponent';
 import { PassThroughOptions } from '../passthrough';

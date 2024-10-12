@@ -9,6 +9,6 @@ export default function (event: Event): void {
   const maxHeight = (window.innerHeight * 90) / 100;
 
   if (offsetHeight >= maxHeight) {
-    el.style.transform = 'translateY(5vh)'; // Make the menu verticaly centered
+    el.style.transform = 'translateY(5vh)'; // Make the menu vertically centered
   }
 }
