@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { GenericObject, useForm } from 'vee-validate';
-import { inject, onMounted, ref } from 'vue';
+import { inject, onMounted, ref, shallowRef } from 'vue';
 import Button from '../button/Button.vue';
 import Checkbox from '../checkbox/Checkbox.vue';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
@@ -13,7 +13,12 @@ import type {
 } from './Form.vue.d';
 
 const props = withDefaults(defineProps<FormProps>(), {
+  cancelBtnLabel: 'Batal',
+  clearBtnLabel: 'Bersihkan Field',
+  submitBtnLabel: 'Simpan',
   resetAfterSubmit: true,
+  stayCheckboxLabel: 'Tetap di halaman ini',
+  validatorMessage: 'Please input all required field!',
 });
 
 const emit = defineEmits<FormEmits>();
@@ -38,13 +43,14 @@ onMounted(() => {
     }
 
     setOuterFieldsWrapperHeight();
-    if (props.stickyButtons) setDialogClass();
   }
 });
 
 const Preset = inject<Record<string, any>>('preset', {}).form;
 
 const { handleSubmit, values, resetForm, errors, resetField } = useForm();
+
+const stayAfterSubmit = shallowRef<boolean>(false);
 
 const formElement = ref<HTMLFormElement>();
 const showValidator = ref<boolean>(false);
@@ -54,7 +60,6 @@ const footer = ref<HTMLDivElement>();
 
 const fieldsWrapper = ref<HTMLDivElement | null>(null);
 const outerFieldsWrapper = ref<HTMLDivElement | null>(null);
-const stayAfterSubmit = ref<boolean>(false);
 
 const setOuterFieldsWrapperHeight = (): void => {
   if (footer.value) {
@@ -65,11 +70,6 @@ const setOuterFieldsWrapperHeight = (): void => {
         footerHeight + 20
       }px)`;
   }
-};
-
-const setDialogClass = (): void => {
-  const dialog = document.querySelector('.p-dialog') as HTMLDivElement;
-  if (dialog) dialog.classList.add('form-dialog-sticky-buttons');
 };
 
 const onSubmitClicked = (): void => {
@@ -132,48 +132,41 @@ defineExpose({
     @input="showValidator = false"
     @submit.prevent="submit"
   >
-    <div ref="outerFieldsWrapper" class="ts-form-fields-outer-wrapper">
-      <div
-        ref="fieldsWrapper"
-        class="grid gap-y-3 gap-x-6"
-        data-wv-section="fields"
-      >
+    <div ref="outerFieldsWrapper">
+      <div ref="fieldsWrapper" v-bind="Preset?.['fields-wrapper']">
         <slot :key="fieldsKey" :form-values="values" name="fields" />
       </div>
     </div>
 
     <div ref="footer" v-if="!hideFooter" v-bind="Preset?.footer">
       <div v-if="!hideStayCheckbox" v-bind="Preset?.staycheckbox">
-        <Checkbox v-model="stayAfterSubmit" label="Tetap di halaman ini" />
+        <Checkbox v-model="stayAfterSubmit" :label="stayCheckboxLabel" />
       </div>
 
-      <div data-wv-section="action-buttons" v-bind="Preset?.['action-buttons']">
-        <div
-          data-wv-section="button-wrapper"
-          v-bind="Preset?.['button-wrapper']"
-        >
+      <div v-bind="Preset?.['action-buttons']">
+        <div v-bind="Preset?.['button-wrapper']">
           <Button
+            v-bind="Preset?.['cancel-button']"
             v-if="props.buttonsTemplate?.includes('cancel')"
+            :label="cancelBtnLabel"
             @click="$emit('cancel')"
-            data-test="cancel-button"
-            label="Batal"
             severity="secondary"
             text
             type="button"
           />
           <Button
+            v-bind="Preset?.['clear-button']"
             v-if="props.buttonsTemplate?.includes('clear')"
-            :label="clearBtnLabel ?? 'Bersihkan Field'"
+            :label="clearBtnLabel"
             @click="clearField"
-            data-test="clear-button"
             text
             type="button"
           />
           <Button
+            v-bind="Preset?.['submit-button']"
             v-if="props.buttonsTemplate?.includes('submit')"
-            :label="submitBtnLabel ?? 'Simpan'"
+            :label="submitBtnLabel"
             @click="onSubmitClicked"
-            data-test="submit-button"
             severity="success"
             type="submit"
           />
@@ -181,13 +174,9 @@ defineExpose({
         <ValidatorMessage
           v-show="showValidator || props.invalid"
           v-bind="Preset?.['validator-message']"
-          :message="validatorMessage ?? 'Please input all required field!'"
+          :message="validatorMessage"
         />
       </div>
     </div>
   </form>
 </template>
-
-<style lang="css">
-@import './style/Form.css';
-</style>
