@@ -56,7 +56,11 @@ export const CommentServices = {
   postCommentsUpload: (
     body: PostCommentsUploadBody,
   ): Promise<AxiosResponse<PostCommentsUploadResponse>> => {
-    return API().post('/upload', body);
+    return API({
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }).post('/upload', body);
   },
 
   postCommentsReactionsByCommentId: (

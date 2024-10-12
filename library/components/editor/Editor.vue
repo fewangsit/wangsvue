@@ -227,7 +227,7 @@ const editor = useEditor({
     History,
     Mention.configure({
       HTMLAttributes: {
-        class: 'bg-primary-200 text-primary-800 rounded-[50px] p-[4px]',
+        class: 'bg-primary-200 text-primary-800 rounded-[50px] px-1',
       },
       suggestion: {
         items({ query }: { query: string }): any {
@@ -239,6 +239,8 @@ const editor = useEditor({
               return {
                 id: item?._id,
                 label: item?.fullName,
+                nickName: item.nickName,
+                profilePicture: item.profilePicture,
               };
             });
         },
@@ -271,7 +273,7 @@ const toolbars = computed<(ButtonProps & { active?: boolean })[]>(() => {
       label: 'Aa',
       iconPos: 'right',
       icon: 'arrow-down',
-      class: '!gap-0 mr-3 !w-max [&_span]:leading-[22px]',
+      class: '!gap-0 !w-[50px] !p-0 !m-0 [&_span]:leading-[22px]',
       onClick: headingMenu.value?.toggle,
     },
     {
@@ -612,6 +614,7 @@ const setImageFunction = (imageUrl?: string): void => {
   }
 
   inputURLImage.value = undefined;
+  goToNextLine();
 };
 
 const unsetImage = (): void => {
@@ -716,19 +719,23 @@ watch(registeredMentionList, () => {
         '[&_code]:p-[0.25em_0.3em]',
         '[&_code]:text-[0.85rem]',
         '[&_code]:!font-source-code-pro',
+        `${props.editorWrapperClass}`,
       ]"
       data-wv-name="editor"
     >
       <div
         v-if="props.editorState === 'editable'"
-        class="border-b-[0.5px] border-inherit px-3 py-1 flex gap-1 bg-general-50"
+        :class="[
+          'border-b-[0.5px] border-inherit px-3 py-1 flex gap-1 bg-general-50',
+          `${props.toolbarWrapperClass}`,
+        ]"
         data-wv-section="toolbar"
       >
         <EditorButton
           v-bind="tool"
           :key="tool.icon"
           v-for="tool of toolbars"
-          :class="[{ '!bg-primary-50 ': tool.active }]"
+          :class="[{ '!bg-primary-50 ': tool.active }, tool.class]"
         />
       </div>
       <EditorContent
@@ -761,6 +768,7 @@ watch(registeredMentionList, () => {
 
           // Inline Code
           '[&_*:has(code)]:my-[0.25rem]',
+          `${props.contentWrapperClass}`,
         ]"
         :editor="editor"
         spellcheck="false"
@@ -919,7 +927,7 @@ watch(registeredMentionList, () => {
                   class="flex flex-col justify-center w-28 h-28 items-center"
                 >
                   <Icon
-                    class="w-[70px] h-[70px]"
+                    class="!w-[70px] !h-[70px]"
                     icon="upload-2"
                     severity="primary"
                   />

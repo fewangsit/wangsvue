@@ -13,14 +13,14 @@ import { getImageURL } from 'lib/utils';
     <template #content>
       <Comment
         :user="{
-          _id: '66c833f028754c4f75532f00',
+          _id: '66f2876214c6d63fb6ab3f17',
           fullName: 'Super Admins',
           profilePicture: getImageURL(
             '/members/1726721700029-big.webp',
           ) as string,
         }"
-        comment-type="ticket"
-        object-id="66eaa68cfa36b1a0edc3b692"
+        comment-type="module"
+        object-id="66f2876214c6d63fb6ab3f17"
       />
     </template>
   </Card>
