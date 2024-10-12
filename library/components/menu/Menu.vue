@@ -1,12 +1,14 @@
 <script setup lang="ts">
+import Menu, { MenuEmits, MenuProps } from './Menu.vue.d';
+import { inject, ref } from 'vue';
 import { WangsIcons } from '../icon/Icon.vue.d';
 import Icon from '../icon/Icon.vue';
 import PrimeMenu from 'primevue/menu';
-import Menu, { MenuEmits, MenuProps } from './Menu.vue.d';
-import { ref } from 'vue';
 
 withDefaults(defineProps<MenuProps>(), { popup: true });
 defineEmits<MenuEmits>();
+
+const Preset = inject<Record<string, any>>('preset', {}).menu;
 
 const menu = ref<Menu>();
 const toggle = (e: Event): void => {
@@ -81,7 +83,11 @@ defineExpose({
         />
 
         <span
-          :class="['text-inherit', { '!text-danger-500': item.danger }]"
+          v-bind="
+            Preset?.label({
+              props: { danger: item.danger },
+            })
+          "
           data-pc-section="label"
         >
           {{ item.label }}
