@@ -1,12 +1,12 @@
+import config from './presets/wangsvue/tailwind.config';
+
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: 'selector',
+  ...config,
   content: [
     './index.html',
-    './{library,playground}/**/*.{vue,js,ts,jsx,tsx}',
+    './{library,playground,presets}/**/*.{vue,js,ts,jsx,tsx}',
     './main.ts',
     './App.vue',
   ],
-  theme: {},
-  plugins: [],
 };

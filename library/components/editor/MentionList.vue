@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, watch, defineProps } from 'vue';
+import { ref, watch } from 'vue';
 import UserName from '../username/UserName.vue';
 
 const props = defineProps<{
