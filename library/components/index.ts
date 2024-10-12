@@ -34,7 +34,7 @@ import InputInitialName from './inputinitialname/InputInitialName.vue';
 import InputPhoneNumber from './inputphonenumber/InputPhoneNumber.vue';
 import InputPassword from './inputpassword/InputPassword.vue';
 import Loading from './loading/Loading.vue';
-import DataTable from './treetable/TreeTable.vue';
+import DataTable from './datatable/DataTable.vue';
 import SummaryAccordion from './summaryaccordion/SummaryAccordion.vue';
 import InputURL from './inputurl/InputURL.vue';
 import OverlayPanel from './overlaypanel/OverlayPanel.vue';

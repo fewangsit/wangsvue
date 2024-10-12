@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, shallowRef } from 'vue';
 import { useToast } from 'lib/utils';
-import { FetchResponse } from '../datatable/DataTable.vue.d';
-import { TreeTableColumns } from '../treetable/TreeTable.vue.d';
+import { FetchResponse, DataTableColumns } from '../datatable/DataTable.vue.d';
 
 import {
   ChangelogFilterQuery,
@@ -14,7 +13,7 @@ import {
 import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
 import ButtonFilter from '../buttonfilter/ButtonFilter.vue';
 import ChangelogFilter from './ChangelogFilter.vue';
-import TreeTable from '../treetable/TreeTable.vue';
+import DataTable from '../datatable/DataTable.vue';
 import LogServices from 'lib/services/log.service';
 import ButtonDownload from '../buttondownload/ButtonDownload.vue';
 
@@ -57,7 +56,7 @@ const tableName = computed<string>(() => {
   );
 });
 
-const changelogColumn = ((): TreeTableColumns[] => {
+const changelogColumn = ((): DataTableColumns[] => {
   const tempColumns = [
     {
       field: 'createdAt',
@@ -145,7 +144,7 @@ const changelogColumn = ((): TreeTableColumns[] => {
         return data.modifiedBy ?? '-';
       },
     },
-  ].filter((col) => col.visible) as TreeTableColumns[];
+  ].filter((col) => col.visible) as DataTableColumns[];
 
   if (props.additionalTemplateColumns?.length) {
     props.additionalTemplateColumns?.forEach((each) => {
@@ -208,7 +207,7 @@ const fetchChangelogs = async (
       :sub-module-id="subModuleId"
       :table-name="tableName"
     />
-    <TreeTable
+    <DataTable
       :key="dataTableKey"
       :columns="changelogColumn"
       :default-query-params="defaultParamsQuery"
