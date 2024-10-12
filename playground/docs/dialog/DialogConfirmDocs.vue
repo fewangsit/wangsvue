@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { shallowRef } from 'vue';
-import Card from 'lib/components/card/Card.vue';
-import DocTitle from '../DocTitle.vue';
-import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
 import Button from 'lib/components/button/Button.vue';
+import Card from 'lib/components/card/Card.vue';
+import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
+import { shallowRef } from 'vue';
+import DocTitle from '../DocTitle.vue';
 const showSuccess = shallowRef<boolean>(false);
 const showDanger = shallowRef<boolean>(false);
 </script>
@@ -30,6 +30,7 @@ const showDanger = shallowRef<boolean>(false);
         v-model:visible="showSuccess"
         close-label="Hilangkan"
         confirm-label="Simpan"
+        data-wv-name="test attrs"
         header="Simpan Data"
         message="Apakah kamu yakin ingin menyimpan data ini?"
         severity="success"

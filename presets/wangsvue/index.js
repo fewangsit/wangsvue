@@ -19,6 +19,7 @@ import datatable from './datatable/index.js';
 import dataview from './dataview/index.js';
 import dataviewlayoutoptions from './dataviewlayoutoptions/index.js';
 import dialog from './dialog/index.js';
+import dialogconfirm from './dialogconfirm/index.js';
 import dialogform from './dialogform/index.js';
 import divider from './divider/index.js';
 import dock from './dock/index.js';
@@ -160,6 +161,7 @@ const wangsvue = {
 
   //Overlays
   dialog,
+  dialogconfirm,
   dialogform,
   overlaypanel,
   sidebar,
