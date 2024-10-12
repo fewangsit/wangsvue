@@ -79,6 +79,8 @@ const expandedRows = ref<DataTableExpandedRows>({});
 const visibleColumns = ref<TreeTableColumns[]>(props.columns);
 const checkboxSelection = ref<Data[]>([]);
 const rowReorderEventPayload = ref<DataTableRowReorderEvent>();
+const tableWrapper = ref<HTMLDivElement>();
+const rowSingleActionCell = ref<HTMLTableCellElement>();
 
 const customColumnKey = shallowRef<number>(0);
 const loadingTable = shallowRef<boolean>(false);
@@ -86,6 +88,7 @@ const columnKey = shallowRef<number>(0);
 const tableKey = shallowRef<number>(0);
 const dragging = shallowRef<boolean>(false);
 const draggedRow = shallowRef<DragableRow>();
+const rightDistanceFrozenColumn = shallowRef<number>(0);
 
 // Components Instance REFs
 const customColumn = ref<CustomColumnInstance>();
@@ -537,7 +540,9 @@ const headerCellPreset = (
   useCustomColumn?: boolean,
 ): object => {
   return Preset?.headercell({
+    props,
     context: {
+      sortOrder: sortOrder.value,
       customColumn: useCustomColumn,
       sorted: sortBy.value && sortBy.value === col?.field,
       sortable: col?.sortable,
@@ -672,6 +677,13 @@ onMounted(async () => {
   }
 
   attachEventListener();
+
+  if (tableWrapper.value)
+    tableWrapper.value.onscroll = adjustFrozenColumnRightDistance;
+
+  new ResizeObserver(adjustFrozenColumnRightDistance).observe(
+    tableWrapper.value,
+  );
 });
 
 onUnmounted(() => {
@@ -759,6 +771,19 @@ const downloadHandler = (e: Events['data-table:download']): void => {
   }
 };
 
+/**
+ * TO dynamically set the single action and column visibility right position.
+ *
+ * It needs to be done because class the td and th cannot be relative to tablewrapper
+ */
+const adjustFrozenColumnRightDistance = (): void => {
+  rightDistanceFrozenColumn.value =
+    (tableWrapper.value?.scrollWidth ?? 0) -
+    (tableWrapper.value?.offsetWidth ?? 0) -
+    (tableWrapper.value?.scrollLeft ?? 0) -
+    (rowSingleActionCell.value?.offsetWidth ?? 0);
+};
+
 const updateTotalRecordBulkAction = (total?: number): void => {
   const disabledCount =
     (currentPageDisabledRows.value.length || props.totalDisabledRows) ?? 0;
@@ -777,57 +802,44 @@ const listenUpdateTableEvent = (): void => {
 </script>
 
 <template>
+  {{ rightDistanceFrozenColumn }}
   <div v-bind="Preset?.root">
-    <div v-bind="Preset?.tablewrapper" style="scrollbar-width: thin !important">
-      <div
-        v-bind="Preset?.scrollheightwrapper({ props })"
-        :style="`max-height: ${props.scrollHeight}`"
-      >
+    <div v-bind="Preset?.tablewrapper" ref="tableWrapper">
+      <div v-bind="Preset?.scrollheightwrapper({ props })">
         <table :id="dataTableID" v-bind="Preset?.table" :key="tableKey">
-          <thead class="sticky top-0 z-50">
-            <tr class="border-b border-primary-100">
+          <thead v-bind="Preset.thead">
+            <tr v-bind="Preset.headerrow">
               <th
                 v-if="reorderable && !sortOrder"
-                class="w-[40px] !py-1"
-                v-bind="headerCellPreset()"
-                data-wv-section="headerreorderable"
+                v-bind="Preset.headercellreorderable"
+                :class="headerCellPreset().class"
               />
               <th
                 v-if="selectionType === 'checkbox'"
+                v-bind="Preset.headercellcheckbox"
+                :class="headerCellPreset().class"
                 @click="toggleAllDataSelection(!isSelectedAll)"
-                v-bind="headerCellPreset()"
-                class="w-[40px] text-center"
-                data-wv-section="headercheckbox"
               >
                 <Checkbox
-                  v-bind="Preset?.headercheckbox"
-                  :class="[
-                    {
-                      '[&_[data-pc-section=box]]:!border-white [&_[data-pc-section=box]]:!bg-transparent':
-                        !isSelectedAll,
-                    },
-                  ]"
+                  v-bind="
+                    Preset?.headercheckbox({ context: { isSelectedAll } })
+                  "
                   :model-value="isSelectedAll"
                   binary
-                  data-wv-section="headercheckbox"
                 />
               </th>
 
               <th
                 v-if="treeTable"
-                class="w-[40px] text-center !py-1"
-                v-bind="headerCellPreset()"
-                data-wv-section="headertoggler"
+                v-bind="Preset.headertoggler"
+                :class="headerCellPreset().class"
               >
                 <Button
-                  :class="[
-                    '!p-0 !m-0 !w-auto !h-auto',
-                    { 'rotate-180': isExpandedAll },
-                    { 'rotate-0': !isExpandedAll },
-                  ]"
                   @click="toggleExpandAll"
+                  v-bind="
+                    Preset.headertogglerbutton({ context: { isExpandedAll } })
+                  "
                   icon="arrow-down"
-                  icon-class="w-6 h-6 text-white"
                   text
                 />
               </th>
@@ -839,7 +851,7 @@ const listenUpdateTableEvent = (): void => {
                 v-bind="headerCellPreset(col)"
                 @click="col.sortable ? sortColumn(col.field) : null"
               >
-                <span class="inline-flex gap-2 items-center leading-[18px]">
+                <span v-bind="Preset.headercellcontent">
                   {{ col.header }}
 
                   <Icon
@@ -857,17 +869,16 @@ const listenUpdateTableEvent = (): void => {
               </th>
 
               <th
+                v-bind="headerCellPreset(undefined, props.customColumn)"
                 :id="`column-visibility-toggle-${dataTableID}`"
                 v-if="props.customColumn || props.useOption"
+                :style="`right: ${rightDistanceFrozenColumn}px`"
                 @click="customColumn?.toggleMenu"
-                v-bind="headerCellPreset(undefined, props.customColumn)"
-                class="sticky right-0"
               >
                 <Icon
                   v-if="props.customColumn"
-                  class="!w-4 !h-4 !mx-auto"
+                  v-bind="Preset.columnvisibilityicon"
                   icon="ellipsis-h"
-                  info="Visibilitas Kolom"
                   tooltip-pos="left"
                 />
               </th>
@@ -881,17 +892,14 @@ const listenUpdateTableEvent = (): void => {
             >
               <tr
                 :id="item._id"
-                :class="[
-                  'px-4 transition-transform',
-                  { 'select-none': dragging, 'select-auto': !dragging },
-                  { '!cursor-grab [&_label]:!cursor-grab': draggable(item) },
-                ]"
                 :draggable="draggable(item)"
                 v-bind="
                   Preset?.bodyrow({
                     context: {
                       selected: isRowSelected(item[dataKey]),
                       disabled: isRowDisabled(item[dataKey]),
+                      draggable: draggable(item),
+                      dragging,
                     },
                     props,
                   })
@@ -904,34 +912,19 @@ const listenUpdateTableEvent = (): void => {
                 @dragover.prevent=""
                 @dragstart="startReorderRow($event, item, index)"
                 @drop="onRowReorder"
-                @mouseenter="
-                  ($event.target as HTMLLIElement).classList.add(
-                    'bg-primary-50',
-                  )
-                "
-                @mouseleave="
-                  ($event.target as HTMLLIElement).classList.remove(
-                    'bg-primary-50',
-                  )
-                "
               >
-                <td
-                  v-if="reorderable && !sortOrder"
-                  v-bind="Preset?.bodycell"
-                  class="w-[40px]"
-                >
+                <td v-if="reorderable && !sortOrder" v-bind="Preset?.bodycell">
                   <Icon
                     v-if="!item.childRow && !item.childRowHeader"
-                    class="w-[18px] h-[18px] !p-0 !m-0 !cursor-grab [&_label]:!cursor-grab"
+                    class="draggableicon"
                     icon="dragable-menu"
                   />
                 </td>
 
                 <td
                   v-if="selectionType === 'checkbox'"
-                  @click.stop=""
                   v-bind="Preset?.bodycell"
-                  class="w-[40px] text-center"
+                  @click.stop=""
                 >
                   <Checkbox
                     v-if="!item.childRow && !item.childRowHeader"
@@ -944,25 +937,25 @@ const listenUpdateTableEvent = (): void => {
 
                 <td
                   v-if="treeTable"
+                  v-bind="Preset?.bodycell"
                   @click="
                     (e) => {
                       (item.childRow || item.childRowHeader) &&
                         e.stopPropagation();
                     }
                   "
-                  v-bind="Preset?.bodycell"
-                  class="w-[40px] text-center"
                 >
                   <Button
                     v-if="item.children?.length"
-                    :class="[
-                      '!p-0 !m-0 !w-auto !h-auto',
-                      { 'rotate-180': isRowExpanded(item[dataKey]) },
-                      { 'rotate-0': !isRowExpanded(item[dataKey]) },
-                    ]"
                     @click.stop="toggleRowExpand(item, index)"
+                    v-bind="
+                      Preset.rowtogglerbutton({
+                        context: {
+                          isRowExpanded: isRowExpanded(item[dataKey]),
+                        },
+                      })
+                    "
                     icon="arrow-down"
-                    icon-class="w-6 h-6"
                     text
                   />
                 </td>
@@ -987,7 +980,8 @@ const listenUpdateTableEvent = (): void => {
 
                 <td
                   v-else-if="item.childRowHeader"
-                  :class="[Preset?.bodycell.class, 'font-semibold text-xs']"
+                  v-bind="Preset.childrowheader"
+                  :class="Preset?.bodycell.class"
                   :colspan="props.columns.length"
                   @click.stop=""
                 >
@@ -1080,7 +1074,7 @@ const listenUpdateTableEvent = (): void => {
 
                     <template v-else-if="col.editable">
                       <span
-                        :class="['focus:px-2']"
+                        v-bind="Preset.celleditableelement"
                         :contenteditable="col.editable"
                         @blur="
                           (e: Event) => {
@@ -1092,7 +1086,6 @@ const listenUpdateTableEvent = (): void => {
                             } as DataTableCellEditedEvent);
                           }
                         "
-                        class="w-full inline-block py-2 focus:outline-grayscale-600 focus:outline-1"
                       >
                         {{ getNestedProperyValue(item, col.field) || '-' }}
                       </span>
@@ -1137,38 +1130,29 @@ const listenUpdateTableEvent = (): void => {
                   </td>
 
                   <td
+                    ref="rowSingleActionCell"
                     v-if="useOption || customColumn"
-                    v-bind="Preset?.bodycell"
-                    :class="[
-                      'group-hover:!bg-primary-50',
-                      {
-                        'sticky right-0 bg-white': useOption,
-                        '!bg-primary-100': isRowSelected(item[dataKey]),
-                      },
-                    ]"
+                    v-bind="
+                      Preset?.rowsingleactioncell({
+                        props,
+                        context: {
+                          selected: isRowSelected(item[dataKey]),
+                        },
+                      })
+                    "
+                    :class="Preset.bodycell.class"
+                    :style="`right: ${rightDistanceFrozenColumn}px`"
                   >
-                    <div
-                      v-if="useOption"
-                      class="relative w-full h-full flex items-center justify-center"
-                      data-wv-section="single-action-wrapper"
-                    >
+                    <div v-if="useOption" v-bind="Preset.singleactionwrapper">
                       <Button
                         :id="'button-action-' + item[props.dataKey]"
-                        :class="[
-                          {
-                            'pointer-events-none !border-general-100 [&>i]:text-general-200':
-                              disableAllRows,
-                          },
-                          { 'pointer-events-auto': !disableAllRows },
-                        ]"
+                        v-bind="Preset.singleactionbutton({ props })"
                         :disabled="disableAllRows"
                         @click.stop="toggleOptions($event, item)"
-                        data-wv-section="button-action"
                         icon="ellipsis-h"
                         outlined
                         severity="secondary"
                         size="small"
-                        tooltip="Aksi"
                         tooltip-pos="left"
                         type="button"
                       />
@@ -1182,22 +1166,22 @@ const listenUpdateTableEvent = (): void => {
       </div>
 
       <template v-if="!loadingTable && !currentPageTableData?.length">
-        <div class="w-full p-4 flex items-center justify-center">
+        <div v-bind="Preset.nodatalottiewrapper">
           <DotLottieVue
             :src="noDataLottie as string"
+            v-bind="Preset.nodatalottie"
             autoplay
-            class="w-44 h-auto"
             loop
           />
         </div>
       </template>
 
       <template v-if="loadingTable">
-        <div class="sticky left-0 w-full p-4 flex items-center justify-center">
+        <div v-bind="Preset.loadingtablewrapper">
           <DotLottieVue
             :src="loadingTableLottie as string"
+            v-bind="Preset.loadingtablelottie"
             autoplay
-            class="w-20 h-auto"
             loop
           />
         </div>
@@ -1209,16 +1193,10 @@ const listenUpdateTableEvent = (): void => {
       v-if="usePaginator"
       v-show="!loadingTable"
       v-model:rows="tableRows"
-      :current-page-report-template="
-        totalRecords
-          ? 'Menampilkan {first} - {last} dari {totalRecords}'
-          : 'Tidak ditemukan data'
-      "
+      v-bind="Preset.paginator({ context: { totalRecords } })"
       :rows-per-page-options="rowsPerPageOptions"
       :total-records="totalRecords"
       @page="handlePageChange"
-      class="sticky left-0 bottom-0"
-      template="FirstPageLink PrevPageLink PageLinks JumpToPageInput NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
     >
       <template #firstpagelinkicon>
         <Icon icon="round-keyboard-double-arrow-left" />

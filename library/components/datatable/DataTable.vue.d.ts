@@ -395,21 +395,6 @@ export interface TreeTableProps extends Omit<BaseDataTableProps, 'columns'> {
    * Properties to be passed into sub table
    */
   childTableProps?: ChildTableProps;
-  /**
-   * Props to set scroll height, this will make table content scrollable
-   * @example '50vh' or '300px'
-   */
-  scrollHeight?: string;
-  /**
-   * When the row height sets to fixed, it will have 35px height
-   *
-   * @defaultValue 'fixed'
-   */
-  rowHeight?: 'fixed' | 'auto';
-  /**
-   * To determine if row table is reorder-able
-   */
-  reorderable?: boolean;
 }
 
 export interface BaseDataTableProps {
@@ -528,9 +513,20 @@ export interface BaseDataTableProps {
    */
   customColumn?: boolean;
   /**
-   * Set the scrollHeight in px
+   * Props to set scroll height, this will make table content scrollable
+   * @example '50vh' or '300px'
    */
   scrollHeight?: string;
+  /**
+   * When the row height sets to fixed, it will have 35px height
+   *
+   * @defaultValue 'fixed'
+   */
+  rowHeight?: 'fixed' | 'auto';
+  /**
+   * To determine if row table is reorder-able
+   */
+  reorderable?: boolean;
   /**
    * An array of fields as string to use in global filtering.
    */

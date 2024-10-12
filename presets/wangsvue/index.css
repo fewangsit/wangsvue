@@ -7,61 +7,59 @@
 @tailwind utilities;
 
 * {
-    font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .font-poppins {
-    font-family: 'Poppins', sans-serif !important;
+  font-family: 'Poppins', sans-serif !important;
 }
 
 .font-source-code-pro {
-    font-family: 'Source Code Pro', monospace;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
+  font-family: 'Source Code Pro', monospace;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
 h1,
 .heading-1 {
-    @apply !text-[22px] !font-semibold leading-7;
+  @apply !text-[22px] !font-semibold leading-7;
 }
 
 h2,
 .heading-2 {
-    @apply !text-lg !font-semibold leading-6;
+  @apply !text-lg !font-semibold leading-6;
 }
 
 h3,
 .heading-3 {
-    @apply !text-base !font-medium leading-5;
+  @apply !text-base !font-medium leading-5;
 }
 
 h4,
 .heading-4 {
-    @apply !text-sm !font-medium leading-4;
+  @apply !text-sm !font-medium leading-4;
 }
 
 p,
 .p {
-    @apply !text-xs !font-normal leading-4;
+  @apply !text-xs !font-normal leading-4;
 }
 
 h5,
 .heading-5 {
-    @apply !text-xs !font-semibold leading-4;
+  @apply !text-xs !font-semibold leading-4;
 }
 
 h6,
 .heading-6 {
-    @apply !text-[10px] !font-semibold leading-3;
+  @apply !text-[10px] !font-semibold leading-3;
 }
 
-@layer utilities {
-    .scrollbar-w-none {
-        scrollbar-width: none;
-    }
+.scrollbar-w-none {
+  scrollbar-width: none;
+}
 
-    .scrollbar-w-thin {
-        scrollbar-width: thin;
-    }
+.scrollbar-w-thin {
+  scrollbar-width: thin;
 }
