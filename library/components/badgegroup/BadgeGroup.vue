@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, inject, ref } from 'vue';
 import Badge from 'lib/components/badge/Badge.vue';
 import type { BadgeGroupProps } from 'lib/components/badgegroup/BadgeGroup.vue.d';
 import Button from 'lib/components/button/Button.vue';
 import Dialog from 'primevue/dialog';
 
 const props = defineProps<BadgeGroupProps>();
+
+const Preset = inject<Record<string, any>>('preset', {}).badge;
 
 const showedLabels = computed(() => {
   if (props.limit) return props.labels.slice(0, props.limit);
@@ -20,7 +22,7 @@ const detailDialog = ref(false);
 </script>
 
 <template>
-  <div class="flex flex-nowrap items-center gap-1">
+  <div v-bind="Preset?.group">
     <template v-if="props.limit">
       <Badge
         :key="index"
@@ -65,7 +67,7 @@ const detailDialog = ref(false);
     }"
     modal
   >
-    <div class="flex flex-wrap gap-1">
+    <div v-bind="Preset?.groupdialog">
       <Badge
         :key="index"
         v-for="(label, index) in props.labels"

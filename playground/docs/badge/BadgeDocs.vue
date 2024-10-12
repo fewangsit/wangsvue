@@ -46,6 +46,7 @@ import BadgeGroup from 'lib/components/badgegroup/BadgeGroup.vue';
           ]"
           :limit="2"
           format="username"
+          severity="primary"
         />
       </div>
     </template>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Dropdown, { DropdownChangeEvent } from 'primevue/dropdown';
 import Badge, { BadgeProps } from 'lib/components/badge/Badge.vue.d';
 import { useField } from 'vee-validate';
 import {
@@ -10,26 +11,27 @@ import {
   ref,
   watch,
 } from 'vue';
-
 import type {
   DropdownEmits,
   DropdownProps,
 } from 'lib/components/dropdown/Dropdown.vue.d';
-
 import { DropdownOption, OptionValue } from 'lib/types/options.type';
 import { FieldValidation } from '../form/Form.vue.d';
+import { filterOptions } from 'lib/utils';
+import { cloneDeep } from 'lodash';
+import { Nullable } from '../ts-helpers';
 
 import FieldWrapper from 'lib/components/fieldwrapper/FieldWrapper.vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import InputGroup from 'lib/components/inputgroup/InputGroup.vue';
 import ValidatorMessage from 'lib/components/validatormessage/ValidatorMessage.vue';
-import { filterOptions } from 'lib/utils';
-import { cloneDeep } from 'lodash';
-import Dropdown, { DropdownChangeEvent } from 'primevue/dropdown';
 import InputGroupAddon from 'primevue/inputgroupaddon';
-import { Nullable } from '../ts-helpers';
 
 const Preset = inject<Record<string, any>>('preset', {}).dropdown;
+const InputGroupAddonPreset = inject<Record<string, any>>(
+  'preset',
+  {},
+).inputgroupaddon;
 
 const props = withDefaults(defineProps<DropdownProps>(), {
   filter: true,
@@ -196,9 +198,9 @@ defineExpose({
         :pt="{
           wrapper: Preset?.wrapper({ props }),
         }"
-        :virtual-scroller-options="{
-          itemSize: 32,
-        }"
+        :virtual-scroller-options="
+          options?.length > 10 ? { itemSize: 32 } : undefined
+        "
         @change="updateFieldValue"
         @hide="isShowOverlay = false"
         @show="$emit('show'), (isShowOverlay = true)"
@@ -245,8 +247,16 @@ defineExpose({
 
       <InputGroupAddon
         v-if="$slots['addon-right']"
-        :class="{
-          '!text-general-200': props.disabled,
+        :pt="{
+          root: InputGroupAddonPreset.root({
+            props: {
+              class: [
+                {
+                  '!text-general-200': props.disabled,
+                },
+              ],
+            },
+          }),
         }"
       >
         <slot name="addon-right" />

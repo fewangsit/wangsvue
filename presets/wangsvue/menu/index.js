@@ -99,9 +99,9 @@ export default {
       'w-4 h-4',
     ],
   },
-  label: {
-    class: ['text-inherit', 'leading-4'],
-  },
+  label: ({ props }) => ({
+    class: ['text-inherit', { '!text-danger-500': props.danger }],
+  }),
   submenuheader: {
     class: [
       // Font

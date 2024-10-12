@@ -1,43 +1,54 @@
 export default {
-  root: ({ props, context }) => ({
-    class: [
-      // Font
-      'font-medium',
-      {
-        'text-xs leading-[1.5rem]': props.size == null,
-        'text-lg leading-[2.25rem]': props.size == 'large',
-        'text-2xl leading-[3rem]': props.size == 'xlarge',
-      },
-
+  root: ({ props }) => ({
+    'class': [
       // Alignment
-      'text-center inline-block',
+      'inline-flex items-center',
 
       // Size
-      'p-0 px-1',
-      {
-        'min-w-[1.5rem] h-[1.5rem]': props.size == null,
-        'min-w-[2.25rem] h-[2.25rem]': props.size == 'large',
-        'min-w-[3rem] h-[3rem]': props.size == 'xlarge',
-      },
+      'py-1 px-2',
 
       // Shape
-      {
-        'rounded-full': props.value.length == 1,
-        'rounded-[0.71rem]': props.value.length !== 1,
-      },
+      'rounded-[50px]',
 
       // Color
-      'text-white',
       {
-        'bg-primary-500':
+        '!text-general-400 !bg-general-100': props.disabled,
+        'text-success-800 bg-success-100': props.severity == 'success',
+        'text-primary-800 bg-primary-200':
           props.severity == null || props.severity == 'primary',
-        'bg-surface-500': props.severity == 'secondary',
-        'bg-green-500': props.severity == 'success',
-        'bg-blue-500': props.severity == 'info',
-        'bg-orange-500': props.severity == 'warning',
-        'bg-purple-500': props.severity == 'help',
-        'bg-red-500': props.severity == 'danger',
+        'text-grayscale-900 bg-grayscale-500': props.severity == 'dark',
+        'text-warning-600 bg-warning-100': props.severity == 'warning',
+        'text-danger-700 bg-danger-200': props.severity == 'danger',
+      },
+    ],
+    'data-wv-section': 'badge',
+  }),
+  input: ({ props }) => ({
+    class: [
+      'text-nowrap whitespace-nowrap font-normal text-xs leading-4 tracking-[0.2488px]',
+      {
+        'caret-surface-700': props.editable,
+        'cursor-default': !!props.badgeTooltip,
       },
     ],
   }),
+  button: ({ props }) => ({
+    class: [
+      'remove-btn',
+      {
+        '!text-primary-800':
+          !props.badgeSeverity || props.badgeSeverity === 'primary',
+        '!text-success-800': props.badgeSeverity === 'success',
+        '!text-danger-700': props.badgeSeverity === 'danger',
+        '!text-warning-600': props.badgeSeverity === 'warning',
+        '!text-grayscale-900': props.badgeSeverity === 'dark',
+      },
+    ],
+  }),
+  group: {
+    class: ['flex flex-nowrap items-center gap-1'],
+  },
+  groupdialog: {
+    class: ['flex flex-wrap gap-1'],
+  },
 };

@@ -24,6 +24,7 @@ export default {
 
       // Color
       'bg-general-50',
+      ...props.class,
     ],
-  })
+  }),
 };

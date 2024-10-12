@@ -24,8 +24,7 @@ export default {
     class: ['text-sm font-normal'],
   },
   content: {
-    class:
-      'flex flex-col gap-2 text-xs text-grayscale-900',
+    class: 'flex flex-col gap-3 text-xs text-grayscale-900',
   },
   footer: {
     class: ['inline-flex gap-1 text-xs items-center'],
