@@ -1,19 +1,19 @@
 <script setup lang="ts">
+import { MultiSelectOption } from 'lib/types/options.type';
+import { useToast } from 'lib/utils';
 import { reactive, watch } from 'vue';
 import FilterContainer from '../filtercontainer/FilterContainer.vue';
 import {
   FilterField,
   MultiSelectFilterField,
 } from '../filtercontainer/FilterContainer.vue.d';
-import { useToast } from 'lib/utils';
-import { MultiSelectOption } from 'lib/types/options.type';
 
+import LogServices from 'lib/services/log.service';
 import {
+  BaseChangelogPageProps,
   ChangelogFilter,
   ChangelogOptionQuery,
-  BaseChangelogPageProps,
 } from './ChangelogPage.vue.d';
-import LogServices from 'lib/services/log.service';
 
 type ChangelogOptionFields = keyof Omit<
   ChangelogOptionQuery,
@@ -172,6 +172,5 @@ watch(filter, () => {
     :fields-per-row="props.moduleId || props.subModuleId ? 4 : 3"
     :table-name="props.tableName"
     @clear="clearFilter"
-    data-wv-name="changelog-filter"
   />
 </template>
