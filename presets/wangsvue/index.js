@@ -5,6 +5,7 @@ import avatargroup from './avatargroup/index.js';
 import badge from './badge/index.js';
 import badgedirective from './badgedirective/index.js';
 import button from './button/index.js';
+import buttonfilter from './buttonfilter/index.js';
 import buttonsearch from './buttonsearch/index.js';
 import calendar from './calendar/index.js';
 import card from './card/index.js';
@@ -127,6 +128,7 @@ const wangsvue = {
   //Buttons
   button,
   buttonsearch,
+  buttonfilter,
   splitbutton,
 
   //Data

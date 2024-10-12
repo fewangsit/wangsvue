@@ -1,10 +1,15 @@
 <script lang="ts" setup>
-import { inject, shallowRef } from 'vue';
-import { ButtonFilterProps } from './ButtonFilter.vue.d';
-import Icon from '../icon/Icon.vue';
 import eventBus from 'lib/event-bus';
+import { inject, shallowRef } from 'vue';
+import Icon from '../icon/Icon.vue';
+import { ButtonFilterProps } from './ButtonFilter.vue.d';
 
 const { buttonFocusClass } = inject<Record<string, any>>('preset', {}).button;
+
+const ButtonFilterPreset = inject<Record<string, any>>(
+  'preset',
+  {},
+).buttonfilter;
 
 const { tableName } = withDefaults(defineProps<ButtonFilterProps>(), {
   tableName: 'datatable',
@@ -24,10 +29,14 @@ const toggleFilterPanel = (): void => {
 </script>
 
 <template>
-  <button :class="buttonFocusClass" @click="toggleFilterPanel" type="button">
+  <button
+    v-bind="ButtonFilterPreset?.buttontrigger"
+    @click="toggleFilterPanel"
+    type="button"
+  >
     <Icon
+      v-bind="ButtonFilterPreset?.icon"
       :icon="showFilter ? 'filter-fill' : 'filter'"
-      class="text-2xl"
       info="Filter"
       severity="secondary"
       tooltip-pos="bottom"
