@@ -198,9 +198,9 @@ defineExpose({
         :pt="{
           wrapper: Preset?.wrapper({ props }),
         }"
-        :virtual-scroller-options="{
-          itemSize: 32,
-        }"
+        :virtual-scroller-options="
+          options.length > 10 ? { itemSize: 32 } : undefined
+        "
         @change="updateFieldValue"
         @hide="isShowOverlay = false"
         @show="$emit('show'), (isShowOverlay = true)"

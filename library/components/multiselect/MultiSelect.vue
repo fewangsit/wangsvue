@@ -155,9 +155,9 @@ defineExpose({
         :placeholder="multiSelectPlaceholder"
         :selected-items-label="props.selectedItemsLabel"
         :show-toggle-all="props.filter"
-        :virtual-scroller-options="{
-          itemSize: 32,
-        }"
+        :virtual-scroller-options="
+          options.length > 10 ? { itemSize: 32 } : undefined
+        "
         @hide="(isShowOverlay = false), $emit('hide')"
         @show="$emit('show'), (isShowOverlay = true)"
       >
