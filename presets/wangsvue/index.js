@@ -5,10 +5,13 @@ import avatargroup from './avatargroup/index.js';
 import badge from './badge/index.js';
 import badgedirective from './badgedirective/index.js';
 import button from './button/index.js';
+import buttonfilter from './buttonfilter/index.js';
+import buttonsearch from './buttonsearch/index.js';
 import calendar from './calendar/index.js';
 import card from './card/index.js';
 import carousel from './carousel/index.js';
 import cascadeselect from './cascadeselect/index.js';
+import changelog from './changelog/index.js';
 import checkbox from './checkbox/index.js';
 import chip from './chip/index.js';
 import chips from './chips/index.js';
@@ -126,6 +129,8 @@ const wangsvue = {
 
   //Buttons
   button,
+  buttonsearch,
+  buttonfilter,
   splitbutton,
 
   //Data
@@ -139,6 +144,7 @@ const wangsvue = {
   orderlist,
   picklist,
   timeline,
+  changelog,
 
   //Panels
   accordion,

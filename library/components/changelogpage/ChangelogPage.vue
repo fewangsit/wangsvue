@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, ref, shallowRef } from 'vue';
 import { useToast } from 'lib/utils';
-import { FetchResponse, DataTableColumns } from '../datatable/DataTable.vue.d';
+import { computed, inject, ref, shallowRef } from 'vue';
+import { FetchResponse, TableColumn } from '../datatable/DataTable.vue.d';
 
 import {
   ChangelogFilterQuery,
@@ -10,14 +10,15 @@ import {
   ChangelogType,
 } from './ChangelogPage.vue.d';
 
-import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
-import ButtonFilter from '../buttonfilter/ButtonFilter.vue';
-import ChangelogFilter from './ChangelogFilter.vue';
-import DataTable from '../datatable/DataTable.vue';
 import LogServices from 'lib/services/log.service';
 import ButtonDownload from '../buttondownload/ButtonDownload.vue';
+import ButtonFilter from '../buttonfilter/ButtonFilter.vue';
+import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
+import DataTable from '../datatable/DataTable.vue';
+import ChangelogFilter from './ChangelogFilter.vue';
 
 const toast = useToast();
+const Preset = inject<Record<string, any>>('preset', {}).changelog;
 
 const props = withDefaults(defineProps<ChangelogPageProps>(), {
   useButtonDownload: false,
@@ -56,7 +57,7 @@ const tableName = computed<string>(() => {
   );
 });
 
-const changelogColumn = ((): DataTableColumns[] => {
+const changelogColumn = ((): TableColumn[] => {
   const tempColumns = [
     {
       field: 'createdAt',
@@ -144,7 +145,7 @@ const changelogColumn = ((): DataTableColumns[] => {
         return data.modifiedBy ?? '-';
       },
     },
-  ].filter((col) => col.visible) as DataTableColumns[];
+  ].filter((col) => col.visible) as TableColumn[];
 
   if (props.additionalTemplateColumns?.length) {
     props.additionalTemplateColumns?.forEach((each) => {
@@ -172,26 +173,19 @@ const fetchChangelogs = async (
 </script>
 
 <template>
-  <div class="flex flex-col gap-2 justify-between">
-    <div
-      class="flex justify-end gap-1 items-center"
-      data-wv-section="changelog-dialog-header"
-    >
-      <ButtonSearch
-        :table-name="tableName"
-        class="ring-inset"
-        data-wv-section="changelog-dialog-button-search"
-      />
+  <div v-bind="Preset?.root">
+    <div v-bind="Preset?.header">
+      <ButtonSearch v-bind="Preset?.buttonsearch" :table-name="tableName" />
       <ButtonFilter
+        v-bind="Preset?.buttonfilter"
         :table-name="tableName"
         @show-filter="showChangelogFilter = $event"
-        data-wv-section="changelog-dialog-button-filter"
       />
       <ButtonDownload
         v-if="props.useButtonDownload"
+        v-bind="Preset?.buttondownload"
         :file-name="fileName ?? 'Changelog'"
         :table-name="tableName"
-        data-wv-section="changelog-dialog-button-download"
       />
     </div>
     <ChangelogFilter
