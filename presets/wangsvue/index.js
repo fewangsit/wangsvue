@@ -77,7 +77,6 @@ import toolbar from './toolbar/index.js';
 import tooltip from './tooltip/index.js';
 import tree from './tree/index.js';
 import treeselect from './treeselect/index.js';
-import treetable from './treetable/index.js';
 import tristatecheckbox from './tristatecheckbox/index.js';
 
 const directives = {
@@ -128,7 +127,6 @@ const wangsvue = {
   //Data
   paginator,
   datatable,
-  treetable,
   tree,
   dataview,
   dataviewlayoutoptions,

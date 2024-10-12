@@ -63,7 +63,7 @@ const props = withDefaults(defineProps<DataTableProps>(), {
 const emit = defineEmits<DataTableEmits>();
 const singleSelection = defineModel<Data>('singleSelection');
 
-const Preset = inject<Record<string, any>>('preset', {}).treetable;
+const Preset = inject<Record<string, any>>('preset', {}).datatable;
 
 const rowsPerPageOptions = [10, 25, 50, 100];
 const toast = useToast();
