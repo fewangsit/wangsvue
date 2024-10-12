@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue';
+import { computed, inject, shallowRef } from 'vue';
 import { BadgeProps, BadgeEmits } from 'lib/components/badge/Badge.vue.d';
 import { formatUserName } from 'lib/utils';
-import { WangsitStatus } from 'lib/types/wangsStatus.type';
+import { StatusSeverity, WangsitStatus } from 'lib/types/wangsStatus.type';
 
 import Button from 'lib/components/button/Button.vue';
 import getStatusSeverity from 'lib/utils/statusSeverity.util';
 
 const props = withDefaults(defineProps<BadgeProps>(), {});
 const emit = defineEmits<BadgeEmits>();
+
+const Preset = inject<Record<string, any>>('preset', {}).badge;
 
 const hasValue = computed(() => {
   const type = typeof props.label;
@@ -18,27 +20,8 @@ const hasValue = computed(() => {
   );
 });
 
-const badgeSeverity = computed(() => {
+const badgeSeverity = computed<StatusSeverity>(() => {
   return props.severity ?? getStatusSeverity(props.label as WangsitStatus);
-});
-
-const severityClasses = computed<string[]>(() => {
-  if (!props.disabled) {
-    switch (badgeSeverity.value) {
-      case 'success':
-        return ['text-success-800 bg-success-100', ''];
-      case 'danger':
-        return ['text-danger-700 bg-danger-200'];
-      case 'warning':
-        return ['text-warning-600 bg-warning-100'];
-      case 'dark':
-        return ['text-grayscale-900 bg-grayscale-500'];
-      default:
-        return ['text-primary-800 bg-primary-200'];
-    }
-  } else {
-    return ['text-general-400', 'bg-general-100'];
-  }
 });
 
 const formattedText = computed(() => {
@@ -119,16 +102,19 @@ const updateLabel = (inputElement: HTMLElement, badgeEl: HTMLElement): void => {
     ref="badge"
     v-if="hasValue"
     v-tooltip.top="{ value: badgeTooltip, autoHide: false }"
-    :class="severityClasses"
-    class="inline-flex items-center rounded-[50px] py-1 px-2"
+    v-bind="
+      Preset?.root({
+        props: { severity: badgeSeverity, disabled },
+      })
+    "
   >
     <span
       ref="input"
-      :class="[
-        'text-nowrap whitespace-nowrap font-normal text-xs leading-4 tracking-[0.2488px]',
-        { 'cursor-default': !!badgeTooltip },
-        { 'caret-surface-700	': editable },
-      ]"
+      v-bind="
+        Preset?.input({
+          props: { badgeTooltip, editable },
+        })
+      "
       :contenteditable="editable"
       @blur="
         updateLabel(
@@ -143,16 +129,11 @@ const updateLabel = (inputElement: HTMLElement, badgeEl: HTMLElement): void => {
     </span>
     <Button
       v-if="props.removable"
-      :class="[
-        'remove-btn',
-        {
-          '!text-primary-800': !badgeSeverity || badgeSeverity === 'primary',
-          '!text-success-800': badgeSeverity === 'success',
-          '!text-danger-700': badgeSeverity === 'danger',
-          '!text-warning-600': badgeSeverity === 'warning',
-          '!text-grayscale-900': badgeSeverity === 'dark',
-        },
-      ]"
+      v-bind="
+        Preset?.button({
+          props: { badgeSeverity },
+        })
+      "
       :disabled="props.disabled"
       :pt="props.disabled ? ptDisabledBtn : undefined"
       :severity="badgeSeverity"
