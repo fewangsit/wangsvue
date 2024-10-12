@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.223
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.222...v1.4.223)
+
+### 💅 Refactors
+
+- **ImageCompressor:** Implement custom validator message ([5238e19](https://github.com/fewangsit/wangsvue/commit/5238e19))
+
+### 📖 Documentation
+
+- **ImageCompressor:** Remove todo for rounded ([c15b150](https://github.com/fewangsit/wangsvue/commit/c15b150))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.4.222
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.221...v1.4.222)
