@@ -1038,7 +1038,7 @@ const listenUpdateTableEvent = (): void => {
                       <DialogConfirm
                         v-if="col.preset?.confirmDialogProps"
                         :list="[item]"
-                        :visible="showConfirmToggle[item[dataKey]]"
+                        :visible="!!showConfirmToggle[item[dataKey]]"
                         @close="
                           () => {
                             const revert = () =>

@@ -16,6 +16,7 @@ import eventBus, { Events } from 'lib/event-bus';
 const props = withDefaults(defineProps<ButtonBulkActionProps>(), {
   tableName: 'datatable',
   useButton: true,
+  selectedData: [],
 });
 
 const emit = defineEmits<ButtonBulkActionEmits>();
@@ -100,9 +101,9 @@ const handleUpdateSelectedData = (
 
 watch(
   [dataSelected, totalRecords],
-  ([datas, total]) => {
-    if (!datas?.length) selectedOption.value = undefined;
-    isAllDataSelected.value = datas?.length === total;
+  ([data, total]) => {
+    if (!data?.length) selectedOption.value = undefined;
+    isAllDataSelected.value = data?.length === total;
   },
   { deep: true },
 );
