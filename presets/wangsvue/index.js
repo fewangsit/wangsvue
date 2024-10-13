@@ -86,6 +86,7 @@ import tristatecheckbox from './tristatecheckbox/index.js';
 import validatormessage from './validatormessage/index.js';
 import buttonbulkaction from './buttonbulkaction/index';
 import badgegroup from './badgegroup/index.js';
+import breadcrumb from './breadcrumb/index.js';
 
 const directives = {
   badge: badgedirective,
@@ -164,6 +165,7 @@ const wangsvue = {
   menu,
   menubar,
   steps,
+  breadcrumb,
   tieredmenu,
   panelmenu,
   megamenu,
