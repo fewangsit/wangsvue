@@ -8,7 +8,7 @@ const props = withDefaults(defineProps<ButtonDownloadProps>(), {
   tableName: 'datatable',
 });
 
-const { buttonFocusClass } = inject<Record<string, any>>('preset', {}).button;
+const Preset = inject<Record<string, any>>('preset', {}).buttondownload;
 
 const downloadExcel = (): void => {
   const { fileName, tableName } = props;
@@ -19,9 +19,9 @@ const downloadExcel = (): void => {
 </script>
 
 <template>
-  <button :class="buttonFocusClass" @click="downloadExcel" type="button">
+  <button :class="Preset.root" @click="downloadExcel" type="button">
     <Icon
-      class="text-2xl"
+      v-bind="Preset.icon"
       icon="download"
       info="Download"
       severity="secondary"

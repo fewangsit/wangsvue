@@ -1,8 +1,5 @@
-export const buttonFocusClass =
-  'focus-within:ring-2 focus-within:ring-primary-400 focus-within:outline-none rounded-sm';
-
 export default {
-  root: ({ props, context, parent }) => ({
+  root: ({ props, context }) => ({
     class: [
       'relative',
 
@@ -365,8 +362,7 @@ export default {
           !props.plain,
       },
       {
-        'focus:ring-blue-400/50':
-          props.severity === 'info',
+        'focus:ring-blue-400/50': props.severity === 'info',
       },
       // Text & Outlined Button
       {
@@ -406,8 +402,7 @@ export default {
           !props.plain,
       },
       {
-        'focus:ring-purple-400/50':
-          props.severity === 'help',
+        'focus:ring-purple-400/50': props.severity === 'help',
       },
       // Text & Outlined Button
       {
@@ -492,10 +487,10 @@ export default {
       'h-4 w-4',
       'mx-0',
       {
-        'mr-2': props.iconPos == 'left' && props.label != null,
-        'ml-2 order-1': props.iconPos == 'right' && props.label != null,
-        'mb-2': props.iconPos == 'top' && props.label != null,
-        'mt-2': props.iconPos == 'bottom' && props.label != null,
+        'mr-2': props.iconPos === 'left' && props.label != null,
+        'ml-2 order-1': props.iconPos === 'right' && props.label != null,
+        'mb-2': props.iconPos === 'top' && props.label != null,
+        'mt-2': props.iconPos === 'bottom' && props.label != null,
       },
       'animate-spin',
     ],
