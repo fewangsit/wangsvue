@@ -1,16 +1,12 @@
 <script setup lang="ts">
-import eventBus from 'lib/event-bus';
-import InputText from 'primevue/inputtext';
 import { inject, nextTick, ref, shallowRef } from 'vue';
-import Icon from '../icon/Icon.vue';
 import { ButtonSearchEmits, ButtonSearchProps } from './ButtonSearch.vue.d';
 
-const { buttonFocusClass } = inject<Record<string, any>>('preset', {}).button;
+import Icon from '../icon/Icon.vue';
+import eventBus from 'lib/event-bus';
+import InputText from 'primevue/inputtext';
 
-const ButtonSearchPreset = inject<Record<string, any>>(
-  'preset',
-  {},
-).buttonsearch;
+const Preset = inject<Record<string, any>>('preset', {}).buttonsearch;
 
 withDefaults(defineProps<ButtonSearchProps>(), {
   tableName: 'datatable',
@@ -38,11 +34,11 @@ const focusToInput = (): void => {
 
 /**
  * Need to update the query on input to show the clear (x) icon.
- * PrimeVue only update modelValue if input has losen focus
+ * PrimeVue only update modelValue if input has loosened focus
  */
 const updateInput = (event: Event): void => {
   /**
-   * If query is empty string, undefine will be assigned.
+   * If query is empty string, undefined will be assigned.
    * This will ensure the 'search' field always removed while fetching data.
    */
   query.value = (event.target as HTMLInputElement).value || undefined;
@@ -52,21 +48,22 @@ const updateInput = (event: Event): void => {
 <template>
   <button
     v-if="!showSearchInput"
-    v-bind="ButtonSearchPreset?.buttontrigger(buttonFocusClass)"
     @click="showSearchForm"
+    v-bind="Preset?.buttontrigger.root({ context: { showSearchInput } })"
     type="button"
   >
     <Icon
-      v-bind="ButtonSearchPreset?.icon()"
+      v-bind="Preset?.buttontrigger.icon"
       icon="search"
       info="Search"
       severity="secondary"
       tooltip-pos="bottom"
     />
   </button>
+
   <form
     v-else
-    v-bind="ButtonSearchPreset?.form(showSearchInput)"
+    v-bind="Preset?.form({ context: { showSearchInput } })"
     @submit.prevent="
       () => {
         eventBus.emit('search-table', { tableName, search: query });
@@ -75,9 +72,6 @@ const updateInput = (event: Event): void => {
     "
   >
     <button
-      v-bind="
-        ButtonSearchPreset?.buttontrigger(buttonFocusClass, showSearchInput)
-      "
       @click="
         () => {
           query = undefined;
@@ -87,28 +81,31 @@ const updateInput = (event: Event): void => {
           $emit('search', undefined);
         }
       "
+      v-bind="Preset?.collapsebutton.root({ context: { showSearchInput } })"
       type="button"
     >
-      <Icon
-        v-bind="ButtonSearchPreset?.icon(showSearchInput)"
-        icon="arrow-left"
-      />
+      <Icon v-bind="Preset?.collapsebutton.icon" icon="arrow-left" />
     </button>
 
     <InputText
-      v-bind="ButtonSearchPreset?.inputtext"
+      v-bind="Preset?.inputtext"
       ref="inputtext"
       :model-value="query"
       @input="updateInput"
       placeholder="Cari"
     />
+
     <button
-      v-bind="ButtonSearchPreset?.buttonclose(buttonFocusClass, query)"
-      @click="(query = undefined), focusToInput()"
+      @click="
+        query = undefined;
+        focusToInput();
+      "
+      v-bind="Preset?.resetbutton.root({ query })"
       type="button"
     >
-      <Icon v-bind="ButtonSearchPreset?.iconclose" icon="close" />
+      <Icon v-bind="Preset?.resetbutton.icon" icon="close" />
     </button>
-    <button v-bind="ButtonSearchPreset?.buttonsubmit" type="submit" />
+
+    <button v-bind="Preset?.hiddensubmit" type="submit" />
   </form>
 </template>
