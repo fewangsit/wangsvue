@@ -1,5 +1,10 @@
 export default {
-  root: ({ props }) => ({
+  root: {
+    'class': 'flex items-center w-max gap-1 cursor-pointer text-xs',
+    'data-wv-name': 'buttonradio',
+    'data-wv-section': 'root',
+  },
+  wrapper: ({ props }) => ({
     class: [
       'relative',
 
@@ -15,8 +20,6 @@ export default {
 
       // Colors
       {
-        'text-surface-700/80':
-          props.value !== props.modelValue && props.value !== undefined,
         'bg-white':
           props.value !== props.modelValue &&
           props.value !== undefined &&
@@ -34,7 +37,7 @@ export default {
       },
 
       // Misc
-      // 'cursor-pointer',
+      'cursor-pointer',
     ],
   }),
   box: ({ props }) => ({
@@ -105,7 +108,7 @@ export default {
       // 'border-2 border-surface-300',
 
       // Misc
-      'appareance-none',
+      'appearance-none',
       { 'cursor-default': props.disabled, 'cursor-pointer': !props.disabled },
     ],
   }),

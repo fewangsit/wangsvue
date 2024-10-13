@@ -100,11 +100,11 @@ export interface ButtonRadioProps {
    */
   label?: string;
   /**
-   * Value of the checkbox.
+   * Value of the input.
    */
   value?: any;
   /**
-   * Value binding of the checkbox.
+   * Value binding of the input.
    */
   modelValue?: any;
   /**
@@ -152,29 +152,6 @@ export interface ButtonRadioProps {
    * Style class of the input field.
    */
   inputClass?: string | object | undefined;
-  /**
-   * Establishes relationships between the component and label(s) where its value should be one or more element IDs.
-   */
-  ariaLabelledby?: string | undefined;
-  /**
-   * Establishes a string value that labels the component.
-   */
-  ariaLabel?: string | undefined;
-  /**
-   * Used to pass attributes to DOM elements inside the component.
-   * @type {ButtonRadioPassThroughOptions}
-   */
-  pt?: PassThrough<ButtonRadioPassThroughOptions>;
-  /**
-   * Used to configure passthrough(pt) options of the component.
-   * @type {PassThroughOptions}
-   */
-  ptOptions?: PassThroughOptions;
-  /**
-   * When enabled, it removes component related styles in the core.
-   * @defaultValue false
-   */
-  unstyled?: boolean;
 }
 
 /**

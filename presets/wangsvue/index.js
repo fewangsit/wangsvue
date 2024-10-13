@@ -58,7 +58,7 @@ import panelmenu from './panelmenu/index.js';
 import password from './password/index.js';
 import picklist from './picklist/index.js';
 import progressbar from './progressbar/index.js';
-import radiobutton from './radiobutton/index.js';
+import buttonradio from './buttonradio/index.js';
 import rating from './rating/index.js';
 import ripple from './ripple/index.js';
 import scrollpanel from './scrollpanel/index.js';
@@ -109,7 +109,7 @@ const wangsvue = {
   inputbadge,
   calendar,
   checkbox,
-  radiobutton,
+  buttonradio,
   inputswitch,
   selectbutton,
   slider,
