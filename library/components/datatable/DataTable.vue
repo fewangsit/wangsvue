@@ -802,7 +802,6 @@ const listenUpdateTableEvent = (): void => {
 </script>
 
 <template>
-  {{ rightDistanceFrozenColumn }}
   <div v-bind="Preset?.root">
     <div v-bind="Preset?.tablewrapper" ref="tableWrapper">
       <div v-bind="Preset?.scrollheightwrapper({ props })">

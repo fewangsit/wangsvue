@@ -20,9 +20,7 @@ const focusToInput = (e: MouseEvent): void => {
 
 <template>
   <InputGroup
-    :pt="{
-      root: Preset.root({ props: { ...$props, class: $attrs['class'] } }),
-    }"
+    v-bind="Preset.root({ props: { ...$props, class: $attrs['class'] } })"
     @click="focusToInput"
   >
     <slot />

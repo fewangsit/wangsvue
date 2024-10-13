@@ -32,6 +32,6 @@ export default {
       'bg-white',
       props.class,
     ],
-    'data-wv-section': 'input-group',
+    'data-wv-section': 'inputgroup',
   }),
 };
