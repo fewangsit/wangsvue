@@ -84,6 +84,7 @@ import tree from './tree/index.js';
 import treeselect from './treeselect/index.js';
 import tristatecheckbox from './tristatecheckbox/index.js';
 import validatormessage from './validatormessage/index.js';
+import buttonbulkaction from './buttonbulkaction/index';
 
 const directives = {
   badge: badgedirective,
@@ -95,7 +96,7 @@ const wangsvue = {
   global,
   directives,
 
-  //Forms
+  // Forms
   form,
   autocomplete,
   dropdown,
@@ -127,14 +128,15 @@ const wangsvue = {
   password,
   validatormessage,
 
-  //Buttons
+  // Buttons
   button,
   buttondownload,
+  buttonbulkaction,
   buttonsearch,
   buttonfilter,
   splitbutton,
 
-  //Data
+  // Data
   paginator,
   datatable,
   tree,
@@ -146,7 +148,7 @@ const wangsvue = {
   timeline,
   changelog,
 
-  //Panels
+  // Panels
   accordion,
   panel,
   fieldset,
@@ -156,7 +158,7 @@ const wangsvue = {
   toolbar,
   scrollpanel,
 
-  //Menu
+  // Menu
   contextmenu,
   menu,
   menubar,
@@ -167,7 +169,7 @@ const wangsvue = {
   dock,
   tabmenu,
 
-  //Overlays
+  // Overlays
   dialog,
   dialogconfirm,
   dialogform,
@@ -175,15 +177,15 @@ const wangsvue = {
   sidebar,
   confirmpopup,
 
-  //Messages
+  // Messages
   message,
   inlinemessage,
   toast,
 
-  //Media
+  // Media
   carousel,
 
-  //Misc
+  // Misc
   badge,
   avatar,
   avatargroup,

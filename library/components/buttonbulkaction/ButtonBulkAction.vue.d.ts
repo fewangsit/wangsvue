@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DefineComponent } from 'vue';
 import { MenuItem } from '../menuitem';
 
@@ -22,7 +21,7 @@ export interface ButtonBulkActionProps {
   /**
    * Multiple bulk action mounted at the same time will cause unexpected behavior.
    *
-   * You need to set the appropiate id the same with the table-name where the bulkaction used for.
+   * You need to set the appropriate id the same with the table-name where the bulkaction used for.
    */
   tableName?: string;
 }
@@ -30,7 +29,7 @@ export interface ButtonBulkActionProps {
 export interface ButtonBulkActionSlots {
   /**
    * Use additional slot like input field.
-   * The button Apply will shown if the selected option use additional slot.
+   * The button Apply will be shown if the selected option use additional slot.
    *
    * @slotprops selectedOption the current selected option/action. you can do conditional based on this slotprops.
    */
@@ -41,7 +40,7 @@ export type ButtonBulkActionEmits = {
   /**
    * Emits when Apply button is clicked.
    *
-   * By default 'command' on MenuItem will be executed.
+   * By default, 'command' on MenuItem will be executed.
    * With this event, You can do additional actions.
    */
   'apply': [];

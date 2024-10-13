@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { computed, ref, watch, onMounted, onUnmounted, shallowRef } from 'vue';
+import {
+  computed,
+  ref,
+  watch,
+  onMounted,
+  onUnmounted,
+  shallowRef,
+  inject,
+} from 'vue';
 
 import Menu from 'lib/components/menu/Menu.vue';
 import {
@@ -33,6 +41,8 @@ onUnmounted(() => {
   eventBus.off('data-table:update-total-record');
   eventBus.off('data-table:update-selected-data');
 });
+
+const Preset = inject<Record<string, any>>('preset', {}).buttonbulkaction;
 
 const menu = ref();
 const selectedOption = shallowRef<MenuItem>();
@@ -116,37 +126,25 @@ watch(
 </script>
 
 <template>
-  <div
-    v-show="dataSelected?.length"
-    class="flex gap-2 items-center"
-    data-wv-name="bulkaction"
-    data-wv-section="root"
-  >
+  <div v-show="dataSelected?.length" v-bind="Preset.root">
     <Menu
-      id="bulkaction-overlay-menu"
       ref="menu"
       v-if="dataSelected?.length"
+      v-bind="Preset.menu"
       :model="bulkOptions"
-      :popup="true"
-      data-wv-section="bulkactionmenu"
+      popup
     />
 
-    <span
-      v-show="dataSelected?.length"
-      class="text-xs text-grayscale-900 cursor-default whitespace-nowrap"
-      data-wv-section="selection-message"
-    >
+    <span v-show="dataSelected?.length" v-bind="Preset.selectionmessage">
       {{ dataSelected?.length }} data dipilih
     </span>
 
     <Button
       v-show="showSelectAllButton"
-      :class="[
-        '!px-1.5 !py-1 -ml-1.5 -mr-1.5 !text-xs',
-        { 'pointer-events-none': isAllDataSelected },
-      ]"
       @click="selectAllData"
-      data-wv-section="buttonselectall"
+      v-bind="
+        Preset.buttonselectall({ context: { selectedAll: isAllDataSelected } })
+      "
       text
     >
       <template v-if="!isAllDataSelected">
@@ -157,7 +155,7 @@ watch(
 
     <Button
       @click="toggleMenu"
-      data-wv-section="bulkactiontoggle"
+      v-bind="Preset.bulkactiontoggle"
       icon="ellipsis-h"
       outlined
       severity="secondary"
@@ -165,8 +163,7 @@ watch(
     />
     <Button
       @click="unSelectAllData"
-      class="!p-0 !w-6 !h-6 [&_.icon]:!w-5 [&_.icon]:!h-5"
-      data-wv-section="clearselection"
+      v-bind="Preset.buttonclearselection"
       icon="close"
       severity="danger"
       text
