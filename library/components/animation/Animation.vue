@@ -12,8 +12,8 @@ onMounted(async () => {
 const animationData = shallowRef<string>();
 
 const getAnimationData = async (): Promise<string> => {
-  return (await import(`../../assets/lottie/${props.animation}.lottie`))
-    .default;
+  const animationPath = `../../assets/lottie/${props.animation}.lottie`;
+  return (await import(animationPath)).default;
 };
 </script>
 <template>
