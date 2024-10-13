@@ -21,20 +21,21 @@ export default {
         'text-danger-700 bg-danger-200': props.severity == 'danger',
       },
     ],
-    'data-wv-section': 'badge',
+    'data-wv-name': 'badge',
+    'data-wv-section': 'root',
   }),
-  input: ({ props }) => ({
+  input: ({ props, context }) => ({
     class: [
       'text-nowrap whitespace-nowrap font-normal text-xs leading-4 tracking-[0.2488px]',
       {
         'caret-surface-700': props.editable,
-        'cursor-default': !!props.badgeTooltip,
+        'cursor-default': !!context.badgeTooltip,
       },
     ],
   }),
-  button: ({ props }) => ({
-    class: [
-      'remove-btn',
+  removebutton: ({ props }) => ({
+    'class': [
+      '!p-0 !w-3 !h-3 ml-1',
       {
         '!text-primary-800':
           !props.badgeSeverity || props.badgeSeverity === 'primary',
@@ -43,7 +44,12 @@ export default {
         '!text-warning-600': props.badgeSeverity === 'warning',
         '!text-grayscale-900': props.badgeSeverity === 'dark',
       },
+      {
+        'text-general-400': props.disabled,
+      },
     ],
+    'icon-class': 'w-3 h-3',
+    'data-wv-section': 'removebutton',
   }),
   group: {
     class: ['flex flex-nowrap items-center gap-1'],

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, inject, shallowRef } from 'vue';
+import { computed, inject } from 'vue';
 import { BadgeProps, BadgeEmits } from 'lib/components/badge/Badge.vue.d';
 import { formatUserName } from 'lib/utils';
 import { StatusSeverity, WangsitStatus } from 'lib/types/wangsStatus.type';
@@ -45,17 +45,13 @@ const formattedText = computed(() => {
 /**
  * Show tooltip the full label text when:
  * - The format is not nowrap and the length is more than 12 chars
- * - The format is user name and the length is more than 8 characters
+ * - The format is username and the length is more than 8 characters
  */
 const badgeTooltip = computed(() => {
   return (props.format !== 'nowrap' && props.label.length > 12) ||
     (props.format === 'username' && props.label.length > 8)
     ? props.label
     : undefined;
-});
-
-const ptDisabledBtn = shallowRef({
-  root: { style: 'color: #6C688D !important' },
 });
 
 /**
@@ -73,7 +69,7 @@ const onEditText = (ev: KeyboardEvent): void => {
 
 /**
  * Function to update the label text and emit events.
- * @param text - The new text content for the label.
+ * @param inputElement - the conteneditable span element
  * @param badgeEl - The HTML element representing the label.
  */
 const updateLabel = (inputElement: HTMLElement, badgeEl: HTMLElement): void => {
@@ -110,11 +106,7 @@ const updateLabel = (inputElement: HTMLElement, badgeEl: HTMLElement): void => {
   >
     <span
       ref="input"
-      v-bind="
-        Preset?.input({
-          props: { badgeTooltip, editable },
-        })
-      "
+      v-bind="Preset?.input({ props, context: { badgeTooltip } })"
       :contenteditable="editable"
       @blur="
         updateLabel(
@@ -129,13 +121,8 @@ const updateLabel = (inputElement: HTMLElement, badgeEl: HTMLElement): void => {
     </span>
     <Button
       v-if="props.removable"
-      v-bind="
-        Preset?.button({
-          props: { badgeSeverity },
-        })
-      "
+      v-bind="Preset?.removebutton({ props: { badgeSeverity, disabled } })"
       :disabled="props.disabled"
-      :pt="props.disabled ? ptDisabledBtn : undefined"
       :severity="badgeSeverity"
       @click="emit('remove')"
       icon="close"
@@ -145,16 +132,3 @@ const updateLabel = (inputElement: HTMLElement, badgeEl: HTMLElement): void => {
   </span>
   <span v-else aria-label="invalid-label">-</span>
 </template>
-
-<style scoped>
-.remove-btn {
-  height: 10.13px !important;
-  width: 10.13px !important;
-  min-width: 10.13px !important;
-  padding: 0 !important;
-  margin-left: 4px;
-}
-:deep(.remove-btn i) {
-  font-size: 10.13px;
-}
-</style>
