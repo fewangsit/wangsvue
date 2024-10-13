@@ -4,12 +4,7 @@ import { inject, shallowRef } from 'vue';
 import Icon from '../icon/Icon.vue';
 import { ButtonFilterProps } from './ButtonFilter.vue.d';
 
-const { buttonFocusClass } = inject<Record<string, any>>('preset', {}).button;
-
-const ButtonFilterPreset = inject<Record<string, any>>(
-  'preset',
-  {},
-).buttonfilter;
+const Preset = inject<Record<string, any>>('preset', {}).buttonfilter;
 
 const { tableName } = withDefaults(defineProps<ButtonFilterProps>(), {
   tableName: 'datatable',
@@ -29,13 +24,9 @@ const toggleFilterPanel = (): void => {
 </script>
 
 <template>
-  <button
-    v-bind="ButtonFilterPreset?.buttontrigger"
-    @click="toggleFilterPanel"
-    type="button"
-  >
+  <button @click="toggleFilterPanel" v-bind="Preset?.root" type="button">
     <Icon
-      v-bind="ButtonFilterPreset?.icon"
+      v-bind="Preset?.icon"
       :icon="showFilter ? 'filter-fill' : 'filter'"
       info="Filter"
       severity="secondary"

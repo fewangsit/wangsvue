@@ -12,7 +12,7 @@ const Preset = inject<Record<string, any>>('preset', {}).button;
 const iconProps = computed(() => ({
   icon: props.icon ?? 'check',
   class: [
-    ...Preset?.icon({ props: props }).class,
+    ...(Preset?.icon({ props: props }).class ?? {}),
     { 'text-base': props.icon && !props.label }, // Need to use attrs, because props.label is always undefined.
     ...toArrayClass(props.iconClass),
   ],
