@@ -51,10 +51,4 @@ export default {
     'icon-class': 'w-3 h-3',
     'data-wv-section': 'removebutton',
   }),
-  group: {
-    class: ['flex flex-nowrap items-center gap-1'],
-  },
-  groupdialog: {
-    class: ['flex flex-wrap gap-1'],
-  },
 };

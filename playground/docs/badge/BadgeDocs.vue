@@ -41,7 +41,7 @@ import BadgeGroup from 'lib/components/badgegroup/BadgeGroup.vue';
           :labels="[
             'June Nicolas',
             'Tiffany Glover',
-            'Lori Ritchie',
+            'Lori Richie',
             'Rodney Fadel',
           ]"
           :limit="2"

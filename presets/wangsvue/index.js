@@ -85,6 +85,7 @@ import treeselect from './treeselect/index.js';
 import tristatecheckbox from './tristatecheckbox/index.js';
 import validatormessage from './validatormessage/index.js';
 import buttonbulkaction from './buttonbulkaction/index';
+import badgegroup from './badgegroup/index.js';
 
 const directives = {
   badge: badgedirective,
@@ -187,6 +188,7 @@ const wangsvue = {
 
   // Misc
   badge,
+  badgegroup,
   avatar,
   avatargroup,
   tag,
