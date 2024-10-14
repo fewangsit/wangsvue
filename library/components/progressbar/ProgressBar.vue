@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { inject } from 'vue';
+import { computed, inject } from 'vue';
 import { ProgressBarProps } from './ProgressBar.vue.d';
-import ProgressBar from 'primevue/progressbar';
 
 const Preset = inject<Record<string, any>>('preset', {}).progressbar;
 
@@ -9,27 +8,46 @@ const props = withDefaults(defineProps<ProgressBarProps>(), {
   mode: 'determinate',
   severity: 'primary',
   showValue: true,
+  valuePosition: 'right-side',
 });
+
+const determinate = computed(() => props.mode === 'determinate');
+const indeterminate = computed(() => props.mode === 'indeterminate');
+const inside = computed(() => props.valuePosition === 'inside');
 </script>
 
 <template>
   <div
-    data-wv-name="progressbar"
-    data-wv-section="root"
-    v-bind="Preset?.wrapper"
+    v-bind="Preset.root({ props })"
+    :aria-valuenow="value"
+    aria-valuemax="100"
+    aria-valuemin="0"
+    role="progressbar"
   >
-    <ProgressBar
-      v-bind="props"
-      :pt="{ value: Preset?.value({ props }) }"
-      :show-value="false"
-    />
+    <div v-bind="Preset.container({ props })">
+      <div
+        v-if="determinate"
+        v-bind="Preset.value({ props })"
+        :style="`width: ${value ?? 0}%`"
+      >
+        <div
+          v-if="value != null && value !== 0 && showValue && inside"
+          v-bind="Preset.label({ props })"
+        >
+          <slot name="label">{{ value + '%' }}</slot>
+        </div>
+      </div>
+
+      <div v-if="indeterminate" v-bind="Preset.container({ props })">
+        <div v-bind="Preset.value" />
+      </div>
+    </div>
 
     <span
-      v-if="showValue"
-      v-bind="Preset?.['progressbar-value']"
-      data-wv-section="progressbar-value"
+      v-if="showValue && !inside && determinate"
+      v-bind="Preset.label({ props })"
     >
-      {{ value }}%
+      <slot name="label">{{ value + '%' }}</slot>
     </span>
   </div>
 </template>

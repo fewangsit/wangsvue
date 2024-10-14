@@ -1,5 +1,6 @@
-import { VNode } from 'vue';
+import { Slot } from 'vue';
 import { ClassComponent } from '../ts-helpers';
+import { GlobalComponentConstructor } from 'lib/components/ts-helpers';
 
 /**
  * Defines valid properties in ProgressBar component.
@@ -9,6 +10,13 @@ export interface ProgressBarProps {
    * Current value of the progress.
    */
   value?: number | undefined;
+  /**
+   * Set the position of progress value label position
+   * Only available on mode Determinate
+   *
+   * @default 'right-side'
+   */
+  valuePosition?: 'inside' | 'left-side' | 'right-side';
   /**
    * The progress bar severity color
    *
@@ -32,9 +40,9 @@ export interface ProgressBarProps {
  */
 export interface ProgressBarSlots {
   /**
-   * Custom content slot.
+   * Slot for customizing the value label.
    */
-  default(): VNode[];
+  label: Slot<{ value: number | undefined }>;
 }
 
 /**
@@ -42,7 +50,7 @@ export interface ProgressBarSlots {
  *
  * ProgressBar is a process status indicator._
  *
- * [Live Demo](https://fewangsit.github.io/wangsvue/projectsummary)
+ * [Live Demo](https://fewangsit.github.io/wangsvue/progressbar)
  *
  * --- ---
  * ![WangsVue](https://www.wangs.id/wp-content/uploads/2023/12/cropped-Logo_Wangsid-removebg-preview-192x192.png)
@@ -54,5 +62,11 @@ declare class ProgressBar extends ClassComponent<
   ProgressBarSlots,
   null
 > {}
+
+declare module '@vue/runtime-core' {
+  interface GlobalComponents {
+    ProgressBar: GlobalComponentConstructor<ProgressBar>;
+  }
+}
 
 export default ProgressBar;
