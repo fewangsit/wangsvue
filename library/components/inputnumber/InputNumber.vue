@@ -92,7 +92,7 @@ const setValidatorMessage = async (
     return props.validatorMessage;
   } else if (typeof props.validatorMessage !== 'string') {
     const { empty } = props.validatorMessage ?? {};
-    if (!value && props.mandatory) {
+    if (value == null && props.mandatory) {
       return empty ?? true;
     } else if (value && props.existingValues?.includes(value)) {
       return props.validatorMessage?.exist ?? props.label + ' sudah ada';
