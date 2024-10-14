@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import Menu, { MenuEmits, MenuProps } from './Menu.vue.d';
 import { inject, ref } from 'vue';
 import { WangsIcons } from '../icon/Icon.vue.d';
+import { filterVisibleMenu } from './helpers';
+
+import Menu, { MenuEmits, MenuProps } from './Menu.vue.d';
 import Icon from '../icon/Icon.vue';
 import PrimeMenu from 'primevue/menu';
 
-withDefaults(defineProps<MenuProps>(), { popup: true });
+withDefaults(defineProps<MenuProps>(), { popup: true, model: [] });
 defineEmits<MenuEmits>();
 
 const Preset = inject<Record<string, any>>('preset', {}).menu;
-
 const menu = ref<Menu>();
 const toggle = (e: Event): void => {
   menu.value?.toggle(e);
@@ -34,6 +35,7 @@ defineExpose({
   <PrimeMenu
     v-bind="$props"
     ref="menu"
+    :model="filterVisibleMenu($props.model)"
     @blur="$emit('blur', $event)"
     @focus="$emit('focus', $event)"
   >

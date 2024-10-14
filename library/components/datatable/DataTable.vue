@@ -15,7 +15,6 @@ import { exportToExcel, getNestedProperyValue, useToast } from 'lib/utils';
 import { DataTableExpandedRows } from 'primevue/datatable';
 import { cloneDeep } from 'lodash';
 
-import { filterVisibleMenu } from '../helpers';
 import { Booleanish } from '../ts-helpers';
 import { isArrayIncluded, adjustMenuPositionHelper } from './helpers';
 import {
@@ -52,6 +51,7 @@ type DragableRow = Data & { draggable?: boolean; order?: number };
 const props = withDefaults(defineProps<DataTableProps>(), {
   tableName: 'datatable',
   lazy: true,
+  options: [],
   dataKey: '_id',
   disableKey: 'isDefault',
   selectionType: 'checkbox',
@@ -184,10 +184,6 @@ const isSelectedAll = computed(() => {
 const currentPageDisabledRows = computed(() =>
   getDisabledRows(props.data ?? filterParentRowData() ?? []),
 );
-
-const singleOptions = computed(() => {
-  return filterVisibleMenu(props.options ?? []);
-});
 
 const isRowExpanded = (key: string): boolean => {
   const keys = Object.keys(expandedRows.value);
@@ -1217,7 +1213,7 @@ const listenUpdateTableEvent = (): void => {
     <Menu
       id="single-action-menu"
       ref="optionMenu"
-      :model="singleOptions"
+      :model="options"
       @focus="adjustMenuPositionHelper"
       append-to="body"
       auto-z-index
