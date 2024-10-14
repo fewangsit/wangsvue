@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, watch } from 'vue';
+import { computed, inject, onMounted, reactive, watch } from 'vue';
 import type { TextareaEmits, TextareaProps } from './Textarea.vue.d';
+
 import { FieldValidation } from '../form/Form.vue.d';
 import { Nullable } from 'lib/components/ts-helpers.d';
 import { useField } from 'vee-validate';
@@ -14,7 +15,6 @@ const props = withDefaults(defineProps<TextareaProps>(), {
   maxInput: undefined,
   fieldName: 'textareaInput',
   rows: 5,
-  textareaPt: undefined,
 });
 
 const emit = defineEmits<TextareaEmits>();
@@ -23,11 +23,16 @@ onMounted(() => {
   setValidator();
 });
 
+const Preset = inject<Record<string, any>>('preset', {}).textarea;
+
 const field = reactive<FieldValidation<Nullable<string>>>({
   value: props.value?.trim() ?? props.modelValue?.trim(),
 });
 
 const invalidInput = computed(() => props.invalid || !!field.errorMessage);
+const invalidMessage = computed(() =>
+  props.invalid ? props.validatorMessage : field.errorMessage,
+);
 
 const inputPlaceholder = computed(
   () =>
@@ -89,25 +94,15 @@ watch(
   >
     <Textarea
       v-model="field.value"
+      v-bind="Preset.root({ props, context: { disabled, invalidInput } })"
       :auto-resize="autoResize"
-      :class="[
-        {
-          'resize-none': autoResize,
-          'resize': !autoResize,
-        },
-        {
-          '!border-danger-500 border:bg-danger-500': invalidInput,
-        },
-        inputClass,
-        `min-h-[${rows * 26}px]`,
-      ]"
       :disabled="disabled"
-      :maxlength="props.maxlength"
+      :maxlength="maxlength"
       :placeholder="inputPlaceholder"
-      :pt="props.textareaPt"
-      :rows="props.rows"
+      :rows="rows"
       @update:model-value="emit('update:modelValue', $event)"
     />
-    <ValidatorMessage :message="field.errorMessage" />
+
+    <ValidatorMessage :message="invalidMessage" />
   </FieldWrapper>
 </template>

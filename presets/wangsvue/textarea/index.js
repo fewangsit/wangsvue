@@ -1,13 +1,18 @@
 import { ringClass } from '../global.js';
 
 export default {
-  root: ({ context }) => ({
-    class: [
+  root: ({ context, props }) => ({
+    'class': [
       // Font
-      'font-medium placeholder:text-general-200 text-xs placeholder:font-light leading-[16.39px] tracking-[0.24px]',
+      'font-normal placeholder:text-general-200 placeholder:!font-normal text-xs',
 
       'w-full',
+      {
+        'resize-none': props.autoResize,
+        'resize': !props.autoResize,
+      },
 
+      props.inputClass,
       // Spacing
       'm-0',
       'py-1 px-3',
@@ -15,13 +20,16 @@ export default {
       // Shape
       'rounded',
       'appearance-none',
+
       ...ringClass,
+      {
+        '!ring-danger-500': context.invalidInput,
+      },
+
       // // States
       {
-        'bg-transparent text-general-800':
-          !context.disabled,
-        'bg-general-50 text-general-200':
-          context.disabled,
+        'bg-transparent text-general-800': !context.disabled,
+        'bg-general-50 text-general-200': context.disabled,
       },
       'focus-visible:outline-none',
 
@@ -29,5 +37,8 @@ export default {
       'appearance-none',
       'transition-colors duration-200',
     ],
+    'style': `min-height: ${props.rows * 26}px`,
+    'data-wv-name': 'textarea',
+    'data-wv-section': 'root',
   }),
 };

@@ -1,58 +1,15 @@
-/**
- *
- * Textarea is a multi-line text input element.
- *
- * [Live Demo](https://www.TSVue.org/textarea/)
- *
- * @module textarea
- *
- */
 import { TextareaHTMLAttributes } from 'vue';
 import {
   ClassComponent,
   GlobalComponentConstructor,
   Nullable,
-  PassThrough,
 } from 'lib/components/ts-helpers.d';
 import { InputTextProps } from '../inputtext/InputText.vue.d';
-import { TextareaPassThroughOptionType } from 'primevue/textarea';
-import { ComponentHooks } from '../basecomponent';
-
-/**
- * Defines current options in Textarea component.
- */
-export interface TextareaContext {
-  /**
-   * Current filled state of the component as a boolean.
-   * @defaultValue false
-   */
-  filled: boolean;
-  /**
-   * Current disabled state of the component as a boolean.
-   * @defaultValue false
-   */
-  disabled: boolean;
-}
 
 export type Condition = 'empty' | 'exceed';
 
-/**
- * Custom passthrough(pt) options.
- * @see {@link TextareaProps.pt}
- */
-export interface TextareaPassThroughOptions {
-  /**
-   * Used to pass attributes to the root's DOM element.
-   */
-  root?: TextareaPassThroughOptionType;
-  /**
-   * Used to manage all lifecycle hooks.
-   * @see {@link BaseComponent.ComponentHooks}
-   */
-  hooks?: ComponentHooks;
-}
-
 export type CustomValidation = Partial<Record<Condition, string>>;
+
 /**
  * Defines valid properties in Textarea component. In addition to these, all properties of TextareaHTMLAttributes can be used in this component.
  * @extends TextareaHTMLAttributes
@@ -60,7 +17,7 @@ export type CustomValidation = Partial<Record<Condition, string>>;
  */
 export interface TextareaProps
   extends /* @vue-ignore */ TextareaHTMLAttributes,
-    /* @vue-ignore */ InputTextProps {
+    InputTextProps {
   /**
    * The model value of text area.
    */
@@ -68,9 +25,10 @@ export interface TextareaProps
   /**
    * Sets the initial value of the field. This will only available with option 'useValidator'.
    *
-   * In usecase like edit form, you need to display the previous inputted value.
+   * In use case like edit form, you need to display the previous inputted value.
    */
   value?: Nullable<string>;
+  invalid?: boolean;
   /**
    * Disabled input state.
    */
@@ -86,7 +44,7 @@ export interface TextareaProps
    */
   variant?: 'outlined' | 'filled' | undefined;
   /**
-   * Wether the input should be validated with vee-validator or not.
+   * Whether the input should be validated with vee-validator or not.
    * If you use this component within form input, you need to set this props as true.
    */
   useValidator?: boolean;
@@ -99,18 +57,22 @@ export interface TextareaProps
   fieldName?: string;
   mandatory?: boolean;
   /**
-   * The maximun character length allowed by validator.
+   * The maximum character length allowed by validator.
    *
    * @default unlimited
    */
   maxInput?: number;
   /**
-   * The maximun character length allowed on input.
+   * The maximum character length allowed on input.
    *
    * @default unlimited
    */
   maxlength?: number;
-  invalid?: boolean;
+  /**
+   * @deprecated - now validatorMessage support type CustomValidation
+   *
+   * @see {InputTextProps.validatorMessage}
+   */
   customValidation?: CustomValidation;
   inputClass?: string;
   rows?: number;
@@ -124,7 +86,6 @@ export interface TextareaProps
    * The input label. Tell the user what input is this.
    */
   label?: string;
-  textareaPt?: PassThrough<TextareaPassThroughOptions>;
 }
 
 /**
