@@ -25,7 +25,6 @@ const items = ref(
       >
         <div class="flex flex-col gap-1">
           <Dropdown
-            v-model="model"
             :options="items"
             label="Status"
             option-label="label"

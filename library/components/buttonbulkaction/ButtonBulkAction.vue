@@ -15,7 +15,6 @@ import {
   ButtonBulkActionProps,
 } from './ButtonBulkAction.vue.d';
 import { MenuItem } from '../menuitem';
-import { filterVisibleMenu } from '../helpers';
 import { Data } from '../datatable/DataTable.vue.d';
 
 import Button from '../button/Button.vue';
@@ -25,6 +24,7 @@ const props = withDefaults(defineProps<ButtonBulkActionProps>(), {
   tableName: 'datatable',
   useButton: true,
   selectedData: [],
+  options: [],
 });
 
 const emit = defineEmits<ButtonBulkActionEmits>();
@@ -50,10 +50,6 @@ const totalRecords = shallowRef<number>(0);
 const isAllDataSelected = shallowRef<boolean>(false);
 const isDisabled = shallowRef<boolean>(false);
 const dataSelected = ref<Data[] | undefined>(props.selectedData);
-
-const bulkOptions = computed(() => {
-  return filterVisibleMenu(props.options);
-});
 
 const showSelectAllButton = computed(
   () =>
@@ -131,7 +127,7 @@ watch(
       ref="menu"
       v-if="dataSelected?.length"
       v-bind="Preset.menu"
-      :model="bulkOptions"
+      :model="options"
       popup
     />
 

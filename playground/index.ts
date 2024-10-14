@@ -44,6 +44,7 @@ import AnimationDocs from './docs/animation/AnimationDocs.vue';
 import CommentDocs from './docs/comment/CommentDocs.vue';
 import ButtonRadioDocs from './docs/buttonradio/ButtonRadioDocs.vue';
 import InputBadgeDocs from './docs/inputbadge/InputBadgeDocs.vue';
+import ProgressBarDocs from './docs/progressbar/ProgressBarDocs.vue';
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
@@ -54,6 +55,11 @@ const routes: Readonly<RouteRecordRaw[]> = [
         path: 'table',
         name: 'Tree Table Docs',
         component: TreeTableDocs,
+      },
+      {
+        path: 'progressbar',
+        name: 'ProgressBarDocs',
+        component: ProgressBarDocs,
       },
       {
         path: 'animation',

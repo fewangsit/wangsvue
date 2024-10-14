@@ -68,6 +68,7 @@ export default {
         will-change: left, right;
         animation: p-progressbar-indeterminate-anim 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
     }
+
     @keyframes p-progressbar-indeterminate-anim {
         0% {
             left: -35%;

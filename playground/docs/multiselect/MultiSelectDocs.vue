@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import { OptionValue } from 'lib/types/options.type';
 import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
 import MultiSelect from 'lib/components/multiselect/MultiSelect.vue';
-import { ref } from 'vue';
-import { OptionValue } from 'lib/types/options.type';
 import Button from 'lib/components/button/Button.vue';
 
 const model = ref<OptionValue[]>();
