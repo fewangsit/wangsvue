@@ -1,10 +1,5 @@
 import { ComponentHooks } from '../basecomponent';
-import { PassThroughOptions } from '../passthrough';
-import {
-  ClassComponent,
-  GlobalComponentConstructor,
-  PassThrough,
-} from '../ts-helpers';
+import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
 
 export declare type ButtonRadioPassThroughOptionType =
   | ButtonRadioPassThroughAttributes
