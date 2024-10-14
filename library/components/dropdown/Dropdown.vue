@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Dropdown, { DropdownChangeEvent } from 'primevue/dropdown';
-import Badge, { BadgeProps } from 'lib/components/badge/Badge.vue.d';
+import { BadgeProps } from 'lib/components/badge/Badge.vue.d';
 import { useField } from 'vee-validate';
 import {
   computed,
@@ -22,6 +22,7 @@ import { cloneDeep } from 'lodash';
 import { Nullable } from '../ts-helpers';
 
 import FieldWrapper from 'lib/components/fieldwrapper/FieldWrapper.vue';
+import Badge from 'lib/components/badge/Badge.vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import InputGroup from 'lib/components/inputgroup/InputGroup.vue';
 import ValidatorMessage from 'lib/components/validatormessage/ValidatorMessage.vue';
