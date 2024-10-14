@@ -2,10 +2,12 @@
 import {
   AttachmentFile,
   AttachmentLink,
+  DetailJSONContent,
   DetailText,
   LinkTaskIframeEmbed,
   LinkTaskURL,
 } from './Timeline.vue.d';
+import Editor from '../editor/Editor.vue';
 import Image from '../image/Image.vue';
 import pdf from 'lib/assets/icons/pdf.svg';
 import csv from 'lib/assets/icons/csv.svg';
@@ -20,7 +22,8 @@ defineProps<{
     | LinkTaskIframeEmbed
     | LinkTaskURL
     | AttachmentLink
-    | DetailText;
+    | DetailText
+    | DetailJSONContent;
 }>();
 
 const getFileIcon = (type: string): string | undefined => {
@@ -41,6 +44,12 @@ const getAttchmentFileName = (detail: AttachmentFile): string | undefined => {
   <p v-if="detail.type === 'text'">
     {{ detail.value }}
   </p>
+
+  <Editor
+    v-else-if="detail.type === 'json'"
+    :model-value="detail.value"
+    editor-state="readonly"
+  />
 
   <span v-else-if="detail.type === 'taskUrl'" class="grid">
     <a
@@ -63,7 +72,7 @@ const getAttchmentFileName = (detail: AttachmentFile): string | undefined => {
   <div v-else class="grid grid-cols-[max-content,1fr] gap-2 items-center">
     <Image
       v-if="detail.type === 'image'"
-      :thumbnail="detail.filePath"
+      :src="detail.filePath"
       class="!w-6 !h-6 shrink-0"
     />
 

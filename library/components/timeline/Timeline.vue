@@ -57,8 +57,31 @@ const formatActionTitle = (action: string): string => {
           class="flex flex-col gap-1"
           data-wv-section="itemdetail"
         >
+          <div
+            v-if="$props.alignDetail"
+            class="grid grid-cols-[max-content,max-content,auto] gap-1 items-start"
+          >
+            <template
+              :key="key"
+              v-for="[key, value] in (() =>
+                Object.entries<string | LinkTaskURL | LinkTaskIframeEmbed>(
+                  item.detail,
+                ))()"
+            >
+              <span class="font-semibold whitespace-nowrap"> {{ key }} </span>
+              <span class="font-semibold whitespace-nowrap"> : </span>
+              <span v-if="typeof value === 'string'" class="text-xs">
+                {{ value }}
+              </span>
+              <TimelineContenByType
+                v-else-if="'type' in value"
+                :detail="value"
+              />
+            </template>
+          </div>
           <template
             :key="key"
+            v-else
             v-for="[key, value] in (() =>
               Object.entries<string | LinkTaskURL | LinkTaskIframeEmbed>(
                 item.detail,
@@ -69,8 +92,9 @@ const formatActionTitle = (action: string): string => {
                 v-if="typeof value === 'string'"
                 class="grid grid-cols-[max-content,max-content,auto] gap-1 items-start"
               >
-                <span class="font-semibold whitespace-nowrap"> {{ key }} </span>
-                <span class="font-semibold"> : </span>
+                <span class="font-semibold whitespace-nowrap">
+                  {{ key }}:
+                </span>
                 <span class="text-xs">
                   {{ value }}
                 </span>
@@ -80,9 +104,8 @@ const formatActionTitle = (action: string): string => {
                 <div class="grid grid-rows-[max-content,auto] gap-1">
                   <span>
                     <span class="font-semibold whitespace-nowrap">
-                      {{ key }}
+                      {{ key }}:
                     </span>
-                    <span class="font-semibold"> : </span>
                   </span>
                   <TimelineContenByType :detail="value" />
                 </div>
