@@ -14,7 +14,7 @@ export default {
 
   scrollheightwrapper: ({ props }) => ({
     'class': [
-      'overflow-hidden overflow-x-auto w-max',
+      'overflow-hidden overflow-x-auto',
       {
         '!overflow-y-auto': !!props.scrollHeight,
       },
