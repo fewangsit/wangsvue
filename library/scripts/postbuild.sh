@@ -5,6 +5,7 @@ rm -r dist/types
 cp -r types dist
 cp -r event-bus dist
 cp components/ts-helpers.d.ts dist/components
+cp -r assets/lottie dist/assets/lottie
 
 source_directory="./components"
 target_directory="./dist/components"
