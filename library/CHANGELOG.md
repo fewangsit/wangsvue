@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v1.5.1
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.0...v1.5.1)
+
+### 🏡 Chore
+
+- **presets:** Update version ([8fd7769](https://github.com/fewangsit/wangsvue/commit/8fd7769))
+- **Library:** Copy lottie into dist/assets/lottie on postbuild.sh ([d7af0cb](https://github.com/fewangsit/wangsvue/commit/d7af0cb))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.0
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.223...v1.5.0)
