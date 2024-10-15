@@ -1,6 +1,76 @@
 # Changelog
 
 
+## v1.5.0
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.223...v1.5.0)
+
+### 🩹 Fixes
+
+- **comment:** Upload image & post body ([a91feca](https://github.com/fewangsit/wangsvue/commit/a91feca))
+- Multiselect and dropdown options can be undefined ([9ff6169](https://github.com/fewangsit/wangsvue/commit/9ff6169))
+- Runtime warning in ButtonBulkAction.vue and DataTable.vue ([7e08312](https://github.com/fewangsit/wangsvue/commit/7e08312))
+- **InputNumber:** Zero value should not be treated as empty value ([3305882](https://github.com/fewangsit/wangsvue/commit/3305882))
+- **Dropdown:** Wrong import path for Badge component ([0381ffd](https://github.com/fewangsit/wangsvue/commit/0381ffd))
+
+### 💅 Refactors
+
+- **Card:** Add passthrough props for content gap ([7f478fe](https://github.com/fewangsit/wangsvue/commit/7f478fe))
+- **Badge:** Inject Preset ([dc489ae](https://github.com/fewangsit/wangsvue/commit/dc489ae))
+- **Form:** Adjust component Form ([250dbef](https://github.com/fewangsit/wangsvue/commit/250dbef))
+- **InputGroup:** Inject Preset ([a484193](https://github.com/fewangsit/wangsvue/commit/a484193))
+- **InputGroupAddon:** Inject preset ([abec502](https://github.com/fewangsit/wangsvue/commit/abec502))
+- **ValidatorMessage:** Inject preset ([480e41e](https://github.com/fewangsit/wangsvue/commit/480e41e))
+- **Card:** Implement content gap in preset ([39fe8bd](https://github.com/fewangsit/wangsvue/commit/39fe8bd))
+- **Menu:** Inject preset ([36c5a6d](https://github.com/fewangsit/wangsvue/commit/36c5a6d))
+- Virtual scroller only enabled if more than 10 options ([7f59a9a](https://github.com/fewangsit/wangsvue/commit/7f59a9a))
+- **Animation:** Update dynamic import statement, move the path into variable ([810415b](https://github.com/fewangsit/wangsvue/commit/810415b))
+- **BadgeGroup:** Simplified template conditional rendering and improve performance rendering ([cce27b8](https://github.com/fewangsit/wangsvue/commit/cce27b8))
+- **ButtonRadio:** Copy all functionality radio button primevue and adjust it into ButtonRadio.vue ([04391b1](https://github.com/fewangsit/wangsvue/commit/04391b1))
+- **ButtonSearch:** Fix buttonFocusClass and improve preset section structures ([7c6ea5f](https://github.com/fewangsit/wangsvue/commit/7c6ea5f))
+- **Menu:** Move filterMenu.helper.ts into menu component ([1110912](https://github.com/fewangsit/wangsvue/commit/1110912))
+- **ProgressBar:** Build custom ProgressBar.vue ([fd4aafa](https://github.com/fewangsit/wangsvue/commit/fd4aafa))
+- **MultiSelect:** Move inline class into preset ([beed89b](https://github.com/fewangsit/wangsvue/commit/beed89b))
+
+### 📖 Documentation
+
+- **DataTable:** Merge component DataTable and TreeTable and the type declarations ([8bde8e9](https://github.com/fewangsit/wangsvue/commit/8bde8e9))
+- **DialogForm:** Improve declaration type file ([b64813e](https://github.com/fewangsit/wangsvue/commit/b64813e))
+- **DialogForm:** Add expose declaration in declaration type file ([cac09c8](https://github.com/fewangsit/wangsvue/commit/cac09c8))
+- **DialogConfirm:** Improve declaration type in declaration file ([7872d87](https://github.com/fewangsit/wangsvue/commit/7872d87))
+
+### 🏡 Chore
+
+- Update tailwind config to use config from presets ([1f47dbd](https://github.com/fewangsit/wangsvue/commit/1f47dbd))
+- **ChangelogFilter:** Remove unecessary attribute ([d28185b](https://github.com/fewangsit/wangsvue/commit/d28185b))
+- **Library:** Add release script minor and major version ([eb7931d](https://github.com/fewangsit/wangsvue/commit/eb7931d))
+
+### 🎨 Styles
+
+- Delete unused css file ([b47be6f](https://github.com/fewangsit/wangsvue/commit/b47be6f))
+- **Form:** Add more section to preset instead inline attributes ([fb282c2](https://github.com/fewangsit/wangsvue/commit/fb282c2))
+- **DialogForm:** Move all inline class & attribute to preset ([297c586](https://github.com/fewangsit/wangsvue/commit/297c586))
+- **DialogConfirm:** Move all inline class & attribute data selector to preset ([5b0547d](https://github.com/fewangsit/wangsvue/commit/5b0547d))
+- Remove treetable preset and move the content into datatable presets ([4cc142e](https://github.com/fewangsit/wangsvue/commit/4cc142e))
+- Add several new presets ([35ffb25](https://github.com/fewangsit/wangsvue/commit/35ffb25))
+- **ButtonSearch:** Move inline class to preset ([534ad80](https://github.com/fewangsit/wangsvue/commit/534ad80))
+- **Changelog:** Move inline class to preset ([032d523](https://github.com/fewangsit/wangsvue/commit/032d523))
+- **ButtonFilter:** Move inline class to preset ([9b921d8](https://github.com/fewangsit/wangsvue/commit/9b921d8))
+- **DataTable:** Move all inline class into presets datatable ([7730c76](https://github.com/fewangsit/wangsvue/commit/7730c76))
+- Remove tagsamurai presets - change input group preset into v-bind ([cdcdb0d](https://github.com/fewangsit/wangsvue/commit/cdcdb0d))
+- **buttondownload:** Create preset ([dbd5db3](https://github.com/fewangsit/wangsvue/commit/dbd5db3))
+- **ButtonBulkAction:** Add preset and move all inline class to preset ([a08db90](https://github.com/fewangsit/wangsvue/commit/a08db90))
+- **Badge:** Move scoped style into presets ([11b1370](https://github.com/fewangsit/wangsvue/commit/11b1370))
+- **Breadcrumb:** Move inline class into breadcrumb preset ([6292584](https://github.com/fewangsit/wangsvue/commit/6292584))
+- **ButtonFilter:** Move button focus class to buttonfilter preset ([84df20b](https://github.com/fewangsit/wangsvue/commit/84df20b))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+- Programmer-mob5 <programmer-mob5@qwertysystem.net>
+
 ## v1.4.223
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.222...v1.4.223)
