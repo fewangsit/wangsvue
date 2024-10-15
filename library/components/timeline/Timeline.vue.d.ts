@@ -1,3 +1,4 @@
+import { JSONContent } from '../editor/Editor.vue.d';
 import { ClassComponent } from '../ts-helpers';
 
 export interface AttachmentFile {
@@ -25,6 +26,11 @@ export interface DetailText {
   value: string;
 }
 
+export interface DetailJSONContent {
+  type: 'json';
+  value: JSONContent;
+}
+
 export type Attachment =
   | AttachmentLink
   | AttachmentFile
@@ -36,7 +42,10 @@ export type LinkTaskEditAction = Record<
   LinkTaskURL | LinkTaskIframeEmbed
 >;
 
-export type KeyValue = Record<string, string>;
+export type KeyValue = Record<
+  string,
+  string | Attachment | LinkTaskEditAction | DetailText | DetailJSONContent
+>;
 
 export type TimelineItem = {
   _id: string;
@@ -51,11 +60,21 @@ export type TimelineItem = {
     position: string;
     email: string;
   };
-  detail?: KeyValue | Attachment | LinkTaskEditAction | DetailText;
+  detail?:
+    | KeyValue
+    | Attachment
+    | LinkTaskEditAction
+    | DetailText
+    | DetailJSONContent;
 };
 
 export type TimelineProps = {
   value: TimelineItem[];
+  /**
+   * Whether the detail values should be aligned with each other or not.
+   * @defaultValue false
+   */
+  alignDetail?: boolean;
 };
 
 /**
