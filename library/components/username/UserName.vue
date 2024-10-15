@@ -92,7 +92,9 @@ const adjustPosition = async (): Promise<void> => {
           v-if="!loadingUser"
           class="flex flex-col gap-0.5 items-center justify-center"
         >
-          <h4 class="font-semibold text-[10px] leading-[15px]">
+          <h4
+            class="font-semibold text-[10px] leading-[15px] text-center text-pretty"
+          >
             {{ fullUserObject?.fullName }} ({{ fullUserObject?.nickName }})
           </h4>
 
