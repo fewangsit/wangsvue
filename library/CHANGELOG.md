@@ -1,6 +1,32 @@
 # Changelog
 
 
+## v1.5.2
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.1...v1.5.2)
+
+### 🚀 Enhancements
+
+- **Timeline:** Add editor value type, align detail props ([9307a14](https://github.com/fewangsit/wangsvue/commit/9307a14))
+
+### 🩹 Fixes
+
+- **ButtonRadio:** Defined but never used variables ([0ede18b](https://github.com/fewangsit/wangsvue/commit/0ede18b))
+- **Animation:** Could not resolve import("../../assets/lottie/**/*.lottie") ([abf0ce2](https://github.com/fewangsit/wangsvue/commit/abf0ce2))
+
+### 💅 Refactors
+
+- **Button:** Add severity to icon props ([c1b82bf](https://github.com/fewangsit/wangsvue/commit/c1b82bf))
+- **Button:** Add severity to icon props" ([fba8573](https://github.com/fewangsit/wangsvue/commit/fba8573))
+- **Button:** Add severity to icon props" ([b834331](https://github.com/fewangsit/wangsvue/commit/b834331))
+- **UserName:** Center overlay text ([e653008](https://github.com/fewangsit/wangsvue/commit/e653008))
+- **UserName:** Pretty wrap overlay text ([01403af](https://github.com/fewangsit/wangsvue/commit/01403af))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.1
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.0...v1.5.1)
