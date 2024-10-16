@@ -123,13 +123,7 @@ watch(
 
 <template>
   <div v-show="dataSelected?.length" v-bind="Preset.root">
-    <Menu
-      ref="menu"
-      v-if="dataSelected?.length"
-      v-bind="Preset.menu"
-      :model="options"
-      popup
-    />
+    <Menu ref="menu" v-if="dataSelected?.length" :model="options" popup />
 
     <span v-show="dataSelected?.length" v-bind="Preset.selectionmessage">
       {{ dataSelected?.length }} data dipilih
