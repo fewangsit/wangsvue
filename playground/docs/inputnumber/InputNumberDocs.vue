@@ -72,7 +72,9 @@ const numberlimit = shallowRef();
           :min="2"
           field-info="Input Number with Min Value 2"
           label="Min 2"
-        />
+        >
+          <template #addon-right>TEXT</template>
+        </InputNumber>
       </div>
     </template>
   </Card>

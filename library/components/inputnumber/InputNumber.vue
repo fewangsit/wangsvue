@@ -320,16 +320,7 @@ watch(
       <InputGroupAddon
         v-if="$slots['addon-right'] || props.showButtons"
         :pt="{
-          root: InputGroupAddonPreset.root({
-            props: {
-              class: [
-                {
-                  '!text-general-200': props.disabled,
-                  '!px-2': props.showButtons,
-                },
-              ],
-            },
-          }),
+          root: InputGroupAddonPreset.root({ props }),
         }"
       >
         <slot name="addon-right">

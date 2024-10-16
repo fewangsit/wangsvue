@@ -24,7 +24,10 @@ export default {
 
       // Color
       'bg-general-50',
-      ...props.class,
+      {
+        '!text-general-200': props.disabled,
+        '!px-2': props.showButtons,
+      },
     ],
   }),
 };
