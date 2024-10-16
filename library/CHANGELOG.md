@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v1.5.3
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.2...v1.5.3)
+
+### 🩹 Fixes
+
+- **InputNumber:** Presets - props.class is not itterable ([4bf02ff](https://github.com/fewangsit/wangsvue/commit/4bf02ff))
+
+### 🏡 Chore
+
+- **presets:** Update version ([99dc2d9](https://github.com/fewangsit/wangsvue/commit/99dc2d9))
+
+### 🎨 Styles
+
+- **DataTable:** Remove class w-max in scrollheightwrapper ([8dd4092](https://github.com/fewangsit/wangsvue/commit/8dd4092))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.2
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.1...v1.5.2)
