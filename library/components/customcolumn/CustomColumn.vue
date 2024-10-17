@@ -10,7 +10,7 @@ import useDataTableStore, {
 
 import Button from '../button/Button.vue';
 import Checkbox from '../checkbox/Checkbox.vue';
-import Menu from '../menu/Menu.vue';
+import Menu from 'primevue/menu';
 import Icon from '../icon/Icon.vue';
 import readConfig from '../datatable/helpers/readConfig.helper';
 
