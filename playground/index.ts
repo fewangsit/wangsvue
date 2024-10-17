@@ -145,11 +145,15 @@ const routes: Readonly<RouteRecordRaw[]> = [
         path: 'tabmenu/second-link',
         name: 'Tab Menu Second Link Docs',
         component: TabMenuDocs,
+        redirect: '/tabmenu/second-link/children',
         children: [
           {
             path: 'children',
             name: 'Tab Menu Second Link > Children Docs',
-            component: TabMenuDocs,
+          },
+          {
+            path: 'children-2',
+            name: 'Tab Menu Second Link > Children Docs 2',
           },
         ],
       },

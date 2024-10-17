@@ -1,17 +1,13 @@
 <script setup lang="ts">
-import { onBeforeMount, watch } from 'vue';
+import { watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { WangsIcons } from '../icon/Icon.vue.d';
+import { TabMenuEmits, TabMenuProps } from './TabMenu.vue.d';
 
 import PrimeTabMenu from 'primevue/tabmenu';
-import type { TabMenuEmits, TabMenuProps } from './TabMenu.vue.d';
 import Icon from '../icon/Icon.vue';
-import { WangsIcons } from '../icon/Icon.vue.d';
 
 const route = useRoute();
-
-onBeforeMount(() => {
-  setActiveIndex(route.path);
-});
 
 const props = withDefaults(defineProps<TabMenuProps>(), {
   useTrailingLine: true,
@@ -31,27 +27,32 @@ const menuPassThrough = props.useTrailingLine
     };
 
 const setActiveIndex = (routePath: string): void => {
-  // Find index from the element where routePath is exactly item.route
-  let index = props.menu?.findIndex(
-    (item) => item.route && routePath === item.route,
-  );
-
-  // If cannot find exact match, find index where routePath includes item.route
-  if (index === -1) {
-    index = props.menu?.findIndex(
-      (item) => item.route && routePath.includes(item.route),
+  const findIndexRecursive = (path: string): number | undefined => {
+    // Find index from the element where routePath is exactly item.route
+    let index = props.menu?.findIndex(
+      (item) => item.route && path === item.route,
     );
-  }
 
-  if (index !== -1) {
-    activeIndex.value = index as number;
-  }
+    // If it cannot find exact match, recursively trim and try to match
+    if (index === -1 && path.includes('/')) {
+      // Trim the last segment from the path
+      const newPath = path.substring(0, path.lastIndexOf('/'));
+      index = findIndexRecursive(newPath);
+    }
+
+    return index;
+  };
+
+  activeIndex.value = findIndexRecursive(routePath);
 };
 
 watch(
   () => route.path,
   (routePath) => {
     setActiveIndex(routePath);
+  },
+  {
+    immediate: true,
   },
 );
 </script>
