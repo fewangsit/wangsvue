@@ -150,6 +150,10 @@ const wangsIconsArray: WangsIcons[] = [
   'code-line',
   'code-box-line',
   'emotion-happy-line',
+  'run-line',
+  'bar-chart-line',
+  'file-chart-line',
+  'bug-2-line',
 ];
 </script>
 
@@ -158,7 +162,7 @@ const wangsIconsArray: WangsIcons[] = [
     <template #header>
       <DocTitle name="Icon List" />
       <span>
-        These icons were upscaled to 200% of their original size for better
+        These icons were upscale to 200% of their original size for better
         viewing.
       </span>
     </template>

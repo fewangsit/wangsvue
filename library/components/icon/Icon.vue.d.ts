@@ -139,7 +139,6 @@ export type WangsIcons =
   | 'star'
   | 'store'
   | 'subtract'
-  | 'team'
   | 'time'
   | 'ticket'
   | 'tools'
@@ -171,6 +170,10 @@ export type WangsIcons =
   | 'external-link'
   | 'whatsapp'
   | 'code-box-line'
+  | 'file-chart-line'
+  | 'bar-chart-line'
+  | 'bug-2-line'
+  | 'run-line'
   | 'emotion-happy-line';
 
 export interface IconProps {
