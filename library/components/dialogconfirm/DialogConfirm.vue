@@ -82,14 +82,14 @@ const confirm = (): void => {
         ...DialogConfirmPreset?.content,
         class: [
           ...DialogPreset?.content({ state: {}, instance: {} }).class,
-          ...DialogConfirmPreset?.content.class,
+          DialogConfirmPreset?.content.class,
         ],
       },
       footer: {
         ...DialogConfirmPreset?.footer,
         class: [
           ...DialogPreset?.footer.class,
-          ...DialogConfirmPreset?.footer.class,
+          DialogConfirmPreset?.footer.class,
         ],
       },
     }"
@@ -140,8 +140,8 @@ const confirm = (): void => {
 
         <Button
           v-if="actionable"
-          v-bind="DialogConfirmPreset?.confirmbutton"
           v-focus
+          v-bind="DialogConfirmPreset?.confirmbutton"
           :label="confirmLabel"
           :severity="severity"
           @click="confirm"
