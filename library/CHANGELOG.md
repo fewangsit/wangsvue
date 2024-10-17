@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v1.5.4
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.3...v1.5.4)
+
+### 🚀 Enhancements
+
+- Add wangsvue icons ([313f688](https://github.com/fewangsit/wangsvue/commit/313f688))
+
+### 🩹 Fixes
+
+- **CustomColumn:** Action "Tidak ada aksi" should not appear on column visibility - fixed by change import menu to primevue/menu ([78649c1](https://github.com/fewangsit/wangsvue/commit/78649c1))
+- **TabMenu:** Ensure consistent active tab on page reload ([9c655fd](https://github.com/fewangsit/wangsvue/commit/9c655fd))
+- **MultiSelect:** Assign props initial value or modelValue as initialValue of field.value ([ca3d6bc](https://github.com/fewangsit/wangsvue/commit/ca3d6bc))
+
+### 🏡 Chore
+
+- **presets:** Update version ([c502f48](https://github.com/fewangsit/wangsvue/commit/c502f48))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.3
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.2...v1.5.3)
