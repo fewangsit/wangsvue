@@ -30,6 +30,7 @@ const props = withDefaults(defineProps<InputNumberProps>(), {
   padStart: 0,
   showValidatorMessage: true,
   allowEmptyValue: true,
+  addonVariant: 'filled',
 });
 
 const emit = defineEmits<InputNumberEmits>();
@@ -262,19 +263,9 @@ watch(
     >
       <InputGroupAddon
         v-if="$slots['addon-left'] || props.showButtons"
+        :class="addonLeftClass"
         :disabled="disabled"
-        :pt="{
-          root: InputGroupAddonPreset.root({
-            props: {
-              class: [
-                {
-                  '!px-2': props.showButtons,
-                },
-                addonLeftClass,
-              ],
-            },
-          }),
-        }"
+        v-bind="InputGroupAddonPreset.root({ props })"
       >
         <slot name="addon-left">
           <Icon

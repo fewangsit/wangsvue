@@ -1,5 +1,6 @@
 import { DefineComponent, Slot } from 'vue';
 import { CustomValidation } from '../form/Form.vue.d';
+
 export type InputNumberEvent = number | string | undefined;
 
 /**
@@ -14,11 +15,11 @@ export interface InputNumberProps {
    * Sets the initial value of the field.
    * This will only available with option 'useValidator'.
    *
-   * In usecase like edit form, you need to display the previous inputted value.
+   * In use case like edit form, you need to display the previous inputted value.
    */
   value?: number;
   /**
-   * Exisitng values to be checkeed with validation 'exist' - check the validatorMessage props
+   * Existing values to be checked with validation 'exist' - check the validatorMessage props
    *
    * - Need to specify the custom validation : { empty: 'Error message when empty' } within props validatorMessage
    */
@@ -49,7 +50,7 @@ export interface InputNumberProps {
    */
   padStart?: number;
   /**
-   * Wether the input should be validated with vee-validator or not.
+   * Weather the input should be validated with vee-validator or not.
    * If you use this component within form input, you need to set this props as true.
    */
   useValidator?: boolean;
@@ -61,7 +62,7 @@ export interface InputNumberProps {
    */
   fieldName?: string;
   /**
-   * Wether this input field is required or not.
+   * Whether this input field is required or not.
    */
   mandatory?: boolean;
   /**
@@ -119,6 +120,14 @@ export interface InputNumberProps {
    * The filed info tooltip position
    */
   tooltipPos?: 'top' | 'right' | 'bottom' | 'left';
+  /**
+   * Specify the appearance of addon right and left
+   * - filled - has background and border
+   * - plain - no background, no border
+   *
+   * @defaultValue filled
+   */
+  addonVariant?: 'filled' | 'plain';
   /**
    * Class to be bind on addon left component
    */

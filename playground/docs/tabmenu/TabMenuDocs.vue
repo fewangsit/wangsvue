@@ -51,7 +51,7 @@ const subTabActiveIndex = shallowRef(0);
         />
         <TabMenu
           v-model:active-index="subActiveIndex"
-          :menu="[
+        :menu="[
             {
               label: 'With Link to current page > children',
               route: '/tabmenu/second-link/children',
