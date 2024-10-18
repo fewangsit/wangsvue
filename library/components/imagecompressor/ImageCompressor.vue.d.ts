@@ -70,7 +70,13 @@ export interface ImageCompressorProps {
    */
   rounded?: boolean;
   /**
-   * Specify wether the image input will be used as field within Form validation.
+   * Specify whether the image able to be deleted or not (in case image only able to added and edited)
+   *
+   * @default true
+   */
+  useDeleteButton?: boolean;
+  /**
+   * Specify whether the image input will be used as field within Form validation.
    *
    */
   useValidator?: boolean;

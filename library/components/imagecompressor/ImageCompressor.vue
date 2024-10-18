@@ -53,6 +53,7 @@ const props = withDefaults(defineProps<ImageCompressorProps>(), {
   label: undefined,
   fieldName: 'imageInput',
   fieldInfo: undefined,
+  useDeleteButton: true,
 });
 
 const emit = defineEmits<ImageCompressorEmits>();
@@ -623,6 +624,7 @@ watch(
                   text
                 />
                 <Button
+                  v-if="useDeleteButton"
                   @click="onBeforeDeleteImage(index)"
                   class="!py-0.5 !px-1 !h-max"
                   icon="delete-bin"
