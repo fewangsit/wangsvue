@@ -102,7 +102,7 @@ export default {
     'data-wv-section': 'headercellcontent',
   },
   headercellreorderable: {
-    'class': ['w-[40px] !py-1'],
+    'class': ['w-[35px] !py-1'],
     'data-wv-section': 'headercellreorderable',
   },
   draggableicon: {
