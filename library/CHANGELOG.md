@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v1.5.5
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.4...v1.5.5)
+
+### 🩹 Fixes
+
+- **BulkAction:** Overlay menu list should full width ([d9d773b](https://github.com/fewangsit/wangsvue/commit/d9d773b))
+
+### 🏡 Chore
+
+- **presets:** Update version ([38c6a10](https://github.com/fewangsit/wangsvue/commit/38c6a10))
+- **presets:** Update version ([b33e725](https://github.com/fewangsit/wangsvue/commit/b33e725))
+
+### 🎨 Styles
+
+- **InputNumber:** Add addonVariant filled and plain ([99a8f26](https://github.com/fewangsit/wangsvue/commit/99a8f26))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.4
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.3...v1.5.4)
