@@ -153,6 +153,7 @@ const wangsIconsArray: WangsIcons[] = [
   'run-line',
   'bar-chart-line',
   'file-chart-line',
+  'user-unfollow-line',
   'bug-2-line',
 ];
 </script>
