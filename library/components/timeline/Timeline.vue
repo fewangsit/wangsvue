@@ -59,7 +59,7 @@ const formatActionTitle = (action: string): string => {
         >
           <div
             v-if="$props.alignDetail"
-            class="grid grid-cols-[max-content,max-content,auto] gap-1 items-start"
+            class="grid grid-cols-[max-content,max-content,auto] gap-2 py-1.5 items-start"
           >
             <template
               :key="key"
