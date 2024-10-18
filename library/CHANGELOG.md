@@ -1,6 +1,33 @@
 # Changelog
 
 
+## v1.5.6
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.5...v1.5.6)
+
+### 🩹 Fixes
+
+- **DataTable:** Cannot execute observer on ResizeObserver, parameter 1 is not Element ([dfaab3f](https://github.com/fewangsit/wangsvue/commit/dfaab3f))
+
+### 💅 Refactors
+
+- **Badge:** Change default status severity ([bfb07f3](https://github.com/fewangsit/wangsvue/commit/bfb07f3))
+- **Badge:** Add development status severity ([b672325](https://github.com/fewangsit/wangsvue/commit/b672325))
+- **SummaryAccordion:** Sub module doesn't have initial name ([00c573f](https://github.com/fewangsit/wangsvue/commit/00c573f))
+
+### 🎨 Styles
+
+- **DialogConfirm:** Unspread dialog confirm class ([4072995](https://github.com/fewangsit/wangsvue/commit/4072995))
+- **ButtonBulkAction:** Remove preset from popup menu ([aedcf6a](https://github.com/fewangsit/wangsvue/commit/aedcf6a))
+- **DataTable:** Fixed width 35px of custom column ([f3ec5c8](https://github.com/fewangsit/wangsvue/commit/f3ec5c8))
+- **DataTable:** Change width of checkbox header ([b3eceab](https://github.com/fewangsit/wangsvue/commit/b3eceab))
+- **DataTable:** Change width of reorderable header ([4946e66](https://github.com/fewangsit/wangsvue/commit/4946e66))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.5
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.4...v1.5.5)
