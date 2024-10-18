@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v1.5.7
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.6...v1.5.7)
+
+### 🚀 Enhancements
+
+- **ImageCompressor:** Add props `useDeleteButton` with default true ([a5850f5](https://github.com/fewangsit/wangsvue/commit/a5850f5))
+- Add input currency component ([e8535ee](https://github.com/fewangsit/wangsvue/commit/e8535ee))
+- **Icon:** User-unfollow-line ([b588df2](https://github.com/fewangsit/wangsvue/commit/b588df2))
+
+### 🩹 Fixes
+
+- **TabMenu:** The active index should not be -1 - fallbacks to props.activeIndex with default 0 ([6107f5e](https://github.com/fewangsit/wangsvue/commit/6107f5e))
+
+### 🏡 Chore
+
+- **presets:** Update version ([c54cb7c](https://github.com/fewangsit/wangsvue/commit/c54cb7c))
+- **presets:** Update version ([dec25a9](https://github.com/fewangsit/wangsvue/commit/dec25a9))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.6
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.5...v1.5.6)
