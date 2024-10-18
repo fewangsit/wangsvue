@@ -118,7 +118,7 @@ export default {
     'data-wv-section': 'headercheckbox',
   }),
   headercellcheckbox: {
-    'class': 'w-[40px] text-center',
+    'class': 'w-[35px] text-center',
     'data-wv-section': 'headercellcheckbox',
   },
   headertoggler: {
