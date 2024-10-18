@@ -178,7 +178,7 @@ export default {
 
   rowsingleactioncell: ({ props, context }) => ({
     'class': [
-      'group-hover:!bg-primary-50',
+      'group-hover:!bg-primary-50 w-[35px]',
       {
         'sticky bg-white': props.useOption,
         '!bg-primary-100': context.selected,
