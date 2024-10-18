@@ -42,7 +42,7 @@ const isShowOverlay = ref<boolean>(false);
 const multiselect = ref<MultiSelect>();
 
 const field = reactive<FieldValidation<OptionValue[] | undefined>>({
-  value: undefined,
+  value: props.initialValue ? props.initialValue : props.modelValue,
 });
 
 const visibleOptions = computed(() => filterOptions(props.options));

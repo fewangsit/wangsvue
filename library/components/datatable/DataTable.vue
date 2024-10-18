@@ -674,12 +674,13 @@ onMounted(async () => {
 
   attachEventListener();
 
-  if (tableWrapper.value)
+  if (tableWrapper.value) {
     tableWrapper.value.onscroll = adjustFrozenColumnRightDistance;
 
-  new ResizeObserver(adjustFrozenColumnRightDistance).observe(
-    tableWrapper.value,
-  );
+    new ResizeObserver(adjustFrozenColumnRightDistance).observe(
+      tableWrapper.value,
+    );
+  }
 });
 
 onUnmounted(() => {

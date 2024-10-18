@@ -1,6 +1,6 @@
 export default {
   root: ({ props }) => ({
-    class: [
+    'class': [
       'inputgroupaddon', // Removing this class will causes bug style.
       // Flex
       'inline-flex items-center justify-center',
@@ -23,11 +23,12 @@ export default {
       'text-xs font-medium leading-none tracking-tight',
 
       // Color
-      'bg-general-50',
+      { 'bg-general-50': props.addonVariant === 'filled' },
       {
         '!text-general-200': props.disabled,
         '!px-2': props.showButtons,
       },
     ],
+    'data-addon-variant': props.addonVariant, // Used in inputgroup to set styling
   }),
 };

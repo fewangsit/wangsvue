@@ -9,21 +9,24 @@ export default {
     'class': [
       {
         '!ring-danger-500 [&_.inputgroupaddon]:ring-danger-500':
-          props.invalid && props.ring != 'none',
+          props.invalid && props.ring !== 'none',
         '[&_.inputgroupaddon]:ring-general-400':
-          !props.invalid && props.ring != 'none',
+          !props.invalid && props.ring !== 'none',
         '!bg-general-50 ': props.disabled,
       },
       {
         '[&:has(:focus)]:!ring-primary-400 [&:has(:focus)_.inputgroupaddon]:!ring-primary-400':
-          props.ring != 'none',
+          props.ring !== 'none',
       },
       {
         'ring-[1px] [&_.inputgroupaddon]:ring-[1px]':
-          isFirefoxBased && props.ring != 'none',
+          isFirefoxBased && props.ring !== 'none',
         'ring-[0.5px] [&_.inputgroupaddon]:ring-[0.5px]':
-          !isFirefoxBased && props.ring != 'none',
+          !isFirefoxBased && props.ring !== 'none',
       },
+
+      '[&_.inputgroupaddon[data-addon-variant=plain]]:!ring-[0px]',
+
       '[&:has(input)]:cursor-text',
       'h-[30px]',
       'flex items-stretch',

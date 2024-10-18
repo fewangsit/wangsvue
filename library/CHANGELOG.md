@@ -1,6 +1,76 @@
 # Changelog
 
 
+## v1.5.6
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.5...v1.5.6)
+
+### 🩹 Fixes
+
+- **DataTable:** Cannot execute observer on ResizeObserver, parameter 1 is not Element ([dfaab3f](https://github.com/fewangsit/wangsvue/commit/dfaab3f))
+
+### 💅 Refactors
+
+- **Badge:** Change default status severity ([bfb07f3](https://github.com/fewangsit/wangsvue/commit/bfb07f3))
+- **Badge:** Add development status severity ([b672325](https://github.com/fewangsit/wangsvue/commit/b672325))
+- **SummaryAccordion:** Sub module doesn't have initial name ([00c573f](https://github.com/fewangsit/wangsvue/commit/00c573f))
+
+### 🎨 Styles
+
+- **DialogConfirm:** Unspread dialog confirm class ([4072995](https://github.com/fewangsit/wangsvue/commit/4072995))
+- **ButtonBulkAction:** Remove preset from popup menu ([aedcf6a](https://github.com/fewangsit/wangsvue/commit/aedcf6a))
+- **DataTable:** Fixed width 35px of custom column ([f3ec5c8](https://github.com/fewangsit/wangsvue/commit/f3ec5c8))
+- **DataTable:** Change width of checkbox header ([b3eceab](https://github.com/fewangsit/wangsvue/commit/b3eceab))
+- **DataTable:** Change width of reorderable header ([4946e66](https://github.com/fewangsit/wangsvue/commit/4946e66))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
+## v1.5.5
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.4...v1.5.5)
+
+### 🩹 Fixes
+
+- **BulkAction:** Overlay menu list should full width ([d9d773b](https://github.com/fewangsit/wangsvue/commit/d9d773b))
+
+### 🏡 Chore
+
+- **presets:** Update version ([38c6a10](https://github.com/fewangsit/wangsvue/commit/38c6a10))
+- **presets:** Update version ([b33e725](https://github.com/fewangsit/wangsvue/commit/b33e725))
+
+### 🎨 Styles
+
+- **InputNumber:** Add addonVariant filled and plain ([99a8f26](https://github.com/fewangsit/wangsvue/commit/99a8f26))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.4
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.3...v1.5.4)
+
+### 🚀 Enhancements
+
+- Add wangsvue icons ([313f688](https://github.com/fewangsit/wangsvue/commit/313f688))
+
+### 🩹 Fixes
+
+- **CustomColumn:** Action "Tidak ada aksi" should not appear on column visibility - fixed by change import menu to primevue/menu ([78649c1](https://github.com/fewangsit/wangsvue/commit/78649c1))
+- **TabMenu:** Ensure consistent active tab on page reload ([9c655fd](https://github.com/fewangsit/wangsvue/commit/9c655fd))
+- **MultiSelect:** Assign props initial value or modelValue as initialValue of field.value ([ca3d6bc](https://github.com/fewangsit/wangsvue/commit/ca3d6bc))
+
+### 🏡 Chore
+
+- **presets:** Update version ([c502f48](https://github.com/fewangsit/wangsvue/commit/c502f48))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.3
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.2...v1.5.3)

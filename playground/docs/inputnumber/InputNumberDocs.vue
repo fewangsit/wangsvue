@@ -70,10 +70,11 @@ const numberlimit = shallowRef();
         <InputNumber
           :allow-empty-value="false"
           :min="2"
+          addon-variant="plain"
           field-info="Input Number with Min Value 2"
           label="Min 2"
         >
-          <template #addon-right>TEXT</template>
+          <template #addon-right>%</template>
         </InputNumber>
       </div>
     </template>
