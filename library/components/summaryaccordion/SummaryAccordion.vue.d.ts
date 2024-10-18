@@ -38,7 +38,7 @@ export interface ModuleSummary extends Summary {
   totalSubModule: number;
 }
 
-export interface SubModuleSummary extends Summary {
+export interface SubModuleSummary extends Omit<Summary, 'initialName'> {
   type: 'submodule';
   moduleName: string;
   progressWeb?: number;

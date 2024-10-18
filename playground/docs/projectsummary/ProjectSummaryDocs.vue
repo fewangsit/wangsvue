@@ -63,7 +63,6 @@ const moduleSummary = reactive<ModuleSummary>({
 const subModuleSummary = reactive<SubModuleSummary>({
   type: 'submodule',
   name: 'Transaction',
-  initialName: 'TRX',
   priority: 10,
   status: 'Sprint',
   totalSprintTask: 250,

@@ -18,8 +18,11 @@ export default function getStatusSeverity(
     case 'Pending Review Leader':
     case 'Ready to Deploy':
     case 'Pending E2E Testing Dev':
+    case 'Selesai Dev':
     case 'Pending E2E Testing Staging':
+    case 'Selesai Staging':
     case 'Pending E2E Testing':
+    default:
       return 'primary';
 
     case 'Fixing Bug':
@@ -29,7 +32,6 @@ export default function getStatusSeverity(
 
     case 'Finish Deployment':
     case 'Selesai':
-    default:
       return 'success';
   }
 }

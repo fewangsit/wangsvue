@@ -102,7 +102,7 @@ export default {
     'data-wv-section': 'headercellcontent',
   },
   headercellreorderable: {
-    'class': ['w-[40px] !py-1'],
+    'class': ['w-[35px] !py-1'],
     'data-wv-section': 'headercellreorderable',
   },
   draggableicon: {
@@ -118,7 +118,7 @@ export default {
     'data-wv-section': 'headercheckbox',
   }),
   headercellcheckbox: {
-    'class': 'w-[40px] text-center',
+    'class': 'w-[35px] text-center',
     'data-wv-section': 'headercellcheckbox',
   },
   headertoggler: {
@@ -178,7 +178,7 @@ export default {
 
   rowsingleactioncell: ({ props, context }) => ({
     'class': [
-      'group-hover:!bg-primary-50',
+      'group-hover:!bg-primary-50 w-[35px]',
       {
         'sticky bg-white': props.useOption,
         '!bg-primary-100': context.selected,
