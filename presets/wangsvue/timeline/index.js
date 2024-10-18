@@ -41,6 +41,6 @@ export default {
     class: ['w-[2px] grow bg-grayscale-900'],
   }),
   content: ({ props, context }) => ({
-    class: ['grid grid-rows-[max-content,auto] pb-3'],
+    class: ['grid grid-rows-[max-content,auto] pb-2.5 gap-1'],
   }),
 };

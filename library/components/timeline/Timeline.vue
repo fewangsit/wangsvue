@@ -32,7 +32,7 @@ const formatActionTitle = (action: string): string => {
     </template>
 
     <template #content="{ item }">
-      <div class="flex items-center gap-1 pb-1" data-wv-section="itemheader">
+      <div class="flex items-center gap-1 py-0.5" data-wv-section="itemheader">
         <h3
           v-html="formatActionTitle(item.action)"
           @click="item.showDetail = !item.showDetail"
@@ -59,7 +59,7 @@ const formatActionTitle = (action: string): string => {
         >
           <div
             v-if="$props.alignDetail"
-            class="grid grid-cols-[max-content,max-content,auto] gap-1 items-start"
+            class="grid grid-cols-[max-content,max-content,auto] gap-2 py-1.5 items-start"
           >
             <template
               :key="key"
