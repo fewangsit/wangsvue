@@ -32,7 +32,7 @@ const formatActionTitle = (action: string): string => {
     </template>
 
     <template #content="{ item }">
-      <div class="flex items-center gap-1 pb-1" data-wv-section="itemheader">
+      <div class="flex items-center gap-1 py-0.5" data-wv-section="itemheader">
         <h3
           v-html="formatActionTitle(item.action)"
           @click="item.showDetail = !item.showDetail"
