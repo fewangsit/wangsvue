@@ -30,6 +30,12 @@ export interface InputPhoneNumberProps {
    */
   disabled?: boolean;
   /**
+   * The maximum input length.
+   *
+   * @default 14 digit number
+   */
+  maxDigit?: number;
+  /**
    * State of invalid input.
    */
   invalid?: boolean;

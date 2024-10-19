@@ -1,52 +1,5 @@
+import { Component } from 'vue';
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-
-import TreeTableDocs from './docs/datatable/TreeTableDocs.vue';
-import DropdownDocs from './docs/dropdown/DropdownDocs.vue';
-import CalendarDocs from './docs/calendar/CalendarDocs.vue';
-import ProjectSummaryDocs from './docs/projectsummary/ProjectSummaryDocs.vue';
-import InputURLDocs from './docs/inputurl/InputURLDocs.vue';
-import UserNameDocs from './docs/username/UserNameDocs.vue';
-import DialogFormDocs from './docs/dialog/DialogFormDocs.vue';
-import DialogDocs from './docs/dialog/DialogDocs.vue';
-import EditorDocs from './docs/editor/EditorDocs.vue';
-import DialogConfirmDocs from './docs/dialog/DialogConfirmDocs.vue';
-import ButtonDocs from './docs/button/ButtonDocs.vue';
-import TimeLineDocs from './docs/timeline/TimeLineDocs.vue';
-import ImageCompressorDocs from './docs/image/ImageCompressorDocs.vue';
-import TypographyDocs from './docs/typography/TypographyDocs.vue';
-import CardDocs from './docs/card/CardDocs.vue';
-import TabMenuDocs from './docs/tabmenu/TabMenuDocs.vue';
-import MenuDocs from './docs/menu/MenuDocs.vue';
-import FilterContainerDocs from './docs/filtercontainer/FilterContainerDocs.vue';
-import QuickFilterDocs from './docs/quickfilter/QuickFilterDocs.vue';
-import BreadcrumbDocs from './docs/breadcrumb/BreadcrumbDocs.vue';
-import DataTableDocs from './docs/datatable/DataTableDocs.vue';
-import CheckboxDocs from './docs/checkbox/CheckboxDocs.vue';
-import ToastDocs from './docs/toast/ToastDocs.vue';
-import InputTextDocs from './docs/inputtext/InputTextDocs.vue';
-import ImageDocs from './docs/image/ImageDocs.vue';
-import BadgeDocs from './docs/badge/BadgeDocs.vue';
-import FormDocs from './docs/form/FormDocs.vue';
-import WorkCalendarDocs from './docs/calendar/WorkCalendarDocs.vue';
-import MultiSelectDocs from './docs/multiselect/MultiSelectDocs.vue';
-import InputRangeNumberDocs from './docs/inputrangenumber/InputRangeNumberDocs.vue';
-import InputNumberDocs from './docs/inputnumber/InputNumberDocs.vue';
-import InputPhoneNumberDocs from './docs/inputphonenumber/InputPhoneNumberDocs.vue';
-import InputEmailDocs from './docs/inputemail/InputEmailDocs.vue';
-import ButtonToggleDocs from './docs/buttontoggle/ButtonToggleDocs.vue';
-import InputPasswordDocs from './docs/inputpassword/InputPasswordDocs.vue';
-import IconDocs from './docs/icon/IconDocs.vue';
-import ChangelogDocs from './docs/changelog/ChangelogDocs.vue';
-import ChangelogPageDocs from './docs/changelogpage/ChangelogPageDocs.vue';
-import CodeSnippetDocs from './docs/codesnippet/CodeSnippetDocs.vue';
-import InputRepositoryNameDocs from './docs/inputrepositoryname/InputRepositoryNameDocs.vue';
-import TextareaDocs from './docs/textarea/TextareaDocs.vue';
-import AnimationDocs from './docs/animation/AnimationDocs.vue';
-import CommentDocs from './docs/comment/CommentDocs.vue';
-import ButtonRadioDocs from './docs/buttonradio/ButtonRadioDocs.vue';
-import InputBadgeDocs from './docs/inputbadge/InputBadgeDocs.vue';
-import ProgressBarDocs from './docs/progressbar/ProgressBarDocs.vue';
-import InputCurrencyDocs from './docs/inputcurrency/InputCurrencyDocs.vue';
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
@@ -56,52 +9,62 @@ const routes: Readonly<RouteRecordRaw[]> = [
       {
         path: 'table',
         name: 'Tree Table Docs',
-        component: TreeTableDocs,
+        component: (): Promise<Component> =>
+          import('./docs/datatable/TreeTableDocs.vue'),
       },
       {
         path: 'progressbar',
         name: 'ProgressBarDocs',
-        component: ProgressBarDocs,
+        component: (): Promise<Component> =>
+          import('./docs/progressbar/ProgressBarDocs.vue'),
       },
       {
         path: 'animation',
         name: 'Lottie Animation Docs',
-        component: AnimationDocs,
+        component: (): Promise<Component> =>
+          import('./docs/animation/AnimationDocs.vue'),
       },
       {
         path: 'dropdown',
         name: 'Dropdown Docs',
-        component: DropdownDocs,
+        component: (): Promise<Component> =>
+          import('./docs/dropdown/DropdownDocs.vue'),
       },
       {
         path: 'calendar',
         name: 'Calendar Docs',
-        component: CalendarDocs,
+        component: (): Promise<Component> =>
+          import('./docs/calendar/CalendarDocs.vue'),
       },
       {
         path: 'projectsummary',
         name: 'Project Summary Docs',
-        component: ProjectSummaryDocs,
+        component: (): Promise<Component> =>
+          import('./docs/projectsummary/ProjectSummaryDocs.vue'),
       },
       {
         path: 'inputurl',
         name: 'Input URL Docs',
-        component: InputURLDocs,
+        component: (): Promise<Component> =>
+          import('./docs/inputurl/InputURLDocs.vue'),
       },
       {
         path: 'username',
         name: 'UserName Docs',
-        component: UserNameDocs,
+        component: (): Promise<Component> =>
+          import('./docs/username/UserNameDocs.vue'),
       },
       {
         path: 'dialogform',
         name: 'Dialog Form Docs',
-        component: DialogFormDocs,
+        component: (): Promise<Component> =>
+          import('./docs/dialog/DialogFormDocs.vue'),
       },
       {
         path: 'editor',
         name: 'Editor Docs',
-        component: EditorDocs,
+        component: (): Promise<Component> =>
+          import('./docs/editor/EditorDocs.vue'),
       },
       {
         path: 'dialog',
@@ -111,47 +74,55 @@ const routes: Readonly<RouteRecordRaw[]> = [
       {
         path: 'dialogconfirm',
         name: 'Dialog Confirmation Docs',
-        component: DialogConfirmDocs,
+        component: (): Promise<Component> =>
+          import('./docs/dialog/DialogConfirmDocs.vue'),
       },
       {
         path: 'button',
         name: 'ButtonDocs',
-        component: ButtonDocs,
+        component: (): Promise<Component> =>
+          import('./docs/button/ButtonDocs.vue'),
       },
       {
         path: 'buttonradio',
         name: 'ButtonRadioDocs',
-        component: ButtonRadioDocs,
+        component: (): Promise<Component> =>
+          import('./docs/buttonradio/ButtonRadioDocs.vue'),
       },
       {
         path: 'timeline',
         name: 'TimelineDocs',
-        component: TimeLineDocs,
+        component: (): Promise<Component> =>
+          import('./docs/timeline/TimeLineDocs.vue'),
       },
       {
         path: 'imagecompressor',
         name: 'Image Compressor Docs',
-        component: ImageCompressorDocs,
+        component: (): Promise<Component> =>
+          import('./docs/image/ImageCompressorDocs.vue'),
       },
       {
         path: 'typo',
         name: 'Typography Docs',
-        component: TypographyDocs,
+        component: (): Promise<Component> =>
+          import('./docs/typography/TypographyDocs.vue'),
       },
       {
         path: 'card',
         name: 'Card Docs',
-        component: CardDocs,
+        component: (): Promise<Component> => import('./docs/card/CardDocs.vue'),
       },
       {
         path: 'tabmenu',
         name: 'Tab Menu Docs',
-        component: TabMenuDocs,
+        component: (): Promise<Component> =>
+          import('./docs/tabmenu/TabMenuDocs.vue'),
       },
       {
         path: 'tabmenu/second-link',
         name: 'Tab Menu Second Link Docs',
-        component: TabMenuDocs,
+        component: (): Promise<Component> =>
+          import('./docs/tabmenu/TabMenuDocs.vue'),
         redirect: '/tabmenu/second-link/children',
         children: [
           {
@@ -167,142 +138,173 @@ const routes: Readonly<RouteRecordRaw[]> = [
       {
         path: 'menu',
         name: 'Menu Docs',
-        component: MenuDocs,
+        component: (): Promise<Component> => import('./docs/menu/MenuDocs.vue'),
       },
       {
         path: 'filtercontainer',
         name: 'Filter Container Docs',
-        component: FilterContainerDocs,
+        component: (): Promise<Component> =>
+          import('./docs/filtercontainer/FilterContainerDocs.vue'),
       },
       {
         path: 'quickfilter',
         name: 'Quick Filter Container Docs',
-        component: QuickFilterDocs,
+        component: (): Promise<Component> =>
+          import('./docs/quickfilter/QuickFilterDocs.vue'),
       },
       {
         path: 'breadcrumb',
         name: 'Breadcrumb Docs',
-        component: BreadcrumbDocs,
+        component: (): Promise<Component> =>
+          import('./docs/breadcrumb/BreadcrumbDocs.vue'),
       },
       {
         path: 'datatable',
         name: 'DataTable Docs',
-        component: DataTableDocs,
+        component: (): Promise<Component> =>
+          import('./docs/datatable/DataTableDocs.vue'),
       },
       {
         path: 'checkbox',
         name: 'Checbox Docs',
-        component: CheckboxDocs,
+        component: (): Promise<Component> =>
+          import('./docs/checkbox/CheckboxDocs.vue'),
       },
       {
         path: 'codesnippet',
         name: 'Code Snippet Docs',
-        component: CodeSnippetDocs,
+        component: (): Promise<Component> =>
+          import('./docs/codesnippet/CodeSnippetDocs.vue'),
       },
       {
         path: 'toast',
         name: 'Toast Docs',
-        component: ToastDocs,
+        component: (): Promise<Component> =>
+          import('./docs/toast/ToastDocs.vue'),
       },
       {
         path: 'inputtext',
         name: 'InputText Docs',
-        component: InputTextDocs,
+        component: (): Promise<Component> =>
+          import('./docs/inputtext/InputTextDocs.vue'),
       },
       {
         path: 'inputbadge',
         name: 'InputBadgeDocs',
-        component: InputBadgeDocs,
+        component: (): Promise<Component> =>
+          import('./docs/inputbadge/InputBadgeDocs.vue'),
       },
       {
         path: 'image',
         name: 'Image Docs',
-        component: ImageDocs,
+        component: (): Promise<Component> =>
+          import('./docs/image/ImageDocs.vue'),
       },
       {
         path: 'badge',
         name: 'Badge Docs',
-        component: BadgeDocs,
+        component: (): Promise<Component> =>
+          import('./docs/badge/BadgeDocs.vue'),
       },
       {
         path: 'form',
         name: 'Form Docs',
-        component: FormDocs,
+        component: (): Promise<Component> => import('./docs/form/FormDocs.vue'),
       },
       {
         path: 'workcalendar',
         name: 'Work Calendar Docs',
-        component: WorkCalendarDocs,
+        component: (): Promise<Component> =>
+          import('./docs/calendar/WorkCalendarDocs.vue'),
       },
       {
         path: 'multiselect',
         name: 'MultiSelect Docs',
-        component: MultiSelectDocs,
+        component: (): Promise<Component> =>
+          import('./docs/multiselect/MultiSelectDocs.vue'),
       },
       {
         path: 'inputrangenumber',
         name: 'Input Range Number Docs',
-        component: InputRangeNumberDocs,
+        component: (): Promise<Component> =>
+          import('./docs/inputrangenumber/InputRangeNumberDocs.vue'),
       },
       {
         path: 'inputnumber',
         name: 'Input Number Docs',
-        component: InputNumberDocs,
+        component: (): Promise<Component> =>
+          import('./docs/inputnumber/InputNumberDocs.vue'),
       },
       {
         path: 'inputcurrency',
         name: 'Input Currency Docs',
-        component: InputCurrencyDocs,
+        component: (): Promise<Component> =>
+          import('./docs/inputcurrency/InputCurrencyDocs.vue'),
       },
       {
         path: 'inputphonenumber',
         name: 'Input Phone Number Docs',
-        component: InputPhoneNumberDocs,
+        component: (): Promise<Component> =>
+          import('./docs/inputphonenumber/InputPhoneNumberDocs.vue'),
       },
       {
         path: 'inputemail',
         name: 'Input Email Docs',
-        component: InputEmailDocs,
+        component: (): Promise<Component> =>
+          import('./docs/inputemail/InputEmailDocs.vue'),
       },
       {
         path: 'toggle',
         name: 'ButtonToggle Docs',
-        component: ButtonToggleDocs,
+        component: (): Promise<Component> =>
+          import('./docs/buttontoggle/ButtonToggleDocs.vue'),
       },
       {
         path: 'inputpassword',
         name: 'Input Password Docs',
-        component: InputPasswordDocs,
+        component: (): Promise<Component> =>
+          import('./docs/inputpassword/InputPasswordDocs.vue'),
       },
       {
         path: 'icon',
         name: 'Icon Docs',
-        component: IconDocs,
+        component: (): Promise<Component> => import('./docs/icon/IconDocs.vue'),
       },
       {
         path: 'changelog',
         name: 'Changelog Docs',
-        component: ChangelogDocs,
+        component: (): Promise<Component> =>
+          import('./docs/changelog/ChangelogDocs.vue'),
       },
       {
         path: 'changelogpage',
         name: 'ChangelogPage Docs',
-        component: ChangelogPageDocs,
+        component: (): Promise<Component> =>
+          import('./docs/changelogpage/ChangelogPageDocs.vue'),
       },
       {
         path: 'inputrepositoryname',
         name: 'InputRepositoryName Docs',
-        component: InputRepositoryNameDocs,
+        component: (): Promise<Component> =>
+          import('./docs/inputrepositoryname/InputRepositoryNameDocs.vue'),
       },
       {
         path: 'textarea',
         name: 'Textarea Docs',
-        component: TextareaDocs,
+        component: (): Promise<Component> =>
+          import('./docs/textarea/TextareaDocs.vue'),
       },
       {
         path: 'comment',
         name: 'Comment Docs',
-        component: CommentDocs,
+        component: (): Promise<Component> =>
+          import('./docs/comment/CommentDocs.vue'),
+      },
+      {
+        path: 'fileupload',
+        name: 'FileUploadDocs',
+        component: (): Promise<Component> =>
+          import('./docs/fileupload/FileUploadDocs.vue'),
       },
     ],
   },

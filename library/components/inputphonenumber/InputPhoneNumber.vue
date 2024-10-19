@@ -37,7 +37,9 @@ type DialCode = {
   name: string;
 };
 
-const props = defineProps<InputPhoneNumberProps>();
+const props = withDefaults(defineProps<InputPhoneNumberProps>(), {
+  maxDigit: 14,
+});
 
 const emit = defineEmits<InputPhoneNumberEmits>();
 

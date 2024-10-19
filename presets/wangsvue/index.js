@@ -88,6 +88,7 @@ import buttonbulkaction from './buttonbulkaction/index';
 import badgegroup from './badgegroup/index.js';
 import breadcrumb from './breadcrumb/index.js';
 import inputcurrency from './inputcurrency';
+import fileupload from './fileupload';
 
 const directives = {
   badge: badgedirective,
@@ -131,6 +132,7 @@ const wangsvue = {
   textarea,
   password,
   validatormessage,
+  fileupload,
 
   // Buttons
   button,

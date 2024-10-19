@@ -29,8 +29,8 @@ const currValue = ref<CurrencyValue>({});
         <br />
         Using InputNumber Component
         <InputNumber
-          :allow-empty-value="false"
-          :min="0"
+          :min-fraction-digits="0"
+          :value="0"
           currency="IDR"
           locale="id-ID"
           mode="currency"
@@ -38,7 +38,14 @@ const currValue = ref<CurrencyValue>({});
         />
 
         Using InputNumber Component with prefix
-        <InputNumber prefix="Rp" use-grouping />
+        <InputNumber
+          :allow-empty-value="false"
+          :min="0"
+          locale="id-ID"
+          prefix="Rp "
+          suffix=",00"
+          use-grouping
+        />
       </div>
     </template>
   </Card>

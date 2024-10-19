@@ -1,6 +1,39 @@
 # Changelog
 
 
+## v1.5.9
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.8...v1.5.9)
+
+### 🚀 Enhancements
+
+- **InputPhoneNumber:** Add maxDigits with default value 14 digits ([0d66655](https://github.com/fewangsit/wangsvue/commit/0d66655))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.8
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.7...v1.5.8)
+
+### 🚀 Enhancements
+
+- Add filter.helper.ts - to be continued ([81e0b15](https://github.com/fewangsit/wangsvue/commit/81e0b15))
+- Add FileUpload.vue ([2c7773e](https://github.com/fewangsit/wangsvue/commit/2c7773e))
+
+### 📖 Documentation
+
+- **InputCurrencyDocs:** Update documentation to use input currency ([d542b28](https://github.com/fewangsit/wangsvue/commit/d542b28))
+
+### 🏡 Chore
+
+- **presets:** Update version ([5f9f3ab](https://github.com/fewangsit/wangsvue/commit/5f9f3ab))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.7
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.6...v1.5.7)
