@@ -7,6 +7,7 @@ import ProjectSummaryDocs from './docs/projectsummary/ProjectSummaryDocs.vue';
 import InputURLDocs from './docs/inputurl/InputURLDocs.vue';
 import UserNameDocs from './docs/username/UserNameDocs.vue';
 import DialogFormDocs from './docs/dialog/DialogFormDocs.vue';
+import DialogDocs from './docs/dialog/DialogDocs.vue';
 import EditorDocs from './docs/editor/EditorDocs.vue';
 import DialogConfirmDocs from './docs/dialog/DialogConfirmDocs.vue';
 import ButtonDocs from './docs/button/ButtonDocs.vue';
@@ -100,6 +101,11 @@ const routes: Readonly<RouteRecordRaw[]> = [
         path: 'editor',
         name: 'Editor Docs',
         component: EditorDocs,
+      },
+      {
+        path: 'dialog',
+        name: 'Dialog Docs',
+        component: DialogDocs,
       },
       {
         path: 'dialogconfirm',

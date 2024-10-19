@@ -161,7 +161,7 @@ export default {
       'text-surface-600',
 
       // Misc
-      'overflow-y-auto',
+      'overflow-y-auto scrollbar-w-none',
 
       {
         grow: state?.maximized,
@@ -194,8 +194,7 @@ export default {
 
       // Background and Effects
       {
-        'has-[.mask-active]:bg-transparent bg-dialog-mask':
-          props.modal,
+        'has-[.mask-active]:bg-transparent bg-dialog-mask': props.modal,
         'has-[.mask-active]:backdrop-blur-none backdrop-blur-sm': props.modal,
       },
     ],
