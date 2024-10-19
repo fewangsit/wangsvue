@@ -74,7 +74,7 @@ const subTabActiveIndex = shallowRef(0);
       nostrum ratione blanditiis ex sapiente labore ullam? Iste atque aut ipsum.
 
       <h3 class="mt-2">TAB Menu without routes</h3>
-      <TabMenu v-model:active-index="subTabActiveIndex" :model="subTabMenus" />
+      <TabMenu v-model:active-index="subTabActiveIndex" :menu="subTabMenus" />
 
       <Tab v-if="!subTabActiveIndex" />
       <AnotherTab v-else />

@@ -174,6 +174,7 @@ export type WangsIcons =
   | 'bar-chart-line'
   | 'bug-2-line'
   | 'run-line'
+  | 'user-unfollow-line'
   | 'emotion-happy-line';
 
 export interface IconProps {

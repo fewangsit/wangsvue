@@ -46,6 +46,7 @@ import CommentDocs from './docs/comment/CommentDocs.vue';
 import ButtonRadioDocs from './docs/buttonradio/ButtonRadioDocs.vue';
 import InputBadgeDocs from './docs/inputbadge/InputBadgeDocs.vue';
 import ProgressBarDocs from './docs/progressbar/ProgressBarDocs.vue';
+import InputCurrencyDocs from './docs/inputcurrency/InputCurrencyDocs.vue';
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
@@ -247,6 +248,11 @@ const routes: Readonly<RouteRecordRaw[]> = [
         path: 'inputnumber',
         name: 'Input Number Docs',
         component: InputNumberDocs,
+      },
+      {
+        path: 'inputcurrency',
+        name: 'Input Currency Docs',
+        component: InputCurrencyDocs,
       },
       {
         path: 'inputphonenumber',

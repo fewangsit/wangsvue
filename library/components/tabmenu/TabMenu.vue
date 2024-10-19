@@ -43,7 +43,8 @@ const setActiveIndex = (routePath: string): void => {
     return index;
   };
 
-  activeIndex.value = findIndexRecursive(routePath);
+  const foundIndex = findIndexRecursive(routePath);
+  activeIndex.value = foundIndex === -1 ? props.activeIndex : foundIndex;
 };
 
 watch(

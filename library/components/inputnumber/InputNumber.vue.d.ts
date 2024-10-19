@@ -104,6 +104,26 @@ export interface InputNumberProps {
    */
   mode?: 'decimal' | 'currency';
   /**
+   * The currency to use in currency formatting. Possible values are the [ISO 4217 currency codes](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency), such as 'USD' for the US dollar, 'EUR' for the euro, or 'CNY' for the Chinese RMB.
+   * There is no default value; if the style is 'currency', the currency property must be provided.
+   */
+  currency?: string | undefined;
+  /**
+   * The `locale` variable specifies the regional setting or language preference to be used.
+   * It is an optional string that can influence date, time, number formatting, and other locale-specific operations.
+   *
+   * If not provided, the system may default to a pre-configured or fallback locale.
+   */
+  locale?: string;
+  /**
+   * Text to display before the value.
+   */
+  prefix?: string | undefined;
+  /**
+   * Text to display after the value.
+   */
+  suffix?: string | undefined;
+  /**
    * The minimal digits of decimal value.
    */
   minFractionDigits?: number;

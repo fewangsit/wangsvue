@@ -87,6 +87,7 @@ import validatormessage from './validatormessage/index.js';
 import buttonbulkaction from './buttonbulkaction/index';
 import badgegroup from './badgegroup/index.js';
 import breadcrumb from './breadcrumb/index.js';
+import inputcurrency from './inputcurrency';
 
 const directives = {
   badge: badgedirective,
@@ -104,6 +105,7 @@ const wangsvue = {
   dropdown,
   inputnumber,
   inputphonenumber,
+  inputcurrency,
   inputotp,
   inputtext,
   inputbadge,

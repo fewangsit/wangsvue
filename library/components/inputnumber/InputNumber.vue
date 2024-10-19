@@ -291,7 +291,7 @@ watch(
         <InputNumber
           :key="inputKey"
           ref="inputNumber"
-          v-bind="$props"
+          v-bind="props"
           :class="[
             inputNumberClass,
             {
