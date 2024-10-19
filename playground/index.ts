@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import { Component } from 'vue';
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
@@ -65,6 +65,11 @@ const routes: Readonly<RouteRecordRaw[]> = [
         name: 'Editor Docs',
         component: (): Promise<Component> =>
           import('./docs/editor/EditorDocs.vue'),
+      },
+      {
+        path: 'dialog',
+        name: 'Dialog Docs',
+        component: DialogDocs,
       },
       {
         path: 'dialogconfirm',
