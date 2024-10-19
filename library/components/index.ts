@@ -50,6 +50,8 @@ import Animation from './animation/Animation.vue';
 import Comment from 'lib/components/comment/Comment.vue';
 import ProgressBar from './progressbar/ProgressBar.vue';
 import InputBadge from './inputbadge/InputBadge.vue';
+import InputCurrency from './inputcurrency/InputCurrency.vue';
+import FileUpload from './fileupload/FileUpload.vue';
 
 export {
   Badge,
@@ -104,4 +106,6 @@ export {
   Animation,
   Comment,
   ProgressBar,
+  InputCurrency,
+  FileUpload,
 };

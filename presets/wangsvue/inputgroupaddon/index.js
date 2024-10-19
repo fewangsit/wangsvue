@@ -23,7 +23,7 @@ export default {
       'text-xs font-medium leading-none tracking-tight',
 
       // Color
-      { 'bg-general-50': props.addonVariant === 'filled' },
+      { 'bg-general-50': props.addonVariant !== 'plain' },
       {
         '!text-general-200': props.disabled,
         '!px-2': props.showButtons,
