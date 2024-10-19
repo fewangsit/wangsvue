@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v1.5.10
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.9...v1.5.10)
+
+### 🚀 Enhancements
+
+- Add icons ([9856003](https://github.com/fewangsit/wangsvue/commit/9856003))
+
+### 🏡 Chore
+
+- **presets:** Update version ([2836472](https://github.com/fewangsit/wangsvue/commit/2836472))
+
+### 🎨 Styles
+
+- **Timeline:** Center timeline item ([45e0221](https://github.com/fewangsit/wangsvue/commit/45e0221))
+- **Timeline:** Change paddings and gaps ([7344693](https://github.com/fewangsit/wangsvue/commit/7344693))
+- **Dialog:** Hide scrollbar ([7fdba35](https://github.com/fewangsit/wangsvue/commit/7fdba35))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.9
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.8...v1.5.9)
