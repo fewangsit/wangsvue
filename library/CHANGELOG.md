@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.9
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.8...v1.5.9)
+
+### 🚀 Enhancements
+
+- **InputPhoneNumber:** Add maxDigits with default value 14 digits ([0d66655](https://github.com/fewangsit/wangsvue/commit/0d66655))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.8
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.7...v1.5.8)
