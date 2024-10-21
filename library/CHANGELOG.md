@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.5.11
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.10...v1.5.11)
+
+### 🩹 Fixes
+
+- **DataTable:** Horizontal scroller not appear ([5f991a7](https://github.com/fewangsit/wangsvue/commit/5f991a7))
+
+### 🏡 Chore
+
+- **presets:** Update version ([8d814ba](https://github.com/fewangsit/wangsvue/commit/8d814ba))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.10
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.9...v1.5.10)
