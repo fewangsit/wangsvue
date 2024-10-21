@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import Toast from 'primevue/toast';
+import { onBeforeUnmount, onMounted, shallowRef } from 'vue';
 import { ToastProps, ToastEmits } from 'lib/components/toast/Toast.vue.d';
+import { ToastParams } from 'lib/utils/toast.util';
+import Toast from 'primevue/toast';
 import Icon from 'lib/components/icon/Icon.vue';
-import { onMounted, ref } from 'vue';
+import eventBus from 'lib/event-bus';
 
 withDefaults(defineProps<ToastProps>(), {
   position: 'bottom-right',
@@ -12,12 +14,18 @@ withDefaults(defineProps<ToastProps>(), {
 defineEmits<ToastEmits>();
 
 onMounted(() => {
-  window.addEventListener('showingToast:severity', (event) => {
-    severity.value = event.detail;
-  });
+  eventBus.on('toast:add', handleToastAdd);
 });
 
-const severity = ref('');
+onBeforeUnmount(() => {
+  eventBus.off('toast:add', handleToastAdd);
+});
+
+const toastParams = shallowRef<ToastParams>();
+
+const handleToastAdd = (params: ToastParams): void => {
+  toastParams.value = params;
+};
 </script>
 
 <template>
@@ -29,10 +37,14 @@ const severity = ref('');
     <template #icon>
       <Icon
         :id="new Date().getTime()"
+        :class="['w-5 h-5', toastParams.iconClass]"
         :icon="
-          severity === 'success' ? 'emotion-happy-fill' : 'emotion-unhappy-fill'
+          (() =>
+            toastParams.icon ??
+            (toastParams.severity === 'success'
+              ? 'emotion-happy-fill'
+              : 'emotion-unhappy-fill'))()
         "
-        class="w-5 h-5"
       />
     </template>
     <template

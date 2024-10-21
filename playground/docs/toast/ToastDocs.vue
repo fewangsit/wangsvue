@@ -8,7 +8,7 @@ import { useToast } from 'lib/utils/';
 const toast = useToast();
 
 const openToast = (message: string, isError?: boolean): void => {
-  toast.add({ message, error: isError });
+  toast.add({ message, error: isError, life: 0 });
 };
 </script>
 
@@ -21,7 +21,7 @@ const openToast = (message: string, isError?: boolean): void => {
     </template>
     <template #content>
       <div
-        class="w-[324px] flex flex-col gap-3 h-[65px] p-4 relative bg-[#f8f7ee] rounded-[5px] border-2 border-dashed border-[#9747ff]"
+        class="w-[400px] flex flex-col gap-3 h-[65px] p-4 relative bg-[#f8f7ee] rounded-[5px] border-2 border-dashed border-[#9747ff]"
       >
         <div class="flex gap-3">
           <Button
@@ -33,6 +33,16 @@ const openToast = (message: string, isError?: boolean): void => {
             @click="openToast('Group soal gagal dihapus.', true)"
             label="Error Toast"
             severity="danger"
+          />
+          <Button
+            @click="
+              toast.add({
+                icon: 'check-double-fill',
+                iconClass: 'text-white',
+              })
+            "
+            label="Custom Toast"
+            severity="success"
           />
         </div>
       </div>

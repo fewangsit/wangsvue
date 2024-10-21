@@ -1,4 +1,5 @@
-import { Data, QueryParams } from '../components/datatable/DataTable.vue.d';
+import { Data, QueryParams } from 'lib/components/datatable/DataTable.vue';
+import { ToastParams } from 'lib/utils/toast.util';
 import mitt from './mitt';
 
 export type TableEvent = {
@@ -27,6 +28,8 @@ export type Events = {
 
   'work-calendar:reset-month': unknown;
   'work-calendar:reset-year': unknown;
+
+  'toast:add': ToastParams;
 };
 
 const eventBus = mitt<Events>();
