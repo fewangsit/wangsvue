@@ -69,7 +69,8 @@ const routes: Readonly<RouteRecordRaw[]> = [
       {
         path: 'dialog',
         name: 'Dialog Docs',
-        component: DialogDocs,
+        component: (): Promis<Component> =>
+          import('./docs/dialog/DialogDocs.vue'),
       },
       {
         path: 'dialogconfirm',
