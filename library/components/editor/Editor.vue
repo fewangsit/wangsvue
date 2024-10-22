@@ -668,12 +668,6 @@ const goToNextLine = (): void => {
   if (editorData.content) {
     editorData.content.push({
       type: 'paragraph',
-      content: [
-        {
-          type: 'text',
-          text: 'a',
-        },
-      ],
     });
 
     editor.value?.commands.setContent(editorData);
