@@ -2,7 +2,6 @@
 import { computed, inject } from 'vue';
 import { toArrayClass } from 'lib/components/helpers';
 import type { ButtonProps } from './Button.vue.d';
-import { WangsIconseverities } from '../icon/Icon.vue.d';
 
 import Icon from 'lib/components/icon/Icon.vue';
 import PrimeButton from 'primevue/button';
@@ -17,7 +16,6 @@ const iconProps = computed(() => ({
     { 'text-base': props.icon && !props.label }, // Need to use attrs, because props.label is always undefined.
     ...toArrayClass(props.iconClass),
   ],
-  severity: props.severity as WangsIconseverities,
 }));
 </script>
 
