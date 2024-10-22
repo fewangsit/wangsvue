@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.13
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.12...v1.5.13)
+
+### 🩹 Fixes
+
+- **Toast Util:** Cannot find module 'lib/utils/toast.util' or its corresponding type declarations. ([b88a77f](https://github.com/fewangsit/wangsvue/commit/b88a77f))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.12
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.11...v1.5.12)
