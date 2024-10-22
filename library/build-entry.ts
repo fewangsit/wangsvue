@@ -114,6 +114,7 @@ import {
   Comment,
   ProgressBar,
   InputBadge,
+  FileUpload,
 } from './components';
 
 export {
@@ -188,6 +189,7 @@ export {
   Animation,
   Comment,
   ProgressBar,
+  FileUpload,
 
   // Component store
   useLoadingStore,

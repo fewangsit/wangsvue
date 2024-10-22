@@ -1,6 +1,32 @@
 # Changelog
 
 
+## v1.5.12
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.11...v1.5.12)
+
+### 🚀 Enhancements
+
+- **Toast:** Add ability to custom icon and set icon Class ([99a4de6](https://github.com/fewangsit/wangsvue/commit/99a4de6))
+- Export FileUpload component ([b2ae42a](https://github.com/fewangsit/wangsvue/commit/b2ae42a))
+
+### 🩹 Fixes
+
+- **Button:** Remove severity on iconProps, it causes bug style on filled button style ([6ff4715](https://github.com/fewangsit/wangsvue/commit/6ff4715))
+
+### 📖 Documentation
+
+- Update dialogDocs component import ([15711ee](https://github.com/fewangsit/wangsvue/commit/15711ee))
+- Missing `s` on word `Promise` on Dialog Docs component import ([79d296c](https://github.com/fewangsit/wangsvue/commit/79d296c))
+
+### 🏡 Chore
+
+- **presets:** Update version ([41c18dc](https://github.com/fewangsit/wangsvue/commit/41c18dc))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.11
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.10...v1.5.11)
