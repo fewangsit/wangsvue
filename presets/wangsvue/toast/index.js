@@ -13,20 +13,24 @@ export default {
     style: `z-index: ${props.baseZIndex}`,
   }),
   container: ({ props }) => ({
-    class: [
+    'class': [
       'border-0 mt-6',
       'rounded-[7px] w-full',
       'shadow-lg',
       // Colors
       {
-        'border-success-600 text-white bg-success-500': props.message.severity === 'success',
-        'border-danger text-white bg-danger-500': props.message.severity === 'error',
-        'border-primary-500 text-primary-500 bg-primary-50': props.message.severity === 'info',
+        'border-success-600 text-white bg-success-500':
+          props.message.severity === 'success',
+        'border-danger text-white bg-danger-500':
+          props.message.severity === 'error',
+        'border-primary-500 text-primary-500 bg-primary-50':
+          props.message.severity === 'info',
       },
     ],
+    'data-wv-severity': props.message.severity,
   }),
   content: {
-      class: 'flex items-center py-3 px-3 text-inherit gap-2',
+    class: 'flex items-center py-3 px-3 text-inherit gap-2',
   },
   icon: {
     class: 'hidden',
