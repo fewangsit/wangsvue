@@ -28,6 +28,7 @@ export type Events = {
   'detail-task:show': { taskId: string };
   'detail-task:create': { taskId: string };
   'detail-task:update': { taskId: string };
+  'detail-task:delete': { taskId: string };
 
   'work-calendar:reset-month': unknown;
   'work-calendar:reset-year': unknown;

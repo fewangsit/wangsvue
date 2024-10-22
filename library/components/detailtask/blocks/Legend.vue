@@ -1,11 +1,19 @@
 <script setup lang="ts">
-import { computed, inject, Ref, ref, shallowRef, watch } from 'vue';
+import {
+  computed,
+  ComputedRef,
+  inject,
+  Ref,
+  ref,
+  shallowRef,
+  watch,
+} from 'vue';
 
 import { DropdownOption } from 'lib/types/options.type';
 import LiteDropdown from 'lib/components/litedropdown/LiteDropdown.vue';
 import Button from 'lib/components/button/Button.vue';
 import Badge from 'lib/components/badge/Badge.vue';
-import ProcessServices from 'lib/services/process.service';
+import ProjectProcessServices from 'lib/services/projectProcess.service';
 import { useToast } from 'lib/utils';
 import ModuleServices from 'lib/services/module.service';
 import SubModuleServices from 'lib/services/submodule.service';
@@ -24,13 +32,24 @@ const toast = useToast();
 const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
 const isNewTask = inject<Ref<boolean>>('isNewTask');
+const legendForm = inject<Ref<TaskLegendForm>>('legendForm');
+const loadingTask = inject<Ref<boolean>>('loadingTask');
+const userType =
+  inject<ComputedRef<'member' | 'admin' | 'pm' | 'teamLeader'>>('userType');
+
+const emit = defineEmits<{
+  processChange: [
+    process: Pick<ProjectProcess, '_id' | 'name' | 'team' | 'processPosition'>,
+  ];
+}>();
 
 const projectId = sessionStorage.getItem('projectId');
 
 export type TaskLegend = {
-  process: Pick<ProjectProcess, '_id' | 'name' | 'team'>;
+  process: Pick<ProjectProcess, '_id' | 'name' | 'team' | 'processPosition'>;
   module?: Pick<ProjectModule, '_id' | 'name'>;
-  submodule?: Pick<ProjectSubModule, '_id' | 'name'>;
+  submodule?: Pick<ProjectSubModule, '_id' | 'name' | 'repository'>;
+  repository?: string;
   title: string;
   priorityValue?: number;
 };
@@ -41,6 +60,7 @@ export type TaskLegendOptions = {
   process?: DropdownOption[];
   module?: DropdownOption[];
   submodule?: DropdownOption[];
+  repository?: DropdownOption[];
 };
 
 export type TaskLegendLoading = {
@@ -49,7 +69,6 @@ export type TaskLegendLoading = {
   submodule?: boolean;
 };
 
-const legendForm = ref<TaskLegendForm>({});
 /**
  * Necessary to watch old and new value changes.
  *
@@ -67,24 +86,41 @@ const legendLoading = ref<TaskLegendLoading>({
 
 const showDialogNilaiPrioritas = shallowRef<boolean>(false);
 
+const subModuleVisibility = ref(true);
+const repositoryVisibility = ref(true);
+
+const bindProcess = computed(() => legendForm.value.process);
+const bindModule = computed(() => legendForm.value.module);
+const bindSubModule = computed(() => legendForm.value.submodule);
+
 const getProcessOptions = async (): Promise<void> => {
   if (!projectId) return;
   try {
     legendLoading.value.process = true;
 
-    const { data } = await ProcessServices.getProcessList(projectId);
+    const { data } = await ProjectProcessServices.getProcessesByUser(projectId);
 
-    legendOptions.value.process = data.data.processProjects.map((d) => ({
-      label: d.name,
-      value: {
-        _id: d._id,
-        name: d.name,
-        team: d.team.map((team) => ({ initial: team.initial })),
-      },
-    }));
+    legendOptions.value.process = data.data
+      .filter((d) => {
+        /*
+         * Do not show 'API Spec' on the detail task legend page
+         * because it is not used in the detail task page.
+         */
+        const isApiSpec = d.name === 'API Spec';
+        return !isApiSpec;
+      })
+      .map((d) => ({
+        label: d.name,
+        value: {
+          _id: d._id,
+          name: d.name,
+          team: d.team.map((team) => ({ initial: team.initial })),
+          processPosition: d.processPosition,
+        },
+      }));
   } catch (error) {
     toast.add({
-      message: 'Data Proses gagal diambil.',
+      message: 'Data Proses gagal dimuat.',
       severity: 'error',
       error,
     });
@@ -98,16 +134,51 @@ const getModuleOptions = async (): Promise<void> => {
   try {
     legendLoading.value.module = true;
 
-    // TODO: Filter according to team selected in the process.
     const { data } = await ModuleServices.getModuleList(projectId);
 
-    legendOptions.value.module = data.data.map((d) => ({
-      label: d.name,
-      value: {
-        _id: d._id,
-        name: d.name,
-      },
-    }));
+    legendOptions.value.module = data.data
+      .filter((d) => {
+        /*
+         * Filter out modules that are not supposed to be used for the current process.
+         * The following modules are only used for their respective processes:
+         * - Komponen module is only used for Komponen Web/Mobile process.
+         * - Konsep module is only used for Pengonsepan process.
+         * - Other modules are used for other processes.
+         */
+        const isComponent =
+          [
+            'Komponen Web',
+            'Komponen Mobile',
+            'Slicing Komponen Web',
+            'Slicing Komponen Mobile',
+          ].includes(legendForm.value.process.name) && d.name === 'Komponen';
+
+        const isConcept =
+          legendForm.value.process.name === 'Pengonsepan' &&
+          d.name === 'Konsep';
+
+        const isOtherModule =
+          ![
+            'Komponen Web',
+            'Komponen Mobile',
+            'Slicing Komponen Web',
+            'Slicing Komponen Mobile',
+            'Pengonsepan',
+          ].includes(legendForm.value.process.name) &&
+          !['Komponen', 'Konsep'].includes(d.name);
+
+        if (isComponent || isConcept || isOtherModule) {
+          return true;
+        }
+        return false;
+      })
+      .map((d) => ({
+        label: d.name,
+        value: {
+          _id: d._id,
+          name: d.name,
+        },
+      }));
   } catch (error) {
     toast.add({
       message: 'Data Modul gagal diambil.',
@@ -133,6 +204,7 @@ const getSubmoduleOptions = async (): Promise<void> => {
       value: {
         _id: d._id,
         name: d.name,
+        repository: d.repository,
       },
     }));
   } catch (error) {
@@ -157,56 +229,56 @@ const isModuleDropdownDisabled = computed<boolean>(() => {
 
 /**
  * Disable Rules:
- * 1. If the selected process is for UIUX, set submodule dropdown to disabled.
- * 2. If the selected process is NOT for UIUX & module has not been selected, set submodule dropdown to disabled.
+ * 1. If the process hasn't been selected.
+ * 2. If the module hasn't been selected.
+ * 3. If the submodule visibility is set to false.
  */
 const isSubmoduleDropdownDisabled = computed<boolean>(() => {
-  return (
-    (legendForm.value.process &&
-      legendForm.value.process.team[0].initial === 'UIUX') ||
-    !legendForm.value.module
-  );
+  const { process, module } = legendForm.value;
+  if (subModuleVisibility.value) {
+    return !process || !module;
+  }
+  return true;
 });
 
 /**
  * Disable Rules:
- * 1. If the selected process is for UIUX, IMMEDIATELY set title input to NOT disabled.
- * 2. If the selected process is NOT for UIUX & module + submodule has not been selected, set title input to disabled.
+ * 1. If the process hasn't been selected.
+ * 2. If the module hasn't been selected.
+ * 3. If the submodule visibility is set to true and submodule hasn't been selected.
  */
 const isTitleInputDisabled = computed<boolean>(() => {
-  const isProcessUIUX =
-    !!legendForm.value.process &&
-    legendForm.value.process.team[0].initial === 'UIUX';
-
-  const isProcessNotUIUX =
-    !!legendForm.value.process &&
-    legendForm.value.process.team[0].initial !== 'UIUX';
-
-  if (isProcessUIUX) {
-    return !legendForm.value.module;
-  }
-
-  if (
-    isProcessNotUIUX &&
-    legendForm.value.process &&
-    legendForm.value.module &&
-    legendForm.value.submodule
-  )
-    return false;
-
-  return true;
+  const { process, module, submodule } = legendForm.value;
+  const isProcessSelected = !!process;
+  const isModuleSelected = !!module;
+  const isSubmoduleSelected = subModuleVisibility.value ? !!submodule : true;
+  return !(isProcessSelected && isModuleSelected && isSubmoduleSelected);
 });
+
+const focusTitleInput = (): void => {
+  const titleInputEl = document.querySelector(
+    '[placeholder="Nama Task"]',
+  ) as HTMLInputElement;
+  setTimeout(() => {
+    titleInputEl.focus();
+  }, 100);
+};
 
 const createTask = async (): Promise<void> => {
   if (!legendForm.value.process || !legendForm.value.title) return;
   try {
+    const user = JSON.parse(localStorage.getItem('user') as string) ?? {};
     const dataDTO: CreateTaskDTO = {
       project: projectId,
       process: legendForm.value.process._id,
       module: legendForm.value.module?._id,
       subModule: legendForm.value?.submodule?._id,
+      repository: legendForm.value?.repository,
       name: legendForm.value.title,
       team: legendForm.value.process.team.map((team) => team.initial),
+      assignedTo: ['member', 'teamLeader'].includes(userType.value)
+        ? [user._id]
+        : undefined,
     };
 
     const { data } = await TaskServices.postCreateTask(dataDTO);
@@ -253,6 +325,10 @@ const editTask = async (): Promise<void> => {
  * This function is called whenever there will be changes in the detail task. (including create task and edit task)
  */
 const handleTaskChange = async (): Promise<void> => {
+  showSubModuleByProcess();
+  showRepositoryByProcess();
+  emit('processChange', legendForm.value.process);
+
   // Skip this function when title input is disabled.
   if (isTitleInputDisabled.value) return;
 
@@ -270,6 +346,86 @@ const handleTitleInput = (e: KeyboardEvent): void => {
   }
 
   legendForm.value.title = legendForm.value.title?.replace(/\n/g, '');
+};
+
+/**
+ * This function will show or hide submodule based on the process selection.
+ * If the process name is inside `noSubModuleProcesses` or the process position is
+ * 'di luar deployment', submodule will be hidden.
+ * Otherwise, submodule will be shown.
+ */
+const showSubModuleByProcess = (): void => {
+  const noSubModuleProcesses = [
+    'Pengonsepan',
+    'Diagram',
+    'Wireframe',
+    'Komponen Web',
+    'Komponen Mobile',
+    'Dokumentasi API',
+    'User Manual Web',
+    'User Manual Mobile',
+    'Slicing Komponen Web',
+    'Slicing Komponen Mobile',
+    'Detailing',
+  ];
+
+  const outsideDeploymentProcess =
+    legendForm.value?.process?.processPosition?.toLowerCase() ===
+    'di luar deployment';
+
+  if (
+    noSubModuleProcesses.includes(legendForm.value?.process?.name) ||
+    outsideDeploymentProcess
+  ) {
+    subModuleVisibility.value = false;
+    legendForm.value.submodule = undefined;
+    legendOptions.value.submodule = [];
+  } else {
+    subModuleVisibility.value = true;
+  }
+};
+
+const showRepositoryByProcess = (): void => {
+  const noRepositoryProcesses = [
+    'Repositori BE',
+    'Repositori FE',
+    'Repositori Mobile',
+    'IOT',
+    'Database',
+  ];
+  if (
+    legendForm.value.submodule &&
+    !noRepositoryProcesses.includes(legendForm.value.process.name)
+  ) {
+    repositoryVisibility.value = true;
+  } else {
+    repositoryVisibility.value = false;
+    legendForm.value.repository = undefined;
+  }
+};
+
+/**
+ * Get repository options based on the selected process team.
+ *
+ * This function will populate the legendOptions.repository with the
+ * repository option based on the selected process team.
+ *
+ * @returns {void}
+ */
+const getRepositoryOptions = (): void => {
+  const selectedProcessTeam = legendForm.value?.process?.team[0]?.initial;
+  if (selectedProcessTeam && legendForm.value?.submodule?.repository) {
+    const teams = {
+      BE: 'backend',
+      FE: 'frontend',
+      MOB: 'mobile',
+    };
+    const teamKeys = Object.keys(teams);
+    if (teamKeys.includes(selectedProcessTeam)) {
+      legendOptions.value.repository =
+        legendForm.value?.submodule?.repository[teams[selectedProcessTeam]];
+    }
+  }
 };
 
 watch(
@@ -313,20 +469,48 @@ watch(
   { deep: true },
 );
 
-watch(
-  computedLegendForm,
-  (value, oldValue) => {
-    if (!isNewTask.value) return;
-    if (oldValue.process !== undefined && value.process !== oldValue.process) {
-      legendForm.value.module = undefined;
-    }
+/*
+ * Watch(
+ *   computedLegendForm,
+ *   (value, oldValue) => {
+ *     if (!isNewTask.value) return;
+ *     if (oldValue.process !== undefined && value.process !== oldValue.process) {
+ *       legendForm.value.module = undefined;
+ *       legendOptions.value.module = [];
+ *     }
+ */
 
-    if (oldValue.process !== undefined && value.module !== oldValue.module) {
-      legendForm.value.submodule = undefined;
-    }
-  },
-  { deep: true },
-);
+/*
+ *     If (oldValue.process !== undefined && value.module !== oldValue.module) {
+ *       legendForm.value.submodule = undefined;
+ *       legendOptions.value.submodule = [];
+ *     }
+ *   },
+ *   { deep: true },
+ * );
+ */
+
+watch(bindProcess, (value, oldValue) => {
+  if (loadingTask.value || !oldValue || value?._id === oldValue?._id) return;
+  legendForm.value.module = undefined;
+  console.log('watch bindProcess', loadingTask.value);
+});
+
+watch(bindModule, (value, oldValue) => {
+  if (loadingTask.value || !oldValue || value?._id === oldValue?._id) return;
+  legendForm.value.submodule = undefined;
+  console.log('watch bindModule');
+});
+
+watch(bindSubModule, (value, oldValue) => {
+  if (loadingTask.value || !oldValue || value?._id === oldValue?._id) return;
+  legendForm.value.repository = undefined;
+  console.log('watch bindSubModule');
+});
+
+watch(isTitleInputDisabled, (value) => {
+  if (!value) focusTitleInput();
+});
 </script>
 
 <template>
@@ -341,6 +525,7 @@ watch(
             _id: '1',
             name: 'Pengonsepan',
             team: [],
+            processPosition: '-',
           },
           title: 'Process',
           priorityValue: 1,
@@ -350,6 +535,7 @@ watch(
             _id: '2',
             name: 'Detailing',
             team: [],
+            processPosition: '-',
           },
           title: 'Process',
           priorityValue: 5,
@@ -359,6 +545,7 @@ watch(
             _id: '3',
             name: 'Slicing Komponen Web',
             team: [],
+            processPosition: '-',
           },
           title: 'Process',
           priorityValue: 10,
@@ -399,16 +586,30 @@ watch(
           </div>
           <div>
             <LiteDropdown
+              v-if="subModuleVisibility"
               v-model="legendForm.submodule"
               :disabled="isSubmoduleDropdownDisabled"
               :loading="legendLoading.submodule"
               :options="legendOptions.submodule"
-              @change="handleTaskChange"
+              @change="getRepositoryOptions(), handleTaskChange()"
               @show="getSubmoduleOptions"
               data-wv-section="detailtask-submodule-input"
               option-label="label"
               option-value="value"
               placeholder="Sub Modul"
+            />
+          </div>
+          <div>
+            <LiteDropdown
+              v-if="repositoryVisibility"
+              v-model="legendForm.repository"
+              :disabled="isSubmoduleDropdownDisabled"
+              :options="legendOptions.repository"
+              @show="getSubmoduleOptions"
+              data-wv-section="detailtask-repository-input"
+              option-label="name"
+              option-value="name"
+              placeholder="Repository"
             />
           </div>
         </div>
@@ -431,9 +632,11 @@ watch(
         severity="secondary"
       />
     </div>
+    <pre>{{ legendForm }}</pre>
     <div class="flex justify-between items-start">
       <div class="w-8/10" data-wv-section="detailtask-title-wrapper">
         <Textarea
+          ref="titleInput"
           v-model="legendForm.title"
           :disabled="isTitleInputDisabled"
           @blur="handleTaskChange"
@@ -449,11 +652,7 @@ watch(
       </div>
       <div class="flex items-center gap-2">
         <Badge :label="taskDetail?.status ?? 'Backlog'" />
-        <!-- TODO: 
-          - Only show task button action when there are action to be made
-          - Show button according to their respective available action
-        -->
-        <Button label="Tandai Selesai" severity="secondary" />
+        <Button v-show="false" label="Tandai Selesai" severity="secondary" />
       </div>
     </div>
   </div>

@@ -22,7 +22,7 @@ import { TaskDetail } from 'lib/types/task.type';
 const toast = useToast();
 
 onMounted(() => {
-  setJWTToken();
+  // SetJWTToken();
 });
 
 onUnmounted(() => {
@@ -126,11 +126,13 @@ watch(projectId, () => {
     v-model:visible="showDetailTask"
     :task-id="selectedItem?._id ?? ''"
     @create="refreshTable"
+    @delete="refreshTable"
     @update="refreshTable"
   />
   <DetailTask
     v-model:visible="showNewTask"
     @create="refreshTable"
+    @delete="refreshTable"
     @update="refreshTable"
   />
   <Card>

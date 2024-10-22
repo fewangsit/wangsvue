@@ -11,19 +11,22 @@ import {
 
 import Dialog from 'primevue/dialog';
 import DialogPreset from 'lib/preset/dialog';
-import Legend from './blocks/Legend.vue';
+import Legend, { TaskLegendForm } from './blocks/Legend.vue';
 import Button from '../button/Button.vue';
 import { DetailTaskEmits, DetailTaskProps } from './DetailTask.vue.d';
 import { MenuItem } from '../menuitem';
 import TabMenu from '../tabmenu/TabMenu.vue';
 import InfoTaskTab from './blocks/Tabs/InfoTaskTab.vue';
-import { TaskDependency, TaskDetail } from 'lib/types/task.type';
+import { TaskDetail } from 'lib/types/task.type';
 import eventBus from 'lib/event-bus';
 import useLoadingStore from '../loading/store/loading.store';
 import { useToast } from 'lib/utils';
 import TaskServices from 'lib/services/task.service';
 import DescriptionTab from './blocks/Tabs/DescriptionTab.vue';
 import TaskMore from './blocks/TaskMore.vue';
+import ProjectServices from 'lib/services/project.service';
+import { ProjectDetail } from 'lib/types/project.type';
+import { ProjectProcess } from 'lib/types/projectProcess.type';
 
 const { setLoading } = useLoadingStore();
 const toast = useToast();
@@ -40,6 +43,11 @@ type TaskMenu = MenuItem & {
   component: DefineComponent<any, any, any>;
 };
 
+type SelectedProcess = Pick<
+  ProjectProcess,
+  '_id' | 'name' | 'team' | 'processPosition'
+>;
+
 onMounted(async () => {
   attachEventListener();
 });
@@ -48,16 +56,42 @@ onUnmounted(() => {
   removeEventListener();
 });
 
+const userType = computed(() => {
+  const { permission } = JSON.parse(localStorage.getItem('user') || '{}');
+  const isAdmin = Object.values(permission?.manageProject || {}).every(
+    (value) => value === true,
+  );
+  const { isPM, leaders } = projectDetail.value ?? {};
+  const processTeam = selectedProcess.value?.team?.[0]?.initial;
+  const isTeamLeader =
+    processTeam && leaders?.length && leaders?.includes(processTeam);
+
+  if (isAdmin) {
+    return 'admin';
+  } else if (isPM) {
+    return 'pm';
+  } else if (isTeamLeader) {
+    return 'teamLeader';
+  }
+  return 'member';
+});
+
 /**
  * To be used for the first initial loading.
  */
 const firstFetch = ref<boolean>(true);
 const taskId = ref<string>();
 const taskDetail = ref<TaskDetail>();
-const taskDependencies = ref<TaskDependency[]>();
 const isNewTask = ref<boolean>(false);
-
 const taskMenuIndex = ref<number>(0);
+
+const projectDetail = ref<ProjectDetail>();
+const selectedProcess = ref<SelectedProcess>();
+
+const legendForm = ref<TaskLegendForm>({});
+
+const loadingTask = ref(true);
+
 const taskMenu = computed<TaskMenu[]>(() => {
   return [
     {
@@ -83,11 +117,31 @@ const taskMenu = computed<TaskMenu[]>(() => {
   ];
 });
 
+const getProjectDetail = async (): Promise<void> => {
+  try {
+    const projectId = sessionStorage.getItem('projectId');
+    if (projectId) {
+      const { data } = await ProjectServices.getProjectDetail(projectId);
+      projectDetail.value = data.data;
+    }
+  } catch (error) {
+    toast.add({
+      message: 'Gagal memuat proyek detail.',
+      severity: 'error',
+      error,
+    });
+  }
+};
+
 const getDetailTask = async (): Promise<void> => {
   try {
-    if (!taskId.value) return;
+    loadingTask.value = true;
 
-    const { data } = await TaskServices.getTaskDetail(taskId.value);
+    if (!taskId.value && !props.taskId) return;
+
+    const { data } = await TaskServices.getTaskDetail(
+      taskId.value ?? props.taskId,
+    );
 
     // Parse task detail data to synchronize legend form data.
     taskDetail.value = {
@@ -107,29 +161,13 @@ const getDetailTask = async (): Promise<void> => {
 
     taskId.value = data.data._id;
   } catch (error) {
-    console.error(error);
     toast.add({
       message: 'Data Task Detail gagal diambil.',
       severity: 'error',
       error,
     });
-  }
-};
-
-const getTaskDependency = async (): Promise<void> => {
-  try {
-    if (!taskId.value) return;
-
-    const { data } = await TaskServices.getTaskDependencies(taskId.value);
-
-    taskDependencies.value = data.data;
-  } catch (error) {
-    console.error(error);
-    toast.add({
-      message: 'Data Task Dependensi gagal diambil.',
-      severity: 'error',
-      error,
-    });
+  } finally {
+    loadingTask.value = false;
   }
 };
 
@@ -141,10 +179,16 @@ const refreshAndEmitHandler = async (
     // Skip this function if id doesn't equal the task id.
     if (id !== taskId.value) return;
 
+    if (eventName === 'delete') {
+      emit('delete');
+      visible.value = false;
+      return;
+    }
+
     if (firstFetch.value) setLoading(true);
 
     await getDetailTask();
-    await getTaskDependency();
+    await getProjectDetail();
 
     firstFetch.value = false;
     setLoading(false);
@@ -175,6 +219,9 @@ const attachEventListener = (): void => {
   eventBus.on('detail-task:update', (event) =>
     refreshAndEmitHandler('update', event.taskId),
   );
+  eventBus.on('detail-task:delete', (event) =>
+    refreshAndEmitHandler('delete', event.taskId),
+  );
 };
 
 const removeEventListener = (): void => {
@@ -201,9 +248,16 @@ const reset = (): void => {
   taskMenuIndex.value = 0;
 };
 
+const handleProcessChange = (process: SelectedProcess): void => {
+  selectedProcess.value = process;
+};
+
 provide('taskId', taskId);
 provide('taskDetail', taskDetail);
 provide('isNewTask', isNewTask);
+provide('userType', userType);
+provide('legendForm', legendForm);
+provide('loadingTask', loadingTask);
 
 watch(
   () => props.taskId,
@@ -215,6 +269,16 @@ watch(
     }
   },
 );
+
+watch(visible, (value) => {
+  if (!value) {
+    taskId.value = undefined;
+    taskDetail.value = undefined;
+    selectedProcess.value = undefined;
+    legendForm.value = {};
+    isNewTask.value = false;
+  }
+});
 </script>
 
 <template>
@@ -274,13 +338,14 @@ watch(
         <span class="text-lg font-semibold leading-4">Detail Task</span>
         <div class="flex items-center gap-1.5">
           <Button
+            v-if="!isNewTask"
             class="!p-1"
             icon="chat-1-line"
             icon-class="!w-6 !h-6"
             severity="secondary"
             text
           />
-          <TaskMore />
+          <TaskMore v-if="!isNewTask" :task-detail="taskDetail" />
           <Button
             @click="visible = false"
             class="!p-0.5 !text-general-200 dark:!text-general-200"
@@ -295,13 +360,16 @@ watch(
     </template>
     <template #default>
       <div class="flex flex-col gap-3">
-        <Legend />
+        <pre>{{ userType }}</pre>
+        <Legend @process-change="handleProcessChange" />
         <TabMenu v-model:active-index="taskMenuIndex" :menu="taskMenu" />
         <component :is="taskMenu[taskMenuIndex].component" />
       </div>
+      <pre>{{ taskDetail }}</pre>
     </template>
   </Dialog>
 </template>
+
 <style>
 /* Hide scrollbar for Chrome, Safari and Opera */
 .detailtask-scrollbar-hide::-webkit-scrollbar {

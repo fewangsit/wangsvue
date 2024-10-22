@@ -18,6 +18,7 @@ import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
 import Icon from '../icon/Icon.vue';
 import InputGroup from '../inputgroup/InputGroup.vue';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
+import Button from '../button/Button.vue';
 
 const props = withDefaults(defineProps<CalendarProps>(), {
   view: 'date',
@@ -243,7 +244,6 @@ watch(date, formatDateText);
         @update:model-value="
           onUpdateModelValue($event as unknown as Date | Date[])
         "
-        hour-format="12"
         icon-display="input"
         show-icon
         show-other-months
@@ -256,6 +256,31 @@ watch(date, formatDateText);
             data-pc-section="inputicon"
             icon="calendar"
           />
+        </template>
+
+        <template #footer>
+          <div
+            v-if="showButtons || showTime"
+            v-show="calendar?.currentView === 'date'"
+            class="w-full flex items-center justify-end gap-1"
+            data-ts-section="calendarfooter"
+          >
+            <Button
+              @click="revertChanges"
+              label="Cancel"
+              severity="dark"
+              text
+            />
+            <Button :disabled="!date" @click="applyChanges" label="Apply" />
+          </div>
+        </template>
+
+        <template #incrementicon>
+          <Icon icon="arrow-up-s" />
+        </template>
+
+        <template #decrementicon>
+          <Icon icon="arrow-down" />
         </template>
       </Calendar>
     </InputGroup>

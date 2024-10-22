@@ -4,10 +4,10 @@ import { getBaseURL } from 'lib/utils/getBaseURL.util';
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
   const user = JSON.parse(localStorage.getItem('user') as string) ?? {};
 
-  const BASE_URL = getBaseURL('APP_PROJECT_PROCESS_API');
+  const BASE_URL = getBaseURL('APP_PROJECT_TEAM_API');
 
   const instance = axios.create({
-    baseURL: BASE_URL,
+    baseURL: `${BASE_URL}/projects`,
     headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + user.jwt,
@@ -19,16 +19,16 @@ const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
   return instance;
 };
 
-const ProcessServices = {
-  getProcessList: (
+const ProjectTeamServices = {
+  getProjectTeamMembers: (
     projectId: string,
-    params?: Record<string, string>,
-    isActive: 'active' | 'nonactive' = 'active',
+    teamInitial: string,
   ): Promise<AxiosResponse> => {
-    return API({ params }).get(
-      `/project-details/process/${projectId}/${isActive}`,
-    );
+    const params = {
+      initial: JSON.stringify([teamInitial]),
+    };
+    return API({ params }).get(`/${projectId}/members`);
   },
 };
 
-export default ProcessServices;
+export default ProjectTeamServices;

@@ -8,7 +8,7 @@ import { MenuItem } from 'lib/components/menuitem';
 import TabMenu from 'lib/components/tabmenu/TabMenu.vue';
 import { EditTaskLinkDTO } from 'lib/dto/task.dto';
 import eventBus from 'lib/event-bus';
-import TaskServices from 'lib/services/task.service';
+import TaskLinkServices from 'lib/services/taskLink.service';
 import { TaskLink, TaskLinkURLType } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 import { computed, inject, Ref, ref } from 'vue';
@@ -27,9 +27,20 @@ const props = withDefaults(
   },
 );
 
+/**
+ *
+ * - \s*\/?\s* There may be spaces before the name of the tag
+ * - (iframe)\b Matches only the whole tag name
+ * - .*?> Matching everything to the character >
+ *
+ * @see <https://stackoverflow.com/questions/59465583/regex-to-whitelist-html-tags>
+ */
+const whitelistIframeTag = /<\s*\/?\s*(iframe)\b.*?>/;
+
 const visible = defineModel<boolean>('visible', { required: true });
 
 const dialogForm = ref();
+const customInvalidEmbed = ref(false);
 
 const linkMenuIndex = ref<number>(0);
 const linkMenu = computed<MenuItem[]>(() => [
@@ -70,14 +81,14 @@ const handleSubmit = async (payload: FormPayload): Promise<void> => {
       type: props.type === 'microservices' ? 'service' : 'task',
     };
 
-    await TaskServices.putTaskLink(taskId.value, dataDTO);
+    await TaskLinkServices.putTaskLink(taskId.value, dataDTO);
 
     eventBus.emit('detail-task:update', { taskId: taskId.value });
+
+    visible.value = false;
   } catch (error) {
-    console.error(error);
     toast.add({
       message: 'Link Task gagal disimpan.',
-      severity: 'error',
       error,
     });
   }
@@ -90,6 +101,21 @@ const handleClick = (): void => {
 const reset = (): void => {
   linkMenuIndex.value = 0;
 };
+
+const invalidEmbedMessage = computed(() =>
+  customInvalidEmbed.value
+    ? 'Code embeded tidak valid.'
+    : { empty: 'Code embeded harus diisi.' },
+);
+
+const embedCodeValidation = (event: Event | string): void => {
+  if (!(event as string).length) {
+    customInvalidEmbed.value = false;
+    return;
+  }
+  const isValid = whitelistIframeTag.test(event as string);
+  customInvalidEmbed.value = !isValid;
+};
 </script>
 
 <template>
@@ -97,6 +123,7 @@ const reset = (): void => {
     ref="dialogForm"
     v-model:visible="visible"
     :buttons-template="[]"
+    :close-on-submit="false"
     :header="dialogHeader"
     @hide="reset"
     @submit="handleSubmit"
@@ -126,14 +153,14 @@ const reset = (): void => {
           </div>
           <div v-if="linkMenuIndex === 1" data-wv-section="code-embed-tab">
             <InputText
-              :validator-message="{
-                empty: 'Code embeded harus diisi.',
-              }"
+              :invalid="customInvalidEmbed"
+              :validator-message="invalidEmbedMessage"
               :value="
                 props.initialValue?.linkType === 'embedded'
                   ? props.initialValue.link
                   : undefined
               "
+              @input="embedCodeValidation"
               field-name="link"
               label="Code Embed"
               mandatory

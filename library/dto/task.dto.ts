@@ -5,8 +5,10 @@ export interface CreateTaskDTO {
   process: string;
   module: string;
   subModule?: string;
+  repository?: string;
   name: string;
   team?: string[];
+  assignedTo?: string[];
 }
 
 export interface EditTaskDTO {

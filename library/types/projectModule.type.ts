@@ -1,5 +1,6 @@
 export type ProjectModule = {
   _id: string;
-  initial: string;
   name: string;
+  initialName: string;
+  initial?: string;
 };

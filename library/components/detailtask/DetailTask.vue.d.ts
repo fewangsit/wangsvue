@@ -30,6 +30,10 @@ export type DetailTaskEmits = {
    * Emits when there is an update on the task.
    */
   update: [];
+  /**
+   * Emits when the task is deleted.
+   */
+  delete: [];
 };
 
 /**

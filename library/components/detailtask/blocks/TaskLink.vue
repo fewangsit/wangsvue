@@ -2,17 +2,21 @@
 import Button from 'lib/components/button/Button.vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import DialogSetTaskLink from './Dialog/DialogSetTaskLink.vue';
-import { computed, inject, Ref, ref, watch } from 'vue';
+import { computed, inject, onMounted, Ref, ref, watch } from 'vue';
 import { TaskDetail, TaskLink } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
-import TaskServices from 'lib/services/task.service';
+import TaskLinkServices from 'lib/services/taskLink.service';
 import UserName from 'lib/components/username/UserName.vue';
-import { formatTimeAgo } from '@vueuse/core';
+import { formatDateReadable } from 'lib/utils/date.util';
 
 const toast = useToast();
 
 const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
+
+onMounted(() => {
+  getTaskLink();
+});
 
 const showDialogSetTaskLink = ref<boolean>(false);
 const showDialogSetTaskRepositoryLink = ref<boolean>(false);
@@ -23,7 +27,7 @@ const serviceLink = ref<TaskLink>();
 
 const isProcessHasRepository = computed(() => {
   if (!taskDetail.value) return false;
-  return ['Repositori FE', 'Repositori BE'].includes(
+  return ['Repositori FE', 'Repositori BE', 'Repositori Mobile'].includes(
     taskDetail.value.process.name,
   );
 });
@@ -42,11 +46,11 @@ const getTaskLink = async (): Promise<void> => {
   try {
     if (!taskId.value) return;
 
-    const { data: taskData } = await TaskServices.getTaskLink(
+    const { data: taskData } = await TaskLinkServices.getTaskLink(
       taskId.value,
       'task',
     );
-    const { data: serviceData } = await TaskServices.getTaskLink(
+    const { data: serviceData } = await TaskLinkServices.getTaskLink(
       taskId.value,
       'service',
     );
@@ -54,10 +58,8 @@ const getTaskLink = async (): Promise<void> => {
     taskLink.value = taskData.data;
     serviceLink.value = serviceData.data;
   } catch (error) {
-    console.error(error);
     toast.add({
-      message: 'Data Task Link gagal diambil.',
-      severity: 'error',
+      message: 'Data Task Link gagal dimuat.',
       error,
     });
   }
@@ -86,7 +88,7 @@ watch(taskDetail, async () => {
         </div>
         <div class="flex items-center gap-2">
           <span v-if="taskLink?.updatedAt">
-            {{ formatTimeAgo(new Date(taskLink.updatedAt)) }}
+            {{ formatDateReadable(new Date(taskLink.updatedAt), 86400) }}
           </span>
           <UserName
             v-if="taskLink?.updatedBy"
@@ -139,7 +141,7 @@ watch(taskDetail, async () => {
         </div>
         <div class="flex items-center gap-2">
           <span v-if="serviceLink?.updatedAt">
-            {{ formatTimeAgo(new Date(serviceLink.updatedAt)) }}
+            {{ formatDateReadable(new Date(serviceLink.updatedAt), 86400) }}
           </span>
           <UserName
             v-if="serviceLink?.updatedBy"
@@ -193,7 +195,7 @@ watch(taskDetail, async () => {
       </div>
       <div class="flex items-center gap-2">
         <span v-if="taskLink?.updatedAt">
-          {{ formatTimeAgo(new Date(taskLink.updatedAt)) }}
+          {{ formatDateReadable(new Date(taskLink.updatedAt), 86400) }}
         </span>
         <UserName
           v-if="taskLink?.updatedBy"
@@ -239,7 +241,6 @@ watch(taskDetail, async () => {
           v-html="taskLink.link"
           class="[&_iframe]:flex-grow flex w-full h-full"
         />
-        <!-- TODO: Desain kode embed tidak valid -->
         <div v-else>
           <span class="font-bold text-lg">
             Oh Tidak! kode embed tidak valid.

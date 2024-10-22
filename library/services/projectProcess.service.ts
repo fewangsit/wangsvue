@@ -4,7 +4,7 @@ import { getBaseURL } from 'lib/utils/getBaseURL.util';
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
   const user = JSON.parse(localStorage.getItem('user') as string) ?? {};
 
-  const BASE_URL = getBaseURL('APP_PROJECT_SUB_MODULE_API');
+  const BASE_URL = getBaseURL('APP_PROJECT_PROCESS_API');
 
   const instance = axios.create({
     baseURL: BASE_URL,
@@ -19,21 +19,19 @@ const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
   return instance;
 };
 
-const SubModuleServices = {
-  getSubmoduleList: (
+const ProcessServices = {
+  getProcessList: (
     projectId: string,
     params?: Record<string, string>,
-  ): Promise<AxiosResponse> => {
-    return API({ params }).get(`/${projectId}/project-detail/sub-module`);
-  },
-  getSubmoduleOptions: (
-    projectId: string,
-    params?: Record<string, boolean>,
+    isActive: 'active' | 'nonactive' = 'active',
   ): Promise<AxiosResponse> => {
     return API({ params }).get(
-      `/${projectId}/project-detail/sub-module/options`,
+      `/project-details/process/${projectId}/${isActive}`,
     );
+  },
+  getProcessesByUser: (projectId: string): Promise<AxiosResponse> => {
+    return API().get(`/project-details/process-user/${projectId}`);
   },
 };
 
-export default SubModuleServices;
+export default ProcessServices;

@@ -3,9 +3,7 @@ import {
   CreateTaskDTO,
   EditDescriptionTaskDTO,
   EditTaskDTO,
-  EditTaskLinkDTO,
 } from 'lib/dto/task.dto';
-import { TaskLinkType } from 'lib/types/task.type';
 import { getBaseURL } from 'lib/utils/getBaseURL.util';
 
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
@@ -14,7 +12,7 @@ const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
   const BASE_URL = getBaseURL('APP_TASK_API');
 
   const instance = axios.create({
-    baseURL: BASE_URL,
+    baseURL: `${BASE_URL}/api/tasks`,
     headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + user.jwt,
@@ -28,45 +26,41 @@ const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
 
 const TaskServices = {
   postCreateTask: (data: CreateTaskDTO): Promise<AxiosResponse> => {
-    return API().post('/api/tasks', data);
+    return API().post('/', data);
   },
 
   putEditTask: (taskId: string, data: EditTaskDTO): Promise<AxiosResponse> => {
-    return API().put(`/api/tasks/${taskId}`, data);
+    return API().put(`/${taskId}`, data);
   },
 
   getTaskList: (params?: Record<string, string>): Promise<AxiosResponse> => {
-    return API({ params }).get('/api/tasks');
+    return API({ params }).get('/');
+  },
+
+  getTaskOptions: (
+    params?: Record<string, string | boolean>,
+  ): Promise<AxiosResponse> => {
+    return API({ params }).get('/options');
   },
 
   getTaskDetail: (taskId: string): Promise<AxiosResponse> => {
-    return API().get(`/api/tasks/${taskId}`);
+    return API().get(`/${taskId}`);
   },
 
   getTaskDescription: (taskId: string): Promise<AxiosResponse> => {
-    return API().get(`/api/tasks/${taskId}/description`);
+    return API().get(`/${taskId}/description`);
   },
 
   putTaskDescription: (
     taskId: string,
     data: EditDescriptionTaskDTO,
   ): Promise<AxiosResponse> => {
-    return API().put(`/api/tasks/${taskId}/description`, data);
+    return API().put(`/${taskId}/description`, data);
   },
 
-  getTaskDependencies: (taskId: string): Promise<AxiosResponse> => {
-    return API().get(`/api/task-dependency/task/${taskId}`);
-  },
-
-  getTaskLink: (taskId: string, type: TaskLinkType): Promise<AxiosResponse> => {
-    return API().get(`/api/task-link/task/${taskId}/${type}`);
-  },
-
-  putTaskLink: (
-    taskId: string,
-    data: EditTaskLinkDTO,
-  ): Promise<AxiosResponse> => {
-    return API().put(`/api/task-link/task/${taskId}`, data);
+  deleteTask: (taskId: string): Promise<AxiosResponse> => {
+    const params = { id: JSON.stringify([taskId]) };
+    return API({ params }).delete('/delete');
   },
 };
 
