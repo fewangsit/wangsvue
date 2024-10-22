@@ -1,15 +1,13 @@
 <script setup lang="ts">
+import { inject } from 'vue';
 import type { ValidatorMessageProps } from './ValidatorMessage.vue.d';
 
 defineProps<ValidatorMessageProps>();
+
+const Preset = inject<Record<string, any>>('preset', {}).validatormessage;
 </script>
 <template>
-  <small
-    v-show="message"
-    class="!mt-0 text-danger-500 dark:text-danger-500 text-xs font-light"
-    data-wv-section="validator-message"
-    role="alert"
-  >
+  <small v-show="message" v-bind="Preset?.root" role="alert">
     {{ message }}
   </small>
 </template>

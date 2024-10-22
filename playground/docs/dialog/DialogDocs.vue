@@ -25,10 +25,36 @@ const showDialog = shallowRef<boolean>(false);
           class="w-[400px]"
           header="Dialog Header"
         >
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa aliquam
-          quam quia? Dolor debitis reprehenderit aliquam fugit repellat unde,
-          explicabo sint maiores eius, mollitia dolorum odio neque natus.
-          Tenetur, id!
+          <span class="text-lg">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa quam
+            quia? Dolor debitis reprehenderit aliquam fugit repellat unde,
+            explicabo sint maiores eius, mollitia dolorum odio neque natus.
+            Tenetur, id!
+          </span>
+          <span class="text-lg">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa quam
+            quia? Dolor debitis reprehenderit aliquam fugit repellat unde,
+            explicabo sint maiores eius, mollitia dolorum odio neque natus.
+            Tenetur, id!
+          </span>
+          <span class="text-lg">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa quam
+            quia? Dolor debitis reprehenderit aliquam fugit repellat unde,
+            explicabo sint maiores eius, mollitia dolorum odio neque natus.
+            Tenetur, id!
+          </span>
+          <span class="text-lg">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa quam
+            quia? Dolor debitis reprehenderit aliquam fugit repellat unde,
+            explicabo sint maiores eius, mollitia dolorum odio neque natus.
+            Tenetur, id!
+          </span>
+          <span class="text-lg">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa quam
+            quia? Dolor debitis reprehenderit aliquam fugit repellat unde,
+            explicabo sint maiores eius, mollitia dolorum odio neque natus.
+            Tenetur, id!
+          </span>
           <template #footer>
             <Button label="Simpan" />
           </template>

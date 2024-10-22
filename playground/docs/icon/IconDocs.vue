@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import Card from 'lib/components/card/Card.vue';
-import DocTitle from '../DocTitle.vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import { WangsIcons } from 'lib/components/icon/Icon.vue.d';
+import DocTitle from '../DocTitle.vue';
 
 const wangsIconsArray: WangsIcons[] = [
   'add',
@@ -41,6 +41,7 @@ const wangsIconsArray: WangsIcons[] = [
   'coins',
   'completion',
   'dashboard',
+  'database',
   'delete-back',
   'delete-bin',
   'delete-bin-7',
@@ -82,6 +83,7 @@ const wangsIconsArray: WangsIcons[] = [
   'indeterminate-circle-fill',
   'info',
   'information-line',
+  'line-chart',
   'link-unlink-m',
   'list-settings',
   'loader-4',
@@ -151,6 +153,14 @@ const wangsIconsArray: WangsIcons[] = [
   'attachment-2',
   'save',
   'chat-new-line',
+  'code-line',
+  'code-box-line',
+  'emotion-happy-line',
+  'run-line',
+  'bar-chart-line',
+  'file-chart-line',
+  'user-unfollow-line',
+  'bug-2-line',
 ];
 </script>
 
@@ -159,7 +169,7 @@ const wangsIconsArray: WangsIcons[] = [
     <template #header>
       <DocTitle name="Icon List" />
       <span>
-        These icons were upscaled to 200% of their original size for better
+        These icons were upscale to 200% of their original size for better
         viewing.
       </span>
     </template>

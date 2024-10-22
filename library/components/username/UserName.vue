@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { nextTick } from 'vue';
+import { nextTick, shallowRef } from 'vue';
 import { getNestedProperyValue } from 'lib/utils';
 import { UserNameProps } from './UserName.vue.d';
 import Image from '../image/Image.vue';
 import Icon from '../icon/Icon.vue';
 import OverlayPanel from 'primevue/overlaypanel';
+import MemberServices, { Member } from 'lib/services/member.service';
+import Skeleton from 'primevue/skeleton';
 
 const props = withDefaults(defineProps<UserNameProps>(), {
   type: 'picture',
@@ -13,16 +15,31 @@ const props = withDefaults(defineProps<UserNameProps>(), {
 });
 
 const overlayId = +new Date();
+const loadingUser = shallowRef<boolean>(false);
+const fullUserObject = shallowRef<Member>();
 
-const adjustPosition = (): void => {
+const adjustPosition = async (): Promise<void> => {
   const overlay = document.getElementById(overlayId.toString());
 
   if (overlay) {
-    nextTick(() => {
+    await nextTick(() => {
       overlay.style.top = 'revert-layer';
       overlay.style.bottom = '0';
       overlay.style.translate = '-25%';
     });
+  }
+
+  if (!fullUserObject.value) {
+    try {
+      loadingUser.value = true;
+      const { data } = await MemberServices.getMemberDetail(props.user?._id);
+
+      fullUserObject.value = data.data;
+    } catch (error) {
+      console.error(error);
+    } finally {
+      loadingUser.value = false;
+    }
   }
 };
 </script>
@@ -64,35 +81,48 @@ const adjustPosition = (): void => {
         <div class="bg-primary-100 absolute top-0 h-[42px] w-full" />
 
         <Image
-          :src="props.user?.profilePicture"
+          :src="
+            fullUserObject?.profilePicture ?? fullUserObject?.profilePictureBig
+          "
           class="w-[60px] h-[60px]"
           rounded
         />
 
-        <div class="flex flex-col gap-0.5 items-center justify-center">
-          <h4 class="font-semibold text-[10px] leading-[15px]">
-            {{ props.user?.fullName }} ({{ props.user?.nickName }})
+        <div
+          v-if="!loadingUser"
+          class="flex flex-col gap-0.5 items-center justify-center"
+        >
+          <h4
+            class="font-semibold text-[10px] leading-[15px] text-center text-pretty"
+          >
+            {{ fullUserObject?.fullName }} ({{ fullUserObject?.nickName }})
           </h4>
 
           <span class="text-[8px] font-normal leading-3">
-            {{ props.user?.email }}
+            {{ fullUserObject?.email }}
           </span>
         </div>
+        <Skeleton v-else width="100px" />
 
-        <span class="text-[8px] font-normal leading-3">
-          {{ props.user?.division }}
+        <span v-if="!loadingUser" class="text-[8px] font-normal leading-3">
+          {{ fullUserObject?.division }}
           /
-          {{ props.user?.position }}
+          {{ fullUserObject?.position }}
         </span>
 
+        <Skeleton v-else height="12px" width="60px" />
+
         <a
-          :href="`/user/${props.user?._id}`"
+          v-if="!loadingUser"
+          :href="`/user/${fullUserObject?._id}`"
           class="underline text-primary-400 text-[10px] leading-4 cursor-pointer hover:text-primary-500 transition-colors duration-100"
           target="_blank"
           title="link to user detail"
         >
           Detail Member
         </a>
+
+        <Skeleton v-else height="14px" width="75px" />
       </div>
     </OverlayPanel>
   </span>

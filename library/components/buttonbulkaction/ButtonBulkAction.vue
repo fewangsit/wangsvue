@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { computed, ref, watch, onMounted, onUnmounted, shallowRef } from 'vue';
+import {
+  computed,
+  ref,
+  watch,
+  onMounted,
+  onUnmounted,
+  shallowRef,
+  inject,
+} from 'vue';
 
 import Menu from 'lib/components/menu/Menu.vue';
 import {
@@ -7,7 +15,6 @@ import {
   ButtonBulkActionProps,
 } from './ButtonBulkAction.vue.d';
 import { MenuItem } from '../menuitem';
-import { filterVisibleMenu } from '../helpers';
 import { Data } from '../datatable/DataTable.vue.d';
 
 import Button from '../button/Button.vue';
@@ -16,6 +23,8 @@ import eventBus, { Events } from 'lib/event-bus';
 const props = withDefaults(defineProps<ButtonBulkActionProps>(), {
   tableName: 'datatable',
   useButton: true,
+  selectedData: [],
+  options: [],
 });
 
 const emit = defineEmits<ButtonBulkActionEmits>();
@@ -33,16 +42,14 @@ onUnmounted(() => {
   eventBus.off('data-table:update-selected-data');
 });
 
+const Preset = inject<Record<string, any>>('preset', {}).buttonbulkaction;
+
 const menu = ref();
 const selectedOption = shallowRef<MenuItem>();
 const totalRecords = shallowRef<number>(0);
 const isAllDataSelected = shallowRef<boolean>(false);
 const isDisabled = shallowRef<boolean>(false);
 const dataSelected = ref<Data[] | undefined>(props.selectedData);
-
-const bulkOptions = computed(() => {
-  return filterVisibleMenu(props.options);
-});
 
 const showSelectAllButton = computed(
   () =>
@@ -100,9 +107,9 @@ const handleUpdateSelectedData = (
 
 watch(
   [dataSelected, totalRecords],
-  ([datas, total]) => {
-    if (!datas?.length) selectedOption.value = undefined;
-    isAllDataSelected.value = datas?.length === total;
+  ([data, total]) => {
+    if (!data?.length) selectedOption.value = undefined;
+    isAllDataSelected.value = data?.length === total;
   },
   { deep: true },
 );
@@ -115,37 +122,19 @@ watch(
 </script>
 
 <template>
-  <div
-    v-show="dataSelected?.length"
-    class="flex gap-2 items-center"
-    data-wv-name="bulkaction"
-    data-wv-section="root"
-  >
-    <Menu
-      id="bulkaction-overlay-menu"
-      ref="menu"
-      v-if="dataSelected?.length"
-      :model="bulkOptions"
-      :popup="true"
-      data-wv-section="bulkactionmenu"
-    />
+  <div v-show="dataSelected?.length" v-bind="Preset.root">
+    <Menu ref="menu" v-if="dataSelected?.length" :model="options" popup />
 
-    <span
-      v-show="dataSelected?.length"
-      class="text-xs text-grayscale-900 cursor-default whitespace-nowrap"
-      data-wv-section="selection-message"
-    >
+    <span v-show="dataSelected?.length" v-bind="Preset.selectionmessage">
       {{ dataSelected?.length }} data dipilih
     </span>
 
     <Button
       v-show="showSelectAllButton"
-      :class="[
-        '!px-1.5 !py-1 -ml-1.5 -mr-1.5 !text-xs',
-        { 'pointer-events-none': isAllDataSelected },
-      ]"
       @click="selectAllData"
-      data-wv-section="buttonselectall"
+      v-bind="
+        Preset.buttonselectall({ context: { selectedAll: isAllDataSelected } })
+      "
       text
     >
       <template v-if="!isAllDataSelected">
@@ -156,7 +145,7 @@ watch(
 
     <Button
       @click="toggleMenu"
-      data-wv-section="bulkactiontoggle"
+      v-bind="Preset.bulkactiontoggle"
       icon="ellipsis-h"
       outlined
       severity="secondary"
@@ -164,8 +153,7 @@ watch(
     />
     <Button
       @click="unSelectAllData"
-      class="!p-0 !w-6 !h-6 [&_.icon]:!w-5 [&_.icon]:!h-5"
-      data-wv-section="clearselection"
+      v-bind="Preset.buttonclearselection"
       icon="close"
       severity="danger"
       text

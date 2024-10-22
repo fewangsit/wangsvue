@@ -7,10 +7,10 @@ import {
   onMounted,
   onUnmounted,
   watch,
+  inject,
 } from 'vue';
 
 import Dialog from 'primevue/dialog';
-import DialogPreset from 'lib/preset/dialog';
 import Legend, { TaskLegendForm } from './blocks/Legend.vue';
 import Button from '../button/Button.vue';
 import { DetailTaskEmits, DetailTaskProps } from './DetailTask.vue.d';
@@ -27,6 +27,8 @@ import TaskMore from './blocks/TaskMore.vue';
 import ProjectServices from 'lib/services/project.service';
 import { ProjectDetail } from 'lib/types/project.type';
 import { ProjectProcess } from 'lib/types/projectProcess.type';
+
+const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 
 const { setLoading } = useLoadingStore();
 const toast = useToast();

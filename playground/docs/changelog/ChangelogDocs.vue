@@ -10,7 +10,7 @@ import {
   TableColumn,
 } from 'lib/components/datatable/DataTable.vue.d';
 import MultiSelect from 'lib/components/multiselect/MultiSelect.vue';
-import TreeTable from 'lib/components/treetable/TreeTable.vue';
+import DataTable from 'lib/components/datatable/DataTable.vue';
 import { computed, h, ref } from 'vue';
 
 const options = {
@@ -165,7 +165,7 @@ const featuredTableName = computed<string>(() => {
     <div class="flex flex-col gap-2">
       <div class="flex flex-col gap-1">
         <span>Switch to activate/deactivate custom features</span>
-        <TreeTable
+        <DataTable
           :columns="featureColumns"
           :custom-column="false"
           :data="featureData"

@@ -1,20 +1,18 @@
 <script lang="ts" setup>
-import { ref, watch, defineProps } from 'vue';
-import Button from '../button/Button.vue';
+import { ref, watch } from 'vue';
+import UserName from '../username/UserName.vue';
 
 const props = defineProps<{
-  items: string[];
-  command: (arg: { id: string }) => void;
+  items: {
+    id: string;
+    label: string;
+    nickName: string;
+    profilePicture: string;
+  }[];
+  command: (arg: { id: string; label: string }) => void;
 }>();
 
 const selectedIndex = ref(0);
-
-watch(
-  () => props.items,
-  () => {
-    selectedIndex.value = 0;
-  },
-);
 
 const onKeyDown = (event: KeyboardEvent): boolean => {
   if (event.key === 'ArrowUp') {
@@ -48,32 +46,54 @@ const enterHandler = (): void => {
 const selectItem = (index: number): void => {
   const item = props.items[index];
   if (item) {
-    props.command({ id: item });
+    props.command({
+      id: item.id,
+      label: item.label,
+    });
   }
 };
 
 defineExpose({
   onKeyDown,
 });
+
+watch(
+  () => props.items,
+  () => {
+    selectedIndex.value = 0;
+  },
+);
 </script>
 <template>
   <div
-    class="bg-white border border-gray-200 rounded-lg shadow-md flex flex-col gap-1 overflow-auto p-2 relative dropdown-menu"
+    class="bg-white border border-gray-200 rounded-lg shadow-md flex flex-col max-h-72 overflow-y-scroll w-fit gap-1 p-2 relative"
   >
     <template v-if="items.length">
-      <Button
+      <div
         :key="index"
         v-for="(item, index) in items"
         :class="{
-          'flex items-center gap-1 text-left w-full': true,
-          'bg-gray-400': index === selectedIndex,
-          'hover:bg-gray-100': true,
+          'hover:bg-gray-100 flex': true,
+          '!bg-gray-100 ': index === selectedIndex,
         }"
-        :label="item"
         @click="selectItem(index)"
-        severity="secondary"
-      />
+      >
+        <UserName
+          :user="{
+            profilePicture: item.profilePicture,
+          }"
+          profile-picture-field="profilePicture"
+        />
+        <div class="flex flex-col gap-[1px]">
+          <p>
+            {{ item.label }}
+          </p>
+          <p class="!text-[10px] !font-light">
+            {{ item.nickName }}
+          </p>
+        </div>
+      </div>
     </template>
-    <div v-else class="item">No result</div>
+    <div v-else class="text-xs font-semibold">No result</div>
   </div>
 </template>

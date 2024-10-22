@@ -34,7 +34,7 @@ import InputInitialName from './inputinitialname/InputInitialName.vue';
 import InputPhoneNumber from './inputphonenumber/InputPhoneNumber.vue';
 import InputPassword from './inputpassword/InputPassword.vue';
 import Loading from './loading/Loading.vue';
-import DataTable from './treetable/TreeTable.vue';
+import DataTable from './datatable/DataTable.vue';
 import SummaryAccordion from './summaryaccordion/SummaryAccordion.vue';
 import InputURL from './inputurl/InputURL.vue';
 import OverlayPanel from './overlaypanel/OverlayPanel.vue';
@@ -46,9 +46,16 @@ import LiteDropdown from './litedropdown/LiteDropdown.vue';
 import ChangelogPage from './changelogpage/ChangelogPage.vue';
 import Editor from './editor/Editor.vue';
 import Image from './image/Image.vue';
+import Animation from './animation/Animation.vue';
+import Comment from 'lib/components/comment/Comment.vue';
+import ProgressBar from './progressbar/ProgressBar.vue';
+import InputBadge from './inputbadge/InputBadge.vue';
+import InputCurrency from './inputcurrency/InputCurrency.vue';
+import FileUpload from './fileupload/FileUpload.vue';
 
 export {
   Badge,
+  InputBadge,
   BadgeGroup,
   Button,
   ButtonToggle,
@@ -96,4 +103,9 @@ export {
   LiteDropdown,
   ChangelogPage,
   Editor,
+  Animation,
+  Comment,
+  ProgressBar,
+  InputCurrency,
+  FileUpload,
 };

@@ -46,7 +46,7 @@ export interface DropdownProps {
   /**
    * Bind the badge property to the dropdown value
    */
-  badgeValueProps?: BadgeProps;
+  badgeValueProps?: Omit<BadgeProps, 'label'>;
   /**
    * Set the input border style
    *
@@ -129,6 +129,7 @@ export interface DropdownProps {
 }
 
 export interface DropdownSlots {
+  'value': Slot<{ value: string }>;
   'option': Slot<{ option: DropdownOption }>;
   'addon-left': Slot;
   'addon-right': Slot;

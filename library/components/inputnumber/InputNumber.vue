@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue';
+import {
+  computed,
+  inject,
+  nextTick,
+  onMounted,
+  reactive,
+  ref,
+  watch,
+} from 'vue';
 import { useField } from 'vee-validate';
 import { FieldValidation } from '../form/Form.vue.d';
 
@@ -22,9 +30,15 @@ const props = withDefaults(defineProps<InputNumberProps>(), {
   padStart: 0,
   showValidatorMessage: true,
   allowEmptyValue: true,
+  addonVariant: 'filled',
 });
 
 const emit = defineEmits<InputNumberEmits>();
+
+const InputGroupAddonPreset = inject<Record<string, any>>(
+  'preset',
+  {},
+).inputgroupaddon;
 
 const inputKey = ref<number>(0);
 const inputNumber = ref<InputNumber>();
@@ -85,7 +99,7 @@ const setValidatorMessage = async (
     return props.validatorMessage;
   } else if (typeof props.validatorMessage !== 'string') {
     const { empty } = props.validatorMessage ?? {};
-    if (!hasValue && props.mandatory) {
+    if (value == null && props.mandatory) {
       return empty ?? true;
     } else if (hasValue && props.existingValues?.includes(value)) {
       return props.validatorMessage?.exist ?? props.label + ' sudah ada';
@@ -133,7 +147,7 @@ const onUpdateValue = (
         inputKey.value++;
 
         nextTick(() => {
-          const inputWrapper = inputNumber.value[
+          const inputWrapper = inputNumber.value?.[
             '$el' as keyof InputNumber
           ] as HTMLSpanElement;
 
@@ -189,7 +203,9 @@ const increment = (): void => {
   const currentValue = +(field.value ?? 0);
 
   onUpdateValue(
-    currentValue < props.max ? currentValue + 1 : currentValue,
+    props.max != null && currentValue < props.max
+      ? currentValue + 1
+      : currentValue,
     'modelValue',
   );
 };
@@ -198,7 +214,9 @@ const decrement = (): void => {
   const currentValue = +(field.value ?? 0);
 
   onUpdateValue(
-    currentValue > props.min ? currentValue - 1 : currentValue,
+    props.min != null && currentValue > props.min
+      ? currentValue - 1
+      : currentValue,
     'modelValue',
   );
 };
@@ -251,13 +269,9 @@ watch(
     >
       <InputGroupAddon
         v-if="$slots['addon-left'] || props.showButtons"
-        :class="[
-          {
-            '!px-2': props.showButtons,
-          },
-          addonLeftClass,
-        ]"
+        :class="addonLeftClass"
         :disabled="disabled"
+        v-bind="InputGroupAddonPreset.root({ props })"
       >
         <slot name="addon-left">
           <Icon
@@ -283,7 +297,7 @@ watch(
         <InputNumber
           :key="inputKey"
           ref="inputNumber"
-          v-bind="$props"
+          v-bind="props"
           :class="[
             inputNumberClass,
             {
@@ -302,9 +316,8 @@ watch(
 
       <InputGroupAddon
         v-if="$slots['addon-right'] || props.showButtons"
-        :class="{
-          '!text-general-200 !dark:text-general-200': props.disabled,
-          '!px-2': props.showButtons,
+        :pt="{
+          root: InputGroupAddonPreset.root({ props }),
         }"
       >
         <slot name="addon-right">

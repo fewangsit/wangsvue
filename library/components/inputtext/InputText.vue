@@ -6,6 +6,7 @@ import {
   shallowRef,
   watch,
   nextTick,
+  inject,
 } from 'vue';
 import { useField } from 'vee-validate';
 import { Nullable } from '../ts-helpers';
@@ -28,6 +29,11 @@ const props = withDefaults(defineProps<InputTextProps>(), {
 });
 
 const emit = defineEmits<InputTextEmits>();
+
+const InputGroupAddonPreset = inject<Record<string, any>>(
+  'preset',
+  {},
+).inputgroupaddon;
 
 const field = reactive<FieldValidation<Nullable<string>>>({
   value: props.modelValue?.trim(),
@@ -194,8 +200,16 @@ watch(
 
       <InputGroupAddon
         v-if="$slots['addon-right']"
-        :class="{
-          '!text-general-200 !dark:text-general-200': props.disabled,
+        :pt="{
+          root: InputGroupAddonPreset.root({
+            props: {
+              class: [
+                {
+                  '!text-general-200': props.disabled,
+                },
+              ],
+            },
+          }),
         }"
       >
         <slot name="addon-right" />

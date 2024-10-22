@@ -22,13 +22,13 @@ const textLimited = shallowRef();
       >
         This input will be invalid if the length more than 10 char: invalid
         <Textarea
+          v-model="textMaxInput"
           :max-input="10"
           :validator-message="{ exceed: 'Max 10 char' }"
           :value="textMaxInput"
           disabled
           mandatory
           use-validator
-          v-model:="textMaxInput"
         />
         Text you have inputted: {{ text }}
         <Textarea v-model="text" />
@@ -43,10 +43,19 @@ const textLimited = shallowRef();
           mandatory
           placeholder="Textarea"
         />
+        Invalid State
+        <Textarea
+          field-info="Mandatory"
+          invalid
+          label="Textarea"
+          placeholder="Textarea"
+          use-validator
+          validator-message="validator-message"
+        />
       </div>
 
       Default Placeholder
-      <Textarea field-info="Mandatory" label="Name" mandatory />
+      <Textarea field-info="Mandatory" label="Name" mandatory rows="1" />
     </template>
   </Card>
 </template>

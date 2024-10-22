@@ -19,7 +19,7 @@ const { loading, message } = useLoadingStore();
       data-wv-section="overlay"
     >
       <DotLottieVue
-        :src="loadingPlane"
+        :src="loadingPlane as string"
         autoplay
         class="w-[450px] h-auto"
         loop

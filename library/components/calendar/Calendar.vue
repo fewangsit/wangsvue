@@ -7,18 +7,20 @@ import {
   nextTick,
   computed,
   shallowRef,
+  inject,
 } from 'vue';
 import { useField } from 'vee-validate';
 import { CalendarProps, CalendarEmits } from './Calendar.vue.d';
 import { FieldValidation } from '../form/Form.vue.d';
 
 import Calendar, { CalendarState } from 'primevue/calendar';
-import CalendarPresets from 'lib/preset/calendar';
 import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
 import Icon from '../icon/Icon.vue';
 import InputGroup from '../inputgroup/InputGroup.vue';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 import Button from '../button/Button.vue';
+
+const CalendarPresets = inject<Record<string, any>>('preset', {}).calendar;
 
 const props = withDefaults(defineProps<CalendarProps>(), {
   view: 'date',

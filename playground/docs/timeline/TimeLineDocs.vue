@@ -26,6 +26,11 @@ onMounted(() => {
     </template>
     <template #content>
       <Timeline :value="eventLogs as TimelineItem[]" />
+      <Timeline
+        :align-detail="true"
+        :value="eventLogs as TimelineItem[]"
+        class="mt-10"
+      />
     </template>
     <template #footer>
       <div class="flex flex-col gap-2 pt-5">

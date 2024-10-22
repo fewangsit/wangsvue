@@ -10,6 +10,11 @@ export type TaskStatus =
   | 'Penyesuaian'
   | 'Selesai';
 
+export type ProductBacklogItemStatus =
+  | DevelopmentStatus
+  | 'Overdue'
+  | 'Pending E2E Testing';
+
 export type DeploymentStatus =
   | 'Not Ready Yet'
   | 'Ready to Deploy'
@@ -19,7 +24,9 @@ export type DeploymentStatus =
 export type DevelopmentStatus =
   | ProjectStatus
   | 'Pending E2E Testing Dev'
+  | 'Selesai Dev'
   | 'Pending E2E Testing Staging'
+  | 'Selesai Staging'
   | 'Reported Bug';
 
 export type StatusSeverity =
@@ -35,4 +42,5 @@ export type WangsitStatus =
   | UserStatus
   | TaskStatus
   | DeploymentStatus
-  | DevelopmentStatus;
+  | DevelopmentStatus
+  | ProductBacklogItemStatus;

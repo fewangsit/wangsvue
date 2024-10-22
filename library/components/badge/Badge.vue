@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue';
+import { computed, inject } from 'vue';
 import { BadgeProps, BadgeEmits } from 'lib/components/badge/Badge.vue.d';
 import { formatUserName } from 'lib/utils';
+import { StatusSeverity, WangsitStatus } from 'lib/types/wangsStatus.type';
 
 import Button from 'lib/components/button/Button.vue';
 import getStatusSeverity from 'lib/utils/statusSeverity.util';
-import { WangsitStatus } from 'lib/types/wangsStatus.type';
 
 const props = withDefaults(defineProps<BadgeProps>(), {});
 const emit = defineEmits<BadgeEmits>();
+
+const Preset = inject<Record<string, any>>('preset', {}).badge;
 
 const hasValue = computed(() => {
   const type = typeof props.label;
@@ -18,42 +20,8 @@ const hasValue = computed(() => {
   );
 });
 
-const badgeSeverity = computed(() => {
+const badgeSeverity = computed<StatusSeverity>(() => {
   return props.severity ?? getStatusSeverity(props.label as WangsitStatus);
-});
-
-const severityClasses = computed<string[]>(() => {
-  if (!props.disabled) {
-    switch (badgeSeverity.value) {
-      case 'success':
-        return [
-          'text-success-800 bg-success-100',
-          'dark:bg-success-100 dark:text-success-800',
-        ];
-      case 'danger':
-        return [
-          'text-danger-700 bg-danger-200',
-          'dark:bg-danger-200 dark:text-danger-700',
-        ];
-      case 'warning':
-        return [
-          'text-warning-600 bg-warning-100',
-          'dark:bg-warning-100 dark:text-warning-600',
-        ];
-      case 'dark':
-        return [
-          'text-grayscale-900 bg-grayscale-500',
-          'dark:bg-grayscale-500 dark:text-grayscale-900',
-        ];
-      default:
-        return [
-          'text-primary-800 bg-primary-200',
-          'dark:bg-primary-200 dark:text-primary-800',
-        ];
-    }
-  } else {
-    return ['text-general-400', 'bg-general-100'];
-  }
 });
 
 const formattedText = computed(() => {
@@ -77,17 +45,13 @@ const formattedText = computed(() => {
 /**
  * Show tooltip the full label text when:
  * - The format is not nowrap and the length is more than 12 chars
- * - The format is user name and the length is more than 8 characters
+ * - The format is username and the length is more than 8 characters
  */
 const badgeTooltip = computed(() => {
   return (props.format !== 'nowrap' && props.label.length > 12) ||
     (props.format === 'username' && props.label.length > 8)
     ? props.label
     : undefined;
-});
-
-const ptDisabledBtn = shallowRef({
-  root: { style: 'color: #6C688D !important' },
 });
 
 /**
@@ -105,7 +69,7 @@ const onEditText = (ev: KeyboardEvent): void => {
 
 /**
  * Function to update the label text and emit events.
- * @param text - The new text content for the label.
+ * @param inputElement - the conteneditable span element
  * @param badgeEl - The HTML element representing the label.
  */
 const updateLabel = (inputElement: HTMLElement, badgeEl: HTMLElement): void => {
@@ -134,16 +98,15 @@ const updateLabel = (inputElement: HTMLElement, badgeEl: HTMLElement): void => {
     ref="badge"
     v-if="hasValue"
     v-tooltip.top="{ value: badgeTooltip, autoHide: false }"
-    :class="severityClasses"
-    class="inline-flex items-center rounded-[50px] py-1 px-2"
+    v-bind="
+      Preset?.root({
+        props: { severity: badgeSeverity, disabled },
+      })
+    "
   >
     <span
       ref="input"
-      :class="[
-        'text-nowrap whitespace-nowrap font-normal text-xs leading-4 tracking-[0.2488px]',
-        { 'cursor-default': !!badgeTooltip },
-        { 'caret-surface-700	': editable },
-      ]"
+      v-bind="Preset?.input({ props, context: { badgeTooltip } })"
       :contenteditable="editable"
       @blur="
         updateLabel(
@@ -158,23 +121,8 @@ const updateLabel = (inputElement: HTMLElement, badgeEl: HTMLElement): void => {
     </span>
     <Button
       v-if="props.removable"
-      :class="[
-        'remove-btn',
-        {
-          'dark:hover:!text-primary-300 !text-primary-800 dark:!text-primary-800':
-            !badgeSeverity || badgeSeverity === 'primary',
-          'dark:hover:!text-success-200 !text-success-800 dark:!text-success-800':
-            badgeSeverity === 'success',
-          'dark:hover:!text-danger-200 !text-danger-700 dark:!text-danger-700':
-            badgeSeverity === 'danger',
-          'dark:hover:!text-warning-400 !text-warning-600 dark:!text-warning-600':
-            badgeSeverity === 'warning',
-          'dark:hover:!text-grayscale-800 !text-grayscale-900 dark:!text-grayscale-900':
-            badgeSeverity === 'dark',
-        },
-      ]"
+      v-bind="Preset?.removebutton({ props: { badgeSeverity, disabled } })"
       :disabled="props.disabled"
-      :pt="props.disabled ? ptDisabledBtn : undefined"
       :severity="badgeSeverity"
       @click="emit('remove')"
       icon="close"
@@ -184,16 +132,3 @@ const updateLabel = (inputElement: HTMLElement, badgeEl: HTMLElement): void => {
   </span>
   <span v-else aria-label="invalid-label">-</span>
 </template>
-
-<style scoped>
-.remove-btn {
-  height: 10.13px !important;
-  width: 10.13px !important;
-  min-width: 10.13px !important;
-  padding: 0 !important;
-  margin-left: 4px;
-}
-:deep(.remove-btn i) {
-  font-size: 10.13px;
-}
-</style>

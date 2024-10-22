@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { computed, ref, shallowRef, useSlots } from 'vue';
-import Form from '../form/Form.vue';
 import Dialog from 'primevue/dialog';
+import { computed, inject, ref, shallowRef, useSlots } from 'vue';
 import Button from '../button/Button.vue';
-import DialogPreset from 'lib/preset/dialog';
-import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
-import FormInstance, { FormPayload } from '../form/Form.vue.d';
+import Form from '../form/Form.vue';
+
 import Checkbox from '../checkbox/Checkbox.vue';
+import FormInstance, { FormPayload } from '../form/Form.vue.d';
 import Icon from '../icon/Icon.vue';
-import { convertToArrayClass } from 'lib/utils';
+import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
+
+const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
+const DialogFormPreset = inject<Record<string, any>>('preset', {}).dialogform;
 
 import {
   DialogFormEmits,
@@ -17,14 +19,19 @@ import {
 } from '../dialogform/DialogForm.vue.d';
 
 const props = withDefaults(defineProps<DialogFormProps>(), {
-  showStayCheckbox: undefined,
-  useClearBtn: true,
-  useActionBtn: true,
+  cancelBtnLabel: 'Batal',
+  clearBtnLabel: 'Bersihkan Field',
+  submitBtnLabel: 'Simpan',
+  asideRightWidth: 260,
   closable: true,
   closeOnSubmit: true,
-  resetAfterSubmit: true,
-  width: 'small',
   columnPerRow: 1,
+  resetAfterSubmit: true,
+  showStayCheckbox: undefined,
+  stayCheckboxLabel: 'Tetap di halaman ini',
+  useActionBtn: true,
+  useClearBtn: true,
+  width: 'small',
 });
 
 const emit = defineEmits<DialogFormEmits>();
@@ -43,7 +50,8 @@ const formPayload = ref<FormPayload>({
 });
 
 const computedWidth = computed(() => {
-  const asideRightWidth = slots['aside-right'] && expanded.value ? 260 : 0;
+  const asideRightWidth =
+    slots['aside-right'] && expanded.value ? props.asideRightWidth : 0;
   const baseWidth = {
     'small': 400,
     'medium': 500,
@@ -149,80 +157,54 @@ defineExpose({ form, clearField });
 <template>
   <Dialog
     ref="dialogForm"
+    v-bind="DialogFormPreset?.root"
     :class="props.class"
     :closable="closable"
     :draggable="false"
     :header="header"
     :pt="{
       root: {
-        class: [...DialogPreset.root({ state: {} }).class, 'max-w-[90vw]'],
-        style: `width: ${computedWidth};`,
-      },
-      header: {
-        'class': [...DialogPreset.header.class],
-        'data-wv-section': 'dialog-form-header',
-      },
-      content: {
-        'class': [
-          ...DialogPreset.content({ state: {}, instance: {} }).class,
-          ...convertToArrayClass(contentClass),
+        class: [
+          ...DialogPreset?.root({ state: {} }).class,
+          ...DialogFormPreset?.root.class,
         ],
-        'data-wv-section': 'dialog-form-content',
-      },
-      footer: {
-        'class': [
-          ...DialogPreset.footer.class,
-          'flex flex-col !items-end justify-end !gap-1',
-        ],
-        'data-wv-section': 'dialog-form-footer',
+        style: DialogFormPreset?.root.style(computedWidth),
       },
     }"
     :visible="visible"
     @hide="emit('hide')"
     @show="emit('show')"
     @update:visible="emit('update:visible', !!$event)"
-    data-wv-section="dialog-form"
     modal
   >
     <template #container>
-      <div
-        :class="[
-          'flex overflow-y-auto overflow-x-hidden scrollbar-thin',
-          { 'gap-6': expanded },
-        ]"
-      >
-        <section id="main" class="flex flex-col gap-3 w-full">
-          <div class="flex items-center gap-2" data-wv-section="header">
+      <div v-bind="DialogFormPreset?.container(expanded)">
+        <section v-bind="DialogFormPreset?.mainsection" id="main">
+          <div v-bind="DialogFormPreset?.header">
             <slot name="header">
               <Icon
                 v-if="headerIcon"
+                v-bind="DialogFormPreset?.headericon"
                 :icon="headerIcon"
                 :severity="severity"
                 aria-label="Header Icon"
-                class="text-2xl"
-                data-wv-section="headericon"
               />
-              <h3
-                class="mr-auto text-grayscale-900 dark:text-general-100 text-center text-[0.9rem] leading-[1.125rem] !font-semibold tracking-[0.28px]"
-                data-wv-section="dialog-form-title"
-              >
+              <h3 v-bind="DialogFormPreset?.headertitle">
                 {{ header }}
               </h3>
 
               <Button
                 v-if="$slots['aside-right']"
-                :class="['!px-1.5 !py-1 -mr-1.5 !text-xs']"
+                v-bind="DialogFormPreset?.expandasidebutton"
                 :label="expanded ? 'Tutup <' : 'Lihat data yang ada >'"
                 @click="expanded = !expanded"
-                data-wv-section="buttonselectall"
                 text
               />
 
               <Button
                 v-if="closable"
+                v-bind="DialogFormPreset?.closedialog"
                 @click="closeDialog"
-                class="!p-0.5 !text-general-200 dark:!text-general-200"
-                data-wv-section="closebutton"
                 icon="close"
                 icon-class="w-[22px] h-[22px]"
                 severity="secondary"
@@ -232,12 +214,12 @@ defineExpose({ form, clearField });
           </div>
 
           <Form
+            v-bind="DialogFormPreset?.form"
             ref="form"
             :buttons-template="buttonsTemplate"
             :column-per-row="columnPerRow"
             :reset-after-submit="resetAfterSubmit"
             @submit="onSubmitDialogForm"
-            class="overflow-y-auto scrollbar-w-thin"
             hide-footer
           >
             <template #fields="{ formValues }">
@@ -252,12 +234,12 @@ defineExpose({ form, clearField });
             name="confirm"
           />
 
-          <div class="flex flex-col gap-3 items-end justify-center">
+          <div v-bind="DialogFormPreset?.footer">
             <Checkbox
               v-if="showStayCheckbox"
+              :label="stayCheckboxLabel"
               :model-value="form?.stayAfterSubmit"
               @update:model-value="form && (form.stayAfterSubmit = $event)"
-              label="Tetap di halaman ini"
             />
             <ValidatorMessage
               v-show="invalid && validatorMessage"
@@ -266,34 +248,33 @@ defineExpose({ form, clearField });
             />
             <div
               v-if="props.buttonsTemplate.length"
-              class="flex gap-1 items-center justify-end"
-              data-wv-section="footer-button"
+              v-bind="DialogFormPreset?.footerbutton"
             >
               <slot :submit="onButtonSubmitClicked" name="actionButtons">
                 <Button
                   v-if="props.buttonsTemplate?.includes('cancel')"
+                  v-bind="DialogFormPreset?.cancelbtn"
+                  :label="cancelBtnLabel"
                   @click="emit('close'), emit('update:visible', false)"
-                  data-wv-section="cancel-btn"
-                  label="Batal"
                   severity="dark"
                   text
                 />
                 <Button
                   v-if="props.buttonsTemplate?.includes('clear')"
-                  :label="clearBtnLabel ?? 'Bersihkan Field'"
+                  v-bind="DialogFormPreset?.clearfield"
+                  :label="clearBtnLabel"
                   @click="clearField"
                   class="whitespace-nowrap"
-                  data-wv-section="clear-field"
                   text
                 />
                 <Button
                   v-if="props.buttonsTemplate?.includes('submit')"
-                  :label="submitBtnLabel ?? 'Simpan'"
+                  v-bind="DialogFormPreset?.savesubmitbutton"
+                  :label="submitBtnLabel"
                   :severity="
                     props.severity === 'primary' ? undefined : 'success'
                   "
                   @click="onButtonSubmitClicked"
-                  data-wv-section="save-submit-button"
                 />
               </slot>
             </div>
@@ -301,13 +282,8 @@ defineExpose({ form, clearField });
         </section>
 
         <aside
-          v-if="$slots['aside-right'] && expanded"
-          :class="[
-            'flex flex-col gap-3',
-            { 'w-0 opacity-0': !expanded },
-            { 'w-[236px] opacity-100': expanded },
-          ]"
-          style="transition: opacity 0.1s ease-in"
+          v-bind="DialogFormPreset?.asidesection(expanded, asideRightWidth)"
+          v-if="$slots['aside-right']"
         >
           <slot name="aside-right" />
         </aside>
@@ -315,9 +291,3 @@ defineExpose({ form, clearField });
     </template>
   </Dialog>
 </template>
-
-<style scoped>
-.scrollbar-w-thin {
-  scrollbar-width: none;
-}
-</style>

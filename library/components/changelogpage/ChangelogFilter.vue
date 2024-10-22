@@ -1,19 +1,24 @@
 <script setup lang="ts">
+import { MultiSelectOption } from 'lib/types/options.type';
+import { useToast } from 'lib/utils';
 import { reactive, watch } from 'vue';
 import FilterContainer from '../filtercontainer/FilterContainer.vue';
 import {
   FilterField,
   MultiSelectFilterField,
 } from '../filtercontainer/FilterContainer.vue.d';
-import { useToast } from 'lib/utils';
-import { MultiSelectOption } from 'lib/types/options.type';
 
+import LogServices from 'lib/services/log.service';
 import {
+  BaseChangelogPageProps,
   ChangelogFilter,
   ChangelogOptionQuery,
-  BaseChangelogPageProps,
 } from './ChangelogPage.vue.d';
-import LogServices from 'lib/services/log.service';
+
+type ChangelogOptionFields = keyof Omit<
+  ChangelogOptionQuery,
+  'moduleId' | 'subModuleId' | 'objects' | 'object'
+>;
 
 const toast = useToast();
 
@@ -32,10 +37,8 @@ const fields = ((): FilterField[] => {
       type: 'multiselect',
       field: 'action',
       visible: !props.removedFilters?.includes('action'),
-      fetchOptionFn: async (
-        params?: ChangelogOptionQuery,
-      ): Promise<MultiSelectOption[]> => {
-        return await fetchOptions('actionOptions', params);
+      fetchOptionFn: async (): Promise<MultiSelectOption[]> => {
+        return await fetchOptions('actionOptions');
       },
     },
     {
@@ -46,10 +49,8 @@ const fields = ((): FilterField[] => {
         (props.moduleId || props.subModuleId) &&
         !props.additionalTemplateFilters?.length &&
         !props.removedFilters?.includes('object'),
-      fetchOptionFn: async (
-        params?: ChangelogOptionQuery,
-      ): Promise<MultiSelectOption[]> => {
-        return await fetchOptions('objectOptions', params);
+      fetchOptionFn: async (): Promise<MultiSelectOption[]> => {
+        return await fetchOptions('objectOptions');
       },
     },
     {
@@ -62,10 +63,8 @@ const fields = ((): FilterField[] => {
       visible:
         !props.additionalTemplateFilters?.length &&
         !props.removedFilters?.includes('objectName'),
-      fetchOptionFn: async (
-        params?: ChangelogOptionQuery,
-      ): Promise<MultiSelectOption[]> => {
-        return await fetchOptions('assetNameOptions', params);
+      fetchOptionFn: async (): Promise<MultiSelectOption[]> => {
+        return await fetchOptions('assetNameOptions');
       },
     },
     {
@@ -75,10 +74,8 @@ const fields = ((): FilterField[] => {
       visible:
         !/Testing/.test(props.object) &&
         !props.removedFilters?.includes('field'),
-      fetchOptionFn: async (
-        params?: ChangelogOptionQuery,
-      ): Promise<MultiSelectOption[]> => {
-        return await fetchOptions('fieldOptions', params);
+      fetchOptionFn: async (): Promise<MultiSelectOption[]> => {
+        return await fetchOptions('fieldOptions');
       },
     },
     {
@@ -86,10 +83,8 @@ const fields = ((): FilterField[] => {
       type: 'multiselect',
       field: 'modifiedBy',
       visible: !props.removedFilters?.includes('modifiedBy'),
-      fetchOptionFn: async (
-        params?: ChangelogOptionQuery,
-      ): Promise<MultiSelectOption[]> => {
-        return await fetchOptions('modifiedByOptions', params);
+      fetchOptionFn: async (): Promise<MultiSelectOption[]> => {
+        return await fetchOptions('modifiedByOptions');
       },
     },
   ].filter((field) => field.visible) as FilterField[];
@@ -100,13 +95,11 @@ const fields = ((): FilterField[] => {
         ...each.filter,
         ...(each.filter.type === 'multiselect'
           ? {
-              fetchOptionFn: async (
-                params?: ChangelogOptionQuery,
-              ): Promise<MultiSelectOption[]> => {
+              fetchOptionFn: async (): Promise<MultiSelectOption[]> => {
                 const filter = each.filter as MultiSelectFilterField;
                 const optionField = (filter.field +
-                  'Options') as keyof ChangelogOptionQuery;
-                return await fetchOptions(optionField, params);
+                  'Options') as ChangelogOptionFields;
+                return await fetchOptions(optionField);
               },
             }
           : {}),
@@ -125,13 +118,11 @@ const filter = reactive<ChangelogFilter>({});
  * It also handles the loading state for the options.
  *
  * @function fetchOptions
- * @param {keyof ChangelogOptionFilter} option - The option to fetch.
+ * @param field
  * @returns {Promise<void>}
  */
 const fetchOptions = async (
-  field: keyof ChangelogOptionQuery,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  params?: ChangelogOptionQuery,
+  field: ChangelogOptionFields,
 ): Promise<MultiSelectOption[]> => {
   try {
     const { data } = await LogServices.getChangelogOptions({
@@ -181,6 +172,5 @@ watch(filter, () => {
     :fields-per-row="props.moduleId || props.subModuleId ? 4 : 3"
     :table-name="props.tableName"
     @clear="clearFilter"
-    data-wv-name="changelog-filter"
   />
 </template>

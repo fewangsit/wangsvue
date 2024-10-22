@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, shallowRef } from 'vue';
+import { computed, nextTick, onMounted, ref, shallowRef, inject } from 'vue';
 import { TableColumn } from '../datatable/DataTable.vue.d';
 import { CustomColumnProps } from './CustomColumn.vue.d';
 import { cloneDeep } from 'lodash';
@@ -10,12 +10,14 @@ import useDataTableStore, {
 
 import Button from '../button/Button.vue';
 import Checkbox from '../checkbox/Checkbox.vue';
-import Menu from '../menu/Menu.vue';
+import Menu from 'primevue/menu';
 import Icon from '../icon/Icon.vue';
 import readConfig from '../datatable/helpers/readConfig.helper';
-import MenuPreset from 'lib/preset/menu';
 
 type DragableColumn = TableColumn & { order?: number };
+
+const MenuPreset = inject<Record<string, any>>('preset', {}).menu;
+
 const props = withDefaults(defineProps<CustomColumnProps>(), { type: 'menu' });
 
 const emit = defineEmits<{
@@ -23,12 +25,10 @@ const emit = defineEmits<{
 }>();
 
 onMounted(async () => {
-  const columnsConfig = await readConfig(
+  columnReorderData.value = await readConfig(
     props.tableId,
     cloneDeep(props.defaultColumns),
   );
-
-  columnReorderData.value = columnsConfig;
 
   updateVisibleColumnsModel();
 });
@@ -61,7 +61,38 @@ const columnVisibilityModel = computed({
 
 const toggleMenu = (event: Event): void => {
   if (visibilityMenu.value && 'toggle' in visibilityMenu.value) {
-    visibilityMenu.value.toggle(event);
+    const eventTarget = (event.currentTarget ?? event.target) as HTMLElement;
+
+    const currentTarget =
+      eventTarget.tagName.toLowerCase() === 'th'
+        ? eventTarget
+        : eventTarget.parentElement;
+
+    const toggleEvent: Event = {
+      ...event,
+      currentTarget,
+    };
+
+    visibilityMenu.value.toggle(toggleEvent);
+
+    nextTick(() => {
+      const panel = document.getElementById(visibilityMenuId.value);
+
+      if (panel) {
+        const windowWidth = window.innerWidth;
+
+        const targetDOM = document.getElementById(
+          `column-visibility-toggle-${props.tableId}`,
+        );
+
+        if (targetDOM) {
+          const { right, width } = targetDOM.getBoundingClientRect();
+
+          panel.style.right = `${windowWidth - (right + width / 2)}px`;
+          panel.style.left = 'auto';
+        }
+      }
+    });
   }
 };
 
@@ -182,7 +213,7 @@ const setColumnVisibilityConfig = async (): Promise<void> => {
   );
 
   const { setConfig } = await useDataTableStore();
-  setConfig(props.tableId, columnsConfig);
+  await setConfig(props.tableId, columnsConfig);
 };
 
 const teleportColumnList = (
@@ -266,7 +297,7 @@ defineExpose({
     :data-table-id="tableId"
     :pt="{
       root: {
-        class: [...MenuPreset.root.class, 'shadow-panel'],
+        class: [...MenuPreset?.root.class, 'shadow-panel'],
       },
       start: {
         class: [
@@ -335,16 +366,10 @@ defineExpose({
         @dragstart="startReorderColumn($event, item, index)"
         @drop="onColumnReorder"
         @mouseenter="
-          ($event.target as HTMLLIElement).classList.add(
-            'bg-primary-50',
-            'dark:bg-primary-50',
-          )
+          ($event.target as HTMLLIElement).classList.add('bg-primary-50')
         "
         @mouseleave="
-          ($event.target as HTMLLIElement).classList.remove(
-            'bg-primary-50',
-            'dark:bg-primary-50',
-          )
+          ($event.target as HTMLLIElement).classList.remove('bg-primary-50')
         "
         data-wv-section="custom-column-menu-item"
       >

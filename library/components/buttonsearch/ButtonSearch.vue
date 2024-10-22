@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { nextTick, ref, shallowRef } from 'vue';
-import Icon from '../icon/Icon.vue';
+import { inject, nextTick, ref, shallowRef } from 'vue';
 import { ButtonSearchEmits, ButtonSearchProps } from './ButtonSearch.vue.d';
-import InputText from 'primevue/inputtext';
+
+import Icon from '../icon/Icon.vue';
 import eventBus from 'lib/event-bus';
-import { buttonFocusClass } from 'lib/preset/button';
+import InputText from 'primevue/inputtext';
+
+const Preset = inject<Record<string, any>>('preset', {}).buttonsearch;
 
 withDefaults(defineProps<ButtonSearchProps>(), {
   tableName: 'datatable',
@@ -32,11 +34,11 @@ const focusToInput = (): void => {
 
 /**
  * Need to update the query on input to show the clear (x) icon.
- * PrimeVue only update modelValue if input has losen focus
+ * PrimeVue only update modelValue if input has loosened focus
  */
 const updateInput = (event: Event): void => {
   /**
-   * If query is empty string, undefine will be assigned.
+   * If query is empty string, undefined will be assigned.
    * This will ensure the 'search' field always removed while fetching data.
    */
   query.value = (event.target as HTMLInputElement).value || undefined;
@@ -46,36 +48,30 @@ const updateInput = (event: Event): void => {
 <template>
   <button
     v-if="!showSearchInput"
-    :class="'w-max ' + buttonFocusClass"
     @click="showSearchForm"
-    data-wv-section="buttonsearchtrigger"
+    v-bind="Preset?.buttontrigger.root({ context: { showSearchInput } })"
     type="button"
   >
     <Icon
-      class="text-2xl"
+      v-bind="Preset?.buttontrigger.icon"
       icon="search"
       info="Search"
       severity="secondary"
       tooltip-pos="bottom"
     />
   </button>
+
   <form
     v-else
-    :class="[
-      { show: showSearchInput },
-      'grid grid-cols-[max-content,auto,max-content] items-center gap-0.5 max-w-[224px] h-6',
-      'border-b border-primary-100',
-    ]"
+    v-bind="Preset?.form({ context: { showSearchInput } })"
     @submit.prevent="
       () => {
         eventBus.emit('search-table', { tableName, search: query });
         $emit('search', query);
       }
     "
-    data-wv-section="searchbox-form"
   >
     <button
-      :class="buttonFocusClass"
       @click="
         () => {
           query = undefined;
@@ -85,27 +81,31 @@ const updateInput = (event: Event): void => {
           $emit('search', undefined);
         }
       "
-      data-wv-section="buttonsearchtrigger"
+      v-bind="Preset?.collapsebutton.root({ context: { showSearchInput } })"
       type="button"
     >
-      <Icon class="w-6 h-6 text-grayscale-900 shrink-0" icon="arrow-left" />
+      <Icon v-bind="Preset?.collapsebutton.icon" icon="arrow-left" />
     </button>
 
     <InputText
+      v-bind="Preset?.inputtext"
       ref="inputtext"
       :model-value="query"
       @input="updateInput"
-      class="!h-max"
       placeholder="Cari"
     />
+
     <button
-      :class="[buttonFocusClass, { invisible: !query }]"
-      @click="(query = undefined), focusToInput()"
-      data-wv-section="buttonsearchtrigger"
+      @click="
+        query = undefined;
+        focusToInput();
+      "
+      v-bind="Preset?.resetbutton.root({ query })"
       type="button"
     >
-      <Icon :class="['text-2xl shrink-0']" icon="close" />
+      <Icon v-bind="Preset?.resetbutton.icon" icon="close" />
     </button>
-    <button class="hidden" type="submit" />
+
+    <button v-bind="Preset?.hiddensubmit" type="submit" />
   </form>
 </template>

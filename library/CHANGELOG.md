@@ -1,6 +1,855 @@
 # Changelog
 
 
+## v1.5.11
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.10...v1.5.11)
+
+### 🩹 Fixes
+
+- **DataTable:** Horizontal scroller not appear ([5f991a7](https://github.com/fewangsit/wangsvue/commit/5f991a7))
+
+### 🏡 Chore
+
+- **presets:** Update version ([8d814ba](https://github.com/fewangsit/wangsvue/commit/8d814ba))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.10
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.9...v1.5.10)
+
+### 🚀 Enhancements
+
+- Add icons ([9856003](https://github.com/fewangsit/wangsvue/commit/9856003))
+
+### 🏡 Chore
+
+- **presets:** Update version ([2836472](https://github.com/fewangsit/wangsvue/commit/2836472))
+
+### 🎨 Styles
+
+- **Timeline:** Center timeline item ([45e0221](https://github.com/fewangsit/wangsvue/commit/45e0221))
+- **Timeline:** Change paddings and gaps ([7344693](https://github.com/fewangsit/wangsvue/commit/7344693))
+- **Dialog:** Hide scrollbar ([7fdba35](https://github.com/fewangsit/wangsvue/commit/7fdba35))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
+## v1.5.9
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.8...v1.5.9)
+
+### 🚀 Enhancements
+
+- **InputPhoneNumber:** Add maxDigits with default value 14 digits ([0d66655](https://github.com/fewangsit/wangsvue/commit/0d66655))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.8
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.7...v1.5.8)
+
+### 🚀 Enhancements
+
+- Add filter.helper.ts - to be continued ([81e0b15](https://github.com/fewangsit/wangsvue/commit/81e0b15))
+- Add FileUpload.vue ([2c7773e](https://github.com/fewangsit/wangsvue/commit/2c7773e))
+
+### 📖 Documentation
+
+- **InputCurrencyDocs:** Update documentation to use input currency ([d542b28](https://github.com/fewangsit/wangsvue/commit/d542b28))
+
+### 🏡 Chore
+
+- **presets:** Update version ([5f9f3ab](https://github.com/fewangsit/wangsvue/commit/5f9f3ab))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.7
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.6...v1.5.7)
+
+### 🚀 Enhancements
+
+- **ImageCompressor:** Add props `useDeleteButton` with default true ([a5850f5](https://github.com/fewangsit/wangsvue/commit/a5850f5))
+- Add input currency component ([e8535ee](https://github.com/fewangsit/wangsvue/commit/e8535ee))
+- **Icon:** User-unfollow-line ([b588df2](https://github.com/fewangsit/wangsvue/commit/b588df2))
+
+### 🩹 Fixes
+
+- **TabMenu:** The active index should not be -1 - fallbacks to props.activeIndex with default 0 ([6107f5e](https://github.com/fewangsit/wangsvue/commit/6107f5e))
+
+### 🏡 Chore
+
+- **presets:** Update version ([c54cb7c](https://github.com/fewangsit/wangsvue/commit/c54cb7c))
+- **presets:** Update version ([dec25a9](https://github.com/fewangsit/wangsvue/commit/dec25a9))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.6
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.5...v1.5.6)
+
+### 🩹 Fixes
+
+- **DataTable:** Cannot execute observer on ResizeObserver, parameter 1 is not Element ([dfaab3f](https://github.com/fewangsit/wangsvue/commit/dfaab3f))
+
+### 💅 Refactors
+
+- **Badge:** Change default status severity ([bfb07f3](https://github.com/fewangsit/wangsvue/commit/bfb07f3))
+- **Badge:** Add development status severity ([b672325](https://github.com/fewangsit/wangsvue/commit/b672325))
+- **SummaryAccordion:** Sub module doesn't have initial name ([00c573f](https://github.com/fewangsit/wangsvue/commit/00c573f))
+
+### 🎨 Styles
+
+- **DialogConfirm:** Unspread dialog confirm class ([4072995](https://github.com/fewangsit/wangsvue/commit/4072995))
+- **ButtonBulkAction:** Remove preset from popup menu ([aedcf6a](https://github.com/fewangsit/wangsvue/commit/aedcf6a))
+- **DataTable:** Fixed width 35px of custom column ([f3ec5c8](https://github.com/fewangsit/wangsvue/commit/f3ec5c8))
+- **DataTable:** Change width of checkbox header ([b3eceab](https://github.com/fewangsit/wangsvue/commit/b3eceab))
+- **DataTable:** Change width of reorderable header ([4946e66](https://github.com/fewangsit/wangsvue/commit/4946e66))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
+## v1.5.5
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.4...v1.5.5)
+
+### 🩹 Fixes
+
+- **BulkAction:** Overlay menu list should full width ([d9d773b](https://github.com/fewangsit/wangsvue/commit/d9d773b))
+
+### 🏡 Chore
+
+- **presets:** Update version ([38c6a10](https://github.com/fewangsit/wangsvue/commit/38c6a10))
+- **presets:** Update version ([b33e725](https://github.com/fewangsit/wangsvue/commit/b33e725))
+
+### 🎨 Styles
+
+- **InputNumber:** Add addonVariant filled and plain ([99a8f26](https://github.com/fewangsit/wangsvue/commit/99a8f26))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.4
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.3...v1.5.4)
+
+### 🚀 Enhancements
+
+- Add wangsvue icons ([313f688](https://github.com/fewangsit/wangsvue/commit/313f688))
+
+### 🩹 Fixes
+
+- **CustomColumn:** Action "Tidak ada aksi" should not appear on column visibility - fixed by change import menu to primevue/menu ([78649c1](https://github.com/fewangsit/wangsvue/commit/78649c1))
+- **TabMenu:** Ensure consistent active tab on page reload ([9c655fd](https://github.com/fewangsit/wangsvue/commit/9c655fd))
+- **MultiSelect:** Assign props initial value or modelValue as initialValue of field.value ([ca3d6bc](https://github.com/fewangsit/wangsvue/commit/ca3d6bc))
+
+### 🏡 Chore
+
+- **presets:** Update version ([c502f48](https://github.com/fewangsit/wangsvue/commit/c502f48))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.3
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.2...v1.5.3)
+
+### 🩹 Fixes
+
+- **InputNumber:** Presets - props.class is not itterable ([4bf02ff](https://github.com/fewangsit/wangsvue/commit/4bf02ff))
+
+### 🏡 Chore
+
+- **presets:** Update version ([99dc2d9](https://github.com/fewangsit/wangsvue/commit/99dc2d9))
+
+### 🎨 Styles
+
+- **DataTable:** Remove class w-max in scrollheightwrapper ([8dd4092](https://github.com/fewangsit/wangsvue/commit/8dd4092))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.2
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.1...v1.5.2)
+
+### 🚀 Enhancements
+
+- **Timeline:** Add editor value type, align detail props ([9307a14](https://github.com/fewangsit/wangsvue/commit/9307a14))
+
+### 🩹 Fixes
+
+- **ButtonRadio:** Defined but never used variables ([0ede18b](https://github.com/fewangsit/wangsvue/commit/0ede18b))
+- **Animation:** Could not resolve import("../../assets/lottie/**/*.lottie") ([abf0ce2](https://github.com/fewangsit/wangsvue/commit/abf0ce2))
+
+### 💅 Refactors
+
+- **Button:** Add severity to icon props ([c1b82bf](https://github.com/fewangsit/wangsvue/commit/c1b82bf))
+- **Button:** Add severity to icon props" ([fba8573](https://github.com/fewangsit/wangsvue/commit/fba8573))
+- **Button:** Add severity to icon props" ([b834331](https://github.com/fewangsit/wangsvue/commit/b834331))
+- **UserName:** Center overlay text ([e653008](https://github.com/fewangsit/wangsvue/commit/e653008))
+- **UserName:** Pretty wrap overlay text ([01403af](https://github.com/fewangsit/wangsvue/commit/01403af))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
+## v1.5.1
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.0...v1.5.1)
+
+### 🏡 Chore
+
+- **presets:** Update version ([8fd7769](https://github.com/fewangsit/wangsvue/commit/8fd7769))
+- **Library:** Copy lottie into dist/assets/lottie on postbuild.sh ([d7af0cb](https://github.com/fewangsit/wangsvue/commit/d7af0cb))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.0
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.223...v1.5.0)
+
+### 🩹 Fixes
+
+- **comment:** Upload image & post body ([a91feca](https://github.com/fewangsit/wangsvue/commit/a91feca))
+- Multiselect and dropdown options can be undefined ([9ff6169](https://github.com/fewangsit/wangsvue/commit/9ff6169))
+- Runtime warning in ButtonBulkAction.vue and DataTable.vue ([7e08312](https://github.com/fewangsit/wangsvue/commit/7e08312))
+- **InputNumber:** Zero value should not be treated as empty value ([3305882](https://github.com/fewangsit/wangsvue/commit/3305882))
+- **Dropdown:** Wrong import path for Badge component ([0381ffd](https://github.com/fewangsit/wangsvue/commit/0381ffd))
+
+### 💅 Refactors
+
+- **Card:** Add passthrough props for content gap ([7f478fe](https://github.com/fewangsit/wangsvue/commit/7f478fe))
+- **Badge:** Inject Preset ([dc489ae](https://github.com/fewangsit/wangsvue/commit/dc489ae))
+- **Form:** Adjust component Form ([250dbef](https://github.com/fewangsit/wangsvue/commit/250dbef))
+- **InputGroup:** Inject Preset ([a484193](https://github.com/fewangsit/wangsvue/commit/a484193))
+- **InputGroupAddon:** Inject preset ([abec502](https://github.com/fewangsit/wangsvue/commit/abec502))
+- **ValidatorMessage:** Inject preset ([480e41e](https://github.com/fewangsit/wangsvue/commit/480e41e))
+- **Card:** Implement content gap in preset ([39fe8bd](https://github.com/fewangsit/wangsvue/commit/39fe8bd))
+- **Menu:** Inject preset ([36c5a6d](https://github.com/fewangsit/wangsvue/commit/36c5a6d))
+- Virtual scroller only enabled if more than 10 options ([7f59a9a](https://github.com/fewangsit/wangsvue/commit/7f59a9a))
+- **Animation:** Update dynamic import statement, move the path into variable ([810415b](https://github.com/fewangsit/wangsvue/commit/810415b))
+- **BadgeGroup:** Simplified template conditional rendering and improve performance rendering ([cce27b8](https://github.com/fewangsit/wangsvue/commit/cce27b8))
+- **ButtonRadio:** Copy all functionality radio button primevue and adjust it into ButtonRadio.vue ([04391b1](https://github.com/fewangsit/wangsvue/commit/04391b1))
+- **ButtonSearch:** Fix buttonFocusClass and improve preset section structures ([7c6ea5f](https://github.com/fewangsit/wangsvue/commit/7c6ea5f))
+- **Menu:** Move filterMenu.helper.ts into menu component ([1110912](https://github.com/fewangsit/wangsvue/commit/1110912))
+- **ProgressBar:** Build custom ProgressBar.vue ([fd4aafa](https://github.com/fewangsit/wangsvue/commit/fd4aafa))
+- **MultiSelect:** Move inline class into preset ([beed89b](https://github.com/fewangsit/wangsvue/commit/beed89b))
+
+### 📖 Documentation
+
+- **DataTable:** Merge component DataTable and TreeTable and the type declarations ([8bde8e9](https://github.com/fewangsit/wangsvue/commit/8bde8e9))
+- **DialogForm:** Improve declaration type file ([b64813e](https://github.com/fewangsit/wangsvue/commit/b64813e))
+- **DialogForm:** Add expose declaration in declaration type file ([cac09c8](https://github.com/fewangsit/wangsvue/commit/cac09c8))
+- **DialogConfirm:** Improve declaration type in declaration file ([7872d87](https://github.com/fewangsit/wangsvue/commit/7872d87))
+
+### 🏡 Chore
+
+- Update tailwind config to use config from presets ([1f47dbd](https://github.com/fewangsit/wangsvue/commit/1f47dbd))
+- **ChangelogFilter:** Remove unecessary attribute ([d28185b](https://github.com/fewangsit/wangsvue/commit/d28185b))
+- **Library:** Add release script minor and major version ([eb7931d](https://github.com/fewangsit/wangsvue/commit/eb7931d))
+
+### 🎨 Styles
+
+- Delete unused css file ([b47be6f](https://github.com/fewangsit/wangsvue/commit/b47be6f))
+- **Form:** Add more section to preset instead inline attributes ([fb282c2](https://github.com/fewangsit/wangsvue/commit/fb282c2))
+- **DialogForm:** Move all inline class & attribute to preset ([297c586](https://github.com/fewangsit/wangsvue/commit/297c586))
+- **DialogConfirm:** Move all inline class & attribute data selector to preset ([5b0547d](https://github.com/fewangsit/wangsvue/commit/5b0547d))
+- Remove treetable preset and move the content into datatable presets ([4cc142e](https://github.com/fewangsit/wangsvue/commit/4cc142e))
+- Add several new presets ([35ffb25](https://github.com/fewangsit/wangsvue/commit/35ffb25))
+- **ButtonSearch:** Move inline class to preset ([534ad80](https://github.com/fewangsit/wangsvue/commit/534ad80))
+- **Changelog:** Move inline class to preset ([032d523](https://github.com/fewangsit/wangsvue/commit/032d523))
+- **ButtonFilter:** Move inline class to preset ([9b921d8](https://github.com/fewangsit/wangsvue/commit/9b921d8))
+- **DataTable:** Move all inline class into presets datatable ([7730c76](https://github.com/fewangsit/wangsvue/commit/7730c76))
+- Remove tagsamurai presets - change input group preset into v-bind ([cdcdb0d](https://github.com/fewangsit/wangsvue/commit/cdcdb0d))
+- **buttondownload:** Create preset ([dbd5db3](https://github.com/fewangsit/wangsvue/commit/dbd5db3))
+- **ButtonBulkAction:** Add preset and move all inline class to preset ([a08db90](https://github.com/fewangsit/wangsvue/commit/a08db90))
+- **Badge:** Move scoped style into presets ([11b1370](https://github.com/fewangsit/wangsvue/commit/11b1370))
+- **Breadcrumb:** Move inline class into breadcrumb preset ([6292584](https://github.com/fewangsit/wangsvue/commit/6292584))
+- **ButtonFilter:** Move button focus class to buttonfilter preset ([84df20b](https://github.com/fewangsit/wangsvue/commit/84df20b))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+- Programmer-mob5 <programmer-mob5@qwertysystem.net>
+
+## v1.4.223
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.222...v1.4.223)
+
+### 💅 Refactors
+
+- **ImageCompressor:** Implement custom validator message ([5238e19](https://github.com/fewangsit/wangsvue/commit/5238e19))
+
+### 📖 Documentation
+
+- **ImageCompressor:** Remove todo for rounded ([c15b150](https://github.com/fewangsit/wangsvue/commit/c15b150))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.4.222
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.221...v1.4.222)
+
+### 💅 Refactors
+
+- **Form:** Expose resetField from useForm ([930efcf](https://github.com/fewangsit/wangsvue/commit/930efcf))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.4.221
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.220...v1.4.221)
+
+### 💅 Refactors
+
+- **Dropdown:** Implement usage of props.dataKey and use cloneDeep before comparing object value ([e443a7a](https://github.com/fewangsit/wangsvue/commit/e443a7a))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.4.220
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.219...v1.4.220)
+
+### 🚀 Enhancements
+
+- Export InputBadge ([fef9bc6](https://github.com/fewangsit/wangsvue/commit/fef9bc6))
+
+### 🏡 Chore
+
+- **presets:** Update version ([b4e16a0](https://github.com/fewangsit/wangsvue/commit/b4e16a0))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.219
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.218...v1.4.219)
+
+### 🩹 Fixes
+
+- **typeerror:** Property 'Preset' does not exist on type 'TreeTableColumns ([1914595](https://github.com/fewangsit/wangsvue/commit/1914595))
+
+### 💅 Refactors
+
+- **TreeTable:** Implement inject Preset ([5da369c](https://github.com/fewangsit/wangsvue/commit/5da369c))
+
+### 🏡 Chore
+
+- **presets:** Update version ([4880f74](https://github.com/fewangsit/wangsvue/commit/4880f74))
+- **Presets:** Update build.sh to run rm -rf instead if rimraf ([6bb820c](https://github.com/fewangsit/wangsvue/commit/6bb820c))
+- **presets:** Move treetable presets ([f381447](https://github.com/fewangsit/wangsvue/commit/f381447))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.218
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.217...v1.4.218)
+
+### 🚀 Enhancements
+
+- **preset:** Import form preset to index.js ([c183764](https://github.com/fewangsit/wangsvue/commit/c183764))
+- **InputBadge:** Add component, preset, and docs ([70251c1](https://github.com/fewangsit/wangsvue/commit/70251c1))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.217
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.216...v1.4.217)
+
+### 💅 Refactors
+
+- **ButtonRadio:** Update structure and add proper declaration typescript ([ce71b60](https://github.com/fewangsit/wangsvue/commit/ce71b60))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.216
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.215...v1.4.216)
+
+### 🚀 Enhancements
+
+- Add optional chaining on every injection preset ([7486882](https://github.com/fewangsit/wangsvue/commit/7486882))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.215
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.214...v1.4.215)
+
+### 🚀 Enhancements
+
+- Add default value on every injection preset ([237f583](https://github.com/fewangsit/wangsvue/commit/237f583))
+
+### 🩹 Fixes
+
+- Unsafe usage of optional chaining ([35c9901](https://github.com/fewangsit/wangsvue/commit/35c9901))
+
+### 💅 Refactors
+
+- **Badge:** Add PBI status severity ([dbe7037](https://github.com/fewangsit/wangsvue/commit/dbe7037))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
+## v1.4.214
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.213...v1.4.214)
+
+### 🩹 Fixes
+
+- Add optional chaining in usage of Form Preset ([ca02e26](https://github.com/fewangsit/wangsvue/commit/ca02e26))
+
+### 🏡 Chore
+
+- **Presets:** Update presets scripts in package json ([bf9d9ce](https://github.com/fewangsit/wangsvue/commit/bf9d9ce))
+
+### 🤖 CI
+
+- Change runner into windows-latest ([7f98083](https://github.com/fewangsit/wangsvue/commit/7f98083))
+- **gh pages:** Change runner into ubuntu-latest because the runner only support linux ([779975d](https://github.com/fewangsit/wangsvue/commit/779975d))
+- Change back runner to ubuntu-latest ([791e006](https://github.com/fewangsit/wangsvue/commit/791e006))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.213
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.212...v1.4.213)
+
+### 🩹 Fixes
+
+- Add missing import `inject` and add optional chaining ([222a016](https://github.com/fewangsit/wangsvue/commit/222a016))
+
+### 🏡 Chore
+
+- **Presets:** Update build config - copy each presets colors.config.json into dist ([762d421](https://github.com/fewangsit/wangsvue/commit/762d421))
+- **presets:** Update version ([8610994](https://github.com/fewangsit/wangsvue/commit/8610994))
+- Update build script to build presets first ([ac5a88a](https://github.com/fewangsit/wangsvue/commit/ac5a88a))
+- Adjust pnpm lock ([2ae55af](https://github.com/fewangsit/wangsvue/commit/2ae55af))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.212
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.211...v1.4.212)
+
+### 🩹 Fixes
+
+- 'Dropdown' is defined but never used ([b5a0956](https://github.com/fewangsit/wangsvue/commit/b5a0956))
+
+### 💅 Refactors
+
+- **summaryAccordion:** Progress cannot be NaN ([b8511f1](https://github.com/fewangsit/wangsvue/commit/b8511f1))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
+## v1.4.211
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.210...v1.4.211)
+
+### 🩹 Fixes
+
+- **Presets:** Update the way how to import default ([1ca7598](https://github.com/fewangsit/wangsvue/commit/1ca7598))
+
+### 💅 Refactors
+
+- Move isEmptyObject into new file ([bd9fc1a](https://github.com/fewangsit/wangsvue/commit/bd9fc1a))
+- Update export preset ([616d94a](https://github.com/fewangsit/wangsvue/commit/616d94a))
+
+### 🏡 Chore
+
+- **presets:** Update version ([1fb324f](https://github.com/fewangsit/wangsvue/commit/1fb324f))
+- **presets:** Update version ([bcef67b](https://github.com/fewangsit/wangsvue/commit/bcef67b))
+- **presets:** Update version ([2a2bb16](https://github.com/fewangsit/wangsvue/commit/2a2bb16))
+- **presets:** Update version ([ea807ef](https://github.com/fewangsit/wangsvue/commit/ea807ef))
+- **presets:** Update version ([8c46ddc](https://github.com/fewangsit/wangsvue/commit/8c46ddc))
+- **presets:** Update version ([99b88e9](https://github.com/fewangsit/wangsvue/commit/99b88e9))
+- **presets:** Update version ([1c0fa95](https://github.com/fewangsit/wangsvue/commit/1c0fa95))
+- **presets:** Update version ([b062cad](https://github.com/fewangsit/wangsvue/commit/b062cad))
+- **presets:** Update version ([0fc9b9b](https://github.com/fewangsit/wangsvue/commit/0fc9b9b))
+- **presets:** Update version ([24e5ffe](https://github.com/fewangsit/wangsvue/commit/24e5ffe))
+- **presets:** Update version ([e54a5ef](https://github.com/fewangsit/wangsvue/commit/e54a5ef))
+- **presets:** Update version ([11d7fde](https://github.com/fewangsit/wangsvue/commit/11d7fde))
+- **presets:** Update version ([a7a41e5](https://github.com/fewangsit/wangsvue/commit/a7a41e5))
+- **presets:** Update version ([21bbf98](https://github.com/fewangsit/wangsvue/commit/21bbf98))
+- Update import presets in main.ts ([58970c5](https://github.com/fewangsit/wangsvue/commit/58970c5))
+- **presets:** Update version ([1a8f3ee](https://github.com/fewangsit/wangsvue/commit/1a8f3ee))
+- **presets:** Update version ([ec08c15](https://github.com/fewangsit/wangsvue/commit/ec08c15))
+- **presets:** Update version ([c4bc6d8](https://github.com/fewangsit/wangsvue/commit/c4bc6d8))
+- **presets:** Update version ([7702c1f](https://github.com/fewangsit/wangsvue/commit/7702c1f))
+- **presets:** Update version ([b2d263a](https://github.com/fewangsit/wangsvue/commit/b2d263a))
+- **presets:** Update version ([263be38](https://github.com/fewangsit/wangsvue/commit/263be38))
+- **Presets:** Update configuration and update build and release script ([0f2ec98](https://github.com/fewangsit/wangsvue/commit/0f2ec98))
+- **presets:** Update version ([12baceb](https://github.com/fewangsit/wangsvue/commit/12baceb))
+- **presets:** Update version ([c2100e3](https://github.com/fewangsit/wangsvue/commit/c2100e3))
+- **Presets:** Update build config ([f1c46b1](https://github.com/fewangsit/wangsvue/commit/f1c46b1))
+- **presets:** Update version ([41fa83c](https://github.com/fewangsit/wangsvue/commit/41fa83c))
+
+### 🎨 Styles
+
+- Convert form css into preset ([d9839ee](https://github.com/fewangsit/wangsvue/commit/d9839ee))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.210
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.0.1...v1.4.210)
+
+### 🚀 Enhancements
+
+- Export isEmptyObject util ([98f4ed7](https://github.com/fewangsit/wangsvue/commit/98f4ed7))
+- Add script to release presets ([3e7bb82](https://github.com/fewangsit/wangsvue/commit/3e7bb82))
+
+### 💅 Refactors
+
+- Change preset inport into inject ([6fa997d](https://github.com/fewangsit/wangsvue/commit/6fa997d))
+
+### 🏡 Chore
+
+- **presets:** Update version ([0fe74c1](https://github.com/fewangsit/wangsvue/commit/0fe74c1))
+- Add post-release.sh for presets publish ([142fcc2](https://github.com/fewangsit/wangsvue/commit/142fcc2))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.209
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.208...v1.4.209)
+
+### 🚀 Enhancements
+
+- Add virtual scroller MultiSelect dan Dropdown ([bdcd79c](https://github.com/fewangsit/wangsvue/commit/bdcd79c))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.208
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.207...v1.4.208)
+
+### 🩹 Fixes
+
+- **ProgressBar:** Type error ([527e087](https://github.com/fewangsit/wangsvue/commit/527e087))
+
+### 💅 Refactors
+
+- **ProgressBar:** Override progressbar default value with custom value section, add ts declaration and export it ([1e3a26a](https://github.com/fewangsit/wangsvue/commit/1e3a26a))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.207
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.206...v1.4.207)
+
+### 🚀 Enhancements
+
+- **ColumnVisibility:** Adjust panel position on panel show ([51248d8](https://github.com/fewangsit/wangsvue/commit/51248d8))
+
+### 💅 Refactors
+
+- Add env to github workflow ([7db31f9](https://github.com/fewangsit/wangsvue/commit/7db31f9))
+- **Comment:** Add backslash to service URL ([5dfb699](https://github.com/fewangsit/wangsvue/commit/5dfb699))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
+## v1.4.206
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.205...v1.4.206)
+
+### 🩹 Fixes
+
+- **UserName:** Unable to get member detail ([10a5fc1](https://github.com/fewangsit/wangsvue/commit/10a5fc1))
+- **Comment:** Cannot get profile picture ([9604ebe](https://github.com/fewangsit/wangsvue/commit/9604ebe))
+- Unassignable type errors ([f2c7a90](https://github.com/fewangsit/wangsvue/commit/f2c7a90))
+
+### 💅 Refactors
+
+- **DialogForm:** Set aside right width props as optional ([c7a939d](https://github.com/fewangsit/wangsvue/commit/c7a939d))
+- **UserName:** Remove getImageURL ([4d31052](https://github.com/fewangsit/wangsvue/commit/4d31052))
+- **UserName:** Remove getImageURL import ([e37ece5](https://github.com/fewangsit/wangsvue/commit/e37ece5))
+- **comment service:** Put slash after BASE_URL ([bbb9935](https://github.com/fewangsit/wangsvue/commit/bbb9935))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
+## v1.4.205
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.204...v1.4.205)
+
+### 🩹 Fixes
+
+- **Table:** Single action and column visibility does not sticky ([4bda8fe](https://github.com/fewangsit/wangsvue/commit/4bda8fe))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.204
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.203...v1.4.204)
+
+### 🎨 Styles
+
+- **Table:** Update table scrollheightwrapper ([6c0add0](https://github.com/fewangsit/wangsvue/commit/6c0add0))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.203
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.202...v1.4.203)
+
+### 🚀 Enhancements
+
+- **UserName:** Get user detail on panel shown - add loading Skeleton while loading user data ([f5ce408](https://github.com/fewangsit/wangsvue/commit/f5ce408))
+
+### 🎨 Styles
+
+- **DialogForm:** Remove scoped style of scrollbar-w-thin ([15e2943](https://github.com/fewangsit/wangsvue/commit/15e2943))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.202
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.201...v1.4.202)
+
+### 💅 Refactors
+
+- **Table:** Show horizontal scroll, hide vertical scroll ([cff89cf](https://github.com/fewangsit/wangsvue/commit/cff89cf))
+- **DialogForm:** Remove v-show directive on aside-right ([4bb7183](https://github.com/fewangsit/wangsvue/commit/4bb7183))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.201
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.200...v1.4.201)
+
+### 🩹 Fixes
+
+- **Badge:** ReferenceError - Badge is not defined ([f53e26e](https://github.com/fewangsit/wangsvue/commit/f53e26e))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.200
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.199...v1.4.200)
+
+### 🚀 Enhancements
+
+- Resets expanded rows on table re fetched ([726473f](https://github.com/fewangsit/wangsvue/commit/726473f))
+- **DialogForm:** Add prop asideRightWidth accepts value in pixel to determine the width of aside right ([d8f4193](https://github.com/fewangsit/wangsvue/commit/d8f4193))
+
+### 🩹 Fixes
+
+- Eslint Errors ([63c212e](https://github.com/fewangsit/wangsvue/commit/63c212e))
+- Typescript errors ([6e401e2](https://github.com/fewangsit/wangsvue/commit/6e401e2))
+- **MultiSelect:** Should update field value on props.modelValue changed ([38e5188](https://github.com/fewangsit/wangsvue/commit/38e5188))
+- **Table:** Td for single action should only shown when eiter useOption or customColumn is true ([bd9b07c](https://github.com/fewangsit/wangsvue/commit/bd9b07c))
+- Type error on ChangelogFilter.vue and Dropdown.vue ([b495ec5](https://github.com/fewangsit/wangsvue/commit/b495ec5))
+- Type error on Editor.vue ([20ee856](https://github.com/fewangsit/wangsvue/commit/20ee856))
+
+### 💅 Refactors
+
+- **DialogForm:** Using v-show to hide the aside instead of v-if ([ba9894c](https://github.com/fewangsit/wangsvue/commit/ba9894c))
+- **TabMenu:** Find exact route match first, and find index again when route is changed ([08c7e39](https://github.com/fewangsit/wangsvue/commit/08c7e39))
+
+### 📖 Documentation
+
+- **Badge:** Omit property label of BadgeProps on props badgeValueProps ([4331957](https://github.com/fewangsit/wangsvue/commit/4331957))
+
+### 🏡 Chore
+
+- Run vue-tsc on build ([1862adb](https://github.com/fewangsit/wangsvue/commit/1862adb))
+
+### 🎨 Styles
+
+- Remove tailwind class dark on all preset ([3777a68](https://github.com/fewangsit/wangsvue/commit/3777a68))
+
+### 🤖 CI
+
+- Add Pull request checks for main branch ([db84681](https://github.com/fewangsit/wangsvue/commit/db84681))
+- Run jekyll-gh-pages on push main ([11090a8](https://github.com/fewangsit/wangsvue/commit/11090a8))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
+## v1.4.199
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.198...v1.4.199)
+
+### 🚀 Enhancements
+
+- Add Component Animation to play lottie animation ([38535a6](https://github.com/fewangsit/wangsvue/commit/38535a6))
+
+### 🩹 Fixes
+
+- **Animation.vue:** Cannot resolve AnimationProps ([ac4718a](https://github.com/fewangsit/wangsvue/commit/ac4718a))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.198
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.197...v1.4.198)
+
+### 🚀 Enhancements
+
+- **Dropdown:** Add slot value ([6b288d8](https://github.com/fewangsit/wangsvue/commit/6b288d8))
+
+### 🏡 Chore
+
+- **library:** Remove dist after successfully release ([a79a8d2](https://github.com/fewangsit/wangsvue/commit/a79a8d2))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.197
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.196...v1.4.197)
+
+### 🎨 Styles
+
+- **9Id4F4DB:** Update single action td style when useOption false ([e562c44](https://github.com/fewangsit/wangsvue/commit/e562c44))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.196
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.195...v1.4.196)
+
+### 🚀 Enhancements
+
+- **Table:** Add options rowHeight to determine the row height whether fixed 35px or auto grow ([ee978dd](https://github.com/fewangsit/wangsvue/commit/ee978dd))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.195
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.194...v1.4.195)
+
+### 🏡 Chore
+
+- Update publish script ([003fc78](https://github.com/fewangsit/wangsvue/commit/003fc78))
+- Update publish script - cd to dist before publishing ([088a4b9](https://github.com/fewangsit/wangsvue/commit/088a4b9))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.4.194
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.193...v1.4.194)
+
+## v1.4.193
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.192...v1.4.193)
+
+## v1.4.192
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.191...v1.4.192)
+
+### 🩹 Fixes
+
+- Fix incorrect gap ([7f2294a](https://github.com/fewangsit/wangsvue/commit/7f2294a))
+- Missing `objectName` to be included in removable fields in Changelog ([cce4f5b](https://github.com/fewangsit/wangsvue/commit/cce4f5b))
+- Type error while importing .lottie file, assertion needed ([9778f48](https://github.com/fewangsit/wangsvue/commit/9778f48))
+
+### 💅 Refactors
+
+- **Lottie:** Change Vue3Lottie to DotLottieVue and change lottie asset animation to .lottie ([8ba3360](https://github.com/fewangsit/wangsvue/commit/8ba3360))
+- **TreeTable:** Now TreeTable able to receive class and headerClass as column attributes ([640f973](https://github.com/fewangsit/wangsvue/commit/640f973))
+- **ChangelogDocs:** Refactor changelog docs to give a better dynamic example to specific features ([ea0eeed](https://github.com/fewangsit/wangsvue/commit/ea0eeed))
+
+### 🏡 Chore
+
+- Add declaration for .lottie file ([b67dbe3](https://github.com/fewangsit/wangsvue/commit/b67dbe3))
+- Update package.json build script ([e1952b5](https://github.com/fewangsit/wangsvue/commit/e1952b5))
+
+### 🎨 Styles
+
+- **Changelog:** Add class `w-max` ([e348b65](https://github.com/fewangsit/wangsvue/commit/e348b65))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.4.191
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.4.190...v1.4.191)

@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import { shallowRef, watch } from 'vue';
+import { inject, shallowRef, watch } from 'vue';
 
 import InputNumber from 'lib/components/inputnumber/InputNumber.vue';
 import Button from 'lib/components/button/Button.vue';
 import Dialog from 'lib/components/dialog/Dialog.vue';
-import DialogPreset from 'lib/preset/dialog';
 import { TaskLegend } from '../Legend.vue';
 import ValidatorMessage from 'lib/components/validatormessage/ValidatorMessage.vue';
 import { useToast } from 'lib/utils';
 import useLoadingStore from 'lib/components/loading/store/loading.store';
 import LegendList from '../LegendList.vue';
 import TaskList from '../TaskList.vue';
+
+const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 
 const { loading, setLoading } = useLoadingStore();
 const toast = useToast();

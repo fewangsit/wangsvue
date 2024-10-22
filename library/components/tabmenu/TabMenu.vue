@@ -1,57 +1,68 @@
 <script setup lang="ts">
-import { onBeforeMount } from 'vue';
+import { watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { WangsIcons } from '../icon/Icon.vue.d';
+import { TabMenuEmits, TabMenuProps } from './TabMenu.vue.d';
 
 import PrimeTabMenu from 'primevue/tabmenu';
-import type { TabMenuEmits, TabMenuProps } from './TabMenu.vue.d';
 import Icon from '../icon/Icon.vue';
-import { WangsIcons } from '../icon/Icon.vue.d';
 
 const route = useRoute();
-
-onBeforeMount(() => {
-  /**
-   * Find index from the last element where the route.path includes the item.route.
-   *
-   * using findLastIndex because there might be case where there are route menu like these:
-   * ['/route/first', '/route/first/second']
-   *
-   * If our current route is '/route/first/second', the findIndex will take the '/route/first' as true,
-   * even though we are aiming to set the '/route/first/second' as the current index.
-   *
-   * following Left to Right (LTR) writing convention. It can't cover the opposite (RTL), though.
-   * Maybe we should add a prop to use findIndex or findLastIndex for that. (Default to findLastIndex (LTR))
-   */
-  const index =
-    props.menu?.findLastIndex((item) => route.path.includes(item.route)) ?? -1;
-
-  if (index !== -1) {
-    activeIndex.value = index;
-  }
-});
 
 const props = withDefaults(defineProps<TabMenuProps>(), {
   useTrailingLine: true,
 });
+
 const emit = defineEmits<TabMenuEmits>();
 const activeIndex = defineModel<number>('activeIndex', {
   default: 0,
 });
+
+const menuPassThrough = props.useTrailingLine
+  ? undefined
+  : {
+      inkbar: {
+        class: 'hidden',
+      },
+    };
+
+const setActiveIndex = (routePath: string): void => {
+  const findIndexRecursive = (path: string): number | undefined => {
+    // Find index from the element where routePath is exactly item.route
+    let index = props.menu?.findIndex(
+      (item) => item.route && path === item.route,
+    );
+
+    // If it cannot find exact match, recursively trim and try to match
+    if (index === -1 && path.includes('/')) {
+      // Trim the last segment from the path
+      const newPath = path.substring(0, path.lastIndexOf('/'));
+      index = findIndexRecursive(newPath);
+    }
+
+    return index;
+  };
+
+  const foundIndex = findIndexRecursive(routePath);
+  activeIndex.value = foundIndex === -1 ? props.activeIndex : foundIndex;
+};
+
+watch(
+  () => route.path,
+  (routePath) => {
+    setActiveIndex(routePath);
+  },
+  {
+    immediate: true,
+  },
+);
 </script>
 
 <template>
   <PrimeTabMenu
     v-model:activeIndex="activeIndex"
     :model="menu"
-    :pt="
-      useTrailingLine
-        ? undefined
-        : {
-            inkbar: {
-              class: 'hidden',
-            },
-          }
-    "
+    :pt="menuPassThrough"
     @tab-change="emit('tab-change', $event)"
     data-wv-name="tabmenu"
   >

@@ -1,3 +1,4 @@
+import { CustomValidation } from '../form/Form.vue.d';
 import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
 
 export type Image = {
@@ -65,12 +66,17 @@ export interface ImageCompressorProps {
    *
    * If true, the image will be full rounded.
    *
-   * @todo add rounded full support.
    * @default 'false'
    */
   rounded?: boolean;
   /**
-   * Specify wether the image input will be used as field within Form validation.
+   * Specify whether the image able to be deleted or not (in case image only able to added and edited)
+   *
+   * @default true
+   */
+  useDeleteButton?: boolean;
+  /**
+   * Specify whether the image input will be used as field within Form validation.
    *
    */
   useValidator?: boolean;
@@ -85,7 +91,7 @@ export interface ImageCompressorProps {
   /**
    * Set custom validation message.
    */
-  validatorMessage?: string;
+  validatorMessage?: string | CustomValidation;
   /**
    * The field label.
    *

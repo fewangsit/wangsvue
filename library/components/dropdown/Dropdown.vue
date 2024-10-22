@@ -1,25 +1,38 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue';
+import Dropdown, { DropdownChangeEvent } from 'primevue/dropdown';
+import { BadgeProps } from 'lib/components/badge/Badge.vue.d';
 import { useField } from 'vee-validate';
-import Badge from 'lib/components/badge/Badge.vue';
-
+import {
+  computed,
+  inject,
+  nextTick,
+  onMounted,
+  reactive,
+  ref,
+  watch,
+} from 'vue';
 import type {
   DropdownEmits,
   DropdownProps,
 } from 'lib/components/dropdown/Dropdown.vue.d';
-
 import { DropdownOption, OptionValue } from 'lib/types/options.type';
 import { FieldValidation } from '../form/Form.vue.d';
+import { filterOptions } from 'lib/utils';
+import { cloneDeep } from 'lodash';
+import { Nullable } from '../ts-helpers';
 
-import ValidatorMessage from 'lib/components/validatormessage/ValidatorMessage.vue';
-import Dropdown, { DropdownChangeEvent } from 'primevue/dropdown';
 import FieldWrapper from 'lib/components/fieldwrapper/FieldWrapper.vue';
+import Badge from 'lib/components/badge/Badge.vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import InputGroup from 'lib/components/inputgroup/InputGroup.vue';
+import ValidatorMessage from 'lib/components/validatormessage/ValidatorMessage.vue';
 import InputGroupAddon from 'primevue/inputgroupaddon';
-import { Nullable } from '../ts-helpers';
-import { filterOptions } from 'lib/utils';
-import Preset from 'lib/preset/dropdown';
+
+const Preset = inject<Record<string, any>>('preset', {}).dropdown;
+const InputGroupAddonPreset = inject<Record<string, any>>(
+  'preset',
+  {},
+).inputgroupaddon;
 
 const props = withDefaults(defineProps<DropdownProps>(), {
   filter: true,
@@ -93,12 +106,14 @@ const updateFieldValue = (event: DropdownChangeEvent): void => {
 };
 
 const getOptionLabel = (): string => {
-  if (props.optionValue) {
+  if (props.dataKey) {
+    return field.value[props.dataKey] as string;
+  } else if (props.optionValue) {
     const matchOption = visibleOptions.value.find((op) => {
       if (typeof op != 'string') {
         return (
-          op[(props.optionValue ?? '') as keyof DropdownOption] ===
-          (field.value as string)
+          cloneDeep(op[(props.optionValue ?? '') as keyof DropdownOption]) ==
+          cloneDeep(field.value as string)
         );
       }
     });
@@ -182,22 +197,27 @@ defineExpose({
         :options="visibleOptions"
         :placeholder="dropdownPlaceholder"
         :pt="{
-          wrapper: Preset.wrapper({ props }),
+          wrapper: Preset?.wrapper({ props }),
         }"
+        :virtual-scroller-options="
+          options?.length > 10 ? { itemSize: 32 } : undefined
+        "
         @change="updateFieldValue"
         @hide="isShowOverlay = false"
         @show="$emit('show'), (isShowOverlay = true)"
       >
         <template #value="slotProps">
           <template v-if="slotProps.value">
-            <Badge
-              v-if="valueType === 'badge'"
-              v-bind="badgeValueProps"
-              :label="getOptionLabel()"
-            />
-            <div v-else class="flex items-center">
-              {{ getOptionLabel() }}
-            </div>
+            <slot :value="getOptionLabel()" name="value">
+              <Badge
+                v-if="valueType === 'badge'"
+                v-bind="badgeValueProps as BadgeProps"
+                :label="getOptionLabel()"
+              />
+              <div v-else class="flex items-center">
+                {{ getOptionLabel() }}
+              </div>
+            </slot>
           </template>
           <template v-else>
             {{ slotProps.placeholder }}
@@ -228,8 +248,16 @@ defineExpose({
 
       <InputGroupAddon
         v-if="$slots['addon-right']"
-        :class="{
-          '!text-general-200 !dark:text-general-200': props.disabled,
+        :pt="{
+          root: InputGroupAddonPreset.root({
+            props: {
+              class: [
+                {
+                  '!text-general-200': props.disabled,
+                },
+              ],
+            },
+          }),
         }"
       >
         <slot name="addon-right" />

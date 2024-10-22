@@ -68,8 +68,8 @@ const progress = computed(() => {
     props.summary.type === 'project' ? props.summary : ({} as ProjectSummary);
 
   const totalTask = totalCompletedTask + totalSprintTask + totalBacklogTask;
-  const task = Math.floor((totalCompletedTask / totalTask) * 100);
-  const module = Math.floor((totalCompletedModule / totalModule) * 100);
+  const task = Math.floor((totalCompletedTask / (totalTask || 1)) * 100);
+  const module = Math.floor((totalCompletedModule / (totalModule || 1)) * 100);
 
   return {
     task,
@@ -139,7 +139,7 @@ const summaryItems = computed<SummaryItem[]>(() => {
       icon: 'star',
       severity: 'primary',
       label: 'Progress Poin',
-      value: `${Math.floor((sprintPoint / totalSprintPoint) * 100)}% (${sprintPoint}/${totalSprintPoint})`,
+      value: `${Math.floor((sprintPoint / (totalSprintPoint || 1)) * 100)}% (${sprintPoint}/${totalSprintPoint})`,
       show: props.summary.type == 'profile',
     },
     {
@@ -265,20 +265,12 @@ const secondsToDHM = (seconds: number): string => {
             </template>
           </h2>
 
-          <div
+          <ProgressBar
             v-if="summary.type !== 'profile'"
-            class="flex items-center gap-2"
-          >
-            <ProgressBar
-              :severity="getStatusSeverity(summary.status)"
-              :show-value="false"
-              :value="progress.task"
-              class="w-[20vw] max-w-[200px]"
-            />
-            <span class="font-medium text-[14px] leading-4">
-              {{ progress.task }}%
-            </span>
-          </div>
+            :severity="getStatusSeverity(summary.status)"
+            :value="progress.task"
+            class="w-[20vw] max-w-[200px]"
+          />
 
           <Badge
             :label="

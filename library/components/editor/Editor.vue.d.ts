@@ -67,8 +67,39 @@ export interface EditorProps {
   invalid?: boolean;
   /**
    * Showing Optional value text on Label.
+   * @default true
    */
   showOptionalText?: boolean;
+  /**
+   * Determine for image upload from local machine if value is true, no need to use postImageLocal emitter
+   * @default false
+   */
+  isImageUploadBase64?: boolean;
+  /**
+   * Fetch function for mention this will get triger if putting @ in editor
+   */
+  fetchMentionSuggestionFunction?: () => Promise<
+    GetMentionSuggestionResponse | undefined
+  >;
+  /**
+   * Getting all mentioned list
+   */
+  mentionedList?: string[];
+  /**
+   * Add custom class tailwind for editor wrapper/container
+   * and preferred for using "!" bang! for your tailwind class just to make sure it apply
+   */
+  editorWrapperClass?: string;
+  /**
+   * Add custom class tailwind for editor toolbar wrapper/container
+   * and preferred for using "!" bang! for your tailwind class just to make sure it apply
+   */
+  toolbarWrapperClass?: string;
+  /**
+   * Add custom class tailwind for editor content wrapper/container
+   * and preferred for using "!" bang! for your tailwind class just to make sure it apply
+   */
+  contentWrapperClass?: string;
 }
 
 export type EditorEmits = {
@@ -77,7 +108,10 @@ export type EditorEmits = {
    */
   'update:modelValue': [value: JSONContent];
   /**
-   * Event emitted when upload image from local file
+   * Event emitted when try to upload image from local machine,
+   * and need to send file image to server first using value.image params and then
+   * get back image url that already get hosted.
+   * to set the image url back to editor to be show up simply using value.setImageCb from params
    */
   'postImageLocal': [value: PostImage];
   /**
@@ -93,10 +127,21 @@ export type EditorEmits = {
    * Event emitted when the editor is focused
    */
   'focus': [value: EditorEvents['focus']];
+  /**
+   * Emited Everytime mentioned user in editor change
+   */
+  'update:mentionedList': [value: string[]];
 };
 
 export type PostImage = {
+  /**
+   * This Is Image File that should be send to server
+   */
   image: File;
+  /**
+   * Set Image Cb Is Callback For setting back image url that get send back
+   *  from server through response
+   */
   setImageCb: (imageUrl: string) => void;
 };
 
@@ -122,6 +167,23 @@ export type ImageProperties = {
   title: string;
 };
 
+export type GetMentionSuggestionResponse = {
+  status: number;
+  message: string;
+  data: MentionSuggestion[];
+};
+
+export type MentionSuggestion = {
+  _id: string;
+  fullName: string;
+  nickName: string;
+  profilePicture: string;
+};
+
 export type EditorState = 'editable' | 'readonly';
 
-declare class Editor extends ClassComponent<EditorProps, unknown, unknown> {}
+declare class Editor extends ClassComponent<
+  EditorProps,
+  unknown,
+  EditorEmits
+> {}

@@ -1,36 +1,33 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, inject } from 'vue';
 import { navigateToUrl } from 'single-spa';
 import { BreadcrumbProps } from './Breadcrumb.vue.d';
 
 const props = defineProps<BreadcrumbProps>();
+const Preset = inject<Record<string, any>>('preset', {}).breadcrumb;
 const lastIndex = computed(() => props.menus.length - 1);
 </script>
 
 <template>
-  <div
-    :class="[
-      'flex gap-[5px] items-center text-left h-[21px]',
-      'text-grayscale-900 ',
-      'text-xs font-normal leading-none',
-    ]"
-    data-wv-name="breadcrumb"
-  >
-    <template :key="index" v-for="(menu, index) in props.menus">
+  <div v-bind="Preset.root">
+    <template :key="menu.route" v-for="(menu, index) in props.menus">
       <span
-        :class="{
-          'font-semibold': index == lastIndex,
-          'text-primary-400': index && index < lastIndex,
-        }"
-        data-wv-section="breadcrumb-menu"
+        v-bind="
+          Preset.item({
+            context: {
+              firstItem: index == 0,
+              lastItem: index == lastIndex,
+              hasRoute: !!menu.route,
+            },
+          })
+        "
       >
         <a
           v-if="menu.route"
           :href="menu.route"
           :title="menu.title"
+          v-bind="Preset.itemlink"
           @click="navigateToUrl(menu.route!)"
-          class="cursor-pointer text-primary"
-          data-wv-section="breadcrumb-menu-link"
         >
           {{ menu.name }}
         </a>
@@ -42,8 +39,8 @@ const lastIndex = computed(() => props.menus.length - 1);
 
       <span
         v-if="index != lastIndex"
-        v-text="'>'"
-        data-wv-section="breadcrumb-separator"
+        v-text="Preset.separator.content"
+        v-bind="Preset.separator"
       />
     </template>
   </div>

@@ -1,17 +1,63 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
-import RadioButton from 'primevue/radiobutton';
+import { computed, inject } from 'vue';
+import { isEqual } from 'lodash';
+import {
+  ButtonRadioEmits,
+  ButtonRadioProps,
+} from 'lib/components/buttonradio/ButtonRadio.vue.d';
 
-const props = defineProps<{ label?: string; labelId?: string }>();
+const Preset = inject<Record<string, any>>('preset', {}).buttonradio;
 
-const labelId = computed(
-  () => props.labelId ?? props.label?.split(' ')?.join('-') ?? undefined,
-);
+const props = defineProps<ButtonRadioProps>();
+const emit = defineEmits<ButtonRadioEmits>();
+defineOptions({ inheritAttrs: false });
+
+const checked = computed(() => {
+  return (
+    props.modelValue != null &&
+    (props.binary ? !!props.modelValue : isEqual(props.modelValue, props.value))
+  );
+});
+
+const onChange = (event: Event): void => {
+  if (!props.disabled && !props.readonly) {
+    const newModelValue = props.binary ? !checked.value : props.value;
+
+    emit('update:modelValue', newModelValue);
+    emit('change', event);
+  }
+};
+
+const onFocus = (event: Event): void => {
+  emit('focus', event);
+};
+
+const onBlur = (event: Event): void => {
+  emit('blur', event);
+};
 </script>
 
 <template>
-  <div class="flex items-center gap-1">
-    <RadioButton v-bind="$attrs" :input-id="labelId" />
-    <label v-if="label" :for="labelId" class="text-xs">{{ label }}</label>
-  </div>
+  <label v-bind="Preset.root">
+    <span v-bind="Preset.wrapper({ props })">
+      <input
+        :id="inputId"
+        v-bind="props"
+        :aria-invalid="invalid || undefined"
+        :checked="checked"
+        :class="[Preset.input({ props }).class, inputClass]"
+        :style="inputStyle"
+        @blur="onBlur"
+        @change="onChange"
+        @focus="onFocus"
+        type="radio"
+      />
+
+      <span v-bind="Preset.box({ props })">
+        <span v-bind="Preset.icon" />
+      </span>
+    </span>
+
+    <template v-if="label">{{ label }}</template>
+  </label>
 </template>

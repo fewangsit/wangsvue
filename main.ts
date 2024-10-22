@@ -14,15 +14,19 @@ import router from './playground';
 import Focus from 'lib/directives/focus';
 
 // Preset
-import Preset from 'lib/preset';
+import { wangsvue } from './presets';
+// import(`./presets/${import.meta.env.VITE_APP_PRESET}/index.css`);
+import './presets/wangsvue/index.css';
 
 const app = createApp(App);
 
 // Init PrimeVue
 app.use(PrimeVue, {
   unstyled: true,
-  pt: Preset,
+  pt: wangsvue,
 });
+
+app.provide('preset', wangsvue);
 
 app.use(router);
 

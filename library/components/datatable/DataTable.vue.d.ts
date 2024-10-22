@@ -1,12 +1,7 @@
 import { Component } from 'vue';
-import { MenuItem } from '../menuitem';
-import { ClassComponent } from '../ts-helpers';
-import {
-  DataTableFilterMeta,
-  DataTablePageEvent,
-  DataTableSortEvent,
-} from 'primevue/datatable';
-import { DialogConfirmProps } from '../dialogconfirm/DialogConfirm.vue.d';
+import { MenuItem } from 'lib/components/menuitem';
+import { ClassComponent, HintedString } from 'lib/components/ts-helpers';
+import { DialogConfirmProps } from 'lib/components/dialogconfirm/DialogConfirm.vue.d';
 
 export type ChildGroup = {
   groupHeader: string;
@@ -21,6 +16,137 @@ export type QueryParams = {
   [key: string]: any;
 };
 
+/**
+ * Custom sort event.
+ * @see {@link BaseDataTableEmits.sort}
+ */
+export interface DataTableSortEvent {
+  /**
+   * Browser event.
+   */
+  originalEvent: Event;
+  /**
+   * Index of first record
+   */
+  first: number;
+  /**
+   * Number of rows to display in new page
+   */
+  rows: number;
+  /**
+   * Field to sort against
+   */
+  sortField: string | undefined;
+  /**
+   * Sort order as integer
+   */
+  sortOrder: 1 | 0 | -1 | undefined | null;
+  /**
+   * Collection of active filters
+   * @see DataTableFilterMeta
+   */
+  filters: DataTableFilterMeta;
+  /**
+   * Match modes per field
+   */
+  filterMatchModes:
+    | HintedString<
+        | 'startsWith'
+        | 'contains'
+        | 'notContains'
+        | 'endsWith'
+        | 'equals'
+        | 'notEquals'
+        | 'in'
+        | 'lt'
+        | 'lte'
+        | 'gt'
+        | 'gte'
+        | 'between'
+        | 'dateIs'
+        | 'dateIsNot'
+        | 'dateBefore'
+        | 'dateAfter'
+      >
+    | undefined;
+}
+
+/**
+ * Custom pagination event.
+ * @see {@link BaseDataTableEmits.page}
+ * @extends DataTableSortEvent
+ */
+export interface DataTablePageEvent extends DataTableSortEvent {
+  /**
+   * New page number
+   */
+  page: number;
+  /**
+   * Total page count
+   */
+  pageCount: number;
+}
+
+/**
+ * Custom datatable operator filter metadata.
+ */
+export interface DataTableOperatorFilterMetaData {
+  /**
+   * Filter operator
+   */
+  operator: string;
+  /**
+   * Array of filter meta data.
+   */
+  constraints: DataTableFilterMetaData[];
+}
+
+/**
+ * Custom datatable filter metadata.
+ */
+export interface DataTableFilterMetaData {
+  /**
+   * Filter value
+   */
+  value: any;
+  /**
+   * Filter match mode
+   */
+  matchMode:
+    | HintedString<
+        | 'startsWith'
+        | 'contains'
+        | 'notContains'
+        | 'endsWith'
+        | 'equals'
+        | 'notEquals'
+        | 'in'
+        | 'lt'
+        | 'lte'
+        | 'gt'
+        | 'gte'
+        | 'between'
+        | 'dateIs'
+        | 'dateIsNot'
+        | 'dateBefore'
+        | 'dateAfter'
+      >
+    | undefined;
+}
+
+/**
+ * Custom datatable filter metadata.
+ */
+export interface DataTableFilterMeta {
+  /**
+   * Extra options
+   */
+  [key: string]:
+    | string
+    | DataTableFilterMetaData
+    | DataTableOperatorFilterMetaData;
+}
+
 export type FetchResponse<T = Data> = {
   message: string;
   data: {
@@ -30,7 +156,7 @@ export type FetchResponse<T = Data> = {
 };
 
 export type TableCellComponent = {
-  component: string | Component;
+  component: Component;
   props?: object;
   model?: any;
   events?: any;
@@ -43,7 +169,7 @@ export interface ColumnTogglePreset {
   /**
    *
    * @param state boolean - the toggle state
-   * @param revertFunction - function to revert previous state when action failed
+   * @param revertFunction - function to revert previous state when action failed or canceled
    * @returns
    */
   onToggle?: (state: boolean, data: Data, revertFunction: () => void) => void;
@@ -72,28 +198,28 @@ export interface ColumnTogglePreset {
 
 export type ColumnPreset = ColumnTogglePreset;
 
-export type TableColumn = {
+export interface TableColumn {
   header?: string;
   field: string;
   editable?: boolean;
   sortable?: boolean;
   /**
-   * Wether the column can be re-ordered by column visibilty.
+   * Whether the column can be re-ordered by column visibility.
    * If set to false, the column will not appear on column visibility.
    */
   reorderable?: boolean;
   /**
-   * Make the column cannot reordered by disabled dragability.
+   * Make the column cannot reordered by disabled drag-ability.
    */
   dragable?: boolean;
   fixed?: boolean;
   visible?: boolean;
   /**
-   * Use commontly used component as preset
+   * Use commonly used component as preset
    */
   preset?: ColumnPreset;
   /**
-   * Wether the column is checked by default, only for Custom Report Table
+   * Whether the column is checked by default, only for Custom Report Table
    * @default true
    */
   checkedByDefault?: boolean;
@@ -125,7 +251,7 @@ export type TableColumn = {
    * Download Excel Config
    *
    * When needs to export only the property has Truthy value, set this to true,
-   * The excel result will only get the property object which the value is truthy.
+   * The Excel result will only get the property object which the value is truthy.
    *
    * @example
    * Example Object:
@@ -180,19 +306,49 @@ export type TableColumn = {
    * Style class of the column body.
    */
   bodyClass?: string | string[] | ((data?: any) => string | string[]);
-};
+}
 
-export type TableOption = {
-  label?: string;
-  command?: (data?: any) => any;
-  icon?: string;
-  items?: any[];
-  class?: string;
-  disabled?: boolean;
-  separator?: boolean;
-  danger?: boolean;
-  visible?: boolean;
-};
+/**
+ * Extending the base table column, tree table column will only available when props.treeTable is sets to be `true`
+ */
+export interface TreeTableColumns extends TableColumn {
+  /**
+   * How much the column spanning
+   */
+  colspan?: number;
+  /**
+   * The list of parents columns fields
+   * The colspan will be counted from it lengths
+   * This column will be shown when at least one of parent columns is visible
+   *
+   * @example
+   * This column spans from parent column A to C,
+   * this property value should be ['a', 'b', 'c'],
+   * which each value in array is a 'column.field' of the parent columns
+   *
+   * The counted colspan will be 3
+   */
+  parentColumnsFields?: string[];
+}
+
+/**
+ * Emit payload for `cellEdited`
+ */
+export interface DataTableCellEditedEvent {
+  item: Data;
+  field: string;
+  index: number;
+  value?: string;
+}
+
+/**
+ * Emit payload for `rowReorder`
+ */
+export interface DataTableRowReorderEvent {
+  item: Data;
+  fromIndex?: number;
+  toIndex?: number;
+}
 
 /**
  * Custom row click event.
@@ -213,22 +369,35 @@ export interface DataTableRowClickEvent {
   index: number;
 }
 
-/**
- * Custom row select all change event.
- * @see {@link DataTableEmits['select-all-change']}
- */
-export interface DataTableSelectAllChangeEvent {
+export type ChildTableProps = Partial<TreeTableProps> & {
   /**
-   * Browser event
+   * Use the header of each column in child table
+   *
+   * @default false
    */
-  originalEvent: Event;
+  useColumnsHeader?: boolean;
+};
+
+export interface TreeTableProps extends Omit<BaseDataTableProps, 'columns'> {
   /**
-   * Whether all data is selected.
+   * Activate tree table mode
    */
-  checked: boolean;
+  treeTable?: true;
+  /**
+   * V-model single selection. Works with selectionType 'single'
+   */
+  singleSelection?: Data;
+  /**
+   * An array of table columns to display.
+   */
+  columns: TreeTableColumns[];
+  /**
+   * Properties to be passed into sub table
+   */
+  childTableProps?: ChildTableProps;
 }
 
-export interface DataTableProps {
+export interface BaseDataTableProps {
   /**
    * Optional property to set a unique name for the table. This name will be used as part of the unique table ID.
    *
@@ -240,7 +409,7 @@ export interface DataTableProps {
    */
   columns: TableColumn[];
   /**
-   * Wether show single action option.
+   * Whether show single action option.
    * @default true;
    */
   useOption?: boolean;
@@ -255,11 +424,11 @@ export interface DataTableProps {
    */
   dataKey?: string;
   /**
-   * The key of the data object to determine wether the row data should be disabled.
+   * The key of the data object to determine whether the row data should be disabled.
    */
   disableKey?: string;
   /**
-   * Boolean to specify wether all rows should be disabled.
+   * Boolean to specify whether all rows should be disabled.
    */
   disableAllRows?: boolean;
   /**
@@ -293,7 +462,7 @@ export interface DataTableProps {
   /**
    * Determine the type of DataTable.
    *
-   * Sets to lazy if you need to dynamicaly shows data.
+   * Sets to lazy if you need to dynamically shows data.
    */
   lazy?: boolean;
   loading?: boolean;
@@ -318,7 +487,7 @@ export interface DataTableProps {
    */
   expandedRows?: { [key: string]: boolean };
   /**
-   * Wether display pagination under the table or not.
+   * Whether display pagination under the table or not.
    */
   usePaginator?: boolean;
   /**
@@ -338,15 +507,26 @@ export interface DataTableProps {
    */
   singleSelect?: boolean;
   /**
-   * Wether the column is customizable or not.
+   * Whether the column is customizable or not.
    *
    * @default true - the table is able to reorder and toggle visibility column;
    */
   customColumn?: boolean;
   /**
-   * Set the scrollHeight in px
+   * Props to set scroll height, this will make table content scrollable
+   * @example '50vh' or '300px'
    */
   scrollHeight?: string;
+  /**
+   * When the row height sets to fixed, it will have 35px height
+   *
+   * @defaultValue 'fixed'
+   */
+  rowHeight?: 'fixed' | 'auto';
+  /**
+   * To determine if row table is reorder-able
+   */
+  reorderable?: boolean;
   /**
    * An array of fields as string to use in global filtering.
    */
@@ -356,12 +536,14 @@ export interface DataTableProps {
    */
   totalDisabledRows?: number;
   /**
-   * Sepecify the error message download excel
+   * Specify the error message download excel
    */
   excelToastErrorMessage?: string;
 }
 
-export type DataTableEmits = {
+export type DataTableProps = BaseDataTableProps | TreeTableProps;
+
+export type BaseDataTableEmits = {
   /**
    * Emits when option menu button clicked.
    */
@@ -371,20 +553,6 @@ export type DataTableEmits = {
    */
   'selectData': [data: Data[]];
   'rowSelect': [data: DataTableRowClickEvent];
-  /**
-   * Event emitted when the `isSelectedAll` property is updated.
-   *
-   * @event update:isSelectedAll
-   * @param {boolean} data - The updated value of `isSelectedAll`.
-   *
-   * @example
-   * <DataTable v-model:is-selected-all="isSelectedAll" />
-   *
-   * This will update the `isSelectedAll` value when one of checkbox is unchecked.
-   *
-   * @deprecated;
-   */
-  // 'update:isSelectedAll': [data: boolean];
   /**
    * Event emitted when the page changes in the data table.
    *
@@ -424,6 +592,40 @@ export type DataTableEmits = {
   'update:selectedData': [datas: Data[]];
 };
 
+export type TreeTableEmits = BaseDataTableEmits & {
+  /**
+   * Emitted when a row is clicked/selected. Only available on `single` selectionType
+   */
+  'update:singleSelection': [data: Data];
+  /**
+   * Emitted when cell has lost focus.
+   */
+  'cellEdited': [payload: DataTableCellEditedEvent];
+  /**
+   * @deprecated - use new emits `cellEdited`
+   */
+  'input': [payload: DataTableCellEditedEvent];
+  /**
+   * Emitted on Drop Event occurred after dragging a row.
+   * Only available on
+   *
+   */
+  'rowReorder': [payload?: DataTableRowReorderEvent];
+};
+
+export type DataTableEmits = BaseDataTableEmits | TreeTableEmits;
+
+/**
+ * **WangsVue - DataTable**
+ *
+ *  * _DataTable displays data in tabular format._
+ *
+ * [Live Demo](https://fewangsit.github.io/wangsvue/table)
+ * --- ---
+ * ![WangsVue](https://www.wangs.id/wp-content/uploads/2023/12/cropped-Logo_Wangsid-removebg-preview-192x192.png)
+ *
+ * @group Component
+ */
 declare class DataTable extends ClassComponent<
   DataTableProps,
   Record<string, unknown>,

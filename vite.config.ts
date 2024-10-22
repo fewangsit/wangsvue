@@ -10,5 +10,10 @@ export default defineConfig({
       lib: resolve(__dirname, 'library'),
     },
   },
+  server: {
+    watch: {
+      ignored: ['**/dist/**'],
+    },
+  },
   assetsInclude: ['**/*.lottie'],
 });

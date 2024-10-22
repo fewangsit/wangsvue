@@ -7,6 +7,8 @@ import {
   QueryParams,
   TableCellComponent,
   TableColumn,
+  TreeTableColumns,
+  TreeTableProps,
 } from 'lib/components/datatable/DataTable.vue.d';
 import { computed, onMounted, ref, shallowRef, watch } from 'vue';
 import Badge from 'primevue/badge';
@@ -22,11 +24,7 @@ import { FilterMatchMode } from 'primevue/api';
 import ButtonBulkAction from 'lib/components/buttonbulkaction/ButtonBulkAction.vue';
 import eventBus from 'lib/event-bus';
 import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
-import TreeTable from 'lib/components/treetable/TreeTable.vue';
-import {
-  TreeTableColumns,
-  TreeTableProps,
-} from 'lib/components/treetable/TreeTable.vue.d';
+import DataTable from 'lib/components/datatable/DataTable.vue';
 import { cloneDeep } from 'lodash';
 import useLoadingStore from 'lib/components/loading/store/loading.store';
 import Checkbox from 'lib/components/checkbox/Checkbox.vue';
@@ -91,7 +89,7 @@ const tableColumns = computed<TableColumn[]>(() => {
         confirmDialogProps: {
           header: 'Are you sure?',
           listLabel: 'name.nameWithSequence',
-          message: 'This action will set this data to innactive. Are you sure?',
+          message: 'This action will set this data to inactive. Are you sure?',
           severity: 'danger',
           confirmLabel: 'Yes, sure!',
           showWhen: async (data): Promise<boolean> => {
@@ -105,14 +103,14 @@ const tableColumns = computed<TableColumn[]>(() => {
         onConfirm: (state, data, revert): void => {
           setTimeout(() => {
             revert();
-          }, 1000);
+          }, 100);
         },
       },
     },
 
     {
       field: 'name',
-      header: 'Name',
+      header: 'This Header will make the page overflows',
       sortable: true,
       reorderable: true,
       fixed: false,
@@ -196,6 +194,7 @@ const tableColumns = computed<TableColumn[]>(() => {
   ];
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const childrenColumns = computed(() => {
   const columns: TreeTableColumns[] = cloneDeep(tableColumns.value);
   columns.splice(1, 1);
@@ -318,7 +317,7 @@ const filters = ref<any>({
       <FilterContainer :fields="filterFields" @apply="console.log" />
       <QuickFilter :fields="quickFilterField" />
 
-      <TreeTable
+      <DataTable
         :key="tableKey"
         v-model:single-selection="singleSelection"
         :child-table-props="{ columns: subColumns, useColumnsHeader: true }"

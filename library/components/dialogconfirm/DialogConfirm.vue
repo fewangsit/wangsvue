@@ -1,16 +1,22 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
 import Dialog from 'primevue/dialog';
+import { computed, inject, ref } from 'vue';
 
-import DialogPreset from 'lib/preset/dialog';
 import { getNestedProperyValue } from 'lib/utils';
+import Button from '../button/Button.vue';
+import Icon from '../icon/Icon.vue';
 import {
   DialogConfirmEmits,
   DialogConfirmProps,
   DialogConfirmSlots,
 } from './DialogConfirm.vue.d';
-import Icon from '../icon/Icon.vue';
-import Button from '../button/Button.vue';
+
+const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
+
+const DialogConfirmPreset = inject<Record<string, any>>(
+  'preset',
+  {},
+).dialogconfirm;
 
 const props = withDefaults(defineProps<DialogConfirmProps>(), {
   list: undefined,
@@ -58,63 +64,56 @@ const confirm = (): void => {
     :pt="{
       root: {
         'class': [
-          ...DialogPreset.root({ state: {} }).class,
-          '!w-[clamp(360px,75vw,400px)]',
+          ...DialogPreset?.root({ state: {} }).class,
+          ...DialogConfirmPreset?.root.class,
         ],
-        'data-wv-section': $attrs['data-wv-section'] ?? 'root',
-        'data-wv-name': $attrs['data-wv-name'] ?? 'dialogconfirm',
+        'data-wv-section': DialogConfirmPreset?.root['data-wv-section'](
+          $attrs['data-wv-section'],
+        ),
+        'data-wv-name': DialogConfirmPreset?.root['data-wv-name'](
+          $attrs['data-wv-name'],
+        ),
       },
       header: {
-        'class': [...DialogPreset.header.class],
-        'data-wv-section': 'dialog-confirm-header',
+        ...DialogConfirmPreset?.header,
+        class: [...DialogPreset?.header.class],
       },
       content: {
-        'class': [
-          ...DialogPreset.content({ state: {}, instance: {} }).class,
-          '[&_ul]:list-inside [&_ul]:list-disc [&_ul_li]:pl-[6px]',
+        ...DialogConfirmPreset?.content,
+        class: [
+          ...DialogPreset?.content({ state: {}, instance: {} }).class,
+          DialogConfirmPreset?.content.class,
         ],
-        'data-wv-section': 'dialog-confirm-content',
       },
       footer: {
-        'class': [
-          ...DialogPreset.footer.class,
-          'flex items-end justify-end gap-1 !mt-0',
+        ...DialogConfirmPreset?.footer,
+        class: [
+          ...DialogPreset?.footer.class,
+          DialogConfirmPreset?.footer.class,
         ],
-        'data-wv-section': 'dialog-confirm-footer',
       },
     }"
     :visible="props.visible"
     @hide="emit('hide')"
     @update:visible="emit('update:visible', !!$event)"
     close-on-escape
-    data-wv-section="dialog-confirm"
     modal
   >
     <template #header>
       <Icon
         v-if="showIcon"
+        v-bind="DialogConfirmPreset?.headericon"
         :icon="headerIcon"
         :severity="severity"
         aria-label="Header Icon"
-        class="text-2xl"
-        data-wv-section="headericon"
       />
-      <h3
-        :class="[
-          'text-base leading-none font-semibold',
-          {
-            'text-success-700': severity === 'success',
-            'text-danger-700': severity === 'danger',
-          },
-        ]"
-        data-wv-section="dialog-confirm-title"
-      >
+      <h3 v-bind="DialogConfirmPreset?.headertitle(severity)">
         {{ header }}
       </h3>
     </template>
 
     <template #default>
-      <ul v-if="list" data-wv-section="dialog-confirm-list">
+      <ul v-if="list" v-bind="DialogConfirmPreset?.list">
         <li :key="index" v-for="(item, index) in list">
           {{
             listLabel && typeof item !== 'string'
@@ -125,16 +124,16 @@ const confirm = (): void => {
       </ul>
 
       <slot :items="list" name="body">
-        <p data-wv-section="confirm-message">{{ message }}</p>
+        <p v-bind="DialogConfirmPreset?.bodymessage">{{ message }}</p>
       </slot>
     </template>
 
     <template #footer>
       <slot name="footer">
         <Button
+          v-bind="DialogConfirmPreset?.cancelbutton"
           :label="closeButtonLabel"
           @click="closeDialog"
-          data-wv-section="cancel-button"
           severity="secondary"
           text
         />
@@ -142,10 +141,10 @@ const confirm = (): void => {
         <Button
           v-if="actionable"
           v-focus
+          v-bind="DialogConfirmPreset?.confirmbutton"
           :label="confirmLabel"
           :severity="severity"
           @click="confirm"
-          data-wv-section="confirm-button"
         />
       </slot>
     </template>

@@ -1,21 +1,23 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, inject } from 'vue';
 import { toArrayClass } from 'lib/components/helpers';
+import type { ButtonProps } from './Button.vue.d';
+import { WangsIconseverities } from '../icon/Icon.vue.d';
 
 import Icon from 'lib/components/icon/Icon.vue';
 import PrimeButton from 'primevue/button';
-import type { ButtonProps } from './Button.vue.d';
-import Preset from 'lib/preset/button';
 
 const props = defineProps<ButtonProps>();
+const Preset = inject<Record<string, any>>('preset', {}).button;
 
 const iconProps = computed(() => ({
   icon: props.icon ?? 'check',
   class: [
-    ...Preset.icon({ props: props }).class,
+    ...(Preset?.icon({ props: props }).class ?? {}),
     { 'text-base': props.icon && !props.label }, // Need to use attrs, because props.label is always undefined.
     ...toArrayClass(props.iconClass),
   ],
+  severity: props.severity as WangsIconseverities,
 }));
 </script>
 

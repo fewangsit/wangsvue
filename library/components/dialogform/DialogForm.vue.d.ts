@@ -1,8 +1,8 @@
+import { GenericObject } from 'vee-validate';
 import { Slot } from 'vue';
 import { FormPayload, FormProps } from '../form/Form.vue.d';
-import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
-import { GenericObject } from 'vee-validate';
 import { WangsIcons } from '../icon/Icon.vue.d';
+import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
 
 export type DialogFormValue =
   | string
@@ -14,6 +14,9 @@ export type DialogFormValue =
   | Record<string, unknown>
   | Record<string, unknown>[];
 
+/**
+ * Generic form payload, able to receive types from outside
+ */
 export type DialogFormPayload<
   FormValuesType = Record<string, DialogFormValue>,
 > = {
@@ -26,62 +29,59 @@ export type DialogFormPayload<
  */
 export interface DialogFormProps extends FormProps {
   /**
-   * Value binding to show/hide the dialog.
+   * The template for form buttons.
    */
-  visible: boolean;
+  buttonsTemplate: ('clear' | 'submit' | 'cancel')[];
   /**
    * The dialog header.
    */
   header: string;
   /**
-   * Show Date time on header
+   * Value binding to show/hide the dialog.
    */
-  dateHeader?: string;
+  visible: boolean;
+
   /**
    * Determine the button label for form.
    */
   actionLabel?: string;
   /**
-   * Show or hide the checkbox 'Stay after submit'
+   * With in pixel
    *
-   * @default true - if the action is submit.
-   * @default false - if the action is save.
+   * @default 260
    */
-  showStayCheckbox?: boolean;
+  asideRightWidth?: number;
+  class?: string | string[];
   /**
-   * The template for form buttons.
+   * Custom button cancel label.
    */
-  buttonsTemplate: ('clear' | 'submit' | 'cancel')[];
-  /**
-   * Custom button submit label.
-   */
-  submitBtnLabel?: string;
+  cancelBtnLabel?: string;
   /**
    * Custom button clear label.
    */
   clearBtnLabel?: string;
   /**
-   * Prevent form resets after submitted. Default is resetted.
-   *
-   * @default true
+   * Wether show the Close icon or not.
    */
-  resetAfterSubmit?: boolean;
+  closable?: boolean;
   /**
-   * Close dialo after form validated and submited.
+   * Close dialog after form validated and submitted.
    *
    * @default true
    */
   closeOnSubmit?: boolean;
   /**
-   * Wether show the Close icon or not.
+   * @deprecated
    */
-  closable?: boolean;
+  contentClass?: string | string[];
   /**
-   * Define the invalid message to be shown on invalid state above the Form submit button.
-   *
-   * @default undefined
+   * Show Date time on header.
    */
-  validatorMessage?: string;
+  dateHeader?: string;
+  /**
+   * Set the header icon left beside of the title.
+   */
+  headerIcon?: WangsIcons;
   /**
    * Sets the invalid state.
    *
@@ -89,10 +89,42 @@ export interface DialogFormProps extends FormProps {
    */
   invalid?: boolean;
   /**
+   * Prevent form resets after submitted. Default is resetted.
+   *
+   * @default true
+   */
+  resetAfterSubmit?: boolean;
+  /**
+   * The severity of the dialog.
+   * The severity will determine the dialog icons and color scheme.
+   */
+  severity?: 'success' | 'danger' | 'primary';
+  /**
+   * Show or hide the checkbox 'Stay after submit.'
+   *
+   * @default true - if the action is submit.
+   * @default false - if the action is save.
+   */
+  showStayCheckbox?: boolean;
+  /**
+   * Custom label for stay checkbox.
+   */
+  stayCheckboxLabel?: string;
+  /**
+   * Custom button submit label.
+   */
+  submitBtnLabel?: string;
+  /**
+   * Define the invalid message to be shown on invalid state above the Form submit button.
+   *
+   * @default undefined
+   */
+  validatorMessage?: string;
+  /**
    * Additional validation function.
    * Within this this function, you need to set the invalid props value.
    *
-   * If after executing this function the props invalid is true, the form will not submitted.
+   * If after executing this function the props invalid is true, the form will not be submitted.
    * Otherwise, 'submit' event will be emitted.
    */
   validationFunction?: () => void | Promise<void>;
@@ -108,17 +140,6 @@ export interface DialogFormProps extends FormProps {
    * @default 'small';
    */
   width?: 'small' | 'medium' | 'large' | 'semi-xlarge' | 'xlarge';
-  class?: string | string[];
-  contentClass?: string | string[];
-  /**
-   * Set the header icon left beside of the title.
-   */
-  headerIcon?: WangsIcons;
-  /**
-   * The severity of the dialog.
-   * The severity will determine the dialog icons and color scheme.
-   */
-  severity?: 'success' | 'danger' | 'primary';
 }
 
 export interface ConfirmSlots {
@@ -148,25 +169,25 @@ export interface ActionSlots {
  */
 export interface DialogFormSlots {
   /**
-   * The fields slot for the Dialogform. Here is where you can put your Dialogform fields.
+   * Slot for action buttons.
    */
-  'fields': Slot<{ formValues: GenericObject; key?: number }>;
-  /**
-   * Slot for dialog confirm.
-   */
-  'confirm': Slot<ConfirmSlots>;
+  'actionButtons': Slot<ActionSlots>;
   /**
    * Slot for aside right expansion.
    */
   'aside-right': Slot;
   /**
+   * Slot for dialog confirm.
+   */
+  'confirm': Slot<ConfirmSlots>;
+  /**
+   * The fields slot for the Dialogform. Here is where you can put your Dialogform fields.
+   */
+  'fields': Slot<{ formValues: GenericObject; key?: number }>;
+  /**
    * Slot for dialog header.
    */
   'header': Slot;
-  /**
-   * Slot for action buttons.
-   */
-  'actionButtons': Slot<ActionSlots>;
 }
 
 /**
@@ -174,29 +195,29 @@ export interface DialogFormSlots {
  */
 export type DialogFormEmits = {
   /**
-   * When dialog is closed.
+   * Emits when 'Clear Field' button clicked.
    */
-  'update:visible': [state: boolean];
+  'clear': [];
   /**
    * When dialog is closed by close button.
    */
   'close': [];
   /**
-   * Emits when the form validation succes and props.invalid is 'false'.
+   * Callback to invoke when dialog is hidden.
    */
-  'submit': [values: DialogFormPayload];
-  /**
-   * Emits when 'Clear Field' button clicked.
-   */
-  'clear': [];
+  'hide': [];
   /**
    * Callback to invoke when dialog is shown.
    */
   'show': [];
   /**
-   * Callback to invoke when dialog is hidden.
+   * Emits when the form validation succes and props.invalid is 'false'.
    */
-  'hide': [];
+  'submit': [values: DialogFormPayload];
+  /**
+   * When dialog is closed.
+   */
+  'update:visible': [state: boolean];
 };
 
 /**
@@ -214,7 +235,16 @@ declare class DialogForm extends ClassComponent<
   DialogFormProps,
   DialogFormSlots,
   DialogFormEmits
-> {}
+> {
+  /**
+   * Exposed function to clears the form fields.
+   */
+  clearField: () => void;
+  /**
+   * The ref of form element.
+   */
+  form: HTMLFormElement;
+}
 
 declare module '@vue/runtime-core' {
   interface GlobalComponents {

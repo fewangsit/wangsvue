@@ -5,8 +5,13 @@ import Dropdown from 'lib/components/dropdown/Dropdown.vue';
 import { ref } from 'vue';
 import { OptionValue } from 'lib/types/options.type';
 import Form from 'lib/components/form/Form.vue';
+import Badge from 'lib/components/badge/Badge.vue';
 
 const model = ref<OptionValue>();
+
+const items = ref(
+  Array.from({ length: 100000 }, (_, i) => ({ label: `Item #${i}`, value: i })),
+);
 </script>
 
 <template>
@@ -20,9 +25,10 @@ const model = ref<OptionValue>();
       >
         <div class="flex flex-col gap-1">
           <Dropdown
-            v-model="model"
-            :options="['Waiting for Approval', 'Waiting for Handover']"
+            :options="items"
             label="Status"
+            option-label="label"
+            option-value="value"
             placeholder="Pilih status"
           />
         </div>
@@ -63,10 +69,29 @@ const model = ref<OptionValue>();
             value-type="badge"
           />
           <Dropdown
+            :options="[
+              { label: 'Waiting for Approval', value: 'Approval' },
+              { label: 'Waiting for Handover', value: 'Handover' },
+            ]"
+            class="w-max"
+            field-name="status2"
+            input-border="none"
+            label="Status"
+            mandatory
+            option-label="label"
+            placeholder="Pilih status"
+            use-validator
+            validator-message="Ga boleh kosong"
+          >
+            <template #value="{ value }">
+              <Badge :label="value" />
+            </template>
+          </Dropdown>
+          <Dropdown
             v-model="model"
+            :filter="false"
             :options="['Waiting for Approval', 'Waiting for Handover']"
             label="Dropdown No Filter"
-            :filter="false"
             placeholder="Pilih status"
           />
         </template>

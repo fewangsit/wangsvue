@@ -8,6 +8,7 @@ import {
   onBeforeMount,
   shallowRef,
   ref,
+  inject,
 } from 'vue';
 import axios from 'axios';
 
@@ -18,7 +19,8 @@ import { FieldValidation } from '../form/Form.vue.d';
 import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 import Icon from '../icon/Icon.vue';
-import Preset from 'lib/preset/inputphonenumber';
+
+const Preset = inject<Record<string, any>>('preset', {}).inputphonenumber;
 
 import type {
   InputPhoneNumberProps,
@@ -35,7 +37,9 @@ type DialCode = {
   name: string;
 };
 
-const props = defineProps<InputPhoneNumberProps>();
+const props = withDefaults(defineProps<InputPhoneNumberProps>(), {
+  maxDigit: 14,
+});
 
 const emit = defineEmits<InputPhoneNumberEmits>();
 
@@ -187,7 +191,7 @@ watch(rawValue, (val) => {
     >
       <Dropdown
         v-model="selectedDialCode"
-        :class="Preset.dialcode({ isFirefoxBased, invalidInput }).class"
+        :class="Preset?.dialcode({ isFirefoxBased, invalidInput }).class"
         :disabled="props.disabled"
         :filter-fields="['dial_code', 'name']"
         :options="dialCodes"
@@ -218,7 +222,7 @@ watch(rawValue, (val) => {
         :key="phoneKey"
         v-bind="$props"
         v-model="rawValue"
-        :class="Preset.inputnumber({ isFirefoxBased, invalidInput }).class"
+        :class="Preset?.inputnumber({ isFirefoxBased, invalidInput }).class"
         :disabled="props.disabled"
         :use-grouping="false"
         @input="grabValue"

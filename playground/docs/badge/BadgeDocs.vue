@@ -12,7 +12,7 @@ import BadgeGroup from 'lib/components/badgegroup/BadgeGroup.vue';
     </template>
     <template #content>
       <div
-        class="w-[576px] flex flex-col gap-3 h-auto py-4 px-1 relative bg-white rounded-[5px] border-2 border-dashed border-[#9747ff]"
+        class="w-[588px] flex flex-col gap-3 h-auto py-4 px-1 relative bg-white rounded-[5px] border-2 border-dashed border-[#9747ff]"
       >
         <div class="flex gap-0.5">
           <Badge format="nowrap" label="Unverified" removable />
@@ -41,11 +41,12 @@ import BadgeGroup from 'lib/components/badgegroup/BadgeGroup.vue';
           :labels="[
             'June Nicolas',
             'Tiffany Glover',
-            'Lori Ritchie',
+            'Lori Richie',
             'Rodney Fadel',
           ]"
           :limit="2"
           format="username"
+          severity="primary"
         />
       </div>
     </template>

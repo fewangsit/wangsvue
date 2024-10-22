@@ -42,7 +42,7 @@ const isShowOverlay = ref<boolean>(false);
 const multiselect = ref<MultiSelect>();
 
 const field = reactive<FieldValidation<OptionValue[] | undefined>>({
-  value: undefined,
+  value: props.initialValue ? props.initialValue : props.modelValue,
 });
 
 const visibleOptions = computed(() => filterOptions(props.options));
@@ -106,6 +106,13 @@ watch(
 );
 
 watch(
+  () => props.modelValue,
+  (value) => {
+    field.value = value;
+  },
+);
+
+watch(
   () => props.initialValue,
   (value) => {
     field.value = value;
@@ -148,6 +155,9 @@ defineExpose({
         :placeholder="multiSelectPlaceholder"
         :selected-items-label="props.selectedItemsLabel"
         :show-toggle-all="props.filter"
+        :virtual-scroller-options="
+          options?.length > 10 ? { itemSize: 32 } : undefined
+        "
         @hide="(isShowOverlay = false), $emit('hide')"
         @show="$emit('show'), (isShowOverlay = true)"
       >
@@ -161,7 +171,7 @@ defineExpose({
         <template #dropdownicon>
           <Icon
             :class="[
-              'w-full h-full transition-transform !text-general-500 dark:!text-general-100',
+              'w-full h-full transition-transform !text-general-500',
               { 'rotate-180': isShowOverlay },
             ]"
             icon="arrow-drop-down"

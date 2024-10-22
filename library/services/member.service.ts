@@ -1,27 +1,38 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { getBaseURL } from 'lib/utils/getBaseURL.util';
+import axios, { AxiosResponse, AxiosInstance } from 'axios';
+
+export interface Member {
+  _id: string;
+  profilePicture?: string;
+  profilePictureBig?: string;
+  fullName: string;
+  nickName: string;
+  division: string;
+  position: string;
+  teams: string[];
+  email: string;
+  initial: string;
+}
 
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
-  const user = JSON.parse(localStorage.getItem('user') as string) ?? {};
+  const BASE_URL = import.meta.env.VITE_APP_TEAM_MEMBER_MEMBER_API;
+  const { jwt } = JSON.parse(localStorage.user ?? '{}');
 
-  const BASE_URL = getBaseURL('APP_TEAM_MEMBER_MEMBER_API');
-
-  const instance = axios.create({
-    baseURL: BASE_URL,
+  return axios.create({
+    baseURL: `${BASE_URL}/api/members`,
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + user.jwt,
+      'Content-type': 'application/json',
+      'Authorization': `Bearer ${jwt}`,
       ...headers,
     },
     params,
   });
-
-  return instance;
 };
 
 const MemberServices = {
-  getMemberList: (params?: Record<string, string>): Promise<AxiosResponse> => {
-    return API({ params }).get('/api/members');
+  getMemberDetail: (
+    memberId: string,
+  ): Promise<AxiosResponse<AxiosResponse<Member>>> => {
+    return API().get(`/${memberId}`);
   },
 };
 

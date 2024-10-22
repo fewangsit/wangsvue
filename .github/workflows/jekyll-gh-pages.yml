@@ -2,12 +2,9 @@
 name: Deploy Jekyll with GitHub Pages dependencies preinstalled
 
 on:
-  # push: 
-  #   branches: 
-  #     main
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -28,7 +25,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -37,15 +34,17 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
         with:
-            version: 9.6.0
+          version: 9.6.0
 
       - name: Install Deps
         run: pnpm i
-        
+
       - name: Vite Build
         run: pnpm build
-        env: 
+        env:
           VITE_APP_LOGS_API: ${{ secrets.APP_LOGS_API }}
+          VITE_APP_COMMENTS_API: ${{ secrets.APP_COMMENTS_API }}
+          VITE_APP_TEAM_MEMBER_MEMBER_API: ${{ secrets.APP_TEAM_MEMBER_MEMBER_API }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

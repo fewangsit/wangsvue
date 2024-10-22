@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { shallowRef } from 'vue';
+import { inject, shallowRef } from 'vue';
 
 import Dropdown from 'primevue/dropdown';
-import DropdownPreset from 'lib/preset/dropdown';
 import Icon from '../icon/Icon.vue';
 import { LiteDropdownEmits, LiteDropdownProps } from './LiteDropdown.vue.d';
 import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
 import { OptionValue } from 'lib/types/options.type';
+
+const DropdownPreset = inject<Record<string, any>>('preset', {}).dropdown;
 
 const model = defineModel<OptionValue>({ required: true });
 
@@ -30,7 +31,7 @@ const isShowOverlay = shallowRef<boolean>(false);
       :pt="{
         root: ({ state, props }) => ({
           'class': [
-            ...DropdownPreset.root({ state, props }).class,
+            ...DropdownPreset?.root({ state, props }).class,
             'text-base',
             {
               'cursor-pointer': !props.disabled,
@@ -42,8 +43,7 @@ const isShowOverlay = shallowRef<boolean>(false);
           class: [
             '!font-semibold',
             {
-              '!text-general-200 dark:!text-grayscale-800':
-                props.modelValue == null,
+              '!text-general-200': props.modelValue == null,
               '!text-grayscale-900': props.modelValue != null,
             },
           ],

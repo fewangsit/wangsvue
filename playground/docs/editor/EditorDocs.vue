@@ -1,9 +1,14 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import {
+  PostImage,
+  GetMentionSuggestionResponse,
+} from 'lib/components/editor/Editor.vue.d';
+import Editor from 'lib/components/editor/Editor.vue';
+import Form from 'lib/components/form/Form.vue';
 import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
-import Editor from 'lib/components/editor/Editor.vue';
-import { ref } from 'vue';
-import { PostImage } from 'lib/components/editor/Editor.vue.d';
+import { FormPayload } from 'lib/components/form/Form.vue.d';
 
 const editorContent = ref({
   type: 'doc',
@@ -13,37 +18,48 @@ const editorContent = ref({
       content: [
         {
           type: 'text',
-          text: 'asdsadasd',
+          text: 'asdsad',
         },
       ],
     },
     {
-      type: 'paragraph',
-      content: [
-        {
-          type: 'text',
-          text: 'asdasd',
-        },
-      ],
-    },
-    {
-      type: 'paragraph',
-      content: [
-        {
-          type: 'text',
-          text: 'sad',
-        },
-      ],
-    },
-    {
-      type: 'paragraph',
+      type: 'codeSnippet',
+      attrs: { code: '' },
     },
   ],
 });
 
+const mentionedList = ref();
+
 const sendImage = (value: PostImage): void => {
   value.setImageCb('https://www.svgrepo.com/show/452030/avatar-default.svg');
 };
+
+const submitForm = (data: FormPayload): void => {
+  console.error(data);
+};
+
+const fetchMentionSuggestion =
+  async (): Promise<GetMentionSuggestionResponse> => {
+    return {
+      data: [
+        {
+          _id: '1',
+          fullName: 'Sir Alex',
+          nickName: 'alex',
+          profilePicture: '',
+        },
+        {
+          _id: '2',
+          fullName: 'Cak Rudi',
+          nickName: 'rudi',
+          profilePicture: '',
+        },
+      ],
+      message: 'Successs',
+      status: 200,
+    };
+  };
 </script>
 
 <template>
@@ -52,10 +68,37 @@ const sendImage = (value: PostImage): void => {
       <DocTitle name="Editor" />
     </template>
     <template #content>
-      <Editor
-        v-model:model-value="editorContent"
-        @post-image-local="sendImage"
-      />
+      <div class="flex flex-col gap-4">
+        <Form
+          :buttons-template="['submit', 'cancel']"
+          :reset-after-submit="false"
+          @submit="submitForm"
+        >
+          <template #fields>
+            <Editor
+              v-model:mentioned-list="mentionedList"
+              :fetch-mention-suggestion-function="fetchMentionSuggestion"
+              :show-optional-text="false"
+              :validator-message="{
+                empty: 'Ga Boleh Kosong',
+              }"
+              is-image-upload-base64
+              label="Editor"
+              mandatory
+              placeholder="asdsa"
+              toolbar-wrapper-class="bg-transparent"
+              use-validator
+            />
+          </template>
+        </Form>
+
+        <Editor
+          :initial-value="editorContent"
+          @post-image-local="sendImage"
+          label="Editor Using Base 64 Image"
+          placeholder="asdsa"
+        />
+      </div>
     </template>
   </Card>
 </template>

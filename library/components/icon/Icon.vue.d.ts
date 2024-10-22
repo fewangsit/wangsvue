@@ -47,6 +47,7 @@ export type WangsIcons =
   | 'coins'
   | 'completion'
   | 'dashboard'
+  | 'database'
   | 'delete-back'
   | 'delete-bin'
   | 'delete-bin-7'
@@ -94,6 +95,7 @@ export type WangsIcons =
   | 'xls'
   | 'doc'
   | 'data'
+  | 'line-chart'
   | 'link-unlink-m'
   | 'list-settings'
   | 'loader-4'
@@ -140,7 +142,6 @@ export type WangsIcons =
   | 'star'
   | 'store'
   | 'subtract'
-  | 'team'
   | 'time'
   | 'ticket'
   | 'tools'
@@ -174,7 +175,14 @@ export type WangsIcons =
   | 'chat-1-line'
   | 'attachment-2'
   | 'save'
-  | 'chat-new-line';
+  | 'chat-new-line'
+  | 'code-box-line'
+  | 'file-chart-line'
+  | 'bar-chart-line'
+  | 'bug-2-line'
+  | 'run-line'
+  | 'user-unfollow-line'
+  | 'emotion-happy-line';
 
 export interface IconProps {
   icon: WangsIcons;

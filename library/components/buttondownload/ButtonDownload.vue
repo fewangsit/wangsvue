@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { buttonFocusClass } from 'lib/preset/button';
+import { inject } from 'vue';
 import type { ButtonDownloadProps } from './ButtonDownload.vue.d';
 import eventBus from 'lib/event-bus';
 import Icon from '../icon/Icon.vue';
@@ -7,6 +7,8 @@ import Icon from '../icon/Icon.vue';
 const props = withDefaults(defineProps<ButtonDownloadProps>(), {
   tableName: 'datatable',
 });
+
+const Preset = inject<Record<string, any>>('preset', {}).buttondownload;
 
 const downloadExcel = (): void => {
   const { fileName, tableName } = props;
@@ -17,9 +19,9 @@ const downloadExcel = (): void => {
 </script>
 
 <template>
-  <button :class="buttonFocusClass" @click="downloadExcel" type="button">
+  <button :class="Preset.root" @click="downloadExcel" type="button">
     <Icon
-      class="text-2xl"
+      v-bind="Preset.icon"
       icon="download"
       info="Download"
       severity="secondary"

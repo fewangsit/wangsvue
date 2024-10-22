@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, shallowRef } from 'vue';
+import { computed, inject, onMounted, onUnmounted, shallowRef } from 'vue';
 import { ImageProps } from './Image.vue.d';
 import { getImageURL, genPlaceholder } from 'lib/utils';
 
 import Image from 'primevue/image';
 import Icon from '../icon/Icon.vue';
-import ImagePreset from 'lib/preset/image';
 import Button from '../button/Button.vue';
+
+const ImagePreset = inject<Record<string, any>>('preset', {}).image;
 
 const props = withDefaults(defineProps<ImageProps>(), {
   rounded: false,
@@ -135,7 +136,7 @@ const getGalleryImageSrc = (src?: string | Blob): string | undefined => {
   <Image
     v-bind="$props"
     :class="[
-      ...ImagePreset.root({ props: $props }).class,
+      ...ImagePreset?.root({ props: $props }).class,
       $props.rounded ? '!rounded-full' : '!rounded-lg',
       '[&:has(:focus)_button]:opacity-50 [&:has(:focus)_button]:bg-header-weak',
       ...(Array.isArray($props.class) ? $props.class : [$props.class]),
@@ -149,7 +150,7 @@ const getGalleryImageSrc = (src?: string | Blob): string | undefined => {
   >
     <template #image>
       <img
-        :class="ImagePreset.image({ props: $props }).class"
+        :class="ImagePreset?.image({ props: $props }).class"
         :onerror="onErrorLoadImage"
         :src="imageThumbnail as unknown as string"
         alt=""

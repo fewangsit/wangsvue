@@ -1,4 +1,4 @@
-import type { App, MaybeRef, MaybeRefOrGetter } from 'vue';
+import type { MaybeRef, MaybeRefOrGetter } from 'vue';
 import eventBus from './event-bus';
 
 // Style
@@ -46,15 +46,13 @@ const useField = <T>(
   return context;
 };
 
-// Preset
-import Preset from 'lib/preset';
-
 // Utils
 import {
   useToast,
   getNestedProperyValue,
   checkRouteAccess,
   getImageURL,
+  isEmptyObject,
 } from 'lib/utils';
 
 // Directives
@@ -112,79 +110,20 @@ import {
   ChangelogPage,
   Editor,
   Image,
+  Animation,
+  Comment,
+  ProgressBar,
+  InputBadge,
 } from './components';
-
-export default {
-  install: (app: App): void => {
-    app.use(WangsVue, {
-      unstyled: true,
-      pt: Preset,
-    });
-
-    app.use(ToastService);
-
-    app.component('Badge', Badge);
-    app.component('BadgeGroup', BadgeGroup);
-    app.component('Button', Button);
-    app.component('ButtonToggle', ButtonToggle);
-    app.component('ButtonBulkAction', ButtonBulkAction);
-    app.component('ButtonDownload', ButtonDownload);
-    app.component('ButtonFilter', ButtonFilter);
-    app.component('FilterContainer', FilterContainer);
-    app.component('Timeline', Timeline);
-    app.component('Dialog', Dialog);
-    app.component('InputInitialName', InputInitialName);
-    app.component('DialogConfirm', DialogConfirm);
-    app.component('Checkbox', Checkbox);
-    app.component('Menu', Menu);
-    app.component('ButtonSearch', ButtonSearch);
-    app.component('Calendar', Calendar);
-    app.component('InputPhoneNumber', InputPhoneNumber);
-    app.component('Changelog', Changelog);
-    app.component('WorkCalendar', WorkCalendar);
-    app.component('InputRangeNumber', InputRangeNumber);
-    app.component('QuickFilter', QuickFilter);
-    app.component('Breadcrumb', Breadcrumb);
-    app.component('Card', Card);
-    app.component('DataTable', DataTable);
-    app.component('Dropdown', Dropdown);
-    app.component('Icon', Icon);
-    app.component('InputText', InputText);
-    app.component('MultiSelect', MultiSelect);
-    app.component('TabMenu', TabMenu);
-    app.component('Image', Image);
-    app.component('ImageCompressor', ImageCompressor);
-    app.component('Toast', Toast);
-    app.component('UserName', UserName);
-    app.component('Form', Form);
-    app.component('DialogForm', DialogForm);
-    app.component('InputNumber', InputNumber);
-    app.component('InputEmail', InputEmail);
-    app.component('InputPassword', InputPassword);
-    app.component('Loading', Loading);
-    app.component('SummaryAccordion', SummaryAccordion);
-    app.component('InputURL', InputURL);
-    app.component('OverlayPanel', OverlayPanel);
-    app.component('ButtonRadio', ButtonRadio);
-    app.component('InputRepositoryName', InputRepositoryName);
-    app.component('Textarea', Textarea);
-    app.component('LiteDropdown', LiteDropdown);
-    app.component('ChangelogPage', ChangelogPage);
-    app.component('Editor', Editor);
-
-    app.directive('tooltip', Tooltip);
-    app.directive('focus', Focus);
-  },
-};
 
 export {
   // Config
   WangsVue,
   ToastService,
-  Preset,
   eventBus,
 
   // Directives
+  Focus,
   Tooltip,
   useForm,
   useField,
@@ -194,6 +133,7 @@ export {
   useToast,
   checkRouteAccess,
   getImageURL,
+  isEmptyObject,
 
   // Components
   Badge,
@@ -213,6 +153,7 @@ export {
   UserName,
   Icon,
   InputPassword,
+  InputBadge,
   OverlayPanel,
   ButtonDownload,
   ButtonFilter,
@@ -244,6 +185,9 @@ export {
   LiteDropdown,
   ChangelogPage,
   Editor,
+  Animation,
+  Comment,
+  ProgressBar,
 
   // Component store
   useLoadingStore,

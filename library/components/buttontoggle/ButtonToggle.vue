@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue';
+import { computed, inject, ref, watch } from 'vue';
 import InputSwitch from 'primevue/inputswitch';
 import type {
   ButtonToggleProps,
   ButtonToggleEmits,
 } from 'lib/components/buttontoggle/ButtonToggle.vue.d';
 
-import InputSwitchPresets from 'lib/preset/inputswitch';
+const InputSwitchPresets = inject<Record<string, any>>('preset', {}).inputswitch;
 
 const props = withDefaults(defineProps<ButtonToggleProps>(), {
   triState: false,
@@ -31,9 +31,8 @@ watch(computedVal, (val) => (model.value = val));
         class: [
           ...InputSwitchPresets.slider({ props: inputSwitchProps }).class,
           {
-            'before:!bg-general-100 before:dark:!bg-general-100':
-              props.modelValue === undefined,
-            'before:!bg-white before:dark:!bg-white':
+            'before:!bg-general-100': props.modelValue === undefined,
+            'before:!bg-white':
               props.modelValue === true || props.modelValue === false,
           },
           '!border',
@@ -43,13 +42,13 @@ watch(computedVal, (val) => (model.value = val));
               props.modelValue === true || props.modelValue === false,
           },
           {
-            '!bg-white dark:!bg-white':
+            '!bg-white':
               props.modelValue === undefined && !inputSwitchProps.disabled,
-            '!bg-danger-500 dark:!bg-danger-500':
+            '!bg-danger-500':
               props.modelValue === false && !inputSwitchProps.disabled,
-            '!bg-success-500 dark:!bg-success-500':
+            '!bg-success-500':
               props.modelValue === true && !inputSwitchProps.disabled,
-            '!bg-general-200 dark:!bg-general-200': inputSwitchProps.disabled,
+            '!bg-general-200': inputSwitchProps.disabled,
           },
         ],
       }),

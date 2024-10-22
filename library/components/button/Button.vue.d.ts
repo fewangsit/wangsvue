@@ -1,92 +1,8 @@
-/**
- *
- * Button is an extension to standard button element with icons and theming.
- *
- * [Live Demo](https://www.primevue.org/button/)
- *
- * @module button
- *
- */
 import { ButtonHTMLAttributes, VNode } from 'vue';
-import { ComponentHooks } from '../basecomponent';
-import { PassThroughOptions } from '../passthrough';
-import { ClassComponent, PassThrough, HintedString } from '../ts-helpers';
 import { WangsIcons } from '../icon/Icon.vue.d';
 import { TooltipOptions } from 'primevue/tooltip';
-
-export declare type ButtonPassThroughOptionType<T = any> =
-  | ButtonPassThroughAttributes
-  | ((
-      options: ButtonPassThroughMethodOptions<T>,
-    ) => ButtonPassThroughAttributes | string)
-  | string
-  | null
-  | undefined;
-
-/**
- * Custom passthrough(pt) option method.
- */
-export interface ButtonPassThroughMethodOptions<T> {
-  /**
-   * Defines instance.
-   */
-  instance: any;
-  /**
-   * Defines valid properties.
-   */
-  props: ButtonProps;
-  /**
-   * Defines current options.
-   */
-  context: ButtonContext;
-  /**
-   * Defines parent instance.
-   */
-  parent: T;
-  /**
-   * Defines passthrough(pt) options in global config.
-   */
-  global: object | undefined;
-}
-
-/**
- * Custom passthrough(pt) options.
- * @see {@link ButtonProps.pt}
- */
-export interface ButtonPassThroughOptions<T = any> {
-  /**
-   * Used to pass attributes to the root's DOM element.
-   */
-  root?: ButtonPassThroughOptionType<T>;
-  /**
-   * Used to pass attributes to the loading icon's DOM element.
-   */
-  loadingIcon?: ButtonPassThroughOptionType<T>;
-  /**
-   * Used to pass attributes to the icon's DOM element.
-   */
-  icon?: ButtonPassThroughOptionType<T>;
-  /**
-   * Used to pass attributes to the label's DOM element.
-   */
-  label?: ButtonPassThroughOptionType<T>;
-  /**
-   * Used to pass attributes to the badge's DOM element.
-   */
-  badge?: ButtonPassThroughOptionType<T>;
-  /**
-   * Used to manage all lifecycle hooks.
-   * @see {@link BaseComponent.ComponentHooks}
-   */
-  hooks?: ComponentHooks;
-}
-
-/**
- * Custom passthrough attributes for each DOM elements
- */
-export interface ButtonPassThroughAttributes {
-  [key: string]: any;
-}
+import { GlobalComponentConstructor } from 'lib/components/ts-helpers';
+import { ClassComponent, HintedString } from '../ts-helpers';
 
 /**
  * Defines valid properties in Button component.
@@ -200,21 +116,6 @@ export interface ButtonProps extends /* @vue-ignore */ ButtonHTMLAttributes {
    * @defaultValue false
    */
   plain?: boolean | undefined;
-  /**
-   * Used to pass attributes to DOM elements inside the component.
-   * @type {ButtonPassThroughOptions}
-   */
-  pt?: PassThrough<ButtonPassThroughOptions<any>>;
-  /**
-   * Used to configure passthrough(pt) options of the component.
-   * @type {PassThroughOptions}
-   */
-  ptOptions?: PassThroughOptions;
-  /**
-   * When enabled, it removes component related styles in the core.
-   * @defaultValue false
-   */
-  unstyled?: boolean;
 }
 
 /**
@@ -259,20 +160,26 @@ export interface ButtonSlots {
 }
 
 /**
- * **PrimeVue - Button**
+ * **WangsVue - Button**
  *
  * _Button is an extension to standard button element with icons and theming._
  *
- * [Live Demo](https://www.primevue.org/button/)
+ * [Live Demo](https://fewangsit.github.io/wangsvue/table)
  * --- ---
- * ![PrimeVue](https://primefaces.org/cdn/primevue/images/logo-100.png)
+ * ![WangsVue](https://www.wangs.id/wp-content/uploads/2023/12/cropped-Logo_Wangsid-removebg-preview-192x192.png)
  *
  * @group Component
  */
 declare class Button extends ClassComponent<
   ButtonProps,
   ButtonSlots,
-  unknown
+  Record<string, unknown>
 > {}
+
+declare module '@vue/runtime-core' {
+  interface GlobalComponents {
+    Button: GlobalComponentConstructor<Button>;
+  }
+}
 
 export default Button;
