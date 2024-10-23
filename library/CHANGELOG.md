@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.5.14
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.13...v1.5.14)
+
+### 🚀 Enhancements
+
+- **FilterContainer:** Add new filter field template (Dropdown) ([90ca793](https://github.com/fewangsit/wangsvue/commit/90ca793))
+
+### 💅 Refactors
+
+- **Editor:** Remove 'a' character from next line ([3d55441](https://github.com/fewangsit/wangsvue/commit/3d55441))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.13
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.12...v1.5.13)
