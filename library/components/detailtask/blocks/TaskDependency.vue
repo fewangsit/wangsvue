@@ -608,7 +608,7 @@ watch(
 </script>
 
 <template>
-  <div data-wv-section="detailtask-task-dependency">
+  <div v-if="dependencies?.length" data-wv-section="detailtask-task-dependency">
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-2">
         <Icon class="w-6 h-6" icon="link" />
@@ -622,7 +622,7 @@ watch(
         severity="secondary"
       />
     </div>
-    <div v-if="dependencies?.length" class="pl-8 flex flex-col gap-2">
+    <div class="pl-8 flex flex-col gap-2">
       <div :key="index" v-for="(dep, index) in dependencies" class="">
         <div class="flex gap-2">
           <div class="flex items-center gap-1">
