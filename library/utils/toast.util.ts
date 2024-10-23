@@ -1,6 +1,6 @@
 import eventBus from 'lib/event-bus';
 import { useToast as usePrimevueToast } from 'primevue/usetoast';
-import { WangsIcons } from 'lib/components/icon/Icon.vue';
+import { WangsIcons } from 'lib/components/icon/Icon.vue.d';
 
 export interface ToastParams {
   message: string;
