@@ -6,7 +6,7 @@ import TaskServices from 'lib/services/task.service';
 import ProjectProcessServices from 'lib/services/projectProcess.service';
 import { TaskDependency, TaskDetail } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
-import { computed, inject, Ref, ref, watch } from 'vue';
+import { computed, inject, nextTick, Ref, ref, watch } from 'vue';
 import TaskDependencyServices from 'lib/services/taskDependency.service';
 import Button from 'lib/components/button/Button.vue';
 import UserName from 'lib/components/username/UserName.vue';
@@ -17,6 +17,7 @@ import { ProjectModule } from 'lib/types/projectModule.type';
 import DialogCustomDependency from './Dialog/DialogCustomDependency.vue';
 import Dropdown from 'lib/components/dropdown/Dropdown.vue';
 import SubModuleServices from 'lib/services/submodule.service';
+import { cloneDeep } from 'lodash';
 
 const toast = useToast();
 
@@ -63,6 +64,12 @@ const getTaskOptions = async (args: {
   moduleId: string;
   subModuleId?: string;
 }): Promise<void> => {
+  if (
+    dependencies.value[args.index] &&
+    dependencies.value[args.index]?.subModuleVisibility &&
+    !dependencies.value[args.index]?.subModule
+  )
+    return;
   try {
     dependencies.value[args.index].loading = true;
 
@@ -85,21 +92,35 @@ const getTaskOptions = async (args: {
       error,
     });
   } finally {
-    dependencies.value[args.index].loading = false;
+    if (dependencies.value[args.index]) {
+      dependencies.value[args.index].loading = false;
+    }
   }
 };
 
+/**
+ * Asynchronously loads and processes task dependencies, project modules, and process dependencies.
+ *
+ * This function performs the following:
+ * - Sets the loading state to true.
+ * - Fetches project modules, process dependencies, and task dependencies.
+ * - Merges process and task dependencies, ensuring all dependencies are accounted for.
+ * - Updates the `dependencies` ref with deep-cloned merged dependencies.
+ * - Loads custom module options if there are custom dependencies present.
+ */
 const loadData = async (): Promise<void> => {
   try {
     loadingData.value = true;
 
+    // Fetch project modules
     projectModules.value = await getProjectModules();
 
+    // Fetch process dependencies and task dependencies
     processDependencies.value = await getProcessDependencies();
     taskDependencies.value = await getTaskDependencies();
 
-    // Create a new array based on processDependencies and taskDependencies
-    dependencies.value = processDependencies.value.map((process) => {
+    // Merge process and task dependencies
+    const mergedDependencies = processDependencies.value.map((process) => {
       // Find the corresponding task from taskDependencies based on process id
       const taskData = taskDependencies.value.find(
         (task) =>
@@ -107,62 +128,77 @@ const loadData = async (): Promise<void> => {
           task.module._id === process.module._id,
       );
 
-      // If taskData exists, assign the tasks to this process
-      return taskData
-        ? {
-            ...process,
-            task: taskData.task,
-            selectedOptions: taskData.task.map((task) => task._id),
-            subModuleVisibility: !!taskData.subModule,
-          }
-        : { ...process, subModuleVisibility: !!process.subModule };
+      if (taskData) {
+        // Find the current dependency in dependencies based on process id and module id
+        const currentDependency = dependencies.value?.find(
+          (dep) =>
+            dep.process._id === taskData.process._id &&
+            dep.module._id === taskData.module._id,
+        );
+
+        /*
+         * If the current dependency is found, use its options as task options
+         * Otherwise, create a new dependency with the task options and selected options
+         */
+        return {
+          ...process,
+          task: taskData.task,
+          options: currentDependency
+            ? currentDependency.options
+            : taskData.task.map((task) => ({
+                label: task.name,
+                value: task._id,
+              })),
+          selectedOptions: taskData.task.map((task) => task._id),
+          subModuleVisibility: !!taskData.subModule,
+        };
+      }
+      // If the task data is not found, return the process dependency
+      return { ...process, subModuleVisibility: !!process.subModule };
     });
 
     // Iterate through taskDependencies and add new processes that don't exist in processDependencies
     taskDependencies.value.forEach((task) => {
-      // Check if the task's process id exists in dependencies
-      const processExists = dependencies.value.some(
+      const processExists = mergedDependencies.some(
         (process) =>
           process.process._id === task.process._id &&
           process.module._id === task.module._id,
       );
 
-      // If it doesn't exist, add it to dependencies
       if (!processExists) {
-        dependencies.value.push({
-          processOptions: customProcessOptions.value,
+        // Find the current dependency in dependencies based on process id and module id
+        const currentDependency = dependencies.value?.find(
+          (dep) =>
+            dep.process._id === task.process._id &&
+            dep.module._id === task.module._id,
+        );
+
+        // Add a new process dependency with the task options and selected options
+        mergedDependencies.push({
           process: { _id: task.process?._id, name: task.process?.name },
+          processOptions: customProcessOptions.value,
           module: { _id: task.module?._id, name: task.module?.name },
           subModule: task.subModule
             ? { _id: task.subModule?._id, name: task.subModule?.name }
             : undefined,
+          subModuleVisibility: !!task.subModule,
           task: task.task,
-          options: [],
+          // If the current dependency is found, use its options as task options
+          options: currentDependency
+            ? currentDependency.options
+            : task.task.map((t) => ({ label: t.name, value: t._id })),
+          selectedOptions: task.task.map((t) => t._id),
           loading: false,
           custom: true,
-          key: 0,
         });
       }
     });
 
-    /*
-     * Loop through each dependency and get the task options for each dependency
-     * if the selectedOptions array is not empty
-     */
-    await Promise.all(
-      dependencies.value.map(async (dep, index) => {
-        // If the selectedOptions array is not empty, get the task options
-        if (dep.selectedOptions?.length) {
-          // Call the getTaskOptions function with the current index, processId, moduleId and subModuleId
-          await getTaskOptions({
-            index,
-            processId: dep.process._id,
-            moduleId: dep.module._id,
-            subModuleId: dep.subModule?._id,
-          });
-        }
-      }),
-    );
+    // Update the dependencies ref with the merged dependencies
+    dependencies.value = cloneDeep(mergedDependencies);
+
+    // Wait for Vue's DOM updates to finish
+    await nextTick();
   } catch (error) {
     console.error(error);
   } finally {
@@ -259,29 +295,19 @@ const getProjectModules = async (): Promise<ProjectModule[]> => {
   }
 };
 
-/**
- * Update task dependency based on the selected options.
- *
- * @returns {Promise<boolean>} Whether the update was successful or not.
- */
-const updateTaskDependency = async (depIndex: number): Promise<boolean> => {
-  /*
-   * We don't want to perform update if the data is still being loaded
-   * because the dependencies might not be up to date yet.
-   */
-  const dependency = dependencies.value[depIndex];
-  if (loadingData.value || !dependency.process || !dependency.module)
-    return false;
+const sendDependencyData = async (): Promise<boolean> => {
   try {
     const body = {
       data: dependencies.value.flatMap((item) =>
         item.selectedOptions
           ? item.selectedOptions.map((option) => {
-              const taskIndex = item.task.findIndex(
+              const taskIndex = item.task?.findIndex(
                 (task) => task._id === option,
               );
               const caption =
-                taskIndex !== -1 ? item.task[taskIndex].caption : undefined;
+                typeof taskIndex === 'number' && taskIndex !== -1
+                  ? item.task[taskIndex].caption
+                  : undefined;
               return {
                 task: option,
                 custom: item.custom,
@@ -296,6 +322,51 @@ const updateTaskDependency = async (depIndex: number): Promise<boolean> => {
       body,
     );
     if (data) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    toast.add({
+      message: 'Gagal mengirim data dependensi.',
+      error,
+    });
+    return false;
+  }
+};
+
+/**
+ * Remove custom dependency if the selected options is empty.
+ * @param {number} depIndex - Dependency index to be removed.
+ */
+const handleEmptyCustomDependency = (depIndex: number): void => {
+  const dependency = dependencies.value[depIndex];
+  if (dependency.custom && !dependency.selectedOptions?.length) {
+    dependencies.value.splice(depIndex, 1);
+  }
+};
+
+/**
+ * Update task dependency based on the selected options.
+ *
+ * @returns {Promise<boolean>} Whether the update was successful or not.
+ */
+const updateTaskDependency = async (depIndex: number): Promise<boolean> => {
+  /*
+   * We don't want to perform update if the data is still being loaded
+   * because the dependencies might not be up to date yet.
+   */
+  const dependency = dependencies.value[depIndex];
+  if (
+    loadingData.value ||
+    !dependency?.process ||
+    !dependency?.module ||
+    (dependency.subModuleVisibility && !dependency.subModule)
+  )
+    return false;
+  try {
+    handleEmptyCustomDependency(depIndex);
+    const isDataSent = await sendDependencyData();
+    if (isDataSent) {
       await loadData();
       return true;
     }
@@ -381,47 +452,29 @@ const showSubModuleByProcess = (depIndex: number): void => {
   }
 };
 
-const getModuleOptions = async (depIndex: number): Promise<void> => {
+const getCustomModuleOptions = async (depIndex: number): Promise<void> => {
   if (!projectId) return;
   try {
     const modules = await getProjectModules();
-    const currentProcess = dependencies.value[depIndex].process;
 
     dependencies.value[depIndex].moduleOptions = modules
       ? modules
           .filter((module) => {
-            /*
-             * Filter out modules that are not supposed to be used for the current process.
-             * The following modules are only used for their respective processes:
-             * - Komponen module is only used for Komponen Web/Mobile process.
-             * - Konsep module is only used for Pengonsepan process.
-             * - Other modules are used for other processes.
-             */
-            const isComponent =
-              [
-                'Komponen Web',
-                'Komponen Mobile',
-                'Slicing Komponen Web',
-                'Slicing Komponen Mobile',
-              ].includes(currentProcess.name) && module.name === 'Komponen';
-
-            const isConcept =
-              currentProcess.name === 'Pengonsepan' && module.name === 'Konsep';
-
-            const isOtherModule =
-              ![
-                'Komponen Web',
-                'Komponen Mobile',
-                'Slicing Komponen Web',
-                'Slicing Komponen Mobile',
-                'Pengonsepan',
-              ].includes(currentProcess.name) &&
-              !['Komponen', 'Konsep'].includes(module.name);
-
-            if (isComponent || isConcept || isOtherModule) {
-              return true;
-            }
-            return false;
+            const isDuplicateModule = dependencies.value.some(
+              (dep, i) =>
+                dep.process?._id === dependencies.value[depIndex].process._id &&
+                dep.module?._id === module._id &&
+                !dep.subModuleVisibility &&
+                i !== depIndex,
+            );
+            const isExcludedModule = ['Komponen', 'Konsep'].includes(
+              module.name,
+            );
+            const isCurrentTaskModule =
+              module._id === taskDetail.value.module._id;
+            return (
+              !isExcludedModule && !isCurrentTaskModule && !isDuplicateModule
+            );
           })
           .map((module) => ({
             label: module.name,
@@ -440,10 +493,10 @@ const getModuleOptions = async (depIndex: number): Promise<void> => {
   }
 };
 
-const getSubmoduleOptions = async (depIndex: number): Promise<void> => {
-  if (!projectId) return;
+const getCustomSubmoduleOptions = async (depIndex: number): Promise<void> => {
+  const currentModule = dependencies.value[depIndex].module;
+  if (!projectId || !currentModule) return;
   try {
-    const currentModule = dependencies.value[depIndex].module;
     const { data: response } = await SubModuleServices.getSubmoduleList(
       projectId,
       {
@@ -452,20 +505,34 @@ const getSubmoduleOptions = async (depIndex: number): Promise<void> => {
     );
     if (response.data) {
       const subModules = response.data.data;
-      dependencies.value[depIndex].subModuleOptions = subModules.map(
-        (subModule) => ({
+      /*
+       * Filter out submodules that are already used in other dependencies
+       * with the same process and module
+       */
+      const subModulesWithoutDuplicates = subModules.filter((subModule) => {
+        const similarSubModule = dependencies.value.find(
+          (dep, i) =>
+            dep.process?._id === dependencies.value[depIndex].process._id &&
+            dep.module?._id === dependencies.value[depIndex].module._id &&
+            dep.subModule?._id === subModule?._id &&
+            i !== depIndex,
+        );
+        return !similarSubModule;
+      });
+
+      // Map the filtered submodules to the correct format
+      dependencies.value[depIndex].subModuleOptions =
+        subModulesWithoutDuplicates.map((subModule) => ({
           label: subModule.name,
           value: {
             _id: subModule._id,
             name: subModule.name,
           },
-        }),
-      );
+        }));
     }
   } catch (error) {
     toast.add({
       message: 'Data sub modul gagal dimuat.',
-      severity: 'error',
       error,
     });
   }
@@ -473,31 +540,66 @@ const getSubmoduleOptions = async (depIndex: number): Promise<void> => {
 
 const onProcessChange = (depIndex: number): void => {
   showSubModuleByProcess(depIndex);
-  getModuleOptions(depIndex);
   resetField(depIndex, 'module');
   resetField(depIndex, 'subModule');
   resetField(depIndex, 'selectedOptions');
+  resetField(depIndex, 'task');
 };
 
 const onModuleChange = (depIndex: number): void => {
-  if (dependencies.value[depIndex].subModuleVisibility) {
-    getSubmoduleOptions(depIndex);
-  }
   resetField(depIndex, 'subModule');
   resetField(depIndex, 'selectedOptions');
+  resetField(depIndex, 'task');
+};
+
+const onSubModuleChange = async (depIndex: number): Promise<void> => {
+  try {
+    /*
+     * Set loadingData ref into true,
+     * To prevents triggering the updateTaskDependency method
+     */
+    loadingData.value = true;
+
+    resetField(depIndex, 'selectedOptions');
+    resetField(depIndex, 'task');
+
+    // Wait for Vue's DOM updates to finish
+    await nextTick();
+  } catch (error) {
+    console.error(error);
+  } finally {
+    loadingData.value = false;
+  }
 };
 
 const resetField = (
   depIndex: number,
-  field: 'module' | 'subModule' | 'selectedOptions',
+  field: 'module' | 'subModule' | 'selectedOptions' | 'task',
 ): void => {
   dependencies.value[depIndex][field] = undefined;
 };
 
+const removeCustomDependency = async (depIndex: number): Promise<void> => {
+  try {
+    if (dependencies.value[depIndex].custom) {
+      dependencies.value.splice(depIndex, 1);
+      const isDataSent = await sendDependencyData();
+      if (isDataSent) {
+        await loadData();
+      }
+    }
+  } catch (error) {
+    toast.add({
+      message: 'Task dependensi gagal dihapus.',
+      error,
+    });
+  }
+};
+
 watch(
   taskProcess,
-  (value) => {
-    if (value) {
+  (value, oldValue) => {
+    if (JSON.stringify(value) !== JSON.stringify(oldValue)) {
       loadData();
     }
   },
@@ -525,23 +627,13 @@ watch(
         <div class="flex gap-2">
           <div class="flex items-center gap-1">
             <span class="text-xs font-semibold">Proses: </span>
-            <span @click="dep.key++">click {{ dep.key }}</span>
             <Dropdown
-              :key="dep.key"
               v-if="dep.custom"
               v-model="dep.process"
               :initial-value="dep.process"
-              :options="[
-                {
-                  label: 'Diagram',
-                  value: {
-                    _id: '6706205a9bdcad72db25711c',
-                    name: 'Diagram',
-                  },
-                },
-              ]"
+              :options="customProcessOptions"
               @update:model-value="onProcessChange(index)"
-              class="!w-[140px]"
+              class="!w-[110px]"
               data-key="name"
               option-label="label"
               option-value="value"
@@ -549,17 +641,18 @@ watch(
               use-validator
             />
             <span v-else>{{ dep.process?.name }}</span>
-            <pre>{{ dep.process }}</pre>
-            <pre>{{ dep.processOptions }}</pre>
           </div>
           <div v-if="dep.process" class="flex items-center gap-1">
             <span class="text-xs font-semibold">Modul: </span>
             <Dropdown
               v-if="dep.custom"
               v-model="dep.module"
+              :initial-value="dep.module"
               :options="dep.moduleOptions"
+              @show="getCustomModuleOptions(index)"
               @update:model-value="onModuleChange(index)"
-              class="!w-[140px]"
+              class="!w-[110px]"
+              data-key="name"
               option-label="label"
               option-value="value"
               placeholder="Pilih modul"
@@ -572,16 +665,23 @@ watch(
             <Dropdown
               v-if="dep.custom"
               v-model="dep.subModule"
-              :options="dep.options"
-              class="!w-[140px]"
+              :initial-value="dep.subModule"
+              :options="dep.subModuleOptions"
+              @show="getCustomSubmoduleOptions(index)"
+              @update:model-value="onSubModuleChange(index)"
+              class="!w-[110px]"
+              data-key="name"
               option-label="label"
               option-value="value"
-              placeholder="Pilih task"
+              placeholder="Pilih sub modul"
               use-validator
             />
             <span v-else>{{ dep.subModule?.name }}</span>
           </div>
-          <div v-if="dep.module" class="flex items-center gap-1">
+          <div
+            v-if="dep.subModuleVisibility ? dep.subModule : dep.module"
+            class="flex items-center gap-1"
+          >
             <span class="text-xs font-semibold">Task: </span>
             <MultiSelect
               v-model="dep.selectedOptions"
@@ -597,13 +697,21 @@ watch(
                 })
               "
               @update:model-value="updateTaskDependency(index)"
-              class="w-[140px]"
+              class="!w-[110px]"
               option-label="label"
               option-value="value"
               placeholder="Pilih task"
               use-validator
             />
           </div>
+          <Button
+            v-if="dep.custom"
+            @click="removeCustomDependency(index)"
+            class="text-danger-500"
+            icon="close"
+            severity="danger"
+            text
+          />
         </div>
         <ul class="list-none pt-2">
           <li

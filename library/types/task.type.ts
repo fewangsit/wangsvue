@@ -45,7 +45,6 @@ export type TaskDependency = {
   moduleOptions?: DropdownOption[];
   subModuleOptions?: DropdownOption[];
   subModuleVisibility?: boolean;
-  key?: number;
 };
 
 export type TaskDependencyDetail = {
