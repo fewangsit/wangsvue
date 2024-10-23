@@ -262,7 +262,7 @@ export default {
       },
       // Danger Text Button
       {
-        'text-danger-500-500':
+        'text-danger-500':
           props.text && props.severity === 'danger' && !props.plain,
       },
       // Danger Outlined Button
