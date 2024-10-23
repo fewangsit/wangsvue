@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TaskLegendForm } from './Legend.vue';
+import { TaskLegend } from './Legend.vue';
 import Button from 'lib/components/button/Button.vue';
 
 const props = withDefaults(
@@ -7,7 +7,7 @@ const props = withDefaults(
     /**
      * The Task's Legend
      */
-    legend: TaskLegendForm;
+    legend: TaskLegend;
 
     /**
      * The Task's priority value
@@ -36,10 +36,12 @@ const props = withDefaults(
   >
     <span v-if="props.legend.process"> {{ props.legend.process.name }}. </span>
     <span v-if="props.legend.module"> {{ props.legend.module.name }}. </span>
-    <span v-if="props.legend.submodule">
-      {{ props.legend.submodule.name }}.
+    <span v-if="props.legend.subModule">
+      {{ props.legend.subModule.name }}.
     </span>
-    <span v-if="props.legend.title"> {{ props.legend.title }} </span>
+    <span v-if="props.legend.title ?? props.legend.name">
+      {{ props.legend.title ?? props.legend.name }}
+    </span>
     <Button
       v-if="props.priorityValue"
       :label="props.priorityValue.toString()"

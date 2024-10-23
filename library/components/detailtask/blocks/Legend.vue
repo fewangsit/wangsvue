@@ -49,8 +49,10 @@ export type TaskLegend = {
   process: Pick<ProjectProcess, '_id' | 'name' | 'team' | 'processPosition'>;
   module?: Pick<ProjectModule, '_id' | 'name'>;
   submodule?: Pick<ProjectSubModule, '_id' | 'name' | 'repository'>;
+  subModule?: Pick<ProjectSubModule, '_id' | 'name' | 'repository'>;
   repository?: string;
   title: string;
+  name?: string;
   priorityValue?: number;
 };
 

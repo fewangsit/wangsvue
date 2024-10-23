@@ -30,6 +30,9 @@ const TaskDependencyServices = {
   ): Promise<AxiosResponse> => {
     return API().put(`/${taskId}`, body);
   },
+  getChildTasks: (taskId: string): Promise<AxiosResponse> => {
+    return API().get(`/${taskId}/child-task`);
+  },
 };
 
 export default TaskDependencyServices;
