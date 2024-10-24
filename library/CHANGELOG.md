@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v1.5.17
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.16...v1.5.17)
+
+### 🚀 Enhancements
+
+- **Icon:** Add calculator icon ([269ca27](https://github.com/fewangsit/wangsvue/commit/269ca27))
+
+### 🏡 Chore
+
+- Build presets into system js format ([04b3de9](https://github.com/fewangsit/wangsvue/commit/04b3de9))
+- **presets:** Update version ([43d4a85](https://github.com/fewangsit/wangsvue/commit/43d4a85))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.16
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.15...v1.5.16)
