@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { formatTimeAgo } from '@vueuse/core';
 import Button from 'lib/components/button/Button.vue';
 import Editor from 'lib/components/editor/Editor.vue';
 import { EditorState, JSONContent } from 'lib/components/editor/Editor.vue.d';
@@ -10,6 +9,7 @@ import eventBus from 'lib/event-bus';
 import TaskServices from 'lib/services/task.service';
 import { TaskDescription, TaskDetail } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
+import { formatDateReadable } from 'lib/utils/date.util';
 import { computed, inject, onMounted, Ref, ref, toRaw, watch } from 'vue';
 
 const toast = useToast();
@@ -123,7 +123,7 @@ watch(taskDetail, async () => {
       </div>
       <div class="flex items-center gap-2">
         <span v-if="taskDescription?.updatedAt">
-          {{ formatTimeAgo(new Date(taskDescription.updatedAt)) }}
+          {{ formatDateReadable(new Date(taskDescription.updatedAt), 86400) }}
         </span>
         <UserName
           v-if="taskDescription?.updatedBy"
