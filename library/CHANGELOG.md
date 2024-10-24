@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v1.5.16
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.15...v1.5.16)
+
+### 🚀 Enhancements
+
+- Add icon ([a1be067](https://github.com/fewangsit/wangsvue/commit/a1be067))
+- Add UserGroup component ([9dd0af2](https://github.com/fewangsit/wangsvue/commit/9dd0af2))
+
+### 🩹 Fixes
+
+- **Button:** Invalid style for danger text button ([e2e09a2](https://github.com/fewangsit/wangsvue/commit/e2e09a2))
+
+### 🎨 Styles
+
+- **UserGroup:** Move classes to preset ([a0ab234](https://github.com/fewangsit/wangsvue/commit/a0ab234))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.15
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.14...v1.5.15)
