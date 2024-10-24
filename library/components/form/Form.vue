@@ -26,21 +26,8 @@ defineSlots<FormSlots>();
 
 onMounted(() => {
   if (fieldsWrapper.value) {
-    const chilren = fieldsWrapper.value.children;
-    const childCount = fieldsWrapper.value.childElementCount;
     const colCount = props.columnPerRow ?? 1;
-
     fieldsWrapper.value.style.gridTemplateColumns = `repeat(${colCount}, minmax(0, 1fr))`;
-
-    let [rowPos, colPos] = [1, 1];
-    for (const i in Array.from({ length: childCount })) {
-      chilren[i].setAttribute('style', `grid-area: ${rowPos}/${colPos}`);
-
-      if (++colPos > colCount) {
-        colPos = 1;
-        rowPos++;
-      }
-    }
 
     setOuterFieldsWrapperHeight();
   }
@@ -146,8 +133,8 @@ defineExpose({
       <div v-bind="Preset?.['action-buttons']">
         <div v-bind="Preset?.['button-wrapper']">
           <Button
-            v-bind="Preset?.['cancel-button']"
             v-if="props.buttonsTemplate?.includes('cancel')"
+            v-bind="Preset?.['cancel-button']"
             :label="cancelBtnLabel"
             @click="$emit('cancel')"
             severity="secondary"
@@ -155,16 +142,16 @@ defineExpose({
             type="button"
           />
           <Button
-            v-bind="Preset?.['clear-button']"
             v-if="props.buttonsTemplate?.includes('clear')"
+            v-bind="Preset?.['clear-button']"
             :label="clearBtnLabel"
             @click="clearField"
             text
             type="button"
           />
           <Button
-            v-bind="Preset?.['submit-button']"
             v-if="props.buttonsTemplate?.includes('submit')"
+            v-bind="Preset?.['submit-button']"
             :label="submitBtnLabel"
             @click="onSubmitClicked"
             severity="success"
