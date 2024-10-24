@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import Icon from 'lib/components/icon/Icon.vue';
-import Image from 'lib/components/image/Image.vue';
 import UserName from 'lib/components/username/UserName.vue';
 import {
   AttachmentItemProps,
@@ -16,6 +14,7 @@ import { UpdateTaskAttachmentCaptionDTO } from 'lib/dto/taskAttachment.dto';
 import { formatDateReadable } from 'lib/utils/date.util';
 import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
 import { useToast } from 'lib/utils';
+import TaskAttachmentThumbnail from './TaskAttachmentThumbnail.vue';
 
 const toast = useToast();
 
@@ -88,18 +87,7 @@ const downloadFile = async (url: string, fileName: string): Promise<void> => {
   <div class="flex flex-col gap-2">
     <div class="flex justify-between">
       <div class="flex gap-2">
-        <Image
-          v-if="item.type === 'image'"
-          :src="item.url"
-          class="w-[70px] h-[70px] object-cover"
-        />
-        <div
-          v-else
-          class="!w-[70px] !min-w-[70px] h-[70px] rounded-lg bg-primary-100 flex justify-center items-center"
-        >
-          <Icon class="text-sm text-general-300" icon="attachment-2" />
-        </div>
-
+        <TaskAttachmentThumbnail :item="item" />
         <div class="max-w-[430px] flex flex-col gap-1">
           <a
             v-if="item.type === 'link'"
@@ -107,7 +95,7 @@ const downloadFile = async (url: string, fileName: string): Promise<void> => {
             class="text-xs text-link !text-wrap wrap-text"
             target="_blank"
           >
-            {{ item.displayName ?? item.url }}
+            {{ item.displayName?.length ? item.displayName : item.url }}
           </a>
           <span v-else class="text-xs font-semibold">
             {{ item.displayName }}

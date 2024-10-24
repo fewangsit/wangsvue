@@ -23,33 +23,40 @@ onMounted(async () => {
 const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
 const taskId = inject<Ref<string>>('taskId');
 
-const editor = ref<typeof Editor>();
-
 const taskDescription = ref<TaskDescription>();
 
 const editorState = ref<EditorState>('readonly');
 const isCurrentlyFocused = ref<boolean>(false);
 
-const content = ref<JSONContent>();
+const content = ref();
 const initialContent = ref<JSONContent>();
 
-const isContentEmpty = computed<boolean>(() => {
-  return !(content.value && content.value.content[0].content);
+const insideContent = computed(() => content.value?.content ?? []);
+
+const anyContent = computed<boolean>(() => {
+  if (insideContent.value.length) {
+    const hasContent = Object.hasOwn(insideContent.value[0], 'content');
+    return hasContent;
+  }
+  return false;
 });
+
+const bindEditorState = computed(() =>
+  anyContent.value ? editorState.value : 'editable',
+);
 
 const getDescription = async (): Promise<void> => {
   try {
     const { data } = await TaskServices.getTaskDescription(taskId.value);
 
-    if (data.data.description) {
-      content.value = JSON.parse(data.data.description);
+    if (data?.data?.description) {
+      content.value = JSON.parse(data?.data?.description);
 
       taskDescription.value = data.data;
     }
   } catch (error) {
-    console.error(error);
     toast.add({
-      message: 'Data Task Description gagal diambil.',
+      message: 'Data Task Description gagal dimuat.',
       severity: 'error',
       error,
     });
@@ -126,18 +133,27 @@ watch(taskDetail, async () => {
       </div>
     </div>
     <div class="pl-8 flex flex-col gap-2">
-      <Editor
-        ref="editor"
-        v-model="content"
-        :class="[
-          {
-            'cursor-pointer': editorState === 'readonly',
-          },
-        ]"
-        :editor-state="!isContentEmpty ? editorState : 'editable'"
-        @focus="handleOnFocus"
-        placeholder="Tulis deskripsi"
-      />
+      <template v-if="bindEditorState === 'readonly'">
+        <div @click="handleOnFocus" class="cursor-pointer">
+          <Editor
+            v-model="content"
+            @focus="handleOnFocus"
+            border-less
+            editor-state="readonly"
+            placeholder="Tulis deskripsi"
+          />
+        </div>
+      </template>
+      <template v-else>
+        <div class="">
+          <Editor
+            v-model="content"
+            @focus="handleOnFocus"
+            editor-state="editable"
+            placeholder="Tulis deskripsi"
+          />
+        </div>
+      </template>
       <div v-if="isCurrentlyFocused" class="flex items-center gap-1">
         <Button @click="handleSave" label="Simpan" severity="success" />
         <Button @click="handleCancel" label="Batal" severity="secondary" text />

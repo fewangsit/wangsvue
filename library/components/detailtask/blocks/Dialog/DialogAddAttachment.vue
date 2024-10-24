@@ -9,7 +9,6 @@ import Form from 'lib/components/form/Form.vue';
 import { FormPayload } from 'lib/components/form/Form.vue.d';
 import InputText from 'lib/components/inputtext/InputText.vue';
 import { FileType } from '../TaskAttachmentItem.vue.d';
-import Image from 'lib/components/image/Image.vue';
 import TaskAttachmentServices from 'lib/services/taskAttachment.service';
 import {
   AddTaskAttachmentFileDTO,
@@ -17,6 +16,7 @@ import {
 } from 'lib/dto/taskAttachment.dto';
 import axios, { AxiosProgressEvent } from 'axios';
 import { useToast } from 'lib/utils';
+import TaskAttachmentThumbnail from '../TaskAttachmentThumbnail.vue';
 
 type FormattedFile = {
   name: string;
@@ -372,12 +372,10 @@ const onHideDialog = (): void => {
               v-for="(file, index) in files"
               class="h-[46px] flex justify-center items-center p-2 gap-2 border border-primary-100 rounded-lg"
             >
-              <Image
-                v-if="file.imgPreviewURL"
-                :src="file.imgPreviewURL"
-                class="w-[30px] h-[30px] object-cover"
+              <TaskAttachmentThumbnail
+                :item="{ type: file.fileType, url: file.imgPreviewURL }"
+                small
               />
-              <Image v-else class="w-[30px]" />
               <div class="w-full flex flex-col gap-1">
                 <div class="w-full flex justify-between items-center">
                   <span>{{ file.name }}</span>

@@ -182,6 +182,7 @@ export type WangsIcons =
   | 'bug-2-line'
   | 'run-line'
   | 'user-unfollow-line'
+  | 'archive-line'
   | 'emotion-happy-line';
 
 export interface IconProps {
