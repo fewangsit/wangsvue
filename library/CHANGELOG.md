@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.15
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.14...v1.5.15)
+
+### 💅 Refactors
+
+- **Form:** Remove grid-area since Form doesn't need to configure grid-area ([dd63e59](https://github.com/fewangsit/wangsvue/commit/dd63e59))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.14
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.13...v1.5.14)
