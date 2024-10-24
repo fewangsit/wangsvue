@@ -31,6 +31,7 @@ export type WangsIcons =
   | 'borrow'
   | 'building'
   | 'building-4'
+  | 'calculator'
   | 'calendar'
   | 'calendar-todo'
   | 'chat-check'
