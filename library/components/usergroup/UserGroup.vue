@@ -20,27 +20,21 @@ const totalRemainingUser = computed<number>(
 </script>
 
 <template>
-  <span
-    class="flex items-center gap-1 ml-4"
-    data-wv-name="usergroup"
-    data-wv-section="root"
-  >
-    <AvatarGroup>
-      <template :key="user" v-for="user in showedUsers">
-        <Avatar
-          :image="
-            getImageURL(
-              getNestedProperyValue(user ?? {}, profilePictureField) as string,
-            )
-          "
-          shape="circle"
-        />
-      </template>
+  <AvatarGroup>
+    <template :key="user" v-for="user in showedUsers">
       <Avatar
-        v-if="totalRemainingUser"
-        :label="`+${totalRemainingUser}`"
+        :image="
+          getImageURL(
+            getNestedProperyValue(user ?? {}, profilePictureField) as string,
+          )
+        "
         shape="circle"
       />
-    </AvatarGroup>
-  </span>
+    </template>
+    <Avatar
+      v-if="totalRemainingUser"
+      :label="`+${totalRemainingUser}`"
+      shape="circle"
+    />
+  </AvatarGroup>
 </template>
