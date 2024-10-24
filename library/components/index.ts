@@ -52,6 +52,7 @@ import ProgressBar from './progressbar/ProgressBar.vue';
 import InputBadge from './inputbadge/InputBadge.vue';
 import InputCurrency from './inputcurrency/InputCurrency.vue';
 import FileUpload from './fileupload/FileUpload.vue';
+import UserGroup from './usergroup/UserGroup.vue';
 
 export {
   Badge,
@@ -108,4 +109,5 @@ export {
   ProgressBar,
   InputCurrency,
   FileUpload,
+  UserGroup,
 };
