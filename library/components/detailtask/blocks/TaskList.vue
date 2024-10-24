@@ -110,7 +110,7 @@ watch(
         v-for="(task, index) in tasks"
         class="pt-1 pb-1 first:!pt-0 first:!pb-1 last:!pt-1 last:!pb-0"
       >
-        <LegendList :legend="task" :priority-value="task.priorityValue" />
+        <LegendList :legend="task" :priority-value="task.priority" />
       </li>
     </ul>
   </div>

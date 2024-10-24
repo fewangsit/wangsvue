@@ -51,9 +51,10 @@ export type TaskLegend = {
   submodule?: Pick<ProjectSubModule, '_id' | 'name' | 'repository'>;
   subModule?: Pick<ProjectSubModule, '_id' | 'name' | 'repository'>;
   repository?: string;
-  title: string;
+  title?: string;
   name?: string;
   priorityValue?: number;
+  priority?: number;
 };
 
 export type TaskLegendForm = Partial<Omit<TaskLegend, 'priorityValue'>>;
