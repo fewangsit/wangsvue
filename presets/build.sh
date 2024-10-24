@@ -5,6 +5,7 @@ rm -rf dist
 
 # Create type declaration
 tsc ./index.ts --declaration --allowJs --outDir dist
+npx rollup -c
 
 # Preset names array
 presetNames=("wangsvue")
