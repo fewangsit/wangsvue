@@ -131,6 +131,7 @@ export type WangsIcons =
   | 'search'
   | 'search-line'
   | 'search-eye'
+  | 'send-plane-line'
   | 'settings'
   | 'shopping-cart-2'
   | 'smartphone'

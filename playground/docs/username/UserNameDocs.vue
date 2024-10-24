@@ -2,6 +2,7 @@
 import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
 import UserName from 'lib/components/username/UserName.vue';
+import UserGroup from 'lib/components/usergroup/UserGroup.vue';
 import { ref } from 'vue';
 
 const user = ref({
@@ -48,6 +49,20 @@ const testUser = {
           />
         </div>
       </div>
+      <Card class="!px-0">
+        <template #header>
+          <DocTitle name="UserGroup" />
+        </template>
+        <template #content>
+          <div>
+            <UserGroup
+              :limit="2"
+              :users="[testUser, testUser, testUser]"
+              profile-picture-field="photo"
+            />
+          </div>
+        </template>
+      </Card>
     </template>
   </Card>
 </template>

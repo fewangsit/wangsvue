@@ -15,7 +15,7 @@ export default {
 
       // Sizes
       {
-        'h-8 w-8': props.size == null || props.size == 'normal',
+        'h-[30px] w-[30px]': props.size == null || props.size == 'normal',
         'w-12 h-12': props.size == 'large',
         'w-16 h-16': props.size == 'xlarge',
       },
@@ -26,17 +26,17 @@ export default {
         'rounded-lg': props.shape == 'square',
         'rounded-full': props.shape == 'circle',
       },
-      { 'border-2': parent.instance.$style?.name == 'avatargroup' },
+      { 'border-[0.5px]': parent.instance.$style?.name == 'avatargroup' },
 
       // Colors
-      'bg-surface-100',
+      'bg-general-300',
       {
-        'border-white':
-          parent.instance.$style?.name == 'avatargroup',
+        'border-gray-100': parent.instance.$style?.name == 'avatargroup',
       },
+      'text-white',
     ],
   }),
   image: {
-    class: 'h-full w-full',
+    class: 'h-full w-full rounded-full',
   },
 };
