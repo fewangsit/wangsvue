@@ -1,4 +1,28 @@
-import { isEmpty } from 'lodash';
+const isEmptyObject = (obj) => {
+  if (!obj) return true;
+
+  const keys = Object.keys(obj);
+  if (!keys.length) return true; // Empty at the top level
+
+  return keys.every((key) => {
+    const value = obj[key];
+
+    if (typeof value === 'object') {
+      if (Array.isArray(value)) {
+        return (
+          !value.length ||
+          value.every((val) =>
+            typeof val === 'object' ? isEmptyObject(val) : val == null,
+          )
+        );
+      }
+
+      return isEmptyObject(value);
+    }
+
+    return value == null;
+  });
+};
 
 export default {
   root: ({ props }) => ({
@@ -32,7 +56,7 @@ export default {
   markerArrow: (item) => ({
     'class': [
       'w-4 h-4 invisible transition-transform duration-200 ease-in-out text-grayscale-900',
-      { '!visible': item.detail && !isEmpty(item.detail) },
+      { '!visible': item.detail && !isEmptyObject(item.detail) },
       { 'rotate-180': item.showDetail },
     ],
     'data-wv-section': 'markerArrow',

@@ -1,6 +1,45 @@
 # Changelog
 
 
+## v1.5.17
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.16...v1.5.17)
+
+### 🚀 Enhancements
+
+- **Icon:** Add calculator icon ([269ca27](https://github.com/fewangsit/wangsvue/commit/269ca27))
+
+### 🏡 Chore
+
+- Build presets into system js format ([04b3de9](https://github.com/fewangsit/wangsvue/commit/04b3de9))
+- **presets:** Update version ([43d4a85](https://github.com/fewangsit/wangsvue/commit/43d4a85))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.16
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.15...v1.5.16)
+
+### 🚀 Enhancements
+
+- Add icon ([a1be067](https://github.com/fewangsit/wangsvue/commit/a1be067))
+- Add UserGroup component ([9dd0af2](https://github.com/fewangsit/wangsvue/commit/9dd0af2))
+
+### 🩹 Fixes
+
+- **Button:** Invalid style for danger text button ([e2e09a2](https://github.com/fewangsit/wangsvue/commit/e2e09a2))
+
+### 🎨 Styles
+
+- **UserGroup:** Move classes to preset ([a0ab234](https://github.com/fewangsit/wangsvue/commit/a0ab234))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.15
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.14...v1.5.15)
