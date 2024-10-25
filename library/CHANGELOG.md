@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v1.5.18
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.17...v1.5.18)
+
+### 🚀 Enhancements
+
+- **MultiRow in DataTable:** Add preset multirow ([63c84af](https://github.com/fewangsit/wangsvue/commit/63c84af))
+- **Preset:** Add class preset for multirow in datatable preset ([fa15d4c](https://github.com/fewangsit/wangsvue/commit/fa15d4c))
+
+### 🏡 Chore
+
+- **presets:** Update version ([a5bd671](https://github.com/fewangsit/wangsvue/commit/a5bd671))
+- **presets:** Update version ([023d596](https://github.com/fewangsit/wangsvue/commit/023d596))
+- **presets:** Update version ([b0800dd](https://github.com/fewangsit/wangsvue/commit/b0800dd))
+- **presets:** Update version ([d214373](https://github.com/fewangsit/wangsvue/commit/d214373))
+- **presets:** Update version ([b201fff](https://github.com/fewangsit/wangsvue/commit/b201fff))
+- **Presets:** Remove rollup build step ([6004124](https://github.com/fewangsit/wangsvue/commit/6004124))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.17
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.16...v1.5.17)
