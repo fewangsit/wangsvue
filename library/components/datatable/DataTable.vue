@@ -45,6 +45,7 @@ import CustomColumn from '../customcolumn/CustomColumn.vue';
 import CustomColumnInstance from '../customcolumn/CustomColumn.vue.d';
 import useLoadingStore from '../loading/store/loading.store';
 import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
+import MultiRow from './MultiRow.vue';
 
 type DragableRow = Data & { draggable?: boolean; order?: number };
 
@@ -991,7 +992,10 @@ const listenUpdateTableEvent = (): void => {
                       ? visibleChildTableColumns
                       : visibleColumns"
                     :class="[
-                      { '!py-0': col.editable },
+                      {
+                        '!py-0': col.editable,
+                        '!px-0': col.preset?.type === 'multirow',
+                      },
                       typeof col.bodyClass === 'function'
                         ? col.bodyClass(item)
                         : col.bodyClass,
@@ -1066,6 +1070,10 @@ const listenUpdateTableEvent = (): void => {
                         actionable
                         v-bind="col.preset?.confirmDialogProps"
                       />
+                    </template>
+
+                    <template v-else-if="col.preset?.type">
+                      <MultiRow :values="col.preset?.fieldValues(item)" />
                     </template>
 
                     <template v-else-if="col.editable">

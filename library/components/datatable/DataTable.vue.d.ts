@@ -1,7 +1,7 @@
-import { Component } from 'vue';
+import { DialogConfirmProps } from 'lib/components/dialogconfirm/DialogConfirm.vue.d';
 import { MenuItem } from 'lib/components/menuitem';
 import { ClassComponent, HintedString } from 'lib/components/ts-helpers';
-import { DialogConfirmProps } from 'lib/components/dialogconfirm/DialogConfirm.vue.d';
+import { Component } from 'vue';
 
 export type ChildGroup = {
   groupHeader: string;
@@ -196,7 +196,12 @@ export interface ColumnTogglePreset {
   onConfirm?: (state: boolean, data: Data, revertFunction: () => void) => void;
 }
 
-export type ColumnPreset = ColumnTogglePreset;
+export interface ColumnMultiRowPreset {
+  type: 'multirow';
+  fieldValues?: (data: any) => string[];
+}
+
+export type ColumnPreset = ColumnTogglePreset | ColumnMultiRowPreset;
 
 export interface TableColumn {
   header?: string;
