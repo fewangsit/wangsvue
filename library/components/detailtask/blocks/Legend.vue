@@ -17,7 +17,7 @@ import ProjectProcessServices from 'lib/services/projectProcess.service';
 import { useToast } from 'lib/utils';
 import ModuleServices from 'lib/services/module.service';
 import SubModuleServices from 'lib/services/submodule.service';
-import DialogNilaiPrioritas from './Dialog/DialogNilaiPrioritas.vue';
+import DialogPriorityValue from './Dialog/DialogPriorityValue.vue';
 import TaskServices from 'lib/services/task.service';
 import { CreateTaskDTO, EditTaskDTO } from 'lib/dto/task.dto';
 import { ProjectProcess } from 'lib/types/projectProcess.type';
@@ -518,7 +518,7 @@ watch(isTitleInputDisabled, (value) => {
 
 <template>
   <div class="flex flex-col gap-6 mb-3" data-wv-section="detailtask-legend">
-    <DialogNilaiPrioritas
+    <DialogPriorityValue
       v-model:visible="showDialogNilaiPrioritas"
       :legend="legendForm as TaskLegend"
       :tasks="[

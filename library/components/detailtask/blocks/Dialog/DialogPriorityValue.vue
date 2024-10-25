@@ -1,60 +1,59 @@
 <script setup lang="ts">
-import { inject, shallowRef, watch } from 'vue';
+import { inject, Ref, ref, watch } from 'vue';
 
 import InputNumber from 'lib/components/inputnumber/InputNumber.vue';
 import Button from 'lib/components/button/Button.vue';
 import Dialog from 'lib/components/dialog/Dialog.vue';
-import { TaskLegend } from '../Legend.vue';
 import ValidatorMessage from 'lib/components/validatormessage/ValidatorMessage.vue';
 import { useToast } from 'lib/utils';
 import useLoadingStore from 'lib/components/loading/store/loading.store';
-import LegendList from '../LegendList.vue';
 import TaskList from '../TaskList.vue';
+import { EditTaskDTO } from 'lib/dto/task.dto';
+import TaskServices from 'lib/services/task.service';
+import eventBus from 'lib/event-bus';
 
 const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
+const taskId = inject<Ref<string>>('taskId');
 
 const { loading, setLoading } = useLoadingStore();
 const toast = useToast();
 
 const visible = defineModel<boolean>('visible', { required: true });
 
-const props = defineProps<{
-  /**
-   * The Task's Legend
-   */
-  legend: TaskLegend;
+const priorityValue = ref<number>();
+const priorityValueMessage = ref<string>();
+const priorityValueInvalid = ref<boolean>(false);
 
-  /**
-   * The Task's list
-   */
-  tasks: TaskLegend[];
-}>();
-
-const priorityValue = shallowRef<number>();
-const priorityValueMessage = shallowRef<string>();
-const priorityValueInvalid = shallowRef<boolean>(false);
-
-// TODO: Handle Nilai Prioritas Submit
 const handleSubmit = async (): Promise<void> => {
   try {
     setLoading(true);
+    const body: EditTaskDTO = {
+      priority: priorityValue.value,
+    };
 
-    toast.add({
-      message: 'Nilai prioritas telah disimpan.',
-      severity: 'success',
-    });
-  } catch (error) {
-    if (error instanceof Error) {
-      // TODO: Adjust error message from backend later.
-      if (error.message === 'Priority value taken') {
-        priorityValueMessage.value = 'Nilai prioritas sudah ada';
-        priorityValueInvalid.value = true;
-      }
+    const { data } = await TaskServices.putEditTask(taskId.value, body);
+
+    if (data) {
+      toast.add({
+        message: 'Nilai prioritas telah disimpan.',
+        severity: 'success',
+      });
+
+      eventBus.emit('detail-task:update', { taskId: taskId.value });
+
+      visible.value = false;
     }
+  } catch (error) {
+    /*
+     * TODO: Adjust error message from backend later.
+     * if (error.message === 'Priority value taken') {
+     *   priorityValueMessage.value = 'Nilai prioritas sudah ada';
+     *   priorityValueInvalid.value = true;
+     * }
+     */
 
     toast.add({
       message: 'Nilai prioritas gagal disimpan.',
-      severity: 'error',
       error,
     });
   } finally {
@@ -79,7 +78,7 @@ watch(priorityValue, () => {
 
           // Customs
           '!gap-0',
-          '!w-[600px]',
+          '!w-[500px]',
         ],
         'data-wv-name': 'dialog-nilai-prioritas',
       }),
@@ -116,9 +115,8 @@ watch(priorityValue, () => {
       </div>
     </template>
     <template #default>
-      <LegendList :legend="props.legend" bold />
       <div class="flex items-start gap-3">
-        <div>
+        <div class="w-full">
           <InputNumber
             v-model="priorityValue"
             :invalid="priorityValueInvalid"
@@ -126,12 +124,10 @@ watch(priorityValue, () => {
             :max-digit="4"
             :min="0"
             :value="priorityValue"
-            class="!w-[160px]"
-            input-number-class="[&_input]:!text-center"
+            class="!w-full"
             label="Tambah Nilai Prioritas"
             mandatory
             placeholder=""
-            show-buttons
             use-validator
           />
           <ValidatorMessage
@@ -149,7 +145,7 @@ watch(priorityValue, () => {
           />
         </div>
       </div>
-      <TaskList :tasks="props.tasks" type="parent" />
+      <TaskList />
     </template>
   </Dialog>
 </template>

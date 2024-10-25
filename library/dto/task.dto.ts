@@ -42,6 +42,7 @@ export interface EditTaskDTO {
   team?: string[];
   duration?: number;
   startDate?: string | Date;
+  priority?: number;
 }
 
 export interface EditDescriptionTaskDTO {
