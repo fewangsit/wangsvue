@@ -1135,7 +1135,11 @@ const listenUpdateTableEvent = (): void => {
 
                   <td
                     ref="rowSingleActionCell"
-                    v-if="useOption || customColumn"
+                    v-if="
+                      (() =>
+                        ((useOption || customColumn) && !item.childRow) ||
+                        (item.childRow && childTableProps?.useOption))()
+                    "
                     v-bind="
                       Preset?.rowsingleactioncell({
                         props,
@@ -1147,7 +1151,10 @@ const listenUpdateTableEvent = (): void => {
                     :class="Preset.bodycell.class"
                     :style="`right: ${rightDistanceFrozenColumn}px`"
                   >
-                    <div v-if="useOption" v-bind="Preset.singleactionwrapper">
+                    <div
+                      v-if="useOption || childTableProps?.useOption"
+                      v-bind="Preset.singleactionwrapper"
+                    >
                       <Button
                         :id="'button-action-' + item[props.dataKey]"
                         v-bind="Preset.singleactionbutton({ props })"
