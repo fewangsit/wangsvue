@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.5.19
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.18...v1.5.19)
+
+### 🚀 Enhancements
+
+- **DataTable:** Hide single action when childTableProps.usePOption is false ([b57f0bb](https://github.com/fewangsit/wangsvue/commit/b57f0bb))
+
+### 🏡 Chore
+
+- **presets:** Update version ([8292f6f](https://github.com/fewangsit/wangsvue/commit/8292f6f))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.18
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.17...v1.5.18)
