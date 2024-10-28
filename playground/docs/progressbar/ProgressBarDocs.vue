@@ -12,9 +12,22 @@ import Card from '../../../library/components/card/Card.vue';
 
     <template #content>
       <span>Determinate</span>
-      <ProgressBar mode="determinate" value="10" />
-      <ProgressBar mode="determinate" value="10" value-position="left-side" />
-      <ProgressBar mode="determinate" value="10" value-position="inside" />
+      <ProgressBar :value="0" mode="determinate" />
+      <ProgressBar :value="10" mode="determinate" value-position="left-side" />
+      <ProgressBar
+        :value="10"
+        mode="determinate"
+        severity="danger"
+        value-position="left-side"
+      />
+      <ProgressBar
+        :value="100"
+        mode="determinate"
+        severity="success"
+        value-position="left-side"
+      />
+
+      <ProgressBar :value="100" mode="determinate" value-position="inside" />
 
       <span class="mt-2">Indeterminate</span>
       <ProgressBar mode="indeterminate" />
