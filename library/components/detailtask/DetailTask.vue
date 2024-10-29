@@ -17,6 +17,7 @@ import { DetailTaskEmits, DetailTaskProps } from './DetailTask.vue.d';
 import { MenuItem } from '../menuitem';
 import TabMenu from '../tabmenu/TabMenu.vue';
 import InfoTaskTab from './blocks/Tabs/InfoTaskTab.vue';
+import ReviewTab from './blocks/Tabs/ReviewTab.vue';
 import { TaskDetail } from 'lib/types/task.type';
 import eventBus from 'lib/event-bus';
 import useLoadingStore from '../loading/store/loading.store';
@@ -109,7 +110,7 @@ const taskMenu = computed<TaskMenu[]>(() => {
     {
       label: 'Review',
       disabled: isNewTask.value,
-      component: InfoTaskTab,
+      component: ReviewTab,
     },
     {
       label: 'Event Log',

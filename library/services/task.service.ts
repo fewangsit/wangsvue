@@ -62,6 +62,10 @@ const TaskServices = {
     const params = { id: JSON.stringify([taskId]) };
     return API({ params }).delete('/delete');
   },
+
+  getTaskReview: (taskId: string): Promise<AxiosResponse> => {
+    return API().get(`/${taskId}/review`);
+  },
 };
 
 export default TaskServices;
