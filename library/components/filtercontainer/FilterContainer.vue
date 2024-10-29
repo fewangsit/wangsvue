@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useForm } from 'vee-validate';
 import { onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue';
 import Button from '../button/Button.vue';
 import {
@@ -8,12 +9,12 @@ import {
   LoadingFilters,
   MultiSelectFilterField,
 } from './FilterContainer.vue.d';
-import { useForm } from 'vee-validate';
 
-import InputRangeNumber from '../inputrangenumber/InputRangeNumber.vue';
-import MultiSelect from '../multiselect/MultiSelect.vue';
 import eventBus, { Events } from 'lib/event-bus';
 import Calendar from '../calendar/Calendar.vue';
+import Dropdown from '../dropdown/Dropdown.vue';
+import InputRangeNumber from '../inputrangenumber/InputRangeNumber.vue';
+import MultiSelect from '../multiselect/MultiSelect.vue';
 import applyFilter from './helpers/applyFilter.helper';
 
 const props = withDefaults(defineProps<FilterContainerProps>(), {
@@ -126,6 +127,19 @@ defineOptions({
       />
       <MultiSelect
         v-else-if="field.type == 'multiselect'"
+        v-bind="field"
+        :field-name="field.field"
+        :loading="loading[field.field]"
+        :mandatory="false"
+        :options="filterOption[field.field]"
+        :show-optional-text="false"
+        @show="getOptions(field.fetchOptionFn, field.field)"
+        option-label="label"
+        option-value="value"
+        use-validator
+      />
+      <Dropdown
+        v-else-if="field.type == 'dropdown'"
         v-bind="field"
         :field-name="field.field"
         :loading="loading[field.field]"

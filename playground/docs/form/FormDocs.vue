@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import Card from 'lib/components/card/Card.vue';
-import DocTitle from '../DocTitle.vue';
-import Form from 'lib/components/form/Form.vue';
 import Button from 'lib/components/button/Button.vue';
+import Card from 'lib/components/card/Card.vue';
+import Form from 'lib/components/form/Form.vue';
 import { FormValue } from 'lib/components/form/Form.vue.d';
-import { ref } from 'vue';
 import InputText from 'lib/components/inputtext/InputText.vue';
+import { ref } from 'vue';
+import DocTitle from '../DocTitle.vue';
 
 const formValues = ref<(FormValue | null)[]>([null, null, null, null]);
 const showResult = ref<boolean[]>([]);
+const first = ref<string>();
 
 const clear = (): void => alert('Field Dibersihkan!');
 
@@ -42,6 +43,7 @@ const apply = (
         >
           <template #fields>
             <InputText
+              v-model="first"
               :field-name="`username${[index]}`"
               :validator-message="{
                 exceed: 'Max char 30',
@@ -53,6 +55,7 @@ const apply = (
               use-validator
             />
             <InputText
+              v-if="first"
               :field-name="`firstname${[index]}`"
               :validator-message="{
                 exceed: 'Max char 30',

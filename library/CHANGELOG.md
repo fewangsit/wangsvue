@@ -1,6 +1,151 @@
 # Changelog
 
 
+## v1.5.19
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.18...v1.5.19)
+
+### 🚀 Enhancements
+
+- **DataTable:** Hide single action when childTableProps.usePOption is false ([b57f0bb](https://github.com/fewangsit/wangsvue/commit/b57f0bb))
+
+### 🏡 Chore
+
+- **presets:** Update version ([8292f6f](https://github.com/fewangsit/wangsvue/commit/8292f6f))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.18
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.17...v1.5.18)
+
+### 🚀 Enhancements
+
+- **MultiRow in DataTable:** Add preset multirow ([63c84af](https://github.com/fewangsit/wangsvue/commit/63c84af))
+- **Preset:** Add class preset for multirow in datatable preset ([fa15d4c](https://github.com/fewangsit/wangsvue/commit/fa15d4c))
+
+### 🏡 Chore
+
+- **presets:** Update version ([a5bd671](https://github.com/fewangsit/wangsvue/commit/a5bd671))
+- **presets:** Update version ([023d596](https://github.com/fewangsit/wangsvue/commit/023d596))
+- **presets:** Update version ([b0800dd](https://github.com/fewangsit/wangsvue/commit/b0800dd))
+- **presets:** Update version ([d214373](https://github.com/fewangsit/wangsvue/commit/d214373))
+- **presets:** Update version ([b201fff](https://github.com/fewangsit/wangsvue/commit/b201fff))
+- **Presets:** Remove rollup build step ([6004124](https://github.com/fewangsit/wangsvue/commit/6004124))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.17
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.16...v1.5.17)
+
+### 🚀 Enhancements
+
+- **Icon:** Add calculator icon ([269ca27](https://github.com/fewangsit/wangsvue/commit/269ca27))
+
+### 🏡 Chore
+
+- Build presets into system js format ([04b3de9](https://github.com/fewangsit/wangsvue/commit/04b3de9))
+- **presets:** Update version ([43d4a85](https://github.com/fewangsit/wangsvue/commit/43d4a85))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.16
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.15...v1.5.16)
+
+### 🚀 Enhancements
+
+- Add icon ([a1be067](https://github.com/fewangsit/wangsvue/commit/a1be067))
+- Add UserGroup component ([9dd0af2](https://github.com/fewangsit/wangsvue/commit/9dd0af2))
+
+### 🩹 Fixes
+
+- **Button:** Invalid style for danger text button ([e2e09a2](https://github.com/fewangsit/wangsvue/commit/e2e09a2))
+
+### 🎨 Styles
+
+- **UserGroup:** Move classes to preset ([a0ab234](https://github.com/fewangsit/wangsvue/commit/a0ab234))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
+## v1.5.15
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.14...v1.5.15)
+
+### 💅 Refactors
+
+- **Form:** Remove grid-area since Form doesn't need to configure grid-area ([dd63e59](https://github.com/fewangsit/wangsvue/commit/dd63e59))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.14
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.13...v1.5.14)
+
+### 🚀 Enhancements
+
+- **FilterContainer:** Add new filter field template (Dropdown) ([90ca793](https://github.com/fewangsit/wangsvue/commit/90ca793))
+
+### 💅 Refactors
+
+- **Editor:** Remove 'a' character from next line ([3d55441](https://github.com/fewangsit/wangsvue/commit/3d55441))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
+## v1.5.13
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.12...v1.5.13)
+
+### 🩹 Fixes
+
+- **Toast Util:** Cannot find module 'lib/utils/toast.util' or its corresponding type declarations. ([b88a77f](https://github.com/fewangsit/wangsvue/commit/b88a77f))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.12
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.11...v1.5.12)
+
+### 🚀 Enhancements
+
+- **Toast:** Add ability to custom icon and set icon Class ([99a4de6](https://github.com/fewangsit/wangsvue/commit/99a4de6))
+- Export FileUpload component ([b2ae42a](https://github.com/fewangsit/wangsvue/commit/b2ae42a))
+
+### 🩹 Fixes
+
+- **Button:** Remove severity on iconProps, it causes bug style on filled button style ([6ff4715](https://github.com/fewangsit/wangsvue/commit/6ff4715))
+
+### 📖 Documentation
+
+- Update dialogDocs component import ([15711ee](https://github.com/fewangsit/wangsvue/commit/15711ee))
+- Missing `s` on word `Promise` on Dialog Docs component import ([79d296c](https://github.com/fewangsit/wangsvue/commit/79d296c))
+
+### 🏡 Chore
+
+- **presets:** Update version ([41c18dc](https://github.com/fewangsit/wangsvue/commit/41c18dc))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.11
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.10...v1.5.11)

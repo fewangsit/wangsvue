@@ -45,6 +45,7 @@ import CustomColumn from '../customcolumn/CustomColumn.vue';
 import CustomColumnInstance from '../customcolumn/CustomColumn.vue.d';
 import useLoadingStore from '../loading/store/loading.store';
 import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
+import MultiRow from './MultiRow.vue';
 
 type DragableRow = Data & { draggable?: boolean; order?: number };
 
@@ -991,7 +992,10 @@ const listenUpdateTableEvent = (): void => {
                       ? visibleChildTableColumns
                       : visibleColumns"
                     :class="[
-                      { '!py-0': col.editable },
+                      {
+                        '!py-0': col.editable,
+                        '!px-0': col.preset?.type === 'multirow',
+                      },
                       typeof col.bodyClass === 'function'
                         ? col.bodyClass(item)
                         : col.bodyClass,
@@ -1068,6 +1072,10 @@ const listenUpdateTableEvent = (): void => {
                       />
                     </template>
 
+                    <template v-else-if="col.preset?.type">
+                      <MultiRow :values="col.preset?.fieldValues(item)" />
+                    </template>
+
                     <template v-else-if="col.editable">
                       <span
                         v-bind="Preset.celleditableelement"
@@ -1127,7 +1135,11 @@ const listenUpdateTableEvent = (): void => {
 
                   <td
                     ref="rowSingleActionCell"
-                    v-if="useOption || customColumn"
+                    v-if="
+                      (() =>
+                        ((useOption || customColumn) && !item.childRow) ||
+                        (item.childRow && childTableProps?.useOption))()
+                    "
                     v-bind="
                       Preset?.rowsingleactioncell({
                         props,
@@ -1139,7 +1151,10 @@ const listenUpdateTableEvent = (): void => {
                     :class="Preset.bodycell.class"
                     :style="`right: ${rightDistanceFrozenColumn}px`"
                   >
-                    <div v-if="useOption" v-bind="Preset.singleactionwrapper">
+                    <div
+                      v-if="useOption || childTableProps?.useOption"
+                      v-bind="Preset.singleactionwrapper"
+                    >
                       <Button
                         :id="'button-action-' + item[props.dataKey]"
                         v-bind="Preset.singleactionbutton({ props })"

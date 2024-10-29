@@ -320,7 +320,11 @@ const filters = ref<any>({
       <DataTable
         :key="tableKey"
         v-model:single-selection="singleSelection"
-        :child-table-props="{ columns: subColumns, useColumnsHeader: true }"
+        :child-table-props="{
+          columns: subColumns,
+          useColumnsHeader: true,
+          useOption: false,
+        }"
         :columns="tableColumns"
         :custom-column="customColumn"
         :fetch-function="getTableData"

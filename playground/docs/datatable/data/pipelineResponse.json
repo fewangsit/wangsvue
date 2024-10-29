@@ -1,0 +1,191 @@
+{
+  "message": "Pipeline data retrieved successfully",
+  "status": 200,
+  "data": {
+    "totalRecords": 5,
+    "data": [
+      {
+        "_id": "pipeline1",
+        "accountManager": {
+          "_id": "am123",
+          "nickName": "Alex Johnson"
+        },
+        "name": "Pipeline Alpha",
+        "partner": {
+          "_id": "partner101",
+          "name": "Partner A"
+        },
+        "status": "Initial Interest",
+        "products": [
+          {
+            "_id": "productA1",
+            "name": "Product A",
+            "sku": "SKU-A1",
+            "purchaseType": "New",
+            "quantity": 10,
+            "duration": "12",
+            "standardPrice": 5000
+          },
+          {
+            "_id": "productA2",
+            "name": "Product B",
+            "sku": "SKU-B1",
+            "purchaseType": "Upselling",
+            "quantity": 5,
+            "duration": "6",
+            "standardPrice": 3000
+          }
+        ],
+        "estimatedValue": 8000,
+        "estimatedClose": "2024-12-01T00:00:00Z",
+        "currentPurchaseSituation": "Proposal Submitted",
+        "lastUpdateCps": "2024-10-20T15:30:00Z",
+        "nextAction": "Presentasi",
+        "isItEverOverdue": false,
+        "updatedAt": "2024-10-22T10:00:00Z"
+      },
+      {
+        "_id": "pipeline2",
+        "accountManager": {
+          "_id": "am456",
+          "nickName": "Sara Lee"
+        },
+        "name": "Pipeline Beta",
+        "partner": {
+          "_id": "partner202",
+          "name": "Partner B"
+        },
+        "status": "Awaiting PO",
+        "products": [
+          {
+            "_id": "productB1",
+            "name": "Product C",
+            "sku": "SKU-C1",
+            "purchaseType": "Renewal",
+            "quantity": 20,
+            "duration": "24",
+            "standardPrice": 12000
+          }
+        ],
+        "estimatedValue": 12000,
+        "estimatedClose": "2024-11-15T00:00:00Z",
+        "currentPurchaseSituation": "Awaiting Client Approval",
+        "lastUpdateCps": "2024-10-15T12:00:00Z",
+        "nextAction": "Penawaran Harga",
+        "isItEverOverdue": false,
+        "updatedAt": "2024-10-21T08:30:00Z"
+      },
+      {
+        "_id": "pipeline3",
+        "accountManager": {
+          "_id": "am789",
+          "nickName": "Tom Yu"
+        },
+        "name": "Pipeline Gamma",
+        "partner": {
+          "_id": "partner303",
+          "name": "Partner C"
+        },
+        "status": "Closed Win",
+        "products": [
+          {
+            "_id": "productC1",
+            "name": "Product D",
+            "sku": "SKU-D1",
+            "purchaseType": "Cross-selling",
+            "quantity": 15,
+            "duration": "18",
+            "standardPrice": 7500
+          },
+          {
+            "_id": "productC2",
+            "name": "Product E",
+            "sku": "SKU-E1",
+            "purchaseType": "New",
+            "quantity": 8,
+            "duration": "12",
+            "standardPrice": 4000
+          }
+        ],
+        "estimatedValue": 11500,
+        "estimatedClose": "2024-10-05T00:00:00Z",
+        "currentPurchaseSituation": "Deal Closed",
+        "lastUpdateCps": "2024-10-04T09:00:00Z",
+        "nextAction": "None",
+        "isItEverOverdue": false,
+        "updatedAt": "2024-10-04T10:00:00Z"
+      },
+      {
+        "_id": "pipeline4",
+        "accountManager": {
+          "_id": "am321",
+          "nickName": "Emily Rose"
+        },
+        "name": "Pipeline Delta",
+        "partner": {
+          "_id": "partner404",
+          "name": "Partner D"
+        },
+        "status": "Commit Pipeline",
+        "products": [
+          {
+            "_id": "productD1",
+            "name": "Product F",
+            "sku": "SKU-F1",
+            "purchaseType": "New Additional",
+            "quantity": 12,
+            "duration": "10",
+            "standardPrice": 5000
+          }
+        ],
+        "estimatedValue": 5000,
+        "estimatedClose": "2024-11-10T00:00:00Z",
+        "currentPurchaseSituation": "Commitment Obtained",
+        "lastUpdateCps": "2024-10-18T10:00:00Z",
+        "nextAction": "POC",
+        "isItEverOverdue": true,
+        "updatedAt": "2024-10-19T14:00:00Z"
+      },
+      {
+        "_id": "pipeline5",
+        "accountManager": {
+          "_id": "am654",
+          "nickName": "James Bond"
+        },
+        "name": "Pipeline Epsilon",
+        "partner": {
+          "_id": "partner505",
+          "name": "Partner E"
+        },
+        "status": "Closed Lost",
+        "products": [
+          {
+            "_id": "productE1",
+            "name": "Product G",
+            "sku": "SKU-G1",
+            "purchaseType": "Upselling",
+            "quantity": 25,
+            "duration": "36",
+            "standardPrice": 15000
+          },
+          {
+            "_id": "productE2",
+            "name": "Product H",
+            "sku": "SKU-H1",
+            "purchaseType": "Cross-selling",
+            "quantity": 10,
+            "duration": "24",
+            "standardPrice": 8000
+          }
+        ],
+        "estimatedValue": 23000,
+        "estimatedClose": "2024-09-30T00:00:00Z",
+        "currentPurchaseSituation": "Deal Lost",
+        "lastUpdateCps": "2024-09-29T10:00:00Z",
+        "nextAction": "None",
+        "isItEverOverdue": true,
+        "updatedAt": "2024-09-30T15:00:00Z"
+      }
+    ]
+  }
+}

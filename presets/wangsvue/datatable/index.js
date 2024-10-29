@@ -153,6 +153,15 @@ export default {
     ],
     'data-wv-section': 'bodycell',
   },
+  multirowcontainer: ({ props }) => ({
+    class: ['grid grid-cols-1', `grid-rows-${props.values.length}`],
+  }),
+  multirow: ({ context }) => ({
+    class: [
+      '!h-[35px] flex items-center px-2',
+      { '!border-t border-primary-100 !border-solid': !context.firstIndex },
+    ],
+  }),
   rowtogglerbutton: ({ context }) => ({
     'class': [
       '!p-0 !m-0 !w-auto !h-auto',

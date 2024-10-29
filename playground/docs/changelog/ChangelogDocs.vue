@@ -5,12 +5,13 @@ import {
   ChangelogTemplateFilter,
 } from 'lib/components/changelog/Changelog.vue.d';
 import { ChangelogType } from 'lib/components/changelogpage/ChangelogPage.vue.d';
+import DataTable from 'lib/components/datatable/DataTable.vue';
 import {
   TableCellComponent,
   TableColumn,
 } from 'lib/components/datatable/DataTable.vue.d';
 import MultiSelect from 'lib/components/multiselect/MultiSelect.vue';
-import DataTable from 'lib/components/datatable/DataTable.vue';
+import { MultiSelectOption } from 'lib/types/options.type';
 import { computed, h, ref } from 'vue';
 
 const options = {
@@ -121,6 +122,21 @@ const additionalTemplateFilters: ChangelogTemplateFilter[] = [
       label: 'Custom Filter Aksi',
       type: 'multiselect',
       field: 'action',
+    },
+  },
+  {
+    index: 4,
+    filter: {
+      label: 'Required',
+      field: 'required',
+      type: 'dropdown',
+      placeholder: 'Pilih required',
+      fetchOptionFn: (): MultiSelectOption[] => {
+        return [
+          { label: 'Yes', value: true },
+          { label: 'No', value: false },
+        ];
+      },
     },
   },
 ];

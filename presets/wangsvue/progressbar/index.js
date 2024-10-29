@@ -58,8 +58,8 @@ export default {
             props.value > 0 &&
             props.severity !== 'danger') ||
           props.severity === 'warning',
-        'min-w-[6px] bg-grayscale-500': props.value === 0,
-        'bg-success-1000': props.severity === 'success',
+        'min-w-[6px] !bg-grayscale-500': +props.value === 0,
+        'bg-success-1000': props.severity === 'success' || +props.value === 100,
         'bg-danger-500': props.severity === 'danger',
         'bg-primary-400': props.severity === 'primary',
       },

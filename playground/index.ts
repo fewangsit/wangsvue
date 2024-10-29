@@ -13,6 +13,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
           import('./docs/datatable/TreeTableDocs.vue'),
       },
       {
+        path: 'secondarytable',
+        name: 'Data Table Secondary Docs',
+        component: (): Promise<Component> =>
+          import('./docs/datatable/DataTableSecondaryDocs.vue'),
+      },
+      {
         path: 'progressbar',
         name: 'ProgressBarDocs',
         component: (): Promise<Component> =>

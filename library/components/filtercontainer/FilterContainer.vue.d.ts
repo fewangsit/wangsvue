@@ -1,13 +1,22 @@
 import { MultiSelectOption } from 'lib/types/options.type';
 import { DefineComponent, Slot } from 'vue';
-import { MultiSelectProps } from '../multiselect/MultiSelect.vue.d';
-import { InputRangeNumberProps } from '../inputrangenumber/InputRangeNumber.vue.d';
 import { CalendarProps } from '../calendar/Calendar.vue.d';
 import { QueryParams } from '../datatable/DataTable.vue.d';
+import { DropdownProps } from '../dropdown/Dropdown.vue.d';
+import { InputRangeNumberProps } from '../inputrangenumber/InputRangeNumber.vue.d';
+import { MultiSelectProps } from '../multiselect/MultiSelect.vue.d';
 
 // More specific filter field types
 export interface MultiSelectFilterField extends MultiSelectProps {
   type: 'multiselect';
+  field: string; // The name of the field this filter applies to
+  fetchOptionFn?:
+    | ((args?: any) => MultiSelectOption[]) // Sync function to fetch options
+    | ((args?: any) => Promise<MultiSelectOption[]>); // Async function
+}
+
+export interface DropdownFilterField extends DropdownProps {
+  type: 'dropdown';
   field: string; // The name of the field this filter applies to
   fetchOptionFn?:
     | ((args?: any) => MultiSelectOption[]) // Sync function to fetch options
@@ -32,6 +41,7 @@ export interface CalendarFilterField extends CalendarProps {
 
 export type FilterField =
   | MultiSelectFilterField
+  | DropdownFilterField
   | RangeNumberFilterField
   | CalendarFilterField;
 

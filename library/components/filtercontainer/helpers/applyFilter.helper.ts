@@ -18,8 +18,11 @@ const applyFilter = (
     if (
       (values[field] != null && !isArray) ||
       (isArray && values[field].length)
-    )
+    ) {
       parsedFilter[field] = JSON.stringify(values[field]);
+    } else {
+      parsedFilter[field] = values[field];
+    }
   });
 
   eventBus.emit('data-table:apply-filter', {

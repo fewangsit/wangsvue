@@ -1,5 +1,5 @@
-import { Data, QueryParams } from 'lib/components/datatable/DataTable.vue';
-import { ToastParams } from 'lib/utils/toast.util';
+import { Data, QueryParams } from '../components/datatable/DataTable.vue.d';
+import { ToastParams } from '../utils/toast.util';
 import mitt from './mitt';
 
 export type TableEvent = {
