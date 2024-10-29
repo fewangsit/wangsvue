@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { getImageURL, getNestedProperyValue } from 'lib/utils';
+import { getNestedProperyValue } from 'lib/utils';
 import { UserGroupProps } from './UserGroup.vue.d';
-import Avatar from 'primevue/avatar';
-import AvatarGroup from 'primevue/avatargroup';
+import PrimeAvatar from 'primevue/avatar';
+import PrimeAvatarGroup from 'primevue/avatargroup';
+import Image from '../image/Image.vue';
 
 const props = withDefaults(defineProps<UserGroupProps>(), {
   userNameField: 'nickName',
@@ -20,21 +21,24 @@ const totalRemainingUser = computed<number>(
 </script>
 
 <template>
-  <AvatarGroup>
+  <PrimeAvatarGroup>
     <template :key="user" v-for="user in showedUsers">
-      <Avatar
-        :image="
-          getImageURL(
-            getNestedProperyValue(user ?? {}, profilePictureField) as string,
-          )
-        "
-        shape="circle"
-      />
+      <PrimeAvatar shape="circle">
+        <template #icon>
+          <Image
+            :src="
+              getNestedProperyValue(user ?? {}, profilePictureField) as string
+            "
+            class="w-[29px] h-[29px]"
+            rounded
+          />
+        </template>
+      </PrimeAvatar>
     </template>
-    <Avatar
+    <PrimeAvatar
       v-if="totalRemainingUser"
       :label="`+${totalRemainingUser}`"
       shape="circle"
     />
-  </AvatarGroup>
+  </PrimeAvatarGroup>
 </template>
