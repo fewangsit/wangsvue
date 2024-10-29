@@ -1,162 +1,293 @@
 <script setup lang="ts">
-import { inject, Ref, ref } from 'vue';
+import { inject, nextTick, Ref, ref, watch } from 'vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import Button from 'lib/components/button/Button.vue';
 import DialogAddChecklist from './Dialog/DialogAddChecklist.vue';
 import Menu from 'lib/components/menu/Menu.vue';
 import { MenuItem } from 'lib/components/menuitem';
-import InputText from 'lib/components/inputtext/InputText.vue';
-import Form from 'lib/components/form/Form.vue';
 import { getAttachmentIcon, useToast } from 'lib/utils';
-import eventBus from 'lib/event-bus';
 import Checkbox from 'lib/components/checkbox/Checkbox.vue';
-import { formatTimeAgo } from '@vueuse/core';
 import UserName from 'lib/components/username/UserName.vue';
 import ProgressBar from 'lib/components/progressbar/ProgressBar.vue';
 import Image from 'lib/components/image/Image.vue';
+import TaskChecklistServices from 'lib/services/taskChecklist.service';
+import { TaskChecklist, TaskChecklistItem } from 'lib/types/task.type';
+import DialogConfirmChecklist from './Dialog/DialogConfirmChecklist.vue';
+import DialogSaveChecklistTemplate from './Dialog/DialogSaveChecklistTemplate.vue';
+import InputAdditional from './InputAdditional.vue';
+import {
+  AddTaskChecklistItemDTO,
+  ToggleTaskChecklistItemDTO,
+} from 'lib/dto/taskChecklist.dto';
+import { formatDateReadable } from 'lib/utils/date.util';
+import DialogDetailChecklistTemplate from './Dialog/DialogDetailChecklistTemplate.vue';
 
 const toast = useToast();
 
 const taskId = inject<Ref<string>>('taskId');
 
-const showDialogAddChecklist = ref<boolean>(false);
-const showAddChecklistItem = ref<boolean>(false);
-const addChecklistItemForm = ref();
+const dialogAddChecklist = ref<boolean>(false);
+const dialogSaveChecklistTemplate = ref<boolean>(false);
+const dialogDetailChecklistTemplate = ref<boolean>(false);
+const dialogDeleteChecklist = ref<boolean>(false);
+const dialogDeleteChecklistItem = ref<boolean>(false);
+const dialogUncheckChecklistItem = ref<boolean>(false);
 
-const selectedCheck = ref();
+const selectedChecklist = ref<TaskChecklist>();
+const selectedChecklistItem = ref<TaskChecklistItem>();
 const moreMenu = ref();
 
-// TODO: Replace me with real data
-const checklist = [
-  {
-    name: 'TODO LIST',
-    progress: 33,
-    items: [
-      {
-        isChecked: true,
-        name: 'Read The Rust Book Documentation',
-        updatedAt: new Date(),
-        updatedBy: {
-          nickName: 'Rachel',
-        },
-      },
-      {
-        isChecked: false,
-        name: 'Read The Rust Programming Language Source Code',
-        updatedAt: new Date(),
-        updatedBy: {
-          nickName: 'Mephistopeles',
-        },
-      },
-      {
-        isChecked: false,
-        name: 'Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-        updatedAt: new Date(),
-        updatedBy: {
-          nickName: 'Mephistopeles',
-        },
-        attachments: [
-          {
-            filename: 'Document.pdf',
-            type: 'file',
-            url: 'https://example.com/document.pdf',
-            isViewable: true,
-          },
-          {
-            filename: 'Document.xlsx',
-            type: 'file',
-            url: 'https://example.com/document.xlsx',
-          },
-          {
-            filename: 'Document.csv',
-            type: 'file',
-            url: 'https://example.com/document.csv',
-          },
-          {
-            type: 'link',
-            url: 'https://example.com',
-          },
-          {
-            filename: 'image.png',
-            type: 'media',
-            thumbnail:
-              'https://dev-static-assets.wangs.id/img/wangsit-logo.png',
-            url: 'https://example.com/image.png',
-            isViewable: true,
-          },
-          {
-            filename: 'video.mp4',
-            type: 'media',
-            thumbnail:
-              'https://dev-static-assets.wangs.id/img/wangsit-logo.png',
-            url: 'https://example.com/video.mp4',
-            isViewable: true,
-          },
-        ],
-      },
-    ],
-  },
-];
+const checklists = ref<TaskChecklist[]>();
 
 const handleMore = (e: Event, check: any): void => {
-  selectedCheck.value = check;
-
+  selectedChecklist.value = check;
   moreMenu.value.toggle(e);
 };
 
-const moreModel: MenuItem[] = [
+const checklistOptions: MenuItem[] = [
   {
     icon: 'save',
     label: 'Simpan Template',
+    command: (): void => {
+      dialogSaveChecklistTemplate.value = true;
+    },
+  },
+  {
+    icon: 'file-copy-2-line',
+    label: 'Detail Template',
+    command: (): void => {
+      dialogDetailChecklistTemplate.value = true;
+    },
   },
   {
     icon: 'delete-bin',
     label: 'Hapus Ceklis',
     danger: true,
     command: (): void => {
-      /**
-       * Whenever there are checklist deleted, immediately hide the addChecklistItem,
-       * to prevent addChecklistItem section from hanging.
-       */
-      showAddChecklistItem.value = false;
-
-      // TODO: Delete checklist
+      dialogDeleteChecklist.value = true;
     },
   },
 ];
 
-const handleSaveBtn = (index: number): void => {
-  addChecklistItemForm.value[index].submit();
-};
-
-const handleSave = async (): Promise<void> => {
+const addChecklistItem = async (item: string, index: number): Promise<void> => {
   try {
-    eventBus.emit('detail-task:update', { taskId: taskId.value });
+    const body: AddTaskChecklistItemDTO = {
+      checklist: checklists.value[index]._id,
+      name: item,
+    };
+    const { data } = await TaskChecklistServices.addTaskChecklistItem(body);
+    if (data) {
+      closeInputAddItem(index);
+      getChecklists();
+    }
   } catch (error) {
-    console.error(error);
     toast.add({
-      message: 'Data Item Ceklis gagal disimpan.',
-      severity: 'error',
+      message: 'Item ceklis gagal disimpan.',
       error,
     });
   }
 };
 
-const handleCancel = (): void => {
-  showAddChecklistItem.value = false;
+const closeInputAddItem = (index: number): void => {
+  checklists.value[index].showAddItem = false;
 };
+
+const getChecklists = async (): Promise<void> => {
+  try {
+    const { data } = await TaskChecklistServices.getTaskChecklists(
+      taskId.value,
+    );
+    if (data) {
+      checklists.value = data.data.map((d) => ({
+        ...d,
+        checklistItems: d.checklistItems.map((item) => ({
+          ...item,
+          key: 0,
+        })),
+      }));
+    }
+  } catch (error) {
+    toast.add({
+      message: 'Gagal memuat data ceklis.',
+      error,
+    });
+  }
+};
+
+const renameChecklist = async (index: number, name: string): Promise<void> => {
+  try {
+    const checklist = checklists.value[index];
+    const { data } = await TaskChecklistServices.updateTaskChecklist(
+      checklist._id,
+      { name },
+    );
+    if (data) {
+      checklist.showRenameChecklist = false;
+      await getChecklists();
+    }
+  } catch (error) {
+    toast.add({
+      message: 'Gagal mengubah nama ceklis.',
+      error,
+    });
+  }
+};
+
+const updateChecklistItem = async (args: {
+  checklistIndex: number;
+  itemIndex: number;
+  name: string;
+  caption?: string;
+}): Promise<void> => {
+  try {
+    const checklist = checklists.value[args.checklistIndex];
+    const item = checklist.checklistItems[args.itemIndex];
+    const body = { name: args.name, caption: args.caption };
+    const { data } = await TaskChecklistServices.updateTaskChecklistItem(
+      item._id,
+      body,
+    );
+    if (data) {
+      item.showRenameItem = false;
+      await getChecklists();
+    }
+  } catch (error) {
+    toast.add({
+      message: 'Gagal mengubah nama item ceklis.',
+      error,
+    });
+  }
+};
+
+const openConfirmDialog = (args: {
+  checklistIndex: number;
+  itemIndex: number;
+  type: 'deleteItem' | 'uncheckItem';
+}): void => {
+  const checklist = checklists.value[args.checklistIndex];
+  selectedChecklist.value = checklist;
+  selectedChecklistItem.value = checklist.checklistItems[args.itemIndex];
+  if (args.type === 'deleteItem') {
+    dialogDeleteChecklistItem.value = true;
+  } else {
+    dialogUncheckChecklistItem.value = true;
+  }
+};
+
+const togglingItem = ref(false);
+
+/**
+ * Toggle checklist item,
+ *
+ * If value is false, will open confirm dialog before uncheck the item.
+ * If toggling is failed, will set checked value back to its previous value.
+ * @param {Object} args - Args object
+ * @param {number} args.checklistIndex - Index of checklist
+ * @param {number} args.itemIndex - Index of item
+ * @param {boolean} args.value - Value of checked
+ * @param {string} [args.reason] - Reason of uncheck item
+ * @returns {Promise<void>}
+ */
+const toggleChecklistItem = async (args: {
+  checklistIndex: number;
+  itemIndex: number;
+  value: boolean;
+  reason?: string;
+}): Promise<void> => {
+  const { checklistIndex, itemIndex, value, reason } = args;
+
+  if (togglingItem.value) return;
+
+  togglingItem.value = true;
+  const checklist = checklists.value[checklistIndex];
+  const item = checklist.checklistItems[itemIndex];
+
+  if (args.value === false) {
+    item.checked = true;
+    item.key++;
+    openConfirmDialog({ checklistIndex, itemIndex, type: 'uncheckItem' });
+    togglingItem.value = false;
+    return;
+  }
+
+  try {
+    const body: ToggleTaskChecklistItemDTO = {
+      checked: value,
+      reason: reason ?? '',
+    };
+    const { data } = await TaskChecklistServices.toggleTaskChecklistItem(
+      item._id,
+      body,
+    );
+    if (data) {
+      await getChecklists();
+    }
+    await nextTick();
+  } catch (error) {
+    // If toggling is failed, set checked value back to its previous value
+    item.checked = !value;
+    item.key++;
+    toast.add({
+      message: 'Item ceklis gagal di-check.',
+      error,
+    });
+  } finally {
+    togglingItem.value = false;
+  }
+};
+
+watch(
+  taskId,
+  (value) => {
+    if (value) {
+      getChecklists();
+    }
+  },
+  {
+    immediate: true,
+  },
+);
 </script>
 
 <template>
   <div class="flex flex-col gap-3" data-wv-section="detailtask-task-checklist">
-    <DialogAddChecklist v-model:visible="showDialogAddChecklist" />
+    <DialogAddChecklist
+      v-model:visible="dialogAddChecklist"
+      @added="getChecklists"
+    />
+    <DialogSaveChecklistTemplate
+      v-model:visible="dialogSaveChecklistTemplate"
+      :checklist="selectedChecklist"
+    />
+    <DialogConfirmChecklist
+      v-model:visible="dialogDeleteChecklist"
+      :checklist="selectedChecklist"
+      @submitted="getChecklists"
+      type="deleteList"
+    />
+    <DialogConfirmChecklist
+      v-model:visible="dialogDeleteChecklistItem"
+      :checklist="selectedChecklist"
+      :item="selectedChecklistItem"
+      @submitted="getChecklists"
+      type="deleteItem"
+    />
+    <DialogConfirmChecklist
+      v-model:visible="dialogUncheckChecklistItem"
+      :checklist="selectedChecklist"
+      :item="selectedChecklistItem"
+      @submitted="getChecklists"
+      type="uncheckItem"
+    />
+    <DialogDetailChecklistTemplate
+      v-model:visible="dialogDetailChecklistTemplate"
+    />
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-2">
         <Icon class="w-6 h-6" icon="check" />
         <div class="text-xs font-semibold">Ceklis</div>
       </div>
       <div class="flex items-center gap-2">
-        <!-- TODO: Handle task checklist changelog on click -->
         <Button
           class="!p-1"
           icon="file-history"
@@ -165,56 +296,122 @@ const handleCancel = (): void => {
           text
         />
         <Button
-          @click="showDialogAddChecklist = true"
+          @click="dialogAddChecklist = true"
           icon="add"
           label="Ceklis"
           severity="secondary"
         />
       </div>
     </div>
-    <div v-if="checklist.length" class="pl-8 flex flex-col gap-3">
-      <Menu ref="moreMenu" :model="moreModel" />
+    <div v-if="checklists?.length" class="pl-8 flex flex-col gap-3">
+      <Menu
+        ref="moreMenu"
+        :model="checklistOptions"
+        class="bg-primary-500 !min-w-[170px]"
+      />
       <div
         :key="index"
-        v-for="(check, index) in checklist"
+        v-for="(checklist, index) in checklists"
         class="flex flex-col gap-3"
       >
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold">{{ check.name }}</span>
-          <div class="flex items-center gap-2">
-            <ProgressBar
-              v-if="check.progress"
-              :value="check.progress"
-              severity="success"
-            />
-            <Button
-              @click="handleMore($event, check)"
-              icon="more"
-              icon-class="!w-4 !h-4"
-              severity="secondary"
-              text
-            />
+        <template v-if="checklist.showRenameChecklist">
+          <InputAdditional
+            :validator-message="{
+              empty: 'Nama ceklis harus diisi.',
+            }"
+            :value="checklist.name"
+            @cancel="checklist.showRenameChecklist = false"
+            @submit="renameChecklist(index, $event)"
+            mandatory
+            placeholder="Tulis nama ceklis"
+          />
+        </template>
+        <template v-else>
+          <div class="flex items-center justify-between">
+            <span
+              @click="checklist.showRenameChecklist = true"
+              class="text-xs font-semibold cursor-pointer"
+            >
+              {{ checklist.name }}
+            </span>
+            <div class="flex items-center gap-2">
+              <ProgressBar
+                v-if="checklist.checklistItems.length"
+                :value="
+                  (checklist.checklistItems.filter((item) => item.checked)
+                    .length /
+                    checklist.checklistItems.length) *
+                  100
+                "
+                class="w-[235px]"
+                severity="success"
+                value-position="left-side"
+              />
+              <Button
+                @click="handleMore($event, checklist)"
+                icon="more"
+                icon-class="!w-4 !h-4"
+                severity="secondary"
+                text
+              />
+            </div>
           </div>
-        </div>
+        </template>
         <div
-          :key="`${index}-${cIndex}`"
-          v-for="(item, cIndex) in check.items"
+          :key="`${index}-${itemIndex}`"
+          v-for="(item, itemIndex) in checklist.checklistItems"
           class="flex flex-col gap-2"
         >
-          <div class="flex items-start justify-between">
+          <template v-if="item.showRenameItem">
+            <InputAdditional
+              :validator-message="{
+                empty: 'Nama item ceklis harus diisi.',
+              }"
+              :value="item.name"
+              @cancel="item.showRenameItem = false"
+              @submit="
+                updateChecklistItem({
+                  checklistIndex: index,
+                  itemIndex,
+                  name: $event,
+                })
+              "
+              mandatory
+              placeholder="Tulis nama item ceklis"
+            />
+          </template>
+          <div v-else class="flex items-center justify-between">
             <div class="flex items-start gap-1 w-2/5">
-              <Checkbox v-model="item.isChecked" :label="item.name" />
+              <Checkbox
+                :key="item.key"
+                v-model="item.checked"
+                :label="item.name"
+                @update:model-value="
+                  toggleChecklistItem({
+                    checklistIndex: index,
+                    itemIndex,
+                    value: $event as boolean,
+                  })
+                "
+              />
             </div>
             <div class="flex items-center gap-2">
               <span v-if="item.updatedAt">
-                {{ formatTimeAgo(new Date(item.updatedAt)) }}
+                {{ formatDateReadable(new Date(item.updatedAt), 86400) }}
               </span>
               <UserName
                 v-if="item.updatedBy"
                 :user="item.updatedBy"
                 type="icon"
               />
-              <!-- TODO: Handle task item attachment on click -->
+              <Button
+                @click="item.showRenameItem = true"
+                class="!p-1"
+                icon="edit"
+                icon-class="!w-6 !h-6"
+                severity="secondary"
+                text
+              />
               <Button
                 class="!p-1"
                 icon="attachment-2"
@@ -222,15 +419,14 @@ const handleCancel = (): void => {
                 severity="secondary"
                 text
               />
-              <!-- TODO: Handle task item caption? on click -->
               <Button
+                @click="item.showCaptionItem = !item.showCaptionItem"
                 class="!p-1"
                 icon="chat-new-line"
                 icon-class="!w-6 !h-6"
                 severity="secondary"
                 text
               />
-              <!-- TODO: Handle task item chat on click -->
               <Button
                 class="!p-1"
                 icon="chat-1-line"
@@ -238,20 +434,50 @@ const handleCancel = (): void => {
                 severity="secondary"
                 text
               />
-              <!-- TODO: Handle task item delete on click -->
               <Button
+                @click="
+                  openConfirmDialog({
+                    checklistIndex: index,
+                    itemIndex: itemIndex,
+                    type: 'deleteItem',
+                  })
+                "
                 class="!p-1"
                 icon="close"
-                icon-class="!w-6 !h-6"
+                icon-class="!w-6 !h-6 !text-danger-500"
                 severity="danger"
                 text
               />
             </div>
           </div>
-          <div class="pl-5 flex flex-col gap-2">
-            <!-- TODO: break into its own component -->
+          <div v-if="item.showCaptionItem" class="pl-5">
+            <InputAdditional
+              :validator-message="{
+                empty: 'Caption item ceklis harus diisi.',
+              }"
+              :value="item.caption"
+              @cancel="item.showCaptionItem = false"
+              @submit="
+                updateChecklistItem({
+                  checklistIndex: index,
+                  itemIndex,
+                  name: item.name,
+                  caption: $event,
+                })
+              "
+              mandatory
+              placeholder="Tulis caption item ceklis"
+            />
+          </div>
+          <span
+            v-else-if="item.caption?.length && !item.showCaptionItem"
+            class="text-grayscale-700 pl-5 -mt-1"
+          >
+            {{ item.caption }}
+          </span>
+          <div v-if="item.attachments?.length" class="pl-5 flex flex-col gap-2">
             <div
-              :key="`${index}-${cIndex}-${aIndex}`"
+              :key="`${index}-${itemIndex}-${aIndex}`"
               v-for="(attachment, aIndex) in item.attachments"
               class="flex items-center justify-between"
             >
@@ -279,7 +505,6 @@ const handleCancel = (): void => {
                 </a>
               </div>
               <div class="flex items-center gap-2">
-                <!-- TODO: Handle item attachment preview on click -->
                 <Button
                   v-if="attachment.isViewable"
                   class="!p-1"
@@ -288,7 +513,6 @@ const handleCancel = (): void => {
                   severity="secondary"
                   text
                 />
-                <!-- TODO: Handle item attachment download on click -->
                 <Button
                   class="!p-1"
                   icon="download"
@@ -296,7 +520,6 @@ const handleCancel = (): void => {
                   severity="secondary"
                   text
                 />
-                <!-- TODO: Handle item attachment delete on click -->
                 <Button
                   class="!p-1"
                   icon="close"
@@ -309,48 +532,23 @@ const handleCancel = (): void => {
           </div>
         </div>
         <div>
+          <InputAdditional
+            v-if="checklist.showAddItem"
+            :validator-message="{
+              empty: 'Item ceklis harus diisi.',
+            }"
+            @cancel="closeInputAddItem(index)"
+            @submit="addChecklistItem($event, index)"
+            mandatory
+            placeholder="Tulis item ceklis"
+          />
           <Button
-            v-if="!showAddChecklistItem"
-            @click="showAddChecklistItem = true"
+            v-else
+            @click="checklist.showAddItem = true"
             icon="add"
             label="Item"
             severity="secondary"
           />
-          <Form
-            ref="addChecklistItemForm"
-            v-else
-            @submit="handleSave"
-            hide-footer
-            hide-stay-checkbox
-          >
-            <template #fields>
-              <div class="flex flex-col gap-2">
-                <InputText
-                  :validator-message="{
-                    empty: 'Item ceklis harus diisi.',
-                  }"
-                  class="[&_label]:hidden"
-                  label="Item ceklis"
-                  mandatory
-                  placeholder="Tulis item ceklis"
-                  use-validator
-                />
-                <div class="flex items-center gap-2">
-                  <Button
-                    @click="handleSaveBtn(index)"
-                    label="Simpan"
-                    severity="success"
-                  />
-                  <Button
-                    @click="handleCancel"
-                    label="Batal"
-                    severity="secondary"
-                    text
-                  />
-                </div>
-              </div>
-            </template>
-          </Form>
         </div>
       </div>
     </div>

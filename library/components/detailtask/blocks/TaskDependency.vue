@@ -11,7 +11,7 @@ import TaskDependencyServices from 'lib/services/taskDependency.service';
 import Button from 'lib/components/button/Button.vue';
 import UserName from 'lib/components/username/UserName.vue';
 import Badge from 'lib/components/badge/Badge.vue';
-import InputCaption from './InputCaption.vue';
+import InputAdditional from './InputAdditional.vue';
 import ModuleServices from 'lib/services/module.service';
 import { ProjectModule } from 'lib/types/projectModule.type';
 import DialogCustomDependency from './Dialog/DialogCustomDependency.vue';
@@ -769,7 +769,7 @@ watch(
                 </template>
               </div>
               <div v-if="task.showCaption || task.caption?.length">
-                <InputCaption
+                <InputAdditional
                   v-if="task.showCaption"
                   :value="task.caption"
                   @cancel="task.showCaption = false"
@@ -780,6 +780,7 @@ watch(
                       depIndex: index,
                     })
                   "
+                  placeholder="Tulis caption"
                 />
                 <span v-else class="text-xs text-grayscale-700">{{
                   task.caption

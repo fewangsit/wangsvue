@@ -69,3 +69,46 @@ export type TaskLink = {
   createdAt: string | Date;
   updatedAt: string | Date;
 };
+
+export type TaskChecklist = {
+  _id: string;
+  name: string;
+  task: string;
+  caption?: string;
+  checklistItems?: TaskChecklistItem[];
+  showRenameChecklist?: boolean;
+  showAddItem?: boolean;
+};
+
+export type TaskChecklistItem = {
+  _id: string;
+  name: string;
+  checked: boolean;
+  updatedBy?: {
+    _id: string;
+    fullName: string;
+    nickName: string;
+  };
+  isRequested: boolean;
+  checkedAt?: string;
+  caption?: string;
+  createdAt: string;
+  updatedAt: string;
+  attachments: any[];
+  showRenameItem?: boolean;
+  showCaptionItem?: boolean;
+  key?: number;
+};
+
+export type TaskChecklistTemplate = {
+  _id: string;
+  project: string;
+  name: string;
+  module: string;
+  subModule: string;
+  task: string;
+  items: string[];
+  createdBy: Member;
+  createdAt: string;
+  updatedAt: string;
+};
