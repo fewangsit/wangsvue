@@ -48,7 +48,9 @@ const icon = computed<WangsIcons>(() => {
  * @returns The formatted file path
  */
 const formatFilePath = (url: string): string => {
-  return '/' + url.split('/').slice(4).join('/');
+  return url.includes(import.meta.env.VITE_APP_WANGSIT_FILES_API)
+    ? '/' + url.split('/').slice(4).join('/')
+    : url;
 };
 </script>
 
