@@ -5,11 +5,10 @@ import Button from 'lib/components/button/Button.vue';
 import DialogAddChecklist from './Dialog/DialogAddChecklist.vue';
 import Menu from 'lib/components/menu/Menu.vue';
 import { MenuItem } from 'lib/components/menuitem';
-import { getAttachmentIcon, useToast } from 'lib/utils';
+import { useToast } from 'lib/utils';
 import Checkbox from 'lib/components/checkbox/Checkbox.vue';
 import UserName from 'lib/components/username/UserName.vue';
 import ProgressBar from 'lib/components/progressbar/ProgressBar.vue';
-import Image from 'lib/components/image/Image.vue';
 import TaskChecklistServices from 'lib/services/taskChecklist.service';
 import { TaskChecklist, TaskChecklistItem } from 'lib/types/task.type';
 import DialogConfirmChecklist from './Dialog/DialogConfirmChecklist.vue';
@@ -21,30 +20,14 @@ import {
 } from 'lib/dto/taskChecklist.dto';
 import { formatDateReadable } from 'lib/utils/date.util';
 import DialogDetailChecklistTemplate from './Dialog/DialogDetailChecklistTemplate.vue';
+import DialogAddAttachment from './Dialog/DialogAddAttachment.vue';
+import TaskAttachmentItem from './TaskAttachmentItem.vue';
 
 const toast = useToast();
 
 const taskId = inject<Ref<string>>('taskId');
 
-const dialogAddChecklist = ref<boolean>(false);
-const dialogSaveChecklistTemplate = ref<boolean>(false);
-const dialogDetailChecklistTemplate = ref<boolean>(false);
-const dialogDeleteChecklist = ref<boolean>(false);
-const dialogDeleteChecklistItem = ref<boolean>(false);
-const dialogUncheckChecklistItem = ref<boolean>(false);
-
-const selectedChecklist = ref<TaskChecklist>();
-const selectedChecklistItem = ref<TaskChecklistItem>();
-const moreMenu = ref();
-
-const checklists = ref<TaskChecklist[]>();
-
-const handleMore = (e: Event, check: any): void => {
-  selectedChecklist.value = check;
-  moreMenu.value.toggle(e);
-};
-
-const checklistOptions: MenuItem[] = [
+const checklistMenuOptions: MenuItem[] = [
   {
     icon: 'save',
     label: 'Simpan Template',
@@ -68,6 +51,27 @@ const checklistOptions: MenuItem[] = [
     },
   },
 ];
+
+const checklists = ref<TaskChecklist[]>();
+
+const dialogAddChecklist = ref<boolean>(false);
+const dialogSaveChecklistTemplate = ref<boolean>(false);
+const dialogDetailChecklistTemplate = ref<boolean>(false);
+const dialogDeleteChecklist = ref<boolean>(false);
+const dialogDeleteChecklistItem = ref<boolean>(false);
+const dialogUncheckChecklistItem = ref<boolean>(false);
+const dialogAddAttachment = ref<boolean>(false);
+
+const selectedChecklist = ref<TaskChecklist>();
+const selectedChecklistItem = ref<TaskChecklistItem>();
+const moreMenu = ref();
+
+const togglingItem = ref(false);
+
+const handleMore = (e: Event, check: any): void => {
+  selectedChecklist.value = check;
+  moreMenu.value.toggle(e);
+};
 
 const addChecklistItem = async (item: string, index: number): Promise<void> => {
   try {
@@ -174,7 +178,15 @@ const openConfirmDialog = (args: {
   }
 };
 
-const togglingItem = ref(false);
+const openAttachmentDialog = (args: {
+  checklistIndex: number;
+  itemIndex: number;
+}): void => {
+  const checklist = checklists.value[args.checklistIndex];
+  selectedChecklist.value = checklist;
+  selectedChecklistItem.value = checklist.checklistItems[args.itemIndex];
+  dialogAddAttachment.value = true;
+};
 
 /**
  * Toggle checklist item,
@@ -306,7 +318,7 @@ watch(
     <div v-if="checklists?.length" class="pl-8 flex flex-col gap-3">
       <Menu
         ref="moreMenu"
-        :model="checklistOptions"
+        :model="checklistMenuOptions"
         class="bg-primary-500 !min-w-[170px]"
       />
       <div
@@ -413,6 +425,9 @@ watch(
                 text
               />
               <Button
+                @click="
+                  openAttachmentDialog({ checklistIndex: index, itemIndex })
+                "
                 class="!p-1"
                 icon="attachment-2"
                 icon-class="!w-6 !h-6"
@@ -476,59 +491,13 @@ watch(
             {{ item.caption }}
           </span>
           <div v-if="item.attachments?.length" class="pl-5 flex flex-col gap-2">
-            <div
-              :key="`${index}-${itemIndex}-${aIndex}`"
-              v-for="(attachment, aIndex) in item.attachments"
-              class="flex items-center justify-between"
-            >
-              <div class="flex items-center gap-2">
-                <Icon
-                  v-if="attachment.type === 'file'"
-                  :icon="getAttachmentIcon(attachment.filename)"
-                  class="!w-6 !h-6"
-                />
-                <Icon
-                  v-else-if="attachment.type === 'link'"
-                  class="!w-6 !h-6"
-                  icon="link"
-                />
-                <Image
-                  v-else-if="attachment.type === 'media'"
-                  :src="attachment.thumbnail"
-                  class="!w-6 !h-6"
-                />
-                <span v-if="attachment.filename">
-                  {{ attachment.filename }}
-                </span>
-                <a v-else :href="attachment.url" target="_blank">
-                  {{ attachment.url }}
-                </a>
-              </div>
-              <div class="flex items-center gap-2">
-                <Button
-                  v-if="attachment.isViewable"
-                  class="!p-1"
-                  icon="eye"
-                  icon-class="!w-5 !h-5"
-                  severity="secondary"
-                  text
-                />
-                <Button
-                  class="!p-1"
-                  icon="download"
-                  icon-class="!w-4 !h-4"
-                  severity="secondary"
-                  text
-                />
-                <Button
-                  class="!p-1"
-                  icon="close"
-                  icon-class="!w-4 !h-4"
-                  severity="danger"
-                  text
-                />
-              </div>
-            </div>
+            <TaskAttachmentItem
+              :key="`${index}-${itemIndex}-${attachIndex}`"
+              v-for="(attachment, attachIndex) in item.attachments"
+              :item="attachment"
+              @deleted="getChecklists"
+              type="checklist"
+            />
           </div>
         </div>
         <div>
@@ -553,4 +522,13 @@ watch(
       </div>
     </div>
   </div>
+
+  <DialogAddAttachment
+    v-model:visible="dialogAddAttachment"
+    :object-id="selectedChecklistItem?._id"
+    :upload-file-service="TaskChecklistServices.addTaskAttachmentFile"
+    :upload-url-service="TaskChecklistServices.addTaskAttachmentUrl"
+    @hide="getChecklists"
+    type="checklist"
+  />
 </template>

@@ -15,6 +15,7 @@ import { formatDateReadable } from 'lib/utils/date.util';
 import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
 import { useToast } from 'lib/utils';
 import TaskAttachmentThumbnail from './TaskAttachmentThumbnail.vue';
+import TaskChecklistServices from 'lib/services/taskChecklist.service';
 
 const toast = useToast();
 
@@ -44,9 +45,10 @@ const submitCaption = async (e: FormPayload): Promise<void> => {
 
 const deleteAttachment = async (): Promise<void> => {
   try {
-    const { data } = await TaskAttachmentServices.deleteTaskAttachment(
-      props.item._id,
-    );
+    const { data } =
+      props.type === 'attachment'
+        ? await TaskAttachmentServices.deleteTaskAttachment(props.item._id)
+        : await TaskChecklistServices.deleteTaskAttachment(props.item._id);
     if (data) {
       toast.add({
         message: 'Attachment telah dihapus.',
@@ -81,10 +83,14 @@ const downloadFile = async (url: string, fileName: string): Promise<void> => {
     });
   }
 };
+
+const truncateText = (text: string): string => {
+  return text.length > 32 ? `${text.slice(0, 32)}...` : text;
+};
 </script>
 
 <template>
-  <div class="flex flex-col gap-2">
+  <div v-if="props.type === 'attachment'" class="flex flex-col gap-2">
     <div class="flex justify-between">
       <div class="flex gap-2">
         <TaskAttachmentThumbnail :item="item" />
@@ -175,9 +181,61 @@ const downloadFile = async (url: string, fileName: string): Promise<void> => {
     </div>
   </div>
 
+  <div v-else class="flex flex-col gap-2">
+    <div class="flex justify-between">
+      <div class="flex gap-2 items-center">
+        <TaskAttachmentThumbnail :item="item" small />
+        <div class="max-w-[430px] flex flex-col gap-1">
+          <a
+            v-if="item.type === 'link'"
+            :href="item.url"
+            class="text-xs"
+            target="_blank"
+          >
+            {{
+              item.displayName?.length
+                ? truncateText(item.displayName)
+                : truncateText(item.url)
+            }}
+          </a>
+          <span v-else class="text-xs">
+            {{ truncateText(item.displayName) }}
+          </span>
+        </div>
+      </div>
+      <div class="flex gap-2 items-center">
+        <Button
+          v-if="['image', 'pdf', 'mp4', 'mkv'].includes(item.type)"
+          class="!p-1"
+          icon="eye"
+          icon-class="!w-4 !h-4"
+          severity="secondary"
+          text
+        />
+        <Button
+          v-if="item.type !== 'link'"
+          @click="downloadFile(item.url, item.displayName)"
+          class="!p-1"
+          icon="download"
+          icon-class="!w-4 !h-4"
+          severity="secondary"
+          text
+        />
+        <Button
+          @click="dialogConfirmDelete = true"
+          class="!p-1"
+          icon="close"
+          icon-class="!w-4 !h-4"
+          severity="danger"
+          text
+        />
+      </div>
+    </div>
+  </div>
+
   <DialogConfirm
     v-model:visible="dialogConfirmDelete"
-    :list="[item.displayName]"
+    :list="[item.displayName?.length ? item.displayName : item.url]"
     @confirm="deleteAttachment"
     confirm-label="Hapus"
     header="Hapus Attachment"

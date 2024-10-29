@@ -20,9 +20,9 @@ export interface AttachmentItemData {
   url?: string;
   type?: FileType;
   caption?: string;
-  createdAt: string;
-  updatedAt: string;
-  createdBy: { fullName: string; nickName: string; _id: string };
+  createdAt?: string;
+  updatedAt?: string;
+  createdBy?: { fullName: string; nickName: string; _id: string };
   _id: string;
 }
 
@@ -30,6 +30,7 @@ export interface AttachmentItemData {
  * Attachment item component props
  */
 export interface AttachmentItemProps {
+  type: 'attachment' | 'checklist';
   item?: AttachmentItemData;
 }
 

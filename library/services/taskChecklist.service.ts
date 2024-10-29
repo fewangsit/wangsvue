@@ -1,6 +1,8 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosProgressEvent, AxiosResponse } from 'axios';
 import { QueryParams } from 'lib/components/datatable/DataTable.vue.d';
 import {
+  AddTaskChecklistAttachmentFileDTO,
+  AddTaskChecklistAttachmentUrlDTO,
   AddTaskChecklistDTO,
   AddTaskChecklistItemDTO,
   AddTaskChecklistTemplateDTO,
@@ -10,7 +12,14 @@ import {
 } from 'lib/dto/taskChecklist.dto';
 import { getBaseURL } from 'lib/utils/getBaseURL.util';
 
-const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
+type AxiosInstanceOptions = {
+  headers?: Record<string, string>;
+  params?: any;
+  onUploadProgress?: (progressEvent: AxiosProgressEvent) => void;
+  signal?: AbortSignal;
+};
+
+const API = (options?: AxiosInstanceOptions): AxiosInstance => {
   const user = JSON.parse(localStorage.getItem('user') as string) ?? {};
 
   const BASE_URL = getBaseURL('APP_TASK_API');
@@ -20,9 +29,11 @@ const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + user.jwt,
-      ...headers,
+      ...options?.headers,
     },
-    params,
+    params: options?.params,
+    onUploadProgress: options?.onUploadProgress,
+    signal: options?.signal,
   });
 
   return instance;
@@ -93,6 +104,30 @@ const TaskChecklistServices = {
 
   deleteTaskChecklistTemplate: (templateId: string): Promise<AxiosResponse> => {
     return API().delete(`/template/${templateId}`);
+  },
+
+  addTaskAttachmentFile: (payload: {
+    body: AddTaskChecklistAttachmentFileDTO;
+    onUploadProgress: (progressEvent: AxiosProgressEvent) => void;
+    signal: AbortSignal;
+  }): Promise<AxiosResponse> => {
+    const headers = { 'Content-Type': 'multipart/form-data' };
+    return API({
+      headers,
+      onUploadProgress: payload.onUploadProgress,
+      signal: payload.signal,
+    }).post('/checklist-item/attachment/file', payload.body);
+  },
+
+  addTaskAttachmentUrl: (
+    id: string,
+    body: AddTaskChecklistAttachmentUrlDTO,
+  ): Promise<AxiosResponse> => {
+    return API().post('/checklist-item/attachment/url', body);
+  },
+
+  deleteTaskAttachment: (attachmentId: string): Promise<AxiosResponse> => {
+    return API().delete(`/checklist-item/attachment/${attachmentId}`);
   },
 };
 

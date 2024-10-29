@@ -39,6 +39,17 @@ const icon = computed<WangsIcons>(() => {
       return 'attachment-2';
   }
 });
+
+/**
+ * Format given url to a file path.
+ * Example: https://dev-static-assets.wangs.id/files/attachment/file.txt
+ *          will be formatted to /attachment/file.txt
+ * @param url The file url to be formatted
+ * @returns The formatted file path
+ */
+const formatFilePath = (url: string): string => {
+  return '/' + url.split('/').slice(4).join('/');
+};
 </script>
 
 <template>
@@ -49,7 +60,7 @@ const icon = computed<WangsIcons>(() => {
       { 'w-[70px]': !props.small, 'h-[70px]': !props.small },
       { 'w-[30px]': props.small, 'h-[30px]': props.small },
     ]"
-    :src="props.item.url"
+    :src="formatFilePath(props.item.url)"
   />
   <div
     v-else

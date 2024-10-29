@@ -9,12 +9,7 @@ import Form from 'lib/components/form/Form.vue';
 import { FormPayload } from 'lib/components/form/Form.vue.d';
 import InputText from 'lib/components/inputtext/InputText.vue';
 import { FileType } from '../TaskAttachmentItem.vue.d';
-import TaskAttachmentServices from 'lib/services/taskAttachment.service';
-import {
-  AddTaskAttachmentFileDTO,
-  AddTaskAttachmentUrlDTO,
-} from 'lib/dto/taskAttachment.dto';
-import axios, { AxiosProgressEvent } from 'axios';
+import axios, { AxiosProgressEvent, AxiosResponse } from 'axios';
 import { useToast } from 'lib/utils';
 import TaskAttachmentThumbnail from '../TaskAttachmentThumbnail.vue';
 
@@ -40,7 +35,18 @@ const emit = defineEmits<{
 }>();
 
 const props = defineProps<{
-  taskId: string;
+  objectId: string;
+  uploadFileService: (params: {
+    id?: string;
+    body: Record<string, any>;
+    onUploadProgress: (progressEvent: AxiosProgressEvent) => void;
+    signal: AbortSignal;
+  }) => Promise<AxiosResponse>;
+  uploadUrlService: (
+    id: string,
+    body: Record<string, any>,
+  ) => Promise<AxiosResponse>;
+  type: 'attachment' | 'checklist';
 }>();
 
 const menus = shallowRef<MenuItem[]>([
@@ -211,7 +217,7 @@ const handleDrop = async (event: DragEvent): Promise<void> => {
  * @returns {Promise<void>} A promise that resolves when the attachment is submitted successfully.
  */
 const addAttachment = async (
-  body: AddTaskAttachmentFileDTO,
+  body: Record<string, any>,
   uploadIndex: number,
   uploadLength: number,
 ): Promise<void> => {
@@ -232,10 +238,10 @@ const addAttachment = async (
       progressBars[index].style.width = percentCompleted + '%';
     };
 
-    await TaskAttachmentServices.addTaskAttachmentFile({
-      taskId: props.taskId,
-      body: body,
-      onUploadProgress: onUploadProgress,
+    await props.uploadFileService({
+      id: props.type === 'attachment' ? props.objectId : undefined,
+      body,
+      onUploadProgress,
       signal: controller.signal,
     });
   } catch (error) {
@@ -257,9 +263,10 @@ const addAttachment = async (
 const submitAttachmentFiles = async (
   validFiles: FormattedFile[],
 ): Promise<void> => {
-  const formattedFiles: AddTaskAttachmentFileDTO[] = validFiles.map((file) => ({
+  const formattedFiles = validFiles.map((file) => ({
     file: file.file,
     type: file.fileType,
+    checklistItem: props.type === 'checklist' ? props.objectId : undefined,
   }));
   try {
     await Promise.all(
@@ -280,14 +287,12 @@ const submitAttachmentFiles = async (
  */
 const submitAttachmentURL = async (e: FormPayload): Promise<void> => {
   try {
-    const body: AddTaskAttachmentUrlDTO = {
+    const body = {
       url: e.formValues?.url as unknown as string,
       displayName: e.formValues?.displayName as unknown as string,
+      checklistItem: props.type === 'checklist' ? props.objectId : undefined,
     };
-    const { data } = await TaskAttachmentServices.addTaskAttachmentUrl(
-      props.taskId,
-      body,
-    );
+    const { data } = await props.uploadUrlService(props.objectId, body);
     if (data) {
       visible.value = false;
     }

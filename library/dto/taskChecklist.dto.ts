@@ -32,3 +32,15 @@ export interface AddTaskChecklistTemplateDTO {
   task: string; // Name
   templateReplaced?: string; // Id
 }
+
+export interface AddTaskChecklistAttachmentFileDTO {
+  checklistItem: string;
+  file: any;
+  type: string;
+}
+
+export interface AddTaskChecklistAttachmentUrlDTO {
+  checklistItem: string;
+  url: any;
+  displayName?: string;
+}

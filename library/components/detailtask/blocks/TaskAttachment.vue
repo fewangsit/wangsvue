@@ -54,13 +54,17 @@ const getAttachments = async (): Promise<void> => {
         :item="item"
         @deleted="getAttachments"
         @update-caption="getAttachments"
+        type="attachment"
       />
     </div>
   </div>
 
   <DialogAddAttachment
     v-model:visible="dialogAddAttachment"
-    :task-id="taskId"
+    :object-id="taskId"
+    :upload-file-service="TaskAttachmentServices.addTaskAttachmentFile"
+    :upload-url-service="TaskAttachmentServices.addTaskAttachmentUrl"
     @hide="getAttachments"
+    type="attachment"
   />
 </template>

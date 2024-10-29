@@ -45,7 +45,7 @@ const TaskAttachmentServices = {
     return API().post(`/task/${taskId}/url`, body);
   },
   addTaskAttachmentFile: (payload: {
-    taskId: string;
+    id: string; // Task id
     body: AddTaskAttachmentFileDTO;
     onUploadProgress: (progressEvent: AxiosProgressEvent) => void;
     signal: AbortSignal;
@@ -55,7 +55,7 @@ const TaskAttachmentServices = {
       headers,
       onUploadProgress: payload.onUploadProgress,
       signal: payload.signal,
-    }).post(`/task/${payload.taskId}/file`, payload.body);
+    }).post(`/task/${payload.id}/file`, payload.body);
   },
   updateTaskAttachmentCaption: (
     taskId: string,
