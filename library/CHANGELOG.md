@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.5.23
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.22...v1.5.23)
+
+### 🚀 Enhancements
+
+- Add component InvisibleField ([165d89c](https://github.com/fewangsit/wangsvue/commit/165d89c))
+
+### 📖 Documentation
+
+- Add TODO ([6310738](https://github.com/fewangsit/wangsvue/commit/6310738))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.22
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.21...v1.5.22)
