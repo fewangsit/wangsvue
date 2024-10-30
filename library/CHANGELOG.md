@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.22
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.21...v1.5.22)
+
+### 🚀 Enhancements
+
+- Export CodeSnippet ([255d139](https://github.com/fewangsit/wangsvue/commit/255d139))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.21
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.20...v1.5.21)
