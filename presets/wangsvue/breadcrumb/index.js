@@ -12,7 +12,7 @@ export default {
   item: ({ context }) => ({
     'class': {
       'font-semibold': context.lastItem,
-      'text-primary-400': context.hasRoute && !context.firstItem,
+      'text-primary-400': !context.lastItem && !context.firstItem,
     },
     'data-wv-section': 'breadcrumb-menu',
   }),

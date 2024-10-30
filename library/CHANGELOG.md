@@ -1,6 +1,55 @@
 # Changelog
 
 
+## v1.5.22
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.21...v1.5.22)
+
+### 🚀 Enhancements
+
+- Export CodeSnippet ([255d139](https://github.com/fewangsit/wangsvue/commit/255d139))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.21
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.20...v1.5.21)
+
+### 💅 Refactors
+
+- **UserGroup:** Use Image component for avatar ([a99f32e](https://github.com/fewangsit/wangsvue/commit/a99f32e))
+
+### 🎨 Styles
+
+- **Breadcrumb:** Colored breadcrumb even if it doesn't have route ([5f01671](https://github.com/fewangsit/wangsvue/commit/5f01671))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
+## v1.5.20
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.19...v1.5.20)
+
+### 🚀 Enhancements
+
+- Add new icons ([2623c98](https://github.com/fewangsit/wangsvue/commit/2623c98))
+
+### 🏡 Chore
+
+- **presets:** Update version ([656b287](https://github.com/fewangsit/wangsvue/commit/656b287))
+
+### 🎨 Styles
+
+- **ProgressBar:** Fix severity color ([0bb4c14](https://github.com/fewangsit/wangsvue/commit/0bb4c14))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.19
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.18...v1.5.19)
