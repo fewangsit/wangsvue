@@ -26,6 +26,9 @@ interface FormContext<T> {
   setFieldValue: VeeFormContext['setFieldValue'];
 }
 
+/**
+ * TODO: create config multi build-entry for each project
+ */
 const useForm = <T>(): FormContext<T> => {
   const { values, handleSubmit, setValues, setFieldValue } = veeUseForm();
   return {
