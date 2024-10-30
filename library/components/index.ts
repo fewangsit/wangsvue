@@ -53,6 +53,7 @@ import InputBadge from './inputbadge/InputBadge.vue';
 import InputCurrency from './inputcurrency/InputCurrency.vue';
 import FileUpload from './fileupload/FileUpload.vue';
 import UserGroup from './usergroup/UserGroup.vue';
+import CodeSnippet from './codesnippet/CodeSnippet.vue';
 
 export {
   Badge,
@@ -110,4 +111,5 @@ export {
   InputCurrency,
   FileUpload,
   UserGroup,
+  CodeSnippet,
 };
