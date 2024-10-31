@@ -120,6 +120,7 @@ import {
   FileUpload,
   UserGroup,
   CodeSnippet,
+  InvisibleField,
 } from './components';
 
 export {
@@ -197,6 +198,7 @@ export {
   FileUpload,
   UserGroup,
   CodeSnippet,
+  InvisibleField,
 
   // Component store
   useLoadingStore,
