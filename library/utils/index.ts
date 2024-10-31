@@ -7,6 +7,10 @@ import genPlaceholder from './genPlaceholder.util';
 import getStatusSeverity from './statusSeverity.util';
 import { checkRouteAccess } from './role.util';
 import isEmptyObject from './object.util';
+import getUser from './getUser.util';
+import getUserPermission from './getUserPermission.util';
+import isIntersect from './isIntersect';
+import convertJsonImage from './convertJsonImage.util';
 
 const getNestedProperyValue = (
   object: object,
@@ -35,4 +39,8 @@ export {
   genPlaceholder,
   getInititalName,
   getStatusSeverity,
+  getUser,
+  getUserPermission,
+  isIntersect,
+  convertJsonImage,
 };

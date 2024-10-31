@@ -1,0 +1,38 @@
+{
+  "_id": "67222f7148d5b42224d2fa23",
+  "name": "asdf",
+  "status": "Backlog",
+  "platform": "Web",
+  "iteration": 0,
+  "editedBy": {
+    "_id": "66d1771c1ebe5344bc2b9dab",
+    "nickName": "Super Admin",
+    "imageUrl": "/members/1726721700029-big.webp"
+  },
+  "category": "Bug",
+  "description": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "asdf"
+          }
+        ]
+      }
+    ]
+  },
+  "createdAt": "2024-10-30 13:06:57",
+  "totalTask": 0,
+  "totalTaskDurationMinutes": 0,
+  "isInActiveSprint": false,
+  "isMemberAssigned": false,
+  "estimateDuration": "00h 00j 00m",
+  "createdBy": {
+    "_id": "66d1771c1ebe5344bc2b9dab",
+    "teams": ["DEV", "MOB", "TW", "IOT"]
+  },
+  "lastModified": "2024-10-30 13:06:57"
+}

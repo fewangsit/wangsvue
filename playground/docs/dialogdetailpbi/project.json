@@ -1,0 +1,32 @@
+{
+  "_id": "66e901c165b533fbe0c72c03",
+  "type": "Proyek Baru",
+  "name": "Wangsit",
+  "initialName": "WGST",
+  "method": "Deployment",
+  "priority": 4,
+  "startAt": "2024-09-18T05:28:09.758Z",
+  "isApprover": false,
+  "leaders": ["DEV", "TW", "IOT"],
+  "members": ["DEV", "TW", "IOT"],
+  "isPM": true,
+  "totalModule": 4,
+  "totalCompletedModule": 0,
+  "totalSprintTask": 4,
+  "totalCompletedTask": 1,
+  "totalBacklogTask": 2,
+  "totalBugHistories": 0,
+  "totalSprintPoint": 0,
+  "status": "Sprint",
+  "managers": [
+    {
+      "id": "66d1771c1ebe5344bc2b9dab",
+      "name": "Super Admin"
+    }
+  ],
+  "templateProcess": {
+    "_id": "66e901c165b533fbe0c72c06",
+    "name": "Wangsit"
+  },
+  "createdAt": "2024-09-17 04:12:50"
+}
