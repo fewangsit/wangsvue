@@ -32,7 +32,12 @@ onUnmounted(() => {
   leaveRoom();
 });
 
-const props = withDefaults(defineProps<CommentProps>(), {});
+const props = withDefaults(defineProps<CommentProps>(), {
+  commentPosition: 'below',
+  useReactions: true,
+  useReplies: true,
+  useTimeStamp: true,
+});
 const editorVisibility = shallowRef<boolean>(true);
 const editorData = ref<JSONContent>();
 const commentsList = reactive<CommentData[]>([]);
@@ -48,6 +53,12 @@ const setEditorVisibility = (): void => {
 const fetchGetComments = async (): Promise<void> => {
   isLoading.value = true;
   try {
+    if (props.useExternalServices && props.data) {
+      commentsList.push(...props.data.data);
+      isLoading.value = false;
+      return;
+    }
+
     const { data } = await CommentServices.getCommentsByObjectId(
       props.objectId,
     );
@@ -184,6 +195,31 @@ const uploadImage = async (value: PostImage): Promise<void> => {
 </script>
 
 <template>
+  <template v-if="commentPosition === 'above'">
+    <div v-if="!isLoading">
+      <CommentBlock
+        :key="comment._id"
+        v-for="comment in commentsList"
+        v-bind="comment"
+        :comment-type="props.commentType"
+        :fetch-mention-suggestion-function="fetchMentionSuggestionFunction"
+        :use-reactions="props.useReactions"
+        :use-replies="props.useReplies"
+        :use-time-stamp="props.useTimeStamp"
+        :user="props.user"
+      />
+    </div>
+
+    <div v-else>
+      <div class="flex gap-1 items-center">
+        <Skeleton shape="circle" size="2rem" />
+        <Skeleton height="1rem" width="10rem" />
+      </div>
+
+      <Skeleton class="ml-[34px]" height="4rem" width="10rem" />
+    </div>
+  </template>
+
   <div class="flex gap-1 items-start">
     <Image
       :src="getNestedProperyValue(user, 'profilePicture') as string"
@@ -221,23 +257,27 @@ const uploadImage = async (value: PostImage): Promise<void> => {
     </div>
   </div>
 
-  <div v-if="!isLoading">
-    <CommentBlock
-      :key="comment._id"
-      v-for="comment in commentsList"
-      v-bind="comment"
-      :comment-type="props.commentType"
-      :fetch-mention-suggestion-function="fetchMentionSuggestionFunction"
-      :user="props.user"
-    />
-  </div>
-
-  <div v-else>
-    <div class="flex gap-1 items-center">
-      <Skeleton shape="circle" size="2rem" />
-      <Skeleton height="1rem" width="10rem" />
+  <template v-if="commentPosition === 'below'">
+    <div v-if="!isLoading">
+      <CommentBlock
+        :key="comment._id"
+        v-for="comment in commentsList"
+        v-bind="comment"
+        :comment-type="props.commentType"
+        :fetch-mention-suggestion-function="fetchMentionSuggestionFunction"
+        :use-reactions="props.useReactions"
+        :use-replies="props.useReplies"
+        :user="props.user"
+      />
     </div>
 
-    <Skeleton class="ml-[34px]" height="4rem" width="10rem" />
-  </div>
+    <div v-else>
+      <div class="flex gap-1 items-center">
+        <Skeleton shape="circle" size="2rem" />
+        <Skeleton height="1rem" width="10rem" />
+      </div>
+
+      <Skeleton class="ml-[34px]" height="4rem" width="10rem" />
+    </div>
+  </template>
 </template>

@@ -20,6 +20,9 @@ const props = withDefaults(defineProps<CommentBlockProps>(), {
   replies: () => {
     return [];
   },
+  useReactions: true,
+  useReplies: true,
+  useTimeStamp: true,
 });
 
 const replyMessageVisibility = ref(false);
@@ -189,7 +192,9 @@ watch(props, () => {
         rounded
       />
       <p class="text-grayscale-900 !font-semibold text-xs">{{ sender.name }}</p>
-      <p class="text-[8px] leading-4 text-general-300">{{ createdAt }}</p>
+      <p v-if="useTimeStamp" class="text-[8px] leading-4 text-general-300">
+        {{ createdAt }}
+      </p>
     </div>
 
     <div class="ml-[34px]">
@@ -201,7 +206,10 @@ watch(props, () => {
       </div>
     </div>
 
-    <div class="ml-[34px] mt-1 flex gap-2 items-center text-primary-400">
+    <div
+      v-if="!!useReactions || !!useReplies"
+      class="ml-[34px] mt-1 flex gap-2 items-center text-primary-400"
+    >
       <div v-if="!isLoadingReactions" class="flex gap-1 items-center">
         <div v-if="reactions.length > 0" class="flex items-center gap-1">
           <div
@@ -219,15 +227,16 @@ watch(props, () => {
         </div>
 
         <Icon
+          v-if="useReactions"
           @click="emojiOverlayPanel?.toggle($event)"
           icon="emotion-happy-line"
           severity="primary"
         />
       </div>
 
-      <p class="text-grayscale-900 text-xs font-medium">|</p>
+      <p v-if="useReplies" class="text-grayscale-900 text-xs font-medium">|</p>
       <p
-        v-if="props.user._id !== props.sender._id"
+        v-if="props.user._id !== props.sender._id && useReplies"
         @click="initialPostCommentsById"
         class="text-[10px] leading-4 font-medium"
       >
@@ -262,7 +271,10 @@ watch(props, () => {
       </div>
     </div>
 
-    <div v-if="replies.length > 0" class="ml-[34px] mt-1 flex flex-col gap-2">
+    <div
+      v-if="replies.length > 0 && useReplies"
+      class="ml-[34px] mt-1 flex flex-col gap-2"
+    >
       <div @click="setReplyMessageVisibility" class="flex gap-2 items-center">
         <Icon class="w-[18px] h-[18px]" icon="arrow-down" />
         <p class="text-xs !font-medium text-grayscale-900">
