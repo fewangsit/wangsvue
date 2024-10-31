@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.5.25
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.24...v1.5.25)
+
+## v1.5.24
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.23...v1.5.24)
+
+### 🚀 Enhancements
+
+- **Comment:** Add additional implementation ([d4c2328](https://github.com/fewangsit/wangsvue/commit/d4c2328))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.23
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.22...v1.5.23)
