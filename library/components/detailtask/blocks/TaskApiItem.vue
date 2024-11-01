@@ -14,6 +14,7 @@ import { useToast } from 'lib/utils';
 import { useLoadingStore } from 'lib/build-entry';
 import Form from 'lib/components/form/Form.vue';
 import { FormPayload } from 'lib/components/form/Form.vue.d';
+import DialogTestApi from './Dialog/DialogTestApi.vue';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -52,6 +53,7 @@ const bodyMandatoryOptions = shallowRef([
 ]);
 
 const dialogDeleteConfirm = ref(false);
+const dialogTestApi = ref(false);
 const expanded = ref(false);
 
 const formKey = ref(0);
@@ -244,6 +246,12 @@ const contentTypeChange = (): void => {
                   icon-class="!w-6 !h-6"
                   severity="secondary"
                   text
+                  type="button"
+                />
+                <Button
+                  @click="dialogTestApi = true"
+                  label="Tes API"
+                  severity="secondary"
                   type="button"
                 />
               </div>
@@ -449,6 +457,8 @@ const contentTypeChange = (): void => {
     message="Apakah kamu yakin ingin menghapusnya?"
     severity="danger"
   />
+
+  <DialogTestApi v-model:visible="dialogTestApi" />
 </template>
 
 <style scoped>
