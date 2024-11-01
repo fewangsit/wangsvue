@@ -85,6 +85,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
           import('./docs/dialog/DialogConfirmDocs.vue'),
       },
       {
+        path: 'dialogdetailpbi',
+        name: 'Dialog Detail PBI Docs',
+        component: (): Promise<Component> =>
+          import('./docs/dialogdetailpbi/DialogDetailPbiDocs.vue'),
+      },
+      {
         path: 'button',
         name: 'ButtonDocs',
         component: (): Promise<Component> =>

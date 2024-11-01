@@ -5,6 +5,7 @@ import {
   ChangelogOptionQuery,
 } from 'lib/components/changelog/Changelog.vue.d';
 import { FetchOptionResponse } from 'lib/components/filtercontainer/FilterContainer.vue.d';
+import { TimelineItem } from 'lib/components/timeline/Timeline.vue.d';
 import { getBaseURL } from 'lib/utils/getBaseURL.util';
 
 // Const user = JSON.parse(localStorage.getItem('user')!);
@@ -34,6 +35,12 @@ const AuditServices = {
     params?: ChangelogOptionQuery,
   ): Promise<AxiosResponse<FetchOptionResponse<ChangelogOptionQuery>>> => {
     return API({ params }).get('/change-log/options');
+  },
+
+  getEventLog: (
+    params?: ChangelogFilterQuery,
+  ): Promise<AxiosResponse<AxiosResponse<TimelineItem[]>>> => {
+    return API({ params }).get('/event-log');
   },
 };
 

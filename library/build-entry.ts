@@ -121,6 +121,7 @@ import {
   UserGroup,
   CodeSnippet,
   InvisibleField,
+  DialogDetailPbi,
 } from './components';
 
 export {
@@ -199,6 +200,7 @@ export {
   UserGroup,
   CodeSnippet,
   InvisibleField,
+  DialogDetailPbi,
 
   // Component store
   useLoadingStore,

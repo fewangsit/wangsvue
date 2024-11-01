@@ -4,34 +4,30 @@ import { WangsitStatus } from 'lib/types/wangsStatus.type';
 export default function getStatusSeverity(
   status: WangsitStatus,
 ): BadgeProps['severity'] {
-  switch (status) {
-    case 'Backlog':
-    case 'Waiting Approval':
-    case 'Not Ready Yet':
-      return 'dark';
-
-    case 'Sprint':
-    case 'Penyesuaian':
-    case 'On Deployment':
-      return 'warning';
-
-    case 'Pending Review Leader':
-    case 'Ready to Deploy':
-    case 'Pending E2E Testing Dev':
-    case 'Selesai Dev':
-    case 'Pending E2E Testing Staging':
-    case 'Selesai Staging':
-    case 'Pending E2E Testing':
-    default:
-      return 'primary';
-
-    case 'Fixing Bug':
-    case 'Reported Bug':
-    case 'Overdue':
-      return 'danger';
-
-    case 'Finish Deployment':
-    case 'Selesai':
-      return 'success';
+  if (['Backlog', 'Waiting Approval', 'Not Ready Yet'].includes(status)) {
+    return 'dark';
   }
+  if (['Sprint', 'Penyesuaian', 'On Deployment'].includes(status)) {
+    return 'warning';
+  }
+  if (
+    [
+      'Pending Review Leader',
+      'Ready to Deploy',
+      'Pending E2E Testing Dev',
+      'Selesai Dev',
+      'Pending E2E Testing Staging',
+      'Selesai Staging',
+      'Pending E2E Testing',
+    ].includes(status)
+  ) {
+    return 'primary';
+  }
+  if (['Fixing Bug', 'Reported Bug', 'Overdue', 'Nonaktif'].includes(status)) {
+    return 'danger';
+  }
+  if (['Finish Deployment', 'Selesai', 'Aktif'].includes(status)) {
+    return 'success';
+  }
+  return 'primary';
 }
