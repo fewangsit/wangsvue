@@ -5,7 +5,7 @@ import {
   ClassComponent,
   GlobalComponentConstructor,
   Nullable,
-  HintedString
+  HintedString,
 } from '../ts-helpers';
 
 export type Condition =

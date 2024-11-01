@@ -6,8 +6,7 @@ const taskId = inject<Ref<string>>('taskId');
 
 const getTaskReview = async (): Promise<void> => {
   try {
-    const { data } = await TaskServices.getTaskReview(taskId.value);
-    console.log('🚀 ~ getTaskReview ~ data:', data);
+    await TaskServices.getTaskReview(taskId.value);
   } catch (error) {
     console.error(error);
   }

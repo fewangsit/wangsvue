@@ -77,9 +77,11 @@ export type TaskLegendLoading = {
  *
  * @see <https://github.com/vuejs/vue/issues/2164>
  */
-const computedLegendForm = computed<TaskLegendForm>(() =>
-  Object.assign({}, legendForm.value),
-);
+/*
+ * Const computedLegendForm = computed<TaskLegendForm>(() =>
+ *   Object.assign({}, legendForm.value),
+ * );
+ */
 const legendOptions = ref<TaskLegendOptions>({});
 const legendLoading = ref<TaskLegendLoading>({
   process: false,
@@ -496,19 +498,16 @@ watch(
 watch(bindProcess, (value, oldValue) => {
   if (loadingTask.value || !oldValue || value?._id === oldValue?._id) return;
   legendForm.value.module = undefined;
-  console.log('watch bindProcess', loadingTask.value);
 });
 
 watch(bindModule, (value, oldValue) => {
   if (loadingTask.value || !oldValue || value?._id === oldValue?._id) return;
   legendForm.value.submodule = undefined;
-  console.log('watch bindModule');
 });
 
 watch(bindSubModule, (value, oldValue) => {
   if (loadingTask.value || !oldValue || value?._id === oldValue?._id) return;
   legendForm.value.repository = undefined;
-  console.log('watch bindSubModule');
 });
 
 watch(isTitleInputDisabled, (value) => {
