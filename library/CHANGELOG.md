@@ -1,6 +1,35 @@
 # Changelog
 
 
+## v1.5.26
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.25...v1.5.26)
+
+### 🚀 Enhancements
+
+- Add Dialog Detail PBI component ([c824f07](https://github.com/fewangsit/wangsvue/commit/c824f07))
+
+### 🩹 Fixes
+
+- **statusSeverity:** Reduce function complexity ([d2d3b58](https://github.com/fewangsit/wangsvue/commit/d2d3b58))
+
+### 💅 Refactors
+
+- **SummaryAccordion:** User profile doesn't need initial name ([04e9a12](https://github.com/fewangsit/wangsvue/commit/04e9a12))
+
+### 📖 Documentation
+
+- Add TODO ([2b49361](https://github.com/fewangsit/wangsvue/commit/2b49361))
+
+### 🏡 Chore
+
+- Add InvisibleField to build-entry ([142a59c](https://github.com/fewangsit/wangsvue/commit/142a59c))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.25
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.24...v1.5.25)
