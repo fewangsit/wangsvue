@@ -214,7 +214,7 @@ export interface MenuProps {
   model?: MenuItem[] | undefined;
   /**
    * Defines if menu would displayed as a popup.
-   * @defaultValue false
+   * @defaultValue true
    */
   popup?: boolean | undefined;
   /**

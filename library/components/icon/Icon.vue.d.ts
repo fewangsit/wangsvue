@@ -24,6 +24,7 @@ export type WangsIcons =
   | 'arrow-right-fill'
   | 'asset-view'
   | 'assignment'
+  | 'attachment-2'
   | 'audit'
   | 'barricade-line'
   | 'bell'
@@ -44,6 +45,7 @@ export type WangsIcons =
   | 'close'
   | 'close-circle'
   | 'close-circle-fill'
+  | 'cloud-line'
   | 'coins'
   | 'completion'
   | 'dashboard'
@@ -176,12 +178,17 @@ export type WangsIcons =
   | 'list-unordered'
   | 'external-link'
   | 'whatsapp'
+  | 'chat-1-line'
+  | 'attachment-2'
+  | 'save'
+  | 'chat-new-line'
   | 'code-box-line'
   | 'file-chart-line'
   | 'bar-chart-line'
   | 'bug-2-line'
   | 'run-line'
   | 'user-unfollow-line'
+  | 'archive-line'
   | 'emotion-happy-line';
 
 export interface IconProps {

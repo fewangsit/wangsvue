@@ -1,3 +1,4 @@
+import { EditorEvents } from '@tiptap/vue-3';
 import { ClassComponent } from '../ts-helpers';
 
 export interface EditorProps {
@@ -118,6 +119,14 @@ export type EditorEmits = {
    * but this only get triger if selected image get set by postImageLocal function
    */
   'deleteImageLocal': [value: ImageProperties];
+  /**
+   * Event emitted when the editor is blurred
+   */
+  'blur': [value: EditorEvents['blur']];
+  /**
+   * Event emitted when the editor is focused
+   */
+  'focus': [value: EditorEvents['focus']];
   /**
    * Emited Everytime mentioned user in editor change
    */

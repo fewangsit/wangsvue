@@ -229,6 +229,10 @@ export interface CheckboxProps {
    * @defaultValue false
    */
   unstyled?: boolean;
+  /**
+   * Style class of the checkbox's label.
+   */
+  labelClass?: any;
 }
 
 /**

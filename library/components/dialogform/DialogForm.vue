@@ -203,8 +203,8 @@ defineExpose({ form, clearField });
 
               <Button
                 v-if="closable"
-                v-bind="DialogFormPreset?.closedialog"
                 @click="closeDialog"
+                v-bind="DialogFormPreset?.closedialog"
                 icon="close"
                 icon-class="w-[22px] h-[22px]"
                 severity="secondary"
@@ -282,8 +282,8 @@ defineExpose({ form, clearField });
         </section>
 
         <aside
-          v-bind="DialogFormPreset?.asidesection(expanded, asideRightWidth)"
           v-if="$slots['aside-right']"
+          v-bind="DialogFormPreset?.asidesection(expanded, asideRightWidth)"
         >
           <slot name="aside-right" />
         </aside>

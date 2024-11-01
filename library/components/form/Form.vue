@@ -17,6 +17,8 @@ const props = withDefaults(defineProps<FormProps>(), {
   clearBtnLabel: 'Bersihkan Field',
   submitBtnLabel: 'Simpan',
   resetAfterSubmit: true,
+  cancelBtnSeverity: 'secondary',
+  submitBtnSeverity: 'success',
   stayCheckboxLabel: 'Tetap di halaman ini',
   validatorMessage: 'Please input all required field!',
 });
@@ -136,8 +138,9 @@ defineExpose({
             v-if="props.buttonsTemplate?.includes('cancel')"
             v-bind="Preset?.['cancel-button']"
             :label="cancelBtnLabel"
+            :severity="cancelBtnSeverity"
             @click="$emit('cancel')"
-            severity="secondary"
+            data-test="cancel-button"
             text
             type="button"
           />
@@ -153,8 +156,8 @@ defineExpose({
             v-if="props.buttonsTemplate?.includes('submit')"
             v-bind="Preset?.['submit-button']"
             :label="submitBtnLabel"
+            :severity="submitBtnSeverity"
             @click="onSubmitClicked"
-            severity="success"
             type="submit"
           />
         </div>

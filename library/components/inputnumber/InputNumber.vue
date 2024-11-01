@@ -88,6 +88,12 @@ const setValidatorMessage = async (
 ): Promise<string | boolean> => {
   await nextTick();
 
+  /**
+   * Check whether input has value, this way it can also accept the number 0 as value
+   */
+  const hasValue =
+    (value !== null || value !== undefined) && typeof value === 'number';
+
   // eslint-disable-next-line eqeqeq
   if (props.invalid && typeof props.validatorMessage === 'string') {
     return props.validatorMessage;
@@ -95,7 +101,7 @@ const setValidatorMessage = async (
     const { empty } = props.validatorMessage ?? {};
     if (value == null && props.mandatory) {
       return empty ?? true;
-    } else if (value && props.existingValues?.includes(value)) {
+    } else if (hasValue && props.existingValues?.includes(value)) {
       return props.validatorMessage?.exist ?? props.label + ' sudah ada';
     }
   }

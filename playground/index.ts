@@ -319,6 +319,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
         component: (): Promise<Component> =>
           import('./docs/fileupload/FileUploadDocs.vue'),
       },
+      {
+        path: 'detailtask',
+        name: 'Detail Task Docs',
+        component: (): Promise<Component> =>
+          import('./docs/detailtask/DetailTaskDocs.vue'),
+      },
     ],
   },
 ];

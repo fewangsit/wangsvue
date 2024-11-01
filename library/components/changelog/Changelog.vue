@@ -68,8 +68,8 @@ watch(visible, (newValue) => {
 <template>
   <button
     v-if="props.useButton"
-    v-bind="Preset?.button(buttonFocusClass)"
     @click="visible = true"
+    v-bind="Preset?.button(buttonFocusClass)"
     type="button"
   >
     <Icon
