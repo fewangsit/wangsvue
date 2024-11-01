@@ -26,6 +26,9 @@ interface FormContext<T> {
   setFieldValue: VeeFormContext['setFieldValue'];
 }
 
+/**
+ * TODO: create config multi build-entry for each project
+ */
 const useForm = <T>(): FormContext<T> => {
   const { values, handleSubmit, setValues, setFieldValue } = veeUseForm();
   return {
@@ -116,6 +119,9 @@ import {
   InputBadge,
   FileUpload,
   UserGroup,
+  CodeSnippet,
+  InvisibleField,
+  DialogDetailPbi,
 } from './components';
 
 export {
@@ -192,6 +198,9 @@ export {
   ProgressBar,
   FileUpload,
   UserGroup,
+  CodeSnippet,
+  InvisibleField,
+  DialogDetailPbi,
 
   // Component store
   useLoadingStore,

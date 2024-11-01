@@ -12,6 +12,12 @@ export interface BadgeGroupProps
    * The dialog header shown on more button clicked
    */
   headerLabel?: string;
+  /**
+   * TODO: Implement emptyable badge group
+   * Specify if the badge should be emptyable
+   * @default false
+   */
+  emptyable?: boolean;
 }
 
 export default class Badge extends ClassComponent<

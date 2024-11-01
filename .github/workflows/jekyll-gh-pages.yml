@@ -42,8 +42,10 @@ jobs:
       - name: Vite Build
         run: pnpm build
         env:
+          VITE_APP_TASK_API: ${{ secrets.APP_TASK_API }}
           VITE_APP_LOGS_API: ${{ secrets.APP_LOGS_API }}
           VITE_APP_COMMENTS_API: ${{ secrets.APP_COMMENTS_API }}
+          VITE_APP_PROJECT_SPRINT_API: ${{ secrets.APP_PROJECT_SPRINT_API }}
           VITE_APP_TEAM_MEMBER_MEMBER_API: ${{ secrets.APP_TEAM_MEMBER_MEMBER_API }}
 
       - name: Setup Pages

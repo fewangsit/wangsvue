@@ -1,6 +1,84 @@
 # Changelog
 
 
+## v1.5.27
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.26...v1.5.27)
+
+## v1.5.26
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.25...v1.5.26)
+
+### 🚀 Enhancements
+
+- Add Dialog Detail PBI component ([c824f07](https://github.com/fewangsit/wangsvue/commit/c824f07))
+
+### 🩹 Fixes
+
+- **statusSeverity:** Reduce function complexity ([d2d3b58](https://github.com/fewangsit/wangsvue/commit/d2d3b58))
+
+### 💅 Refactors
+
+- **SummaryAccordion:** User profile doesn't need initial name ([04e9a12](https://github.com/fewangsit/wangsvue/commit/04e9a12))
+
+### 📖 Documentation
+
+- Add TODO ([2b49361](https://github.com/fewangsit/wangsvue/commit/2b49361))
+
+### 🏡 Chore
+
+- Add InvisibleField to build-entry ([142a59c](https://github.com/fewangsit/wangsvue/commit/142a59c))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.25
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.24...v1.5.25)
+
+## v1.5.24
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.23...v1.5.24)
+
+### 🚀 Enhancements
+
+- **Comment:** Add additional implementation ([d4c2328](https://github.com/fewangsit/wangsvue/commit/d4c2328))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.23
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.22...v1.5.23)
+
+### 🚀 Enhancements
+
+- Add component InvisibleField ([165d89c](https://github.com/fewangsit/wangsvue/commit/165d89c))
+
+### 📖 Documentation
+
+- Add TODO ([6310738](https://github.com/fewangsit/wangsvue/commit/6310738))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.22
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.21...v1.5.22)
+
+### 🚀 Enhancements
+
+- Export CodeSnippet ([255d139](https://github.com/fewangsit/wangsvue/commit/255d139))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.21
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.20...v1.5.21)

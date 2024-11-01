@@ -5,6 +5,15 @@ import {
   EditTaskDTO,
 } from 'lib/dto/task.dto';
 import { getBaseURL } from 'lib/utils/getBaseURL.util';
+import {
+  FetchResponse,
+  QueryParams,
+} from 'lib/components/datatable/DataTable.vue.d';
+import {
+  Task,
+  TaskOptions,
+} from 'lib/components/dialogdetailpbi/DialogDetailPbi.vue.d';
+import { FetchOptionResponse } from 'lib/components/filtercontainer/FilterContainer.vue.d';
 
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
   const user = JSON.parse(localStorage.getItem('user') as string) ?? {};
@@ -38,8 +47,8 @@ const TaskServices = {
   },
 
   getTaskOptions: (
-    params?: Record<string, string | boolean>,
-  ): Promise<AxiosResponse> => {
+    params: TaskOptions,
+  ): Promise<AxiosResponse<FetchOptionResponse<TaskOptions>>> => {
     return API({ params }).get('/options');
   },
 
@@ -65,6 +74,14 @@ const TaskServices = {
 
   getTaskReview: (taskId: string): Promise<AxiosResponse> => {
     return API().get(`/${taskId}/review`);
+  },
+
+  getTasks: (
+    query: QueryParams,
+  ): Promise<AxiosResponse<FetchResponse<Task>>> => {
+    return API().get('/', {
+      params: query,
+    });
   },
 };
 

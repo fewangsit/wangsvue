@@ -13,7 +13,6 @@ const userProfileSummary = reactive<UserProfileSummary>({
   type: 'profile',
   nickName: 'Kur',
   fullName: 'Zain Kurnia',
-  initialName: 'KUR',
   division: 'RnD',
   position: 'Front End Developer',
   isActive: true,

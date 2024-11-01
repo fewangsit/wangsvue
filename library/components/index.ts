@@ -53,6 +53,9 @@ import InputBadge from './inputbadge/InputBadge.vue';
 import InputCurrency from './inputcurrency/InputCurrency.vue';
 import FileUpload from './fileupload/FileUpload.vue';
 import UserGroup from './usergroup/UserGroup.vue';
+import CodeSnippet from './codesnippet/CodeSnippet.vue';
+import InvisibleField from './invisiblefield/InvisibleField.vue';
+import DialogDetailPbi from './dialogdetailpbi/DialogDetailPbi.vue';
 
 export {
   Badge,
@@ -110,4 +113,7 @@ export {
   InputCurrency,
   FileUpload,
   UserGroup,
+  CodeSnippet,
+  InvisibleField,
+  DialogDetailPbi,
 };

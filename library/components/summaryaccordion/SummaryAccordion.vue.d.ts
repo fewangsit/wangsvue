@@ -48,7 +48,7 @@ export interface SubModuleSummary extends Omit<Summary, 'initialName'> {
 }
 
 export interface UserProfileSummary
-  extends Omit<Summary, 'name' | 'priority' | 'status'> {
+  extends Omit<Summary, 'name' | 'initialName' | 'priority' | 'status'> {
   type: 'profile';
   nickName: string;
   fullName: string;

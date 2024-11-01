@@ -4,6 +4,7 @@ import Card from 'lib/components/card/Card.vue';
 import Form from 'lib/components/form/Form.vue';
 import { FormValue } from 'lib/components/form/Form.vue.d';
 import InputText from 'lib/components/inputtext/InputText.vue';
+import InvisibleField from 'lib/components/invisiblefield/InvisibleField.vue';
 import { ref } from 'vue';
 import DocTitle from '../DocTitle.vue';
 
@@ -53,6 +54,10 @@ const apply = (
               mandatory
               placeholder="Use custom placholder"
               use-validator
+            />
+            <InvisibleField
+              :field-name="`rahasia${[index]}`"
+              value="Resep Rahasia"
             />
             <InputText
               v-if="first"
