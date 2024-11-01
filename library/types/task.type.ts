@@ -1,3 +1,4 @@
+import { FormDataBody } from 'lib/dto/taskApi.dto';
 import { Member } from './member.type';
 import { DropdownOption } from './options.type';
 import { Project } from './project.type';
@@ -111,4 +112,30 @@ export type TaskChecklistTemplate = {
   createdBy: Member;
   createdAt: string;
   updatedAt: string;
+};
+
+export interface TaskAPI {
+  _id: string;
+  name: string;
+  header?: string;
+  url?: string;
+  method?: string;
+  query?: string[];
+  contentType: string;
+  jsonBody?: string;
+  formDataBody?: FormDataBody[];
+  response?: string;
+  isIntact?: boolean;
+  isSuccess?: boolean;
+  updatedBy: Member;
+  updatedAt: string;
+  anyChanges?: boolean; // Custom field for indicator if there is any changes in the data
+}
+
+export type FormDataBodyCustom = Omit<FormDataBody, 'isMandatory'> & {
+  isMandatory: 'ya' | 'tidak';
+};
+
+export type TaskAPIFormDataCustom = Omit<TaskAPI, 'formDataBody'> & {
+  formDataBody: FormDataBodyCustom[];
 };

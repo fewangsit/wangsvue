@@ -45,6 +45,7 @@ export type WangsIcons =
   | 'close'
   | 'close-circle'
   | 'close-circle-fill'
+  | 'cloud-line'
   | 'coins'
   | 'completion'
   | 'dashboard'

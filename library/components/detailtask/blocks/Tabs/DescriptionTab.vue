@@ -3,6 +3,7 @@ import TaskAttachment from '../TaskAttachment.vue';
 import TaskChecklist from '../TaskChecklist.vue';
 import TaskDescription from '../TaskDescription.vue';
 import TaskLink from '../TaskLink.vue';
+import TaskApi from '../TaskApi.vue';
 </script>
 
 <template>
@@ -12,6 +13,7 @@ import TaskLink from '../TaskLink.vue';
       <TaskAttachment />
       <TaskLink />
       <TaskChecklist />
+      <TaskApi />
     </div>
   </div>
 </template>
