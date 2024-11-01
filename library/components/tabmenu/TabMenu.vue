@@ -73,7 +73,7 @@ watch(
         :to="item.route"
         custom
       >
-        <a v-ripple :href="href" v-bind="tabProps.action" @click="navigate">
+        <a :href="href" v-bind="tabProps.action" @click="navigate">
           <Icon
             v-if="item.icon"
             v-bind="tabProps.icon"
@@ -83,13 +83,7 @@ watch(
         </a>
       </router-link>
 
-      <a
-        v-else
-        v-ripple
-        :href="item.url"
-        :target="item.target"
-        v-bind="tabProps.action"
-      >
+      <a v-else :href="item.url" :target="item.target" v-bind="tabProps.action">
         <Icon
           v-if="item.icon"
           v-bind="tabProps.icon"
