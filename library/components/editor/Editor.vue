@@ -490,17 +490,15 @@ const setImageDialog = (): boolean => {
   return false;
 };
 
-const setPreviewImages = async (data: {
-  target: {
-    files: File[];
-  };
-}): Promise<void> => {
+const setPreviewImages = async (event: Event): Promise<void> => {
+  // Get the image file selected.
+  const { files } = event.target as HTMLInputElement;
   if (props.isImageUploadBase64) {
-    const convertRes = await convertBase64(data.target.files[0]);
+    const convertRes = await convertBase64(files[0]);
     setImageFunction(convertRes as string);
   } else {
     emit('postImageLocal', {
-      image: data.target.files[0],
+      image: files[0],
       setImageCb: setImageFunction,
     });
   }
@@ -910,7 +908,7 @@ watch(registeredMentionList, () => {
             <div>
               <p>Baru Saja Ditambahkan</p>
               <div class="flex flex-wrap justify-center gap-2">
-                <Img
+                <img
                   :key="index"
                   v-for="(previewImage, index) in previewImages"
                   :src="previewImage"
@@ -929,7 +927,7 @@ watch(registeredMentionList, () => {
                     <template #default>
                       <div class="relative py-[7px] px-3">
                         <p>Cari Gambar</p>
-                        <Input
+                        <input
                           @change="setPreviewImages"
                           class="opacity-0 absolute top-0 bottom-0 left-0 right-0"
                           type="file"
