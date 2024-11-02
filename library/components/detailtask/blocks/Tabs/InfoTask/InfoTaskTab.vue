@@ -200,6 +200,7 @@ const getDuration = (duration: number): string => {
                   ? new Date(taskDetail?.startDate).getTime()
                   : undefined
               "
+              :min-date="new Date()"
               @update:model-value="updateStartDate"
               class="!h-[0.000000001px] !w-[0.0000000001px]"
               show-time
