@@ -4,7 +4,7 @@ import UserName from 'lib/components/username/UserName.vue';
 import {
   AttachmentItemProps,
   AttachmentItemEmits,
-} from './TaskAttachmentItem.vue.d';
+} from './AttachmentItem.vue.d';
 import Form from 'lib/components/form/Form.vue';
 import { FormPayload } from 'lib/components/form/Form.vue.d';
 import InputText from 'lib/components/inputtext/InputText.vue';
@@ -14,7 +14,7 @@ import { UpdateTaskAttachmentCaptionDTO } from 'lib/dto/taskAttachment.dto';
 import { formatDateReadable } from 'lib/utils/date.util';
 import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
 import { useToast } from 'lib/utils';
-import TaskAttachmentThumbnail from './TaskAttachmentThumbnail.vue';
+import TaskAttachmentThumbnail from '../../../common/AttachmentThumbnail.vue';
 import TaskChecklistServices from 'lib/services/taskChecklist.service';
 
 const toast = useToast();
