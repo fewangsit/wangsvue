@@ -519,40 +519,7 @@ watch(isTitleInputDisabled, (value) => {
   <div class="flex flex-col gap-6 mb-3" data-wv-section="detailtask-legend">
     <DialogPriorityValue
       v-model:visible="showDialogNilaiPrioritas"
-      :legend="legendForm as TaskLegend"
-      :tasks="[
-        // TODO: Remove and replace this with detail task's data.
-        {
-          process: {
-            _id: '1',
-            name: 'Pengonsepan',
-            team: [],
-            processPosition: '-',
-          },
-          title: 'Process',
-          priorityValue: 1,
-        },
-        {
-          process: {
-            _id: '2',
-            name: 'Detailing',
-            team: [],
-            processPosition: '-',
-          },
-          title: 'Process',
-          priorityValue: 5,
-        },
-        {
-          process: {
-            _id: '3',
-            name: 'Slicing Komponen Web',
-            team: [],
-            processPosition: '-',
-          },
-          title: 'Process',
-          priorityValue: 10,
-        },
-      ]"
+      :priority-value="taskDetail?.priority"
     />
     <div class="flex justify-between items-center">
       <div

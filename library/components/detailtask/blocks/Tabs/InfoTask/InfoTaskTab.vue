@@ -211,7 +211,7 @@ const getDuration = (duration: number): string => {
       <TaskDependency />
       <TaskList child />
       <Ticket :tickets="[]" />
-      <TaskList show-priority-value />
+      <TaskList />
     </div>
   </div>
 </template>
