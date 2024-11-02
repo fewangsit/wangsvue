@@ -17,7 +17,7 @@ import ProjectProcessServices from 'lib/services/projectProcess.service';
 import { useToast } from 'lib/utils';
 import ModuleServices from 'lib/services/module.service';
 import SubModuleServices from 'lib/services/submodule.service';
-import DialogPriorityValue from './Dialog/DialogPriorityValue.vue';
+import DialogPriorityValue from './DialogPriorityValue.vue';
 import TaskServices from 'lib/services/task.service';
 import { CreateTaskDTO, EditTaskDTO } from 'lib/dto/task.dto';
 import { ProjectProcess } from 'lib/types/projectProcess.type';
