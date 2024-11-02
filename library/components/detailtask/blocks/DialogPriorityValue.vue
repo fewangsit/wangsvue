@@ -7,7 +7,7 @@ import Dialog from 'lib/components/dialog/Dialog.vue';
 import ValidatorMessage from 'lib/components/validatormessage/ValidatorMessage.vue';
 import { useToast } from 'lib/utils';
 import useLoadingStore from 'lib/components/loading/store/loading.store';
-import TaskList from '../TaskList.vue';
+import TaskList from './Tabs/InfoTask/TaskList/TaskList.vue';
 import { EditTaskDTO } from 'lib/dto/task.dto';
 import TaskServices from 'lib/services/task.service';
 import eventBus from 'lib/event-bus';

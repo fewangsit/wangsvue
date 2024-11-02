@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import TaskAttachment from '../TaskAttachment.vue';
-import TaskChecklist from '../TaskChecklist.vue';
-import TaskDescription from '../TaskDescription.vue';
-import TaskLink from '../TaskLink.vue';
-import TaskApi from '../TaskApi.vue';
+import TaskAttachment from './Attachment/Attachment.vue';
+import TaskChecklist from './Checklist/Checklist.vue';
+import TaskDescription from './Description/Description.vue';
+import TaskLink from './TaskLink/TaskLink.vue';
+import TaskApi from './API/API.vue';
 </script>
 
 <template>

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import Button from 'lib/components/button/Button.vue';
 import Icon from 'lib/components/icon/Icon.vue';
-import DialogSetTaskLink from './Dialog/DialogSetTaskLink.vue';
 import { computed, inject, onMounted, Ref, ref, watch } from 'vue';
 import { TaskDetail, TaskLink } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 import TaskLinkServices from 'lib/services/taskLink.service';
 import UserName from 'lib/components/username/UserName.vue';
 import { formatDateReadable } from 'lib/utils/date.util';
+import DialogSetTaskLink from './DialogSetTaskLink.vue';
 
 const toast = useToast();
 
