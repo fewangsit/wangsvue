@@ -433,6 +433,12 @@ const getRepositoryOptions = (): void => {
   }
 };
 
+const onBlurTitleInput = (): void => {
+  if (legendForm.value.title !== taskDetail.value.name) {
+    handleTaskChange();
+  }
+};
+
 watch(
   taskDetail,
   () => {
@@ -608,7 +614,7 @@ watch(isTitleInputDisabled, (value) => {
           ref="titleInput"
           v-model="legendForm.title"
           :disabled="isTitleInputDisabled"
-          @blur="handleTaskChange"
+          @blur="onBlurTitleInput"
           @input="handleTitleInput"
           @keypress="handleTitleInput"
           auto-resize
