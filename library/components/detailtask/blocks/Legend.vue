@@ -434,7 +434,7 @@ const getRepositoryOptions = (): void => {
 };
 
 const onBlurTitleInput = (): void => {
-  if (legendForm.value.title !== taskDetail.value.name) {
+  if (legendForm.value.title !== taskDetail.value?.name) {
     handleTaskChange();
   }
 };
