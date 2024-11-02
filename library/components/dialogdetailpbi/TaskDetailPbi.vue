@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import { computed, onMounted, shallowRef } from 'vue';
-import TaskDetailUnassignedPbi from './TaskDetailUnassignedPbi.vue';
-import AssignMember from './AssignMember.vue';
-import taskFilterFields from './options/taskFilterFields';
 import {
   TableColumn,
   TableCellComponent,
@@ -21,6 +18,9 @@ import {
   getUserPermission,
   isIntersect,
 } from 'lib/utils';
+import TaskDetailUnassignedPbi from './TaskDetailUnassignedPbi.vue';
+import AssignMember from './AssignMember.vue';
+import taskFilterFields from './options/taskFilterFields';
 import Badge from '../badge/Badge.vue';
 import UserName from '../username/UserName.vue';
 import Button from '../button/Button.vue';
