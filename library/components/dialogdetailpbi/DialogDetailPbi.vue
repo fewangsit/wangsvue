@@ -146,7 +146,7 @@ const getEventLog = async (): Promise<void> => {
                 :label="print.printValue.value"
                 format="nowrap"
               />
-              <span v-else class="content-center">'-'</span>
+              <span v-else class="content-center"> - </span>
             </template>
             <template v-else-if="print.printValue.type === 'user'">
               <UserName

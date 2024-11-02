@@ -7,6 +7,7 @@ import Dialog from 'primevue/dialog';
 
 const props = withDefaults(defineProps<BadgeGroupProps>(), {
   headerLabel: 'Header',
+  emptyable: false,
 });
 
 const Preset = inject<Record<string, any>>('preset', {}).badgegroup;
@@ -23,7 +24,8 @@ const totalRemainingLabel = computed(
 </script>
 
 <template>
-  <div v-bind="Preset?.root">
+  <span v-if="props.emptyable && !showedLabels.length"> - </span>
+  <div v-else v-bind="Preset?.root">
     <Badge
       :key="label"
       v-for="label in showedLabels"
