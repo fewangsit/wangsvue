@@ -18,6 +18,7 @@ import InputText from 'lib/components/inputtext/InputText.vue';
 
 import FieldWrapper from 'lib/components/fieldwrapper/FieldWrapper.vue';
 import TSButton from '../button/Button.vue';
+import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 
 const BYTES_TO_MEGABYTES = 1048576;
 
@@ -67,7 +68,16 @@ onMounted(() => {
 });
 
 const setValidatorMessage = (value: string): boolean | string => {
-  return !(props.mandatory && !value && !currentFile.value);
+  if (typeof props.validatorMessage === 'string') {
+    return props.validatorMessage;
+  } else if (typeof props.validatorMessage !== 'string') {
+    const { empty } = props.validatorMessage ?? {};
+    if (!value && props.mandatory && !currentFile.value) {
+      return empty ?? true;
+    }
+  }
+
+  return true;
 };
 
 const selectHandler = (event: { files: File[] }): void => {
@@ -188,7 +198,10 @@ watch(errorMessages, (message) => {
     @upload="$emit('upload', $event)"
   >
     <template #header="{ files, chooseCallback, clearCallback }">
-      <div class="grid grid-cols-[auto,max-content] gap-3 items-end">
+      <div
+        :class="{ 'grid-cols-[auto,max-content]': props.withUpload }"
+        class="grid gap-3 items-end"
+      >
         <FieldWrapper
           v-bind="Preset.wrapper"
           :error-messages="errorMessages"
@@ -207,21 +220,33 @@ watch(errorMessages, (message) => {
             <template #addon-left> Browse</template>
           </InputText>
           <div
-            v-if="props.fileExtensions || props.fileRequirements"
-            v-bind="Preset.requirements"
+            :class="{
+              'justify-between': field.errorMessage,
+              'justify-end': !field.errorMessage && props.validatorMessage,
+            }"
+            class="flex w-full"
           >
-            <small class="'!mt-0 font-light text-xs text-general-500'">
-              <template v-if="fileRequirements">
-                {{ fileRequirements }}
-              </template>
-              <template v-else>
-                {{
-                  props.maxFileSize
-                    ? `${props.fileExtensions}. max file ${Math.round(props.maxFileSize / BYTES_TO_MEGABYTES)} MB`
-                    : `${props.fileExtensions} file`
-                }}
-              </template>
-            </small>
+            <ValidatorMessage
+              :class="props.validatorMessageClass"
+              :message="field.errorMessage"
+            />
+            <div
+              v-if="props.fileExtensions || props.fileRequirements"
+              v-bind="Preset.requirements"
+            >
+              <small class="'!mt-0 font-light text-xs text-general-500'">
+                <template v-if="fileRequirements">
+                  {{ fileRequirements }}
+                </template>
+                <template v-else>
+                  {{
+                    props.maxFileSize
+                      ? `${props.fileExtensions}. max file ${Math.round(props.maxFileSize / BYTES_TO_MEGABYTES)} MB`
+                      : `${props.fileExtensions} file`
+                  }}
+                </template>
+              </small>
+            </div>
           </div>
         </FieldWrapper>
         <template v-if="props.withUpload">

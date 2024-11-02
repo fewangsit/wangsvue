@@ -114,7 +114,8 @@ const inputPlaceholder = computed(
 
 const editor = useEditor({
   content: props.initialValue ?? props.modelValue,
-
+  onBlur: (e) => emit('blur', e),
+  onFocus: (e) => emit('focus', e),
   onUpdate: () => {
     emit('update:modelValue', editor.value?.getJSON() ?? {});
     field.value = editor.value?.getJSON() ?? {};
@@ -676,6 +677,8 @@ watch(
   () => props.modelValue,
   (value) => {
     field.value = value;
+
+    editor.value.commands.setContent(value);
   },
 );
 

@@ -85,6 +85,7 @@ watch(
     </Checkbox>
 
     <span
+      :class="props.labelClass"
       class="flex items-start gap-px select-none tracking-[0.02em] leading-none"
       data-wv-section="checkbox-label"
     >

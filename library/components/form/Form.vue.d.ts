@@ -5,6 +5,7 @@ import {
   ClassComponent,
   GlobalComponentConstructor,
   Nullable,
+  HintedString,
 } from '../ts-helpers';
 
 export type Condition =
@@ -101,6 +102,30 @@ export interface FormProps {
    * Custom submit form validator message.
    */
   validatorMessage?: string;
+  /**
+   * Defines the style of the cancel button.
+   */
+  cancelBtnSeverity?: HintedString<
+    | 'secondary'
+    | 'success'
+    | 'info'
+    | 'warning'
+    | 'help'
+    | 'danger'
+    | 'contrast'
+  >;
+  /**
+   * Defines the style of the submit button.
+   */
+  submitBtnSeverity?: HintedString<
+    | 'secondary'
+    | 'success'
+    | 'info'
+    | 'warning'
+    | 'help'
+    | 'danger'
+    | 'contrast'
+  >;
 }
 
 /**

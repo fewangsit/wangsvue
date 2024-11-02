@@ -18,6 +18,6 @@ export default {
     class: [{ 'mb-[21px]': props.fileExtensions || props.fileRequirements }],
   }),
   requirements: {
-    class: 'flex w-full justify-start',
+    class: 'flex justify-start',
   },
 };

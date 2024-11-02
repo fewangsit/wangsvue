@@ -1,3 +1,8 @@
+import {
+  FileUploadErrorEvent,
+  FileUploadUploadEvent,
+} from 'primevue/fileupload';
+import { CustomValidation } from '../form/Form.vue.d';
 import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
 
 export type InputErrorCodes = 'FILE_SIZE_TOO_LARGE';
@@ -88,11 +93,20 @@ export type FileUploadProps = {
    */
   mandatory?: boolean;
   /**
-   * Wether show toast error message on invalid file input
+   * Whether show toast error message on invalid file input
    *
    * @default true;
    */
   useErrorToast?: boolean;
+  /**
+   * Set custom validator message.
+   * Will be show if invalid="true"
+   */
+  validatorMessage?: string | CustomValidation;
+  /**
+   * Classes for validator message in input field.
+   */
+  validatorMessageClass?: string;
 };
 
 export type FileUploadEmits = {

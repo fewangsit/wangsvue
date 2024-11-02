@@ -15,7 +15,7 @@ import Focus from 'lib/directives/focus';
 
 // Preset
 import { wangsvue } from './presets';
-// import(`./presets/${import.meta.env.VITE_APP_PRESET}/index.css`);
+// Import(`./presets/${import.meta.env.VITE_APP_PRESET}/index.css`);
 import './presets/wangsvue/index.css';
 
 const app = createApp(App);

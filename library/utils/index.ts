@@ -6,6 +6,7 @@ import getImageURL from './getImageURL.util';
 import genPlaceholder from './genPlaceholder.util';
 import getStatusSeverity from './statusSeverity.util';
 import { checkRouteAccess } from './role.util';
+import getAttachmentIcon from './getAttachmentIcon.util';
 import isEmptyObject from './object.util';
 import getUser from './getUser.util';
 import getUserPermission from './getUserPermission.util';
@@ -39,6 +40,7 @@ export {
   genPlaceholder,
   getInititalName,
   getStatusSeverity,
+  getAttachmentIcon,
   getUser,
   getUserPermission,
   isIntersect,
