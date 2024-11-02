@@ -15,7 +15,9 @@ import Editor from '../editor/Editor.vue';
 import Timeline from '../timeline/Timeline.vue';
 import AuditServices from 'lib/services/log.service';
 
-const props = defineProps<DialogDetailPbiProps>();
+const props = withDefaults(defineProps<DialogDetailPbiProps>(), {
+  editable: true,
+});
 
 const menu: MenuItem[] = [
   { label: 'Deskripsi' },
