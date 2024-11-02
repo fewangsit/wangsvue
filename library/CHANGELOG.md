@@ -1,6 +1,66 @@
 # Changelog
 
 
+## v1.5.28
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.27...v1.5.28)
+
+### 🚀 Enhancements
+
+- **detailtask:** Initial detail task component ([e51a56f](https://github.com/fewangsit/wangsvue/commit/e51a56f))
+- **icon:** Added new icon chat-1-line ([3836e97](https://github.com/fewangsit/wangsvue/commit/3836e97))
+- **icon:** New icon, attachment-2 ([b4d76af](https://github.com/fewangsit/wangsvue/commit/b4d76af))
+- **detailtask:** Better documentation page ([fd7b125](https://github.com/fewangsit/wangsvue/commit/fd7b125))
+- **detailtask:** Better documentation ([d9148c4](https://github.com/fewangsit/wangsvue/commit/d9148c4))
+- Add attachment section in detail task ([f2742d8](https://github.com/fewangsit/wangsvue/commit/f2742d8))
+- **detailtask:** Add confirm dialog while delete task attachemt ([7780098](https://github.com/fewangsit/wangsvue/commit/7780098))
+- **detailtask:** Task link ([f14b7e3](https://github.com/fewangsit/wangsvue/commit/f14b7e3))
+- **detailtask:** Add functionality for download file in task attachment ([220412d](https://github.com/fewangsit/wangsvue/commit/220412d))
+- Update detail task ([b3ebd16](https://github.com/fewangsit/wangsvue/commit/b3ebd16))
+- **detailtask:** Update features and conditions in task dependency section ([591efbf](https://github.com/fewangsit/wangsvue/commit/591efbf))
+- **detailtask:** Add functionality of task list ([3fa69db](https://github.com/fewangsit/wangsvue/commit/3fa69db))
+- **detailtask:** Connect edit priority value with API in dialogpriorityvalue ([c7832b6](https://github.com/fewangsit/wangsvue/commit/c7832b6))
+- **detailtask:** Add functionality for task checklist ([cde363c](https://github.com/fewangsit/wangsvue/commit/cde363c))
+- **detailtask:** Add attachment functionality for task checklist in detail task ([0690c51](https://github.com/fewangsit/wangsvue/commit/0690c51))
+- **detailtask:** Add review task tab ([51f1a1f](https://github.com/fewangsit/wangsvue/commit/51f1a1f))
+- **detailtask:** Add task api tab ([38f5bdc](https://github.com/fewangsit/wangsvue/commit/38f5bdc))
+- **detailtask:** Add dialogtestapi ([2011c45](https://github.com/fewangsit/wangsvue/commit/2011c45))
+
+### 🩹 Fixes
+
+- **inputnumber:** Better hasValue check ([e89556f](https://github.com/fewangsit/wangsvue/commit/e89556f))
+- **detailtask:** Reset task tab index ([229b8ea](https://github.com/fewangsit/wangsvue/commit/229b8ea))
+- Conflict in detailtask ([f401dde](https://github.com/fewangsit/wangsvue/commit/f401dde))
+- Get task id based on injection value in TaskAttachment ([cb2965d](https://github.com/fewangsit/wangsvue/commit/cb2965d))
+- **detailtask:** Sync upload progress with progress bar in dialogaddattachment ([12a1b6b](https://github.com/fewangsit/wangsvue/commit/12a1b6b))
+- **detailtask:** Set condition for showing download option in task attachment ([d5140c0](https://github.com/fewangsit/wangsvue/commit/d5140c0))
+- **detailtask:** Update filetype in task attachment ([e0e0d70](https://github.com/fewangsit/wangsvue/commit/e0e0d70))
+- **detailtask:** Update error handler while failed to download task attachment ([625e640](https://github.com/fewangsit/wangsvue/commit/625e640))
+- Conflict with latest commit in main branch ([95ce445](https://github.com/fewangsit/wangsvue/commit/95ce445))
+- Conflict in playground ([e46952e](https://github.com/fewangsit/wangsvue/commit/e46952e))
+- **detailtask:** Update condition for showing task dependencies section ([690b466](https://github.com/fewangsit/wangsvue/commit/690b466))
+- **detailtask:** Update field for priority value in tasklist ([3f028a5](https://github.com/fewangsit/wangsvue/commit/3f028a5))
+- **detailtask:** Update attachment thumbnail based on file type and fix editor state in description ([e79a525](https://github.com/fewangsit/wangsvue/commit/e79a525))
+- **detailtask:** Update format time in task description ([7a780d7](https://github.com/fewangsit/wangsvue/commit/7a780d7))
+- Conflict in icon.css ([b4a6f26](https://github.com/fewangsit/wangsvue/commit/b4a6f26))
+- **detailtask:** Update formatFilePath in taskattachmentthumbnail ([817246c](https://github.com/fewangsit/wangsvue/commit/817246c))
+- Conflicts ([18e6312](https://github.com/fewangsit/wangsvue/commit/18e6312))
+
+### 💅 Refactors
+
+- Add validator message in FileUpload & adjust styling ([94ed326](https://github.com/fewangsit/wangsvue/commit/94ed326))
+
+### 🏡 Chore
+
+- 02/10/24 ([d1d16ea](https://github.com/fewangsit/wangsvue/commit/d1d16ea))
+- Linting code ([38f1211](https://github.com/fewangsit/wangsvue/commit/38f1211))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Dzulqtera <dzul@qtera.co.id>
+- Programmer-fe6 ([@programmer-fe6](http://github.com/programmer-fe6))
+
 ## v1.5.27
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.26...v1.5.27)
