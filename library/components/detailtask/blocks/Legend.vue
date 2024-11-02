@@ -26,8 +26,10 @@ import { ProjectSubModule } from 'lib/types/projectSubmodule.type';
 import Textarea from 'primevue/textarea';
 import eventBus from 'lib/event-bus';
 import { TaskDetail } from 'lib/types/task.type';
+import { useLoadingStore } from 'lib/build-entry';
 
 const toast = useToast();
+const { setLoading } = useLoadingStore();
 
 const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
@@ -439,6 +441,25 @@ const onBlurTitleInput = (): void => {
   }
 };
 
+const markAsDone = async (): Promise<void> => {
+  try {
+    setLoading(true);
+    const { data } = await TaskServices.markTaskAsDone(taskId.value);
+    if (data) {
+      eventBus.emit('detail-task:create', { taskId: taskId.value });
+    }
+  } catch (error) {
+    console.error(error);
+    toast.add({
+      message: 'Data Task gagal diubah.',
+      severity: 'error',
+      error,
+    });
+  } finally {
+    setLoading(false);
+  }
+};
+
 watch(
   taskDetail,
   () => {
@@ -627,7 +648,12 @@ watch(isTitleInputDisabled, (value) => {
       </div>
       <div class="flex items-center gap-2">
         <Badge :label="taskDetail?.status ?? 'Backlog'" />
-        <Button v-show="false" label="Tandai Selesai" severity="secondary" />
+        <Button
+          v-if="taskDetail?.status === 'Sprint'"
+          @click="markAsDone"
+          label="Tandai Selesai"
+          severity="secondary"
+        />
       </div>
     </div>
   </div>
