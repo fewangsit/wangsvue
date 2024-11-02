@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import ProjectSummaryAccordion from 'lib/components/summaryaccordion/SummaryAccordion.vue';
+import { reactive } from 'vue';
 import {
   ModuleSummary,
   ProjectSummary,
   SubModuleSummary,
   UserProfileSummary,
 } from 'lib/components/summaryaccordion/SummaryAccordion.vue.d';
-import { reactive } from 'vue';
+import ProjectSummaryAccordion from 'lib/components/summaryaccordion/SummaryAccordion.vue';
 import ProgressBar from 'lib/components/progressbar/ProgressBar.vue';
+import Card from 'lib/components/card/Card.vue';
+import DocTitle from '../DocTitle.vue';
 
 const userProfileSummary = reactive<UserProfileSummary>({
   type: 'profile',
@@ -78,102 +80,130 @@ const subModuleSummary = reactive<SubModuleSummary>({
 </script>
 
 <template>
-  <span>Progress Bar</span>
-  <ProgressBar :value="2" severity="dark" show-value />
-  <div class="flex flex-col gap-3 mt-4">
-    <div class="flex flex-col gap-4">
-      <span>Summary Profile</span>
-      <ProjectSummaryAccordion :summary="userProfileSummary" />
-    </div>
+  <Card>
+    <template #header> <DocTitle name="Project Summary" /> </template>
+    <template #content>
+      <span>Progress Bar</span>
+      <ProgressBar :value="2" severity="dark" show-value />
+      <div class="flex flex-col gap-3 mt-4">
+        <div class="flex flex-col gap-4">
+          <span>Summary Profile</span>
+          <ProjectSummaryAccordion
+            :summary="{
+              ...userProfileSummary,
+              completeProfile: true,
+            }"
+          />
+          <span>Shortened Summary Profile</span>
+          <ProjectSummaryAccordion
+            :summary="{
+              ...userProfileSummary,
+              editedEmail: 'zainkurnia2@mailnesia.com',
+            }"
+            @edit="console.log('edit')"
+          />
+          <span>Shortened Summary Profile, Editable</span>
+          <ProjectSummaryAccordion
+            :summary="{
+              ...userProfileSummary,
+              editable: true,
+              editedEmail: 'zainkurnia2@mailnesia.com',
+            }"
+            @cancel-edit-email="console.log('cancel edit email')"
+            @edit="console.log('edit')"
+          />
+        </div>
 
-    <div class="flex flex-col gap-4 mt-4">
-      <span>Project</span>
-      <ProjectSummaryAccordion
-        :summary="{
-          ...summary,
-          status: 'Backlog',
-          totalCompletedTask: 0,
-          totalSprintTask: 0,
-          totalBacklogTask: 0,
-        }"
-      />
-      <ProjectSummaryAccordion />
-      <ProjectSummaryAccordion
-        :summary="{
-          ...summary,
-          status: 'Selesai',
-          totalCompletedTask: 500,
-          totalSprintTask: 0,
-          totalBacklogTask: 0,
-        }"
-      />
-    </div>
+        <div class="flex flex-col gap-4 mt-4">
+          <span>Project</span>
+          <ProjectSummaryAccordion
+            :summary="{
+              ...summary,
+              status: 'Backlog',
+              totalCompletedTask: 0,
+              totalSprintTask: 0,
+              totalBacklogTask: 0,
+            }"
+          />
+          <ProjectSummaryAccordion />
+          <ProjectSummaryAccordion
+            :summary="{
+              ...summary,
+              status: 'Selesai',
+              totalCompletedTask: 500,
+              totalSprintTask: 0,
+              totalBacklogTask: 0,
+            }"
+          />
+        </div>
 
-    <div class="mt-10 flex flex-col gap-4">
-      <span>Module</span>
-      <ProjectSummaryAccordion
-        :summary="{
-          ...moduleSummary,
-          status: 'Backlog',
-          totalCompletedTask: 0,
-          totalSprintTask: 0,
-          totalBacklogTask: 500,
-        }"
-      />
-      <ProjectSummaryAccordion :summary="moduleSummary" />
-      <ProjectSummaryAccordion
-        :summary="{
-          ...moduleSummary,
-          status: 'Selesai',
-          totalCompletedTask: 500,
-          totalSprintTask: 0,
-          totalBacklogTask: 0,
-        }"
-      />
-    </div>
+        <div class="mt-10 flex flex-col gap-4">
+          <span>Module</span>
+          <ProjectSummaryAccordion
+            :summary="{
+              ...moduleSummary,
+              status: 'Backlog',
+              totalCompletedTask: 0,
+              totalSprintTask: 0,
+              totalBacklogTask: 500,
+            }"
+          />
+          <ProjectSummaryAccordion :summary="moduleSummary" />
+          <ProjectSummaryAccordion
+            :summary="{
+              ...moduleSummary,
+              status: 'Selesai',
+              totalCompletedTask: 500,
+              totalSprintTask: 0,
+              totalBacklogTask: 0,
+            }"
+          />
+        </div>
 
-    <div class="mt-10 flex flex-col gap-4">
-      <span>Sub Module</span>
-      <ProjectSummaryAccordion
-        :summary="{
-          ...subModuleSummary,
-          status: 'Backlog',
-          totalCompletedTask: 0,
-          totalSprintTask: 0,
-          totalBacklogTask: 500,
-          progressMobile: undefined,
-          progressWeb: 40,
-          statusWeb: 'Backlog',
-          statusMobile: undefined,
-        }"
-      />
-      <ProjectSummaryAccordion
-        :summary="{
-          ...subModuleSummary,
-          status: 'Backlog',
-          totalCompletedTask: 0,
-          totalSprintTask: 0,
-          totalBacklogTask: 500,
-          progressMobile: 0,
-          progressWeb: 0,
-          statusWeb: 'Backlog',
-          statusMobile: 'Backlog',
-        }"
-      />
-      <ProjectSummaryAccordion :summary="subModuleSummary" />
-      <ProjectSummaryAccordion
-        :summary="{
-          ...subModuleSummary,
-          status: 'Selesai',
-          totalCompletedTask: 500,
-          totalSprintTask: 0,
-          totalBacklogTask: 0,
-          progressMobile: 100,
-          progressWeb: 100,
-          statusMobile: 'Selesai',
-          statusWeb: 'Selesai',
-        }"
-      />
-    </div>
-  </div>
+        <div class="mt-10 flex flex-col gap-4">
+          <span>Sub Module</span>
+          <ProjectSummaryAccordion
+            :summary="{
+              ...subModuleSummary,
+              status: 'Backlog',
+              totalCompletedTask: 0,
+              totalSprintTask: 0,
+              totalBacklogTask: 500,
+              progressMobile: undefined,
+              progressWeb: 40,
+              statusWeb: 'Backlog',
+              statusMobile: undefined,
+            }"
+          />
+          <ProjectSummaryAccordion
+            :summary="{
+              ...subModuleSummary,
+              status: 'Backlog',
+              totalCompletedTask: 0,
+              totalSprintTask: 0,
+              totalBacklogTask: 500,
+              progressMobile: 0,
+              progressWeb: 0,
+              statusWeb: 'Backlog',
+              statusMobile: 'Backlog',
+            }"
+          />
+          <ProjectSummaryAccordion :summary="subModuleSummary" />
+          <ProjectSummaryAccordion
+            :summary="{
+              ...subModuleSummary,
+              status: 'Selesai',
+              totalCompletedTask: 500,
+              totalSprintTask: 0,
+              totalBacklogTask: 0,
+              progressMobile: 100,
+              progressWeb: 100,
+              statusMobile: 'Selesai',
+              statusWeb: 'Selesai',
+            }"
+          />
+        </div>
+      </div>
+    </template>
+  </Card>
 </template>

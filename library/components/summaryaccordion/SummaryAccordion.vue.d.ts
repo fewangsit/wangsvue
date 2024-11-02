@@ -1,4 +1,5 @@
 import { DevelopmentStatus, ProjectStatus } from 'lib/types/wangsStatus.type';
+import { ClassComponent } from '../ts-helpers';
 
 export interface Summary {
   name: string;
@@ -62,6 +63,9 @@ export interface UserProfileSummary
   teams: string[];
   sprintPoint: number;
   totalSprintTaskDuration: number;
+  completeProfile?: boolean;
+  editable?: boolean;
+  editedEmail?: string;
 }
 
 export interface SummaryAccordionProps {
@@ -71,3 +75,14 @@ export interface SummaryAccordionProps {
     | SubModuleSummary
     | UserProfileSummary;
 }
+
+export type SummaryAccordionEmits = {
+  edit: [];
+  cancelEditEmail: [];
+};
+
+export default class SummaryAccordion extends ClassComponent<
+  SummaryAccordionProps,
+  unknown,
+  SummaryAccordionEmits
+> {}
