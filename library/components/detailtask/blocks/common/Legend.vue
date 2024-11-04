@@ -1,13 +1,5 @@
 <script setup lang="ts">
-import {
-  computed,
-  ComputedRef,
-  inject,
-  Ref,
-  ref,
-  shallowRef,
-  watch,
-} from 'vue';
+import { computed, ComputedRef, inject, Ref, ref, watch } from 'vue';
 
 import { DropdownOption } from 'lib/types/options.type';
 import LiteDropdown from 'lib/components/litedropdown/LiteDropdown.vue';
@@ -17,7 +9,6 @@ import ProjectProcessServices from 'lib/services/projectProcess.service';
 import { useToast } from 'lib/utils';
 import ModuleServices from 'lib/services/module.service';
 import SubModuleServices from 'lib/services/submodule.service';
-import DialogPriorityValue from './DialogPriorityValue.vue';
 import TaskServices from 'lib/services/task.service';
 import { CreateTaskDTO, EditTaskDTO } from 'lib/dto/task.dto';
 import { ProjectProcess } from 'lib/types/projectProcess.type';
@@ -27,6 +18,8 @@ import Textarea from 'primevue/textarea';
 import eventBus from 'lib/event-bus';
 import { TaskDetail } from 'lib/types/task.type';
 import { useLoadingStore } from 'lib/build-entry';
+import DialogPriorityValue from './DialogPriorityValue.vue';
+import DialogReviewLeader from '../sections/Review/DialogReviewLeader.vue';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -91,7 +84,8 @@ const legendLoading = ref<TaskLegendLoading>({
   submodule: false,
 });
 
-const showDialogNilaiPrioritas = shallowRef<boolean>(false);
+const dialogPriorityValue = ref<boolean>(false);
+const dialogReview = ref<boolean>(false);
 
 const subModuleVisibility = ref(true);
 const repositoryVisibility = ref(true);
@@ -460,6 +454,10 @@ const markAsDone = async (): Promise<void> => {
   }
 };
 
+const openReviewDialog = (): void => {
+  dialogReview.value = true;
+};
+
 watch(
   taskDetail,
   () => {
@@ -544,10 +542,6 @@ watch(isTitleInputDisabled, (value) => {
 
 <template>
   <div class="flex flex-col gap-6 mb-3" data-wv-section="detailtask-legend">
-    <DialogPriorityValue
-      v-model:visible="showDialogNilaiPrioritas"
-      :priority-value="taskDetail?.priority"
-    />
     <div class="flex justify-between items-center">
       <div
         class="flex items-center w-4/5 overflow-y-hidden overflow-x-auto scrollbar-hide"
@@ -614,14 +608,14 @@ watch(isTitleInputDisabled, (value) => {
         v-if="taskDetail && taskDetail.priority"
         :disabled="isNewTask"
         :label="taskDetail.priority.toString()"
-        @click="showDialogNilaiPrioritas = true"
+        @click="dialogPriorityValue = true"
         class="!min-w-8"
         data-wv-section="add-nilai-prioritas-button"
       />
       <Button
         v-else
         :disabled="isNewTask"
-        @click="showDialogNilaiPrioritas = true"
+        @click="dialogPriorityValue = true"
         data-wv-section="add-nilai-prioritas-button"
         icon="add"
         label="Nilai Prioritas"
@@ -656,12 +650,21 @@ watch(isTitleInputDisabled, (value) => {
         />
         <Button
           v-if="taskDetail?.status === 'Pending Review Leader'"
+          @click="openReviewDialog"
           label="Review"
           severity="secondary"
         />
       </div>
     </div>
   </div>
+  <DialogPriorityValue
+    v-model:visible="dialogPriorityValue"
+    :priority-value="taskDetail?.priority"
+  />
+  <DialogReviewLeader
+    v-model:visible="dialogReview"
+    @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
+  />
 </template>
 <style scoped>
 /* Hide scrollbar for Chrome, Safari and Opera */

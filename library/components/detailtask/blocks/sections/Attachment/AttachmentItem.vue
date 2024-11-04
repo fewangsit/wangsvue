@@ -222,6 +222,7 @@ const truncateText = (text: string): string => {
           text
         />
         <Button
+          v-if="!props.readonly"
           @click="dialogConfirmDelete = true"
           class="!p-1"
           icon="close"
