@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TaskLegend } from '../../../Legend.vue';
+import { TaskLegend } from '../../common/Legend.vue';
 import Button from 'lib/components/button/Button.vue';
 
 const props = withDefaults(

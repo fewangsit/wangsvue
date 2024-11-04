@@ -14,7 +14,7 @@ import { UpdateTaskAttachmentCaptionDTO } from 'lib/dto/taskAttachment.dto';
 import { formatDateReadable } from 'lib/utils/date.util';
 import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
 import { useToast } from 'lib/utils';
-import TaskAttachmentThumbnail from '../../../common/AttachmentThumbnail.vue';
+import TaskAttachmentThumbnail from '../../common/AttachmentThumbnail.vue';
 import TaskChecklistServices from 'lib/services/taskChecklist.service';
 
 const toast = useToast();

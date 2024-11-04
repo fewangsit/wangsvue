@@ -15,8 +15,8 @@ import {
   ToggleTaskChecklistItemDTO,
 } from 'lib/dto/taskChecklist.dto';
 import { formatDateReadable } from 'lib/utils/date.util';
-import DialogAddAttachment from '../../../common/DialogAddAttachment.vue';
-import InputAdditional from '../../../common/InputAdditional.vue';
+import DialogAddAttachment from '../../common/DialogAddAttachment.vue';
+import InputAdditional from '../../common/InputAdditional.vue';
 import TaskAttachmentItem from '../Attachment/AttachmentItem.vue';
 import DialogConfirmChecklist from './DialogConfirmChecklist.vue';
 import DialogSaveChecklistTemplate from './DialogSaveChecklistTemplate.vue';

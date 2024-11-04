@@ -11,20 +11,20 @@ import {
 } from 'vue';
 
 import Dialog from 'primevue/dialog';
-import Legend, { TaskLegendForm } from './blocks/Legend.vue';
+import Legend, { TaskLegendForm } from './blocks/common/Legend.vue';
 import Button from '../button/Button.vue';
 import { DetailTaskEmits, DetailTaskProps } from './DetailTask.vue.d';
 import { MenuItem } from '../menuitem';
 import TabMenu from '../tabmenu/TabMenu.vue';
-import InfoTaskTab from './blocks/Tabs/InfoTask/InfoTaskTab.vue';
+import InfoTaskTab from './blocks/Tabs/InfoTaskTab.vue';
 import ReviewTab from './blocks/Tabs/ReviewTab.vue';
 import { TaskDetail } from 'lib/types/task.type';
 import eventBus from 'lib/event-bus';
 import useLoadingStore from '../loading/store/loading.store';
 import { useToast } from 'lib/utils';
 import TaskServices from 'lib/services/task.service';
-import DescriptionTab from './blocks/Tabs/Description/DescriptionTab.vue';
-import TaskMore from './blocks/TaskMore.vue';
+import DescriptionTab from './blocks/Tabs/DescriptionTab.vue';
+import TaskMore from './blocks/common/TaskMore.vue';
 import ProjectServices from 'lib/services/project.service';
 import { ProjectDetail } from 'lib/types/project.type';
 import { ProjectProcess } from 'lib/types/projectProcess.type';
