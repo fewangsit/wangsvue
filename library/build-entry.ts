@@ -122,6 +122,7 @@ import {
   CodeSnippet,
   InvisibleField,
   DialogDetailPbi,
+  TaskDetailPbi,
 } from './components';
 
 export {
@@ -201,6 +202,7 @@ export {
   CodeSnippet,
   InvisibleField,
   DialogDetailPbi,
+  TaskDetailPbi,
 
   // Component store
   useLoadingStore,

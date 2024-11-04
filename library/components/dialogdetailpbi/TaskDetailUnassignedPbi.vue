@@ -95,8 +95,8 @@ const taskColumns: TableColumn[] = [
           user: {
             ...data.assignedTo[0],
             profilePicture: getImageURL(data.assignedTo[0]?.profilePictureBig),
-            emptyable: true,
           },
+          emptyable: true,
         },
       };
     },

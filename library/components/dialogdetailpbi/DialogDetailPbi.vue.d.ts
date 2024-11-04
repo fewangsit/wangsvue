@@ -128,6 +128,12 @@ export interface DialogDetailPbiProps {
    * Project detail, used to determine whether the current user is a PM or not
    */
   project?: Project;
+  /**
+   * Whether the PBI can be edited or not
+   *
+   * @default true
+   */
+  editable?: boolean;
 }
 
 declare class DialogDetailPbi extends ClassComponent<

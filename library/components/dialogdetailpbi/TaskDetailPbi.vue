@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import { computed, onMounted, shallowRef } from 'vue';
-import TaskDetailUnassignedPbi from './TaskDetailUnassignedPbi.vue';
-import AssignMember from './AssignMember.vue';
-import taskFilterFields from './options/taskFilterFields';
 import {
   TableColumn,
   TableCellComponent,
@@ -10,14 +7,20 @@ import {
   QueryParams,
 } from '../datatable/DataTable.vue.d';
 import { MenuItem } from '../menuitem';
-import { AssignedMember, Pbi, Task } from './DialogDetailPbi.vue.d';
+import {
+  AssignedMember,
+  DialogDetailPbiProps,
+  Task,
+} from './DialogDetailPbi.vue.d';
 import {
   getImageURL,
   getUser,
   getUserPermission,
   isIntersect,
 } from 'lib/utils';
-import { Project } from 'lib/types/project.type';
+import TaskDetailUnassignedPbi from './TaskDetailUnassignedPbi.vue';
+import AssignMember from './AssignMember.vue';
+import taskFilterFields from './options/taskFilterFields';
 import Badge from '../badge/Badge.vue';
 import UserName from '../username/UserName.vue';
 import Button from '../button/Button.vue';
@@ -29,10 +32,7 @@ import ButtonFilter from '../buttonfilter/ButtonFilter.vue';
 import SprintServices from 'lib/services/sprint.service';
 import TaskServices from 'lib/services/task.service';
 
-const props = defineProps<{
-  selectedPbi?: Pbi;
-  project?: Project;
-}>();
+const props = defineProps<DialogDetailPbiProps>();
 
 const projectId = sessionStorage.getItem('projectId') as string;
 const userId = getUser()._id;
@@ -79,8 +79,8 @@ const taskColumns: TableColumn[] = [
           user: {
             ...data.assignedTo[0],
             profilePicture: getImageURL(data.assignedTo[0]?.profilePictureBig),
-            emptyable: true,
           },
+          emptyable: true,
         },
       };
     },
@@ -126,7 +126,8 @@ const canAssignTask = computed<boolean | 0 | undefined>(() => {
     !['Selesai', 'Pending Testing'].includes(props.selectedPbi?.status ?? '') &&
     ((assignedMembers.value?.map((member) => member._id).includes(userId) ||
       getUserPermission().update) ??
-      false)
+      false) &&
+    props.editable
   );
 });
 
@@ -211,7 +212,9 @@ const getPbiTasks = async (
         v-if="
           !['Selesai', 'Pending Testing'].includes(
             props.selectedPbi?.status ?? '',
-          ) && getUserPermission().update
+          ) &&
+          getUserPermission().update &&
+          props.editable
         "
         @click="visibleAssignMembers = true"
         icon="edit"
@@ -250,8 +253,8 @@ const getPbiTasks = async (
     />
     <TaskDetailUnassignedPbi
       v-model:visible="visibleUnassignedTask"
-      v-bind="$props"
       :assigned-members="assignedMembers"
+      :selected-pbi="selectedPbi"
     />
     <AssignMember
       v-model:visible="visibleAssignMembers"
