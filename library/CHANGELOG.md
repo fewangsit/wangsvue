@@ -1,6 +1,35 @@
 # Changelog
 
 
+## v1.5.30
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.29...v1.5.30)
+
+### 🚀 Enhancements
+
+- **detailtask:** Add button for mark task as done ([89bde51](https://github.com/fewangsit/wangsvue/commit/89bde51))
+
+### 🩹 Fixes
+
+- **detailtask:** Add showPriorityValue props for TaskList ([d515426](https://github.com/fewangsit/wangsvue/commit/d515426))
+- **detailtask:** Add min-date value for startDate in infotask ([7de03ab](https://github.com/fewangsit/wangsvue/commit/7de03ab))
+- **detailtask:** Remove tasklist in dialogpriorityvalue ([4e4cbc3](https://github.com/fewangsit/wangsvue/commit/4e4cbc3))
+- **detailtask:** Add validation before update task title ([b7c43ea](https://github.com/fewangsit/wangsvue/commit/b7c43ea))
+- **detailtask:** Add optional chaining on blur title input condition ([8fc3e53](https://github.com/fewangsit/wangsvue/commit/8fc3e53))
+
+### 💅 Refactors
+
+- **detailtask:** Update folder structure in detailtask ([a4eccae](https://github.com/fewangsit/wangsvue/commit/a4eccae))
+
+### 🏡 Chore
+
+- **presets:** Update version ([a8b7cdf](https://github.com/fewangsit/wangsvue/commit/a8b7cdf))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.29
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.28...v1.5.29)
