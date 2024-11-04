@@ -647,11 +647,16 @@ watch(isTitleInputDisabled, (value) => {
         />
       </div>
       <div class="flex items-center gap-2">
-        <Badge :label="taskDetail?.status ?? 'Backlog'" />
+        <Badge :label="taskDetail?.status ?? 'Backlog'" format="nowrap" />
         <Button
           v-if="taskDetail?.status === 'Sprint'"
           @click="markAsDone"
           label="Tandai Selesai"
+          severity="secondary"
+        />
+        <Button
+          v-if="taskDetail?.status === 'Pending Review Leader'"
+          label="Review"
           severity="secondary"
         />
       </div>
