@@ -17,7 +17,7 @@ import ProjectProcessServices from 'lib/services/projectProcess.service';
 import { useToast } from 'lib/utils';
 import ModuleServices from 'lib/services/module.service';
 import SubModuleServices from 'lib/services/submodule.service';
-import DialogPriorityValue from './Dialog/DialogPriorityValue.vue';
+import DialogPriorityValue from './DialogPriorityValue.vue';
 import TaskServices from 'lib/services/task.service';
 import { CreateTaskDTO, EditTaskDTO } from 'lib/dto/task.dto';
 import { ProjectProcess } from 'lib/types/projectProcess.type';
@@ -26,8 +26,10 @@ import { ProjectSubModule } from 'lib/types/projectSubmodule.type';
 import Textarea from 'primevue/textarea';
 import eventBus from 'lib/event-bus';
 import { TaskDetail } from 'lib/types/task.type';
+import { useLoadingStore } from 'lib/build-entry';
 
 const toast = useToast();
+const { setLoading } = useLoadingStore();
 
 const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
@@ -433,6 +435,31 @@ const getRepositoryOptions = (): void => {
   }
 };
 
+const onBlurTitleInput = (): void => {
+  if (legendForm.value.title !== taskDetail.value?.name) {
+    handleTaskChange();
+  }
+};
+
+const markAsDone = async (): Promise<void> => {
+  try {
+    setLoading(true);
+    const { data } = await TaskServices.markTaskAsDone(taskId.value);
+    if (data) {
+      eventBus.emit('detail-task:create', { taskId: taskId.value });
+    }
+  } catch (error) {
+    console.error(error);
+    toast.add({
+      message: 'Data Task gagal diubah.',
+      severity: 'error',
+      error,
+    });
+  } finally {
+    setLoading(false);
+  }
+};
+
 watch(
   taskDetail,
   () => {
@@ -519,40 +546,7 @@ watch(isTitleInputDisabled, (value) => {
   <div class="flex flex-col gap-6 mb-3" data-wv-section="detailtask-legend">
     <DialogPriorityValue
       v-model:visible="showDialogNilaiPrioritas"
-      :legend="legendForm as TaskLegend"
-      :tasks="[
-        // TODO: Remove and replace this with detail task's data.
-        {
-          process: {
-            _id: '1',
-            name: 'Pengonsepan',
-            team: [],
-            processPosition: '-',
-          },
-          title: 'Process',
-          priorityValue: 1,
-        },
-        {
-          process: {
-            _id: '2',
-            name: 'Detailing',
-            team: [],
-            processPosition: '-',
-          },
-          title: 'Process',
-          priorityValue: 5,
-        },
-        {
-          process: {
-            _id: '3',
-            name: 'Slicing Komponen Web',
-            team: [],
-            processPosition: '-',
-          },
-          title: 'Process',
-          priorityValue: 10,
-        },
-      ]"
+      :priority-value="taskDetail?.priority"
     />
     <div class="flex justify-between items-center">
       <div
@@ -641,7 +635,7 @@ watch(isTitleInputDisabled, (value) => {
           ref="titleInput"
           v-model="legendForm.title"
           :disabled="isTitleInputDisabled"
-          @blur="handleTaskChange"
+          @blur="onBlurTitleInput"
           @input="handleTitleInput"
           @keypress="handleTitleInput"
           auto-resize
@@ -654,7 +648,12 @@ watch(isTitleInputDisabled, (value) => {
       </div>
       <div class="flex items-center gap-2">
         <Badge :label="taskDetail?.status ?? 'Backlog'" />
-        <Button v-show="false" label="Tandai Selesai" severity="secondary" />
+        <Button
+          v-if="taskDetail?.status === 'Sprint'"
+          @click="markAsDone"
+          label="Tandai Selesai"
+          severity="secondary"
+        />
       </div>
     </div>
   </div>

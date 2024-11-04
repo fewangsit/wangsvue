@@ -2,20 +2,20 @@
 import { computed, ComputedRef, inject, Ref, ref } from 'vue';
 
 import Button from 'lib/components/button/Button.vue';
-import DialogAssignMember from '../Dialog/DialogAssignMember.vue';
-import DialogSetDuration from '../Dialog/DialogSetDuration.vue';
 import { TaskDetail } from 'lib/types/task.type';
-import TaskDependency from '../TaskDependency.vue';
-import TaskList from '../TaskList.vue';
-import TicketList from '../TicketList.vue';
-import DialogCustomDependency from '../Dialog/DialogCustomDependency.vue';
-import { TaskLegendForm } from '../Legend.vue';
 import Calendar from 'lib/components/calendar/Calendar.vue';
 import { formatDate } from 'lib/utils/date.util';
 import TaskServices from 'lib/services/task.service';
 import { EditTaskDTO } from 'lib/dto/task.dto';
 import eventBus from 'lib/event-bus';
 import { useToast } from 'lib/utils';
+import { TaskLegendForm } from '../../Legend.vue';
+import DialogAssignMember from './DialogAssignMember.vue';
+import DialogSetDuration from './DialogSetDuration.vue';
+import TaskDependency from './TaskDependency/TaskDependency.vue';
+import TaskList from './TaskList/TaskList.vue';
+import Ticket from './Ticket/Ticket.vue';
+import DialogCustomDependency from './TaskDependency/DialogCustomDependency.vue';
 
 const toast = useToast();
 
@@ -200,6 +200,7 @@ const getDuration = (duration: number): string => {
                   ? new Date(taskDetail?.startDate).getTime()
                   : undefined
               "
+              :min-date="new Date()"
               @update:model-value="updateStartDate"
               class="!h-[0.000000001px] !w-[0.0000000001px]"
               show-time
@@ -209,7 +210,7 @@ const getDuration = (duration: number): string => {
       </div>
       <TaskDependency />
       <TaskList child />
-      <TicketList :tickets="[]" />
+      <Ticket :tickets="[]" />
       <TaskList />
     </div>
   </div>

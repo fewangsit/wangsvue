@@ -14,7 +14,7 @@ import { useToast } from 'lib/utils';
 import { useLoadingStore } from 'lib/build-entry';
 import Form from 'lib/components/form/Form.vue';
 import { FormPayload } from 'lib/components/form/Form.vue.d';
-import DialogTestApi from './Dialog/DialogTestApi.vue';
+import DialogTestApi from './DialogTestApi.vue';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();

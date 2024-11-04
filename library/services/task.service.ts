@@ -67,6 +67,10 @@ const TaskServices = {
     return API().put(`/${taskId}/description`, data);
   },
 
+  markTaskAsDone: (taskId: string): Promise<AxiosResponse> => {
+    return API().put(`/${taskId}/done`);
+  },
+
   deleteTask: (taskId: string): Promise<AxiosResponse> => {
     const params = { id: JSON.stringify([taskId]) };
     return API({ params }).delete('/delete');
