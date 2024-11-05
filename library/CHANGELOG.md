@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v1.5.32
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.31...v1.5.32)
+
+### 🚀 Enhancements
+
+- **ProjectSummary:** Shortened profile summary ([9ede4fd](https://github.com/fewangsit/wangsvue/commit/9ede4fd))
+- **Username, BadgeGroup:** Emptyable username and badgegroup ([371a0a8](https://github.com/fewangsit/wangsvue/commit/371a0a8))
+- **DialogDetailPbi:** Editable PBI ([1cd97b3](https://github.com/fewangsit/wangsvue/commit/1cd97b3))
+- Export TaskDetailPbi ([f6d93a6](https://github.com/fewangsit/wangsvue/commit/f6d93a6))
+
+### 💅 Refactors
+
+- **Editor:** Event paramater for set preview function ([4f355e7](https://github.com/fewangsit/wangsvue/commit/4f355e7))
+- **TabMenu:** Remove ripple directive ([6d77496](https://github.com/fewangsit/wangsvue/commit/6d77496))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.31
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.30...v1.5.31)
