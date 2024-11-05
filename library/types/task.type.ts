@@ -139,3 +139,25 @@ export type FormDataBodyCustom = Omit<FormDataBody, 'isMandatory'> & {
 export type TaskAPIFormDataCustom = Omit<TaskAPI, 'formDataBody'> & {
   formDataBody: FormDataBodyCustom[];
 };
+
+export interface TaskReview {
+  _id: string;
+  task: string;
+  user: Member;
+  title: string;
+  content?: string;
+  checklists?: TaskReviewChecklist[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface TaskReviewChecklist {
+  name: string;
+  items: TaskReviewChecklistItem[];
+}
+
+interface TaskReviewChecklistItem {
+  name: string;
+  result: 'Ok' | 'Bug';
+  content?: string;
+}

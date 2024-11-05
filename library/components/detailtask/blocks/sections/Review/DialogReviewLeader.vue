@@ -217,6 +217,7 @@ watch(visible, (value) => {
               v-if="checklistItem.result === 'Bug'"
               v-model="checklistItem.content"
               editor-state="editable"
+              is-image-upload-base64
               placeholder="Tulis keterangan hasil review disini"
             />
           </div>
