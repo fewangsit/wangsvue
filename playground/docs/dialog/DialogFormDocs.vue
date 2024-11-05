@@ -58,6 +58,7 @@ const apply = (e: {
         :closable="false"
         @submit="apply"
         header="Buat Member"
+        severity="danger"
         show-stay-checkbox
         width="small"
       >

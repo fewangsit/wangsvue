@@ -56,6 +56,7 @@ import UserGroup from './usergroup/UserGroup.vue';
 import CodeSnippet from './codesnippet/CodeSnippet.vue';
 import InvisibleField from './invisiblefield/InvisibleField.vue';
 import DialogDetailPbi from './dialogdetailpbi/DialogDetailPbi.vue';
+import TaskDetailPbi from './dialogdetailpbi/TaskDetailPbi.vue';
 
 export {
   Badge,
@@ -116,4 +117,5 @@ export {
   CodeSnippet,
   InvisibleField,
   DialogDetailPbi,
+  TaskDetailPbi,
 };
