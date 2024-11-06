@@ -12,7 +12,6 @@ import {
 
 import { DotLottieVue } from '@lottiefiles/dotlottie-vue';
 import { exportToExcel, getNestedProperyValue, useToast } from 'lib/utils';
-import { DataTableExpandedRows } from 'primevue/datatable';
 import { cloneDeep } from 'lodash';
 
 import { Booleanish } from '../ts-helpers';
@@ -76,7 +75,7 @@ const dataTableID = ((): string => {
 })();
 
 const currentPageTableData = ref<Data[]>(props.data ?? []);
-const expandedRows = ref<DataTableExpandedRows>({});
+const expandedRows = ref<Record<string, number>>({});
 const visibleColumns = ref<TreeTableColumns[]>(props.columns);
 const checkboxSelection = ref<Data[]>([]);
 const rowReorderEventPayload = ref<DataTableRowReorderEvent>();
@@ -144,7 +143,7 @@ const isExpandedAll = computed(() => {
 
   return (
     rowsHasChildren?.length &&
-    rowsHasChildren.every((data) => expandedRows.value[data[props.dataKey]])
+    rowsHasChildren.every((data) => expandedRows.value[data[props.dataKey]] > 0)
   );
 });
 
@@ -211,23 +210,25 @@ const toggleRowExpand = async (
   indexOfData: number,
   isExpanding?: boolean,
 ): Promise<void> => {
-  let { children } = data;
+  const isExpandingRow = isExpanding ?? !isRowExpanded(data[props.dataKey]);
 
-  if (props.childTableProps?.fetchFunction && data.hasChildren) {
-    const fetchChildren = await props.childTableProps?.fetchFunction(data);
-    children = fetchChildren.data;
+  if (!isExpandingRow) {
+    currentPageTableData.value.splice(
+      indexOfData + 1,
+      expandedRows.value[data[props.dataKey]],
+    );
+    delete expandedRows.value[data[props.dataKey]];
   }
 
-  if (children?.length) {
-    const isExpandingRow = isExpanding ?? !isRowExpanded(data[props.dataKey]);
+  if (isExpandingRow) {
+    let { children } = data;
 
-    if (isExpandingRow) {
-      expandedRows.value[data[props.dataKey]] = true;
-    } else {
-      delete expandedRows.value[data[props.dataKey]];
+    if (props.childTableProps?.fetchFunction && data.hasChildren) {
+      const fetchChildren = await props.childTableProps?.fetchFunction(data);
+      children = fetchChildren.data;
     }
 
-    if (indexOfData >= 0) {
+    if (indexOfData >= 0 && children?.length) {
       const childrenRows = children.flatMap((child) => {
         const rowHeader: Data = {
           childRowHeader: true,
@@ -240,10 +241,8 @@ const toggleRowExpand = async (
         ];
       });
 
-      if (isExpandingRow)
-        currentPageTableData.value.splice(indexOfData + 1, 0, ...childrenRows);
-      else
-        currentPageTableData.value.splice(indexOfData + 1, childrenRows.length);
+      expandedRows.value[data[props.dataKey]] = childrenRows.length;
+      currentPageTableData.value.splice(indexOfData + 1, 0, ...childrenRows);
     }
   }
 };
