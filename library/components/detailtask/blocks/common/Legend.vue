@@ -20,6 +20,8 @@ import { TaskDetail } from 'lib/types/task.type';
 import { useLoadingStore } from 'lib/build-entry';
 import DialogPriorityValue from './DialogPriorityValue.vue';
 import DialogReviewLeader from '../sections/Review/DialogReviewLeader.vue';
+import TaskChecklistServices from 'lib/services/taskChecklist.service';
+import DialogFinishReview from '../sections/Review/DialogFinishReview.vue';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -86,6 +88,7 @@ const legendLoading = ref<TaskLegendLoading>({
 
 const dialogPriorityValue = ref<boolean>(false);
 const dialogReview = ref<boolean>(false);
+const dialogFinishReview = ref<boolean>(false);
 
 const subModuleVisibility = ref(true);
 const repositoryVisibility = ref(true);
@@ -454,8 +457,31 @@ const markAsDone = async (): Promise<void> => {
   }
 };
 
-const openReviewDialog = (): void => {
-  dialogReview.value = true;
+const openReviewDialog = async (): Promise<void> => {
+  const checklists = await getChecklists();
+  if (checklists.length) {
+    dialogReview.value = true;
+  } else {
+    dialogFinishReview.value = true;
+  }
+};
+
+const getChecklists = async (): Promise<any[]> => {
+  try {
+    setLoading(true);
+    const { data } = await TaskChecklistServices.getTaskChecklists(
+      taskId.value,
+    );
+    return data?.data;
+  } catch (error) {
+    toast.add({
+      message: 'Gagal memuat data ceklis.',
+      error,
+    });
+    return [];
+  } finally {
+    setLoading(false);
+  }
 };
 
 watch(
@@ -663,6 +689,10 @@ watch(isTitleInputDisabled, (value) => {
   />
   <DialogReviewLeader
     v-model:visible="dialogReview"
+    @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
+  />
+  <DialogFinishReview
+    v-model:visible="dialogFinishReview"
     @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
   />
 </template>
