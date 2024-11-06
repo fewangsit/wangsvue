@@ -8,10 +8,10 @@ import Icon from 'lib/components/icon/Icon.vue';
 import Form from 'lib/components/form/Form.vue';
 import { FormPayload } from 'lib/components/form/Form.vue.d';
 import InputText from 'lib/components/inputtext/InputText.vue';
-import { FileType } from '../TaskAttachmentItem.vue.d';
+import { FileType } from '../sections/Attachment/AttachmentItem.vue';
 import axios, { AxiosProgressEvent, AxiosResponse } from 'axios';
 import { useToast } from 'lib/utils';
-import TaskAttachmentThumbnail from '../TaskAttachmentThumbnail.vue';
+import TaskAttachmentThumbnail from '../common/AttachmentThumbnail.vue';
 
 type FormattedFile = {
   name: string;

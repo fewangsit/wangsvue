@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue';
+import { computed, onMounted, onUnmounted, shallowRef, watch } from 'vue';
 import {
   ModuleSummary,
   ProjectSummary,
   SubModuleSummary,
   SummaryAccordionProps,
+  SummaryAccordionEmits,
   UserProfileSummary,
 } from './SummaryAccordion.vue.d';
 import { IconProps, WangsIcons } from '../icon/Icon.vue.d';
@@ -26,6 +27,16 @@ interface SummaryItem {
 }
 
 const props = defineProps<SummaryAccordionProps>();
+defineEmits<SummaryAccordionEmits>();
+
+onMounted(() => {
+  shrinkWrap();
+  window.addEventListener('resize', shrinkWrap);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', shrinkWrap);
+});
 
 const expanded = shallowRef(false);
 
@@ -119,21 +130,21 @@ const summaryItems = computed<SummaryItem[]>(() => {
       severity: 'primary',
       label: 'Telepon (WA)',
       value: phoneNumber,
-      show: props.summary.type === 'profile',
+      show: props.summary.type === 'profile' && props.summary.completeProfile,
     },
     {
       icon: 'team',
       severity: 'primary',
       label: 'Tim',
       value: teams?.join(', '),
-      show: props.summary.type === 'profile',
+      show: props.summary.type === 'profile' && props.summary.completeProfile,
     },
     {
       icon: 'mail',
       severity: 'primary',
       label: 'Email',
       value: email,
-      show: props.summary.type === 'profile',
+      show: props.summary.type === 'profile' && props.summary.completeProfile,
     },
     {
       icon: 'star',
@@ -210,6 +221,26 @@ const summaryItems = computed<SummaryItem[]>(() => {
   return items.filter((item) => item.show);
 });
 
+/*
+ * Code taken and modified from https://stackoverflow.com/a/78307608/27534858
+ * Used to adjust the width of the edited email when it's wrapped
+ */
+const shrinkWrap = (): void => {
+  setTimeout(() => {
+    const element = document.getElementById('editedEmail');
+    element.style.width = '';
+    const { firstChild, lastChild } = element;
+    if (!element || !firstChild || !lastChild) return;
+
+    const range = document.createRange();
+    range.setStartBefore(firstChild);
+    range.setEndAfter(lastChild);
+
+    const { width } = range.getBoundingClientRect();
+    element.style.width = width + 'px';
+  }, 0);
+};
+
 const userStatus = (profile: UserProfileSummary): WangsitStatus =>
   profile.isActive ? 'Aktif' : 'Nonaktif';
 
@@ -220,7 +251,16 @@ const secondsToDHM = (seconds: number): string => {
 
   return `${days}h ${hours}j ${minutes}m`;
 };
+
+watch(
+  () => summaryItems,
+  () => {
+    shrinkWrap();
+  },
+);
 </script>
+
+<!-- eslint-disable vue/html-indent -->
 <template>
   <div
     :class="[
@@ -236,6 +276,7 @@ const secondsToDHM = (seconds: number): string => {
     <template v-if="summary">
       <ImageCompressor
         v-if="summary?.type === 'profile' && expanded"
+        :disabled="!summary.completeProfile"
         :image-preview-url="summary.profilePicture"
         :show-info="false"
         image-preview-size="medium"
@@ -244,7 +285,7 @@ const secondsToDHM = (seconds: number): string => {
       <div class="flex flex-col gap-2">
         <div
           @click="expanded = !expanded"
-          class="flex items-center gap-[10px] cursor-pointer"
+          class="flex items-center gap-2 cursor-pointer"
           data-wv-section="projectmeta"
         >
           <h2
@@ -279,10 +320,42 @@ const secondsToDHM = (seconds: number): string => {
             format="nowrap"
           />
 
+          <span
+            v-if="
+              summary.type === 'profile' &&
+              summary.editable &&
+              summary.editedEmail
+            "
+            class="flex items-center gap-1"
+          >
+            <p id="editedEmail" class="content-box text-wrap">
+              Menunggu perubahan email: {{ summary.editedEmail }}
+            </p>
+            <Button
+              @click.stop="$emit('cancelEditEmail')"
+              class="!p-0 !m-0 !w-auto !h-auto"
+              icon="close"
+              icon-class="w-6 h-6 text-danger-500"
+              text
+            />
+          </span>
+
+          <Button
+            v-if="summary?.type === 'profile' && summary.editable"
+            @click.stop="$emit('edit')"
+            class="!py-0.5 !ml-auto"
+            label="Edit"
+            outlined
+            severity="secondary"
+          />
+
           <Button
             :class="[
-              '!p-0 !m-0 !w-auto !h-auto !ml-auto',
-              { 'rotate-180': expanded },
+              '!p-0 !m-0 !w-auto !h-auto',
+              {
+                '!ml-auto': !(summary?.type === 'profile' && summary.editable),
+                'rotate-180': expanded,
+              },
             ]"
             @click.stop="expanded = !expanded"
             icon="arrow-down"

@@ -13,7 +13,6 @@ export interface BadgeGroupProps
    */
   headerLabel?: string;
   /**
-   * TODO: Implement emptyable badge group
    * Specify if the badge should be emptyable
    * @default false
    */

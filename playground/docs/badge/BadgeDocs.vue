@@ -48,6 +48,19 @@ import BadgeGroup from 'lib/components/badgegroup/BadgeGroup.vue';
           format="username"
           severity="primary"
         />
+        <BadgeGroup
+          :labels="[]"
+          :limit="2"
+          format="username"
+          severity="primary"
+        />
+        <BadgeGroup
+          :labels="[]"
+          :limit="2"
+          emptyable
+          format="username"
+          severity="primary"
+        />
       </div>
     </template>
   </Card>

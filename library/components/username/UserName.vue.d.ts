@@ -29,7 +29,6 @@ export interface UserNameProps {
    */
   profilePictureField?: string;
   /**
-   * TODO: Implement emptyable username
    * Specify if the component can be emptyable
    *
    * @default false

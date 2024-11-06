@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import Icon from 'lib/components/icon/Icon.vue';
-import LegendList from './LegendList.vue';
-import TaskDependencyServices from 'lib/services/taskDependency.service';
 import { computed, inject, ref, Ref, watch } from 'vue';
-import { TaskLegend } from './Legend.vue';
+import Icon from 'lib/components/icon/Icon.vue';
 import TaskServices from 'lib/services/task.service';
 import { TaskDetail } from 'lib/types/task.type';
+import TaskDependencyServices from 'lib/services/taskDependency.service';
 import { useToast } from 'lib/utils';
+import LegendList from './LegendList.vue';
+import { TaskLegend } from '../../common/Legend.vue';
 
 const toast = useToast();
 

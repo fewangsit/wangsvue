@@ -2,7 +2,6 @@
 import { inject, nextTick, Ref, ref, watch } from 'vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import Button from 'lib/components/button/Button.vue';
-import DialogAddChecklist from './Dialog/DialogAddChecklist.vue';
 import Menu from 'lib/components/menu/Menu.vue';
 import { MenuItem } from 'lib/components/menuitem';
 import { useToast } from 'lib/utils';
@@ -11,17 +10,18 @@ import UserName from 'lib/components/username/UserName.vue';
 import ProgressBar from 'lib/components/progressbar/ProgressBar.vue';
 import TaskChecklistServices from 'lib/services/taskChecklist.service';
 import { TaskChecklist, TaskChecklistItem } from 'lib/types/task.type';
-import DialogConfirmChecklist from './Dialog/DialogConfirmChecklist.vue';
-import DialogSaveChecklistTemplate from './Dialog/DialogSaveChecklistTemplate.vue';
-import InputAdditional from './InputAdditional.vue';
 import {
   AddTaskChecklistItemDTO,
   ToggleTaskChecklistItemDTO,
 } from 'lib/dto/taskChecklist.dto';
 import { formatDateReadable } from 'lib/utils/date.util';
-import DialogDetailChecklistTemplate from './Dialog/DialogDetailChecklistTemplate.vue';
-import DialogAddAttachment from './Dialog/DialogAddAttachment.vue';
-import TaskAttachmentItem from './TaskAttachmentItem.vue';
+import DialogAddAttachment from '../../common/DialogAddAttachment.vue';
+import InputAdditional from '../../common/InputAdditional.vue';
+import TaskAttachmentItem from '../Attachment/AttachmentItem.vue';
+import DialogConfirmChecklist from './DialogConfirmChecklist.vue';
+import DialogSaveChecklistTemplate from './DialogSaveChecklistTemplate.vue';
+import DialogDetailChecklistTemplate from './DialogDetailChecklistTemplate.vue';
+import DialogAddChecklist from './DialogAddChecklist.vue';
 
 const toast = useToast();
 

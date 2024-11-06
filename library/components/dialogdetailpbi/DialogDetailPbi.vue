@@ -15,7 +15,9 @@ import Editor from '../editor/Editor.vue';
 import Timeline from '../timeline/Timeline.vue';
 import AuditServices from 'lib/services/log.service';
 
-const props = defineProps<DialogDetailPbiProps>();
+const props = withDefaults(defineProps<DialogDetailPbiProps>(), {
+  editable: true,
+});
 
 const menu: MenuItem[] = [
   { label: 'Deskripsi' },
@@ -146,7 +148,7 @@ const getEventLog = async (): Promise<void> => {
                 :label="print.printValue.value"
                 format="nowrap"
               />
-              <span v-else class="content-center">'-'</span>
+              <span v-else class="content-center"> - </span>
             </template>
             <template v-else-if="print.printValue.type === 'user'">
               <UserName

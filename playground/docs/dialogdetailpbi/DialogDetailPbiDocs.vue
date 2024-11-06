@@ -11,6 +11,7 @@ import project from './project.json';
 import Toast from 'lib/components/toast/Toast.vue';
 
 const showDialog = shallowRef<boolean>(false);
+const showDialogNonEditable = shallowRef<boolean>(false);
 </script>
 
 <template>
@@ -21,12 +22,26 @@ const showDialog = shallowRef<boolean>(false);
         <Button
           @click="showDialog = true"
           icon="eye"
-          label="Show Dialog"
+          label="Show Dialog (editable)"
+          severity="secondary"
+        />
+
+        <Button
+          @click="showDialogNonEditable = true"
+          icon="eye"
+          label="Show Dialog (non-editable)"
           severity="secondary"
         />
 
         <DialogDetailPbi
           v-model:visible="showDialog"
+          :project="project as Project"
+          :selected-pbi="pbi as Pbi"
+        />
+
+        <DialogDetailPbi
+          v-model:visible="showDialogNonEditable"
+          :editable="false"
           :project="project as Project"
           :selected-pbi="pbi as Pbi"
         />

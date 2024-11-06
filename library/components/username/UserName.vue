@@ -12,6 +12,7 @@ const props = withDefaults(defineProps<UserNameProps>(), {
   type: 'picture',
   userNameField: 'nickName',
   profilePictureField: 'profilePicture',
+  emptyable: false,
 });
 
 const overlayId = +new Date();
@@ -45,7 +46,9 @@ const adjustPosition = async (): Promise<void> => {
 </script>
 
 <template>
+  <span v-if="props.emptyable && Object.keys(props.user).length < 2">-</span>
   <span
+    v-else
     @click="($refs['miniProfile'] as OverlayPanel).toggle"
     class="flex items-center gap-1"
     data-wv-name="username"
