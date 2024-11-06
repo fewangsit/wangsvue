@@ -107,6 +107,7 @@ const wangsIconsArray: WangsIcons[] = [
   'pencil',
   'phone',
   'printer',
+  'printer-cloud',
   'price-tag-3',
   'profile',
   'qr',
