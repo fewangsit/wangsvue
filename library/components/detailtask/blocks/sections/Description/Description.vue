@@ -150,6 +150,7 @@ watch(taskDetail, async () => {
             v-model="content"
             @focus="handleOnFocus"
             editor-state="editable"
+            is-image-upload-base64
             placeholder="Tulis deskripsi"
           />
         </div>
