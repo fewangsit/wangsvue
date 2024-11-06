@@ -200,6 +200,7 @@ export interface ColumnTogglePreset {
       | ((data: Data) => Promise<boolean>);
   };
   onConfirm?: (state: boolean, data: Data, revertFunction: () => void) => void;
+  disabled?: boolean;
 }
 
 export interface ColumnMultiRowPreset {

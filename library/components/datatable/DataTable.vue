@@ -1011,7 +1011,9 @@ const listenUpdateTableEvent = (): void => {
                     <template v-if="col.preset?.type === 'toggle'">
                       <InputSwitch
                         v-model="item[col.field]"
-                        :disabled="isRowDisabled(item[dataKey])"
+                        :disabled="
+                          isRowDisabled(item[dataKey]) || col.preset?.disabled
+                        "
                         :input-id="item[dataKey]"
                         @click.stop=""
                         @update:model-value="
