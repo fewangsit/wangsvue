@@ -52,6 +52,7 @@ export type TaskLegend = {
   name?: string;
   priorityValue?: number;
   priority?: number;
+  _id?: string;
 };
 
 export type TaskLegendForm = Partial<Omit<TaskLegend, 'priorityValue'>>;

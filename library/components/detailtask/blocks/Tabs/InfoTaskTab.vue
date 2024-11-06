@@ -157,7 +157,7 @@ const getDuration = (duration: number): string => {
               {
                 'pointer-events-none':
                   userType === 'member' ||
-                  taskDetail.process.name === 'API Spec',
+                  taskDetail?.process?.name === 'API Spec',
               },
             ]"
             :disabled="isNewTask"
@@ -194,8 +194,8 @@ const getDuration = (duration: number): string => {
                 '!w-[150px] !h-[30px] !text-left !rounded',
                 {
                   'pointer-events-none':
-                    taskDetail.process.name === 'API Spec' ||
-                    taskDetail.status === 'Sprint',
+                    taskDetail?.process?.name === 'API Spec' ||
+                    taskDetail?.status === 'Sprint',
                 },
               ]"
               :disabled="isNewTask"

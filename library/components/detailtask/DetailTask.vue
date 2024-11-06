@@ -29,6 +29,8 @@ import ProjectServices from 'lib/services/project.service';
 import { ProjectDetail } from 'lib/types/project.type';
 import { ProjectProcess } from 'lib/types/projectProcess.type';
 
+import DetailTask from './DetailTask.vue';
+
 const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 
 const { setLoading } = useLoadingStore();
@@ -95,6 +97,9 @@ const legendForm = ref<TaskLegendForm>({});
 
 const loadingTask = ref(true);
 
+const dialogDetailTask = ref(false);
+const selectedTaskId = ref<string>();
+
 const taskMenu = computed<TaskMenu[]>(() => {
   return [
     {
@@ -119,6 +124,12 @@ const taskMenu = computed<TaskMenu[]>(() => {
     },
   ];
 });
+
+const openDetailTask = (taskIdParam: string): void => {
+  selectedTaskId.value = taskIdParam;
+  dialogDetailTask.value = true;
+  visible.value = false;
+};
 
 const getProjectDetail = async (): Promise<void> => {
   try {
@@ -261,6 +272,7 @@ provide('isNewTask', isNewTask);
 provide('userType', userType);
 provide('legendForm', legendForm);
 provide('loadingTask', loadingTask);
+provide('openDetailTask', openDetailTask);
 
 watch(
   () => props.taskId,
@@ -371,6 +383,15 @@ watch(visible, (value) => {
       <pre>{{ taskDetail }}</pre>
     </template>
   </Dialog>
+
+  <DetailTask
+    v-if="selectedTaskId"
+    v-model:visible="dialogDetailTask"
+    :task-id="selectedTaskId ?? ''"
+    @create="emit('create')"
+    @delete="emit('delete')"
+    @update="emit('update')"
+  />
 </template>
 
 <style>

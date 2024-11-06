@@ -16,6 +16,7 @@ const props = defineProps<{
 
 const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
+const openDetailTask = inject<(taskIdParam: string) => void>('openDetailTask');
 
 const tasks = ref<TaskLegend[]>();
 
@@ -110,7 +111,14 @@ watch(
         v-for="(task, index) in tasks"
         class="pt-1 pb-1 first:!pt-0 first:!pb-1 last:!pt-1 last:!pb-0"
       >
-        <LegendList :legend="task" :priority-value="task.priority" />
+        <LegendList
+          :class="{
+            'cursor-pointer': !props.child,
+          }"
+          :legend="task"
+          :priority-value="task.priority"
+          @click="!props.child ? openDetailTask(task._id) : undefined"
+        />
       </li>
     </ul>
   </div>
