@@ -139,7 +139,7 @@ const queryParams = computed<QueryParams>(() => ({
 
 const isExpandedAll = computed(() => {
   const rowsHasChildren = currentPageTableData.value?.filter(
-    (d) => d.children?.length,
+    (d) => d.children?.length || d.hasChildren,
   );
 
   return (
@@ -206,12 +206,17 @@ const filterParentRowData = (rowData?: Data[]): Data[] => {
   );
 };
 
-const toggleRowExpand = (
+const toggleRowExpand = async (
   data: Data,
   indexOfData: number,
   isExpanding?: boolean,
-): void => {
-  const { children } = data;
+): Promise<void> => {
+  let { children } = data;
+
+  if (props.childTableProps?.fetchFunction && data.hasChildren) {
+    const fetchChildren = await props.childTableProps?.fetchFunction(data);
+    children = fetchChildren.data;
+  }
 
   if (children?.length) {
     const isExpandingRow = isExpanding ?? !isRowExpanded(data[props.dataKey]);
@@ -270,7 +275,7 @@ const toggleRowSelection = (data: Data): void => {
 
 const toggleExpandAll = (): void => {
   currentPageTableData.value.forEach((data, index) => {
-    if (data.children?.length) toggleRowExpand(data, index);
+    if (data.children?.length || data.hasChildren) toggleRowExpand(data, index);
   });
 };
 
@@ -943,7 +948,7 @@ const listenUpdateTableEvent = (): void => {
                   "
                 >
                   <Button
-                    v-if="item.children?.length"
+                    v-if="item.children?.length || item.hasChildren"
                     @click.stop="toggleRowExpand(item, index)"
                     v-bind="
                       Preset.rowtogglerbutton({

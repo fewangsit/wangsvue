@@ -1,0 +1,17 @@
+{
+  "status": 200,
+  "message": "Success get Asset Policy Child!!!",
+  "data": [
+    {
+      "groupHeader": "Child Group",
+      "groupItems": [
+        {
+          "_id": "664af669adad15716b3e30f",
+          "bugDetail": "This is the detail of the bug",
+          "actualResult": "Bug everywhere",
+          "testSteps": "Test Steps: 1. 2. 3."
+        }
+      ]
+    }
+  ]
+}

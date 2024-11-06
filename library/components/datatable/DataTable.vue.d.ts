@@ -10,6 +10,7 @@ export type ChildGroup = {
 
 export type Data = Record<string, any> & {
   children?: ChildGroup[];
+  hasChildren?: boolean;
 };
 
 export type QueryParams = {
@@ -153,6 +154,11 @@ export type FetchResponse<T = Data> = {
     data: T[];
     totalRecords: number;
   };
+};
+
+export type ShortFetchResponse<T = Data> = {
+  message: string;
+  data: T[];
 };
 
 export type TableCellComponent = {
@@ -374,13 +380,17 @@ export interface DataTableRowClickEvent {
   index: number;
 }
 
-export type ChildTableProps = Partial<TreeTableProps> & {
+export type ChildTableProps = Partial<Omit<TreeTableProps, 'fetchFunction'>> & {
   /**
    * Use the header of each column in child table
    *
    * @default false
    */
   useColumnsHeader?: boolean;
+  /**
+   * The function to fetch data on row expand
+   */
+  fetchFunction?: (parentData: Data) => Promise<ShortFetchResponse | undefined>;
 };
 
 export interface TreeTableProps extends Omit<BaseDataTableProps, 'columns'> {
