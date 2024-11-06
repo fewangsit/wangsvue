@@ -154,7 +154,11 @@ const getDuration = (duration: number): string => {
           <Button
             :class="[
               '!min-w-[150px] !h-[30px] !text-left !rounded',
-              { 'pointer-events-none': userType === 'member' },
+              {
+                'pointer-events-none':
+                  userType === 'member' ||
+                  taskDetail.process.name === 'API Spec',
+              },
             ]"
             :disabled="isNewTask"
             :label="memberLabel"
@@ -186,10 +190,15 @@ const getDuration = (duration: number): string => {
           />
           <div class="">
             <Button
+              :class="[
+                '!w-[150px] !h-[30px] !text-left !rounded',
+                {
+                  'pointer-events-none': taskDetail.process.name === 'API Spec',
+                },
+              ]"
               :disabled="isNewTask"
               :label="startDateLabel"
               @click="openCalendar"
-              class="!w-[150px] !h-[30px] !text-left !rounded"
               icon="calendar"
               severity="warning"
             />
