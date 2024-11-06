@@ -193,7 +193,9 @@ const getDuration = (duration: number): string => {
               :class="[
                 '!w-[150px] !h-[30px] !text-left !rounded',
                 {
-                  'pointer-events-none': taskDetail.process.name === 'API Spec',
+                  'pointer-events-none':
+                    taskDetail.process.name === 'API Spec' ||
+                    taskDetail.status === 'Sprint',
                 },
               ]"
               :disabled="isNewTask"
