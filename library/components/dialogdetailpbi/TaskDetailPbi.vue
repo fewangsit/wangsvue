@@ -7,11 +7,8 @@ import {
   QueryParams,
 } from '../datatable/DataTable.vue.d';
 import { MenuItem } from '../menuitem';
-import {
-  AssignedMember,
-  DialogDetailPbiProps,
-  Task,
-} from './DialogDetailPbi.vue.d';
+import { TaskDetailPbiProps } from './TaskDetailPbi.vue.d';
+import { AssignedMember, Task } from './DialogDetailPbi.vue.d';
 import {
   getImageURL,
   getUser,
@@ -32,7 +29,7 @@ import ButtonFilter from '../buttonfilter/ButtonFilter.vue';
 import SprintServices from 'lib/services/sprint.service';
 import TaskServices from 'lib/services/task.service';
 
-const props = defineProps<DialogDetailPbiProps>();
+const props = defineProps<TaskDetailPbiProps>();
 
 const projectId = sessionStorage.getItem('projectId') as string;
 const userId = getUser()._id;
