@@ -60,3 +60,11 @@ export interface EditTaskLinkDTO {
   linkType: TaskLinkURLType;
   type: TaskLinkType;
 }
+
+export interface ReviewTaskDTO {
+  checklistId: string;
+  checklistName: string;
+  checklistItemName: string;
+  result: 'Ok' | 'Bug';
+  content?: string;
+}

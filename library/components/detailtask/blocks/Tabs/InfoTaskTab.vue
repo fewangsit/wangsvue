@@ -9,13 +9,13 @@ import TaskServices from 'lib/services/task.service';
 import { EditTaskDTO } from 'lib/dto/task.dto';
 import eventBus from 'lib/event-bus';
 import { useToast } from 'lib/utils';
-import { TaskLegendForm } from '../../Legend.vue';
-import DialogAssignMember from './DialogAssignMember.vue';
-import DialogSetDuration from './DialogSetDuration.vue';
-import TaskDependency from './TaskDependency/TaskDependency.vue';
-import TaskList from './TaskList/TaskList.vue';
-import Ticket from './Ticket/Ticket.vue';
-import DialogCustomDependency from './TaskDependency/DialogCustomDependency.vue';
+import { TaskLegendForm } from '../common/Legend.vue';
+import DialogAssignMember from '../common/DialogAssignMember.vue';
+import DialogSetDuration from '../common/DialogSetDuration.vue';
+import TaskDependency from '../sections/TaskDependency/TaskDependency.vue';
+import TaskList from '../sections/TaskList/TaskList.vue';
+import Ticket from '../sections/Ticket/Ticket.vue';
+import DialogCustomDependency from '../sections/TaskDependency/DialogCustomDependency.vue';
 
 const toast = useToast();
 
@@ -200,6 +200,7 @@ const getDuration = (duration: number): string => {
                   ? new Date(taskDetail?.startDate).getTime()
                   : undefined
               "
+              :min-date="new Date()"
               @update:model-value="updateStartDate"
               class="!h-[0.000000001px] !w-[0.0000000001px]"
               show-time

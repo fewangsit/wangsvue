@@ -5,7 +5,7 @@ import Changelog from 'lib/components/changelog/Changelog.vue';
 import Button from 'lib/components/button/Button.vue';
 import AttachmentItem from './AttachmentItem.vue';
 import { AttachmentItemData } from './AttachmentItem.vue.d';
-import DialogAddAttachment from '../../../common/DialogAddAttachment.vue';
+import DialogAddAttachment from '../../common/DialogAddAttachment.vue';
 import TaskAttachmentServices from 'lib/services/taskAttachment.service';
 
 onMounted(() => {

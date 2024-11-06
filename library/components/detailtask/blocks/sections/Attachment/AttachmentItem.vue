@@ -14,7 +14,7 @@ import { UpdateTaskAttachmentCaptionDTO } from 'lib/dto/taskAttachment.dto';
 import { formatDateReadable } from 'lib/utils/date.util';
 import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
 import { useToast } from 'lib/utils';
-import TaskAttachmentThumbnail from '../../../common/AttachmentThumbnail.vue';
+import TaskAttachmentThumbnail from '../../common/AttachmentThumbnail.vue';
 import TaskChecklistServices from 'lib/services/taskChecklist.service';
 
 const toast = useToast();
@@ -222,6 +222,7 @@ const truncateText = (text: string): string => {
           text
         />
         <Button
+          v-if="!props.readonly"
           @click="dialogConfirmDelete = true"
           class="!p-1"
           icon="close"

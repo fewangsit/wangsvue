@@ -3,6 +3,7 @@ import {
   CreateTaskDTO,
   EditDescriptionTaskDTO,
   EditTaskDTO,
+  ReviewTaskDTO,
 } from 'lib/dto/task.dto';
 import { getBaseURL } from 'lib/utils/getBaseURL.util';
 import {
@@ -67,9 +68,21 @@ const TaskServices = {
     return API().put(`/${taskId}/description`, data);
   },
 
+  markTaskAsDone: (taskId: string): Promise<AxiosResponse> => {
+    return API().put(`/${taskId}/done`);
+  },
+
   deleteTask: (taskId: string): Promise<AxiosResponse> => {
     const params = { id: JSON.stringify([taskId]) };
     return API({ params }).delete('/delete');
+  },
+
+  reviewTask: (
+    taskId: string,
+    body: ReviewTaskDTO[],
+  ): Promise<AxiosResponse> => {
+    const payload = { data: body };
+    return API().put(`/${taskId}/review`, payload);
   },
 
   getTaskReview: (taskId: string): Promise<AxiosResponse> => {

@@ -11,7 +11,7 @@ import TaskDependencyServices from 'lib/services/taskDependency.service';
 import Button from 'lib/components/button/Button.vue';
 import UserName from 'lib/components/username/UserName.vue';
 import Badge from 'lib/components/badge/Badge.vue';
-import InputAdditional from '../../../common/InputAdditional.vue';
+import InputAdditional from '../../common/InputAdditional.vue';
 import ModuleServices from 'lib/services/module.service';
 import { ProjectModule } from 'lib/types/projectModule.type';
 import DialogCustomDependency from './DialogCustomDependency.vue';

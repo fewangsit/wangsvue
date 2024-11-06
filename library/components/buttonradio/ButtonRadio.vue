@@ -58,6 +58,7 @@ const onBlur = (event: Event): void => {
       </span>
     </span>
 
-    <template v-if="label">{{ label }}</template>
+    <slot v-if="$slots.label" name="label" />
+    <template v-else-if="label">{{ label }}</template>
   </label>
 </template>

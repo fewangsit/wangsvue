@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Image from 'lib/components/image/Image.vue';
-import { AttachmentItemData } from '../Tabs/Description/Attachment/AttachmentItem.vue.d';
+import { AttachmentItemData } from '../sections/Attachment/AttachmentItem.vue.d';
 import Icon from 'lib/components/icon/Icon.vue';
 import { computed } from 'vue';
 import { WangsIcons } from 'lib/components/icon/Icon.vue.d';

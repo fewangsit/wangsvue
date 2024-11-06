@@ -6,7 +6,7 @@ import { TaskDetail } from 'lib/types/task.type';
 import TaskDependencyServices from 'lib/services/taskDependency.service';
 import { useToast } from 'lib/utils';
 import LegendList from './LegendList.vue';
-import { TaskLegend } from '../../../Legend.vue';
+import { TaskLegend } from '../../common/Legend.vue';
 
 const toast = useToast();
 

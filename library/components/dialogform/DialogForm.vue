@@ -272,7 +272,9 @@ defineExpose({ form, clearField });
                   v-bind="DialogFormPreset?.savesubmitbutton"
                   :label="submitBtnLabel"
                   :severity="
-                    props.severity === 'primary' ? undefined : 'success'
+                    props.severity === 'primary'
+                      ? undefined
+                      : (props.severity ?? 'success')
                   "
                   @click="onButtonSubmitClicked"
                 />
