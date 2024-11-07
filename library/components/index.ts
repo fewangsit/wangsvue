@@ -58,6 +58,7 @@ import InvisibleField from './invisiblefield/InvisibleField.vue';
 import DialogDetailPbi from './dialogdetailpbi/DialogDetailPbi.vue';
 import TaskDetailPbi from './dialogdetailpbi/TaskDetailPbi.vue';
 import ApproverInfo from './approverinfo/ApproverInfo.vue';
+import DetailMember from './detailmember/DetailMember.vue';
 
 export {
   Badge,
@@ -120,4 +121,5 @@ export {
   DialogDetailPbi,
   TaskDetailPbi,
   ApproverInfo,
+  DetailMember,
 };
