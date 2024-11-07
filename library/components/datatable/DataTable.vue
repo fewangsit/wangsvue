@@ -76,7 +76,6 @@ const dataTableID = ((): string => {
 
 const currentPageTableData = ref<Data[]>(props.data ?? []);
 const expandedRows = ref<Record<string, number>>({});
-const loadingRows = ref<Record<string, boolean>>({});
 const visibleColumns = ref<TreeTableColumns[]>(props.columns);
 const checkboxSelection = ref<Data[]>([]);
 const rowReorderEventPayload = ref<DataTableRowReorderEvent>();
@@ -219,23 +218,28 @@ const toggleRowExpand = async (
       expandedRows.value[data[props.dataKey]],
     );
     delete expandedRows.value[data[props.dataKey]];
-  }
+  } else {
+    expandedRows.value[data[props.dataKey]] = 1;
 
-  // If currently loading, prevent fetching children twice
-  if (isExpandingRow && !loadingRows.value[data[props.dataKey]]) {
+    // Add loading animation row
+    currentPageTableData.value.splice(indexOfData + 1, 0, {
+      childRow: true,
+      loadingRow: true,
+    });
+
     let { children } = data;
 
     if (props.childTableProps?.fetchFunction && data.hasChildren) {
       try {
-        loadingRows.value[data[props.dataKey]] = true;
         const fetchChildren = await props.childTableProps?.fetchFunction(data);
         children = fetchChildren.data;
       } catch (error) {
         console.error('🚀 ~ toggleRowExpand ~ error:', error);
-      } finally {
-        loadingRows.value[data[props.dataKey]] = false;
       }
     }
+
+    // Remove loading animation row
+    currentPageTableData.value.splice(indexOfData + 1, 1);
 
     if (indexOfData >= 0 && children?.length) {
       const childrenRows = children.flatMap((child) => {
@@ -252,6 +256,11 @@ const toggleRowExpand = async (
 
       expandedRows.value[data[props.dataKey]] = childrenRows.length;
       currentPageTableData.value.splice(indexOfData + 1, 0, ...childrenRows);
+    } else {
+      currentPageTableData.value.splice(indexOfData + 1, 0, {
+        childRow: true,
+        noDataRow: true,
+      });
     }
   }
 };
@@ -992,10 +1001,42 @@ const listenUpdateTableEvent = (): void => {
                   v-else-if="item.childRowHeader"
                   v-bind="Preset.childrowheader"
                   :class="Preset?.bodycell.class"
-                  :colspan="props.columns.length"
+                  :colspan="props.columns.length + 1"
                   @click.stop=""
                 >
                   {{ item.header }}
+                </td>
+
+                <td
+                  v-else-if="item.loadingRow"
+                  :class="Preset?.bodycell.class"
+                  :colspan="props.columns.length + 1"
+                  @click.stop=""
+                >
+                  <div v-bind="Preset.loadingtablewrapper">
+                    <DotLottieVue
+                      :src="loadingTableLottie"
+                      v-bind="Preset.loadingtablelottie"
+                      autoplay
+                      loop
+                    />
+                  </div>
+                </td>
+
+                <td
+                  v-else-if="item.noDataRow"
+                  :class="Preset?.bodycell.class"
+                  :colspan="props.columns.length + 1"
+                  @click.stop=""
+                >
+                  <div v-bind="Preset.nodatalottiewrapper">
+                    <DotLottieVue
+                      :src="noDataLottie"
+                      v-bind="Preset.nodatalottie"
+                      autoplay
+                      loop
+                    />
+                  </div>
                 </td>
 
                 <template v-else>
