@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v1.5.34
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.33...v1.5.34)
+
+### 🚀 Enhancements
+
+- Add component ApproverInfo to build-entry ([8443684](https://github.com/fewangsit/wangsvue/commit/8443684))
+- Add icon printer-cloud ([0c51780](https://github.com/fewangsit/wangsvue/commit/0c51780))
+
+### 💅 Refactors
+
+- **applyFilter.helper.ts:** Refactor to handle array of undefined/null ([9ad3ff4](https://github.com/fewangsit/wangsvue/commit/9ad3ff4))
+
+### 🏡 Chore
+
+- **presets:** Update version ([d3aeb8c](https://github.com/fewangsit/wangsvue/commit/d3aeb8c))
+- **presets:** Update version ([6472cba](https://github.com/fewangsit/wangsvue/commit/6472cba))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.33
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.32...v1.5.33)
