@@ -76,6 +76,7 @@ const dataTableID = ((): string => {
 
 const currentPageTableData = ref<Data[]>(props.data ?? []);
 const expandedRows = ref<Record<string, number>>({});
+const loadingRows = ref<Record<string, boolean>>({});
 const visibleColumns = ref<TreeTableColumns[]>(props.columns);
 const checkboxSelection = ref<Data[]>([]);
 const rowReorderEventPayload = ref<DataTableRowReorderEvent>();
@@ -220,12 +221,20 @@ const toggleRowExpand = async (
     delete expandedRows.value[data[props.dataKey]];
   }
 
-  if (isExpandingRow) {
+  // If currently loading, prevent fetching children twice
+  if (isExpandingRow && !loadingRows.value[data[props.dataKey]]) {
     let { children } = data;
 
     if (props.childTableProps?.fetchFunction && data.hasChildren) {
-      const fetchChildren = await props.childTableProps?.fetchFunction(data);
-      children = fetchChildren.data;
+      try {
+        loadingRows.value[data[props.dataKey]] = true;
+        const fetchChildren = await props.childTableProps?.fetchFunction(data);
+        children = fetchChildren.data;
+      } catch (error) {
+        console.error('🚀 ~ toggleRowExpand ~ error:', error);
+      } finally {
+        loadingRows.value[data[props.dataKey]] = false;
+      }
     }
 
     if (indexOfData >= 0 && children?.length) {
