@@ -28,6 +28,7 @@ const whitelistIframeTag = /<\s*\/?\s*(iframe)\b.*?>/;
 const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
 const isNewTask = inject<Ref<boolean>>('isNewTask');
+const openDetailTask = inject<(taskIdParam: string) => void>('openDetailTask');
 
 const projectModules = ref<ProjectModule[]>();
 
@@ -722,7 +723,12 @@ watch(
             <div class="w-full flex flex-col gap-1.5 overflow-auto">
               <div class="flex justify-between w-full">
                 <div class="flex items-center gap-2">
-                  <span>{{ task.name }}</span>
+                  <span
+                    @click="openDetailTask(task._id)"
+                    class="cursor-pointer"
+                  >
+                    {{ task.name }}
+                  </span>
                   <div v-if="task.assignedTo?.length" class="flex">
                     <UserName
                       :key="userIndex"

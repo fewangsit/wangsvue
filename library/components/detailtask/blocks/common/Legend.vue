@@ -20,6 +20,8 @@ import { TaskDetail } from 'lib/types/task.type';
 import { useLoadingStore } from 'lib/build-entry';
 import DialogPriorityValue from './DialogPriorityValue.vue';
 import DialogReviewLeader from '../sections/Review/DialogReviewLeader.vue';
+import TaskChecklistServices from 'lib/services/taskChecklist.service';
+import DialogFinishReview from '../sections/Review/DialogFinishReview.vue';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -50,6 +52,7 @@ export type TaskLegend = {
   name?: string;
   priorityValue?: number;
   priority?: number;
+  _id?: string;
 };
 
 export type TaskLegendForm = Partial<Omit<TaskLegend, 'priorityValue'>>;
@@ -86,6 +89,7 @@ const legendLoading = ref<TaskLegendLoading>({
 
 const dialogPriorityValue = ref<boolean>(false);
 const dialogReview = ref<boolean>(false);
+const dialogFinishReview = ref<boolean>(false);
 
 const subModuleVisibility = ref(true);
 const repositoryVisibility = ref(true);
@@ -119,6 +123,20 @@ const getProcessOptions = async (): Promise<void> => {
           processPosition: d.processPosition,
         },
       }));
+
+    if (legendForm.value.process) {
+      const indexFound = legendOptions.value.process.findIndex(
+        (d) => d.value?.['_id'] === legendForm.value.process._id,
+      );
+      if (indexFound !== -1) {
+        // Update the process in the form with the matching process from the options
+        legendForm.value.process = legendOptions.value.process[indexFound]
+          .value as Pick<
+          ProjectProcess,
+          '_id' | 'name' | 'team' | 'processPosition'
+        >;
+      }
+    }
   } catch (error) {
     toast.add({
       message: 'Data Proses gagal dimuat.',
@@ -208,11 +226,20 @@ const getSubmoduleOptions = async (): Promise<void> => {
         repository: d.repository,
       },
     }));
+
+    if (legendForm.value.submodule) {
+      const indexFound = legendOptions.value.submodule.findIndex(
+        (d) => d.value?.['_id'] === legendForm.value.submodule._id,
+      );
+      if (indexFound !== -1) {
+        // Update the submodule in the form with the matching submodule from the options
+        legendForm.value.submodule = legendOptions.value.submodule[indexFound]
+          .value as Pick<ProjectSubModule, '_id' | 'name' | 'repository'>;
+      }
+    }
   } catch (error) {
-    console.error(error);
     toast.add({
-      message: 'Data Sub Modul gagal diambil.',
-      severity: 'error',
+      message: 'Data Sub Modul gagal dimuat.',
       error,
     });
   } finally {
@@ -408,8 +435,8 @@ const showRepositoryByProcess = (): void => {
 /**
  * Get repository options based on the selected process team.
  *
- * This function will populate the legendOptions.repository with the
- * repository option based on the selected process team.
+ * This function will assign repository option based on the selected process team
+ * into legendOptions.repository
  *
  * @returns {void}
  */
@@ -454,8 +481,31 @@ const markAsDone = async (): Promise<void> => {
   }
 };
 
-const openReviewDialog = (): void => {
-  dialogReview.value = true;
+const openReviewDialog = async (): Promise<void> => {
+  const checklists = await getChecklists();
+  if (checklists.length) {
+    dialogReview.value = true;
+  } else {
+    dialogFinishReview.value = true;
+  }
+};
+
+const getChecklists = async (): Promise<any[]> => {
+  try {
+    setLoading(true);
+    const { data } = await TaskChecklistServices.getTaskChecklists(
+      taskId.value,
+    );
+    return data?.data;
+  } catch (error) {
+    toast.add({
+      message: 'Gagal memuat data ceklis.',
+      error,
+    });
+    return [];
+  } finally {
+    setLoading(false);
+  }
 };
 
 watch(
@@ -495,6 +545,9 @@ watch(
     if (taskDetail.value.subModule) {
       legendForm.value.submodule = taskDetail.value.subModule;
     }
+
+    showSubModuleByProcess();
+    showRepositoryByProcess();
   },
   { deep: true },
 );
@@ -595,7 +648,6 @@ watch(isTitleInputDisabled, (value) => {
               v-model="legendForm.repository"
               :disabled="isSubmoduleDropdownDisabled"
               :options="legendOptions.repository"
-              @show="getSubmoduleOptions"
               data-wv-section="detailtask-repository-input"
               option-label="name"
               option-value="name"
@@ -622,7 +674,7 @@ watch(isTitleInputDisabled, (value) => {
         severity="secondary"
       />
     </div>
-    <pre>{{ legendForm }}</pre>
+
     <div class="flex justify-between items-start">
       <div class="w-8/10" data-wv-section="detailtask-title-wrapper">
         <Textarea
@@ -663,6 +715,10 @@ watch(isTitleInputDisabled, (value) => {
   />
   <DialogReviewLeader
     v-model:visible="dialogReview"
+    @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
+  />
+  <DialogFinishReview
+    v-model:visible="dialogFinishReview"
     @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
   />
 </template>

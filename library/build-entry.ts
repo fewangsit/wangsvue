@@ -123,6 +123,7 @@ import {
   InvisibleField,
   DialogDetailPbi,
   TaskDetailPbi,
+  ApproverInfo,
 } from './components';
 
 export {
@@ -203,6 +204,7 @@ export {
   InvisibleField,
   DialogDetailPbi,
   TaskDetailPbi,
+  ApproverInfo,
 
   // Component store
   useLoadingStore,

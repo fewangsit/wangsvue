@@ -57,6 +57,7 @@ import CodeSnippet from './codesnippet/CodeSnippet.vue';
 import InvisibleField from './invisiblefield/InvisibleField.vue';
 import DialogDetailPbi from './dialogdetailpbi/DialogDetailPbi.vue';
 import TaskDetailPbi from './dialogdetailpbi/TaskDetailPbi.vue';
+import ApproverInfo from './approverinfo/ApproverInfo.vue';
 
 export {
   Badge,
@@ -118,4 +119,5 @@ export {
   InvisibleField,
   DialogDetailPbi,
   TaskDetailPbi,
+  ApproverInfo,
 };

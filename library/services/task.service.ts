@@ -85,6 +85,13 @@ const TaskServices = {
     return API().put(`/${taskId}/review`, payload);
   },
 
+  reportBugTask: (
+    taskId: string,
+    body: { note: string },
+  ): Promise<AxiosResponse> => {
+    return API().put(`/${taskId}/report-bug`, body);
+  },
+
   getTaskReview: (taskId: string): Promise<AxiosResponse> => {
     return API().get(`/${taskId}/review`);
   },
