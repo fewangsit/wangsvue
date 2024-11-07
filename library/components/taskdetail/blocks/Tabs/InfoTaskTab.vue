@@ -2,7 +2,7 @@
 import { computed, ComputedRef, inject, Ref, ref } from 'vue';
 
 import Button from 'lib/components/button/Button.vue';
-import { TaskDetail } from 'lib/types/task.type';
+import { TaskDetailData } from 'lib/types/task.type';
 import Calendar from 'lib/components/calendar/Calendar.vue';
 import { formatDate } from 'lib/utils/date.util';
 import TaskServices from 'lib/services/task.service';
@@ -20,7 +20,7 @@ import DialogCustomDependency from '../sections/TaskDependency/DialogCustomDepen
 const toast = useToast();
 
 const isNewTask = inject<Ref<boolean>>('isNewTask');
-const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
+const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 const userType =
   inject<ComputedRef<'member' | 'admin' | 'pm' | 'teamLeader'>>('userType');
 const legendForm = inject<Ref<TaskLegendForm>>('legendForm');

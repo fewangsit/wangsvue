@@ -9,7 +9,7 @@ import { useToast } from 'lib/utils';
 import TaskChecklistServices from 'lib/services/taskChecklist.service';
 import { FormPayload, FormValue } from 'lib/components/form/Form.vue.d';
 import { AddTaskChecklistTemplateDTO } from 'lib/dto/taskChecklist.dto';
-import { TaskChecklist, TaskDetail } from 'lib/types/task.type';
+import { TaskChecklist, TaskDetailData } from 'lib/types/task.type';
 import InputText from 'lib/components/inputtext/InputText.vue';
 
 const { setLoading } = useLoadingStore();
@@ -17,7 +17,7 @@ const toast = useToast();
 
 const projectId = sessionStorage.getItem('projectId') ?? '';
 
-const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
+const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 
 const visible = defineModel<boolean>('visible', { required: true });
 

@@ -16,7 +16,7 @@ import { ProjectModule } from 'lib/types/projectModule.type';
 import { ProjectSubModule } from 'lib/types/projectSubmodule.type';
 import Textarea from 'primevue/textarea';
 import eventBus from 'lib/event-bus';
-import { TaskDetail } from 'lib/types/task.type';
+import { TaskDetailData } from 'lib/types/task.type';
 import { useLoadingStore } from 'lib/build-entry';
 import DialogPriorityValue from './DialogPriorityValue.vue';
 import DialogReviewLeader from '../sections/Review/DialogReviewLeader.vue';
@@ -27,7 +27,7 @@ const toast = useToast();
 const { setLoading } = useLoadingStore();
 
 const taskId = inject<Ref<string>>('taskId');
-const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
+const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 const isNewTask = inject<Ref<boolean>>('isNewTask');
 const legendForm = inject<Ref<TaskLegendForm>>('legendForm');
 const loadingTask = inject<Ref<boolean>>('loadingTask');

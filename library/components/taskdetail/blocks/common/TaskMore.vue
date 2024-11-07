@@ -5,14 +5,14 @@ import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
 import Menu from 'lib/components/menu/Menu.vue';
 import { MenuItem } from 'lib/components/menuitem';
 import TaskServices from 'lib/services/task.service';
-import { TaskDetail } from 'lib/types/task.type';
+import { TaskDetailData } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 import eventBus from 'lib/event-bus';
 
 const toast = useToast();
 
 const props = defineProps<{
-  taskDetail: TaskDetail;
+  taskDetail: TaskDetailData;
 }>();
 
 const moreMenu = ref();

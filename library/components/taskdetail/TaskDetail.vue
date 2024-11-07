@@ -13,12 +13,12 @@ import {
 import Dialog from 'primevue/dialog';
 import Legend, { TaskLegendForm } from './blocks/common/Legend.vue';
 import Button from '../button/Button.vue';
-import { DetailTaskEmits, DetailTaskProps } from './DetailTask.vue.d';
+import { DetailTaskEmits, DetailTaskProps } from './TaskDetail.vue.d';
 import { MenuItem } from '../menuitem';
 import TabMenu from '../tabmenu/TabMenu.vue';
 import InfoTaskTab from './blocks/Tabs/InfoTaskTab.vue';
 import ReviewTab from './blocks/Tabs/ReviewTab.vue';
-import { TaskDetail } from 'lib/types/task.type';
+import { TaskDetailData } from 'lib/types/task.type';
 import eventBus from 'lib/event-bus';
 import useLoadingStore from '../loading/store/loading.store';
 import { useToast } from 'lib/utils';
@@ -29,7 +29,7 @@ import ProjectServices from 'lib/services/project.service';
 import { ProjectDetail } from 'lib/types/project.type';
 import { ProjectProcess } from 'lib/types/projectProcess.type';
 
-import DetailTask from './DetailTask.vue';
+import TaskDetail from './TaskDetail.vue';
 import Comment from '../comment/Comment.vue';
 import { User } from 'lib/types/user.type';
 
@@ -92,7 +92,7 @@ const user = ref<User>(
  */
 const firstFetch = ref<boolean>(true);
 const taskId = ref<string>();
-const taskDetail = ref<TaskDetail>();
+const taskDetail = ref<TaskDetailData>();
 const isNewTask = ref<boolean>(false);
 const taskMenuIndex = ref<number>(0);
 
@@ -432,7 +432,7 @@ watch(visible, (value) => {
     </template>
   </Dialog>
 
-  <DetailTask
+  <TaskDetail
     v-if="selectedTaskId"
     v-model:visible="dialogDetailTask"
     :task-id="selectedTaskId ?? ''"

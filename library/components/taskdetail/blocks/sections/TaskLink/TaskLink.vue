@@ -2,7 +2,7 @@
 import Button from 'lib/components/button/Button.vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import { computed, inject, onMounted, Ref, ref, watch } from 'vue';
-import { TaskDetail, TaskLink } from 'lib/types/task.type';
+import { TaskDetailData, TaskLink } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 import TaskLinkServices from 'lib/services/taskLink.service';
 import UserName from 'lib/components/username/UserName.vue';
@@ -12,7 +12,7 @@ import DialogSetTaskLink from './DialogSetTaskLink.vue';
 const toast = useToast();
 
 const taskId = inject<Ref<string>>('taskId');
-const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
+const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 
 onMounted(() => {
   getTaskLink();

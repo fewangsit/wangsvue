@@ -7,7 +7,7 @@ import { ProjectProcess } from './projectProcess.type';
 import { ProjectSubModule } from './projectSubmodule.type';
 import { WangsitStatus } from './wangsStatus.type';
 
-export type TaskDetail = {
+export type TaskDetailData = {
   _id: string;
   project: Project;
   process: ProjectProcess;

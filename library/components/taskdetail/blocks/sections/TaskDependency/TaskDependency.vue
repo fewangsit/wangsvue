@@ -4,7 +4,7 @@ import Icon from 'lib/components/icon/Icon.vue';
 import MultiSelect from 'lib/components/multiselect/MultiSelect.vue';
 import TaskServices from 'lib/services/task.service';
 import ProjectProcessServices from 'lib/services/projectProcess.service';
-import { TaskDependency, TaskDetail } from 'lib/types/task.type';
+import { TaskDependency, TaskDetailData } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 import { computed, inject, nextTick, Ref, ref, watch } from 'vue';
 import TaskDependencyServices from 'lib/services/taskDependency.service';
@@ -26,7 +26,7 @@ const projectId = sessionStorage.getItem('projectId') ?? '';
 const whitelistIframeTag = /<\s*\/?\s*(iframe)\b.*?>/;
 
 const taskId = inject<Ref<string>>('taskId');
-const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
+const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 const isNewTask = inject<Ref<boolean>>('isNewTask');
 const openDetailTask = inject<(taskIdParam: string) => void>('openDetailTask');
 

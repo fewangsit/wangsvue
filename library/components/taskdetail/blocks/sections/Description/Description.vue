@@ -7,7 +7,7 @@ import UserName from 'lib/components/username/UserName.vue';
 import { EditDescriptionTaskDTO } from 'lib/dto/task.dto';
 import eventBus from 'lib/event-bus';
 import TaskServices from 'lib/services/task.service';
-import { TaskDescription, TaskDetail } from 'lib/types/task.type';
+import { TaskDescription, TaskDetailData } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 import { formatDateReadable } from 'lib/utils/date.util';
 import { computed, inject, onMounted, Ref, ref, toRaw, watch } from 'vue';
@@ -20,7 +20,7 @@ onMounted(async () => {
   await getDescription();
 });
 
-const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
+const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 const taskId = inject<Ref<string>>('taskId');
 
 const taskDescription = ref<TaskDescription>();

@@ -37,7 +37,7 @@ export type DetailTaskEmits = {
 };
 
 /**
- * **WangsVue - DetailTask**
+ * **WangsVue - TaskDetail**
  *
  * _DetailTask is a component to show detail task dialog._
  *
@@ -48,7 +48,7 @@ export type DetailTaskEmits = {
  *
  * @experimental
  */
-declare class DetailTask extends ClassComponent<
+declare class TaskDetail extends ClassComponent<
   DetailTaskProps,
   unknown,
   DetailTaskEmits
@@ -56,8 +56,8 @@ declare class DetailTask extends ClassComponent<
 
 declare module '@vue/runtime-core' {
   interface GlobalComponents {
-    Dropdown: GlobalComponentConstructor<DetailTask>;
+    Dropdown: GlobalComponentConstructor<TaskDetail>;
   }
 }
 
-export default DetailTask;
+export default TaskDetail;

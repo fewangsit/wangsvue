@@ -2,7 +2,7 @@
 import { computed, inject, ref, Ref, watch } from 'vue';
 import Button from 'lib/components/button/Button.vue';
 import Dialog from 'lib/components/dialog/Dialog.vue';
-import { TaskChecklist, TaskDetail } from 'lib/types/task.type';
+import { TaskChecklist, TaskDetailData } from 'lib/types/task.type';
 import TaskChecklistServices from 'lib/services/taskChecklist.service';
 import { useToast } from 'lib/utils';
 import TaskAttachmentItem from '../Attachment/AttachmentItem.vue';
@@ -34,7 +34,7 @@ const emit = defineEmits<{
   saved: [];
 }>();
 
-const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
+const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 const taskId = inject<Ref<string>>('taskId');
 
 const checklistItems = ref<ReviewTaskChecklist[]>();
