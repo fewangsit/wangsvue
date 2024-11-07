@@ -7,6 +7,7 @@ import InputText from 'lib/components/inputtext/InputText.vue';
 import InvisibleField from 'lib/components/invisiblefield/InvisibleField.vue';
 import { ref } from 'vue';
 import DocTitle from '../DocTitle.vue';
+import FileUpload from 'lib/components/fileupload/FileUpload.vue';
 
 const formValues = ref<(FormValue | null)[]>([null, null, null, null]);
 const showResult = ref<boolean[]>([]);
@@ -53,6 +54,27 @@ const apply = (
               label="Username"
               mandatory
               placeholder="Use custom placholder"
+              use-validator
+            />
+            <FileUpload
+              :max-file-size="1000000"
+              :validator-message="{ empty: 'KOSONG' }"
+              :with-upload="false"
+              @error="console.log"
+              accept=".pdf,.xlsx,.xls.docx"
+              field-name="inifile"
+              file-extensions=".pdf .xls .docx"
+              mandatory
+              use-validator
+            />
+            <FileUpload
+              :max-file-size="1000000"
+              :with-upload="false"
+              @error="console.log"
+              accept=".pdf,.xlsx,.xls.docx"
+              field-name="iniwfile"
+              file-extensions=".pdf .xls .docx"
+              mandatory
               use-validator
             />
             <InvisibleField

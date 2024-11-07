@@ -1,6 +1,58 @@
 # Changelog
 
 
+## v1.5.34
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.33...v1.5.34)
+
+### 🚀 Enhancements
+
+- Add component ApproverInfo to build-entry ([8443684](https://github.com/fewangsit/wangsvue/commit/8443684))
+- Add icon printer-cloud ([0c51780](https://github.com/fewangsit/wangsvue/commit/0c51780))
+
+### 💅 Refactors
+
+- **applyFilter.helper.ts:** Refactor to handle array of undefined/null ([9ad3ff4](https://github.com/fewangsit/wangsvue/commit/9ad3ff4))
+
+### 🏡 Chore
+
+- **presets:** Update version ([d3aeb8c](https://github.com/fewangsit/wangsvue/commit/d3aeb8c))
+- **presets:** Update version ([6472cba](https://github.com/fewangsit/wangsvue/commit/6472cba))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.33
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.32...v1.5.33)
+
+### 🚀 Enhancements
+
+- **detailtask:** Add review button in detail task ([2811691](https://github.com/fewangsit/wangsvue/commit/2811691))
+- **detailtask:** Add review leader dialog in detailtask ([c312ec3](https://github.com/fewangsit/wangsvue/commit/c312ec3))
+- **detailtask:** Add functionality for task review tab ([33eecb4](https://github.com/fewangsit/wangsvue/commit/33eecb4))
+- Add component ApproverInfo ([ba1c014](https://github.com/fewangsit/wangsvue/commit/ba1c014))
+
+### 💅 Refactors
+
+- **detailtask:** Update folder structure for detailtask ([eee783a](https://github.com/fewangsit/wangsvue/commit/eee783a))
+- **detailtask:** Update folder structure for detailtask ([5bbcf24](https://github.com/fewangsit/wangsvue/commit/5bbcf24))
+
+### 📖 Documentation
+
+- Add documentation for component FileUpload ([3b806aa](https://github.com/fewangsit/wangsvue/commit/3b806aa))
+
+### 🏡 Chore
+
+- **presets:** Update version ([4b0c27f](https://github.com/fewangsit/wangsvue/commit/4b0c27f))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.32
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.31...v1.5.32)
