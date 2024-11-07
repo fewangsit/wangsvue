@@ -124,6 +124,7 @@ import {
   DialogDetailPbi,
   TaskDetailPbi,
   ApproverInfo,
+  DetailMember,
 } from './components';
 
 export {
@@ -205,6 +206,7 @@ export {
   DialogDetailPbi,
   TaskDetailPbi,
   ApproverInfo,
+  DetailMember,
 
   // Component store
   useLoadingStore,

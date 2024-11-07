@@ -5,6 +5,7 @@ import DocTitle from '../DocTitle.vue';
 import {
   FetchResponse,
   QueryParams,
+  ShortFetchResponse,
   TableCellComponent,
   TableColumn,
   TreeTableColumns,
@@ -14,6 +15,7 @@ import { computed, onMounted, ref, shallowRef, watch } from 'vue';
 import Badge from 'primevue/badge';
 
 import response from './data/treetable-response.json';
+import childResponse from './data/treetable-child-response.json';
 import ButtonDownload from 'lib/components/buttondownload/ButtonDownload.vue';
 import ButtonFilter from 'lib/components/buttonfilter/ButtonFilter.vue';
 import FilterContainer from 'lib/components/filtercontainer/FilterContainer.vue';
@@ -228,6 +230,23 @@ const subColumns: TreeTableColumns[] = [
   },
 ];
 
+const getTableChildData = async (parentData: {
+  _id: string;
+}): Promise<ShortFetchResponse | undefined> => {
+  // eslint-disable-next-line no-console
+  console.log('🚀 ~ params:', parentData._id);
+  // Simulate an asynchronous operation (even though we're returning static data)
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(
+        parentData._id === '663ce742f0667d5266d83d66'
+          ? childResponse
+          : { message: '', data: [] },
+      );
+    }, 1000); // You can adjust the timeout if you need a delay
+  });
+};
+
 const getTableData = async (
   params: QueryParams,
 ): Promise<FetchResponse | undefined> => {
@@ -324,6 +343,7 @@ const filters = ref<any>({
           columns: subColumns,
           useColumnsHeader: true,
           useOption: false,
+          fetchFunction: getTableChildData,
         }"
         :columns="tableColumns"
         :custom-column="customColumn"
