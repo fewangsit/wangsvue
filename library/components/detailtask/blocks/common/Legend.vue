@@ -123,6 +123,20 @@ const getProcessOptions = async (): Promise<void> => {
           processPosition: d.processPosition,
         },
       }));
+
+    if (legendForm.value.process) {
+      const indexFound = legendOptions.value.process.findIndex(
+        (d) => d.value?.['_id'] === legendForm.value.process._id,
+      );
+      if (indexFound !== -1) {
+        // Update the process in the form with the matching process from the options
+        legendForm.value.process = legendOptions.value.process[indexFound]
+          .value as Pick<
+          ProjectProcess,
+          '_id' | 'name' | 'team' | 'processPosition'
+        >;
+      }
+    }
   } catch (error) {
     toast.add({
       message: 'Data Proses gagal dimuat.',
@@ -212,11 +226,20 @@ const getSubmoduleOptions = async (): Promise<void> => {
         repository: d.repository,
       },
     }));
+
+    if (legendForm.value.submodule) {
+      const indexFound = legendOptions.value.submodule.findIndex(
+        (d) => d.value?.['_id'] === legendForm.value.submodule._id,
+      );
+      if (indexFound !== -1) {
+        // Update the submodule in the form with the matching submodule from the options
+        legendForm.value.submodule = legendOptions.value.submodule[indexFound]
+          .value as Pick<ProjectSubModule, '_id' | 'name' | 'repository'>;
+      }
+    }
   } catch (error) {
-    console.error(error);
     toast.add({
-      message: 'Data Sub Modul gagal diambil.',
-      severity: 'error',
+      message: 'Data Sub Modul gagal dimuat.',
       error,
     });
   } finally {
@@ -412,8 +435,8 @@ const showRepositoryByProcess = (): void => {
 /**
  * Get repository options based on the selected process team.
  *
- * This function will populate the legendOptions.repository with the
- * repository option based on the selected process team.
+ * This function will assign repository option based on the selected process team
+ * into legendOptions.repository
  *
  * @returns {void}
  */
@@ -522,6 +545,9 @@ watch(
     if (taskDetail.value.subModule) {
       legendForm.value.submodule = taskDetail.value.subModule;
     }
+
+    showSubModuleByProcess();
+    showRepositoryByProcess();
   },
   { deep: true },
 );
@@ -622,7 +648,6 @@ watch(isTitleInputDisabled, (value) => {
               v-model="legendForm.repository"
               :disabled="isSubmoduleDropdownDisabled"
               :options="legendOptions.repository"
-              @show="getSubmoduleOptions"
               data-wv-section="detailtask-repository-input"
               option-label="name"
               option-value="name"
@@ -649,7 +674,7 @@ watch(isTitleInputDisabled, (value) => {
         severity="secondary"
       />
     </div>
-    <pre>{{ legendForm }}</pre>
+
     <div class="flex justify-between items-start">
       <div class="w-8/10" data-wv-section="detailtask-title-wrapper">
         <Textarea

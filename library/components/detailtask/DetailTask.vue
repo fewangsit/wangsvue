@@ -30,6 +30,8 @@ import { ProjectDetail } from 'lib/types/project.type';
 import { ProjectProcess } from 'lib/types/projectProcess.type';
 
 import DetailTask from './DetailTask.vue';
+import Comment from '../comment/Comment.vue';
+import { User } from 'lib/types/user.type';
 
 const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 
@@ -81,6 +83,10 @@ const userType = computed(() => {
   return 'member';
 });
 
+const user = ref<User>(
+  JSON.parse(localStorage.getItem('user') as string) ?? {},
+);
+
 /**
  * To be used for the first initial loading.
  */
@@ -99,6 +105,8 @@ const loadingTask = ref(true);
 
 const dialogDetailTask = ref(false);
 const selectedTaskId = ref<string>();
+
+const showCommentSection = ref(false);
 
 const taskMenu = computed<TaskMenu[]>(() => {
   return [
@@ -129,6 +137,10 @@ const openDetailTask = (taskIdParam: string): void => {
   selectedTaskId.value = taskIdParam;
   dialogDetailTask.value = true;
   visible.value = false;
+};
+
+const toggleCommentSection = (): void => {
+  showCommentSection.value = !showCommentSection.value;
 };
 
 const getProjectDetail = async (): Promise<void> => {
@@ -273,6 +285,7 @@ provide('userType', userType);
 provide('legendForm', legendForm);
 provide('loadingTask', loadingTask);
 provide('openDetailTask', openDetailTask);
+provide('toggleCommentSection', toggleCommentSection);
 
 watch(
   () => props.taskId,
@@ -292,6 +305,7 @@ watch(visible, (value) => {
     selectedProcess.value = undefined;
     legendForm.value = {};
     isNewTask.value = false;
+    showCommentSection.value = false;
   }
 });
 </script>
@@ -299,7 +313,6 @@ watch(visible, (value) => {
 <template>
   <Dialog
     v-model:visible="visible"
-    :block-scroll="false"
     :closable="false"
     :draggable="false"
     :pt="{
@@ -308,8 +321,8 @@ watch(visible, (value) => {
           ...DialogPreset.root({ state: {} }).class,
 
           //   Customs
-          '!w-[clamp(800px,800px,95vw)]',
-          '!h-[648px]',
+          '!w-auto',
+          // '!h-[648px]',
           '!max-w-none',
           '!border-grayscale-900 !border',
           '!p-0',
@@ -335,8 +348,7 @@ watch(visible, (value) => {
           ...DialogPreset.content({ state: {}, instance: {} }).class,
 
           // Customs
-          '!p-0 !m-0',
-          '!pl-6 !py-3 !pr-3 !mr-3',
+          // '!pl-6 !py-3 !pr-6',
           'detailtask-scrollbar-hide',
         ],
       },
@@ -354,6 +366,7 @@ watch(visible, (value) => {
         <div class="flex items-center gap-1.5">
           <Button
             v-if="!isNewTask"
+            @click="toggleCommentSection"
             class="!p-1"
             icon="chat-1-line"
             icon-class="!w-6 !h-6"
@@ -374,13 +387,48 @@ watch(visible, (value) => {
       </div>
     </template>
     <template #default>
-      <div class="flex flex-col gap-3">
-        <pre>{{ userType }}</pre>
-        <Legend @process-change="handleProcessChange" />
-        <TabMenu v-model:active-index="taskMenuIndex" :menu="taskMenu" />
-        <component :is="taskMenu[taskMenuIndex].component" />
+      <div class="flex">
+        <div
+          class="w-[800px] max-h-[600px] flex flex-col gap-3 !px-6 !py-3 overflow-y-auto detailtask-scrollbar-hide"
+        >
+          <pre>{{ userType }}</pre>
+          <Legend @process-change="handleProcessChange" />
+          <TabMenu
+            v-model:active-index="taskMenuIndex"
+            :menu="taskMenu"
+            class="!overflow-visible"
+          />
+          <component :is="taskMenu[taskMenuIndex].component" />
+        </div>
+        <div
+          v-if="showCommentSection"
+          class="w-[520px] max-h-[600px] border-l border-grayscale-900 overflow-y-auto detailtask-scrollbar-hide"
+        >
+          <div
+            class="flex items-center justify-between py-4 px-6 border-b border-grayscale-900"
+          >
+            <span class="text-base font-semibold">Komentar</span>
+            <Button
+              class="!p-1"
+              icon="search"
+              icon-class="!w-6 !h-6"
+              severity="secondary"
+              text
+            />
+          </div>
+          <div class="py-3 px-6">
+            <Comment
+              :object-id="taskDetail?._id"
+              :user="{
+                _id: user?._id,
+                fullName: user?.fullName,
+                profilePicture: user?.profilePictureMedium,
+              }"
+              comment-type="task"
+            />
+          </div>
+        </div>
       </div>
-      <pre>{{ taskDetail }}</pre>
     </template>
   </Dialog>
 
