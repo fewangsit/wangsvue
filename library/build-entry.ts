@@ -55,6 +55,9 @@ import {
   getNestedProperyValue,
   checkRouteAccess,
   getImageURL,
+  getUser,
+  getUserPermission,
+  convertJsonImage,
   isEmptyObject,
 } from 'lib/utils';
 
@@ -144,6 +147,9 @@ export {
   useToast,
   checkRouteAccess,
   getImageURL,
+  getUser,
+  getUserPermission,
+  convertJsonImage,
   isEmptyObject,
 
   // Components
