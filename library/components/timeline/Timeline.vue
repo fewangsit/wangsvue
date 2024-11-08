@@ -8,7 +8,7 @@ import {
 import Timeline from 'primevue/timeline';
 import Icon from '../icon/Icon.vue';
 import UserName from '../username/UserName.vue';
-import TimelineContenByType from './TimelineContenByType.vue';
+import TimelineContenByType from './TimelineContentByType.vue';
 
 const Preset = inject<Record<string, any>>('preset', {}).timeline;
 
