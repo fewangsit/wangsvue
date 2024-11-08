@@ -93,6 +93,8 @@ const subModuleSummary = reactive<SubModuleSummary>({
               ...userProfileSummary,
               completeProfile: true,
             }"
+            @apply="console.log('apply', $event)"
+            @delete="console.log('delete', $event)"
           />
           <span>Shortened Summary Profile</span>
           <ProjectSummaryAccordion

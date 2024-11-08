@@ -279,6 +279,8 @@ watch(
         :disabled="!summary.completeProfile"
         :image-preview-url="summary.profilePicture"
         :show-info="false"
+        @apply="$emit('apply', $event)"
+        @delete="$emit('delete', $event)"
         image-preview-size="medium"
         rounded
       />
