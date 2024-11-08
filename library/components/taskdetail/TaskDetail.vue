@@ -108,6 +108,8 @@ const selectedTaskId = ref<string>();
 
 const showCommentSection = ref(false);
 
+const taskMenuKey = ref(0);
+
 const taskMenu = computed<TaskMenu[]>(() => {
   return [
     {
@@ -228,6 +230,7 @@ const refreshAndEmitHandler = async (
         break;
       case 'update':
         emit('update');
+        taskMenuKey.value++;
         break;
     }
   } catch (error) {
@@ -398,7 +401,10 @@ watch(visible, (value) => {
             :menu="taskMenu"
             class="!overflow-visible"
           />
-          <component :is="taskMenu[taskMenuIndex].component" />
+          <component
+            :key="taskMenuKey"
+            :is="taskMenu[taskMenuIndex].component"
+          />
         </div>
         <div
           v-if="showCommentSection"

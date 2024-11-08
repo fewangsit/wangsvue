@@ -11,16 +11,31 @@ import TaskChecklistServices from 'lib/services/taskChecklist.service';
 import { AddTaskChecklistDTO } from 'lib/dto/taskChecklist.dto';
 import { FormPayload, FormValue } from 'lib/components/form/Form.vue.d';
 
+export type AddTaskChecklistStaticDTO = Omit<
+  AddTaskChecklistDTO,
+  'template'
+> & {
+  template: string[];
+};
+
 const { setLoading } = useLoadingStore();
 const toast = useToast();
 
 const projectId = sessionStorage.getItem('projectId') ?? '';
+
+const props = defineProps<{
+  static?: boolean;
+}>();
 
 const taskId = inject<Ref<string>>('taskId');
 
 const visible = defineModel<boolean>('visible', { required: true });
 
 const emit = defineEmits<{
+  /**
+   * @description Emit for adding checklist with static mode
+   */
+  add: [body: AddTaskChecklistStaticDTO];
   added: [];
 }>();
 
@@ -58,16 +73,19 @@ const handleSubmit = async (e: FormPayload): Promise<void> => {
       task: taskId?.value,
       template: template ? template['_id'] : undefined,
     };
-    const { data } = await TaskChecklistServices.addTaskChecklist(body);
-    if (data) {
-      toast.add({
-        message: 'Ceklis telah ditambahkan.',
-        severity: 'success',
-      });
 
-      emit('added');
-
-      visible.value = false;
+    if (props.static) {
+      const staticBody = {
+        ...body,
+        template: template ? (template['items'] as string[]) : undefined,
+      };
+      emit('add', staticBody);
+      handleSuccess();
+    } else {
+      const { data } = await TaskChecklistServices.addTaskChecklist(body);
+      if (data) {
+        handleSuccess();
+      }
     }
   } catch (error) {
     toast.add({
@@ -77,6 +95,15 @@ const handleSubmit = async (e: FormPayload): Promise<void> => {
   } finally {
     setLoading(false);
   }
+};
+
+const handleSuccess = (): void => {
+  toast.add({
+    message: 'Ceklis telah ditambahkan.',
+    severity: 'success',
+  });
+  emit('added');
+  visible.value = false;
 };
 </script>
 

@@ -6,6 +6,7 @@ import { ProjectModule } from './projectModule.type';
 import { ProjectProcess } from './projectProcess.type';
 import { ProjectSubModule } from './projectSubmodule.type';
 import { WangsitStatus } from './wangsStatus.type';
+import { JSONContent } from 'lib/components/editor/Editor.vue.d';
 
 export type TaskDetailData = {
   _id: string;
@@ -98,6 +99,7 @@ export type TaskChecklistItem = {
   attachments: any[];
   showRenameItem?: boolean;
   showCaptionItem?: boolean;
+  content?: JSONContent;
   key?: number;
 };
 

@@ -15,6 +15,10 @@ import {
   TaskOptions,
 } from 'lib/components/dialogdetailpbi/DialogDetailPbi.vue.d';
 import { FetchOptionResponse } from 'lib/components/filtercontainer/FilterContainer.vue.d';
+import {
+  TaskTableSubTab,
+  TaskTableTab,
+} from 'lib/components/tasktable/TaskTable.vue.d';
 
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
   const user = JSON.parse(localStorage.getItem('user') as string) ?? {};
@@ -77,12 +81,8 @@ const TaskServices = {
     return API({ params }).delete('/delete');
   },
 
-  reviewTask: (
-    taskId: string,
-    body: ReviewTaskDTO[],
-  ): Promise<AxiosResponse> => {
-    const payload = { data: body };
-    return API().put(`/${taskId}/review`, payload);
+  reviewTask: (taskId: string, body: ReviewTaskDTO): Promise<AxiosResponse> => {
+    return API().put(`/${taskId}/review`, body);
   },
 
   reportBugTask: (
@@ -100,6 +100,25 @@ const TaskServices = {
     query: QueryParams,
   ): Promise<AxiosResponse<FetchResponse<Task>>> => {
     return API().get('/', {
+      params: query,
+    });
+  },
+
+  getTasksByTab: (
+    tab: TaskTableTab,
+    query: QueryParams,
+  ): Promise<AxiosResponse<FetchResponse<Task>>> => {
+    return API().get(`/${tab}`, {
+      params: query,
+    });
+  },
+
+  getTasksBySubTab: (
+    tab: TaskTableTab,
+    subTab: TaskTableSubTab,
+    query: QueryParams,
+  ): Promise<AxiosResponse<FetchResponse<Task>>> => {
+    return API().get(`/${tab}/${subTab}`, {
       params: query,
     });
   },
