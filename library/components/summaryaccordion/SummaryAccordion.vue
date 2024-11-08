@@ -259,6 +259,13 @@ watch(
     shrinkWrap();
   },
 );
+
+watch(
+  () => expanded.value,
+  () => {
+    shrinkWrap();
+  },
+);
 </script>
 
 <!-- eslint-disable vue/html-indent -->
