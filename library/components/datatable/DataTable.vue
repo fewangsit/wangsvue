@@ -1127,8 +1127,10 @@ const listenUpdateTableEvent = (): void => {
                       />
                     </template>
 
-                    <template v-else-if="col.preset?.type">
-                      <MultiRow :values="col.preset?.fieldValues(item)" />
+                    <template v-else-if="col.preset?.type === 'multirow'">
+                      <MultiRow
+                        :attributes="col.preset?.fieldAttributes(item)"
+                      />
                     </template>
 
                     <template v-else-if="col.editable">

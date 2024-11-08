@@ -154,7 +154,7 @@ export default {
     'data-wv-section': 'bodycell',
   },
   multirowcontainer: ({ props }) => ({
-    class: ['grid grid-cols-1', `grid-rows-${props.values.length}`],
+    class: ['grid grid-cols-1', `grid-rows-${props.attributes.length}`],
   }),
   multirow: ({ context }) => ({
     class: [

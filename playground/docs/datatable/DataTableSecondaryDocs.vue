@@ -5,6 +5,7 @@ import {
   QueryParams,
   TableCellComponent,
   TableColumn,
+  MultiRowAttribute,
 } from 'lib/components/datatable/DataTable.vue.d';
 import { MenuItem } from 'lib/components/menuitem';
 import { computed, onMounted, ref, shallowRef } from 'vue';
@@ -151,8 +152,12 @@ const tableColumns = computed<TableColumn[]>(() => {
       sortable: true,
       preset: {
         type: 'multirow',
-        fieldValues: (data: Pipeline): string[] => {
-          return data.products.map((each) => each.name);
+        fieldAttributes: (data: Pipeline): MultiRowAttribute[] => {
+          return data.products.map((each) => {
+            return {
+              value: each.name,
+            };
+          });
         },
       },
       bodyClass: (data: Pipeline): string => {
@@ -165,8 +170,14 @@ const tableColumns = computed<TableColumn[]>(() => {
       sortable: true,
       preset: {
         type: 'multirow',
-        fieldValues: (data: Pipeline): string[] => {
-          return data.products.map((each) => each.sku);
+        fieldAttributes: (data: Pipeline): MultiRowAttribute[] => {
+          return data.products.map((each) => {
+            return {
+              value: each.quantity,
+              class:
+                each.quantity > 13 ? 'text-success-500' : 'text-danger-500',
+            };
+          });
         },
       },
       bodyClass: (data: Pipeline): string => {
