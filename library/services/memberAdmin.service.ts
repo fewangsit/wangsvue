@@ -41,6 +41,16 @@ const MemberAdminServices = {
     );
   },
 
+  activateRoles: (
+    memberAdminId: string,
+    body: {
+      roleIds: string[];
+      isActive: boolean;
+    },
+  ): Promise<AxiosResponse> => {
+    return API().post(`/member-admin/${memberAdminId}/bulk-activation`, body);
+  },
+
   updateMemberAdmin: (
     memberAdminId: string,
     body: {

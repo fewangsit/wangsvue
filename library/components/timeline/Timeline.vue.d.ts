@@ -26,6 +26,20 @@ export interface DetailText {
   value: string;
 }
 
+export interface DetailUserText {
+  type: 'userText';
+  user: {
+    _id: string;
+    nickName: string;
+  };
+  text: string;
+}
+
+export interface DetailBullet {
+  type: 'bullet';
+  value: (string | DetailUserText)[];
+}
+
 export interface DetailJSONContent {
   type: 'json';
   value: JSONContent;
@@ -42,30 +56,25 @@ export type LinkTaskEditAction = Record<
   LinkTaskURL | LinkTaskIframeEmbed
 >;
 
-export type KeyValue = Record<
-  string,
-  string | Attachment | LinkTaskEditAction | DetailText | DetailJSONContent
->;
+export type DetailType =
+  | Attachment
+  | LinkTaskEditAction
+  | DetailText
+  | DetailUserText
+  | DetailBullet
+  | DetailJSONContent;
+
+export type KeyValue = Record<string, string | DetailType>;
 
 export type TimelineItem = {
   _id: string;
   action: string;
-  date: string;
-  user: {
+  createdAt: string;
+  user?: {
     _id: string;
-    fullName: string;
-    profilePicture: string;
     nickName: string;
-    division: string;
-    position: string;
-    email: string;
   };
-  detail?:
-    | KeyValue
-    | Attachment
-    | LinkTaskEditAction
-    | DetailText
-    | DetailJSONContent;
+  detail?: KeyValue | DetailType;
 };
 
 export type TimelineProps = {

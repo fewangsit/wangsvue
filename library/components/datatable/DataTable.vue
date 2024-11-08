@@ -221,25 +221,24 @@ const toggleRowExpand = async (
   } else {
     expandedRows.value[data[props.dataKey]] = 1;
 
-    // Add loading animation row
-    currentPageTableData.value.splice(indexOfData + 1, 0, {
-      childRow: true,
-      loadingRow: true,
-    });
-
     let { children } = data;
 
     if (props.childTableProps?.fetchFunction && data.hasChildren) {
       try {
+        // Add loading animation row
+        currentPageTableData.value.splice(indexOfData + 1, 0, {
+          childRow: true,
+          loadingRow: true,
+        });
         const fetchChildren = await props.childTableProps?.fetchFunction(data);
         children = fetchChildren.data;
       } catch (error) {
         console.error('🚀 ~ toggleRowExpand ~ error:', error);
+      } finally {
+        // Remove loading animation row
+        currentPageTableData.value.splice(indexOfData + 1, 1);
       }
     }
-
-    // Remove loading animation row
-    currentPageTableData.value.splice(indexOfData + 1, 1);
 
     if (indexOfData >= 0 && children?.length) {
       const childrenRows = children.flatMap((child) => {

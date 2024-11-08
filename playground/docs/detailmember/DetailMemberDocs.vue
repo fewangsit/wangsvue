@@ -33,7 +33,7 @@ const activeIndex = shallowRef<number>(0);
     <template #content>
       <TabMenu v-model:active-index="activeIndex" :menu="menu" />
       <DetailMember
-        :access="{ create: false, read: false, update: false, delete: false }"
+        :access="{ create: true, read: true, update: true, delete: true }"
         :active-index="activeIndex"
         member-id="66d1771c1ebe5344bc2b9dab"
       />
