@@ -1,14 +1,10 @@
 <script setup lang="ts">
 import { inject, ref } from 'vue';
-import {
-  LinkTaskIframeEmbed,
-  LinkTaskURL,
-  TimelineProps,
-} from './Timeline.vue.d';
+import { DetailType, TimelineProps } from './Timeline.vue.d';
 import Timeline from 'primevue/timeline';
 import Icon from '../icon/Icon.vue';
 import UserName from '../username/UserName.vue';
-import TimelineContenByType from './TimelineContenByType.vue';
+import TimelineContentByType from './TimelineContentByType.vue';
 
 const Preset = inject<Record<string, any>>('preset', {}).timeline;
 
@@ -32,24 +28,26 @@ const formatActionTitle = (action: string): string => {
     </template>
 
     <template #content="{ item }">
-      <div class="flex items-center gap-1 py-0.5" data-wv-section="itemheader">
-        <h3
-          v-html="formatActionTitle(item.action)"
-          @click="item.showDetail = !item.showDetail"
-          class="leading-5 cursor-pointer truncate !text-xs"
-        />
-        <UserName
-          :user="item.user"
-          class="mr-auto"
-          type="icon"
-          user-name-field="fullName"
-        />
-        {{ item.date }}
+      <div class="flex justify-between items-center">
+        <div class="flex gap-1 py-0.5" data-wv-section="itemheader">
+          <h3
+            v-html="formatActionTitle(item.action)"
+            @click="item.showDetail = !item.showDetail"
+            class="leading-5 cursor-pointer truncate !text-xs"
+          />
+          <UserName
+            v-if="item.user"
+            :user="item.user"
+            type="icon"
+            user-name-field="nickName"
+          />
+        </div>
+        {{ item.createdAt }}
       </div>
 
       <template v-if="item.showDetail && item.detail">
         <template v-if="'type' in item.detail">
-          <TimelineContenByType :detail="item.detail" />
+          <TimelineContentByType :detail="item.detail" />
         </template>
 
         <div
@@ -64,16 +62,14 @@ const formatActionTitle = (action: string): string => {
             <template
               :key="key"
               v-for="[key, value] in (() =>
-                Object.entries<string | LinkTaskURL | LinkTaskIframeEmbed>(
-                  item.detail,
-                ))()"
+                Object.entries<string | DetailType>(item.detail))()"
             >
               <span class="font-semibold whitespace-nowrap"> {{ key }} </span>
               <span class="font-semibold whitespace-nowrap"> : </span>
               <span v-if="typeof value === 'string'" class="text-xs">
                 {{ value }}
               </span>
-              <TimelineContenByType
+              <TimelineContentByType
                 v-else-if="'type' in value"
                 :detail="value"
               />
@@ -83,9 +79,7 @@ const formatActionTitle = (action: string): string => {
             :key="key"
             v-else
             v-for="[key, value] in (() =>
-              Object.entries<string | LinkTaskURL | LinkTaskIframeEmbed>(
-                item.detail,
-              ))()"
+              Object.entries<string | DetailType>(item.detail))()"
           >
             <slot name="detail" v-bind="{ key, value }">
               <div
@@ -102,12 +96,19 @@ const formatActionTitle = (action: string): string => {
 
               <template v-else-if="'type' in value">
                 <div class="grid grid-rows-[max-content,auto] gap-1">
-                  <span>
+                  <span class="flex gap-1">
                     <span class="font-semibold whitespace-nowrap">
                       {{ key }}:
                     </span>
+                    <TimelineContentByType
+                      v-if="value.type !== 'json'"
+                      :detail="value"
+                    />
                   </span>
-                  <TimelineContenByType :detail="value" />
+                  <TimelineContentByType
+                    v-if="value.type === 'json'"
+                    :detail="value"
+                  />
                 </div>
               </template>
             </slot>
