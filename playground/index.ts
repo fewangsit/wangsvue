@@ -325,6 +325,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
         component: (): Promise<Component> =>
           import('./docs/detailtask/DetailTaskDocs.vue'),
       },
+      {
+        path: 'tasktable',
+        name: 'Task Table Docs',
+        component: (): Promise<Component> =>
+          import('./docs/tasktable/TaskTableDocs.vue'),
+      },
     ],
   },
 ];
