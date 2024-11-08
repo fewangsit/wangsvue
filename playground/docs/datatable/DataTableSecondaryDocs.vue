@@ -107,26 +107,17 @@ const tableColumns = computed<TableColumn[]>(() => {
       sortable: true,
       reorderable: false,
       fixed: true,
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
     {
       field: 'name',
       header: 'Pipeline',
       sortable: true,
       fixed: true,
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
     {
       field: 'partner.name',
       header: 'Partner/Distributor',
       sortable: true,
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
     {
       field: 'status',
@@ -142,9 +133,6 @@ const tableColumns = computed<TableColumn[]>(() => {
           },
         };
       },
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
     {
       field: 'product',
@@ -159,9 +147,6 @@ const tableColumns = computed<TableColumn[]>(() => {
             };
           });
         },
-      },
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
       },
     },
     {
@@ -180,59 +165,38 @@ const tableColumns = computed<TableColumn[]>(() => {
           });
         },
       },
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
     {
       field: 'estimatedValue',
       header: 'Estimasi Nilai Pipeline',
       sortable: true,
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
     {
       field: 'estimatedClose',
       header: 'Estimasi Close',
       sortable: true,
       fixed: true,
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
     {
       field: 'currentPurchaseSituation',
       header: 'Current Purchase Situation',
       sortable: true,
       fixed: true,
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
     {
       field: 'lastUpdateCps',
       header: 'Last Update CPS',
       sortable: true,
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
     {
       field: 'nextAction',
       header: 'Next Action',
       sortable: true,
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
     {
       field: 'updatedAt',
       header: 'Last Update',
       sortable: true,
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
   ];
 });
@@ -270,6 +234,10 @@ const filters = ref<any>({
   'status': { value: null, matchMode: FilterMatchMode.IN },
   'assetValue': { value: null, matchMode: FilterMatchMode.BETWEEN },
 });
+
+const setSingleActionClass = (data: Pipeline): string | string[] => {
+  return data.isItEverOverdue ? '!bg-warning-200' : '';
+};
 </script>
 
 <template>
@@ -296,8 +264,10 @@ const filters = ref<any>({
         :columns="tableColumns"
         :fetch-function="getTableData"
         :options="singleAction"
+        :set-single-action-class="setSingleActionClass"
         :total-disabled-rows="1"
         data-key="_id"
+        highlight-key="isItEverOverdue"
         lazy
         selection-type="single"
         use-option

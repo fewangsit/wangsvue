@@ -449,6 +449,10 @@ export interface BaseDataTableProps {
    */
   disableKey?: string;
   /**
+   * The key of data object to determine whether the row data has context highlighted or not
+   */
+  highlightKey?: string;
+  /**
    * Boolean to specify whether all rows should be disabled.
    */
   disableAllRows?: boolean;

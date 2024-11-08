@@ -914,6 +914,7 @@ const listenUpdateTableEvent = (): void => {
                 v-bind="
                   Preset?.bodyrow({
                     context: {
+                      highlighted: item[highlightKey],
                       selected: isRowSelected(item[dataKey]),
                       disabled: isRowDisabled(item[dataKey]),
                       draggable: draggable(item),
@@ -1202,6 +1203,7 @@ const listenUpdateTableEvent = (): void => {
                         props,
                         context: {
                           selected: isRowSelected(item[dataKey]),
+                          highlighted: item[highlightKey],
                         },
                       })
                     "
