@@ -15,7 +15,6 @@ import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
 import ButtonFilter from '../buttonfilter/ButtonFilter.vue';
 import DataTable from '../datatable/DataTable.vue';
 import MemberAdminServices from 'lib/services/memberAdmin.service';
-import RoleServices from 'lib/services/role.service';
 import DialogMemberAdmin from './DialogMemberAdmin.vue';
 import Button from '../button/Button.vue';
 import eventBus from 'lib/event-bus';
@@ -33,7 +32,7 @@ const props = defineProps<{
 const singleAction: MenuItem[] = [
   {
     label: 'Unassign Role',
-    icon: 'user-received-2-line',
+    icon: 'user-unfollow-line',
     command: (): void => {
       isSingleSelect.value = true;
       visibleDialogConfirm.value = true;
@@ -43,8 +42,22 @@ const singleAction: MenuItem[] = [
 
 const bulkAction: MenuItem[] = [
   {
+    label: 'Aktifkan',
+    icon: 'check',
+    command: (): void => {
+      activateRoles(true);
+    },
+  },
+  {
+    label: 'Nonaktifkan',
+    icon: 'close',
+    command: (): void => {
+      activateRoles(false);
+    },
+  },
+  {
     label: 'Unassign Role',
-    icon: 'user-received-2-line',
+    icon: 'user-unfollow-line',
     command: (): void => {
       isSingleSelect.value = false;
       visibleDialogConfirm.value = true;
@@ -62,28 +75,7 @@ const roleColumns: TableColumn[] = [
       type: 'toggle',
       disabled: !props.access.update,
       onToggle: async (state, data: MemberAdminRole, revert): Promise<void> => {
-        try {
-          await RoleServices.patchMembers(data.role._id, props.memberId, {
-            isActive: state,
-          });
-
-          clearTable();
-          toast.add({
-            severity: 'success',
-            message: state
-              ? 'Role telah diaktifkan.'
-              : 'Role telah dinonaktifkan.',
-          });
-        } catch (error) {
-          console.error(error);
-          toast.add({
-            error,
-            message: state
-              ? 'Role gagal diaktifkan.'
-              : 'Role gagal dinonaktifkan.',
-          });
-          revert();
-        }
+        activateRoles(state, data.role._id, revert);
       },
     },
   },
@@ -138,6 +130,34 @@ const clearTable = (): void => {
   eventBus.emit('data-table:update', {
     tableName: 'member-roles',
   });
+};
+
+const activateRoles = async (
+  state: boolean,
+  roleId?: string,
+  revertFunction?: () => void,
+): Promise<void> => {
+  try {
+    await MemberAdminServices.activateRoles(props.memberId, {
+      roleIds: roleId
+        ? [roleId]
+        : selectedMemberAdmins.value.map((role) => role.role._id),
+      isActive: state,
+    });
+
+    if (!roleId) clearTable();
+    toast.add({
+      severity: 'success',
+      message: state ? 'Role telah diaktifkan.' : 'Role telah dinonaktifkan.',
+    });
+  } catch (error) {
+    console.error(error);
+    toast.add({
+      error,
+      message: state ? 'Role gagal diaktifkan.' : 'Role gagal dinonaktifkan.',
+    });
+    revertFunction?.();
+  }
 };
 
 const unassignRole = async (): Promise<void> => {

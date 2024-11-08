@@ -1,9 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { getBaseURL } from 'lib/utils/getBaseURL.util';
-import {
-  Role,
-  RoleMemberPatch,
-} from 'lib/components/detailmember/DetailMember.vue.d';
+import { Role } from 'lib/components/detailmember/DetailMember.vue.d';
 import { QueryParams } from 'lib/components/datatable/DataTable.vue.d';
 
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
@@ -28,14 +25,6 @@ const RoleServices = {
     query: QueryParams,
   ): Promise<AxiosResponse<AxiosResponse<Role[]>>> => {
     return API().get('/roles', { params: query });
-  },
-
-  patchMembers: (
-    roleId: string,
-    memberId: string,
-    body: RoleMemberPatch,
-  ): Promise<AxiosResponse> => {
-    return API().patch(`/roles/${roleId}/members/${memberId}`, body);
   },
 };
 
