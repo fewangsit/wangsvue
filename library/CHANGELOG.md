@@ -1,6 +1,34 @@
 # Changelog
 
 
+## v1.5.36
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.35...v1.5.36)
+
+### 🚀 Enhancements
+
+- **Timeline:** Add bullet and userText detail type ([19ab8e8](https://github.com/fewangsit/wangsvue/commit/19ab8e8))
+- **DetailMember:** Batch activate role ([f2a7503](https://github.com/fewangsit/wangsvue/commit/f2a7503))
+
+### 💅 Refactors
+
+- **DataTable:** Only show loading animation if there's a fetchFunction ([193f2fd](https://github.com/fewangsit/wangsvue/commit/193f2fd))
+- **SummaryAccordion:** Separate header to two divs ([b099050](https://github.com/fewangsit/wangsvue/commit/b099050))
+- **Timeline:** Rename timeline content file ([e1720fa](https://github.com/fewangsit/wangsvue/commit/e1720fa))
+
+### 🏡 Chore
+
+- **presets:** Update version ([562ae1f](https://github.com/fewangsit/wangsvue/commit/562ae1f))
+
+### 🎨 Styles
+
+- **UserName:** Change text-pretty to text-balance ([e6707f0](https://github.com/fewangsit/wangsvue/commit/e6707f0))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.35
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.33...v1.5.35)
