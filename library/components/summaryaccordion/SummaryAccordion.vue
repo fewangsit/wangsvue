@@ -228,8 +228,9 @@ const summaryItems = computed<SummaryItem[]>(() => {
 const shrinkWrap = (): void => {
   setTimeout(() => {
     const element = document.getElementById('editedEmail');
+    if (!element) return;
     const { firstChild, lastChild } = element;
-    if (!element || !firstChild || !lastChild) return;
+    if (!firstChild || !lastChild) return;
 
     element.style.width = '';
     const range = document.createRange();
