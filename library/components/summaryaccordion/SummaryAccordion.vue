@@ -228,10 +228,10 @@ const summaryItems = computed<SummaryItem[]>(() => {
 const shrinkWrap = (): void => {
   setTimeout(() => {
     const element = document.getElementById('editedEmail');
-    element.style.width = '';
     const { firstChild, lastChild } = element;
     if (!element || !firstChild || !lastChild) return;
 
+    element.style.width = '';
     const range = document.createRange();
     range.setStartBefore(firstChild);
     range.setEndAfter(lastChild);
@@ -285,83 +285,88 @@ watch(
       <div class="flex flex-col gap-2">
         <div
           @click="expanded = !expanded"
-          class="flex items-center gap-2 cursor-pointer"
+          class="flex justify-between cursor-pointer"
           data-wv-section="projectmeta"
         >
-          <h2
-            class="font-semibold text-base leading-4"
-            data-wv-section="projectname"
-          >
-            <template v-if="summary.type === 'profile'">
-              {{ name }}
-              <span class="font-normal">
-                ({{ summary.position }}, {{ summary.division }})
-              </span>
-            </template>
-            <template v-else-if="summary.type != 'submodule'">
-              {{ name }} ({{ summary.initialName }})
-            </template>
-            <template v-else>
-              {{ name }}
-            </template>
-          </h2>
+          <div class="flex items-center gap-2">
+            <h2
+              class="font-semibold text-base leading-4"
+              data-wv-section="projectname"
+            >
+              <template v-if="summary.type === 'profile'">
+                {{ name }}
+                <span class="font-normal">
+                  ({{ summary.position }}, {{ summary.division }})
+                </span>
+              </template>
+              <template v-else-if="summary.type != 'submodule'">
+                {{ name }} ({{ summary.initialName }})
+              </template>
+              <template v-else>
+                {{ name }}
+              </template>
+            </h2>
 
-          <ProgressBar
-            v-if="summary.type !== 'profile'"
-            :severity="getStatusSeverity(summary.status)"
-            :value="progress.task"
-            class="w-[20vw] max-w-[200px]"
-          />
+            <ProgressBar
+              v-if="summary.type !== 'profile'"
+              :severity="getStatusSeverity(summary.status)"
+              :value="progress.task"
+              class="w-[20vw] max-w-[200px]"
+            />
 
-          <Badge
-            :label="
-              summary.type === 'profile' ? userStatus(summary) : summary.status
-            "
-            format="nowrap"
-          />
+            <Badge
+              :label="
+                summary.type === 'profile'
+                  ? userStatus(summary)
+                  : summary.status
+              "
+              format="nowrap"
+            />
 
-          <span
-            v-if="
-              summary.type === 'profile' &&
-              summary.editable &&
-              summary.editedEmail
-            "
-            class="flex items-center gap-1"
-          >
-            <p id="editedEmail" class="content-box text-wrap">
-              Menunggu perubahan email: {{ summary.editedEmail }}
-            </p>
+            <span
+              v-if="
+                summary.type === 'profile' &&
+                summary.editable &&
+                summary.editedEmail
+              "
+              class="flex items-center gap-1"
+            >
+              <p id="editedEmail" class="content-box text-wrap">
+                Menunggu perubahan email: {{ summary.editedEmail }}
+              </p>
+              <Button
+                @click.stop="$emit('cancelEditEmail')"
+                class="!p-0 !m-0 !w-auto !h-auto"
+                icon="close"
+                icon-class="w-6 h-6 text-danger-500"
+                text
+              />
+            </span>
+          </div>
+
+          <div class="flex items-center gap-2">
             <Button
-              @click.stop="$emit('cancelEditEmail')"
-              class="!p-0 !m-0 !w-auto !h-auto"
-              icon="close"
-              icon-class="w-6 h-6 text-danger-500"
+              v-if="summary?.type === 'profile' && summary.editable"
+              @click.stop="$emit('edit')"
+              class="!py-0.5"
+              label="Edit"
+              outlined
+              severity="secondary"
+            />
+
+            <Button
+              :class="[
+                '!p-0 !m-0 !w-auto !h-auto',
+                {
+                  'rotate-180': expanded,
+                },
+              ]"
+              @click.stop="expanded = !expanded"
+              icon="arrow-down"
+              icon-class="w-6 h-6 text-general-800"
               text
             />
-          </span>
-
-          <Button
-            v-if="summary?.type === 'profile' && summary.editable"
-            @click.stop="$emit('edit')"
-            class="!py-0.5 !ml-auto"
-            label="Edit"
-            outlined
-            severity="secondary"
-          />
-
-          <Button
-            :class="[
-              '!p-0 !m-0 !w-auto !h-auto',
-              {
-                '!ml-auto': !(summary?.type === 'profile' && summary.editable),
-                'rotate-180': expanded,
-              },
-            ]"
-            @click.stop="expanded = !expanded"
-            icon="arrow-down"
-            icon-class="w-6 h-6 text-general-800"
-            text
-          />
+          </div>
         </div>
 
         <div

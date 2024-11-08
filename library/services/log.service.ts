@@ -42,6 +42,16 @@ const AuditServices = {
   ): Promise<AxiosResponse<AxiosResponse<TimelineItem[]>>> => {
     return API({ params }).get('/event-log');
   },
+
+  getUserlog: (params?: ChangelogFilterQuery): Promise<AxiosResponse> => {
+    return API({ params }).get('/user-log');
+  },
+
+  getUserlogOptions: (
+    params?: ChangelogOptionQuery & { memberId: string },
+  ): Promise<AxiosResponse<FetchOptionResponse<ChangelogOptionQuery>>> => {
+    return API({ params }).get('/user-log/options');
+  },
 };
 
 export default AuditServices;

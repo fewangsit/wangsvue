@@ -65,6 +65,31 @@ export interface LinkTaskIframeEmbed {
   code: string;
 }
 
+export interface DetailUserText {
+  type: 'userText';
+  user: {
+    _id: string;
+    nickName: string;
+  };
+  text: string;
+}
+
+export interface DetailBullet {
+  type: 'bullet';
+  value: (string | DetailUserText)[];
+}
+
+export type JSONContent = {
+  type?: string;
+  attrs?: Record&lt;string, any&gt;;
+  content?: JSONContent[];
+};
+
+export interface DetailJSONContent {
+  type: 'json';
+  value: JSONContent;
+}
+
 export type Attachment =
   | AttachmentLink
   | AttachmentFile
@@ -76,22 +101,25 @@ export type LinkTaskEditAction = Record&lt;
   LinkTaskURL | LinkTaskIframeEmbed
 &gt;;
 
-export type KeyValue = Record&lt;string, string&gt;;
+export type DetailType =
+  | Attachment
+  | LinkTaskEditAction
+  | DetailText
+  | DetailUserText
+  | DetailBullet
+  | DetailJSONContent;
+
+export type KeyValue = Record&lt;string, string | DetailType&gt;;
 
 export type TimelineItem = {
   _id: string;
   action: string;
-  date: string;
+  createdAt: string;
   user: {
     _id: string;
-    fullName: string;
-    profilePicture: string;
     nickName: string;
-    division: string;
-    position: string;
-    email: string;
   };
-  detail?: string | KeyValue | Attachment | LinkTaskEditAction | DetailText;
+  detail?: KeyValue | DetailType;
 };
 
             </pre>

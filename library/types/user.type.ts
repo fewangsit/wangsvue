@@ -4,6 +4,7 @@ import { RoleDetailAccess } from './role.detail.access.type';
 export type User = {
   _id: string;
   key: number;
+  profilePicture?: string;
   profilePictureBig: string;
   profilePictureMedium: string;
   profilePictureSmall: string;

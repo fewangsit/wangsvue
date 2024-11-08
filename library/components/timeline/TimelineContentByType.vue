@@ -2,8 +2,10 @@
 import {
   AttachmentFile,
   AttachmentLink,
+  DetailBullet,
   DetailJSONContent,
   DetailText,
+  DetailUserText,
   LinkTaskIframeEmbed,
   LinkTaskURL,
 } from './Timeline.vue.d';
@@ -15,6 +17,7 @@ import doc from 'lib/assets/icons/doc.svg';
 import xls from 'lib/assets/icons/xls.svg';
 import data from 'lib/assets/icons/data.svg';
 import Icon from '../icon/Icon.vue';
+import UserName from '../username/UserName.vue';
 
 defineProps<{
   detail:
@@ -23,6 +26,8 @@ defineProps<{
     | LinkTaskURL
     | AttachmentLink
     | DetailText
+    | DetailUserText
+    | DetailBullet
     | DetailJSONContent;
 }>();
 
@@ -44,6 +49,29 @@ const getAttchmentFileName = (detail: AttachmentFile): string | undefined => {
   <p v-if="detail.type === 'text'">
     {{ detail.value }}
   </p>
+
+  <span v-else-if="detail.type === 'userText'">
+    <span class="flex items-center gap-1">
+      {{ detail.text }}
+      <UserName :user="detail.user" type="icon" user-name-field="nickName" />
+    </span>
+  </span>
+
+  <ul v-else-if="detail.type === 'bullet'" class="list-none">
+    <li
+      :key="index"
+      v-for="(item, index) in detail.value"
+      class="flex items-center gap-1 before:content-['•'] before:mr-1 before:ml-1"
+    >
+      {{ typeof item === 'object' ? item.text : item }}
+      <UserName
+        v-if="typeof item === 'object'"
+        :user="item.user"
+        type="icon"
+        user-name-field="nickName"
+      />
+    </li>
+  </ul>
 
   <Editor
     v-else-if="detail.type === 'json'"

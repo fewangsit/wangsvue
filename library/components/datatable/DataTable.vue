@@ -12,7 +12,6 @@ import {
 
 import { DotLottieVue } from '@lottiefiles/dotlottie-vue';
 import { exportToExcel, getNestedProperyValue, useToast } from 'lib/utils';
-import { DataTableExpandedRows } from 'primevue/datatable';
 import { cloneDeep } from 'lodash';
 
 import { Booleanish } from '../ts-helpers';
@@ -76,7 +75,7 @@ const dataTableID = ((): string => {
 })();
 
 const currentPageTableData = ref<Data[]>(props.data ?? []);
-const expandedRows = ref<DataTableExpandedRows>({});
+const expandedRows = ref<Record<string, number>>({});
 const visibleColumns = ref<TreeTableColumns[]>(props.columns);
 const checkboxSelection = ref<Data[]>([]);
 const rowReorderEventPayload = ref<DataTableRowReorderEvent>();
@@ -139,12 +138,12 @@ const queryParams = computed<QueryParams>(() => ({
 
 const isExpandedAll = computed(() => {
   const rowsHasChildren = currentPageTableData.value?.filter(
-    (d) => d.children?.length,
+    (d) => d.children?.length || d.hasChildren,
   );
 
   return (
     rowsHasChildren?.length &&
-    rowsHasChildren.every((data) => expandedRows.value[data[props.dataKey]])
+    rowsHasChildren.every((data) => expandedRows.value[data[props.dataKey]] > 0)
   );
 });
 
@@ -206,23 +205,42 @@ const filterParentRowData = (rowData?: Data[]): Data[] => {
   );
 };
 
-const toggleRowExpand = (
+const toggleRowExpand = async (
   data: Data,
   indexOfData: number,
   isExpanding?: boolean,
-): void => {
-  const { children } = data;
+): Promise<void> => {
+  const isExpandingRow = isExpanding ?? !isRowExpanded(data[props.dataKey]);
 
-  if (children?.length) {
-    const isExpandingRow = isExpanding ?? !isRowExpanded(data[props.dataKey]);
+  if (!isExpandingRow) {
+    currentPageTableData.value.splice(
+      indexOfData + 1,
+      expandedRows.value[data[props.dataKey]],
+    );
+    delete expandedRows.value[data[props.dataKey]];
+  } else {
+    expandedRows.value[data[props.dataKey]] = 1;
 
-    if (isExpandingRow) {
-      expandedRows.value[data[props.dataKey]] = true;
-    } else {
-      delete expandedRows.value[data[props.dataKey]];
+    let { children } = data;
+
+    if (props.childTableProps?.fetchFunction && data.hasChildren) {
+      try {
+        // Add loading animation row
+        currentPageTableData.value.splice(indexOfData + 1, 0, {
+          childRow: true,
+          loadingRow: true,
+        });
+        const fetchChildren = await props.childTableProps?.fetchFunction(data);
+        children = fetchChildren.data;
+      } catch (error) {
+        console.error('🚀 ~ toggleRowExpand ~ error:', error);
+      } finally {
+        // Remove loading animation row
+        currentPageTableData.value.splice(indexOfData + 1, 1);
+      }
     }
 
-    if (indexOfData >= 0) {
+    if (indexOfData >= 0 && children?.length) {
       const childrenRows = children.flatMap((child) => {
         const rowHeader: Data = {
           childRowHeader: true,
@@ -235,10 +253,13 @@ const toggleRowExpand = (
         ];
       });
 
-      if (isExpandingRow)
-        currentPageTableData.value.splice(indexOfData + 1, 0, ...childrenRows);
-      else
-        currentPageTableData.value.splice(indexOfData + 1, childrenRows.length);
+      expandedRows.value[data[props.dataKey]] = childrenRows.length;
+      currentPageTableData.value.splice(indexOfData + 1, 0, ...childrenRows);
+    } else {
+      currentPageTableData.value.splice(indexOfData + 1, 0, {
+        childRow: true,
+        noDataRow: true,
+      });
     }
   }
 };
@@ -270,7 +291,7 @@ const toggleRowSelection = (data: Data): void => {
 
 const toggleExpandAll = (): void => {
   currentPageTableData.value.forEach((data, index) => {
-    if (data.children?.length) toggleRowExpand(data, index);
+    if (data.children?.length || data.hasChildren) toggleRowExpand(data, index);
   });
 };
 
@@ -943,7 +964,7 @@ const listenUpdateTableEvent = (): void => {
                   "
                 >
                   <Button
-                    v-if="item.children?.length"
+                    v-if="item.children?.length || item.hasChildren"
                     @click.stop="toggleRowExpand(item, index)"
                     v-bind="
                       Preset.rowtogglerbutton({
@@ -979,10 +1000,42 @@ const listenUpdateTableEvent = (): void => {
                   v-else-if="item.childRowHeader"
                   v-bind="Preset.childrowheader"
                   :class="Preset?.bodycell.class"
-                  :colspan="props.columns.length"
+                  :colspan="props.columns.length + 1"
                   @click.stop=""
                 >
                   {{ item.header }}
+                </td>
+
+                <td
+                  v-else-if="item.loadingRow"
+                  :class="Preset?.bodycell.class"
+                  :colspan="props.columns.length + 1"
+                  @click.stop=""
+                >
+                  <div v-bind="Preset.loadingtablewrapper">
+                    <DotLottieVue
+                      :src="loadingTableLottie"
+                      v-bind="Preset.loadingtablelottie"
+                      autoplay
+                      loop
+                    />
+                  </div>
+                </td>
+
+                <td
+                  v-else-if="item.noDataRow"
+                  :class="Preset?.bodycell.class"
+                  :colspan="props.columns.length + 1"
+                  @click.stop=""
+                >
+                  <div v-bind="Preset.nodatalottiewrapper">
+                    <DotLottieVue
+                      :src="noDataLottie"
+                      v-bind="Preset.nodatalottie"
+                      autoplay
+                      loop
+                    />
+                  </div>
                 </td>
 
                 <template v-else>
@@ -1007,7 +1060,9 @@ const listenUpdateTableEvent = (): void => {
                     <template v-if="col.preset?.type === 'toggle'">
                       <InputSwitch
                         v-model="item[col.field]"
-                        :disabled="isRowDisabled(item[dataKey])"
+                        :disabled="
+                          isRowDisabled(item[dataKey]) || col.preset?.disabled
+                        "
                         :input-id="item[dataKey]"
                         @click.stop=""
                         @update:model-value="

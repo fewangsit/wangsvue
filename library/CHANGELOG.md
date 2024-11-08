@@ -1,6 +1,77 @@
 # Changelog
 
 
+## v1.5.36
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.35...v1.5.36)
+
+### 🚀 Enhancements
+
+- **Timeline:** Add bullet and userText detail type ([19ab8e8](https://github.com/fewangsit/wangsvue/commit/19ab8e8))
+- **DetailMember:** Batch activate role ([f2a7503](https://github.com/fewangsit/wangsvue/commit/f2a7503))
+
+### 💅 Refactors
+
+- **DataTable:** Only show loading animation if there's a fetchFunction ([193f2fd](https://github.com/fewangsit/wangsvue/commit/193f2fd))
+- **SummaryAccordion:** Separate header to two divs ([b099050](https://github.com/fewangsit/wangsvue/commit/b099050))
+- **Timeline:** Rename timeline content file ([e1720fa](https://github.com/fewangsit/wangsvue/commit/e1720fa))
+
+### 🏡 Chore
+
+- **presets:** Update version ([562ae1f](https://github.com/fewangsit/wangsvue/commit/562ae1f))
+
+### 🎨 Styles
+
+- **UserName:** Change text-pretty to text-balance ([e6707f0](https://github.com/fewangsit/wangsvue/commit/e6707f0))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
+## v1.5.35
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.33...v1.5.35)
+
+### 🚀 Enhancements
+
+- **detailtask:** Add dialogfinishreview in detailtask ([9a46a7f](https://github.com/fewangsit/wangsvue/commit/9a46a7f))
+- **DataTable:** Fetch function for children ([92c46ec](https://github.com/fewangsit/wangsvue/commit/92c46ec))
+- Add component ApproverInfo to build-entry ([8443684](https://github.com/fewangsit/wangsvue/commit/8443684))
+- **detailtask:** Make task dependency and task list become clickable ([af32b82](https://github.com/fewangsit/wangsvue/commit/af32b82))
+- Add icon printer-cloud ([0c51780](https://github.com/fewangsit/wangsvue/commit/0c51780))
+- **detailtask:** Add comment section in detailtask ([cd0d04a](https://github.com/fewangsit/wangsvue/commit/cd0d04a))
+- **DataTable:** Add loading and noData animation on row expand ([c08b48a](https://github.com/fewangsit/wangsvue/commit/c08b48a))
+- Add Detail Member component ([51b5a0b](https://github.com/fewangsit/wangsvue/commit/51b5a0b))
+
+### 🩹 Fixes
+
+- **detailtask:** Add condition for api spec task ([7077be8](https://github.com/fewangsit/wangsvue/commit/7077be8))
+- **detailtask:** Add condition for api spec task ([41ad3a8](https://github.com/fewangsit/wangsvue/commit/41ad3a8))
+- **detailtask:** Make task description compatible to insert image ([345a9d1](https://github.com/fewangsit/wangsvue/commit/345a9d1))
+
+### 💅 Refactors
+
+- **DialogDetailPbi:** Add declaration file ([fdad5a2](https://github.com/fewangsit/wangsvue/commit/fdad5a2))
+- **DataTable:** Repurpose expandedRows to store rows length ([48216f6](https://github.com/fewangsit/wangsvue/commit/48216f6))
+- **applyFilter.helper.ts:** Refactor to handle array of undefined/null ([9ad3ff4](https://github.com/fewangsit/wangsvue/commit/9ad3ff4))
+- **DataTable:** Toggle can be disabled without disabling all rows ([00e8cba](https://github.com/fewangsit/wangsvue/commit/00e8cba))
+- **DataTable:** Try catch fetchFunction, add loadingRows ([b6cd682](https://github.com/fewangsit/wangsvue/commit/b6cd682))
+
+### 🏡 Chore
+
+- **presets:** Update version ([d3aeb8c](https://github.com/fewangsit/wangsvue/commit/d3aeb8c))
+- **presets:** Update version ([6472cba](https://github.com/fewangsit/wangsvue/commit/6472cba))
+- **release:** V1.5.34 ([bead6b9](https://github.com/fewangsit/wangsvue/commit/bead6b9))
+- **presets:** Update version ([9eb15c3](https://github.com/fewangsit/wangsvue/commit/9eb15c3))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+- Dzulqtera <dzul@qtera.co.id>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.34
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.33...v1.5.34)
