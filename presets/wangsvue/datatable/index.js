@@ -66,7 +66,7 @@ export default {
           props.selectionType !== 'none' &&
           !context.disabled,
         'hover:bg-primary-50': !context.highlighted,
-        'hover:bg-warning-300 bg-warning-200': context.highlighted,
+        'hover:bg-warning-300 !bg-warning-200': context.highlighted,
       },
 
       // Transition
