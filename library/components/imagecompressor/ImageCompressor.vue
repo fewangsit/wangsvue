@@ -112,8 +112,8 @@ const isInitialImage = (index: number): boolean => {
   );
 };
 
-const assignPreviewImagesFromProp = async (): Promise<void> => {
-  if (props.imagePreviewUrl?.length) {
+const assignPreviewImagesFromProp = async (isDelete = false): Promise<void> => {
+  if (!isDelete && props.imagePreviewUrl?.length) {
     previewImages.value = Array.isArray(props.imagePreviewUrl)
       ? props.imagePreviewUrl
       : [props.imagePreviewUrl];
@@ -128,7 +128,7 @@ const assignPreviewImagesFromProp = async (): Promise<void> => {
     previewImages.value = [];
   }
 
-  if (props.imagePreviewUrl) {
+  if (!isDelete && props.imagePreviewUrl) {
     field.value = props.imagePreviewUrl;
   } else if (props.initialName) {
     field.value = await canvasToFile();
@@ -485,12 +485,12 @@ const deleteImage = (index = 0): void => {
   currentCropingImageIndex.value = 0;
   defaultImage.value = 0;
 
-  if (!props.confirmOnDelete) emit('delete', deleteImage, index);
+  if (!props.confirmOnDelete) emit('delete');
   if (props.multiple && Array.isArray(field.value)) {
     field.value = field.value.toSpliced(index, 1);
   } else if (field.handleReset) field.handleReset();
 
-  assignPreviewImagesFromProp();
+  assignPreviewImagesFromProp(true);
 };
 
 /**
@@ -617,16 +617,15 @@ watch(
               >
                 <Button
                   @click="editImage(index)"
-                  class="!py-0.5 !px-1 !h-max"
+                  class="!py-0 !px-1 !h-max"
                   icon="pencil"
                   label="Edit"
-                  severity="secondary"
                   text
                 />
                 <Button
                   v-if="useDeleteButton"
                   @click="onBeforeDeleteImage(index)"
-                  class="!py-0.5 !px-1 !h-max"
+                  class="!py-0 !px-1 !h-max"
                   icon="delete-bin"
                   label="Delete"
                   severity="danger"
