@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.5.42
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.41...v1.5.42)
+
+### 🚀 Enhancements
+
+- Implement existing values in InputBadge ([5b3a95d](https://github.com/fewangsit/wangsvue/commit/5b3a95d))
+
+### 💅 Refactors
+
+- **InputBadge:** Refining logic ([e12b063](https://github.com/fewangsit/wangsvue/commit/e12b063))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.41
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.40...v1.5.41)
