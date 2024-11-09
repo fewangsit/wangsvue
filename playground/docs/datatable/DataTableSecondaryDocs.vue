@@ -158,7 +158,7 @@ const tableColumns = computed<TableColumn[]>(() => {
         fieldAttributes: (data: Pipeline): MultiRowAttribute[] => {
           return data.products.map((each) => {
             return {
-              value: each.quantity,
+              value: each.quantity.toString(),
               class:
                 each.quantity > 13 ? 'text-success-500' : 'text-danger-500',
             };
@@ -234,10 +234,6 @@ const filters = ref<any>({
   'status': { value: null, matchMode: FilterMatchMode.IN },
   'assetValue': { value: null, matchMode: FilterMatchMode.BETWEEN },
 });
-
-const setSingleActionClass = (data: Pipeline): string | string[] => {
-  return data.isItEverOverdue ? '!bg-warning-200' : '';
-};
 </script>
 
 <template>
@@ -264,7 +260,6 @@ const setSingleActionClass = (data: Pipeline): string | string[] => {
         :columns="tableColumns"
         :fetch-function="getTableData"
         :options="singleAction"
-        :set-single-action-class="setSingleActionClass"
         :total-disabled-rows="1"
         data-key="_id"
         highlight-key="isItEverOverdue"
