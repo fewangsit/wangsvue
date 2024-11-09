@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v1.5.41
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.40...v1.5.41)
+
+### 📖 Documentation
+
+- Remove unused code in documentation of multirow table ([30c024a](https://github.com/fewangsit/wangsvue/commit/30c024a))
+
+### 🏡 Chore
+
+- **presets:** Update version ([3f725fd](https://github.com/fewangsit/wangsvue/commit/3f725fd))
+
+### 🎨 Styles
+
+- Add important to bg-warning-200 when context is highlighted ([3dc8261](https://github.com/fewangsit/wangsvue/commit/3dc8261))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.40
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.39...v1.5.40)
