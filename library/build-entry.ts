@@ -59,6 +59,7 @@ import {
   getUserPermission,
   convertJsonImage,
   isEmptyObject,
+  isIntersect,
 } from 'lib/utils';
 
 // Directives
@@ -151,6 +152,7 @@ export {
   getUserPermission,
   convertJsonImage,
   isEmptyObject,
+  isIntersect,
 
   // Components
   Badge,
