@@ -221,6 +221,19 @@ const summaryItems = computed<SummaryItem[]>(() => {
   return items.filter((item) => item.show);
 });
 
+const splitItems = computed<SummaryItem[][]>(() => {
+  const array = [...summaryItems.value];
+  const result = [];
+
+  // Split the items to 3 columns
+  for (let i = Math.ceil(array.length) / 3; i > 0; i--) {
+    result.push(array.splice(0, Math.ceil(array.length / i)));
+  }
+
+  // Transpose the result
+  return result[0].map((col, i) => result.map((row) => row[i]));
+});
+
 /*
  * Code taken and modified from https://stackoverflow.com/a/78307608/27534858
  * Used to adjust the width of the edited email when it's wrapped
@@ -427,18 +440,23 @@ watch(
 
         <div
           v-show="expanded"
-          :class="['grid grid-cols-3 grid-rows-2 gap-3']"
+          class="grid grid-flow-col justify-stretch gap-3"
           data-wv-section="summary"
         >
-          <span
-            :key="item.label"
-            v-for="item of summaryItems"
-            class="flex items-center gap-1 text-xs font-normal"
+          <div
+            :key="`print${index}`"
+            v-for="(items, index) in splitItems"
+            class="flex flex-col gap-3"
           >
-            <Icon :icon="item.icon" :severity="item.severity" />
-            <span>{{ item.label }}:</span>
-            <span>{{ item.value }}</span>
-          </span>
+            <span
+              :key="item.label"
+              v-for="item in items"
+              class="flex items-center gap-1 text-xs font-normal"
+            >
+              <Icon :icon="item.icon" :severity="item.severity" />
+              <span> {{ item.label }}:&nbsp;{{ item.value }} </span>
+            </span>
+          </div>
         </div>
       </div>
     </template>
