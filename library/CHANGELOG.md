@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.40
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.39...v1.5.40)
+
+### 💅 Refactors
+
+- **Dropdown:** Adjust getOptionLabel ([74753ab](https://github.com/fewangsit/wangsvue/commit/74753ab))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.39
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.38...v1.5.39)
