@@ -468,6 +468,8 @@ const revokeObjectURL = (index: number): void => {
 const onBeforeDeleteImage = (index: number): void => {
   if (props.confirmOnDelete) {
     showDeleteConfirm.value[index] = true;
+  } else if (props.emitDelete) {
+    emit('delete', deleteImage, index);
   } else deleteImage(index);
 };
 
