@@ -10,6 +10,7 @@ import {
   nextTick,
 } from 'vue';
 import { useField } from 'vee-validate';
+import { cloneDeep } from 'lodash';
 import { FieldValidation } from '../form/Form.vue.d';
 import { InputBadgeProps, InputBadgeEmits } from './InputBadge.vue.d';
 
@@ -80,7 +81,12 @@ const setValidatorMessage = (values?: string[]): boolean | string => {
       let validator: boolean | string = true;
 
       values.forEach((each) => {
-        if (props.existingValues.includes(each)) validator = exist;
+        // Filter existing in inputed value (check for double value)
+        const matchExist = values.filter((value) => value === each);
+
+        if (props.existingValues.includes(each) || matchExist.length > 1) {
+          validator = exist;
+        }
       });
 
       return validator;
@@ -148,6 +154,7 @@ const onBeforeAddLabel = (event: Event): void => {
  */
 const removeBadge = (index: number): void => {
   field.value?.splice(index, 1);
+  field.value = cloneDeep(field.value);
 };
 
 /**
@@ -161,12 +168,14 @@ const onKeydown = (event: KeyboardEvent): void => {
     event.preventDefault(); // Prevent the last char deleted.
     if (props.type === 'text') newLabel.value = field.value?.pop() as string;
     else field.value?.pop(); // On type email, press backspace remove the entire badge, not enter edit state
+    field.value = cloneDeep(field.value);
   }
 };
 
 const onEditBadge = (text: string | null, index: number): void => {
   if (field.value && text) {
     field.value[index] = text;
+    field.value = cloneDeep(field.value);
     emit('update:modelValue', field.value);
   }
 };
