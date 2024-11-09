@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.5.39
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.38...v1.5.39)
+
+### 💅 Refactors
+
+- Implement context highlighted for datatable row ([8c0942a](https://github.com/fewangsit/wangsvue/commit/8c0942a))
+
+### 🏡 Chore
+
+- **presets:** Update version ([c556888](https://github.com/fewangsit/wangsvue/commit/c556888))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.38
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.37...v1.5.38)
