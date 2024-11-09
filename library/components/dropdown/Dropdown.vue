@@ -18,7 +18,7 @@ import type {
 import { DropdownOption, OptionValue } from 'lib/types/options.type';
 import { FieldValidation } from '../form/Form.vue.d';
 import { filterOptions } from 'lib/utils';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, isEqual } from 'lodash';
 import { Nullable } from '../ts-helpers';
 
 import FieldWrapper from 'lib/components/fieldwrapper/FieldWrapper.vue';
@@ -106,14 +106,12 @@ const updateFieldValue = (event: DropdownChangeEvent): void => {
 };
 
 const getOptionLabel = (): string => {
-  if (props.dataKey) {
-    return field.value[props.dataKey] as string;
-  } else if (props.optionValue) {
+  if (props.optionValue) {
     const matchOption = visibleOptions.value.find((op) => {
       if (typeof op != 'string') {
-        return (
-          cloneDeep(op[(props.optionValue ?? '') as keyof DropdownOption]) ==
-          cloneDeep(field.value as string)
+        return isEqual(
+          cloneDeep(op[(props.optionValue ?? '') as keyof DropdownOption]),
+          cloneDeep(field.value),
         );
       }
     });

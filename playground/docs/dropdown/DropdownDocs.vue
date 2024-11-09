@@ -26,6 +26,7 @@ const items = ref(
         <div class="flex flex-col gap-1">
           <Dropdown
             :options="items"
+            field-name="status24"
             label="Status"
             option-label="label"
             option-value="value"
@@ -43,6 +44,7 @@ const items = ref(
               { label: 'Waiting for Approval', value: 'Approval' },
               { label: 'Waiting for Handover', value: 'Handover' },
             ]"
+            field-name="status12"
             label="Status"
             mandatory
             option-label="label"
@@ -58,7 +60,7 @@ const items = ref(
               { label: 'Waiting for Handover', value: 'Handover' },
             ]"
             class="w-max"
-            field-name="status2"
+            field-name="status23"
             input-border="none"
             label="Status"
             mandatory
@@ -70,15 +72,23 @@ const items = ref(
           />
           <Dropdown
             :options="[
-              { label: 'Waiting for Approval', value: 'Approval' },
-              { label: 'Waiting for Handover', value: 'Handover' },
+              {
+                label: 'Waiting for Approval',
+                value: { text: 'Approval', _id: 'id1' },
+              },
+              {
+                label: 'Waiting for Handover',
+                value: { text: 'Handover', _id: 'id2' },
+              },
             ]"
+            @update:model-value="console.log"
             class="w-max"
-            field-name="status2"
+            field-name="status213"
             input-border="none"
-            label="Status"
+            label="Status 213"
             mandatory
             option-label="label"
+            option-value="value"
             placeholder="Pilih status"
             use-validator
             validator-message="Ga boleh kosong"
@@ -88,9 +98,33 @@ const items = ref(
             </template>
           </Dropdown>
           <Dropdown
+            :options="[
+              {
+                label: 'Waiting for Approval',
+                value: { text: 'Approval', _id: 'id1' },
+              },
+              {
+                label: 'Waiting for Handover',
+                value: { text: 'Handover', _id: 'id2' },
+              },
+            ]"
+            @update:model-value="console.log"
+            class="w-max"
+            field-name="status2"
+            input-border="none"
+            label="Status"
+            mandatory
+            option-label="label"
+            option-value="value"
+            placeholder="Pilih status"
+            use-validator
+            validator-message="Ga boleh kosong"
+          />
+          <Dropdown
             v-model="model"
             :filter="false"
             :options="['Waiting for Approval', 'Waiting for Handover']"
+            field-name="status29"
             label="Dropdown No Filter"
             placeholder="Pilih status"
           />
