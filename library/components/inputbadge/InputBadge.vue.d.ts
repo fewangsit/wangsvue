@@ -1,3 +1,4 @@
+import { CustomValidation } from '../form/Form.vue.d';
 import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
 
 /**
@@ -26,14 +27,19 @@ export interface InputBadgeProps {
    */
   useValidator?: boolean;
   /**
+   * Exisitng values to be checkeed with validation 'exist' - check the validatorMessage props
+   *
+   * - Need to specify the custom validation : { empty: 'Error message when empty' } within props validatorMessage
+   */
+  existingValues?: string[];
+  /**
    * Determines if the field is mandatory
    */
   mandatory?: boolean;
   /**
    * Set custom validator message.
-   * It is rarely use, this component has handled the validator message.
    */
-  validatorMessage?: string;
+  validatorMessage?: string | CustomValidation;
   /**
    * Whether shows the invalid message or not.
    * The validator message will be shown if useValidator true and the field label is specified.

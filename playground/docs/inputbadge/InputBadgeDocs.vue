@@ -24,19 +24,20 @@ onMounted(() => setInitialValue());
     </template>
     <template #content>
       <Form
-        :buttons-template="['submit', 'reset', 'save', 'cancel']"
+        :buttons-template="['submit', 'clear', 'cancel']"
         @save="console.log($event)"
         @submit="console.log($event)"
       >
         <template #fields>
           <InputBadge
+            :existing-values="['abc', 'def', 'krah']"
             :initial-value="initialValue"
+            :validator-message="{ exist: 'ada' }"
             @update:model-value="console.log"
             field-info="Input badge info"
             field-name="models"
             label="Input badge label"
             mandatory
-            type="email"
             use-validator
           />
         </template>
