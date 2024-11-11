@@ -914,6 +914,7 @@ const listenUpdateTableEvent = (): void => {
                 v-bind="
                   Preset?.bodyrow({
                     context: {
+                      highlighted: item[highlightKey],
                       selected: isRowSelected(item[dataKey]),
                       disabled: isRowDisabled(item[dataKey]),
                       draggable: draggable(item),
@@ -1127,8 +1128,10 @@ const listenUpdateTableEvent = (): void => {
                       />
                     </template>
 
-                    <template v-else-if="col.preset?.type">
-                      <MultiRow :values="col.preset?.fieldValues(item)" />
+                    <template v-else-if="col.preset?.type === 'multirow'">
+                      <MultiRow
+                        :attributes="col.preset?.fieldAttributes(item)"
+                      />
                     </template>
 
                     <template v-else-if="col.editable">
@@ -1200,6 +1203,7 @@ const listenUpdateTableEvent = (): void => {
                         props,
                         context: {
                           selected: isRowSelected(item[dataKey]),
+                          highlighted: item[highlightKey],
                         },
                       })
                     "

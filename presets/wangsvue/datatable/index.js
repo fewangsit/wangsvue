@@ -61,10 +61,12 @@ export default {
       {
         'focus:outline-none focus:outline-offset-0': props.selectionType,
         // To sets the bg to single action td
-        'hover:bg-primary-50 group':
+        'group':
           props.selectionType &&
           props.selectionType !== 'none' &&
           !context.disabled,
+        'hover:bg-primary-50': !context.highlighted,
+        'hover:bg-warning-300 !bg-warning-200': context.highlighted,
       },
 
       // Transition
@@ -154,7 +156,7 @@ export default {
     'data-wv-section': 'bodycell',
   },
   multirowcontainer: ({ props }) => ({
-    class: ['grid grid-cols-1', `grid-rows-${props.values.length}`],
+    class: ['grid grid-cols-1', `grid-rows-${props.attributes.length}`],
   }),
   multirow: ({ context }) => ({
     class: [
@@ -187,10 +189,12 @@ export default {
 
   rowsingleactioncell: ({ props, context }) => ({
     'class': [
-      'group-hover:!bg-primary-50 w-[35px]',
+      'w-[35px]',
       {
         'sticky bg-white': props.useOption,
         '!bg-primary-100': context.selected,
+        'group-hover:!bg-primary-50': !context.highlighted,
+        'group-hover:!bg-warning-300 !bg-warning-200': context.highlighted,
       },
     ],
     'data-wv-section': 'rowsingleactioncell',

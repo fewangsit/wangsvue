@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { inject } from 'vue';
+import { MultiRowAttribute } from './DataTable.vue.d';
 
 const props = defineProps<{
-  values: string[];
+  attributes: MultiRowAttribute;
 }>();
 
 const Preset = inject<Record<string, any>>('preset', {}).datatable;
@@ -12,7 +13,7 @@ const Preset = inject<Record<string, any>>('preset', {}).datatable;
   <div v-bind="Preset?.multirowcontainer({ props })">
     <span
       :key="index"
-      v-for="(value, index) in values"
+      v-for="(attribute, index) in attributes"
       v-bind="
         Preset?.multirow({
           context: {
@@ -20,8 +21,9 @@ const Preset = inject<Record<string, any>>('preset', {}).datatable;
           },
         })
       "
+      :class="attribute.class"
     >
-      {{ value }}
+      {{ attribute.value }}
     </span>
   </div>
 </template>

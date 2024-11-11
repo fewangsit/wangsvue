@@ -5,6 +5,7 @@ import {
   QueryParams,
   TableCellComponent,
   TableColumn,
+  MultiRowAttribute,
 } from 'lib/components/datatable/DataTable.vue.d';
 import { MenuItem } from 'lib/components/menuitem';
 import { computed, onMounted, ref, shallowRef } from 'vue';
@@ -106,26 +107,17 @@ const tableColumns = computed<TableColumn[]>(() => {
       sortable: true,
       reorderable: false,
       fixed: true,
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
     {
       field: 'name',
       header: 'Pipeline',
       sortable: true,
       fixed: true,
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
     {
       field: 'partner.name',
       header: 'Partner/Distributor',
       sortable: true,
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
     {
       field: 'status',
@@ -141,9 +133,6 @@ const tableColumns = computed<TableColumn[]>(() => {
           },
         };
       },
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
     {
       field: 'product',
@@ -151,12 +140,13 @@ const tableColumns = computed<TableColumn[]>(() => {
       sortable: true,
       preset: {
         type: 'multirow',
-        fieldValues: (data: Pipeline): string[] => {
-          return data.products.map((each) => each.name);
+        fieldAttributes: (data: Pipeline): MultiRowAttribute[] => {
+          return data.products.map((each) => {
+            return {
+              value: each.name,
+            };
+          });
         },
-      },
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
       },
     },
     {
@@ -165,63 +155,48 @@ const tableColumns = computed<TableColumn[]>(() => {
       sortable: true,
       preset: {
         type: 'multirow',
-        fieldValues: (data: Pipeline): string[] => {
-          return data.products.map((each) => each.sku);
+        fieldAttributes: (data: Pipeline): MultiRowAttribute[] => {
+          return data.products.map((each) => {
+            return {
+              value: each.quantity.toString(),
+              class:
+                each.quantity > 13 ? 'text-success-500' : 'text-danger-500',
+            };
+          });
         },
-      },
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
       },
     },
     {
       field: 'estimatedValue',
       header: 'Estimasi Nilai Pipeline',
       sortable: true,
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
     {
       field: 'estimatedClose',
       header: 'Estimasi Close',
       sortable: true,
       fixed: true,
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
     {
       field: 'currentPurchaseSituation',
       header: 'Current Purchase Situation',
       sortable: true,
       fixed: true,
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
     {
       field: 'lastUpdateCps',
       header: 'Last Update CPS',
       sortable: true,
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
     {
       field: 'nextAction',
       header: 'Next Action',
       sortable: true,
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
     {
       field: 'updatedAt',
       header: 'Last Update',
       sortable: true,
-      bodyClass: (data: Pipeline): string => {
-        return data.isItEverOverdue ? '!bg-warning-200' : '';
-      },
     },
   ];
 });
@@ -287,6 +262,7 @@ const filters = ref<any>({
         :options="singleAction"
         :total-disabled-rows="1"
         data-key="_id"
+        highlight-key="isItEverOverdue"
         lazy
         selection-type="single"
         use-option

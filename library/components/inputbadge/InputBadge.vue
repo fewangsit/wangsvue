@@ -7,8 +7,10 @@ import {
   watch,
   ref,
   inject,
+  nextTick,
 } from 'vue';
 import { useField } from 'vee-validate';
+import { cloneDeep } from 'lodash';
 import { FieldValidation } from '../form/Form.vue.d';
 import { InputBadgeProps, InputBadgeEmits } from './InputBadge.vue.d';
 
@@ -27,7 +29,19 @@ const props = withDefaults(defineProps<InputBadgeProps>(), {
 const emit = defineEmits<InputBadgeEmits>();
 
 onMounted(() => {
-  setValidator();
+  if (props.useValidator) {
+    Object.assign(
+      field,
+      useField(props.fieldName, (value?: string[]) => {
+        return nextTick(() => {
+          return setValidatorMessage(value);
+        }); // Waits props.invalid changed
+      }),
+    );
+
+    if (props.initialValue?.length) field.value = props.initialValue;
+    else if (props.modelValue?.length) field.value = props.modelValue;
+  }
 });
 
 const Preset = inject<Record<string, any>>('preset', {}).inputbadge;
@@ -43,7 +57,9 @@ const inputId = computed(() => {
 });
 
 const invalidMessage = computed(() => {
-  if (props.invalid && props.validatorMessage) return props.validatorMessage;
+  if (props.invalid && typeof props.validatorMessage === 'string') {
+    return props.validatorMessage;
+  }
   return field.errorMessage;
 });
 
@@ -53,20 +69,30 @@ const inputPlaceholder = computed(() => {
   return 'Enter value';
 });
 
-const setValidator = (): void => {
-  if (props.useValidator) {
-    Object.assign(
-      field,
-      useField(props.fieldName, (value?: string[]) => {
-        if (!value?.length && props.mandatory)
-          return (props.label ?? 'This field') + ' must not be empty';
-        return true;
-      }),
-    );
+const setValidatorMessage = (values?: string[]): boolean | string => {
+  if (typeof props.validatorMessage === 'string' && props.invalid) {
+    return props.validatorMessage;
+  } else if (typeof props.validatorMessage !== 'string') {
+    const { empty, exist } = props.validatorMessage ?? {};
 
-    if (props.initialValue?.length) field.value = props.initialValue;
-    else if (props.modelValue?.length) field.value = props.modelValue;
+    if (!values?.length && props.mandatory) {
+      return empty ?? true;
+    } else if (props.existingValues?.length) {
+      let validator: boolean | string = true;
+
+      values.forEach((each) => {
+        // Filter existing in inputed value (check for double value)
+        const matchExist = values.filter((value) => value === each);
+
+        if (props.existingValues.includes(each) || matchExist.length > 1) {
+          validator = exist;
+        }
+      });
+
+      return validator;
+    }
   }
+  return true;
 };
 
 /**
@@ -78,14 +104,15 @@ const setValidator = (): void => {
  * On after user enter some text and delete, the input value will be empty string.
  * It will become invalid input.
  */
-const invalidInput = computed(
-  () =>
+const invalidInput = computed(() => {
+  return (
     props.invalid ||
     !!field.errorMessage ||
     (!field.value?.length &&
       typeof newLabel.value === 'string' &&
-      !newLabel.value.length),
-);
+      !newLabel.value.length)
+  );
+});
 
 const isValidEmail = (email: string): boolean => {
   const emailRegexp = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
@@ -127,6 +154,7 @@ const onBeforeAddLabel = (event: Event): void => {
  */
 const removeBadge = (index: number): void => {
   field.value?.splice(index, 1);
+  field.value = cloneDeep(field.value);
 };
 
 /**
@@ -140,12 +168,14 @@ const onKeydown = (event: KeyboardEvent): void => {
     event.preventDefault(); // Prevent the last char deleted.
     if (props.type === 'text') newLabel.value = field.value?.pop() as string;
     else field.value?.pop(); // On type email, press backspace remove the entire badge, not enter edit state
+    field.value = cloneDeep(field.value);
   }
 };
 
 const onEditBadge = (text: string | null, index: number): void => {
   if (field.value && text) {
     field.value[index] = text;
+    field.value = cloneDeep(field.value);
     emit('update:modelValue', field.value);
   }
 };
