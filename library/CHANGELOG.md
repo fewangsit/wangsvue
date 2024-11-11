@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.46
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.45...v1.5.46)
+
+### 💅 Refactors
+
+- Check existing value only need either validatorMessage or existingValues instead just existingValues ([a000717](https://github.com/fewangsit/wangsvue/commit/a000717))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.45
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.44...v1.5.45)
