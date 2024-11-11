@@ -205,7 +205,12 @@ export interface ColumnTogglePreset {
 
 export interface ColumnMultiRowPreset {
   type: 'multirow';
-  fieldValues?: (data: any) => string[];
+  fieldAttributes?: (data: any) => MultiRowAttribute[];
+}
+
+export interface MultiRowAttribute {
+  class?: string | string[];
+  value: string;
 }
 
 export type ColumnPreset = ColumnTogglePreset | ColumnMultiRowPreset;
@@ -443,6 +448,10 @@ export interface BaseDataTableProps {
    * The key of the data object to determine whether the row data should be disabled.
    */
   disableKey?: string;
+  /**
+   * The key of data object to determine whether the row data has context highlighted or not
+   */
+  highlightKey?: string;
   /**
    * Boolean to specify whether all rows should be disabled.
    */
