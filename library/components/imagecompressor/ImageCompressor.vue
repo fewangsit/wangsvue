@@ -133,6 +133,7 @@ const assignPreviewImagesFromProp = async (isDelete = false): Promise<void> => {
   } else if (props.initialName) {
     field.value = await canvasToFile();
   }
+  emit('applyProp');
 };
 
 const canvasToFile = async (): Promise<File> => {
@@ -468,7 +469,7 @@ const revokeObjectURL = (index: number): void => {
 const onBeforeDeleteImage = (index: number): void => {
   if (props.confirmOnDelete) {
     showDeleteConfirm.value[index] = true;
-  } else if (props.emitDelete) {
+  } else if (props.emitDeleteFn) {
     emit('delete', deleteImage, index);
   } else deleteImage(index);
 };
@@ -539,6 +540,8 @@ watch(
     assignPreviewImagesFromProp();
   },
 );
+
+defineExpose({ assignPreviewImagesFromProp });
 </script>
 
 <template>

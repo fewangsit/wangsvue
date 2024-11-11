@@ -123,7 +123,7 @@ export interface ImageCompressorProps {
    * On clicking delete button, emit the delete function instead of deleting the image.
    * Useful when showing custom dialog confirmation.
    */
-  emitDelete?: boolean;
+  emitDeleteFn?: boolean;
   /**
    * Show the validation message section.
    *
@@ -141,6 +141,10 @@ export type ImageCompressorEmits = {
    * On apply the image cropper.
    */
   'apply': [value: ImageCompressorPayload];
+  /**
+   * On apply image from props.
+   */
+  'applyProp': [];
   'update:defaultImage': [index?: number];
   /**
    * On delete button clicked.
@@ -169,7 +173,14 @@ declare class ImageCompressor extends ClassComponent<
   ImageCompressorProps,
   ImageCompressorSlots,
   ImageCompressorEmits
-> {}
+> {
+  /**
+   * Exposed function to assign image from props.
+   *
+   * @param isDelete
+   */
+  assignPreviewImagesFromProp(isDelete?: boolean): Promise<void>;
+}
 
 declare module '@vue/runtime-core' {
   interface GlobalComponents {
