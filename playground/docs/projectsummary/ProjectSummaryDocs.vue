@@ -1,20 +1,28 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
-import {
+import { reactive, ref, shallowRef } from 'vue';
+import ProjectSummaryAccordionClass, {
   ModuleSummary,
   ProjectSummary,
   SubModuleSummary,
   UserProfileSummary,
 } from 'lib/components/summaryaccordion/SummaryAccordion.vue.d';
+import FormClass, { FormPayload } from 'lib/components/form/Form.vue.d';
+import { useToast } from 'lib/utils';
 import ProjectSummaryAccordion from 'lib/components/summaryaccordion/SummaryAccordion.vue';
 import ProgressBar from 'lib/components/progressbar/ProgressBar.vue';
 import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
+import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
+import Toast from 'lib/components/toast/Toast.vue';
+import Form from 'lib/components/form/Form.vue';
+
+const toast = useToast();
 
 const userProfileSummary = reactive<UserProfileSummary>({
   type: 'profile',
   nickName: 'Kur',
   fullName: 'Zain Kurnia',
+  initial: 'ZK',
   division: 'RnD',
   position: 'Front End Developer',
   isActive: true,
@@ -77,6 +85,27 @@ const subModuleSummary = reactive<SubModuleSummary>({
   statusWeb: 'Pending E2E Testing Dev',
   statusMobile: 'Reported Bug',
 });
+
+const userAccordionRef = ref<ProjectSummaryAccordionClass>();
+const userAccordionFormRef = ref<FormClass>();
+const delImageFn = shallowRef<(index?: number) => void>();
+const showConfirmDelete = shallowRef(false);
+const updatingImage = shallowRef(false);
+
+const submitImage = (e: FormPayload): void => {
+  if (e.formValues.profilePicture) {
+    updatingImage.value = false;
+    console.error(e.formValues);
+    setTimeout(() => {
+      userAccordionRef.value?.assignPreviewImagesFromProp();
+      userProfileSummary.useInitial = false;
+      toast.add({
+        severity: 'error',
+        message: 'Profile picture gagal dihapus.',
+      });
+    }, 1000);
+  }
+};
 </script>
 
 <template>
@@ -88,14 +117,36 @@ const subModuleSummary = reactive<SubModuleSummary>({
       <div class="flex flex-col gap-3 mt-4">
         <div class="flex flex-col gap-4">
           <span>Summary Profile</span>
-          <ProjectSummaryAccordion
-            :summary="{
-              ...userProfileSummary,
-              completeProfile: true,
-            }"
-            @apply="console.log('apply', $event)"
-            @delete="console.log('delete', $event)"
-          />
+          <Form
+            ref="userAccordionFormRef"
+            :reset-after-submit="false"
+            @submit="submitImage"
+            class="!gap-0"
+            hide-stay-checkbox
+          >
+            <template #fields>
+              <ProjectSummaryAccordion
+                ref="userAccordionRef"
+                :summary="{
+                  ...userProfileSummary,
+                  completeProfile: true,
+                }"
+                @apply="userAccordionFormRef?.submit()"
+                @apply-prop="if (updatingImage) userAccordionFormRef?.submit();"
+                @delete="
+                  (deleteFn, index) => {
+                    delImageFn = deleteFn;
+                    if (deleteFn) showConfirmDelete = true;
+                    else {
+                      userProfileSummary.useInitial = true;
+                      updatingImage = true;
+                    }
+                  }
+                "
+                field-name="profilePicture"
+              />
+            </template>
+          </Form>
           <span>Shortened Summary Profile</span>
           <ProjectSummaryAccordion
             :summary="{
@@ -208,4 +259,14 @@ const subModuleSummary = reactive<SubModuleSummary>({
       </div>
     </template>
   </Card>
+
+  <DialogConfirm
+    v-model:visible="showConfirmDelete"
+    @confirm="if (delImageFn) delImageFn();"
+    header="Hapus Profile Picture"
+    message="Apakah anda yakin ingin menghapus profile picture?"
+    severity="danger"
+  />
+
+  <Toast />
 </template>

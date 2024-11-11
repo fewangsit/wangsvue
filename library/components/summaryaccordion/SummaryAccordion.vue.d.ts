@@ -54,6 +54,7 @@ export interface UserProfileSummary
   type: 'profile';
   nickName: string;
   fullName: string;
+  initial: string;
   aliasName?: string;
   division: string;
   position: string;
@@ -67,6 +68,7 @@ export interface UserProfileSummary
   completeProfile?: boolean;
   editable?: boolean;
   editedEmail?: string;
+  useInitial?: boolean;
 }
 
 export interface SummaryAccordionProps {
@@ -75,6 +77,12 @@ export interface SummaryAccordionProps {
     | ModuleSummary
     | SubModuleSummary
     | UserProfileSummary;
+  /**
+   * Specify the field name for the image compressor.
+   *
+   * @default 'imageInput'
+   */
+  fieldName?: string;
 }
 
 export type SummaryAccordionEmits = {
@@ -84,6 +92,10 @@ export type SummaryAccordionEmits = {
    * On apply the image cropper.
    */
   apply: [value: ImageCompressorPayload];
+  /**
+   * On apply image from props.
+   */
+  applyProp: [];
   /**
    * On delete button clicked.
    *
@@ -100,4 +112,11 @@ export default class SummaryAccordion extends ClassComponent<
   SummaryAccordionProps,
   unknown,
   SummaryAccordionEmits
-> {}
+> {
+  /**
+   * Exposed function to assign image from props.
+   *
+   * @param isDelete
+   */
+  assignPreviewImagesFromProp(isDelete?: boolean): Promise<void>;
+}

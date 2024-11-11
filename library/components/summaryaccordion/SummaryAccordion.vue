@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, shallowRef, watch } from 'vue';
+import { computed, onMounted, onUnmounted, ref, shallowRef, watch } from 'vue';
 import {
   ModuleSummary,
   ProjectSummary,
@@ -17,6 +17,7 @@ import Icon from '../icon/Icon.vue';
 import getStatusSeverity from 'lib/utils/statusSeverity.util';
 import Skeleton from 'primevue/skeleton';
 import ImageCompressor from '../imagecompressor/ImageCompressor.vue';
+import ImageCompressorClass from '../imagecompressor/ImageCompressor.vue.d';
 
 interface SummaryItem {
   icon: WangsIcons;
@@ -26,7 +27,9 @@ interface SummaryItem {
   show: boolean;
 }
 
-const props = defineProps<SummaryAccordionProps>();
+const props = withDefaults(defineProps<SummaryAccordionProps>(), {
+  fieldName: 'imageInput',
+});
 defineEmits<SummaryAccordionEmits>();
 
 onMounted(() => {
@@ -38,6 +41,7 @@ onUnmounted(() => {
   window.removeEventListener('resize', shrinkWrap);
 });
 
+const imageCompressor = ref<ImageCompressorClass>();
 const expanded = shallowRef(false);
 
 const name = computed(() => {
@@ -266,6 +270,10 @@ const secondsToDHM = (seconds: number): string => {
   return `${days}h ${hours}j ${minutes}m`;
 };
 
+const assignPreviewImagesFromProp = async (isDelete = false): Promise<void> => {
+  imageCompressor.value?.assignPreviewImagesFromProp(isDelete);
+};
+
 watch(
   () => summaryItems,
   () => {
@@ -279,6 +287,8 @@ watch(
     shrinkWrap();
   },
 );
+
+defineExpose({ assignPreviewImagesFromProp });
 </script>
 
 <!-- eslint-disable vue/html-indent -->
@@ -296,19 +306,27 @@ watch(
   >
     <template v-if="summary">
       <ImageCompressor
+        ref="imageCompressor"
         v-if="summary?.type === 'profile' && expanded"
         :disabled="!summary.completeProfile"
-        :image-preview-url="summary.profilePicture"
+        :field-name="fieldName"
+        :image-preview-url="
+          summary.useInitial ? undefined : summary.profilePicture
+        "
+        :initial-name="summary.useInitial ? summary.initial : undefined"
         :show-info="false"
         @apply="$emit('apply', $event)"
+        @apply-prop="$emit('applyProp')"
         @delete="$emit('delete', $event)"
+        emit-delete-fn
         image-preview-size="medium"
         rounded
+        use-validator
       />
       <div class="flex flex-col gap-2">
         <div
           @click="expanded = !expanded"
-          class="flex justify-between cursor-pointer"
+          class="flex justify-between gap-2 cursor-pointer"
           data-wv-section="projectmeta"
         >
           <div class="flex items-center gap-2">
