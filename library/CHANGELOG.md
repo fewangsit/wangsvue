@@ -1,6 +1,90 @@
 # Changelog
 
 
+## v1.5.46
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.45...v1.5.46)
+
+### 💅 Refactors
+
+- Check existing value only need either validatorMessage or existingValues instead just existingValues ([a000717](https://github.com/fewangsit/wangsvue/commit/a000717))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.45
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.44...v1.5.45)
+
+### 💅 Refactors
+
+- **applyFilter:** Refine logic to make sure every value in array aren't null/undefined ([9bf9390](https://github.com/fewangsit/wangsvue/commit/9bf9390))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.44
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.43...v1.5.44)
+
+## v1.5.43
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.36...v1.5.43)
+
+### 🚀 Enhancements
+
+- **SummaryAccordion:** Add events on image edit/delete ([d563c74](https://github.com/fewangsit/wangsvue/commit/d563c74))
+- Export utils ([e327dff](https://github.com/fewangsit/wangsvue/commit/e327dff))
+- Export isIntersect util ([85b600d](https://github.com/fewangsit/wangsvue/commit/85b600d))
+- Implement existing values in InputBadge ([5b3a95d](https://github.com/fewangsit/wangsvue/commit/5b3a95d))
+- **ImageCompressor:** EmitDelete props ([c21e274](https://github.com/fewangsit/wangsvue/commit/c21e274))
+- **ImageCompressor:** ApplyProp emit, expose assignFromProp function ([cb0127e](https://github.com/fewangsit/wangsvue/commit/cb0127e))
+- **SummaryAccordion:** Handle image edit and delete ([fb94f38](https://github.com/fewangsit/wangsvue/commit/fb94f38))
+
+### 🩹 Fixes
+
+- **SummaryAccordion:** Cannot destructure property of null ([5eb796d](https://github.com/fewangsit/wangsvue/commit/5eb796d))
+- **ImageCompressor:** Don't assign props image after image deletion ([bc1cfe4](https://github.com/fewangsit/wangsvue/commit/bc1cfe4))
+
+### 💅 Refactors
+
+- **SummaryAccordion:** Watch expanded to call shrinkWrap ([79a740e](https://github.com/fewangsit/wangsvue/commit/79a740e))
+- **MultiRow:** Adjust datatable multirow ([97a3688](https://github.com/fewangsit/wangsvue/commit/97a3688))
+- Implement context highlighted for datatable row ([8c0942a](https://github.com/fewangsit/wangsvue/commit/8c0942a))
+- **SummaryAccordion:** Show summaryItems with grid-flow-col ([aa637d2](https://github.com/fewangsit/wangsvue/commit/aa637d2))
+- **Dropdown:** Adjust getOptionLabel ([74753ab](https://github.com/fewangsit/wangsvue/commit/74753ab))
+- **genPlaceholder:** Remove several background options ([a2627f7](https://github.com/fewangsit/wangsvue/commit/a2627f7))
+- **InputBadge:** Refining logic ([e12b063](https://github.com/fewangsit/wangsvue/commit/e12b063))
+
+### 📖 Documentation
+
+- Remove unused code in documentation of multirow table ([30c024a](https://github.com/fewangsit/wangsvue/commit/30c024a))
+
+### 🏡 Chore
+
+- **presets:** Update version ([d10002b](https://github.com/fewangsit/wangsvue/commit/d10002b))
+- **release:** V1.5.37 ([3881a80](https://github.com/fewangsit/wangsvue/commit/3881a80))
+- **release:** V1.5.38 ([e75e247](https://github.com/fewangsit/wangsvue/commit/e75e247))
+- **presets:** Update version ([c556888](https://github.com/fewangsit/wangsvue/commit/c556888))
+- **release:** V1.5.39 ([e538c64](https://github.com/fewangsit/wangsvue/commit/e538c64))
+- **release:** V1.5.40 ([db2b930](https://github.com/fewangsit/wangsvue/commit/db2b930))
+- **presets:** Update version ([3f725fd](https://github.com/fewangsit/wangsvue/commit/3f725fd))
+- **release:** V1.5.41 ([6fa77d6](https://github.com/fewangsit/wangsvue/commit/6fa77d6))
+- **release:** V1.5.42 ([ec6f2b1](https://github.com/fewangsit/wangsvue/commit/ec6f2b1))
+- **presets:** Update version ([8fcdc2f](https://github.com/fewangsit/wangsvue/commit/8fcdc2f))
+
+### 🎨 Styles
+
+- Add important to bg-warning-200 when context is highlighted ([3dc8261](https://github.com/fewangsit/wangsvue/commit/3dc8261))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.42
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.41...v1.5.42)

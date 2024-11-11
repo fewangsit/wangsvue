@@ -77,7 +77,7 @@ const setValidatorMessage = (values?: string[]): boolean | string => {
 
     if (!values?.length && props.mandatory) {
       return empty ?? true;
-    } else if (props.existingValues?.length) {
+    } else if (props.existingValues?.length || exist) {
       let validator: boolean | string = true;
 
       values.forEach((each) => {
