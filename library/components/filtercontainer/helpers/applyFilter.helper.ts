@@ -15,11 +15,19 @@ const applyFilter = (
   fields.forEach((field) => {
     const isArray = Array.isArray(values[field]);
 
+    // First, filter all undefined/null value
+    const filterredValues: GenericObject = isArray
+      ? values[field]?.filter((each: keyof GenericObject) => !!each)
+      : values[field];
+
     if (
-      (values[field] != null && !isArray) ||
-      (isArray && values[field].length)
+      (filterredValues != null && !isArray) ||
+      (isArray && filterredValues.length)
     ) {
-      parsedFilter[field] = JSON.stringify(values[field]);
+      // If filterred value still has length then original value will be used,
+      parsedFilter[field] = filterredValues?.length
+        ? JSON.stringify(values[field])
+        : JSON.stringify(filterredValues);
     } else {
       parsedFilter[field] = values[field];
     }
