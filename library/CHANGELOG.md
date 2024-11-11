@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.45
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.44...v1.5.45)
+
+### 💅 Refactors
+
+- **applyFilter:** Refine logic to make sure every value in array aren't null/undefined ([9bf9390](https://github.com/fewangsit/wangsvue/commit/9bf9390))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.44
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.43...v1.5.44)
