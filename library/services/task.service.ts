@@ -19,6 +19,11 @@ import {
   TaskTableSubTab,
   TaskTableTab,
 } from 'lib/components/tasktable/TaskTable.vue.d';
+import {
+  TaskTableFamilyResponse,
+  TaskTableItem,
+  TaskTableOptionQuery,
+} from 'lib/types/task.type';
 
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
   const user = JSON.parse(localStorage.getItem('user') as string) ?? {};
@@ -104,23 +109,34 @@ const TaskServices = {
     });
   },
 
-  getTasksByTab: (
-    tab: TaskTableTab,
-    query: QueryParams,
-  ): Promise<AxiosResponse<FetchResponse<Task>>> => {
-    return API().get(`/${tab}`, {
+  getTasksByTab: (args: {
+    tab: TaskTableTab;
+    subTab?: TaskTableSubTab;
+    query?: QueryParams;
+  }): Promise<AxiosResponse<FetchResponse<TaskTableItem>>> => {
+    const { tab, query, subTab } = args;
+    const endpoint = subTab ? `/${tab}/${subTab}` : `/${tab}`;
+    return API().get(endpoint, {
       params: query,
     });
   },
 
-  getTasksBySubTab: (
-    tab: TaskTableTab,
-    subTab: TaskTableSubTab,
-    query: QueryParams,
-  ): Promise<AxiosResponse<FetchResponse<Task>>> => {
-    return API().get(`/${tab}/${subTab}`, {
+  getTaskOptionsByTab: (args: {
+    tab: TaskTableTab;
+    subTab?: TaskTableSubTab;
+    query?: TaskTableOptionQuery;
+  }): Promise<AxiosResponse<FetchResponse>> => {
+    const { tab, query, subTab } = args;
+    const endpoint = subTab ? `/${tab}/${subTab}/options` : `/${tab}/options`;
+    return API().get(endpoint, {
       params: query,
     });
+  },
+
+  getTaskFamily: (
+    taskId: string,
+  ): Promise<AxiosResponse<TaskTableFamilyResponse>> => {
+    return API().get(`/${taskId}/family`);
   },
 };
 

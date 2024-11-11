@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { MenuItem } from '../menuitem';
 import QuickFilter from '../quickfilter/QuickFilter.vue';
 import FilterContainer from '../filtercontainer/FilterContainer.vue';
@@ -10,271 +10,424 @@ import eventBus from 'lib/event-bus';
 import {
   FetchResponse,
   QueryParams,
+  ShortFetchResponse,
+  TableCellComponent,
   TableColumn,
 } from '../datatable/DataTable.vue.d';
 import { FilterMatchMode } from '../datatable/helpers/filter.helper';
 import { FilterField } from '../filtercontainer/FilterContainer.vue.d';
 import { MultiSelectOption } from 'lib/types/options.type';
-import response from './response.json';
 import DataTable from '../datatable/DataTable.vue';
 import TaskServices from 'lib/services/task.service';
 import { TaskTableProps } from './TaskTable.vue.d';
+import { TaskTableItem, TaskTableOptionQuery } from 'lib/types/task.type';
+import Badge from '../badge/Badge.vue';
+import UserName from '../username/UserName.vue';
+import { useToast } from 'lib/utils';
+import DependencyCol from './DependencyCol.vue';
+import Button from '../button/Button.vue';
+import TaskDetail from '../taskdetail/TaskDetail.vue';
+import DialogConfirmDeleteTask from '../taskdetail/blocks/common/DialogConfirmDeleteTask.vue';
+
+const toast = useToast();
 
 const props = defineProps<TaskTableProps>();
 
-onMounted(() => {
-  if (props.subTab) {
-    getTasksBySubTab({});
-  } else {
-    getTasksByTab({});
-  }
-});
-
-const singleAction: MenuItem[] = [
-  {
-    label: 'Button',
-    icon: 'checkbox-blank-circle',
-    url: '/wangsvue/button',
-  },
-  {
-    label: 'Icon',
-    icon: 'checkbox-blank-circle',
-    route: '/icon',
-  },
-  {
-    label: 'Danger Action',
-    icon: 'checkbox-blank-circle',
-    danger: true,
-    command: (): void => {
-      eventBus.emit('data-table:update', {});
-    },
-  },
-];
-
 const quickFilterField: FilterField[] = [
   {
-    field: 'category',
+    fields: ['minPriority', 'maxPriority'],
+    type: 'rangenumber',
+    placeholder: '0',
+    tooltip: 'Nilai Prioritas',
+  },
+  {
+    field: 'member',
     type: 'multiselect',
-    placeholder: 'Pilih category',
-    fetchOptionFn(): MultiSelectOption[] {
-      return [
-        {
-          label: 'Category new',
-          value: 1,
-        },
-      ];
-    },
+    placeholder: 'Pilih member',
+    fetchOptionFn: () => getTaskOptionsByTab('memberOptions'),
+  },
+  {
+    field: 'project',
+    type: 'multiselect',
+    placeholder: 'Pilih proyek',
+    fetchOptionFn: () => getTaskOptionsByTab('projectOptions'),
+  },
+  {
+    field: 'module',
+    type: 'multiselect',
+    placeholder: 'Pilih modul',
+    fetchOptionFn: () => getTaskOptionsByTab('moduleOptions'),
+  },
+  {
+    field: 'task',
+    type: 'multiselect',
+    placeholder: 'Pilih task',
+    fetchOptionFn: () => getTaskOptionsByTab('taskOptions'),
   },
   {
     field: 'status',
     type: 'multiselect',
     placeholder: 'Pilih Status',
-    fetchOptionFn(): Promise<MultiSelectOption[]> {
-      return new Promise<MultiSelectOption[]>((resolve) => {
-        setTimeout(() => {
-          resolve([
-            { label: 'Missing', value: 'Missing' },
-            { label: 'Not Paired Yet', value: 'Not Paired Yet' },
-          ]);
-        }, 300);
-      });
-    },
-  },
-  {
-    field: 'brand',
-    type: 'multiselect',
-    placeholder: 'Pilih brand',
-    fetchOptionFn(): Promise<MultiSelectOption[]> {
-      return new Promise<MultiSelectOption[]>((resolve) => {
-        setTimeout(() => {
-          resolve([{ label: 'JHG-90', value: 370 }]);
-        }, 300);
-      });
-    },
-  },
-  {
-    fields: ['minValue', 'maxValue'],
-    type: 'rangenumber',
-    placeholder: '0',
-    tooltip: 'Asset Value',
+    fetchOptionFn: (): MultiSelectOption[] => [
+      {
+        label: 'Selesai',
+        value: 'Selesai',
+      },
+      {
+        label: 'Pending Review Leader',
+        value: 'Pending Review Leader',
+      },
+      {
+        label: 'Sprint',
+        value: 'Sprint',
+      },
+      {
+        label: 'Fixing Bug',
+        value: 'Fixing Bug',
+      },
+      {
+        label: 'Reported Bug',
+        value: 'Reported Bug',
+      },
+      {
+        label: 'Penyesuaian',
+        value: 'Penyesuaian',
+      },
+    ],
   },
 ];
 
 const filterFields: FilterField[] = [
   {
-    label: 'Caetegory',
-    field: 'category',
+    label: 'Sub Modul',
+    field: 'subModule',
     type: 'multiselect',
-    placeholder: 'Pilih category',
-    fetchOptionFn(): MultiSelectOption[] {
-      return [
-        {
-          label: 'Category new',
-          value: 1,
-        },
-      ];
-    },
+    placeholder: 'Pilih sub modul',
+    fetchOptionFn: () => getTaskOptionsByTab('subModuleOptions'),
   },
   {
-    label: 'Status',
-    field: 'status',
+    label: 'Proses',
+    field: 'process',
     type: 'multiselect',
-    placeholder: 'Pilih Status',
-    fetchOptionFn(): Promise<MultiSelectOption[]> {
-      return new Promise<MultiSelectOption[]>((resolve) => {
-        setTimeout(() => {
-          resolve([
-            { label: 'Missing', value: 'Missing' },
-            { label: 'Not Paired Yet', value: 'Not Paired Yet' },
-          ]);
-        }, 300);
-      });
-    },
+    placeholder: 'Pilih proses',
+    fetchOptionFn: () => getTaskOptionsByTab('processOptions'),
   },
   {
-    label: 'Brand/Model',
-    field: 'brand',
+    label: 'Dependensi',
+    field: 'dependencyStatus',
     type: 'multiselect',
-    placeholder: 'Pilih brand',
-    fetchOptionFn(): Promise<MultiSelectOption[]> {
-      return new Promise<MultiSelectOption[]>((resolve) => {
-        setTimeout(() => {
-          resolve([{ label: 'JHG-90', value: 370 }]);
-        }, 300);
-      });
-    },
+    placeholder: 'Pilih dependensi status',
+    fetchOptionFn: (): MultiSelectOption[] => [
+      {
+        label: 'Tidak Ada',
+        value: 'Tidak Ada',
+      },
+      {
+        label: 'Belum Selesai',
+        value: 'Belum Selesai',
+      },
+      {
+        label: 'Selesai',
+        value: 'Selesai',
+      },
+    ],
   },
   {
-    label: 'Calendar',
-    type: 'calendar',
-    field: 'daterange',
-    placeholder: 'Input Date',
-  },
-  {
-    label: 'Asset Value',
-    fields: ['minValue', 'maxValue'],
+    label: 'Reported Bug (Kali)',
+    fields: ['minTimeReportedBug', 'maxTimeReportedBug'],
     type: 'rangenumber',
     placeholder: '0',
+  },
+  {
+    label: 'Last Modified Status',
+    type: 'calendar',
+    field: 'lastUpdatedAt',
+    placeholder: 'Pilih tanggal',
   },
 ];
 
 const showFilter = ref(false);
+const dialogNewTask = ref(false);
+const dialogDetailTask = ref(false);
+const dialogConfirmDeleteTask = ref(false);
+
+const selectedTask = ref<TaskTableItem>();
 
 const filters = ref<any>({
-  'global': { value: undefined, matchMode: FilterMatchMode.CONTAINS },
-  'category.key': { value: null, matchMode: FilterMatchMode.IN },
-  'brand.key': { value: null, matchMode: FilterMatchMode.IN },
-  'status': { value: null, matchMode: FilterMatchMode.IN },
+  global: { value: undefined, matchMode: FilterMatchMode.CONTAINS },
 });
 
 const tableColumns = computed<TableColumn[]>(() => {
   return [
     {
-      field: 'brand.name',
-      header: 'Brand',
+      field: 'module.name',
+      header: 'Modul',
+      sortable: true,
+      fixed: true,
+    },
+    {
+      field: 'subModule.name',
+      header: 'Sub Modul',
       sortable: true,
     },
     {
-      field: 'model.name',
-      header: 'Model/Type',
+      field: 'process.name',
+      header: 'Proses',
       sortable: true,
     },
-
     {
-      field: 'category.name',
-      header: 'Category',
+      field: 'name',
+      header: 'Task',
       sortable: true,
+      fixed: true,
     },
-
     {
       field: 'status',
       header: 'Status',
       sortable: true,
       fixed: true,
+      bodyComponent: (data: TaskTableItem): TableCellComponent => {
+        return {
+          component: Badge,
+          props: {
+            label: data.status,
+            format: 'nowrap',
+          },
+        };
+      },
     },
     {
-      field: 'assetValue',
-      header: 'Asset Value',
+      field: 'priority',
+      header: 'Nilai Prioritas',
+      sortable: true,
+    },
+    {
+      field: 'team',
+      header: 'Tim',
+      sortable: true,
+      bodyTemplate: (data: TaskTableItem): string =>
+        data.team.map((t) => t).join(', '),
+    },
+    {
+      field: 'assignedTo',
+      header: 'Assign',
       sortable: true,
       fixed: true,
+      bodyComponent: (data: TaskTableItem): TableCellComponent => {
+        return {
+          component: UserName,
+          props: {
+            user: data.assignedTo.length ? data.assignedTo?.[0] : {},
+            profilePictureField: 'profilePictureBig',
+            emptyable: true,
+          },
+        };
+      },
     },
-
     {
-      field: 'lastModifier.fullName',
-      header: 'User',
+      field: 'childTask',
+      header: 'Child Task',
+      sortable: true,
+      bodyTemplate: (data: TaskTableItem): string =>
+        data.childTask ? data.childTask.toString() : '-',
+    },
+    {
+      field: 'dependency',
+      header: 'Dependensi',
+      sortable: true,
+      bodyComponent: (data: TaskTableItem): TableCellComponent => {
+        return {
+          component: DependencyCol,
+          props: {
+            dependency: data.dependency,
+          },
+        };
+      },
+    },
+    {
+      field: 'timeReportedBug',
+      header: 'Reported Bug',
+      sortable: true,
+      bodyTemplate: (data: TaskTableItem): string =>
+        data.timeReportedBug ? data.timeReportedBug.toString() + ' Kali' : '-',
+    },
+    {
+      field: 'lastUpdatedAt',
+      header: 'Last Modified Status',
       sortable: true,
     },
   ];
 });
 
-const getTableData = async (
+const tableName = computed(() =>
+  props.subTab ? `task-table-${props.tab}-${props.subTab}` : props.tab,
+);
+
+const tableActions = computed<MenuItem[]>(() => [
+  {
+    label: 'Assign Member',
+    icon: 'user-received-2-line',
+    visible: selectedTask.value?.status === 'Backlog',
+  },
+  {
+    label: 'Detail Task',
+    icon: 'file-copy-2-line',
+    visible: true,
+    command: (): void => {
+      dialogDetailTask.value = true;
+    },
+  },
+  {
+    label: 'Hapus',
+    icon: 'delete-bin',
+    danger: true,
+    visible: selectedTask.value?.status === 'Backlog',
+    command: (): void => {
+      dialogConfirmDeleteTask.value = true;
+    },
+  },
+]);
+
+const getTasksByTab = async (
   params: QueryParams,
-): Promise<FetchResponse | undefined> => {
-  // Simulate an asynchronous operation (even though we're returning static data)
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const startIndex = ((params.page || 1) - 1) * (params.limit || 10); // Default limit to 10 if not provided
-      const endIndex = startIndex + (params.limit || 10);
+): Promise<FetchResponse<TaskTableItem> | undefined> => {
+  try {
+    const { data } = await TaskServices.getTasksByTab({
+      tab: props.tab,
+      subTab: props.subTab,
+      query: params,
+    });
+    const formattedData = {
+      ...data,
+      data: {
+        ...data.data,
+        data: data.data.data.map((task: TaskTableItem) => ({
+          ...task,
+          hasChildren:
+            task.childTask > 0 ||
+            Object.values(task.dependency).some((value) => value > 0),
+        })),
+      },
+    };
+    return formattedData;
+  } catch (error) {
+    toast.add({
+      message: 'Data Task gagal dimuat.',
+      error,
+    });
+  }
+};
 
-      const data =
-        params.page != null && params.limit != null
-          ? response.data.data.slice(startIndex, endIndex)
-          : response.data.data;
+const getTaskOptionsByTab = async (
+  field: keyof TaskTableOptionQuery,
+): Promise<MultiSelectOption[]> => {
+  try {
+    const { data } = await TaskServices.getTaskOptionsByTab({
+      tab: props.tab,
+      subTab: props.subTab,
+      query: { [field]: true },
+    });
+    return data.data[field];
+  } catch (error) {
+    toast.add({
+      message: 'Data options gagal dimuat.',
+      error,
+    });
+  }
+};
 
-      resolve({
-        message: '',
-        data: {
-          data, // Use 'slice' for data limiting
-          totalRecords: response.data.totalRecords,
+const getTaskFamily = async (parentData: {
+  _id: string;
+}): Promise<ShortFetchResponse> => {
+  try {
+    const { data } = await TaskServices.getTaskFamily(parentData._id);
+
+    const formattedData: ShortFetchResponse = {
+      message: data.message,
+      data: [
+        {
+          groupHeader: 'Task Dependensi',
+          groupItems: data.data.dependencies,
         },
-      });
-    }, 0); // You can adjust the timeout if you need a delay
-  });
-};
-
-const getTasksByTab = async (params: QueryParams): Promise<void> => {
-  try {
-    const { data } = await TaskServices.getTasksByTab(props.tab, params);
-    console.log('🚀 ~ getTasksByTab ~ data:', data);
+        {
+          groupHeader: 'Child Task',
+          groupItems: data.data.children,
+        },
+      ],
+    };
+    return formattedData;
   } catch (error) {
-    console.error(error);
+    toast.add({
+      message: 'Data Task gagal dimuat.',
+      error,
+    });
   }
 };
 
-const getTasksBySubTab = async (params: QueryParams): Promise<void> => {
-  try {
-    const { data } = await TaskServices.getTasksBySubTab(
-      props.tab,
-      props.subTab,
-      params,
-    );
-    console.log('🚀 ~ getTasksBySubTab ~ data:', data);
-  } catch (error) {
-    console.error(error);
-  }
+const refreshTable = (): void => {
+  eventBus.emit('data-table:update', { tableName: tableName.value });
 };
 </script>
 
 <template>
   <div class="flex justify-end gap-4">
-    <ButtonSearch @search="filters.global.value = $event" class="ml-auto" />
-    <ButtonDownload file-name="Download" />
-    <ButtonFilter v-model:show-filter="showFilter" />
+    <ButtonSearch
+      :table-name="tableName"
+      @search="filters.global.value = $event"
+      class="ml-auto"
+    />
+    <ButtonDownload :table-name="tableName" file-name="Download" />
+    <ButtonFilter v-model:show-filter="showFilter" :table-name="tableName" />
+    <Button
+      v-if="props.tab === 'all'"
+      @click="dialogNewTask = true"
+      icon="add"
+      label="Task"
+      severity="secondary"
+    />
   </div>
 
-  <QuickFilter :fields="quickFilterField" />
+  <QuickFilter :fields="quickFilterField" :table-name="tableName" />
 
-  <FilterContainer v-show="showFilter" :fields="filterFields" />
+  <FilterContainer :fields="filterFields" :table-name="tableName" />
 
   <DataTable
+    :child-table-props="{
+      useColumnsHeader: false,
+      useOption: false,
+      fetchFunction: getTaskFamily,
+    }"
     :columns="tableColumns"
-    :fetch-function="getTableData"
-    :options="singleAction"
-    :total-disabled-rows="1"
+    :fetch-function="getTasksByTab"
+    :options="tableActions"
+    :table-name="tableName"
+    :tree-table="true"
+    @toggle-option="selectedTask = $event"
     data-key="_id"
-    disable-key="isDefault"
+    excel-toast-error-message="Data task gagal diunduh."
     lazy
+    selection-type="none"
     use-option
     use-paginator
+  />
+
+  <TaskDetail
+    v-model:visible="dialogNewTask"
+    @create="refreshTable"
+    @delete="refreshTable"
+    @update="refreshTable"
+  />
+
+  <TaskDetail
+    v-model:visible="dialogDetailTask"
+    :task-id="selectedTask?._id ?? ''"
+    @create="refreshTable"
+    @delete="refreshTable"
+    @update="refreshTable"
+  />
+
+  <DialogConfirmDeleteTask
+    v-model:visible="dialogConfirmDeleteTask"
+    :task-detail="selectedTask"
   />
 </template>

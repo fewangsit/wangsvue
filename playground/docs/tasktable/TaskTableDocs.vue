@@ -11,7 +11,6 @@ import Card from 'lib/components/card/Card.vue';
     </template>
     <template #content>
       <TaskTable sub-tab="myTask" tab="all" />
-      <TaskTable tab="deleted" />
     </template>
   </Card>
 </template>

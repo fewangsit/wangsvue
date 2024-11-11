@@ -7,6 +7,7 @@ import { ProjectProcess } from './projectProcess.type';
 import { ProjectSubModule } from './projectSubmodule.type';
 import { WangsitStatus } from './wangsStatus.type';
 import { JSONContent } from 'lib/components/editor/Editor.vue.d';
+import { ChildGroup } from 'lib/components/datatable/DataTable.vue.d';
 
 export type TaskDetailData = {
   _id: string;
@@ -162,4 +163,48 @@ interface TaskReviewChecklistItem {
   name: string;
   result: 'Ok' | 'Bug';
   content?: string;
+}
+
+export interface TaskTableItem {
+  _id: string;
+  project: Project;
+  process: ProjectProcess;
+  module: ProjectModule;
+  subModule: ProjectSubModule;
+  name: string;
+  assignedTo: Member[];
+  team: string[];
+  status: string;
+  priority?: number;
+  timeReportedBug: number;
+  childTask: number;
+  dependency: TaskTableItemDependency;
+  lastUpdatedAt: string;
+  children?: ChildGroup[];
+  hasChildren?: boolean;
+}
+
+export interface TaskTableItemDependency {
+  done: number;
+  onProgress: number;
+}
+
+export interface TaskTableOptionQuery {
+  projectOptions?: boolean;
+  moduleOptions?: boolean;
+  subModuleOptions?: boolean;
+  memberOptions?: boolean;
+  taskOptions?: boolean;
+  processOptions?: boolean;
+}
+
+export interface TaskTableFamily {
+  dependencies: TaskTableItem[];
+  children: TaskTableItem[];
+}
+
+export interface TaskTableFamilyResponse {
+  status: number;
+  message: string;
+  data: TaskTableFamily;
 }
