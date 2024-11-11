@@ -55,7 +55,11 @@ import {
   getNestedProperyValue,
   checkRouteAccess,
   getImageURL,
+  getUser,
+  getUserPermission,
+  convertJsonImage,
   isEmptyObject,
+  isIntersect,
 } from 'lib/utils';
 
 // Directives
@@ -144,7 +148,11 @@ export {
   useToast,
   checkRouteAccess,
   getImageURL,
+  getUser,
+  getUserPermission,
+  convertJsonImage,
   isEmptyObject,
+  isIntersect,
 
   // Components
   Badge,

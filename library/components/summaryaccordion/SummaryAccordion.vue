@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, shallowRef, watch } from 'vue';
+import { computed, onMounted, onUnmounted, ref, shallowRef, watch } from 'vue';
 import {
   ModuleSummary,
   ProjectSummary,
@@ -17,6 +17,7 @@ import Icon from '../icon/Icon.vue';
 import getStatusSeverity from 'lib/utils/statusSeverity.util';
 import Skeleton from 'primevue/skeleton';
 import ImageCompressor from '../imagecompressor/ImageCompressor.vue';
+import ImageCompressorClass from '../imagecompressor/ImageCompressor.vue.d';
 
 interface SummaryItem {
   icon: WangsIcons;
@@ -26,7 +27,9 @@ interface SummaryItem {
   show: boolean;
 }
 
-const props = defineProps<SummaryAccordionProps>();
+const props = withDefaults(defineProps<SummaryAccordionProps>(), {
+  fieldName: 'imageInput',
+});
 defineEmits<SummaryAccordionEmits>();
 
 onMounted(() => {
@@ -38,6 +41,7 @@ onUnmounted(() => {
   window.removeEventListener('resize', shrinkWrap);
 });
 
+const imageCompressor = ref<ImageCompressorClass>();
 const expanded = shallowRef(false);
 
 const name = computed(() => {
@@ -221,6 +225,19 @@ const summaryItems = computed<SummaryItem[]>(() => {
   return items.filter((item) => item.show);
 });
 
+const splitItems = computed<SummaryItem[][]>(() => {
+  const array = [...summaryItems.value];
+  const result = [];
+
+  // Split the items to 3 columns
+  for (let i = Math.ceil(array.length) / 3; i > 0; i--) {
+    result.push(array.splice(0, Math.ceil(array.length / i)));
+  }
+
+  // Transpose the result
+  return result[0].map((col, i) => result.map((row) => row[i]));
+});
+
 /*
  * Code taken and modified from https://stackoverflow.com/a/78307608/27534858
  * Used to adjust the width of the edited email when it's wrapped
@@ -228,8 +245,9 @@ const summaryItems = computed<SummaryItem[]>(() => {
 const shrinkWrap = (): void => {
   setTimeout(() => {
     const element = document.getElementById('editedEmail');
+    if (!element) return;
     const { firstChild, lastChild } = element;
-    if (!element || !firstChild || !lastChild) return;
+    if (!firstChild || !lastChild) return;
 
     element.style.width = '';
     const range = document.createRange();
@@ -252,12 +270,25 @@ const secondsToDHM = (seconds: number): string => {
   return `${days}h ${hours}j ${minutes}m`;
 };
 
+const assignPreviewImagesFromProp = async (isDelete = false): Promise<void> => {
+  imageCompressor.value?.assignPreviewImagesFromProp(isDelete);
+};
+
 watch(
   () => summaryItems,
   () => {
     shrinkWrap();
   },
 );
+
+watch(
+  () => expanded.value,
+  () => {
+    shrinkWrap();
+  },
+);
+
+defineExpose({ assignPreviewImagesFromProp });
 </script>
 
 <!-- eslint-disable vue/html-indent -->
@@ -275,17 +306,27 @@ watch(
   >
     <template v-if="summary">
       <ImageCompressor
+        ref="imageCompressor"
         v-if="summary?.type === 'profile' && expanded"
         :disabled="!summary.completeProfile"
-        :image-preview-url="summary.profilePicture"
+        :field-name="fieldName"
+        :image-preview-url="
+          summary.useInitial ? undefined : summary.profilePicture
+        "
+        :initial-name="summary.useInitial ? summary.initial : undefined"
         :show-info="false"
+        @apply="$emit('apply', $event)"
+        @apply-prop="$emit('applyProp')"
+        @delete="$emit('delete', $event)"
+        emit-delete-fn
         image-preview-size="medium"
         rounded
+        use-validator
       />
       <div class="flex flex-col gap-2">
         <div
           @click="expanded = !expanded"
-          class="flex justify-between cursor-pointer"
+          class="flex justify-between gap-2 cursor-pointer"
           data-wv-section="projectmeta"
         >
           <div class="flex items-center gap-2">
@@ -417,18 +458,23 @@ watch(
 
         <div
           v-show="expanded"
-          :class="['grid grid-cols-3 grid-rows-2 gap-3']"
+          class="grid grid-flow-col justify-stretch gap-3"
           data-wv-section="summary"
         >
-          <span
-            :key="item.label"
-            v-for="item of summaryItems"
-            class="flex items-center gap-1 text-xs font-normal"
+          <div
+            :key="`print${index}`"
+            v-for="(items, index) in splitItems"
+            class="flex flex-col gap-3"
           >
-            <Icon :icon="item.icon" :severity="item.severity" />
-            <span>{{ item.label }}:</span>
-            <span>{{ item.value }}</span>
-          </span>
+            <span
+              :key="item.label"
+              v-for="item in items"
+              class="flex items-center gap-1 text-xs font-normal"
+            >
+              <Icon :icon="item.icon" :severity="item.severity" />
+              <span> {{ item.label }}:&nbsp;{{ item.value }} </span>
+            </span>
+          </div>
         </div>
       </div>
     </template>
