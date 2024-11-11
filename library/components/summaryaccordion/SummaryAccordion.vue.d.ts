@@ -1,5 +1,6 @@
 import { DevelopmentStatus, ProjectStatus } from 'lib/types/wangsStatus.type';
 import { ClassComponent } from '../ts-helpers';
+import { ImageCompressorPayload } from '../imagecompressor/ImageCompressor.vue.d';
 
 export interface Summary {
   name: string;
@@ -53,6 +54,7 @@ export interface UserProfileSummary
   type: 'profile';
   nickName: string;
   fullName: string;
+  initial: string;
   aliasName?: string;
   division: string;
   position: string;
@@ -66,6 +68,7 @@ export interface UserProfileSummary
   completeProfile?: boolean;
   editable?: boolean;
   editedEmail?: string;
+  useInitial?: boolean;
 }
 
 export interface SummaryAccordionProps {
@@ -74,15 +77,46 @@ export interface SummaryAccordionProps {
     | ModuleSummary
     | SubModuleSummary
     | UserProfileSummary;
+  /**
+   * Specify the field name for the image compressor.
+   *
+   * @default 'imageInput'
+   */
+  fieldName?: string;
 }
 
 export type SummaryAccordionEmits = {
   edit: [];
   cancelEditEmail: [];
+  /**
+   * On apply the image cropper.
+   */
+  apply: [value: ImageCompressorPayload];
+  /**
+   * On apply image from props.
+   */
+  applyProp: [];
+  /**
+   * On delete button clicked.
+   *
+   * When props.confirmOnDelete is true, on dialog confirmed, this emit will be emitted with a delete function.
+   * You need to call the function inside your own delete funcition to clear the image.
+   *
+   * @param deleteFn - the function delete
+   * @param index - the index of image to be deleted
+   */
+  delete: [deleteFn?: (index?: number) => void, index?: number];
 };
 
 export default class SummaryAccordion extends ClassComponent<
   SummaryAccordionProps,
   unknown,
   SummaryAccordionEmits
-> {}
+> {
+  /**
+   * Exposed function to assign image from props.
+   *
+   * @param isDelete
+   */
+  assignPreviewImagesFromProp(isDelete?: boolean): Promise<void>;
+}
