@@ -165,7 +165,7 @@ interface TaskReviewChecklistItem {
   content?: string;
 }
 
-export type TaskType = 'parent' | 'child' | 'dependency'
+export type TaskType = 'parent' | 'child' | 'dependency';
 
 export interface TaskTableItem {
   _id: string;
@@ -181,6 +181,7 @@ export interface TaskTableItem {
   timeReportedBug: number;
   childTask: number;
   dependency: TaskTableItemDependency;
+  exportDependencyField?: string;
   lastUpdatedAt: string;
   children?: ChildGroup[];
   hasChildren?: boolean;

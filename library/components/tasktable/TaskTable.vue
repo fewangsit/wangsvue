@@ -224,6 +224,8 @@ const tableColumns = computed<TableColumn[]>(() => {
       header: 'Assign',
       sortable: true,
       fixed: true,
+      arrayValueField: 'nickName',
+      exportField: 'assignedTo',
       bodyComponent: (data: TaskTableItem): TableCellComponent => {
         return {
           component: UserGroup,
@@ -247,6 +249,7 @@ const tableColumns = computed<TableColumn[]>(() => {
       field: 'dependency',
       header: 'Dependensi',
       sortable: true,
+      exportField: 'exportDependencyField',
       bodyComponent: (data: TaskTableItem): TableCellComponent => {
         return {
           component: DependencyCol,
@@ -347,6 +350,7 @@ const getTasksByTab = async (
             task.childTask > 0 ||
             Object.values(task.dependency).some((value) => value > 0),
           taskType: 'parent',
+          exportDependencyField: `${task.dependency.done} selesai, ${task.dependency.onProgress} tidak selesai`,
         })),
       },
     };
