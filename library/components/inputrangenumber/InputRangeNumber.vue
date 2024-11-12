@@ -2,12 +2,13 @@
 import InputNumber from 'primevue/inputnumber';
 import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
 import InputGroup from '../inputgroup/InputGroup.vue';
+import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 
 import {
   InputRangeNumberEmits,
   InputRangeNumberProps,
 } from './InputRangeNumber.vue.d';
-import { reactive, watch, onMounted } from 'vue';
+import { computed, reactive, watch, nextTick, onMounted } from 'vue';
 import { useField } from 'vee-validate';
 import { FieldValidation } from '../form/Form.vue.d';
 
@@ -34,8 +35,8 @@ onMounted(() => {
       minField,
       useField(
         props.minFieldName ?? 'minNumberInput',
-        () => {
-          return true;
+        (value: number | undefined) => {
+          return setValidatorMessage(value);
         },
         { initialValue: undefined },
       ),
@@ -45,8 +46,8 @@ onMounted(() => {
       maxField,
       useField(
         props.maxFieldName ?? 'maxNumberInput',
-        () => {
-          return true;
+        (value: number | undefined) => {
+          return setValidatorMessage(value);
         },
         { initialValue: undefined },
       ),
@@ -60,8 +61,29 @@ onMounted(() => {
   }
 });
 
+const invalidInput = computed<boolean>(
+  () => props.invalid || !!minField.errorMessage || !!maxField.errorMessage,
+);
+
 const handleKeydown = (event: KeyboardEvent): void => {
   if (event.key === 'Enter') emit('submit');
+};
+
+const setValidatorMessage = async (
+  value: number | undefined,
+): Promise<boolean | string> => {
+  await nextTick();
+
+  if (typeof props.validatorMessage === 'string' && props.invalid) {
+    return props.validatorMessage;
+  } else if (typeof props.validatorMessage !== 'string') {
+    const { empty } = props.validatorMessage ?? {};
+    if (value == null && props.mandatory) {
+      return empty ?? true;
+    }
+  }
+
+  return true;
 };
 
 // Watch for changes in minField and maxField
@@ -98,7 +120,7 @@ watch(
 <template>
   <FieldWrapper :label="props.label" :show-optional-text="showOptionalText">
     <div class="flex gap-2 w-full items-center" data-wv-section="inputwrapper">
-      <InputGroup>
+      <InputGroup :invalid="invalidInput">
         <InputNumber
           v-bind="$props"
           v-model="minField.value"
@@ -111,7 +133,7 @@ watch(
         />
       </InputGroup>
       -
-      <InputGroup>
+      <InputGroup :invalid="invalidInput">
         <InputNumber
           v-bind="$props"
           v-model="maxField.value"
@@ -124,5 +146,8 @@ watch(
         />
       </InputGroup>
     </div>
+    <ValidatorMessage
+      :message="minField.errorMessage ?? maxField.errorMessage"
+    />
   </FieldWrapper>
 </template>
