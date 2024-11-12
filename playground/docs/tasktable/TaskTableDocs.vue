@@ -10,7 +10,20 @@ import Card from 'lib/components/card/Card.vue';
       <DocTitle name="Task Table" />
     </template>
     <template #content>
-      <TaskTable sub-tab="myTask" tab="all" />
+      <div class="flex flex-col gap-10">
+        <div class="flex flex-col gap-2">
+          <span class="text-xl font-semibold">All > My Tasks</span>
+          <TaskTable sub-tab="myTask" tab="all" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-xl font-semibold">All > Related Tasks</span>
+          <TaskTable sub-tab="relatedTask" tab="all" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-xl font-semibold">Active > My Tasks</span>
+          <TaskTable sub-tab="myTask" tab="active" />
+        </div>
+      </div>
     </template>
   </Card>
 </template>

@@ -28,8 +28,14 @@ import DependencyCol from './DependencyCol.vue';
 import Button from '../button/Button.vue';
 import TaskDetail from '../taskdetail/TaskDetail.vue';
 import DialogConfirmDeleteTask from '../taskdetail/blocks/common/DialogConfirmDeleteTask.vue';
+import DialogAssignMember from '../taskdetail/blocks/common/DialogAssignMember.vue';
+import DialogReviewLeader from '../taskdetail/blocks/sections/Review/DialogReviewLeader.vue';
+import DialogFinishReview from '../taskdetail/blocks/sections/Review/DialogFinishReview.vue';
+import TaskChecklistServices from 'lib/services/taskChecklist.service';
+import { useLoadingStore } from 'lib/build-entry';
 
 const toast = useToast();
+const { setLoading } = useLoadingStore();
 
 const props = defineProps<TaskTableProps>();
 
@@ -149,7 +155,10 @@ const filterFields: FilterField[] = [
 const showFilter = ref(false);
 const dialogNewTask = ref(false);
 const dialogDetailTask = ref(false);
+const dialogAssignMember = ref(false);
 const dialogConfirmDeleteTask = ref(false);
+const dialogReview = ref(false);
+const dialogFinishReview = ref(false);
 
 const selectedTask = ref<TaskTableItem>();
 
@@ -268,6 +277,22 @@ const tableActions = computed<MenuItem[]>(() => [
     label: 'Assign Member',
     icon: 'user-received-2-line',
     visible: selectedTask.value?.status === 'Backlog',
+    command: (): void => {
+      dialogAssignMember.value = true;
+    },
+  },
+  {
+    label: 'Review',
+    icon: 'chat-check',
+    visible: selectedTask.value?.status === 'Pending Review Leader',
+    command: (): void => {
+      openReviewDialog();
+    },
+  },
+  {
+    label: 'Tandai Selesai',
+    icon: 'check-double-fill',
+    visible: selectedTask.value?.status === 'Sprint',
   },
   {
     label: 'Detail Task',
@@ -281,7 +306,7 @@ const tableActions = computed<MenuItem[]>(() => [
     label: 'Hapus',
     icon: 'delete-bin',
     danger: true,
-    visible: selectedTask.value?.status === 'Backlog',
+    visible: ['Backlog', 'Sprint'].includes(selectedTask.value?.status),
     command: (): void => {
       dialogConfirmDeleteTask.value = true;
     },
@@ -367,49 +392,78 @@ const getTaskFamily = async (parentData: {
 const refreshTable = (): void => {
   eventBus.emit('data-table:update', { tableName: tableName.value });
 };
+
+const openReviewDialog = async (): Promise<void> => {
+  const checklists = await getChecklists();
+  if (checklists.length) {
+    dialogReview.value = true;
+  } else {
+    dialogFinishReview.value = true;
+  }
+};
+
+const getChecklists = async (): Promise<any[]> => {
+  try {
+    setLoading(true);
+    const { data } = await TaskChecklistServices.getTaskChecklists(
+      selectedTask.value?._id,
+    );
+    return data?.data;
+  } catch (error) {
+    toast.add({
+      message: 'Gagal memuat data ceklis.',
+      error,
+    });
+    return [];
+  } finally {
+    setLoading(false);
+  }
+};
 </script>
 
 <template>
-  <div class="flex justify-end gap-4">
-    <ButtonSearch
+  <div class="flex flex-col gap-2">
+    <div class="flex justify-end gap-4">
+      <ButtonSearch
+        :table-name="tableName"
+        @search="filters.global.value = $event"
+        class="ml-auto"
+      />
+      <ButtonDownload :table-name="tableName" file-name="Download" />
+      <ButtonFilter v-model:show-filter="showFilter" :table-name="tableName" />
+      <Button
+        v-if="props.tab === 'all'"
+        @click="dialogNewTask = true"
+        icon="add"
+        label="Task"
+        severity="secondary"
+      />
+    </div>
+
+    <QuickFilter :fields="quickFilterField" :table-name="tableName" />
+
+    <FilterContainer :fields="filterFields" :table-name="tableName" />
+
+    <DataTable
+      :child-table-props="{
+        useColumnsHeader: false,
+        useOption: false,
+        fetchFunction: getTaskFamily,
+      }"
+      :columns="tableColumns"
+      :fetch-function="getTasksByTab"
+      :options="tableActions"
       :table-name="tableName"
-      @search="filters.global.value = $event"
-      class="ml-auto"
-    />
-    <ButtonDownload :table-name="tableName" file-name="Download" />
-    <ButtonFilter v-model:show-filter="showFilter" :table-name="tableName" />
-    <Button
-      v-if="props.tab === 'all'"
-      @click="dialogNewTask = true"
-      icon="add"
-      label="Task"
-      severity="secondary"
+      :tree-table="true"
+      @toggle-option="selectedTask = $event"
+      data-key="_id"
+      excel-toast-error-message="Data task gagal diunduh."
+      lazy
+      selection-type="none"
+      use-option
+      use-paginator
     />
   </div>
-
-  <QuickFilter :fields="quickFilterField" :table-name="tableName" />
-
-  <FilterContainer :fields="filterFields" :table-name="tableName" />
-
-  <DataTable
-    :child-table-props="{
-      useColumnsHeader: false,
-      useOption: false,
-      fetchFunction: getTaskFamily,
-    }"
-    :columns="tableColumns"
-    :fetch-function="getTasksByTab"
-    :options="tableActions"
-    :table-name="tableName"
-    :tree-table="true"
-    @toggle-option="selectedTask = $event"
-    data-key="_id"
-    excel-toast-error-message="Data task gagal diunduh."
-    lazy
-    selection-type="none"
-    use-option
-    use-paginator
-  />
 
   <TaskDetail
     v-model:visible="dialogNewTask"
@@ -420,10 +474,28 @@ const refreshTable = (): void => {
 
   <TaskDetail
     v-model:visible="dialogDetailTask"
-    :task-id="selectedTask?._id ?? ''"
+    :task-id="selectedTask?._id"
     @create="refreshTable"
     @delete="refreshTable"
     @update="refreshTable"
+  />
+
+  <DialogAssignMember
+    v-model:visible="dialogAssignMember"
+    :task-id-prop="selectedTask?._id"
+  />
+
+  <DialogReviewLeader
+    v-model:visible="dialogReview"
+    :task-detail-prop="selectedTask"
+    :task-id-prop="selectedTask?._id"
+    @saved="eventBus.emit('detail-task:update', { taskId: selectedTask?._id })"
+  />
+
+  <DialogFinishReview
+    v-model:visible="dialogFinishReview"
+    :task-id-prop="selectedTask?._id"
+    @saved="eventBus.emit('detail-task:update', { taskId: selectedTask?._id })"
   />
 
   <DialogConfirmDeleteTask

@@ -19,19 +19,47 @@ const { setLoading } = useLoadingStore();
 
 const visible = defineModel<boolean>('visible', { required: true });
 
-const taskId = inject<Ref<string>>('taskId');
-const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
+const props = defineProps<{
+  taskIdProp?: string;
+}>();
+
+const taskIdFromInject = inject<Ref<string>>('taskId');
+const taskDetail =
+  inject<Ref<TaskDetailData>>('taskDetail') ?? ref<TaskDetailData>();
+
+const formKey = ref(0);
 
 const memberOptions = ref<DropdownOption[]>();
 const memberLoading = ref<boolean>(false);
 
+const taskId = computed(() => taskIdFromInject.value ?? props.taskIdProp);
+
 const initialMemberValue = computed(() => {
-  if (taskDetail.value?.assignedTo.length === 1) {
+  if (taskDetail?.value?.assignedTo?.length === 1) {
     return taskDetail.value.assignedTo[0]._id;
   }
 
   return undefined;
 });
+
+const getDetailTask = async (): Promise<void> => {
+  try {
+    setLoading(true);
+
+    const { data } = await TaskServices.getTaskDetail(props.taskIdProp);
+
+    taskDetail.value = data.data;
+  } catch (error) {
+    toast.add({
+      message: 'Data Task Detail gagal diambil.',
+      severity: 'error',
+      error,
+    });
+  } finally {
+    formKey.value++;
+    setLoading(false);
+  }
+};
 
 const getMemberOptions = async (): Promise<void> => {
   if (taskDetail.value.subModule) {
@@ -146,10 +174,20 @@ watch(
   },
   { deep: true },
 );
+
+watch(visible, (value) => {
+  if (value) {
+    // Only load detail task if props.taskIdProp is defined
+    if (props.taskIdProp) {
+      getDetailTask();
+    }
+  }
+});
 </script>
 
 <template>
   <DialogForm
+    :key="formKey"
     v-model:visible="visible"
     :buttons-template="['cancel', 'submit']"
     :closable="false"
