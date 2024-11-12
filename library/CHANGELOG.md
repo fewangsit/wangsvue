@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v1.5.47
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.46...v1.5.47)
+
+### 🚀 Enhancements
+
+- **detailtask:** Add custom checklists field in last content of review leader ([6695636](https://github.com/fewangsit/wangsvue/commit/6695636))
+- **tasktable:** Add task table page ([48b2f4f](https://github.com/fewangsit/wangsvue/commit/48b2f4f))
+- **tasktable:** Add functionality for tasktable ([90e0da3](https://github.com/fewangsit/wangsvue/commit/90e0da3))
+- Implement validator message if InputRangeNumber is mandatory and has validatorMessage ([3579f06](https://github.com/fewangsit/wangsvue/commit/3579f06))
+
+### 🩹 Fixes
+
+- Conflict in playground router ([a9a61f8](https://github.com/fewangsit/wangsvue/commit/a9a61f8))
+
+### 🏡 Chore
+
+- **taskdetail:** Rename detailtask to taskdetail ([f5c4b9c](https://github.com/fewangsit/wangsvue/commit/f5c4b9c))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.46
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.45...v1.5.46)
