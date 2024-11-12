@@ -276,7 +276,9 @@ const tableActions = computed<MenuItem[]>(() => [
   {
     label: 'Assign Member',
     icon: 'user-received-2-line',
-    visible: selectedTask.value?.status === 'Backlog',
+    visible:
+      selectedTask.value?.status === 'Backlog' &&
+      selectedTask.value?.taskType === 'parent',
     command: (): void => {
       dialogAssignMember.value = true;
     },
@@ -284,7 +286,9 @@ const tableActions = computed<MenuItem[]>(() => [
   {
     label: 'Review',
     icon: 'chat-check',
-    visible: selectedTask.value?.status === 'Pending Review Leader',
+    visible:
+      selectedTask.value?.status === 'Pending Review Leader' &&
+      selectedTask.value?.taskType === 'parent',
     command: (): void => {
       openReviewDialog();
     },
@@ -292,12 +296,14 @@ const tableActions = computed<MenuItem[]>(() => [
   {
     label: 'Tandai Selesai',
     icon: 'check-double-fill',
-    visible: selectedTask.value?.status === 'Sprint',
+    visible:
+      selectedTask.value?.status === 'Sprint' &&
+      selectedTask.value?.taskType === 'parent',
   },
   {
     label: 'Detail Task',
     icon: 'file-copy-2-line',
-    visible: true,
+    visible: ['parent', 'dependency'].includes(selectedTask.value?.taskType),
     command: (): void => {
       dialogDetailTask.value = true;
     },
@@ -306,7 +312,9 @@ const tableActions = computed<MenuItem[]>(() => [
     label: 'Hapus',
     icon: 'delete-bin',
     danger: true,
-    visible: ['Backlog', 'Sprint'].includes(selectedTask.value?.status),
+    visible:
+      ['Backlog', 'Sprint'].includes(selectedTask.value?.status) &&
+      selectedTask.value?.taskType === 'parent',
     command: (): void => {
       dialogConfirmDeleteTask.value = true;
     },
@@ -322,7 +330,7 @@ const getTasksByTab = async (
       subTab: props.subTab,
       query: params,
     });
-    const formattedData = {
+    const formattedData: FetchResponse<TaskTableItem> = {
       ...data,
       data: {
         ...data.data,
@@ -331,6 +339,7 @@ const getTasksByTab = async (
           hasChildren:
             task.childTask > 0 ||
             Object.values(task.dependency).some((value) => value > 0),
+          taskType: 'parent',
         })),
       },
     };
@@ -372,11 +381,17 @@ const getTaskFamily = async (parentData: {
       data: [
         {
           groupHeader: 'Task Dependensi',
-          groupItems: data.data.dependencies,
+          groupItems: data.data.dependencies.map((dep) => ({
+            ...dep,
+            taskType: 'dependency',
+          })),
         },
         {
           groupHeader: 'Child Task',
-          groupItems: data.data.children,
+          groupItems: data.data.children.map((child) => ({
+            ...child,
+            taskType: 'child',
+          })),
         },
       ],
     };
@@ -447,7 +462,7 @@ const getChecklists = async (): Promise<any[]> => {
     <DataTable
       :child-table-props="{
         useColumnsHeader: false,
-        useOption: false,
+        useOption: true,
         fetchFunction: getTaskFamily,
       }"
       :columns="tableColumns"
