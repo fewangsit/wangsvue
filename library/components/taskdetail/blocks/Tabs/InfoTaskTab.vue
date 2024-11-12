@@ -106,7 +106,7 @@ const teamLabel = computed(() => {
 });
 
 const openCalendar = (): void => {
-  const el: HTMLElement = document.querySelector('[data-pc-name="calendar"]');
+  const el: HTMLElement = document.querySelector('#startDateOfTaskDetail div');
   if (el) {
     el.click();
   }
@@ -205,6 +205,7 @@ const getDuration = (duration: number): string => {
               severity="warning"
             />
             <Calendar
+              id="startDateOfTaskDetail"
               v-model="startDate"
               :date-value="
                 taskDetail?.startDate

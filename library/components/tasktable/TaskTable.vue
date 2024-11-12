@@ -33,6 +33,7 @@ import DialogReviewLeader from '../taskdetail/blocks/sections/Review/DialogRevie
 import DialogFinishReview from '../taskdetail/blocks/sections/Review/DialogFinishReview.vue';
 import TaskChecklistServices from 'lib/services/taskChecklist.service';
 import { useLoadingStore } from 'lib/build-entry';
+import DialogConfirmFinishTask from '../taskdetail/blocks/common/DialogConfirmFinishTask.vue';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -157,6 +158,7 @@ const dialogNewTask = ref(false);
 const dialogDetailTask = ref(false);
 const dialogAssignMember = ref(false);
 const dialogConfirmDeleteTask = ref(false);
+const dialogConfirmFinishTask = ref(false);
 const dialogReview = ref(false);
 const dialogFinishReview = ref(false);
 
@@ -297,8 +299,12 @@ const tableActions = computed<MenuItem[]>(() => [
     label: 'Tandai Selesai',
     icon: 'check-double-fill',
     visible:
-      selectedTask.value?.status === 'Sprint' &&
-      selectedTask.value?.taskType === 'parent',
+      ['Sprint', 'Fixing Bug', 'Penyesuaian'].includes(
+        selectedTask.value?.status,
+      ) && selectedTask.value?.taskType === 'parent',
+    command: (): void => {
+      dialogConfirmFinishTask.value = true;
+    },
   },
   {
     label: 'Detail Task',
@@ -511,6 +517,11 @@ const getChecklists = async (): Promise<any[]> => {
     v-model:visible="dialogFinishReview"
     :task-id-prop="selectedTask?._id"
     @saved="eventBus.emit('detail-task:update', { taskId: selectedTask?._id })"
+  />
+
+  <DialogConfirmFinishTask
+    v-model:visible="dialogConfirmFinishTask"
+    :task-detail="selectedTask"
   />
 
   <DialogConfirmDeleteTask
