@@ -22,7 +22,6 @@ import TaskServices from 'lib/services/task.service';
 import { TaskTableProps } from './TaskTable.vue.d';
 import { TaskTableItem, TaskTableOptionQuery } from 'lib/types/task.type';
 import Badge from '../badge/Badge.vue';
-import UserName from '../username/UserName.vue';
 import { useToast } from 'lib/utils';
 import DependencyCol from './DependencyCol.vue';
 import Button from '../button/Button.vue';
@@ -34,6 +33,7 @@ import DialogFinishReview from '../taskdetail/blocks/sections/Review/DialogFinis
 import TaskChecklistServices from 'lib/services/taskChecklist.service';
 import { useLoadingStore } from 'lib/build-entry';
 import DialogConfirmFinishTask from '../taskdetail/blocks/common/DialogConfirmFinishTask.vue';
+import UserGroup from '../usergroup/UserGroup.vue';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -226,11 +226,12 @@ const tableColumns = computed<TableColumn[]>(() => {
       fixed: true,
       bodyComponent: (data: TaskTableItem): TableCellComponent => {
         return {
-          component: UserName,
+          component: UserGroup,
           props: {
-            user: data.assignedTo.length ? data.assignedTo?.[0] : {},
+            users: data.assignedTo,
             profilePictureField: 'profilePictureBig',
-            emptyable: true,
+            withDialogDetail: true,
+            dialogHeaderLabel: 'Assigned To',
           },
         };
       },
