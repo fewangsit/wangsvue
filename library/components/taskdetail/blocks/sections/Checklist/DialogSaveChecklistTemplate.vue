@@ -6,22 +6,23 @@ import Dropdown from 'lib/components/dropdown/Dropdown.vue';
 import useLoadingStore from 'lib/components/loading/store/loading.store';
 import { DropdownOption } from 'lib/types/options.type';
 import { useToast } from 'lib/utils';
-import InputText from 'lib/components/inputtext/InputText.vue';
 import TaskChecklistServices from 'lib/services/taskChecklist.service';
-import { AddTaskChecklistDTO } from 'lib/dto/taskChecklist.dto';
 import { FormPayload, FormValue } from 'lib/components/form/Form.vue.d';
+import { AddTaskChecklistTemplateDTO } from 'lib/dto/taskChecklist.dto';
+import { TaskChecklist, TaskDetailData } from 'lib/types/task.type';
+import InputText from 'lib/components/inputtext/InputText.vue';
 
 const { setLoading } = useLoadingStore();
 const toast = useToast();
 
 const projectId = sessionStorage.getItem('projectId') ?? '';
 
-const taskId = inject<Ref<string>>('taskId');
+const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 
 const visible = defineModel<boolean>('visible', { required: true });
 
-const emit = defineEmits<{
-  added: [];
+const props = defineProps<{
+  checklist: TaskChecklist;
 }>();
 
 const templateOptions = ref<DropdownOption[]>();
@@ -33,10 +34,14 @@ const getChecklistTemplates = async (): Promise<void> => {
     const { data: response } =
       await TaskChecklistServices.getTaskChecklistTemplates(projectId);
     if (response) {
-      templateOptions.value = response.data.data.map((d) => ({
-        label: d.name,
-        value: d,
-      }));
+      const defaultOption = {
+        label: 'Template Baru',
+        value: { name: 'Template Baru' },
+      };
+      templateOptions.value = [
+        ...response.data.data.map((d) => ({ label: d.name, value: d })),
+        defaultOption,
+      ];
     }
   } catch (error) {
     toast.add({
@@ -53,25 +58,27 @@ const handleSubmit = async (e: FormPayload): Promise<void> => {
     setLoading(true);
 
     const template = e.formValues?.template as unknown as FormValue;
-    const body: AddTaskChecklistDTO = {
+    const body: AddTaskChecklistTemplateDTO = {
+      project: projectId,
+      checklist: props.checklist._id,
+      module: taskDetail.value?.module?.name,
+      subModule: taskDetail.value?.subModule?.name,
+      task: taskDetail.value?.name,
       name: e.formValues?.name as unknown as string,
-      task: taskId?.value,
-      template: template ? template['_id'] : undefined,
+      templateReplaced:
+        template['name'] === 'new' ? undefined : template['_id'],
     };
-    const { data } = await TaskChecklistServices.addTaskChecklist(body);
+    const { data } = await TaskChecklistServices.addTaskChecklistTemplate(body);
     if (data) {
       toast.add({
-        message: 'Ceklis telah ditambahkan.',
+        message: 'Template ceklis telah disimpan.',
         severity: 'success',
       });
-
-      emit('added');
-
       visible.value = false;
     }
   } catch (error) {
     toast.add({
-      message: 'Ceklis gagal ditambahkan.',
+      message: 'Template ceklis gagal disimpan.',
       error,
     });
   } finally {
@@ -90,36 +97,34 @@ const handleSubmit = async (e: FormPayload): Promise<void> => {
     :show-stay-checkbox="false"
     :use-clear-btn="false"
     @submit="handleSubmit"
-    data-wv-name="dialog-add-checklist"
-    header="Tambah Ceklis"
+    data-wv-name="dialog-save-checklist-template"
+    header="Simpan Template"
   >
     <template #fields>
-      <InputText
-        :validator-message="{
-          empty: 'Nama ceklis harus diisi.',
-        }"
-        field-name="name"
-        label="Nama Ceklis"
-        mandatory
-        placeholder="Tulis nama ceklis"
-        use-validator
-      />
       <Dropdown
+        :custom-validation="{
+          empty: 'Template ceklis harus dipilih.',
+        }"
         :loading="templateLoading"
         :options="templateOptions"
         @show="getChecklistTemplates"
         data-key="name"
         field-name="template"
-        label="Salin List Dari"
+        label="Pilih Template"
+        mandatory
         option-label="label"
         option-value="value"
         placeholder="Pilih template ceklis"
         use-validator
+        validator-message="Template ceklis harus dipilih."
       >
         <template #option="{ option }">
           <div class="flex flex-col gap-0.5">
             <div class="text-xs font-normal">{{ option.label }}</div>
-            <div class="text-[10px] font-normal">
+            <div
+              v-if="option.label !== 'Template Baru'"
+              class="text-[10px] font-normal"
+            >
               {{
                 `${option.value.module}. ${option.value.subModule}. ${option.value.task}`
               }}
@@ -127,6 +132,16 @@ const handleSubmit = async (e: FormPayload): Promise<void> => {
           </div>
         </template>
       </Dropdown>
+      <InputText
+        :validator-message="{
+          empty: 'Nama template harus diisi.',
+        }"
+        field-name="name"
+        label="Nama Template"
+        mandatory
+        placeholder="Tulis nama template"
+        use-validator
+      />
     </template>
   </DialogForm>
 </template>

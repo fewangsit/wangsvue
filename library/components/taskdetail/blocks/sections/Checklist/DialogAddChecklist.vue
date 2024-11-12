@@ -6,23 +6,37 @@ import Dropdown from 'lib/components/dropdown/Dropdown.vue';
 import useLoadingStore from 'lib/components/loading/store/loading.store';
 import { DropdownOption } from 'lib/types/options.type';
 import { useToast } from 'lib/utils';
-import TaskChecklistServices from 'lib/services/taskChecklist.service';
-import { FormPayload, FormValue } from 'lib/components/form/Form.vue.d';
-import { AddTaskChecklistTemplateDTO } from 'lib/dto/taskChecklist.dto';
-import { TaskChecklist, TaskDetail } from 'lib/types/task.type';
 import InputText from 'lib/components/inputtext/InputText.vue';
+import TaskChecklistServices from 'lib/services/taskChecklist.service';
+import { AddTaskChecklistDTO } from 'lib/dto/taskChecklist.dto';
+import { FormPayload, FormValue } from 'lib/components/form/Form.vue.d';
+
+export type AddTaskChecklistStaticDTO = Omit<
+  AddTaskChecklistDTO,
+  'template'
+> & {
+  template: string[];
+};
 
 const { setLoading } = useLoadingStore();
 const toast = useToast();
 
 const projectId = sessionStorage.getItem('projectId') ?? '';
 
-const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
+const props = defineProps<{
+  static?: boolean;
+}>();
+
+const taskId = inject<Ref<string>>('taskId');
 
 const visible = defineModel<boolean>('visible', { required: true });
 
-const props = defineProps<{
-  checklist: TaskChecklist;
+const emit = defineEmits<{
+  /**
+   * @description Emit for adding checklist with static mode
+   */
+  add: [body: AddTaskChecklistStaticDTO];
+  added: [];
 }>();
 
 const templateOptions = ref<DropdownOption[]>();
@@ -34,14 +48,10 @@ const getChecklistTemplates = async (): Promise<void> => {
     const { data: response } =
       await TaskChecklistServices.getTaskChecklistTemplates(projectId);
     if (response) {
-      const defaultOption = {
-        label: 'Template Baru',
-        value: { name: 'Template Baru' },
-      };
-      templateOptions.value = [
-        ...response.data.data.map((d) => ({ label: d.name, value: d })),
-        defaultOption,
-      ];
+      templateOptions.value = response.data.data.map((d) => ({
+        label: d.name,
+        value: d,
+      }));
     }
   } catch (error) {
     toast.add({
@@ -58,32 +68,42 @@ const handleSubmit = async (e: FormPayload): Promise<void> => {
     setLoading(true);
 
     const template = e.formValues?.template as unknown as FormValue;
-    const body: AddTaskChecklistTemplateDTO = {
-      project: projectId,
-      checklist: props.checklist._id,
-      module: taskDetail.value?.module?.name,
-      subModule: taskDetail.value?.subModule?.name,
-      task: taskDetail.value?.name,
+    const body: AddTaskChecklistDTO = {
       name: e.formValues?.name as unknown as string,
-      templateReplaced:
-        template['name'] === 'new' ? undefined : template['_id'],
+      task: taskId?.value,
+      template: template ? template['_id'] : undefined,
     };
-    const { data } = await TaskChecklistServices.addTaskChecklistTemplate(body);
-    if (data) {
-      toast.add({
-        message: 'Template ceklis telah disimpan.',
-        severity: 'success',
-      });
-      visible.value = false;
+
+    if (props.static) {
+      const staticBody = {
+        ...body,
+        template: template ? (template['items'] as string[]) : undefined,
+      };
+      emit('add', staticBody);
+      handleSuccess();
+    } else {
+      const { data } = await TaskChecklistServices.addTaskChecklist(body);
+      if (data) {
+        handleSuccess();
+      }
     }
   } catch (error) {
     toast.add({
-      message: 'Template ceklis gagal disimpan.',
+      message: 'Ceklis gagal ditambahkan.',
       error,
     });
   } finally {
     setLoading(false);
   }
+};
+
+const handleSuccess = (): void => {
+  toast.add({
+    message: 'Ceklis telah ditambahkan.',
+    severity: 'success',
+  });
+  emit('added');
+  visible.value = false;
 };
 </script>
 
@@ -97,34 +117,36 @@ const handleSubmit = async (e: FormPayload): Promise<void> => {
     :show-stay-checkbox="false"
     :use-clear-btn="false"
     @submit="handleSubmit"
-    data-wv-name="dialog-save-checklist-template"
-    header="Simpan Template"
+    data-wv-name="dialog-add-checklist"
+    header="Tambah Ceklis"
   >
     <template #fields>
-      <Dropdown
-        :custom-validation="{
-          empty: 'Template ceklis harus dipilih.',
+      <InputText
+        :validator-message="{
+          empty: 'Nama ceklis harus diisi.',
         }"
+        field-name="name"
+        label="Nama Ceklis"
+        mandatory
+        placeholder="Tulis nama ceklis"
+        use-validator
+      />
+      <Dropdown
         :loading="templateLoading"
         :options="templateOptions"
         @show="getChecklistTemplates"
         data-key="name"
         field-name="template"
-        label="Pilih Template"
-        mandatory
+        label="Salin List Dari"
         option-label="label"
         option-value="value"
         placeholder="Pilih template ceklis"
         use-validator
-        validator-message="Template ceklis harus dipilih."
       >
         <template #option="{ option }">
           <div class="flex flex-col gap-0.5">
             <div class="text-xs font-normal">{{ option.label }}</div>
-            <div
-              v-if="option.label !== 'Template Baru'"
-              class="text-[10px] font-normal"
-            >
+            <div class="text-[10px] font-normal">
               {{
                 `${option.value.module}. ${option.value.subModule}. ${option.value.task}`
               }}
@@ -132,16 +154,6 @@ const handleSubmit = async (e: FormPayload): Promise<void> => {
           </div>
         </template>
       </Dropdown>
-      <InputText
-        :validator-message="{
-          empty: 'Nama template harus diisi.',
-        }"
-        field-name="name"
-        label="Nama Template"
-        mandatory
-        placeholder="Tulis nama template"
-        use-validator
-      />
     </template>
   </DialogForm>
 </template>

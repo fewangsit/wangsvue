@@ -6,7 +6,7 @@ import Dropdown from 'lib/components/dropdown/Dropdown.vue';
 import useLoadingStore from 'lib/components/loading/store/loading.store';
 import eventBus from 'lib/event-bus';
 import { DropdownOption } from 'lib/types/options.type';
-import { TaskDetail } from 'lib/types/task.type';
+import { TaskDetailData } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 import TaskServices from 'lib/services/task.service';
 import { EditTaskDTO } from 'lib/dto/task.dto';
@@ -20,7 +20,7 @@ const { setLoading } = useLoadingStore();
 const visible = defineModel<boolean>('visible', { required: true });
 
 const taskId = inject<Ref<string>>('taskId');
-const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
+const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 
 const memberOptions = ref<DropdownOption[]>();
 const memberLoading = ref<boolean>(false);

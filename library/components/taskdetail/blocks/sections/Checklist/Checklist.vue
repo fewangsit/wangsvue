@@ -21,9 +21,21 @@ import TaskAttachmentItem from '../Attachment/AttachmentItem.vue';
 import DialogConfirmChecklist from './DialogConfirmChecklist.vue';
 import DialogSaveChecklistTemplate from './DialogSaveChecklistTemplate.vue';
 import DialogDetailChecklistTemplate from './DialogDetailChecklistTemplate.vue';
-import DialogAddChecklist from './DialogAddChecklist.vue';
+import DialogAddChecklist, {
+  AddTaskChecklistStaticDTO,
+} from './DialogAddChecklist.vue';
+import { AxiosResponse } from 'axios';
+import Editor from 'lib/components/editor/Editor.vue';
 
 const toast = useToast();
+
+const props = defineProps<{
+  static?: boolean;
+}>();
+
+const emit = defineEmits<{
+  updated: [checklists: TaskChecklist[]];
+}>();
 
 const taskId = inject<Ref<string>>('taskId');
 
@@ -34,6 +46,7 @@ const checklistMenuOptions: MenuItem[] = [
     command: (): void => {
       dialogSaveChecklistTemplate.value = true;
     },
+    visible: !props.static,
   },
   {
     icon: 'file-copy-2-line',
@@ -41,18 +54,27 @@ const checklistMenuOptions: MenuItem[] = [
     command: (): void => {
       dialogDetailChecklistTemplate.value = true;
     },
+    visible: !props.static,
   },
   {
     icon: 'delete-bin',
     label: 'Hapus Ceklis',
     danger: true,
     command: (): void => {
-      dialogDeleteChecklist.value = true;
+      if (props.static) {
+        const checklistIndex = checklists.value.findIndex(
+          (checklist) => checklist._id === selectedChecklist.value._id,
+        );
+        deleteStaticChecklist(checklistIndex);
+      } else {
+        dialogDeleteChecklist.value = true;
+      }
     },
+    visible: true,
   },
 ];
 
-const checklists = ref<TaskChecklist[]>();
+const checklists = ref<TaskChecklist[]>(props.static ? [] : undefined);
 
 const dialogAddChecklist = ref<boolean>(false);
 const dialogSaveChecklistTemplate = ref<boolean>(false);
@@ -79,8 +101,22 @@ const addChecklistItem = async (item: string, index: number): Promise<void> => {
       checklist: checklists.value[index]._id,
       name: item,
     };
-    const { data } = await TaskChecklistServices.addTaskChecklistItem(body);
-    if (data) {
+    let response: boolean | AxiosResponse<any, any>;
+    if (props.static) {
+      checklists.value[index].checklistItems.push({
+        _id: (Math.random() + 1).toString(36).substring(2),
+        name: item,
+        checked: false,
+        isRequested: false,
+        createdAt: '-',
+        updatedAt: '-',
+        attachments: [],
+      });
+      response = true;
+    } else {
+      response = await TaskChecklistServices.addTaskChecklistItem(body);
+    }
+    if (response) {
       closeInputAddItem(index);
       getChecklists();
     }
@@ -97,6 +133,10 @@ const closeInputAddItem = (index: number): void => {
 };
 
 const getChecklists = async (): Promise<void> => {
+  if (props.static) {
+    emit('updated', checklists.value);
+    return;
+  }
   try {
     const { data } = await TaskChecklistServices.getTaskChecklists(
       taskId.value,
@@ -121,11 +161,19 @@ const getChecklists = async (): Promise<void> => {
 const renameChecklist = async (index: number, name: string): Promise<void> => {
   try {
     const checklist = checklists.value[index];
-    const { data } = await TaskChecklistServices.updateTaskChecklist(
-      checklist._id,
-      { name },
-    );
-    if (data) {
+    let response: boolean | AxiosResponse<any, any>;
+    if (props.static) {
+      checklist.name = name;
+      response = true;
+    } else {
+      response = await TaskChecklistServices.updateTaskChecklist(
+        checklist._id,
+        {
+          name,
+        },
+      );
+    }
+    if (response) {
       checklist.showRenameChecklist = false;
       await getChecklists();
     }
@@ -248,6 +296,37 @@ const toggleChecklistItem = async (args: {
   }
 };
 
+const addStaticChecklist = (staticBody: AddTaskChecklistStaticDTO): void => {
+  const body: TaskChecklist = {
+    name: staticBody.name,
+    task: taskId.value,
+    _id: (Math.random() + 1).toString(36).substring(2),
+    checklistItems:
+      staticBody.template?.map((item) => ({
+        name: item,
+        _id: (Math.random() + 1).toString(36).substring(2),
+        checked: false,
+        isRequested: false,
+        createdAt: '-',
+        updatedAt: '-',
+        attachments: [],
+      })) ?? [],
+  };
+  checklists.value?.push(body);
+};
+
+const deleteStaticChecklist = (
+  checklistIndex: number,
+  itemIndex?: number,
+): void => {
+  if (typeof itemIndex === 'number') {
+    const checklist = checklists.value[checklistIndex];
+    checklist.checklistItems.splice(itemIndex, 1);
+  } else {
+    checklists.value.splice(checklistIndex, 1);
+  }
+};
+
 watch(
   taskId,
   (value) => {
@@ -263,44 +342,23 @@ watch(
 
 <template>
   <div class="flex flex-col gap-3" data-wv-section="detailtask-task-checklist">
-    <DialogAddChecklist
-      v-model:visible="dialogAddChecklist"
-      @added="getChecklists"
-    />
-    <DialogSaveChecklistTemplate
-      v-model:visible="dialogSaveChecklistTemplate"
-      :checklist="selectedChecklist"
-    />
-    <DialogConfirmChecklist
-      v-model:visible="dialogDeleteChecklist"
-      :checklist="selectedChecklist"
-      @submitted="getChecklists"
-      type="deleteList"
-    />
-    <DialogConfirmChecklist
-      v-model:visible="dialogDeleteChecklistItem"
-      :checklist="selectedChecklist"
-      :item="selectedChecklistItem"
-      @submitted="getChecklists"
-      type="deleteItem"
-    />
-    <DialogConfirmChecklist
-      v-model:visible="dialogUncheckChecklistItem"
-      :checklist="selectedChecklist"
-      :item="selectedChecklistItem"
-      @submitted="getChecklists"
-      type="uncheckItem"
-    />
-    <DialogDetailChecklistTemplate
-      v-model:visible="dialogDetailChecklistTemplate"
-    />
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-2">
         <Icon class="w-6 h-6" icon="check" />
-        <div class="text-xs font-semibold">Ceklis</div>
+        <div class="flex">
+          <span class="text-xs font-semibold">Ceklis</span>
+          <Icon
+            v-if="props.static"
+            class="w-2.5 h-2.5"
+            icon="info"
+            info="Leader bisa menambahkan ceklisan baru apabila menemukan bug diluar dari ceklisan yang ada."
+            tooltip-pos="top"
+          />
+        </div>
       </div>
       <div class="flex items-center gap-2">
         <Button
+          v-if="!props.static"
           class="!p-1"
           icon="file-history"
           icon-class="!w-6 !h-6"
@@ -348,7 +406,7 @@ watch(
             </span>
             <div class="flex items-center gap-2">
               <ProgressBar
-                v-if="checklist.checklistItems.length"
+                v-if="checklist.checklistItems.length && !props.static"
                 :value="
                   (checklist.checklistItems.filter((item) => item.checked)
                     .length /
@@ -397,6 +455,7 @@ watch(
               <Checkbox
                 :key="item.key"
                 v-model="item.checked"
+                :disabled="props.static"
                 :label="item.name"
                 @update:model-value="
                   toggleChecklistItem({
@@ -408,54 +467,58 @@ watch(
               />
             </div>
             <div class="flex items-center gap-2">
-              <span v-if="item.updatedAt">
-                {{ formatDateReadable(new Date(item.updatedAt), 86400) }}
-              </span>
-              <UserName
-                v-if="item.updatedBy"
-                :user="item.updatedBy"
-                type="icon"
-              />
-              <Button
-                @click="item.showRenameItem = true"
-                class="!p-1"
-                icon="edit"
-                icon-class="!w-6 !h-6"
-                severity="secondary"
-                text
-              />
+              <template v-if="!props.static">
+                <span v-if="item.updatedAt">
+                  {{ formatDateReadable(new Date(item.updatedAt), 86400) }}
+                </span>
+                <UserName
+                  v-if="item.updatedBy"
+                  :user="item.updatedBy"
+                  type="icon"
+                />
+                <Button
+                  @click="item.showRenameItem = true"
+                  class="!p-1"
+                  icon="edit"
+                  icon-class="!w-6 !h-6"
+                  severity="secondary"
+                  text
+                />
+                <Button
+                  @click="
+                    openAttachmentDialog({ checklistIndex: index, itemIndex })
+                  "
+                  class="!p-1"
+                  icon="attachment-2"
+                  icon-class="!w-6 !h-6"
+                  severity="secondary"
+                  text
+                />
+                <Button
+                  @click="item.showCaptionItem = !item.showCaptionItem"
+                  class="!p-1"
+                  icon="chat-new-line"
+                  icon-class="!w-6 !h-6"
+                  severity="secondary"
+                  text
+                />
+                <Button
+                  class="!p-1"
+                  icon="chat-1-line"
+                  icon-class="!w-6 !h-6"
+                  severity="secondary"
+                  text
+                />
+              </template>
               <Button
                 @click="
-                  openAttachmentDialog({ checklistIndex: index, itemIndex })
-                "
-                class="!p-1"
-                icon="attachment-2"
-                icon-class="!w-6 !h-6"
-                severity="secondary"
-                text
-              />
-              <Button
-                @click="item.showCaptionItem = !item.showCaptionItem"
-                class="!p-1"
-                icon="chat-new-line"
-                icon-class="!w-6 !h-6"
-                severity="secondary"
-                text
-              />
-              <Button
-                class="!p-1"
-                icon="chat-1-line"
-                icon-class="!w-6 !h-6"
-                severity="secondary"
-                text
-              />
-              <Button
-                @click="
-                  openConfirmDialog({
-                    checklistIndex: index,
-                    itemIndex: itemIndex,
-                    type: 'deleteItem',
-                  })
+                  props.static
+                    ? deleteStaticChecklist(index, itemIndex)
+                    : openConfirmDialog({
+                        checklistIndex: index,
+                        itemIndex: itemIndex,
+                        type: 'deleteItem',
+                      })
                 "
                 class="!p-1"
                 icon="close"
@@ -499,6 +562,16 @@ watch(
               type="checklist"
             />
           </div>
+          <div v-if="props.static" class="px-5 flex flex-col gap-2">
+            <span class="text-danger-500">Keterangan Bug</span>
+            <Editor
+              v-model="item.content"
+              @update:model-value="emit('updated', checklists)"
+              editor-state="editable"
+              is-image-upload-base64
+              placeholder="Tulis keterangan bug disini"
+            />
+          </div>
         </div>
         <div>
           <InputAdditional
@@ -530,5 +603,44 @@ watch(
     :upload-url-service="TaskChecklistServices.addTaskAttachmentUrl"
     @hide="getChecklists"
     type="checklist"
+  />
+
+  <DialogAddChecklist
+    v-model:visible="dialogAddChecklist"
+    :static="props.static"
+    @add="addStaticChecklist"
+    @added="getChecklists"
+  />
+
+  <DialogSaveChecklistTemplate
+    v-model:visible="dialogSaveChecklistTemplate"
+    :checklist="selectedChecklist"
+  />
+
+  <DialogConfirmChecklist
+    v-model:visible="dialogDeleteChecklist"
+    :checklist="selectedChecklist"
+    @submitted="getChecklists"
+    type="deleteList"
+  />
+
+  <DialogConfirmChecklist
+    v-model:visible="dialogDeleteChecklistItem"
+    :checklist="selectedChecklist"
+    :item="selectedChecklistItem"
+    @submitted="getChecklists"
+    type="deleteItem"
+  />
+
+  <DialogConfirmChecklist
+    v-model:visible="dialogUncheckChecklistItem"
+    :checklist="selectedChecklist"
+    :item="selectedChecklistItem"
+    @submitted="getChecklists"
+    type="uncheckItem"
+  />
+
+  <DialogDetailChecklistTemplate
+    v-model:visible="dialogDetailChecklistTemplate"
   />
 </template>

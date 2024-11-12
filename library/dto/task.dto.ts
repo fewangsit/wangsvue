@@ -62,9 +62,24 @@ export interface EditTaskLinkDTO {
 }
 
 export interface ReviewTaskDTO {
+  data: ReviewTaskData[];
+  checklists: ReviewTaskChecklist[];
+}
+
+export interface ReviewTaskData {
   checklistId: string;
   checklistName: string;
   checklistItemName: string;
   result: 'Ok' | 'Bug';
+  content?: string;
+}
+
+export interface ReviewTaskChecklist {
+  checklistName: string;
+  checklistItems: ChecklistItem[];
+}
+
+export interface ChecklistItem {
+  checklistItemName: string;
   content?: string;
 }

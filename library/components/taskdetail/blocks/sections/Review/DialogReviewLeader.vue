@@ -2,7 +2,7 @@
 import { computed, inject, ref, Ref, watch } from 'vue';
 import Button from 'lib/components/button/Button.vue';
 import Dialog from 'lib/components/dialog/Dialog.vue';
-import { TaskChecklist, TaskDetail } from 'lib/types/task.type';
+import { TaskChecklist, TaskDetailData } from 'lib/types/task.type';
 import TaskChecklistServices from 'lib/services/taskChecklist.service';
 import { useToast } from 'lib/utils';
 import TaskAttachmentItem from '../Attachment/AttachmentItem.vue';
@@ -12,6 +12,7 @@ import Editor from 'lib/components/editor/Editor.vue';
 import TaskServices from 'lib/services/task.service';
 import { ReviewTaskDTO } from 'lib/dto/task.dto';
 import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
+import Checklist from '../Checklist/Checklist.vue';
 
 type ReviewTaskChecklist = TaskChecklist & {
   checked: boolean;
@@ -34,12 +35,14 @@ const emit = defineEmits<{
   saved: [];
 }>();
 
-const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
+const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 const taskId = inject<Ref<string>>('taskId');
 
 const checklistItems = ref<ReviewTaskChecklist[]>();
 const activeIndex = ref<number>(0);
 const confirmReview = ref(false);
+
+const newChecklists = ref<TaskChecklist[]>();
 
 const lastItem = computed(() =>
   checklistItems.value?.length
@@ -79,14 +82,26 @@ const getChecklists = async (): Promise<void> => {
 
 const reviewTask = async (): Promise<void> => {
   try {
-    const body: ReviewTaskDTO[] = checklistItems.value.map((item) => ({
-      checklistId: item.checklistId,
-      checklistName: item.checklistName,
-      checklistItemName: item.name,
-      result: item.result,
-      content: JSON.stringify(item.content),
-    }));
-    const { data } = await TaskServices.reviewTask(taskId.value, body);
+    const payload: ReviewTaskDTO = {
+      data: checklistItems.value.map((item) => ({
+        checklistId: item.checklistId,
+        checklistName: item.checklistName,
+        checklistItemName: item.name,
+        result: item.result,
+        content: JSON.stringify(item.content),
+      })),
+      checklists:
+        newChecklists.value?.map((checklist) => ({
+          checklistName: checklist.name,
+          checklistItems: checklist.checklistItems.map((checklistItem) => ({
+            checklistItemName: checklistItem.name,
+            content: checklistItem.content
+              ? JSON.stringify(checklistItem.content)
+              : undefined,
+          })),
+        })) ?? [],
+    };
+    const { data } = await TaskServices.reviewTask(taskId.value, payload);
     if (data) {
       toast.add({
         message: 'Task telah direview.',
@@ -103,7 +118,12 @@ const reviewTask = async (): Promise<void> => {
   }
 };
 
+const updateChecklist = (checklists: TaskChecklist[]): void => {
+  newChecklists.value = checklists;
+};
+
 watch(visible, (value) => {
+  activeIndex.value = 0;
   if (value) {
     getChecklists();
   }
@@ -222,6 +242,10 @@ watch(visible, (value) => {
             />
           </div>
         </div>
+      </div>
+
+      <div v-if="lastItem" class="pt-6">
+        <Checklist :static="true" @updated="updateChecklist" />
       </div>
 
       <div v-if="checklistItems?.length" class="flex flex-col gap-2 pt-4">

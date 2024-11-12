@@ -5,7 +5,7 @@ import InputNumber from 'lib/components/inputnumber/InputNumber.vue';
 import useLoadingStore from 'lib/components/loading/store/loading.store';
 import eventBus from 'lib/event-bus';
 import TaskServices from 'lib/services/task.service';
-import { TaskDetail } from 'lib/types/task.type';
+import { TaskDetailData } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 import { computed, inject, Ref } from 'vue';
 
@@ -13,7 +13,7 @@ const { setLoading } = useLoadingStore();
 const toast = useToast();
 
 const taskId = inject<Ref<string>>('taskId');
-const taskDetail = inject<Ref<TaskDetail>>('taskDetail');
+const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 
 const visible = defineModel<boolean>('visible', { required: true });
 
