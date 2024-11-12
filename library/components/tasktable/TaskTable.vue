@@ -153,6 +153,8 @@ const filterFields: FilterField[] = [
   },
 ];
 
+const userData = JSON.parse(localStorage.getItem('user') as string);
+
 const showFilter = ref(false);
 const dialogNewTask = ref(false);
 const dialogDetailTask = ref(false);
@@ -278,13 +280,24 @@ const tableName = computed(() =>
   props.subTab ? `task-table-${props.tab}-${props.subTab}` : props.tab,
 );
 
+/**
+ * Generate table actions based on task status and user type.
+ *
+ * Table actions:
+ * - Assign Member (only for PM/Leader and task status is Backlog)
+ * - Review (only for Leader and task status is Pending Review Leader)
+ * - Tandai Selesai (only for Member and task status is Sprint/Fixing Bug/Penyesuaian)
+ * - Detail Task (only for PM/Leader/Member and task type is parent/dependency)
+ * - Hapus (only for PM/Leader/Member and task status is Backlog/Sprint)
+ */
 const tableActions = computed<MenuItem[]>(() => [
   {
     label: 'Assign Member',
     icon: 'user-received-2-line',
     visible:
       selectedTask.value?.status === 'Backlog' &&
-      selectedTask.value?.taskType === 'parent',
+      selectedTask.value?.taskType === 'parent' &&
+      ['pm', 'teamLeader'].includes(userType.value),
     command: (): void => {
       dialogAssignMember.value = true;
     },
@@ -294,7 +307,8 @@ const tableActions = computed<MenuItem[]>(() => [
     icon: 'chat-check',
     visible:
       selectedTask.value?.status === 'Pending Review Leader' &&
-      selectedTask.value?.taskType === 'parent',
+      selectedTask.value?.taskType === 'parent' &&
+      userType.value === 'teamLeader',
     command: (): void => {
       openReviewDialog();
     },
@@ -305,7 +319,9 @@ const tableActions = computed<MenuItem[]>(() => [
     visible:
       ['Sprint', 'Fixing Bug', 'Penyesuaian'].includes(
         selectedTask.value?.status,
-      ) && selectedTask.value?.taskType === 'parent',
+      ) &&
+      selectedTask.value?.taskType === 'parent' &&
+      userType.value === 'member',
     command: (): void => {
       dialogConfirmFinishTask.value = true;
     },
@@ -313,7 +329,9 @@ const tableActions = computed<MenuItem[]>(() => [
   {
     label: 'Detail Task',
     icon: 'file-copy-2-line',
-    visible: ['parent', 'dependency'].includes(selectedTask.value?.taskType),
+    visible:
+      ['parent', 'dependency'].includes(selectedTask.value?.taskType) &&
+      ['pm', 'teamLeader', 'member'].includes(userType.value),
     command: (): void => {
       dialogDetailTask.value = true;
     },
@@ -324,12 +342,27 @@ const tableActions = computed<MenuItem[]>(() => [
     danger: true,
     visible:
       ['Backlog', 'Sprint'].includes(selectedTask.value?.status) &&
-      selectedTask.value?.taskType === 'parent',
+      selectedTask.value?.taskType === 'parent' &&
+      ['pm', 'teamLeader', 'member'].includes(userType.value),
     command: (): void => {
       dialogConfirmDeleteTask.value = true;
     },
   },
 ]);
+
+const userType = computed(() => {
+  const memberType = selectedTask.value?.assignedTo.find(
+    (t) => t._id === userData?._id,
+  )
+    ? 'member'
+    : 'guest';
+  if (selectedTask.value?.isProjectManager) {
+    return 'pm';
+  } else if (selectedTask.value?.isTeamLeader) {
+    return 'teamLeader';
+  }
+  return memberType;
+});
 
 const getTasksByTab = async (
   params: QueryParams,
@@ -450,6 +483,7 @@ const getChecklists = async (): Promise<any[]> => {
 <template>
   <div class="flex flex-col gap-2">
     <div class="flex justify-end gap-4">
+      <pre>{{ userType }}</pre>
       <ButtonSearch
         :table-name="tableName"
         @search="filters.global.value = $event"

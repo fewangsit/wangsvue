@@ -186,6 +186,8 @@ export interface TaskTableItem {
   children?: ChildGroup[];
   hasChildren?: boolean;
   taskType?: TaskType;
+  isProjectManager?: boolean;
+  isTeamLeader?: boolean;
 }
 
 export interface TaskTableItemDependency {
