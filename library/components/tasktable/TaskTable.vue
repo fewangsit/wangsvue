@@ -167,6 +167,8 @@ const dialogFinishReview = ref(false);
 
 const selectedTask = ref<TaskTableItem>();
 
+const selectedTasks = ref<TaskTableItem[]>([]);
+
 const filters = ref<any>({
   global: { value: undefined, matchMode: FilterMatchMode.CONTAINS },
 });
@@ -519,8 +521,6 @@ const getChecklists = async (): Promise<any[]> => {
     setLoading(false);
   }
 };
-
-const selectedTasks = ref<TaskTableItem[]>([]);
 </script>
 
 <template>
