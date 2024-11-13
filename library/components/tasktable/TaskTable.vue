@@ -284,11 +284,11 @@ const tableName = computed(() =>
  * Generate table actions based on task status and user type.
  *
  * Table actions:
- * - Assign Member (only for PM/Leader and task status is Backlog)
+ * - Assign Member (only for Admin/PM/Leader and task status is Backlog)
  * - Review (only for Leader and task status is Pending Review Leader)
  * - Tandai Selesai (only for Member and task status is Sprint/Fixing Bug/Penyesuaian)
- * - Detail Task (only for PM/Leader/Member and task type is parent/dependency)
- * - Hapus (only for PM/Leader/Member and task status is Backlog/Sprint)
+ * - Detail Task (only for Admin/PM/Leader/Member and task type is parent/dependency)
+ * - Hapus (only for Admin/PM/Leader/Member and task status is Backlog/Sprint)
  */
 const tableActions = computed<MenuItem[]>(() => [
   {
@@ -297,7 +297,7 @@ const tableActions = computed<MenuItem[]>(() => [
     visible:
       selectedTask.value?.status === 'Backlog' &&
       selectedTask.value?.taskType === 'parent' &&
-      ['pm', 'teamLeader'].includes(userType.value),
+      ['admin', 'pm', 'teamLeader'].includes(userType.value),
     command: (): void => {
       dialogAssignMember.value = true;
     },
@@ -331,7 +331,7 @@ const tableActions = computed<MenuItem[]>(() => [
     icon: 'file-copy-2-line',
     visible:
       ['parent', 'dependency'].includes(selectedTask.value?.taskType) &&
-      ['pm', 'teamLeader', 'member'].includes(userType.value),
+      ['admin', 'pm', 'teamLeader', 'member'].includes(userType.value),
     command: (): void => {
       dialogDetailTask.value = true;
     },
@@ -343,7 +343,7 @@ const tableActions = computed<MenuItem[]>(() => [
     visible:
       ['Backlog', 'Sprint'].includes(selectedTask.value?.status) &&
       selectedTask.value?.taskType === 'parent' &&
-      ['pm', 'teamLeader', 'member'].includes(userType.value),
+      ['admin', 'pm', 'teamLeader', 'member'].includes(userType.value),
     command: (): void => {
       dialogConfirmDeleteTask.value = true;
     },
@@ -351,12 +351,19 @@ const tableActions = computed<MenuItem[]>(() => [
 ]);
 
 const userType = computed(() => {
+  const isAdmin = Object.values(
+    userData?.permission?.manageProject || {},
+  ).every((value) => value === true);
+
   const memberType = selectedTask.value?.assignedTo.find(
     (t) => t._id === userData?._id,
   )
     ? 'member'
     : 'guest';
-  if (selectedTask.value?.isProjectManager) {
+
+  if (isAdmin) {
+    return 'admin';
+  } else if (selectedTask.value?.isProjectManager) {
     return 'pm';
   } else if (selectedTask.value?.isTeamLeader) {
     return 'teamLeader';
