@@ -712,6 +712,7 @@ onUnmounted(() => {
 watch(
   () => props.columns,
   () => {
+    if (!props.customColumn) visibleColumns.value = props.columns;
     customColumnKey.value++;
   },
 );
