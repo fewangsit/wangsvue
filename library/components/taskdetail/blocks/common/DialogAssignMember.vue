@@ -9,7 +9,7 @@ import { DropdownOption } from 'lib/types/options.type';
 import { TaskDetailData } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 import TaskServices from 'lib/services/task.service';
-import { EditTaskDTO } from 'lib/dto/task.dto';
+import { UpdateTaskMemberDTO } from 'lib/dto/task.dto';
 import { FormPayload } from 'lib/components/form/Form.vue.d';
 import ProjectTeamServices from 'lib/services/projectTeam.service';
 import SubModuleServices from 'lib/services/submodule.service';
@@ -20,10 +20,17 @@ const { setLoading } = useLoadingStore();
 const visible = defineModel<boolean>('visible', { required: true });
 
 const props = defineProps<{
-  taskIdProp?: string;
+  /**
+   * This task id prop is used in task table component, either single or bulk action.
+   */
+  taskIdProp?: string[];
 }>();
 
+/**
+ * This task id inject is used in task detail dialog.
+ */
 const taskIdFromInject = inject<Ref<string>>('taskId');
+
 const taskDetail =
   inject<Ref<TaskDetailData>>('taskDetail') ?? ref<TaskDetailData>();
 
@@ -32,7 +39,10 @@ const formKey = ref(0);
 const memberOptions = ref<DropdownOption[]>();
 const memberLoading = ref<boolean>(false);
 
-const taskId = computed(() => taskIdFromInject.value ?? props.taskIdProp);
+/**
+ * Single task id, either from task table or task detail dialog.
+ */
+const taskId = computed(() => taskIdFromInject?.value ?? props.taskIdProp?.[0]);
 
 const initialMemberValue = computed(() => {
   if (taskDetail?.value?.assignedTo?.length === 1) {
@@ -46,13 +56,12 @@ const getDetailTask = async (): Promise<void> => {
   try {
     setLoading(true);
 
-    const { data } = await TaskServices.getTaskDetail(props.taskIdProp);
+    const { data } = await TaskServices.getTaskDetail(taskId.value);
 
     taskDetail.value = data.data;
   } catch (error) {
     toast.add({
       message: 'Data Task Detail gagal diambil.',
-      severity: 'error',
       error,
     });
   } finally {
@@ -139,11 +148,23 @@ const handleSubmit = async (payload: FormPayload): Promise<void> => {
   try {
     setLoading(true);
 
-    const dataDTO: EditTaskDTO = {
-      assignedTo: [payload.formValues.member] as unknown as string[],
+    const memberPayload = payload.formValues.member as unknown as string;
+
+    const dataDTO: UpdateTaskMemberDTO = {
+      data: props.taskIdProp?.length
+        ? props.taskIdProp.map((id) => ({
+            task: id,
+            member: memberPayload,
+          }))
+        : [
+            {
+              task: taskId.value,
+              member: memberPayload,
+            },
+          ],
     };
 
-    await TaskServices.putEditTask(taskId.value, dataDTO);
+    await TaskServices.updateTaskMember(dataDTO);
 
     eventBus.emit('detail-task:update', { taskId: taskId.value });
 
@@ -152,7 +173,6 @@ const handleSubmit = async (payload: FormPayload): Promise<void> => {
       severity: 'success',
     });
   } catch (error) {
-    console.error(error);
     toast.add({
       message: 'Member gagal di-assign.',
       severity: 'error',
@@ -178,7 +198,12 @@ watch(
 watch(visible, (value) => {
   if (value) {
     // Only load detail task if props.taskIdProp is defined
-    if (props.taskIdProp) {
+    if (props.taskIdProp?.length) {
+      console.log(
+        '🚀 ~ watch ~ props.taskIdProp:',
+        props.taskIdProp,
+        taskId?.value,
+      );
       getDetailTask();
     }
   }
