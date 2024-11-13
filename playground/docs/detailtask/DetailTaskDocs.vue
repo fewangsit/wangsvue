@@ -2,7 +2,7 @@
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 
 import DocTitle from '../DocTitle.vue';
-import DetailTask from 'lib/components/detailtask/DetailTask.vue';
+import TaskDetail from 'lib/components/taskdetail/TaskDetail.vue';
 import Button from 'lib/components/button/Button.vue';
 import Card from 'lib/components/card/Card.vue';
 import Toast from 'lib/components/toast/Toast.vue';
@@ -17,7 +17,7 @@ import {
 import Badge from 'lib/components/badge/Badge.vue';
 import TaskServices from 'lib/services/task.service';
 import eventBus from 'lib/event-bus';
-import { TaskDetail } from 'lib/types/task.type';
+import { TaskDetailData } from 'lib/types/task.type';
 
 const toast = useToast();
 
@@ -29,7 +29,7 @@ onUnmounted(() => {
   localStorage.clear();
 });
 
-const selectedItem = ref<TaskDetail>();
+const selectedItem = ref<TaskDetailData>();
 
 const showDetailTask = ref<boolean>(false);
 const showNewTask = ref<boolean>(false);
@@ -122,14 +122,14 @@ watch(projectId, () => {
 
 <template>
   <Toast />
-  <DetailTask
+  <TaskDetail
     v-model:visible="showDetailTask"
     :task-id="selectedItem?._id ?? ''"
     @create="refreshTable"
     @delete="refreshTable"
     @update="refreshTable"
   />
-  <DetailTask
+  <TaskDetail
     v-model:visible="showNewTask"
     @create="refreshTable"
     @delete="refreshTable"
@@ -239,7 +239,7 @@ watch(projectId, () => {
               },
             },
           ]"
-          @toggle-option="selectedItem = $event as TaskDetail"
+          @toggle-option="selectedItem = $event as TaskDetailData"
           data-key="_id"
           selection-type="none"
           table-name="task-table"

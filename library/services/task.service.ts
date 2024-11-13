@@ -15,6 +15,15 @@ import {
   TaskOptions,
 } from 'lib/components/dialogdetailpbi/DialogDetailPbi.vue.d';
 import { FetchOptionResponse } from 'lib/components/filtercontainer/FilterContainer.vue.d';
+import {
+  TaskTableSubTab,
+  TaskTableTab,
+} from 'lib/components/tasktable/TaskTable.vue.d';
+import {
+  TaskTableFamilyResponse,
+  TaskTableItem,
+  TaskTableOptionQuery,
+} from 'lib/types/task.type';
 
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
   const user = JSON.parse(localStorage.getItem('user') as string) ?? {};
@@ -77,12 +86,8 @@ const TaskServices = {
     return API({ params }).delete('/delete');
   },
 
-  reviewTask: (
-    taskId: string,
-    body: ReviewTaskDTO[],
-  ): Promise<AxiosResponse> => {
-    const payload = { data: body };
-    return API().put(`/${taskId}/review`, payload);
+  reviewTask: (taskId: string, body: ReviewTaskDTO): Promise<AxiosResponse> => {
+    return API().put(`/${taskId}/review`, body);
   },
 
   reportBugTask: (
@@ -102,6 +107,36 @@ const TaskServices = {
     return API().get('/', {
       params: query,
     });
+  },
+
+  getTasksByTab: (args: {
+    tab: TaskTableTab;
+    subTab?: TaskTableSubTab;
+    query?: QueryParams;
+  }): Promise<AxiosResponse<FetchResponse<TaskTableItem>>> => {
+    const { tab, query, subTab } = args;
+    const endpoint = subTab ? `/${tab}/${subTab}` : `/${tab}`;
+    return API().get(endpoint, {
+      params: query,
+    });
+  },
+
+  getTaskOptionsByTab: (args: {
+    tab: TaskTableTab;
+    subTab?: TaskTableSubTab;
+    query?: TaskTableOptionQuery;
+  }): Promise<AxiosResponse<FetchResponse>> => {
+    const { tab, query, subTab } = args;
+    const endpoint = subTab ? `/${tab}/${subTab}/options` : `/${tab}/options`;
+    return API().get(endpoint, {
+      params: query,
+    });
+  },
+
+  getTaskFamily: (
+    taskId: string,
+  ): Promise<AxiosResponse<TaskTableFamilyResponse>> => {
+    return API().get(`/${taskId}/family`);
   },
 };
 

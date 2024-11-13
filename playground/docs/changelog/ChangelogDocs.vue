@@ -120,8 +120,8 @@ const additionalTemplateFilters: ChangelogTemplateFilter[] = [
     index: 3,
     filter: {
       label: 'Custom Filter Aksi',
-      type: 'multiselect',
-      field: 'action',
+      type: 'rangenumber',
+      fields: ['aksi[0]', 'aksi[1]'],
     },
   },
   {

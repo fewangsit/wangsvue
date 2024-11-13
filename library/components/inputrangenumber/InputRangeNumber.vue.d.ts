@@ -1,4 +1,5 @@
 import { DefineComponent } from 'vue';
+import { CustomValidation } from '../form/Form.vue.d';
 
 /**
  * InputRangeNumber component props
@@ -39,12 +40,29 @@ export interface InputRangeNumberProps {
    */
   disabled?: boolean;
   /**
+   * State of invalid input.
+   */
+  invalid?: boolean;
+  /**
    * Show the text (opsional)
    *
    * @default true if mandatory true
    */
   showOptionalText?: boolean;
+  /**
+   * Weather the input should be validated with vee-validator or not.
+   * If you use this component within form input, you need to set this props as true.
+   */
   useValidator?: boolean;
+  /**
+   * Whether this input field is required or not.
+   */
+  mandatory?: boolean;
+  /**
+   * Set custom validator message.
+   * Will be show if invalid="true"
+   */
+  validatorMessage?: string | CustomValidation;
   minFieldName?: string;
   maxFieldName?: string;
 }

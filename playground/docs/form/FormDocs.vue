@@ -8,6 +8,8 @@ import InvisibleField from 'lib/components/invisiblefield/InvisibleField.vue';
 import { ref } from 'vue';
 import DocTitle from '../DocTitle.vue';
 import FileUpload from 'lib/components/fileupload/FileUpload.vue';
+import InputRangeNumber from 'lib/components/inputrangenumber/InputRangeNumber.vue';
+import InputNumber from 'lib/components/inputnumber/InputNumber.vue';
 
 const formValues = ref<(FormValue | null)[]>([null, null, null, null]);
 const showResult = ref<boolean[]>([]);
@@ -99,6 +101,25 @@ const apply = (
                 empty: 'Should not empty',
               }"
               label="Nama Belakang"
+              mandatory
+              use-validator
+            />
+            <InputNumber
+              :field-name="`angka${[index]}`"
+              :validator-message="{
+                empty: 'Isi gaji',
+              }"
+              label="Gaji"
+              mandatory
+              use-validator
+            />
+            <InputRangeNumber
+              :max-field-name="`maxrange${[index]}`"
+              :min-field-name="`minrange${[index]}`"
+              :validator-message="{
+                empty: 'Tebak dulu',
+              }"
+              label="Tebak umur"
               mandatory
               use-validator
             />
