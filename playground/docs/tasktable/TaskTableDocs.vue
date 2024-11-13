@@ -2,9 +2,12 @@
 import TaskTable from 'lib/components/tasktable/TaskTable.vue';
 import DocTitle from '../DocTitle.vue';
 import Card from 'lib/components/card/Card.vue';
+import Toast from 'lib/components/toast/Toast.vue';
 </script>
 
 <template>
+  <Toast />
+
   <Card>
     <template #header>
       <DocTitle name="Task Table" />

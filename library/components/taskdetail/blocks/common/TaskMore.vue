@@ -5,6 +5,7 @@ import Menu from 'lib/components/menu/Menu.vue';
 import { MenuItem } from 'lib/components/menuitem';
 import { TaskDetailData } from 'lib/types/task.type';
 import DialogConfirmDeleteTask from './DialogConfirmDeleteTask.vue';
+import eventBus from 'lib/event-bus';
 
 const props = defineProps<{
   taskDetail: TaskDetailData;
@@ -44,6 +45,9 @@ const toggleMenu = (e: Event): void => {
 
   <DialogConfirmDeleteTask
     v-model:visible="deleteConfirm"
-    :task-detail="props.taskDetail"
+    :tasks="[props.taskDetail]"
+    @saved="
+      eventBus.emit('detail-task:delete', { taskId: props.taskDetail._id })
+    "
   />
 </template>

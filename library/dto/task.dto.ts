@@ -45,6 +45,15 @@ export interface EditTaskDTO {
   priority?: number;
 }
 
+export interface UpdateTaskMemberDTO {
+  data: UpdateTaskMemberItem[];
+}
+
+export interface UpdateTaskMemberItem {
+  task: string;
+  member: string;
+}
+
 export interface EditDescriptionTaskDTO {
   /**
    * Stringified version of JSONContent from Editor

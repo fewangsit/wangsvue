@@ -4,7 +4,6 @@ import { computed, inject, Ref, ref, watch } from 'vue';
 import DialogForm from 'lib/components/dialogform/DialogForm.vue';
 import Dropdown from 'lib/components/dropdown/Dropdown.vue';
 import useLoadingStore from 'lib/components/loading/store/loading.store';
-import eventBus from 'lib/event-bus';
 import { DropdownOption } from 'lib/types/options.type';
 import { TaskDetailData } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
@@ -26,6 +25,10 @@ const props = defineProps<{
   taskIdProp?: string[];
 }>();
 
+const emit = defineEmits<{
+  saved: [];
+}>();
+
 /**
  * This task id inject is used in task detail dialog.
  */
@@ -40,12 +43,15 @@ const memberOptions = ref<DropdownOption[]>();
 const memberLoading = ref<boolean>(false);
 
 /**
- * Single task id, either from task table or task detail dialog.
+ * Single task id, either props from task table or inject from task detail dialog.
  */
 const taskId = computed(() => taskIdFromInject?.value ?? props.taskIdProp?.[0]);
 
 const initialMemberValue = computed(() => {
-  if (taskDetail?.value?.assignedTo?.length === 1) {
+  if (
+    taskDetail?.value?.assignedTo?.length === 1 &&
+    (props.taskIdProp?.length === 1 || taskIdFromInject?.value)
+  ) {
     return taskDetail.value.assignedTo[0]._id;
   }
 
@@ -166,16 +172,15 @@ const handleSubmit = async (payload: FormPayload): Promise<void> => {
 
     await TaskServices.updateTaskMember(dataDTO);
 
-    eventBus.emit('detail-task:update', { taskId: taskId.value });
-
     toast.add({
       message: 'Member telah di-assign.',
       severity: 'success',
     });
+
+    emit('saved');
   } catch (error) {
     toast.add({
       message: 'Member gagal di-assign.',
-      severity: 'error',
       error,
     });
   } finally {
@@ -199,11 +204,6 @@ watch(visible, (value) => {
   if (value) {
     // Only load detail task if props.taskIdProp is defined
     if (props.taskIdProp?.length) {
-      console.log(
-        '🚀 ~ watch ~ props.taskIdProp:',
-        props.taskIdProp,
-        taskId?.value,
-      );
       getDetailTask();
     }
   }

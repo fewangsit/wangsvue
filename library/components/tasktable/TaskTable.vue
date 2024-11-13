@@ -160,7 +160,9 @@ const showFilter = ref(false);
 const dialogNewTask = ref(false);
 const dialogDetailTask = ref(false);
 const dialogAssignMember = ref(false);
+const dialogAssignMemberBulk = ref(false);
 const dialogConfirmDeleteTask = ref(false);
+const dialogConfirmDeleteTaskBulk = ref(false);
 const dialogConfirmFinishTask = ref(false);
 const dialogReview = ref(false);
 const dialogFinishReview = ref(false);
@@ -357,17 +359,27 @@ const tableActions = computed<MenuItem[]>(() => [
  * Generate bulk actions for task table based on user type.
  *
  * Bulk actions:
- * - Assign Member (only for Admin/PM/Leader)
- * - Hapus (only for Admin/PM/Leader or every task is assigned to current user)
+ * - Assign Member (only visible if Admin/PM/Leader & every tasks has the same project and team)
+ * - Hapus (only visible if Admin/PM/Leader or every task is assigned to current user)
  */
 const tableBulkActions = computed<MenuItem[]>(() => [
   {
     label: 'Assign Member',
     icon: 'user-received-2-line',
     visible:
-      selectedTasks.value?.every(
+      (selectedTasks.value?.every(
         (task) => task.isProjectManager || task.isTeamLeader,
-      ) || userData?.permission?.manageProject,
+      ) ||
+        userData?.permission?.manageProject) &&
+      selectedTasks.value?.every(
+        (task) =>
+          selectedTasks.value?.[0].project._id === task.project._id &&
+          JSON.stringify(selectedTasks.value?.[0].team) ===
+            JSON.stringify(task.team),
+      ),
+    command: (): void => {
+      dialogAssignMemberBulk.value = true;
+    },
   },
   {
     label: 'Hapus',
@@ -383,6 +395,9 @@ const tableBulkActions = computed<MenuItem[]>(() => [
           (assignedUser) => assignedUser._id === userData?._id,
         ),
       ),
+    command: (): void => {
+      dialogConfirmDeleteTaskBulk.value = true;
+    },
   },
 ]);
 
@@ -491,8 +506,12 @@ const getTaskFamily = async (parentData: {
   }
 };
 
-const refreshTable = (): void => {
+const reloadTable = (): void => {
+  selectedTasks.value = [];
   eventBus.emit('data-table:update', { tableName: tableName.value });
+  eventBus.emit('data-table:clear-selected-data', {
+    tableName: tableName.value,
+  });
 };
 
 const openReviewDialog = async (): Promise<void> => {
@@ -526,7 +545,6 @@ const getChecklists = async (): Promise<any[]> => {
 <template>
   <div class="flex flex-col gap-2">
     <div class="flex justify-end gap-4">
-      <pre>{{ userType }}</pre>
       <ButtonBulkAction
         v-model:selected-data="selectedTasks"
         :options="tableBulkActions"
@@ -573,48 +591,72 @@ const getChecklists = async (): Promise<any[]> => {
       use-option
       use-paginator
     />
+
+    <pre>{{
+      selectedTasks?.map((task) => ({
+        project: task.project,
+        pm: task.isProjectManager,
+        leader: task.isTeamLeader,
+        team: task.team,
+      }))
+    }}</pre>
   </div>
 
   <TaskDetail
     v-model:visible="dialogNewTask"
-    @create="refreshTable"
-    @delete="refreshTable"
-    @update="refreshTable"
+    @create="reloadTable"
+    @delete="reloadTable"
+    @update="reloadTable"
   />
 
   <TaskDetail
     v-model:visible="dialogDetailTask"
     :task-id="selectedTask?._id"
-    @create="refreshTable"
-    @delete="refreshTable"
-    @update="refreshTable"
+    @create="reloadTable"
+    @delete="reloadTable"
+    @update="reloadTable"
   />
 
   <DialogAssignMember
     v-model:visible="dialogAssignMember"
-    :task-id-prop="selectedTask?._id"
+    :task-id-prop="[selectedTask?._id]"
+    @saved="reloadTable"
+  />
+
+  <DialogAssignMember
+    v-model:visible="dialogAssignMemberBulk"
+    :task-id-prop="selectedTasks?.map((task) => task._id)"
+    @saved="reloadTable"
   />
 
   <DialogReviewLeader
     v-model:visible="dialogReview"
     :task-detail-prop="selectedTask"
     :task-id-prop="selectedTask?._id"
-    @saved="eventBus.emit('detail-task:update', { taskId: selectedTask?._id })"
+    @saved="reloadTable"
   />
 
   <DialogFinishReview
     v-model:visible="dialogFinishReview"
     :task-id-prop="selectedTask?._id"
-    @saved="eventBus.emit('detail-task:update', { taskId: selectedTask?._id })"
+    @saved="reloadTable"
   />
 
   <DialogConfirmFinishTask
     v-model:visible="dialogConfirmFinishTask"
     :task-detail="selectedTask"
+    @saved="reloadTable"
   />
 
   <DialogConfirmDeleteTask
     v-model:visible="dialogConfirmDeleteTask"
-    :task-detail="selectedTask"
+    :tasks="[selectedTask]"
+    @saved="reloadTable"
+  />
+
+  <DialogConfirmDeleteTask
+    v-model:visible="dialogConfirmDeleteTaskBulk"
+    :tasks="selectedTasks"
+    @saved="reloadTable"
   />
 </template>
