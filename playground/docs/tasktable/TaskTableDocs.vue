@@ -12,6 +12,10 @@ import Card from 'lib/components/card/Card.vue';
     <template #content>
       <div class="flex flex-col gap-10">
         <div class="flex flex-col gap-2">
+          <span class="text-xl font-semibold">Backlog</span>
+          <TaskTable tab="backlog" />
+        </div>
+        <div class="flex flex-col gap-2">
           <span class="text-xl font-semibold">All > My Tasks</span>
           <TaskTable sub-tab="myTask" tab="all" />
         </div>

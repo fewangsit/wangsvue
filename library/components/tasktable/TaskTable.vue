@@ -34,6 +34,7 @@ import TaskChecklistServices from 'lib/services/taskChecklist.service';
 import { useLoadingStore } from 'lib/build-entry';
 import DialogConfirmFinishTask from '../taskdetail/blocks/common/DialogConfirmFinishTask.vue';
 import UserGroup from '../usergroup/UserGroup.vue';
+import ButtonBulkAction from '../buttonbulkaction/ButtonBulkAction.vue';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -350,6 +351,39 @@ const tableActions = computed<MenuItem[]>(() => [
   },
 ]);
 
+/**
+ * Generate bulk actions for task table based on user type.
+ *
+ * Bulk actions:
+ * - Assign Member (only for Admin/PM/Leader)
+ * - Hapus (only for Admin/PM/Leader or every task is assigned to current user)
+ */
+const tableBulkActions = computed<MenuItem[]>(() => [
+  {
+    label: 'Assign Member',
+    icon: 'user-received-2-line',
+    visible:
+      selectedTasks.value?.every(
+        (task) => task.isProjectManager || task.isTeamLeader,
+      ) || userData?.permission?.manageProject,
+  },
+  {
+    label: 'Hapus',
+    icon: 'delete-bin',
+    danger: true,
+    visible:
+      selectedTasks.value?.every(
+        (task) => task.isProjectManager || task.isTeamLeader,
+      ) ||
+      userData?.permission?.manageProject ||
+      selectedTasks.value?.every((task) =>
+        task.assignedTo.some(
+          (assignedUser) => assignedUser._id === userData?._id,
+        ),
+      ),
+  },
+]);
+
 const userType = computed(() => {
   const isAdmin = Object.values(
     userData?.permission?.manageProject || {},
@@ -485,12 +519,20 @@ const getChecklists = async (): Promise<any[]> => {
     setLoading(false);
   }
 };
+
+const selectedTasks = ref<TaskTableItem[]>([]);
 </script>
 
 <template>
   <div class="flex flex-col gap-2">
     <div class="flex justify-end gap-4">
       <pre>{{ userType }}</pre>
+      <ButtonBulkAction
+        v-model:selected-data="selectedTasks"
+        :options="tableBulkActions"
+        :table-name="tableName"
+        show-select-all-button
+      />
       <ButtonSearch
         :table-name="tableName"
         @search="filters.global.value = $event"
@@ -512,6 +554,7 @@ const getChecklists = async (): Promise<any[]> => {
     <FilterContainer :fields="filterFields" :table-name="tableName" />
 
     <DataTable
+      v-model:selected-data="selectedTasks"
       :child-table-props="{
         useColumnsHeader: false,
         useOption: true,
@@ -520,16 +563,18 @@ const getChecklists = async (): Promise<any[]> => {
       :columns="tableColumns"
       :fetch-function="getTasksByTab"
       :options="tableActions"
+      :selection-type="props.tab === 'backlog' ? 'checkbox' : 'none'"
       :table-name="tableName"
       :tree-table="true"
       @toggle-option="selectedTask = $event"
       data-key="_id"
       excel-toast-error-message="Data task gagal diunduh."
       lazy
-      selection-type="none"
       use-option
       use-paginator
     />
+
+    <pre>{{ selectedTasks }}</pre>
   </div>
 
   <TaskDetail
