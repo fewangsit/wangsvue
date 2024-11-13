@@ -573,8 +573,6 @@ const selectedTasks = ref<TaskTableItem[]>([]);
       use-option
       use-paginator
     />
-
-    <pre>{{ selectedTasks }}</pre>
   </div>
 
   <TaskDetail
