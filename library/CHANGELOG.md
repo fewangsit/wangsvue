@@ -1,6 +1,55 @@
 # Changelog
 
 
+## v1.5.49
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.48...v1.5.49)
+
+### 🏡 Chore
+
+- **release:** V1.5.48 ([5916c93](https://github.com/fewangsit/wangsvue/commit/5916c93))
+- Push to main after publish ([7fc66db](https://github.com/fewangsit/wangsvue/commit/7fc66db))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.48
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.47...v1.5.48)
+
+### 🚀 Enhancements
+
+- **tasktable:** Add DialogAssignMember, DialogReviewLeader into tasktable ([94c8b6a](https://github.com/fewangsit/wangsvue/commit/94c8b6a))
+- **tasktable:** Add actions for children table in tasktable ([20dddd0](https://github.com/fewangsit/wangsvue/commit/20dddd0))
+- **tasktable:** Separate 'dialog confirm to mark task as done' to new file ([61bb5ec](https://github.com/fewangsit/wangsvue/commit/61bb5ec))
+- **usergroup:** Add props withDialogDetail for usergroup component ([137a04f](https://github.com/fewangsit/wangsvue/commit/137a04f))
+- **tasktable:** Add bulk actions for tasktable with backlog tab ([8e39ffa](https://github.com/fewangsit/wangsvue/commit/8e39ffa))
+- **tasktable:** Add bulk action functionality for assign member and delete task in task table ([0907bad](https://github.com/fewangsit/wangsvue/commit/0907bad))
+- **tasktable:** Add visibility conditions for columns, filter fields and query for fetching table ([35fd948](https://github.com/fewangsit/wangsvue/commit/35fd948))
+
+### 🩹 Fixes
+
+- **tasktable:** Update export fields for assignedTo and dependecy in tasktable ([231282e](https://github.com/fewangsit/wangsvue/commit/231282e))
+- **tasktable:** Update visibility conditions for tasktable options based on user role ([2027b5a](https://github.com/fewangsit/wangsvue/commit/2027b5a))
+- **tasktable:** Add admin usertype in tasktable as visibility conditions for table actions ([31dbdc3](https://github.com/fewangsit/wangsvue/commit/31dbdc3))
+- **tasktable:** Remove pre tag for selected data ([a290ae5](https://github.com/fewangsit/wangsvue/commit/a290ae5))
+- **usergroup:** Add flex-wrap class for usergroup dialog content container ([b094072](https://github.com/fewangsit/wangsvue/commit/b094072))
+- **usergroup:** Add flex-wrap class for usergroup dialog content container ([ec7c162](https://github.com/fewangsit/wangsvue/commit/ec7c162))
+
+### 💅 Refactors
+
+- **tasktable:** Reorder ref variable in tasktable ([80deacb](https://github.com/fewangsit/wangsvue/commit/80deacb))
+- **DialogDetailPbi:** Add visible prop ([e57a1da](https://github.com/fewangsit/wangsvue/commit/e57a1da))
+- **DataTable:** Assign watched columns prop to visibleColumns ([b05787a](https://github.com/fewangsit/wangsvue/commit/b05787a))
+- **ApproverInfo:** Adjust props ([917fd35](https://github.com/fewangsit/wangsvue/commit/917fd35))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Dzulqtera <dzul@qtera.co.id>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.47
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.46...v1.5.47)
