@@ -9,3 +9,4 @@ cd ../
 rm -r dist
 
 echo "Publish tasks completed successfully!"
+git push origin main
