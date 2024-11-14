@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v1.5.49
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.48...v1.5.49)
+
+### 🏡 Chore
+
+- **release:** V1.5.48 ([5916c93](https://github.com/fewangsit/wangsvue/commit/5916c93))
+- Push to main after publish ([7fc66db](https://github.com/fewangsit/wangsvue/commit/7fc66db))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.48
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.47...v1.5.48)
