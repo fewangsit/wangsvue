@@ -19,7 +19,7 @@ import { FilterField } from '../filtercontainer/FilterContainer.vue.d';
 import { MultiSelectOption } from 'lib/types/options.type';
 import DataTable from '../datatable/DataTable.vue';
 import TaskServices from 'lib/services/task.service';
-import { TaskTableProps } from './TaskTable.vue.d';
+import { TaskTablePage, TaskTableProps, TaskTableTab } from './TaskTable.vue.d';
 import { TaskTableItem, TaskTableOptionQuery } from 'lib/types/task.type';
 import Badge from '../badge/Badge.vue';
 import { useToast } from 'lib/utils';
@@ -41,36 +41,244 @@ const { setLoading } = useLoadingStore();
 
 const props = defineProps<TaskTableProps>();
 
-const quickFilterField: FilterField[] = [
+type CustomFilterField = FilterField & {
+  visible: boolean;
+};
+
+const userData = JSON.parse(localStorage.getItem('user') as string);
+
+const showFilter = ref(false);
+const dialogNewTask = ref(false);
+const dialogDetailTask = ref(false);
+const dialogAssignMember = ref(false);
+const dialogAssignMemberBulk = ref(false);
+const dialogConfirmDeleteTask = ref(false);
+const dialogConfirmDeleteTaskBulk = ref(false);
+const dialogConfirmFinishTask = ref(false);
+const dialogReview = ref(false);
+const dialogFinishReview = ref(false);
+
+const selectedTask = ref<TaskTableItem>();
+
+const selectedTasks = ref<TaskTableItem[]>([]);
+
+const filters = ref<any>({
+  global: { value: undefined, matchMode: FilterMatchMode.CONTAINS },
+});
+
+const tableName = computed(() =>
+  props.subTab ? `task-table-${props.tab}-${props.subTab}` : props.tab,
+);
+
+const tableColumns = computed<TableColumn[]>(() => {
+  return [
+    {
+      field: 'project.name',
+      header: 'Proyek',
+      sortable: true,
+      fixed: true,
+      visible: (
+        ['task', 'member-detail', 'my-profile'] as TaskTablePage[]
+      ).includes(props.page),
+    },
+    {
+      field: 'module.name',
+      header: 'Modul',
+      sortable: true,
+      fixed: true,
+      visible: (
+        [
+          'task',
+          'member-detail',
+          'my-profile',
+          'project-task',
+        ] as TaskTablePage[]
+      ).includes(props.page),
+    },
+    {
+      field: 'subModule.name',
+      header: 'Sub Modul',
+      sortable: true,
+      visible: (
+        [
+          'task',
+          'member-detail',
+          'my-profile',
+          'project-task',
+          'project-module',
+        ] as TaskTablePage[]
+      ).includes(props.page),
+    },
+    {
+      field: 'process.name',
+      header: 'Proses',
+      sortable: true,
+      visible: true,
+    },
+    {
+      field: 'name',
+      header: 'Task',
+      sortable: true,
+      fixed: true,
+      visible: true,
+    },
+    {
+      field: 'status',
+      header: 'Status',
+      sortable: true,
+      fixed: true,
+      bodyComponent: (data: TaskTableItem): TableCellComponent => {
+        return {
+          component: Badge,
+          props: {
+            label: data.status,
+            format: 'nowrap',
+          },
+        };
+      },
+      visible: true,
+    },
+    {
+      field: 'priority',
+      header: 'Nilai Prioritas',
+      sortable: true,
+      visible: true,
+    },
+    {
+      field: 'team',
+      header: 'Tim',
+      sortable: true,
+      bodyTemplate: (data: TaskTableItem): string =>
+        data.team.map((t) => t).join(', '),
+      visible: true,
+    },
+    {
+      field: 'assignedTo',
+      header: 'Assign',
+      sortable: true,
+      fixed: true,
+      arrayValueField: 'nickName',
+      exportField: 'assignedTo',
+      bodyComponent: (data: TaskTableItem): TableCellComponent => {
+        return {
+          component: UserGroup,
+          props: {
+            users: data.assignedTo,
+            profilePictureField: 'profilePictureBig',
+            withDialogDetail: true,
+            dialogHeaderLabel: 'Assigned To',
+          },
+        };
+      },
+      visible: true,
+    },
+    {
+      field: 'childTask',
+      header: 'Child Task',
+      sortable: true,
+      bodyTemplate: (data: TaskTableItem): string =>
+        data.childTask ? data.childTask.toString() : '-',
+      visible: true,
+    },
+    {
+      field: 'dependency',
+      header: 'Dependensi',
+      sortable: true,
+      exportField: 'exportDependencyField',
+      bodyComponent: (data: TaskTableItem): TableCellComponent => {
+        return {
+          component: DependencyCol,
+          props: {
+            dependency: data.dependency,
+          },
+        };
+      },
+      visible: true,
+    },
+    {
+      field: 'timeReportedBug',
+      header: 'Reported Bug',
+      sortable: true,
+      bodyTemplate: (data: TaskTableItem): string =>
+        data.timeReportedBug ? data.timeReportedBug.toString() + ' Kali' : '-',
+      visible: true,
+    },
+    {
+      field: 'lastUpdatedAt',
+      header: 'Last Modified Status',
+      sortable: true,
+      visible: true,
+    },
+  ];
+});
+
+/**
+ * Generate quick filter fields based on task table page and tab.
+ *
+ * Quick filter fields:
+ * - Nilai Prioritas (always visible)
+ * - Member (based on tab, sub tab, and user role)
+ * - Proyek (only for task, member-detail, my-profile pages)
+ * - Modul (only for task, member-detail, my-profile, project-task pages)
+ * - Task (always visible)
+ * - Status (only for all, active, deleted tabs)
+ */
+const quickFilterFields = computed<CustomFilterField[]>(() => [
   {
     fields: ['minPriority', 'maxPriority'],
     type: 'rangenumber',
     placeholder: '0',
     tooltip: 'Nilai Prioritas',
+    visible: true,
   },
   {
     field: 'member',
     type: 'multiselect',
     placeholder: 'Pilih member',
-    fetchOptionFn: () => getTaskOptionsByTab('memberOptions'),
+    fetchOptionFn: (): Promise<MultiSelectOption[]> =>
+      getTaskOptionsByTab('memberOptions'),
+    visible:
+      /*
+       * Conditions for member filter be visible :
+       * - The sub tab is 'myTask' and the user is a team leader
+       * - The tab is 'backlog' or 'deleted' and the user is a team leader
+       * - The sub tab is 'relatedTask'
+       *
+       * The member filter will be hidden if the user is not a team leader and
+       * (the sub tab is 'myTask' or the tab is 'backlog' | 'deleted')
+       */
+      ((props.subTab === 'myTask' ||
+        ['backlog', 'deleted'].includes(props.tab)) &&
+        userData.isTeamLeader) ||
+      props.subTab === 'relatedTask',
   },
   {
     field: 'project',
     type: 'multiselect',
     placeholder: 'Pilih proyek',
-    fetchOptionFn: () => getTaskOptionsByTab('projectOptions'),
+    fetchOptionFn: (): Promise<MultiSelectOption[]> =>
+      getTaskOptionsByTab('projectOptions'),
+    visible: (
+      ['task', 'member-detail', 'my-profile'] as TaskTablePage[]
+    ).includes(props.page),
   },
   {
     field: 'module',
     type: 'multiselect',
     placeholder: 'Pilih modul',
-    fetchOptionFn: () => getTaskOptionsByTab('moduleOptions'),
+    fetchOptionFn: (): Promise<MultiSelectOption[]> =>
+      getTaskOptionsByTab('moduleOptions'),
+    visible: (
+      ['task', 'member-detail', 'my-profile', 'project-task'] as TaskTablePage[]
+    ).includes(props.page),
   },
   {
     field: 'task',
     type: 'multiselect',
     placeholder: 'Pilih task',
-    fetchOptionFn: () => getTaskOptionsByTab('taskOptions'),
+    fetchOptionFn: (): Promise<MultiSelectOption[]> =>
+      getTaskOptionsByTab('taskOptions'),
+    visible: true,
   },
   {
     field: 'status',
@@ -102,23 +310,48 @@ const quickFilterField: FilterField[] = [
         value: 'Penyesuaian',
       },
     ],
+    visible: (['all', 'active', 'deleted'] as TaskTableTab[]).includes(
+      props.tab,
+    ),
   },
-];
+]);
 
-const filterFields: FilterField[] = [
+/**
+ * Generate custom filter fields based on task table page.
+ *
+ * Filter fields:
+ * - Sub Modul (only for task, member-detail, my-profile, project-task, project-module pages)
+ * - Proses (always visible)
+ * - Dependensi (always visible)
+ * - Reported Bug (Kali) (always visible)
+ * - Last Modified Status (always visible)
+ */
+const filterFields = computed<CustomFilterField[]>(() => [
   {
     label: 'Sub Modul',
     field: 'subModule',
     type: 'multiselect',
     placeholder: 'Pilih sub modul',
-    fetchOptionFn: () => getTaskOptionsByTab('subModuleOptions'),
+    fetchOptionFn: (): Promise<MultiSelectOption[]> =>
+      getTaskOptionsByTab('subModuleOptions'),
+    visible: (
+      [
+        'task',
+        'member-detail',
+        'my-profile',
+        'project-task',
+        'project-module',
+      ] as TaskTablePage[]
+    ).includes(props.page),
   },
   {
     label: 'Proses',
     field: 'process',
     type: 'multiselect',
     placeholder: 'Pilih proses',
-    fetchOptionFn: () => getTaskOptionsByTab('processOptions'),
+    fetchOptionFn: (): Promise<MultiSelectOption[]> =>
+      getTaskOptionsByTab('processOptions'),
+    visible: true,
   },
   {
     label: 'Dependensi',
@@ -139,151 +372,23 @@ const filterFields: FilterField[] = [
         value: 'Selesai',
       },
     ],
+    visible: true,
   },
   {
     label: 'Reported Bug (Kali)',
     fields: ['minTimeReportedBug', 'maxTimeReportedBug'],
     type: 'rangenumber',
     placeholder: '0',
+    visible: true,
   },
   {
     label: 'Last Modified Status',
     type: 'calendar',
     field: 'lastUpdatedAt',
     placeholder: 'Pilih tanggal',
+    visible: true,
   },
-];
-
-const userData = JSON.parse(localStorage.getItem('user') as string);
-
-const showFilter = ref(false);
-const dialogNewTask = ref(false);
-const dialogDetailTask = ref(false);
-const dialogAssignMember = ref(false);
-const dialogAssignMemberBulk = ref(false);
-const dialogConfirmDeleteTask = ref(false);
-const dialogConfirmDeleteTaskBulk = ref(false);
-const dialogConfirmFinishTask = ref(false);
-const dialogReview = ref(false);
-const dialogFinishReview = ref(false);
-
-const selectedTask = ref<TaskTableItem>();
-
-const selectedTasks = ref<TaskTableItem[]>([]);
-
-const filters = ref<any>({
-  global: { value: undefined, matchMode: FilterMatchMode.CONTAINS },
-});
-
-const tableColumns = computed<TableColumn[]>(() => {
-  return [
-    {
-      field: 'module.name',
-      header: 'Modul',
-      sortable: true,
-      fixed: true,
-    },
-    {
-      field: 'subModule.name',
-      header: 'Sub Modul',
-      sortable: true,
-    },
-    {
-      field: 'process.name',
-      header: 'Proses',
-      sortable: true,
-    },
-    {
-      field: 'name',
-      header: 'Task',
-      sortable: true,
-      fixed: true,
-    },
-    {
-      field: 'status',
-      header: 'Status',
-      sortable: true,
-      fixed: true,
-      bodyComponent: (data: TaskTableItem): TableCellComponent => {
-        return {
-          component: Badge,
-          props: {
-            label: data.status,
-            format: 'nowrap',
-          },
-        };
-      },
-    },
-    {
-      field: 'priority',
-      header: 'Nilai Prioritas',
-      sortable: true,
-    },
-    {
-      field: 'team',
-      header: 'Tim',
-      sortable: true,
-      bodyTemplate: (data: TaskTableItem): string =>
-        data.team.map((t) => t).join(', '),
-    },
-    {
-      field: 'assignedTo',
-      header: 'Assign',
-      sortable: true,
-      fixed: true,
-      arrayValueField: 'nickName',
-      exportField: 'assignedTo',
-      bodyComponent: (data: TaskTableItem): TableCellComponent => {
-        return {
-          component: UserGroup,
-          props: {
-            users: data.assignedTo,
-            profilePictureField: 'profilePictureBig',
-            withDialogDetail: true,
-            dialogHeaderLabel: 'Assigned To',
-          },
-        };
-      },
-    },
-    {
-      field: 'childTask',
-      header: 'Child Task',
-      sortable: true,
-      bodyTemplate: (data: TaskTableItem): string =>
-        data.childTask ? data.childTask.toString() : '-',
-    },
-    {
-      field: 'dependency',
-      header: 'Dependensi',
-      sortable: true,
-      exportField: 'exportDependencyField',
-      bodyComponent: (data: TaskTableItem): TableCellComponent => {
-        return {
-          component: DependencyCol,
-          props: {
-            dependency: data.dependency,
-          },
-        };
-      },
-    },
-    {
-      field: 'timeReportedBug',
-      header: 'Reported Bug',
-      sortable: true,
-      bodyTemplate: (data: TaskTableItem): string =>
-        data.timeReportedBug ? data.timeReportedBug.toString() + ' Kali' : '-',
-    },
-    {
-      field: 'lastUpdatedAt',
-      header: 'Last Modified Status',
-      sortable: true,
-    },
-  ];
-});
-
-const tableName = computed(() =>
-  props.subTab ? `task-table-${props.tab}-${props.subTab}` : props.tab,
-);
+]);
 
 /**
  * Generate table actions based on task status and user type.
@@ -429,7 +534,18 @@ const getTasksByTab = async (
     const { data } = await TaskServices.getTasksByTab({
       tab: props.tab,
       subTab: props.subTab,
-      query: params,
+      query: {
+        project: props.page.includes('project')
+          ? JSON.stringify([props.projectId])
+          : undefined,
+        module: props.page.toLowerCase().includes('module')
+          ? JSON.stringify([props.moduleId])
+          : undefined,
+        subModule: props.page.includes('subModule')
+          ? JSON.stringify([props.subModuleId])
+          : undefined,
+        ...params,
+      },
     });
     const formattedData: FetchResponse<TaskTableItem> = {
       ...data,
@@ -567,9 +683,15 @@ const getChecklists = async (): Promise<any[]> => {
       />
     </div>
 
-    <QuickFilter :fields="quickFilterField" :table-name="tableName" />
+    <QuickFilter
+      :fields="quickFilterFields.filter((field) => field.visible)"
+      :table-name="tableName"
+    />
 
-    <FilterContainer :fields="filterFields" :table-name="tableName" />
+    <FilterContainer
+      :fields="filterFields.filter((field) => field.visible)"
+      :table-name="tableName"
+    />
 
     <DataTable
       v-model:selected-data="selectedTasks"
