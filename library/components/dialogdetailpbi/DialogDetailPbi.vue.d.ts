@@ -121,6 +121,10 @@ export interface AssignedMemberOptions {
 
 export interface DialogDetailPbiProps {
   /**
+   * The boolean modelValue to show dialog.
+   */
+  visible: boolean;
+  /**
    * PBI data to display on the dialog
    */
   selectedPbi?: Pbi;

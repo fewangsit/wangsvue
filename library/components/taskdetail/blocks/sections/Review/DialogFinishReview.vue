@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, ref, Ref } from 'vue';
+import { computed, inject, ref, Ref } from 'vue';
 import Button from 'lib/components/button/Button.vue';
 import Dialog from 'lib/components/dialog/Dialog.vue';
 import { useToast } from 'lib/utils';
@@ -17,13 +17,21 @@ const DialogConfirmPreset = inject<Record<string, any>>(
 
 const visible = defineModel<boolean>('visible', { required: true });
 
+const props = defineProps<{
+  taskIdProp?: string;
+}>();
+
 const emit = defineEmits<{
   saved: [];
 }>();
 
-const taskId = inject<Ref<string>>('taskId');
+const taskIdInject = inject<Ref<string>>('taskId');
 
 const dialogReportBug = ref(false);
+
+const taskId = computed(() =>
+  taskIdInject ? taskIdInject.value : props.taskIdProp,
+);
 
 const markReviewTaskAsDone = async (): Promise<void> => {
   try {

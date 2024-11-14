@@ -31,18 +31,37 @@ const toast = useToast();
 
 const visible = defineModel<boolean>('visible', { required: true });
 
+const props = defineProps<{
+  taskIdProp?: string;
+  taskDetailProp?: Pick<
+    TaskDetailData,
+    'process' | 'module' | 'subModule' | 'name'
+  >;
+}>();
+
 const emit = defineEmits<{
   saved: [];
 }>();
 
-const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
-const taskId = inject<Ref<string>>('taskId');
+const taskIdInject = inject<Ref<string>>('taskId');
+const taskDetailInject =
+  inject<
+    Ref<Pick<TaskDetailData, 'process' | 'module' | 'subModule' | 'name'>>
+  >('taskDetail');
 
 const checklistItems = ref<ReviewTaskChecklist[]>();
 const activeIndex = ref<number>(0);
 const confirmReview = ref(false);
 
 const newChecklists = ref<TaskChecklist[]>();
+
+const taskId = computed(() =>
+  taskIdInject ? taskIdInject.value : props.taskIdProp,
+);
+
+const taskDetail = computed(() =>
+  taskDetailInject ? taskDetailInject.value : props.taskDetailProp,
+);
 
 const lastItem = computed(() =>
   checklistItems.value?.length

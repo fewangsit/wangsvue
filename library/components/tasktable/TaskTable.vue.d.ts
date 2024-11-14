@@ -1,5 +1,13 @@
 import { ClassComponent } from '../ts-helpers';
 
+export type TaskTablePage =
+  | 'task'
+  | 'project-task'
+  | 'project-module'
+  | 'project-subModule'
+  | 'member-detail'
+  | 'my-profile';
+
 export type TaskTableTab =
   | 'all'
   | 'active'
@@ -11,8 +19,24 @@ export type TaskTableTab =
 export type TaskTableSubTab = 'myTask' | 'relatedTask';
 
 export interface TaskTableProps {
+  page: TaskTablePage;
   tab: TaskTableTab;
   subTab?: TaskTableSubTab;
+  /**
+   * Used as query params while fetching data table
+   * in project-task / project-module / project-subModule page
+   */
+  projectId?: string;
+  /**
+   * Used as query params while fetching data table
+   * in project-module / project-subModule page
+   */
+  moduleId?: string;
+  /**
+   * Used as query params while fetching data table
+   * in project-subModule page
+   */
+  subModuleId?: string;
 }
 
 declare class TaskTable extends ClassComponent<

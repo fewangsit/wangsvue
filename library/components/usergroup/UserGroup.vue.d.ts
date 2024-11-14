@@ -28,6 +28,8 @@ export interface UserGroupProps {
    * @default 'profilePicture'
    */
   profilePictureField?: string;
+  withDialogDetail?: boolean;
+  dialogHeaderLabel?: string;
 }
 
 /**

@@ -22,6 +22,7 @@ import DialogPriorityValue from './DialogPriorityValue.vue';
 import DialogReviewLeader from '../sections/Review/DialogReviewLeader.vue';
 import TaskChecklistServices from 'lib/services/taskChecklist.service';
 import DialogFinishReview from '../sections/Review/DialogFinishReview.vue';
+import DialogConfirmFinishTask from './DialogConfirmFinishTask.vue';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -90,6 +91,7 @@ const legendLoading = ref<TaskLegendLoading>({
 const dialogPriorityValue = ref<boolean>(false);
 const dialogReview = ref<boolean>(false);
 const dialogFinishReview = ref<boolean>(false);
+const dialogConfirmFinishTask = ref<boolean>(false);
 
 const subModuleVisibility = ref(true);
 const repositoryVisibility = ref(true);
@@ -462,25 +464,6 @@ const onBlurTitleInput = (): void => {
   }
 };
 
-const markAsDone = async (): Promise<void> => {
-  try {
-    setLoading(true);
-    const { data } = await TaskServices.markTaskAsDone(taskId.value);
-    if (data) {
-      eventBus.emit('detail-task:create', { taskId: taskId.value });
-    }
-  } catch (error) {
-    console.error(error);
-    toast.add({
-      message: 'Data Task gagal diubah.',
-      severity: 'error',
-      error,
-    });
-  } finally {
-    setLoading(false);
-  }
-};
-
 const openReviewDialog = async (): Promise<void> => {
   const checklists = await getChecklists();
   if (checklists.length) {
@@ -696,7 +679,7 @@ watch(isTitleInputDisabled, (value) => {
         <Badge :label="taskDetail?.status ?? 'Backlog'" format="nowrap" />
         <Button
           v-if="['Sprint', 'Fixing Bug'].includes(taskDetail?.status)"
-          @click="markAsDone"
+          @click="dialogConfirmFinishTask = true"
           label="Tandai Selesai"
           severity="secondary"
         />
@@ -719,6 +702,11 @@ watch(isTitleInputDisabled, (value) => {
   />
   <DialogFinishReview
     v-model:visible="dialogFinishReview"
+    @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
+  />
+  <DialogConfirmFinishTask
+    v-model:visible="dialogConfirmFinishTask"
+    :task-detail="taskDetail"
     @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
   />
 </template>

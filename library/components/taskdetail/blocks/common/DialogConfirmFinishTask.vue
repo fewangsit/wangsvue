@@ -1,13 +1,15 @@
 <script setup lang="ts">
+import { useLoadingStore } from 'lib/build-entry';
 import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
 import TaskServices from 'lib/services/task.service';
 import { TaskDetailData } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 
 const toast = useToast();
+const { setLoading } = useLoadingStore();
 
 const props = defineProps<{
-  tasks: Pick<TaskDetailData, '_id' | 'name'>[];
+  taskDetail: Pick<TaskDetailData, '_id' | 'name'>;
 }>();
 
 const emit = defineEmits<{
@@ -16,23 +18,24 @@ const emit = defineEmits<{
 
 const visible = defineModel<boolean>('visible', { required: true });
 
-const deleteTask = async (): Promise<void> => {
+const markAsDone = async (): Promise<void> => {
   try {
-    const { data } = await TaskServices.deleteTask(
-      props.tasks.map((task) => task._id),
-    );
+    setLoading(true);
+    const { data } = await TaskServices.markTaskAsDone(props.taskDetail._id);
     if (data) {
       toast.add({
-        message: 'Task telah dihapus.',
+        message: 'Task telah ditandai selesai.',
         severity: 'success',
       });
       emit('saved');
     }
   } catch (error) {
     toast.add({
-      message: 'Task gagal dihapus.',
+      message: 'Task gagal ditandai selesai.',
       error,
     });
+  } finally {
+    setLoading(false);
   }
 };
 </script>
@@ -40,11 +43,11 @@ const deleteTask = async (): Promise<void> => {
 <template>
   <DialogConfirm
     v-model:visible="visible"
-    :list="props.tasks?.map((task) => task?.name)"
-    @confirm="deleteTask"
-    confirm-label="Hapus"
-    header="Hapus Task"
-    message="Apakah kamu yakin ingin menghapusnya?"
-    severity="danger"
+    :list="[props.taskDetail?.name]"
+    @confirm="markAsDone"
+    confirm-label="Tandai Selesai"
+    header="Tandai Selesai Task"
+    message="Apakah kamu yakin ingin menandai selesai task ini?"
+    severity="success"
   />
 </template>

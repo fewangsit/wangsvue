@@ -106,7 +106,7 @@ const teamLabel = computed(() => {
 });
 
 const openCalendar = (): void => {
-  const el: HTMLElement = document.querySelector('[data-pc-name="calendar"]');
+  const el: HTMLElement = document.querySelector('#startDateOfTaskDetail div');
   if (el) {
     el.click();
   }
@@ -145,7 +145,10 @@ const getDuration = (duration: number): string => {
 
 <template>
   <div data-wv-section="detailtask-info-task-tab">
-    <DialogAssignMember v-model:visible="showDialogAssignMember" />
+    <DialogAssignMember
+      v-model:visible="showDialogAssignMember"
+      @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
+    />
     <DialogSetDuration v-model:visible="showDialogSetDuration" />
     <DialogCustomDependency v-model:visible="showDialogCustomDependency" />
     <div class="flex flex-col gap-6">
@@ -205,6 +208,7 @@ const getDuration = (duration: number): string => {
               severity="warning"
             />
             <Calendar
+              id="startDateOfTaskDetail"
               v-model="startDate"
               :date-value="
                 taskDetail?.startDate
