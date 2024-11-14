@@ -4,6 +4,7 @@ import {
   EditDescriptionTaskDTO,
   EditTaskDTO,
   ReviewTaskDTO,
+  UpdateTaskMemberDTO,
 } from 'lib/dto/task.dto';
 import { getBaseURL } from 'lib/utils/getBaseURL.util';
 import {
@@ -52,6 +53,10 @@ const TaskServices = {
     return API().put(`/${taskId}`, data);
   },
 
+  updateTaskMember: (data: UpdateTaskMemberDTO): Promise<AxiosResponse> => {
+    return API().put('/assignee', data);
+  },
+
   getTaskList: (params?: Record<string, string>): Promise<AxiosResponse> => {
     return API({ params }).get('/');
   },
@@ -81,8 +86,8 @@ const TaskServices = {
     return API().put(`/${taskId}/done`);
   },
 
-  deleteTask: (taskId: string): Promise<AxiosResponse> => {
-    const params = { id: JSON.stringify([taskId]) };
+  deleteTask: (taskIds: string[]): Promise<AxiosResponse> => {
+    const params = { id: JSON.stringify(taskIds) };
     return API({ params }).delete('/delete');
   },
 

@@ -145,7 +145,10 @@ const getDuration = (duration: number): string => {
 
 <template>
   <div data-wv-section="detailtask-info-task-tab">
-    <DialogAssignMember v-model:visible="showDialogAssignMember" />
+    <DialogAssignMember
+      v-model:visible="showDialogAssignMember"
+      @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
+    />
     <DialogSetDuration v-model:visible="showDialogSetDuration" />
     <DialogCustomDependency v-model:visible="showDialogCustomDependency" />
     <div class="flex flex-col gap-6">

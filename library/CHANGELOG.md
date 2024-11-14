@@ -3,49 +3,39 @@
 
 ## v1.5.48
 
-[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.43...v1.5.48)
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.47...v1.5.48)
 
 ### 🚀 Enhancements
 
-- **detailtask:** Add custom checklists field in last content of review leader ([6695636](https://github.com/fewangsit/wangsvue/commit/6695636))
-- **tasktable:** Add task table page ([48b2f4f](https://github.com/fewangsit/wangsvue/commit/48b2f4f))
-- **tasktable:** Add functionality for tasktable ([90e0da3](https://github.com/fewangsit/wangsvue/commit/90e0da3))
 - **tasktable:** Add DialogAssignMember, DialogReviewLeader into tasktable ([94c8b6a](https://github.com/fewangsit/wangsvue/commit/94c8b6a))
-- Implement validator message if InputRangeNumber is mandatory and has validatorMessage ([3579f06](https://github.com/fewangsit/wangsvue/commit/3579f06))
 - **tasktable:** Add actions for children table in tasktable ([20dddd0](https://github.com/fewangsit/wangsvue/commit/20dddd0))
 - **tasktable:** Separate 'dialog confirm to mark task as done' to new file ([61bb5ec](https://github.com/fewangsit/wangsvue/commit/61bb5ec))
 - **usergroup:** Add props withDialogDetail for usergroup component ([137a04f](https://github.com/fewangsit/wangsvue/commit/137a04f))
 - **tasktable:** Add bulk actions for tasktable with backlog tab ([8e39ffa](https://github.com/fewangsit/wangsvue/commit/8e39ffa))
+- **tasktable:** Add bulk action functionality for assign member and delete task in task table ([0907bad](https://github.com/fewangsit/wangsvue/commit/0907bad))
+- **tasktable:** Add visibility conditions for columns, filter fields and query for fetching table ([35fd948](https://github.com/fewangsit/wangsvue/commit/35fd948))
 
 ### 🩹 Fixes
 
-- Conflict in playground router ([a9a61f8](https://github.com/fewangsit/wangsvue/commit/a9a61f8))
 - **tasktable:** Update export fields for assignedTo and dependecy in tasktable ([231282e](https://github.com/fewangsit/wangsvue/commit/231282e))
 - **tasktable:** Update visibility conditions for tasktable options based on user role ([2027b5a](https://github.com/fewangsit/wangsvue/commit/2027b5a))
 - **tasktable:** Add admin usertype in tasktable as visibility conditions for table actions ([31dbdc3](https://github.com/fewangsit/wangsvue/commit/31dbdc3))
 - **tasktable:** Remove pre tag for selected data ([a290ae5](https://github.com/fewangsit/wangsvue/commit/a290ae5))
+- **usergroup:** Add flex-wrap class for usergroup dialog content container ([b094072](https://github.com/fewangsit/wangsvue/commit/b094072))
+- **usergroup:** Add flex-wrap class for usergroup dialog content container ([ec7c162](https://github.com/fewangsit/wangsvue/commit/ec7c162))
 
 ### 💅 Refactors
 
-- **applyFilter:** Refine logic to make sure every value in array aren't null/undefined ([9bf9390](https://github.com/fewangsit/wangsvue/commit/9bf9390))
-- Check existing value only need either validatorMessage or existingValues instead just existingValues ([a000717](https://github.com/fewangsit/wangsvue/commit/a000717))
 - **tasktable:** Reorder ref variable in tasktable ([80deacb](https://github.com/fewangsit/wangsvue/commit/80deacb))
 - **DialogDetailPbi:** Add visible prop ([e57a1da](https://github.com/fewangsit/wangsvue/commit/e57a1da))
 - **DataTable:** Assign watched columns prop to visibleColumns ([b05787a](https://github.com/fewangsit/wangsvue/commit/b05787a))
-
-### 🏡 Chore
-
-- **taskdetail:** Rename detailtask to taskdetail ([f5c4b9c](https://github.com/fewangsit/wangsvue/commit/f5c4b9c))
-- **release:** V1.5.44 ([42c2f9f](https://github.com/fewangsit/wangsvue/commit/42c2f9f))
-- **release:** V1.5.45 ([6ef6164](https://github.com/fewangsit/wangsvue/commit/6ef6164))
-- **release:** V1.5.46 ([0cf4dad](https://github.com/fewangsit/wangsvue/commit/0cf4dad))
-- **release:** V1.5.47 ([afd0d55](https://github.com/fewangsit/wangsvue/commit/afd0d55))
+- **ApproverInfo:** Adjust props ([917fd35](https://github.com/fewangsit/wangsvue/commit/917fd35))
 
 ### ❤️ Contributors
 
-- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
-- Dzulqtera <dzul@qtera.co.id>
 - Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Dzulqtera <dzul@qtera.co.id>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
 
 ## v1.5.47
 

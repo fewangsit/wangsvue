@@ -707,6 +707,7 @@ watch(isTitleInputDisabled, (value) => {
   <DialogConfirmFinishTask
     v-model:visible="dialogConfirmFinishTask"
     :task-detail="taskDetail"
+    @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
   />
 </template>
 <style scoped>
