@@ -675,7 +675,17 @@ const getChecklists = async (): Promise<any[]> => {
       <ButtonDownload :table-name="tableName" file-name="Download" />
       <ButtonFilter v-model:show-filter="showFilter" :table-name="tableName" />
       <Button
-        v-if="props.tab === 'all'"
+        v-if="
+          props.tab === 'all' &&
+          (
+            [
+              'task',
+              'project-task',
+              'project-module',
+              'project-subModule',
+            ] as TaskTablePage[]
+          ).includes(props.page)
+        "
         @click="dialogNewTask = true"
         icon="add"
         label="Task"
