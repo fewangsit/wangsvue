@@ -35,6 +35,8 @@ import { useLoadingStore } from 'lib/build-entry';
 import DialogConfirmFinishTask from '../taskdetail/blocks/common/DialogConfirmFinishTask.vue';
 import UserGroup from '../usergroup/UserGroup.vue';
 import ButtonBulkAction from '../buttonbulkaction/ButtonBulkAction.vue';
+import DialogConfirmRestoreTask from './DialogConfirmRestoreTask.vue';
+import DialogConfirmDeleteTaskPermanently from './DialogConfirmDeleteTaskPermanently.vue';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -57,6 +59,9 @@ const dialogConfirmDeleteTaskBulk = ref(false);
 const dialogConfirmFinishTask = ref(false);
 const dialogReview = ref(false);
 const dialogFinishReview = ref(false);
+const dialogConfirmRestoreTask = ref(false);
+const dialogConfirmDeleteTaskPermanently = ref(false);
+const dialogConfirmDeleteTaskPermanentlyBulk = ref(false);
 
 const selectedTask = ref<TaskTableItem>();
 
@@ -399,66 +404,99 @@ const filterFields = computed<CustomFilterField[]>(() => [
  * - Tandai Selesai (only for Member and task status is Sprint/Fixing Bug/Penyesuaian)
  * - Detail Task (only for Admin/PM/Leader/Member and task type is parent/dependency)
  * - Hapus (only for Admin/PM/Leader/Member and task status is Backlog/Sprint)
+ * - Pulihkan (only if props.tab is 'deleted' )
+ * - Hapus Permanen (only if props.tab is 'deleted')
  */
-const tableActions = computed<MenuItem[]>(() => [
-  {
-    label: 'Assign Member',
-    icon: 'user-received-2-line',
-    visible:
-      selectedTask.value?.status === 'Backlog' &&
-      selectedTask.value?.taskType === 'parent' &&
-      ['admin', 'pm', 'teamLeader'].includes(userType.value),
-    command: (): void => {
-      dialogAssignMember.value = true;
+const tableActions = computed<MenuItem[]>(() => {
+  const commonTableActions: MenuItem[] = [
+    {
+      label: 'Detail Task',
+      icon: 'file-copy-2-line',
+      visible:
+        ['parent', 'dependency'].includes(selectedTask.value?.taskType) &&
+        ['admin', 'pm', 'teamLeader', 'member'].includes(userType.value),
+      command: (): void => {
+        dialogDetailTask.value = true;
+      },
     },
-  },
-  {
-    label: 'Review',
-    icon: 'chat-check',
-    visible:
-      selectedTask.value?.status === 'Pending Review Leader' &&
-      selectedTask.value?.taskType === 'parent' &&
-      userType.value === 'teamLeader',
-    command: (): void => {
-      openReviewDialog();
+  ];
+
+  const otherTableActions: MenuItem[] = [
+    {
+      label: 'Assign Member',
+      icon: 'user-received-2-line',
+      visible:
+        selectedTask.value?.status === 'Backlog' &&
+        selectedTask.value?.taskType === 'parent' &&
+        ['admin', 'pm', 'teamLeader'].includes(userType.value),
+      command: (): void => {
+        dialogAssignMember.value = true;
+      },
     },
-  },
-  {
-    label: 'Tandai Selesai',
-    icon: 'check-double-fill',
-    visible:
-      ['Sprint', 'Fixing Bug', 'Penyesuaian'].includes(
-        selectedTask.value?.status,
-      ) &&
-      selectedTask.value?.taskType === 'parent' &&
-      userType.value === 'member',
-    command: (): void => {
-      dialogConfirmFinishTask.value = true;
+    {
+      label: 'Review',
+      icon: 'chat-check',
+      visible:
+        selectedTask.value?.status === 'Pending Review Leader' &&
+        selectedTask.value?.taskType === 'parent' &&
+        userType.value === 'teamLeader',
+      command: (): void => {
+        openReviewDialog();
+      },
     },
-  },
-  {
-    label: 'Detail Task',
-    icon: 'file-copy-2-line',
-    visible:
-      ['parent', 'dependency'].includes(selectedTask.value?.taskType) &&
-      ['admin', 'pm', 'teamLeader', 'member'].includes(userType.value),
-    command: (): void => {
-      dialogDetailTask.value = true;
+    {
+      label: 'Tandai Selesai',
+      icon: 'check-double-fill',
+      visible:
+        ['Sprint', 'Fixing Bug', 'Penyesuaian'].includes(
+          selectedTask.value?.status,
+        ) &&
+        selectedTask.value?.taskType === 'parent' &&
+        userType.value === 'member',
+      command: (): void => {
+        dialogConfirmFinishTask.value = true;
+      },
     },
-  },
-  {
-    label: 'Hapus',
-    icon: 'delete-bin',
-    danger: true,
-    visible:
-      ['Backlog', 'Sprint'].includes(selectedTask.value?.status) &&
-      selectedTask.value?.taskType === 'parent' &&
-      ['admin', 'pm', 'teamLeader', 'member'].includes(userType.value),
-    command: (): void => {
-      dialogConfirmDeleteTask.value = true;
+    ...commonTableActions,
+    {
+      label: 'Hapus',
+      icon: 'delete-bin',
+      danger: true,
+      visible:
+        ['Backlog', 'Sprint'].includes(selectedTask.value?.status) &&
+        selectedTask.value?.taskType === 'parent' &&
+        ['admin', 'pm', 'teamLeader', 'member'].includes(userType.value),
+      command: (): void => {
+        dialogConfirmDeleteTask.value = true;
+      },
     },
-  },
-]);
+  ];
+
+  const deletedTabActions: MenuItem[] = [
+    ...commonTableActions,
+    {
+      label: 'Pulihkan',
+      icon: 'history',
+      visible:
+        selectedTask.value?.taskType === 'parent' && props.tab === 'deleted',
+      command: (): void => {
+        dialogConfirmRestoreTask.value = true;
+      },
+    },
+    {
+      label: 'Hapus Permanen',
+      icon: 'delete-bin',
+      danger: true,
+      visible:
+        selectedTask.value?.taskType === 'parent' && props.tab === 'deleted',
+      command: (): void => {
+        dialogConfirmDeleteTaskPermanently.value = true;
+      },
+    },
+  ];
+
+  return props.tab === 'deleted' ? deletedTabActions : otherTableActions;
+});
 
 /**
  * Generate bulk actions for task table based on user type.
@@ -466,45 +504,71 @@ const tableActions = computed<MenuItem[]>(() => [
  * Bulk actions:
  * - Assign Member (only visible if Admin/PM/Leader & every tasks has the same project and team)
  * - Hapus (only visible if Admin/PM/Leader or every task is assigned to current user)
+ * - Pulihkan (only visible if props.tab is 'deleted' )
+ * - Hapus Permanen (only visible if props.tab is 'deleted')
  */
-const tableBulkActions = computed<MenuItem[]>(() => [
-  {
-    label: 'Assign Member',
-    icon: 'user-received-2-line',
-    visible:
-      (selectedTasks.value?.every(
-        (task) => task.isProjectManager || task.isTeamLeader,
-      ) ||
-        userData?.permission?.manageProject) &&
-      selectedTasks.value?.every(
-        (task) =>
-          selectedTasks.value?.[0].project._id === task.project._id &&
-          JSON.stringify(selectedTasks.value?.[0].team) ===
-            JSON.stringify(task.team),
-      ),
-    command: (): void => {
-      dialogAssignMemberBulk.value = true;
-    },
-  },
-  {
-    label: 'Hapus',
-    icon: 'delete-bin',
-    danger: true,
-    visible:
-      selectedTasks.value?.every(
-        (task) => task.isProjectManager || task.isTeamLeader,
-      ) ||
-      userData?.permission?.manageProject ||
-      selectedTasks.value?.every((task) =>
-        task.assignedTo.some(
-          (assignedUser) => assignedUser._id === userData?._id,
+const tableBulkActions = computed<MenuItem[]>(() => {
+  const otherBulkActions: MenuItem[] = [
+    {
+      label: 'Assign Member',
+      icon: 'user-received-2-line',
+      visible:
+        (selectedTasks.value?.every(
+          (task) => task.isProjectManager || task.isTeamLeader,
+        ) ||
+          userData?.permission?.manageProject) &&
+        selectedTasks.value?.every(
+          (task) =>
+            selectedTasks.value?.[0].project._id === task.project._id &&
+            JSON.stringify(selectedTasks.value?.[0].team) ===
+              JSON.stringify(task.team),
         ),
-      ),
-    command: (): void => {
-      dialogConfirmDeleteTaskBulk.value = true;
+      command: (): void => {
+        dialogAssignMemberBulk.value = true;
+      },
     },
-  },
-]);
+    {
+      label: 'Hapus',
+      icon: 'delete-bin',
+      danger: true,
+      visible:
+        selectedTasks.value?.every(
+          (task) => task.isProjectManager || task.isTeamLeader,
+        ) ||
+        userData?.permission?.manageProject ||
+        selectedTasks.value?.every((task) =>
+          task.assignedTo.some(
+            (assignedUser) => assignedUser._id === userData?._id,
+          ),
+        ),
+      command: (): void => {
+        dialogConfirmDeleteTaskBulk.value = true;
+      },
+    },
+  ];
+
+  const deletedBulkActions: MenuItem[] = [
+    {
+      label: 'Pulihkan',
+      icon: 'history',
+      visible: true,
+      command: (): void => {
+        dialogConfirmRestoreTask.value = true;
+      },
+    },
+    {
+      label: 'Hapus Permanen',
+      icon: 'delete-bin',
+      danger: true,
+      visible: true,
+      command: (): void => {
+        dialogConfirmDeleteTaskPermanentlyBulk.value = true;
+      },
+    },
+  ];
+
+  return props.tab === 'deleted' ? deletedBulkActions : otherBulkActions;
+});
 
 const userType = computed(() => {
   const isAdmin = Object.values(
@@ -713,7 +777,11 @@ const getChecklists = async (): Promise<any[]> => {
       :columns="tableColumns"
       :fetch-function="getTasksByTab"
       :options="tableActions"
-      :selection-type="props.tab === 'backlog' ? 'checkbox' : 'none'"
+      :selection-type="
+        (['backlog', 'deleted'] as TaskTableTab[]).includes(props.tab)
+          ? 'checkbox'
+          : 'none'
+      "
       :table-name="tableName"
       :tree-table="true"
       @toggle-option="selectedTask = $event"
@@ -790,5 +858,17 @@ const getChecklists = async (): Promise<any[]> => {
     v-model:visible="dialogConfirmDeleteTaskBulk"
     :tasks="selectedTasks"
     @saved="reloadTable"
+  />
+
+  <DialogConfirmRestoreTask v-model:visible="dialogConfirmRestoreTask" />
+
+  <DialogConfirmDeleteTaskPermanently
+    v-model:visible="dialogConfirmDeleteTaskPermanently"
+    :tasks="[selectedTask]"
+  />
+
+  <DialogConfirmDeleteTaskPermanently
+    v-model:visible="dialogConfirmDeleteTaskPermanentlyBulk"
+    :tasks="selectedTasks"
   />
 </template>
