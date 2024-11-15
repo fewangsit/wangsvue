@@ -53,7 +53,6 @@ const projectId = sessionStorage.getItem('projectId') ?? '';
           <span class="text-xl font-semibold"> Member Detail (Dzul) </span>
           <TaskTable
             page="member-detail"
-            sub-tab="relatedTask"
             tab="all"
             user-id="66e90991e64712c4e5eb10a4"
           />
@@ -61,6 +60,12 @@ const projectId = sessionStorage.getItem('projectId') ?? '';
         <div class="flex flex-col gap-2">
           <span class="text-xl font-semibold"> My Profile > Active </span>
           <TaskTable page="my-profile" tab="active" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-xl font-semibold">
+            Task > History > Related Task
+          </span>
+          <TaskTable page="task" sub-tab="relatedTask" tab="history" />
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-xl font-semibold"> Task > Deleted </span>

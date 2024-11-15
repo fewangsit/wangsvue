@@ -23,6 +23,7 @@ import DialogReviewLeader from '../sections/Review/DialogReviewLeader.vue';
 import TaskChecklistServices from 'lib/services/taskChecklist.service';
 import DialogFinishReview from '../sections/Review/DialogFinishReview.vue';
 import DialogConfirmFinishTask from './DialogConfirmFinishTask.vue';
+import DialogConfirmEdit from './DialogConfirmEdit.vue';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -92,6 +93,7 @@ const dialogPriorityValue = ref<boolean>(false);
 const dialogReview = ref<boolean>(false);
 const dialogFinishReview = ref<boolean>(false);
 const dialogConfirmFinishTask = ref<boolean>(false);
+const dialogConfirmEdit = ref<boolean>(false);
 
 const subModuleVisibility = ref(true);
 const repositoryVisibility = ref(true);
@@ -677,6 +679,15 @@ watch(isTitleInputDisabled, (value) => {
       <div class="flex items-center gap-2">
         <Badge :label="taskDetail?.status ?? 'Backlog'" format="nowrap" />
         <Button
+          v-if="
+            taskDetail?.status === 'Selesai' &&
+            taskDetail?.process?.name === 'API Spec'
+          "
+          @click="dialogConfirmEdit = true"
+          label="Edit"
+          severity="secondary"
+        />
+        <Button
           v-if="['Sprint', 'Fixing Bug'].includes(taskDetail?.status)"
           @click="dialogConfirmFinishTask = true"
           label="Tandai Selesai"
@@ -708,7 +719,13 @@ watch(isTitleInputDisabled, (value) => {
     :task-detail="taskDetail"
     @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
   />
+  <DialogConfirmEdit
+    v-model:visible="dialogConfirmEdit"
+    :task-detail="taskDetail"
+    @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
+  />
 </template>
+
 <style scoped>
 /* Hide scrollbar for Chrome, Safari and Opera */
 .scrollbar-hide::-webkit-scrollbar {

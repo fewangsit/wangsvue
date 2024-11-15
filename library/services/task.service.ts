@@ -177,6 +177,10 @@ const TaskServices = {
       params: { id: JSON.stringify(taskIds) },
     }).delete('/permanent-delete');
   },
+
+  markAsSprint: (taskId: string): Promise<AxiosResponse> => {
+    return API().put(`/${taskId}/mark-as-sprint`);
+  },
 };
 
 export default TaskServices;
