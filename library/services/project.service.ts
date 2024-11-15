@@ -22,6 +22,10 @@ const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
 };
 
 const ProjectServices = {
+  getProjectList: (): Promise<AxiosResponse> => {
+    return API().get('/');
+  },
+
   getProjectDetail: (projectId: string): Promise<AxiosResponse> => {
     return API().get(`/detail/${projectId}`);
   },

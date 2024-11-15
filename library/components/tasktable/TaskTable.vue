@@ -37,6 +37,7 @@ import UserGroup from '../usergroup/UserGroup.vue';
 import ButtonBulkAction from '../buttonbulkaction/ButtonBulkAction.vue';
 import DialogConfirmRestoreTask from './DialogConfirmRestoreTask.vue';
 import DialogConfirmDeleteTaskPermanently from './DialogConfirmDeleteTaskPermanently.vue';
+import DialogSelectProject from './DialogSelectProject.vue';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -50,6 +51,7 @@ type CustomFilterField = FilterField & {
 const userData = JSON.parse(localStorage.getItem('user') as string);
 
 const showFilter = ref(false);
+const dialogSelectProject = ref(false);
 const dialogNewTask = ref(false);
 const dialogDetailTask = ref(false);
 const dialogAssignMember = ref(false);
@@ -66,6 +68,8 @@ const dialogConfirmDeleteTaskPermanentlyBulk = ref(false);
 const selectedTask = ref<TaskTableItem>();
 
 const selectedTasks = ref<TaskTableItem[]>([]);
+
+const selectedProjectId = ref<string>();
 
 const filters = ref<any>({
   global: { value: undefined, matchMode: FilterMatchMode.CONTAINS },
@@ -603,6 +607,14 @@ const queryParamsByPage = computed(() => ({
     : undefined,
 }));
 
+const onClickCreateTask = (): void => {
+  if (props.page === 'task') {
+    dialogSelectProject.value = true;
+  } else {
+    dialogNewTask.value = true;
+  }
+};
+
 const getTasks = async (
   params: QueryParams,
 ): Promise<FetchResponse<TaskTableItem> | undefined> => {
@@ -752,6 +764,11 @@ const getChecklists = async (): Promise<any[]> => {
     setLoading(false);
   }
 };
+
+const selectProject = (projectId: string): void => {
+  selectedProjectId.value = projectId;
+  dialogNewTask.value = true;
+};
 </script>
 
 <template>
@@ -782,7 +799,7 @@ const getChecklists = async (): Promise<any[]> => {
             ] as TaskTablePage[]
           ).includes(props.page)
         "
-        @click="dialogNewTask = true"
+        @click="onClickCreateTask"
         icon="add"
         label="Task"
         severity="secondary"
@@ -836,7 +853,7 @@ const getChecklists = async (): Promise<any[]> => {
 
   <TaskDetail
     v-model:visible="dialogNewTask"
-    :project-id="props.projectId"
+    :project-id="props.page === 'task' ? selectedProjectId : props.projectId"
     @create="reloadTable"
     @delete="reloadTable"
     @update="reloadTable"
@@ -849,6 +866,11 @@ const getChecklists = async (): Promise<any[]> => {
     @create="reloadTable"
     @delete="reloadTable"
     @update="reloadTable"
+  />
+
+  <DialogSelectProject
+    v-model:visible="dialogSelectProject"
+    @saved="selectProject"
   />
 
   <DialogAssignMember

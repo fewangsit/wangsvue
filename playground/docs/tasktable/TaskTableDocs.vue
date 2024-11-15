@@ -21,6 +21,10 @@ const projectId = sessionStorage.getItem('projectId') ?? '';
           <TaskTable page="task" tab="backlog" />
         </div>
         <div class="flex flex-col gap-2">
+          <span class="text-xl font-semibold">Task > All</span>
+          <TaskTable page="task" sub-tab="myTask" tab="all" />
+        </div>
+        <div class="flex flex-col gap-2">
           <span class="text-xl font-semibold">
             Project - Module > All > My Tasks
           </span>
