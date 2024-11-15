@@ -200,6 +200,7 @@ const filters = ref<any>({
         :fetch-function="getTableData"
         :options="singleAction"
         :total-disabled-rows="1"
+        @row-select="console.log"
         data-key="_id"
         disable-key="isDefault"
         lazy

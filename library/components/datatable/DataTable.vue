@@ -268,7 +268,7 @@ const toggleAllDataSelection = (e: boolean): void => {
   checkboxSelection.value = e ? filterDisabledRows(filterParentRowData()) : [];
 };
 
-const toggleRowSelection = (data: Data): void => {
+const toggleRowSelection = (event: Event, data: Data, index: number): void => {
   if (
     !data.childRow &&
     !data.childRowHeader &&
@@ -276,6 +276,8 @@ const toggleRowSelection = (data: Data): void => {
     props.selectionType !== 'none'
   ) {
     const selected = isRowSelected(data[props.dataKey]);
+
+    emit('rowSelect', { originalEvent: event, data, index });
 
     if (props.selectionType === 'checkbox') {
       if (selected)
@@ -924,7 +926,7 @@ const listenUpdateTableEvent = (): void => {
                     props,
                   })
                 "
-                @click="toggleRowSelection(item)"
+                @click="toggleRowSelection($event, item, index)"
                 @dblclick="treeTable ? toggleRowExpand(item, index) : null"
                 @drag="dragging = true"
                 @dragenter.prevent="onDragEnter($event, item)"
