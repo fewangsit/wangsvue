@@ -62,6 +62,7 @@ const dialogConfirmFinishTask = ref(false);
 const dialogReview = ref(false);
 const dialogFinishReview = ref(false);
 const dialogConfirmRestoreTask = ref(false);
+const dialogConfirmRestoreTaskBulk = ref(false);
 const dialogConfirmDeleteTaskPermanently = ref(false);
 const dialogConfirmDeleteTaskPermanentlyBulk = ref(false);
 
@@ -557,7 +558,7 @@ const tableBulkActions = computed<MenuItem[]>(() => {
       icon: 'history',
       visible: true,
       command: (): void => {
-        dialogConfirmRestoreTask.value = true;
+        dialogConfirmRestoreTaskBulk.value = true;
       },
     },
     {
@@ -918,15 +919,27 @@ const selectProject = (projectId: string): void => {
     @saved="reloadTable"
   />
 
-  <DialogConfirmRestoreTask v-model:visible="dialogConfirmRestoreTask" />
+  <DialogConfirmRestoreTask
+    v-model:visible="dialogConfirmRestoreTask"
+    :tasks="[selectedTask]"
+    @saved="reloadTable"
+  />
+
+  <DialogConfirmRestoreTask
+    v-model:visible="dialogConfirmRestoreTaskBulk"
+    :tasks="selectedTasks"
+    @saved="reloadTable"
+  />
 
   <DialogConfirmDeleteTaskPermanently
     v-model:visible="dialogConfirmDeleteTaskPermanently"
     :tasks="[selectedTask]"
+    @saved="reloadTable"
   />
 
   <DialogConfirmDeleteTaskPermanently
     v-model:visible="dialogConfirmDeleteTaskPermanentlyBulk"
     :tasks="selectedTasks"
+    @saved="reloadTable"
   />
 </template>

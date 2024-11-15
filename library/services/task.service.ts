@@ -165,6 +165,12 @@ const TaskServices = {
   ): Promise<AxiosResponse<TaskTableFamilyResponse>> => {
     return API().get(`/${taskId}/family`);
   },
+
+  restoreTasks: (taskIds: string[]): Promise<AxiosResponse> => {
+    return API({
+      params: { id: JSON.stringify(taskIds) },
+    }).put('/restore');
+  },
 };
 
 export default TaskServices;
