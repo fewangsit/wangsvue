@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v1.5.50
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.49...v1.5.50)
+
+### 🚀 Enhancements
+
+- **tasktable:** Add table actions for restore and delete permanently ([df2f1c8](https://github.com/fewangsit/wangsvue/commit/df2f1c8))
+- **tasktable:** Add table actions for restore and delete permanently ([38697e7](https://github.com/fewangsit/wangsvue/commit/38697e7))
+- **tasktable:** Add condition for fetching task table based on props.page ([3977b8f](https://github.com/fewangsit/wangsvue/commit/3977b8f))
+- **DataTable:** Implement emit rowSelect when click a row ([6b18539](https://github.com/fewangsit/wangsvue/commit/6b18539))
+
+### 🩹 Fixes
+
+- **tasktable:** Update condition for showing button of create task based on props.page ([b2d7944](https://github.com/fewangsit/wangsvue/commit/b2d7944))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.49
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.48...v1.5.49)
