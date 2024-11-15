@@ -241,7 +241,7 @@ const quickFilterFields = computed<CustomFilterField[]>(() => [
     type: 'multiselect',
     placeholder: 'Pilih member',
     fetchOptionFn: (): Promise<MultiSelectOption[]> =>
-      getTaskOptionsByTab('memberOptions'),
+      getTaskOptions('memberOptions'),
     visible:
       /*
        * Conditions for member filter be visible :
@@ -262,7 +262,7 @@ const quickFilterFields = computed<CustomFilterField[]>(() => [
     type: 'multiselect',
     placeholder: 'Pilih proyek',
     fetchOptionFn: (): Promise<MultiSelectOption[]> =>
-      getTaskOptionsByTab('projectOptions'),
+      getTaskOptions('projectOptions'),
     visible: (
       ['task', 'member-detail', 'my-profile'] as TaskTablePage[]
     ).includes(props.page),
@@ -272,7 +272,7 @@ const quickFilterFields = computed<CustomFilterField[]>(() => [
     type: 'multiselect',
     placeholder: 'Pilih modul',
     fetchOptionFn: (): Promise<MultiSelectOption[]> =>
-      getTaskOptionsByTab('moduleOptions'),
+      getTaskOptions('moduleOptions'),
     visible: (
       ['task', 'member-detail', 'my-profile', 'project-task'] as TaskTablePage[]
     ).includes(props.page),
@@ -282,7 +282,7 @@ const quickFilterFields = computed<CustomFilterField[]>(() => [
     type: 'multiselect',
     placeholder: 'Pilih task',
     fetchOptionFn: (): Promise<MultiSelectOption[]> =>
-      getTaskOptionsByTab('taskOptions'),
+      getTaskOptions('taskOptions'),
     visible: true,
   },
   {
@@ -338,7 +338,7 @@ const filterFields = computed<CustomFilterField[]>(() => [
     type: 'multiselect',
     placeholder: 'Pilih sub modul',
     fetchOptionFn: (): Promise<MultiSelectOption[]> =>
-      getTaskOptionsByTab('subModuleOptions'),
+      getTaskOptions('subModuleOptions'),
     visible: (
       [
         'task',
@@ -355,7 +355,7 @@ const filterFields = computed<CustomFilterField[]>(() => [
     type: 'multiselect',
     placeholder: 'Pilih proses',
     fetchOptionFn: (): Promise<MultiSelectOption[]> =>
-      getTaskOptionsByTab('processOptions'),
+      getTaskOptions('processOptions'),
     visible: true,
   },
   {
@@ -591,31 +591,49 @@ const userType = computed(() => {
   return memberType;
 });
 
-const getTasksByTab = async (
+const queryParamsByPage = computed(() => ({
+  project: props.page.includes('project')
+    ? JSON.stringify([props.projectId])
+    : undefined,
+  module: props.page.toLowerCase().includes('module')
+    ? JSON.stringify([props.moduleId])
+    : undefined,
+  subModule: props.page.includes('subModule')
+    ? JSON.stringify([props.subModuleId])
+    : undefined,
+}));
+
+const getTasks = async (
   params: QueryParams,
 ): Promise<FetchResponse<TaskTableItem> | undefined> => {
   try {
-    const { data } = await TaskServices.getTasksByTab({
-      tab: props.tab,
-      subTab: props.subTab,
-      query: {
-        project: props.page.includes('project')
-          ? JSON.stringify([props.projectId])
-          : undefined,
-        module: props.page.toLowerCase().includes('module')
-          ? JSON.stringify([props.moduleId])
-          : undefined,
-        subModule: props.page.includes('subModule')
-          ? JSON.stringify([props.subModuleId])
-          : undefined,
-        ...params,
-      },
-    });
+    let responseData: FetchResponse<TaskTableItem>;
+    if (
+      (['member-detail', 'my-profile'] as TaskTablePage[]).includes(props.page)
+    ) {
+      const response = await TaskServices.getTasksByUser({
+        userId: props.page === 'my-profile' ? userData._id : props.userId,
+        tab: props.tab,
+        query: params,
+      });
+      responseData = response.data;
+    } else {
+      const response = await TaskServices.getTasksByTab({
+        tab: props.tab,
+        subTab: props.subTab,
+        query: {
+          ...queryParamsByPage.value,
+          ...params,
+        },
+      });
+      responseData = response.data;
+    }
+
     const formattedData: FetchResponse<TaskTableItem> = {
-      ...data,
+      ...responseData,
       data: {
-        ...data.data,
-        data: data.data.data.map((task: TaskTableItem) => ({
+        ...responseData.data,
+        data: responseData.data.data.map((task: TaskTableItem) => ({
           ...task,
           hasChildren:
             task.childTask > 0 ||
@@ -634,16 +652,30 @@ const getTasksByTab = async (
   }
 };
 
-const getTaskOptionsByTab = async (
+const getTaskOptions = async (
   field: keyof TaskTableOptionQuery,
 ): Promise<MultiSelectOption[]> => {
   try {
-    const { data } = await TaskServices.getTaskOptionsByTab({
-      tab: props.tab,
-      subTab: props.subTab,
-      query: { [field]: true },
-    });
-    return data.data[field];
+    let responseData: FetchResponse;
+    if (
+      (['member-detail', 'my-profile'] as TaskTablePage[]).includes(props.page)
+    ) {
+      const response = await TaskServices.getTaskOptionsByUser({
+        userId: props.page === 'my-profile' ? userData._id : props.userId,
+        tab: props.tab,
+        query: { ...queryParamsByPage.value, [field]: true },
+      });
+      responseData = response.data;
+    } else {
+      const response = await TaskServices.getTaskOptionsByTab({
+        tab: props.tab,
+        subTab: props.subTab,
+        query: { ...queryParamsByPage.value, [field]: true },
+      });
+      responseData = response.data;
+    }
+
+    return responseData.data[field];
   } catch (error) {
     toast.add({
       message: 'Data options gagal dimuat.',
@@ -775,7 +807,7 @@ const getChecklists = async (): Promise<any[]> => {
         fetchFunction: getTaskFamily,
       }"
       :columns="tableColumns"
-      :fetch-function="getTasksByTab"
+      :fetch-function="getTasks"
       :options="tableActions"
       :selection-type="
         (['backlog', 'deleted'] as TaskTableTab[]).includes(props.tab)

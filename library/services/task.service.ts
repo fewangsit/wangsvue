@@ -138,6 +138,28 @@ const TaskServices = {
     });
   },
 
+  getTasksByUser: (args: {
+    userId: string;
+    tab: TaskTableTab;
+    query?: QueryParams;
+  }): Promise<AxiosResponse<FetchResponse<TaskTableItem>>> => {
+    const { tab, query, userId } = args;
+    return API().get(`/${tab}/user/${userId}`, {
+      params: query,
+    });
+  },
+
+  getTaskOptionsByUser: (args: {
+    userId: string;
+    tab: TaskTableTab;
+    query?: TaskTableOptionQuery;
+  }): Promise<AxiosResponse<FetchResponse>> => {
+    const { tab, query, userId } = args;
+    return API().get(`/${tab}/user/${userId}/options`, {
+      params: query,
+    });
+  },
+
   getTaskFamily: (
     taskId: string,
   ): Promise<AxiosResponse<TaskTableFamilyResponse>> => {

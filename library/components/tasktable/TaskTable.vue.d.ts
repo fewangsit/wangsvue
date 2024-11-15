@@ -37,6 +37,11 @@ export interface TaskTableProps {
    * in project-subModule page
    */
   subModuleId?: string;
+  /**
+   * Used as parameter while fetching data table
+   * in member-detail page
+   */
+  userId?: string;
 }
 
 declare class TaskTable extends ClassComponent<

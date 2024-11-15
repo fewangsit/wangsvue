@@ -34,7 +34,7 @@ const projectId = sessionStorage.getItem('projectId') ?? '';
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-xl font-semibold">
-            Project - Sub - Module > All > My Tasks
+            Project - Sub Module > All > My Tasks
           </span>
           <TaskTable
             :project-id="projectId"
@@ -46,16 +46,17 @@ const projectId = sessionStorage.getItem('projectId') ?? '';
           />
         </div>
         <div class="flex flex-col gap-2">
-          <span class="text-xl font-semibold">
-            Member - Detail > All > Related Tasks
-          </span>
-          <TaskTable page="member-detail" sub-tab="relatedTask" tab="all" />
+          <span class="text-xl font-semibold"> Member Detail (Dzul) </span>
+          <TaskTable
+            page="member-detail"
+            sub-tab="relatedTask"
+            tab="all"
+            user-id="66e90991e64712c4e5eb10a4"
+          />
         </div>
         <div class="flex flex-col gap-2">
-          <span class="text-xl font-semibold">
-            My - Profile > Active > My Tasks
-          </span>
-          <TaskTable page="my-profile" sub-tab="myTask" tab="active" />
+          <span class="text-xl font-semibold"> My Profile > Active </span>
+          <TaskTable page="my-profile" tab="active" />
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-xl font-semibold"> Task > Deleted </span>

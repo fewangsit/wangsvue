@@ -202,6 +202,9 @@ export interface TaskTableOptionQuery {
   memberOptions?: boolean;
   taskOptions?: boolean;
   processOptions?: boolean;
+  project?: string;
+  module?: string;
+  subModule?: string;
 }
 
 export interface TaskTableFamily {
