@@ -41,7 +41,7 @@ const emit = defineEmits<{
   ];
 }>();
 
-const projectId = sessionStorage.getItem('projectId');
+const projectId = inject<Ref<string>>('projectId');
 
 export type TaskLegend = {
   process: Pick<ProjectProcess, '_id' | 'name' | 'team' | 'processPosition'>;
@@ -101,11 +101,12 @@ const bindModule = computed(() => legendForm.value.module);
 const bindSubModule = computed(() => legendForm.value.submodule);
 
 const getProcessOptions = async (): Promise<void> => {
-  if (!projectId) return;
   try {
     legendLoading.value.process = true;
 
-    const { data } = await ProjectProcessServices.getProcessesByUser(projectId);
+    const { data } = await ProjectProcessServices.getProcessesByUser(
+      projectId.value,
+    );
 
     legendOptions.value.process = data.data
       .filter((d) => {
@@ -151,11 +152,10 @@ const getProcessOptions = async (): Promise<void> => {
 };
 
 const getModuleOptions = async (): Promise<void> => {
-  if (!projectId) return;
   try {
     legendLoading.value.module = true;
 
-    const { data } = await ModuleServices.getModuleList(projectId);
+    const { data } = await ModuleServices.getModuleList(projectId.value);
 
     legendOptions.value.module = data.data
       .filter((d) => {
@@ -212,11 +212,10 @@ const getModuleOptions = async (): Promise<void> => {
 };
 
 const getSubmoduleOptions = async (): Promise<void> => {
-  if (!projectId) return;
   try {
     legendLoading.value.submodule = true;
 
-    const { data } = await SubModuleServices.getSubmoduleList(projectId, {
+    const { data } = await SubModuleServices.getSubmoduleList(projectId.value, {
       module: JSON.stringify([legendForm.value.module._id]),
     });
 
@@ -299,7 +298,7 @@ const createTask = async (): Promise<void> => {
   try {
     const user = JSON.parse(localStorage.getItem('user') as string) ?? {};
     const dataDTO: CreateTaskDTO = {
-      project: projectId,
+      project: projectId.value,
       process: legendForm.value.process._id,
       module: legendForm.value.module?._id,
       subModule: legendForm.value?.submodule?._id,
@@ -331,7 +330,7 @@ const createTask = async (): Promise<void> => {
 const editTask = async (): Promise<void> => {
   try {
     const dataDTO: EditTaskDTO = {
-      project: projectId,
+      project: projectId.value,
       process: legendForm.value.process._id,
       module: legendForm.value.module?._id,
       subModule: legendForm.value?.submodule?._id,

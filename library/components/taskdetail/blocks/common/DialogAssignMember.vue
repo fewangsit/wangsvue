@@ -29,6 +29,7 @@ const emit = defineEmits<{
   saved: [];
 }>();
 
+const projectId = inject<Ref<string>>('projectId');
 /**
  * This task id inject is used in task detail dialog.
  */
@@ -87,10 +88,8 @@ const getMemberOptions = async (): Promise<void> => {
 const getProjectTeamMembers = async (): Promise<void> => {
   try {
     memberLoading.value = true;
-    const projectId = sessionStorage.getItem('projectId');
-    if (!projectId) return;
     const { data } = await ProjectTeamServices.getProjectTeamMembers(
-      projectId,
+      projectId.value,
       taskDetail.value.team[0],
     );
     if (data.data?.length) {
@@ -112,14 +111,12 @@ const getProjectTeamMembers = async (): Promise<void> => {
 const getSubModuleTeamMembers = async (): Promise<void> => {
   try {
     memberLoading.value = true;
-    const projectId = sessionStorage.getItem('projectId');
-    if (!projectId) return;
 
     const teamInitial = getTeamByInitial(taskDetail.value.team[0]);
     const params = {};
     params[teamInitial] = true;
     const { data } = await SubModuleServices.getSubmoduleOptions(
-      projectId,
+      projectId.value,
       params,
     );
     memberOptions.value = data.data[teamInitial];

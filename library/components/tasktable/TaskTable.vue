@@ -836,6 +836,7 @@ const getChecklists = async (): Promise<any[]> => {
 
   <TaskDetail
     v-model:visible="dialogNewTask"
+    :project-id="props.projectId"
     @create="reloadTable"
     @delete="reloadTable"
     @update="reloadTable"
@@ -843,6 +844,7 @@ const getChecklists = async (): Promise<any[]> => {
 
   <TaskDetail
     v-model:visible="dialogDetailTask"
+    :project-id="selectedTask?.project?._id"
     :task-id="selectedTask?._id"
     @create="reloadTable"
     @delete="reloadTable"

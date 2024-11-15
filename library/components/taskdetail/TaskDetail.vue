@@ -92,6 +92,7 @@ const user = ref<User>(
  */
 const firstFetch = ref<boolean>(true);
 const taskId = ref<string>();
+const projectId = ref<string>();
 const taskDetail = ref<TaskDetailData>();
 const isNewTask = ref<boolean>(false);
 const taskMenuIndex = ref<number>(0);
@@ -147,15 +148,11 @@ const toggleCommentSection = (): void => {
 
 const getProjectDetail = async (): Promise<void> => {
   try {
-    const projectId = sessionStorage.getItem('projectId');
-    if (projectId) {
-      const { data } = await ProjectServices.getProjectDetail(projectId);
-      projectDetail.value = data.data;
-    }
+    const { data } = await ProjectServices.getProjectDetail(props.projectId);
+    projectDetail.value = data.data;
   } catch (error) {
     toast.add({
       message: 'Gagal memuat proyek detail.',
-      severity: 'error',
       error,
     });
   }
@@ -260,6 +257,8 @@ const removeEventListener = (): void => {
 };
 
 const handleShow = (): void => {
+  projectId.value = props.projectId;
+
   if (props.taskId) {
     taskId.value = props.taskId;
   } else {
@@ -281,6 +280,7 @@ const handleProcessChange = (process: SelectedProcess): void => {
   selectedProcess.value = process;
 };
 
+provide('projectId', projectId);
 provide('taskId', taskId);
 provide('taskDetail', taskDetail);
 provide('isNewTask', isNewTask);
@@ -441,7 +441,8 @@ watch(visible, (value) => {
   <TaskDetail
     v-if="selectedTaskId"
     v-model:visible="dialogDetailTask"
-    :task-id="selectedTaskId ?? ''"
+    :project-id="projectId"
+    :task-id="selectedTaskId"
     @create="emit('create')"
     @delete="emit('delete')"
     @update="emit('update')"
