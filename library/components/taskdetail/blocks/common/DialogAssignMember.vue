@@ -23,17 +23,24 @@ const props = defineProps<{
    * This task id prop is used in task table component, either single or bulk action.
    */
   taskIdProp?: string[];
+  /**
+   * This project id prop is used in task table component.
+   */
+  projectIdProp?: string;
 }>();
 
 const emit = defineEmits<{
   saved: [];
 }>();
 
-const projectId = inject<Ref<string>>('projectId');
 /**
  * This task id inject is used in task detail dialog.
  */
 const taskIdFromInject = inject<Ref<string>>('taskId');
+/**
+ * This project id inject is used in task detail dialog.
+ */
+const projectIdFromInject = inject<Ref<string>>('projectId');
 
 const taskDetail =
   inject<Ref<TaskDetailData>>('taskDetail') ?? ref<TaskDetailData>();
@@ -47,6 +54,10 @@ const memberLoading = ref<boolean>(false);
  * Single task id, either props from task table or inject from task detail dialog.
  */
 const taskId = computed(() => taskIdFromInject?.value ?? props.taskIdProp?.[0]);
+
+const projectId = computed(
+  () => projectIdFromInject?.value ?? props.projectIdProp,
+);
 
 const initialMemberValue = computed(() => {
   if (

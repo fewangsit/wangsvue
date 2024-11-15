@@ -853,12 +853,14 @@ const getChecklists = async (): Promise<any[]> => {
 
   <DialogAssignMember
     v-model:visible="dialogAssignMember"
+    :project-id-prop="selectedTask?.project?._id"
     :task-id-prop="[selectedTask?._id]"
     @saved="reloadTable"
   />
 
   <DialogAssignMember
     v-model:visible="dialogAssignMemberBulk"
+    :project-id-prop="selectedTasks?.[0]?.project?._id"
     :task-id-prop="selectedTasks?.map((task) => task._id)"
     @saved="reloadTable"
   />
