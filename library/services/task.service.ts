@@ -171,6 +171,12 @@ const TaskServices = {
       params: { id: JSON.stringify(taskIds) },
     }).put('/restore');
   },
+
+  deleteTasksPermanently: (taskIds: string[]): Promise<AxiosResponse> => {
+    return API({
+      params: { id: JSON.stringify(taskIds) },
+    }).delete('/permanent-delete');
+  },
 };
 
 export default TaskServices;
