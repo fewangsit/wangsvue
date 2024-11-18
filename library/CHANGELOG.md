@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.5.54
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.52...v1.5.54)
+
+### 🏡 Chore
+
+- Update version ([6703796](https://github.com/fewangsit/wangsvue/commit/6703796))
+
+### 🤖 CI
+
+- Update release.yml to push changes to main branch after release ([08df431](https://github.com/fewangsit/wangsvue/commit/08df431))
+- Add workflow_dispatch on release workflpow ([a20a270](https://github.com/fewangsit/wangsvue/commit/a20a270))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.52
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.51...v1.5.52)
