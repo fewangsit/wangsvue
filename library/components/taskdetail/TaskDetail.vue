@@ -32,6 +32,7 @@ import { ProjectProcess } from 'lib/types/projectProcess.type';
 import TaskDetail from './TaskDetail.vue';
 import Comment from '../comment/Comment.vue';
 import { User } from 'lib/types/user.type';
+import EventLogTab from './blocks/Tabs/EventLogTab.vue';
 
 const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 
@@ -131,7 +132,7 @@ const taskMenu = computed<TaskMenu[]>(() => {
     {
       label: 'Event Log',
       disabled: isNewTask.value,
-      component: InfoTaskTab,
+      component: EventLogTab,
     },
   ];
 });
