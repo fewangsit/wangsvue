@@ -62,13 +62,13 @@ const getLinkChangelog = async (): Promise<void> => {
     :closable="false"
     @show="getLinkChangelog"
     class="w-[600px]"
-    header="Changelog Attachment"
+    header="Changelog Link Task"
     modal
   >
     <template #header>
       <div class="flex justify-between items-center w-full">
         <span class="text-lg font-semibold leading-4">
-          Changelog Attachment
+          Changelog Link Task
         </span>
         <Button
           @click="visible = false"
