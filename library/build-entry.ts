@@ -129,6 +129,7 @@ import {
   TaskDetailPbi,
   ApproverInfo,
   DetailMember,
+  DialogAdjustmentTask,
 } from './components';
 
 export {
@@ -215,6 +216,7 @@ export {
   TaskDetailPbi,
   ApproverInfo,
   DetailMember,
+  DialogAdjustmentTask,
 
   // Component store
   useLoadingStore,
