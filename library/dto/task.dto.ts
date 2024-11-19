@@ -35,6 +35,7 @@ export interface EditTaskDTO {
   /**
    * Members assigned to the task (Member _id)
    */
+  repository?: string;
   assignedTo?: string[];
   /**
    * Team initials.

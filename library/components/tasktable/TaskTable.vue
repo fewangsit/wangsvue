@@ -841,19 +841,14 @@ const selectProject = (projectId: string): void => {
       use-option
       use-paginator
     />
-
-    <pre>{{
-      selectedTasks?.map((task) => ({
-        project: task.project,
-        pm: task.isProjectManager,
-        leader: task.isTeamLeader,
-        team: task.team,
-      }))
-    }}</pre>
   </div>
 
   <TaskDetail
     v-model:visible="dialogNewTask"
+    :initial-module="props.moduleId ? { _id: props.moduleId } : undefined"
+    :initial-sub-module="
+      props.subModuleId ? { _id: props.subModuleId } : undefined
+    "
     :project-id="props.page === 'task' ? selectedProjectId : props.projectId"
     @create="reloadTable"
     @delete="reloadTable"
@@ -862,6 +857,10 @@ const selectProject = (projectId: string): void => {
 
   <TaskDetail
     v-model:visible="dialogDetailTask"
+    :initial-module="props.moduleId ? { _id: props.moduleId } : undefined"
+    :initial-sub-module="
+      props.subModuleId ? { _id: props.subModuleId } : undefined
+    "
     :project-id="selectedTask?.project?._id"
     :task-id="selectedTask?._id"
     @create="reloadTable"

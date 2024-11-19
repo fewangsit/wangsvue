@@ -30,7 +30,7 @@ const projectId = sessionStorage.getItem('projectId') ?? '';
           </span>
           <TaskTable
             :project-id="projectId"
-            module-id="670620dd3be0c0a2ed7edcc4"
+            module-id="6706205a9bdcad72db25715f"
             page="project-module"
             sub-tab="myTask"
             tab="all"
@@ -38,13 +38,26 @@ const projectId = sessionStorage.getItem('projectId') ?? '';
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-xl font-semibold">
-            Project - Sub Module > All > My Tasks
+            Project - Sub Module (Sub Module MT) > All > My Tasks
           </span>
           <TaskTable
             :project-id="projectId"
             module-id="670620dd3be0c0a2ed7edcc4"
             page="project-subModule"
             sub-module-id="6706211e872d8431a33e68b4"
+            sub-tab="myTask"
+            tab="all"
+          />
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-xl font-semibold">
+            Project - Sub Module (Sub Module MT2) > All > My Tasks
+          </span>
+          <TaskTable
+            :project-id="projectId"
+            module-id="670620dd3be0c0a2ed7edcc4"
+            page="project-subModule"
+            sub-module-id="6706216f872d8431a33e69a3"
             sub-tab="myTask"
             tab="all"
           />

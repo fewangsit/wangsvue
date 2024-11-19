@@ -12,6 +12,15 @@ export interface DetailTaskProps {
    *
    */
   taskId?: string;
+  initialModule?: {
+    _id: string;
+    name?: string;
+  };
+  initialSubModule?: {
+    _id: string;
+    name?: string;
+    repository?: string;
+  };
 }
 
 /**

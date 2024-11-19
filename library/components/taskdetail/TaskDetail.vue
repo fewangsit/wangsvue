@@ -102,7 +102,7 @@ const selectedProcess = ref<SelectedProcess>();
 
 const legendForm = ref<TaskLegendForm>({});
 
-const loadingTask = ref(true);
+const loadingTask = ref(false);
 
 const dialogDetailTask = ref(false);
 const selectedTaskId = ref<string>();
@@ -395,7 +395,11 @@ watch(visible, (value) => {
           class="w-[800px] max-h-[600px] flex flex-col gap-3 !px-6 !py-3 overflow-y-auto detailtask-scrollbar-hide"
         >
           <pre>{{ userType }}</pre>
-          <Legend @process-change="handleProcessChange" />
+          <Legend
+            :initial-module="props.initialModule"
+            :initial-sub-module="props.initialSubModule"
+            @process-change="handleProcessChange"
+          />
           <TabMenu
             v-model:active-index="taskMenuIndex"
             :menu="taskMenu"
@@ -441,6 +445,8 @@ watch(visible, (value) => {
   <TaskDetail
     v-if="selectedTaskId"
     v-model:visible="dialogDetailTask"
+    :initial-module="props.initialModule ?? undefined"
+    :initial-sub-module="props.initialSubModule ?? undefined"
     :project-id="projectId"
     :task-id="selectedTaskId"
     @create="emit('create')"

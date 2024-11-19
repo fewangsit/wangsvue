@@ -15,6 +15,7 @@ export type TaskDetailData = {
   process: ProjectProcess;
   module: ProjectModule;
   subModule: ProjectSubModule;
+  repository: string;
   name: string;
   assignedTo: Member[];
   team: string[]; // Team Initial
