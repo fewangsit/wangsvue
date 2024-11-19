@@ -6,12 +6,16 @@ import { useToast } from 'lib/utils';
 import TaskAttachmentServices from 'lib/services/taskAttachment.service';
 import { TimelineItem } from 'lib/components/timeline/Timeline.vue.d';
 import Timeline from 'lib/components/timeline/Timeline.vue';
+import { DotLottieVue } from '@lottiefiles/dotlottie-vue';
+import noDataLottie from 'lib/assets/lottie/no-data.lottie';
 
 const toast = useToast();
 
 const visible = defineModel<boolean>('visible', { required: true });
 
 const taskId = inject<Ref<string>>('taskId');
+
+const Preset = inject<Record<string, any>>('preset', {}).datatable;
 
 const changelogs = ref<TimelineItem[]>();
 
@@ -62,6 +66,14 @@ const getChangelog = async (): Promise<void> => {
         />
       </div>
     </template>
-    <Timeline :value="changelogs" />
+    <Timeline v-if="changelogs?.length" :value="changelogs" />
+    <div v-else v-bind="Preset.nodatalottiewrapper">
+      <DotLottieVue
+        :src="noDataLottie as string"
+        v-bind="Preset.nodatalottie"
+        autoplay
+        loop
+      />
+    </div>
   </Dialog>
 </template>

@@ -10,6 +10,8 @@ import {
 } from 'lib/components/timeline/Timeline.vue.d';
 import Timeline from 'lib/components/timeline/Timeline.vue';
 import TaskChecklistServices from 'lib/services/taskChecklist.service';
+import { DotLottieVue } from '@lottiefiles/dotlottie-vue';
+import noDataLottie from 'lib/assets/lottie/no-data.lottie';
 
 const toast = useToast();
 
@@ -30,6 +32,8 @@ type Detail = KeyValue | DetailType;
 const visible = defineModel<boolean>('visible', { required: true });
 
 const taskId = inject<Ref<string>>('taskId');
+
+const Preset = inject<Record<string, any>>('preset', {}).datatable;
 
 const changelogs = ref<TimelineItem[]>();
 
@@ -101,6 +105,14 @@ const getDetail = (d: DataItem): Detail => {
         />
       </div>
     </template>
-    <Timeline :value="changelogs" />
+    <Timeline v-if="changelogs?.length" :value="changelogs" />
+    <div v-else v-bind="Preset.nodatalottiewrapper">
+      <DotLottieVue
+        :src="noDataLottie as string"
+        v-bind="Preset.nodatalottie"
+        autoplay
+        loop
+      />
+    </div>
   </Dialog>
 </template>
