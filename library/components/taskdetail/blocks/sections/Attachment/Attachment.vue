@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { inject, onMounted, Ref, ref } from 'vue';
 import Icon from 'lib/components/icon/Icon.vue';
-import Changelog from 'lib/components/changelog/Changelog.vue';
 import Button from 'lib/components/button/Button.vue';
 import AttachmentItem from './AttachmentItem.vue';
 import { AttachmentItemData } from './AttachmentItem.vue.d';
 import DialogAddAttachment from '../../common/DialogAddAttachment.vue';
 import TaskAttachmentServices from 'lib/services/taskAttachment.service';
+import AttachmentChangelog from './AttachmentChangelog.vue';
+import { useToast } from 'lib/utils';
+
+const toast = useToast();
 
 onMounted(() => {
   getAttachments();
@@ -17,6 +20,7 @@ const taskId = inject<Ref<string>>('taskId');
 const attachments = ref<AttachmentItemData[]>([]);
 
 const dialogAddAttachment = ref(false);
+const dialogChangelog = ref(false);
 
 const getAttachments = async (): Promise<void> => {
   try {
@@ -25,7 +29,10 @@ const getAttachments = async (): Promise<void> => {
     );
     attachments.value = response.data;
   } catch (error) {
-    console.error(error);
+    toast.add({
+      error,
+      message: 'Attachment gagal dihapus.',
+    });
   }
 };
 </script>
@@ -38,7 +45,14 @@ const getAttachments = async (): Promise<void> => {
         <span class="text-xs font-semibold">Attachment</span>
       </div>
       <div class="flex items-center gap-2">
-        <Changelog object="objects" />
+        <Button
+          @click="dialogChangelog = true"
+          class="!p-1"
+          icon="file-history"
+          icon-class="!w-6 !h-6"
+          severity="secondary"
+          text
+        />
         <Button
           @click="dialogAddAttachment = true"
           icon="add"
@@ -67,4 +81,6 @@ const getAttachments = async (): Promise<void> => {
     @hide="getAttachments"
     type="attachment"
   />
+
+  <AttachmentChangelog v-model:visible="dialogChangelog" />
 </template>
