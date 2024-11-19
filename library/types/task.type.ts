@@ -246,3 +246,19 @@ export interface TaskLinkChangelogItemValue {
   type: TaskLinkURLType;
   link: string;
 }
+
+export interface TaskChecklistChangelogItem {
+  _id: string;
+  task: string;
+  action: string;
+  oldValue: string;
+  newValue: string;
+  attachment: {
+    type: FileType;
+    name: string;
+    src: string;
+  };
+  user: Member;
+  createdAt: string;
+  updatedAt: string;
+}
