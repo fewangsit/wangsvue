@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios, { AxiosInstance, AxiosProgressEvent, AxiosResponse } from 'axios';
+import { ShortFetchResponse } from 'lib/components/datatable/DataTable.vue.d';
 import {
   AddTaskAttachmentFileDTO,
   AddTaskAttachmentUrlDTO,
   UpdateTaskAttachmentCaptionDTO,
 } from 'lib/dto/taskAttachment.dto';
+import { TaskAttachmentChangelogItem } from 'lib/types/task.type';
 import { getBaseURL } from 'lib/utils/getBaseURL.util';
 
 type AxiosInstanceOptions = {
@@ -65,6 +67,13 @@ const TaskAttachmentServices = {
   },
   deleteTaskAttachment: (attachmentId: string): Promise<AxiosResponse> => {
     return API().delete(`/${attachmentId}`);
+  },
+  getTaskAttachmentChangelog: (
+    taskId: string,
+  ): Promise<
+    AxiosResponse<ShortFetchResponse<TaskAttachmentChangelogItem>>
+  > => {
+    return API().get(`/task/${taskId}/change-log`);
   },
 };
 

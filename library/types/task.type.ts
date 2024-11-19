@@ -8,6 +8,7 @@ import { ProjectSubModule } from './projectSubmodule.type';
 import { WangsitStatus } from './wangsStatus.type';
 import { JSONContent } from 'lib/components/editor/Editor.vue.d';
 import { ChildGroup } from 'lib/components/datatable/DataTable.vue.d';
+import { FileType } from 'lib/components/taskdetail/blocks/sections/Attachment/AttachmentItem.vue.d';
 
 export type TaskDetailData = {
   _id: string;
@@ -217,4 +218,15 @@ export interface TaskTableFamilyResponse {
   status: number;
   message: string;
   data: TaskTableFamily;
+}
+
+export interface TaskAttachmentChangelogItem {
+  _id: string;
+  type: FileType;
+  attachmentSrc: string;
+  attachment: string;
+  action: string;
+  user: Member;
+  createdAt: string;
+  updatedAt: string;
 }
