@@ -35,6 +35,7 @@ export type WangsIcons =
   | 'calculator'
   | 'calendar'
   | 'calendar-todo'
+  | 'chat'
   | 'chat-check'
   | 'change-tag'
   | 'check'
