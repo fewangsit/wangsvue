@@ -1,6 +1,36 @@
 # Changelog
 
 
+## v1.5.55
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.54...v1.5.55)
+
+### 🚀 Enhancements
+
+- **taskdetail:** Add props for initialmodule and initialsubmodule ([202c275](https://github.com/fewangsit/wangsvue/commit/202c275))
+- **taskdetail:** Add attachment changelog ([c3efefc](https://github.com/fewangsit/wangsvue/commit/c3efefc))
+- **taskdetail:** Add task link changelog ([eae6230](https://github.com/fewangsit/wangsvue/commit/eae6230))
+- **taskdetail:** Add task checklist changelog ([97398bc](https://github.com/fewangsit/wangsvue/commit/97398bc))
+- **taskdetail:** Add content for fallback if no data in changelog ([9b4e7f2](https://github.com/fewangsit/wangsvue/commit/9b4e7f2))
+- **taskdetail:** Show validator if counter an error while update priority value ([8878abb](https://github.com/fewangsit/wangsvue/commit/8878abb))
+- **taskdetail:** Add content for event log tab ([377e99d](https://github.com/fewangsit/wangsvue/commit/377e99d))
+- **taskdetail:** Add content for event log tab ([fcbe660](https://github.com/fewangsit/wangsvue/commit/fcbe660))
+
+### 🩹 Fixes
+
+- **timeline:** Update timeline content for embed type ([4cfbb08](https://github.com/fewangsit/wangsvue/commit/4cfbb08))
+- **timeline:** Update timeline content for embed type ([f55ff84](https://github.com/fewangsit/wangsvue/commit/f55ff84))
+- **taskdetail:** Update header of changelog for task link ([de091e9](https://github.com/fewangsit/wangsvue/commit/de091e9))
+
+### 🏡 Chore
+
+- **presets:** Update version ([6bcac82](https://github.com/fewangsit/wangsvue/commit/6bcac82))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.54
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.52...v1.5.54)
