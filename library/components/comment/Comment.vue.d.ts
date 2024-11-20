@@ -161,3 +161,5 @@ export interface CommentBlockProps extends CommentData {
 }
 
 declare class Comment extends ClassComponent<CommentProps, any, any> {}
+
+export default Comment;

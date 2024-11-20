@@ -1,4 +1,5 @@
 import axios, { AxiosResponse, AxiosInstance } from 'axios';
+import { MemberListResponse } from 'lib/dto/member.dto';
 
 export interface Member {
   _id: string;
@@ -33,6 +34,12 @@ const MemberServices = {
     memberId: string,
   ): Promise<AxiosResponse<AxiosResponse<Member>>> => {
     return API().get(`/${memberId}`);
+  },
+
+  getMemberList: (params?: {
+    team: string;
+  }): Promise<AxiosResponse<MemberListResponse>> => {
+    return API({ params }).get('');
   },
 };
 

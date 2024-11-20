@@ -96,6 +96,7 @@ export interface TaskOptions {
   pbi?: string;
   excludePbi?: string;
   status?: string;
+  member?: string;
   memberOptions?: boolean;
   projectOptions?: boolean;
   moduleOptions?: boolean;
