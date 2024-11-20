@@ -187,3 +187,5 @@ declare class Editor extends ClassComponent<
   unknown,
   EditorEmits
 > {}
+
+export default Editor;

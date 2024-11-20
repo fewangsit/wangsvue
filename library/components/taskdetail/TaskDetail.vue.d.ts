@@ -4,14 +4,23 @@ import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
  * Detail task component props
  */
 export interface DetailTaskProps {
+  projectId: string;
   /**
    * The task's id.
    *
    * If this prop is not specified, the dialog will assume for a creation of a new task.
    *
-   * @defaultValue undefined
    */
   taskId?: string;
+  initialModule?: {
+    _id: string;
+    name?: string;
+  };
+  initialSubModule?: {
+    _id: string;
+    name?: string;
+    repository?: string;
+  };
 }
 
 /**

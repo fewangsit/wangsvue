@@ -8,31 +8,30 @@ import { useToast } from 'lib/utils';
 const toast = useToast();
 const { setLoading } = useLoadingStore();
 
-const visible = defineModel<boolean>('visible', { required: true });
-
 const props = defineProps<{
-  tasks: Pick<TaskDetailData, '_id' | 'name'>[];
+  taskDetail: Pick<TaskDetailData, '_id' | 'name'>;
 }>();
 
 const emit = defineEmits<{
   saved: [];
 }>();
 
-const restoreTasks = async (): Promise<void> => {
+const visible = defineModel<boolean>('visible', { required: true });
+
+const markTaskAsSprint = async (): Promise<void> => {
   try {
     setLoading(true);
-    const ids = props.tasks.map((task) => task._id);
-    const { data } = await TaskServices.restoreTasks(ids);
+    const { data } = await TaskServices.markAsSprint(props.taskDetail._id);
     if (data) {
       toast.add({
-        message: 'Task telah dipulihkan.',
+        message: 'Task telah diedit.',
         severity: 'success',
       });
       emit('saved');
     }
   } catch (error) {
     toast.add({
-      message: 'Task gagal dipulihkan.',
+      message: 'Task gagal diedit.',
       error,
     });
   } finally {
@@ -44,10 +43,11 @@ const restoreTasks = async (): Promise<void> => {
 <template>
   <DialogConfirm
     v-model:visible="visible"
-    @confirm="restoreTasks"
-    confirm-label="Simpan"
-    header="Pulihkan Task"
-    message="Task ini akan kembali menjadi aktif dan berstatus backlog. Apakah kamu yakin ingin memulihkannya?"
+    :list="[props.taskDetail?.name]"
+    @confirm="markTaskAsSprint"
+    confirm-label="Edit"
+    header="Edit Task"
+    message="Apakah kamu yakin ingin mengedit task ini?"
     severity="success"
   />
 </template>

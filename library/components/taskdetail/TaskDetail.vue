@@ -32,6 +32,7 @@ import { ProjectProcess } from 'lib/types/projectProcess.type';
 import TaskDetail from './TaskDetail.vue';
 import Comment from '../comment/Comment.vue';
 import { User } from 'lib/types/user.type';
+import EventLogTab from './blocks/Tabs/EventLogTab.vue';
 
 const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 
@@ -92,6 +93,7 @@ const user = ref<User>(
  */
 const firstFetch = ref<boolean>(true);
 const taskId = ref<string>();
+const projectId = ref<string>();
 const taskDetail = ref<TaskDetailData>();
 const isNewTask = ref<boolean>(false);
 const taskMenuIndex = ref<number>(0);
@@ -101,7 +103,7 @@ const selectedProcess = ref<SelectedProcess>();
 
 const legendForm = ref<TaskLegendForm>({});
 
-const loadingTask = ref(true);
+const loadingTask = ref(false);
 
 const dialogDetailTask = ref(false);
 const selectedTaskId = ref<string>();
@@ -130,7 +132,7 @@ const taskMenu = computed<TaskMenu[]>(() => {
     {
       label: 'Event Log',
       disabled: isNewTask.value,
-      component: InfoTaskTab,
+      component: EventLogTab,
     },
   ];
 });
@@ -147,15 +149,11 @@ const toggleCommentSection = (): void => {
 
 const getProjectDetail = async (): Promise<void> => {
   try {
-    const projectId = sessionStorage.getItem('projectId');
-    if (projectId) {
-      const { data } = await ProjectServices.getProjectDetail(projectId);
-      projectDetail.value = data.data;
-    }
+    const { data } = await ProjectServices.getProjectDetail(props.projectId);
+    projectDetail.value = data.data;
   } catch (error) {
     toast.add({
       message: 'Gagal memuat proyek detail.',
-      severity: 'error',
       error,
     });
   }
@@ -205,7 +203,7 @@ const refreshAndEmitHandler = async (
 ): Promise<void> => {
   try {
     // Skip this function if id doesn't equal the task id.
-    if (id !== taskId.value) return;
+    if (id !== taskId.value || !taskId.value) return;
 
     if (eventName === 'delete') {
       emit('delete');
@@ -260,6 +258,8 @@ const removeEventListener = (): void => {
 };
 
 const handleShow = (): void => {
+  projectId.value = props.projectId;
+
   if (props.taskId) {
     taskId.value = props.taskId;
   } else {
@@ -281,6 +281,7 @@ const handleProcessChange = (process: SelectedProcess): void => {
   selectedProcess.value = process;
 };
 
+provide('projectId', projectId);
 provide('taskId', taskId);
 provide('taskDetail', taskDetail);
 provide('isNewTask', isNewTask);
@@ -395,7 +396,11 @@ watch(visible, (value) => {
           class="w-[800px] max-h-[600px] flex flex-col gap-3 !px-6 !py-3 overflow-y-auto detailtask-scrollbar-hide"
         >
           <pre>{{ userType }}</pre>
-          <Legend @process-change="handleProcessChange" />
+          <Legend
+            :initial-module="props.initialModule"
+            :initial-sub-module="props.initialSubModule"
+            @process-change="handleProcessChange"
+          />
           <TabMenu
             v-model:active-index="taskMenuIndex"
             :menu="taskMenu"
@@ -441,7 +446,10 @@ watch(visible, (value) => {
   <TaskDetail
     v-if="selectedTaskId"
     v-model:visible="dialogDetailTask"
-    :task-id="selectedTaskId ?? ''"
+    :initial-module="props.initialModule ?? undefined"
+    :initial-sub-module="props.initialSubModule ?? undefined"
+    :project-id="projectId"
+    :task-id="selectedTaskId"
     @create="emit('create')"
     @delete="emit('delete')"
     @update="emit('update')"

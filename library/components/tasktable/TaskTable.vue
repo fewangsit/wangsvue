@@ -37,6 +37,7 @@ import UserGroup from '../usergroup/UserGroup.vue';
 import ButtonBulkAction from '../buttonbulkaction/ButtonBulkAction.vue';
 import DialogConfirmRestoreTask from './DialogConfirmRestoreTask.vue';
 import DialogConfirmDeleteTaskPermanently from './DialogConfirmDeleteTaskPermanently.vue';
+import DialogSelectProject from './DialogSelectProject.vue';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -50,6 +51,7 @@ type CustomFilterField = FilterField & {
 const userData = JSON.parse(localStorage.getItem('user') as string);
 
 const showFilter = ref(false);
+const dialogSelectProject = ref(false);
 const dialogNewTask = ref(false);
 const dialogDetailTask = ref(false);
 const dialogAssignMember = ref(false);
@@ -60,12 +62,15 @@ const dialogConfirmFinishTask = ref(false);
 const dialogReview = ref(false);
 const dialogFinishReview = ref(false);
 const dialogConfirmRestoreTask = ref(false);
+const dialogConfirmRestoreTaskBulk = ref(false);
 const dialogConfirmDeleteTaskPermanently = ref(false);
 const dialogConfirmDeleteTaskPermanentlyBulk = ref(false);
 
 const selectedTask = ref<TaskTableItem>();
 
 const selectedTasks = ref<TaskTableItem[]>([]);
+
+const selectedProjectId = ref<string>();
 
 const filters = ref<any>({
   global: { value: undefined, matchMode: FilterMatchMode.CONTAINS },
@@ -553,7 +558,7 @@ const tableBulkActions = computed<MenuItem[]>(() => {
       icon: 'history',
       visible: true,
       command: (): void => {
-        dialogConfirmRestoreTask.value = true;
+        dialogConfirmRestoreTaskBulk.value = true;
       },
     },
     {
@@ -602,6 +607,14 @@ const queryParamsByPage = computed(() => ({
     ? JSON.stringify([props.subModuleId])
     : undefined,
 }));
+
+const onClickCreateTask = (): void => {
+  if (props.page === 'task') {
+    dialogSelectProject.value = true;
+  } else {
+    dialogNewTask.value = true;
+  }
+};
 
 const getTasks = async (
   params: QueryParams,
@@ -752,6 +765,11 @@ const getChecklists = async (): Promise<any[]> => {
     setLoading(false);
   }
 };
+
+const selectProject = (projectId: string): void => {
+  selectedProjectId.value = projectId;
+  dialogNewTask.value = true;
+};
 </script>
 
 <template>
@@ -782,7 +800,7 @@ const getChecklists = async (): Promise<any[]> => {
             ] as TaskTablePage[]
           ).includes(props.page)
         "
-        @click="dialogNewTask = true"
+        @click="onClickCreateTask"
         icon="add"
         label="Task"
         severity="secondary"
@@ -823,19 +841,15 @@ const getChecklists = async (): Promise<any[]> => {
       use-option
       use-paginator
     />
-
-    <pre>{{
-      selectedTasks?.map((task) => ({
-        project: task.project,
-        pm: task.isProjectManager,
-        leader: task.isTeamLeader,
-        team: task.team,
-      }))
-    }}</pre>
   </div>
 
   <TaskDetail
     v-model:visible="dialogNewTask"
+    :initial-module="props.moduleId ? { _id: props.moduleId } : undefined"
+    :initial-sub-module="
+      props.subModuleId ? { _id: props.subModuleId } : undefined
+    "
+    :project-id="props.page === 'task' ? selectedProjectId : props.projectId"
     @create="reloadTable"
     @delete="reloadTable"
     @update="reloadTable"
@@ -843,20 +857,32 @@ const getChecklists = async (): Promise<any[]> => {
 
   <TaskDetail
     v-model:visible="dialogDetailTask"
+    :initial-module="props.moduleId ? { _id: props.moduleId } : undefined"
+    :initial-sub-module="
+      props.subModuleId ? { _id: props.subModuleId } : undefined
+    "
+    :project-id="selectedTask?.project?._id"
     :task-id="selectedTask?._id"
     @create="reloadTable"
     @delete="reloadTable"
     @update="reloadTable"
   />
 
+  <DialogSelectProject
+    v-model:visible="dialogSelectProject"
+    @saved="selectProject"
+  />
+
   <DialogAssignMember
     v-model:visible="dialogAssignMember"
+    :project-id-prop="selectedTask?.project?._id"
     :task-id-prop="[selectedTask?._id]"
     @saved="reloadTable"
   />
 
   <DialogAssignMember
     v-model:visible="dialogAssignMemberBulk"
+    :project-id-prop="selectedTasks?.[0]?.project?._id"
     :task-id-prop="selectedTasks?.map((task) => task._id)"
     @saved="reloadTable"
   />
@@ -892,15 +918,27 @@ const getChecklists = async (): Promise<any[]> => {
     @saved="reloadTable"
   />
 
-  <DialogConfirmRestoreTask v-model:visible="dialogConfirmRestoreTask" />
+  <DialogConfirmRestoreTask
+    v-model:visible="dialogConfirmRestoreTask"
+    :tasks="[selectedTask]"
+    @saved="reloadTable"
+  />
+
+  <DialogConfirmRestoreTask
+    v-model:visible="dialogConfirmRestoreTaskBulk"
+    :tasks="selectedTasks"
+    @saved="reloadTable"
+  />
 
   <DialogConfirmDeleteTaskPermanently
     v-model:visible="dialogConfirmDeleteTaskPermanently"
     :tasks="[selectedTask]"
+    @saved="reloadTable"
   />
 
   <DialogConfirmDeleteTaskPermanently
     v-model:visible="dialogConfirmDeleteTaskPermanentlyBulk"
     :tasks="selectedTasks"
+    @saved="reloadTable"
   />
 </template>

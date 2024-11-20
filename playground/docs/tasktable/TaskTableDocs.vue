@@ -21,12 +21,16 @@ const projectId = sessionStorage.getItem('projectId') ?? '';
           <TaskTable page="task" tab="backlog" />
         </div>
         <div class="flex flex-col gap-2">
+          <span class="text-xl font-semibold">Task > All</span>
+          <TaskTable page="task" sub-tab="myTask" tab="all" />
+        </div>
+        <div class="flex flex-col gap-2">
           <span class="text-xl font-semibold">
             Project - Module > All > My Tasks
           </span>
           <TaskTable
             :project-id="projectId"
-            module-id="670620dd3be0c0a2ed7edcc4"
+            module-id="6706205a9bdcad72db25715f"
             page="project-module"
             sub-tab="myTask"
             tab="all"
@@ -34,7 +38,7 @@ const projectId = sessionStorage.getItem('projectId') ?? '';
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-xl font-semibold">
-            Project - Sub Module > All > My Tasks
+            Project - Sub Module (Sub Module MT) > All > My Tasks
           </span>
           <TaskTable
             :project-id="projectId"
@@ -46,10 +50,22 @@ const projectId = sessionStorage.getItem('projectId') ?? '';
           />
         </div>
         <div class="flex flex-col gap-2">
+          <span class="text-xl font-semibold">
+            Project - Sub Module (Sub Module MT2) > All > My Tasks
+          </span>
+          <TaskTable
+            :project-id="projectId"
+            module-id="670620dd3be0c0a2ed7edcc4"
+            page="project-subModule"
+            sub-module-id="6706216f872d8431a33e69a3"
+            sub-tab="myTask"
+            tab="all"
+          />
+        </div>
+        <div class="flex flex-col gap-2">
           <span class="text-xl font-semibold"> Member Detail (Dzul) </span>
           <TaskTable
             page="member-detail"
-            sub-tab="relatedTask"
             tab="all"
             user-id="66e90991e64712c4e5eb10a4"
           />
@@ -57,6 +73,12 @@ const projectId = sessionStorage.getItem('projectId') ?? '';
         <div class="flex flex-col gap-2">
           <span class="text-xl font-semibold"> My Profile > Active </span>
           <TaskTable page="my-profile" tab="active" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-xl font-semibold">
+            Task > History > Related Task
+          </span>
+          <TaskTable page="task" sub-tab="relatedTask" tab="history" />
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-xl font-semibold"> Task > Deleted </span>

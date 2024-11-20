@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import { ShortFetchResponse } from 'lib/components/datatable/DataTable.vue.d';
 import { EditTaskLinkDTO } from 'lib/dto/task.dto';
-import { TaskLinkType } from 'lib/types/task.type';
+import { TaskLinkChangelogItem, TaskLinkType } from 'lib/types/task.type';
 import { getBaseURL } from 'lib/utils/getBaseURL.util';
 
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
@@ -31,6 +32,13 @@ const TaskLinkServices = {
     data: EditTaskLinkDTO,
   ): Promise<AxiosResponse> => {
     return API().put(`/${taskId}`, data);
+  },
+
+  getTaskLinkChangelog: (
+    taskId: string,
+    type: TaskLinkType,
+  ): Promise<AxiosResponse<ShortFetchResponse<TaskLinkChangelogItem>>> => {
+    return API().get(`/${taskId}/${type}/change-log`);
   },
 };
 

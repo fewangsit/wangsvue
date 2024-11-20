@@ -21,10 +21,9 @@ import { cloneDeep } from 'lodash';
 
 const toast = useToast();
 
-const projectId = sessionStorage.getItem('projectId') ?? '';
-
 const whitelistIframeTag = /<\s*\/?\s*(iframe)\b.*?>/;
 
+const projectId = inject<Ref<string>>('projectId');
 const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 const isNewTask = inject<Ref<boolean>>('isNewTask');
@@ -75,7 +74,7 @@ const getTaskOptions = async (args: {
     dependencies.value[args.index].loading = true;
 
     const params = {
-      project: JSON.stringify([projectId]),
+      project: JSON.stringify([projectId.value]),
       process: JSON.stringify([args.processId]),
       module: JSON.stringify([args.moduleId]),
       subModule: args.subModuleId
@@ -210,7 +209,7 @@ const loadData = async (): Promise<void> => {
 const getProcessDependencies = async (): Promise<TaskDependency[]> => {
   try {
     const { data: response } = await ProjectProcessServices.getProcessList(
-      projectId,
+      projectId.value,
       { name: JSON.stringify([taskDetail?.value?.process.name]) },
       'active',
     );
@@ -282,7 +281,7 @@ const getTaskDependencies = async (): Promise<TaskDependency[]> => {
 
 const getProjectModules = async (): Promise<ProjectModule[]> => {
   try {
-    const { data } = await ModuleServices.getModuleList(projectId);
+    const { data } = await ModuleServices.getModuleList(projectId.value);
     if (data) {
       return data.data;
     }
@@ -454,7 +453,6 @@ const showSubModuleByProcess = (depIndex: number): void => {
 };
 
 const getCustomModuleOptions = async (depIndex: number): Promise<void> => {
-  if (!projectId) return;
   try {
     const modules = await getProjectModules();
 
@@ -496,10 +494,10 @@ const getCustomModuleOptions = async (depIndex: number): Promise<void> => {
 
 const getCustomSubmoduleOptions = async (depIndex: number): Promise<void> => {
   const currentModule = dependencies.value[depIndex].module;
-  if (!projectId || !currentModule) return;
+  if (!currentModule) return;
   try {
     const { data: response } = await SubModuleServices.getSubmoduleList(
-      projectId,
+      projectId.value,
       {
         module: JSON.stringify([currentModule._id]),
       },

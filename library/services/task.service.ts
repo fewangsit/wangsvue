@@ -165,6 +165,22 @@ const TaskServices = {
   ): Promise<AxiosResponse<TaskTableFamilyResponse>> => {
     return API().get(`/${taskId}/family`);
   },
+
+  restoreTasks: (taskIds: string[]): Promise<AxiosResponse> => {
+    return API({
+      params: { id: JSON.stringify(taskIds) },
+    }).put('/restore');
+  },
+
+  deleteTasksPermanently: (taskIds: string[]): Promise<AxiosResponse> => {
+    return API({
+      params: { id: JSON.stringify(taskIds) },
+    }).delete('/permanent-delete');
+  },
+
+  markAsSprint: (taskId: string): Promise<AxiosResponse> => {
+    return API().put(`/${taskId}/mark-as-sprint`);
+  },
 };
 
 export default TaskServices;

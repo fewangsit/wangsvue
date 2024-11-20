@@ -39,7 +39,10 @@ const submitCaption = async (e: FormPayload): Promise<void> => {
       showInputCaption.value = false;
     }
   } catch (error) {
-    console.error(error);
+    toast.add({
+      error,
+      message: 'Caption gagal disimpan.',
+    });
   }
 };
 

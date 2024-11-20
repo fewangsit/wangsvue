@@ -21,9 +21,12 @@ export type AddTaskChecklistStaticDTO = Omit<
 const { setLoading } = useLoadingStore();
 const toast = useToast();
 
-const projectId = sessionStorage.getItem('projectId') ?? '';
+const projectId = inject<Ref<string>>('projectId');
 
 const props = defineProps<{
+  /**
+   * This props.static is used in DialogReviewLeader component
+   */
   static?: boolean;
 }>();
 
@@ -46,7 +49,7 @@ const getChecklistTemplates = async (): Promise<void> => {
   try {
     templateLoading.value = true;
     const { data: response } =
-      await TaskChecklistServices.getTaskChecklistTemplates(projectId);
+      await TaskChecklistServices.getTaskChecklistTemplates(projectId.value);
     if (response) {
       templateOptions.value = response.data.data.map((d) => ({
         label: d.name,

@@ -2,12 +2,13 @@
 import Button from 'lib/components/button/Button.vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import { computed, inject, onMounted, Ref, ref, watch } from 'vue';
-import { TaskDetailData, TaskLink } from 'lib/types/task.type';
+import { TaskDetailData, TaskLink, TaskLinkType } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 import TaskLinkServices from 'lib/services/taskLink.service';
 import UserName from 'lib/components/username/UserName.vue';
 import { formatDateReadable } from 'lib/utils/date.util';
 import DialogSetTaskLink from './DialogSetTaskLink.vue';
+import TaskLinkChangelog from './TaskLinkChangelog.vue';
 
 const toast = useToast();
 
@@ -18,12 +19,15 @@ onMounted(() => {
   getTaskLink();
 });
 
-const showDialogSetTaskLink = ref<boolean>(false);
-const showDialogSetTaskRepositoryLink = ref<boolean>(false);
-const showDialogSetTaskMicroserviceLink = ref<boolean>(false);
+const dialogSetTaskLink = ref<boolean>(false);
+const dialogSetTaskRepositoryLink = ref<boolean>(false);
+const dialogSetTaskMicroserviceLink = ref<boolean>(false);
+const dialogChangelog = ref<boolean>(false);
 
 const taskLink = ref<TaskLink>();
 const serviceLink = ref<TaskLink>();
+
+const linkType = ref<TaskLinkType>();
 
 const isProcessHasRepository = computed(() => {
   if (!taskDetail.value) return false;
@@ -65,6 +69,11 @@ const getTaskLink = async (): Promise<void> => {
   }
 };
 
+const openChangelog = (type: TaskLinkType): void => {
+  linkType.value = type;
+  dialogChangelog.value = true;
+};
+
 watch(taskDetail, async () => {
   await getTaskLink();
 });
@@ -77,7 +86,7 @@ watch(taskDetail, async () => {
       data-wv-section="detailtask-task-repository-link"
     >
       <DialogSetTaskLink
-        v-model:visible="showDialogSetTaskRepositoryLink"
+        v-model:visible="dialogSetTaskRepositoryLink"
         :initial-value="taskLink"
         type="repositori"
       />
@@ -103,8 +112,8 @@ watch(taskDetail, async () => {
             severity="secondary"
             text
           />
-          <!-- TODO: Handle task link changelog on click -->
           <Button
+            @click="openChangelog('task')"
             class="!p-1"
             icon="file-history"
             icon-class="!w-6 !h-6"
@@ -113,7 +122,7 @@ watch(taskDetail, async () => {
           />
           <Button
             :label="taskLink ? 'Edit Link' : 'Link Task'"
-            @click="showDialogSetTaskRepositoryLink = true"
+            @click="dialogSetTaskRepositoryLink = true"
             icon="add"
             severity="secondary"
           />
@@ -130,7 +139,7 @@ watch(taskDetail, async () => {
       data-wv-section="detailtask-task-microservices-link"
     >
       <DialogSetTaskLink
-        v-model:visible="showDialogSetTaskMicroserviceLink"
+        v-model:visible="dialogSetTaskMicroserviceLink"
         :initial-value="serviceLink"
         type="microservices"
       />
@@ -156,8 +165,8 @@ watch(taskDetail, async () => {
             severity="secondary"
             text
           />
-          <!-- TODO: Handle task link changelog on click -->
           <Button
+            @click="openChangelog('service')"
             class="!p-1"
             icon="file-history"
             icon-class="!w-6 !h-6"
@@ -166,7 +175,7 @@ watch(taskDetail, async () => {
           />
           <Button
             :label="serviceLink ? 'Edit Link' : 'Task Link'"
-            @click="showDialogSetTaskMicroserviceLink = true"
+            @click="dialogSetTaskMicroserviceLink = true"
             icon="add"
             severity="secondary"
           />
@@ -185,7 +194,7 @@ watch(taskDetail, async () => {
     data-wv-section="detailtask-task-link"
   >
     <DialogSetTaskLink
-      v-model:visible="showDialogSetTaskLink"
+      v-model:visible="dialogSetTaskLink"
       :initial-value="taskLink"
     />
     <div class="flex items-center justify-between">
@@ -210,8 +219,8 @@ watch(taskDetail, async () => {
           severity="secondary"
           text
         />
-        <!-- TODO: Handle task link changelog on click -->
         <Button
+          @click="openChangelog('task')"
           class="!p-1"
           icon="file-history"
           icon-class="!w-6 !h-6"
@@ -220,7 +229,7 @@ watch(taskDetail, async () => {
         />
         <Button
           :label="taskLink ? 'Edit Link' : 'Link Task'"
-          @click="showDialogSetTaskLink = true"
+          @click="dialogSetTaskLink = true"
           icon="add"
           severity="secondary"
         />
@@ -249,4 +258,6 @@ watch(taskDetail, async () => {
       </template>
     </div>
   </div>
+
+  <TaskLinkChangelog v-model:visible="dialogChangelog" :type="linkType" />
 </template>

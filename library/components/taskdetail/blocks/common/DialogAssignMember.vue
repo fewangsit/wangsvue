@@ -23,6 +23,10 @@ const props = defineProps<{
    * This task id prop is used in task table component, either single or bulk action.
    */
   taskIdProp?: string[];
+  /**
+   * This project id prop is used in task table component.
+   */
+  projectIdProp?: string;
 }>();
 
 const emit = defineEmits<{
@@ -33,6 +37,10 @@ const emit = defineEmits<{
  * This task id inject is used in task detail dialog.
  */
 const taskIdFromInject = inject<Ref<string>>('taskId');
+/**
+ * This project id inject is used in task detail dialog.
+ */
+const projectIdFromInject = inject<Ref<string>>('projectId');
 
 const taskDetail =
   inject<Ref<TaskDetailData>>('taskDetail') ?? ref<TaskDetailData>();
@@ -46,6 +54,10 @@ const memberLoading = ref<boolean>(false);
  * Single task id, either props from task table or inject from task detail dialog.
  */
 const taskId = computed(() => taskIdFromInject?.value ?? props.taskIdProp?.[0]);
+
+const projectId = computed(
+  () => projectIdFromInject?.value ?? props.projectIdProp,
+);
 
 const initialMemberValue = computed(() => {
   if (
@@ -87,10 +99,8 @@ const getMemberOptions = async (): Promise<void> => {
 const getProjectTeamMembers = async (): Promise<void> => {
   try {
     memberLoading.value = true;
-    const projectId = sessionStorage.getItem('projectId');
-    if (!projectId) return;
     const { data } = await ProjectTeamServices.getProjectTeamMembers(
-      projectId,
+      projectId.value,
       taskDetail.value.team[0],
     );
     if (data.data?.length) {
@@ -112,14 +122,12 @@ const getProjectTeamMembers = async (): Promise<void> => {
 const getSubModuleTeamMembers = async (): Promise<void> => {
   try {
     memberLoading.value = true;
-    const projectId = sessionStorage.getItem('projectId');
-    if (!projectId) return;
 
     const teamInitial = getTeamByInitial(taskDetail.value.team[0]);
     const params = {};
     params[teamInitial] = true;
     const { data } = await SubModuleServices.getSubmoduleOptions(
-      projectId,
+      projectId.value,
       params,
     );
     memberOptions.value = data.data[teamInitial];

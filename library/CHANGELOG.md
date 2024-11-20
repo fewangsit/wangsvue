@@ -1,6 +1,91 @@
 # Changelog
 
 
+## v1.5.55
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.54...v1.5.55)
+
+### 🚀 Enhancements
+
+- **taskdetail:** Add props for initialmodule and initialsubmodule ([202c275](https://github.com/fewangsit/wangsvue/commit/202c275))
+- **taskdetail:** Add attachment changelog ([c3efefc](https://github.com/fewangsit/wangsvue/commit/c3efefc))
+- **taskdetail:** Add task link changelog ([eae6230](https://github.com/fewangsit/wangsvue/commit/eae6230))
+- **taskdetail:** Add task checklist changelog ([97398bc](https://github.com/fewangsit/wangsvue/commit/97398bc))
+- **taskdetail:** Add content for fallback if no data in changelog ([9b4e7f2](https://github.com/fewangsit/wangsvue/commit/9b4e7f2))
+- **taskdetail:** Show validator if counter an error while update priority value ([8878abb](https://github.com/fewangsit/wangsvue/commit/8878abb))
+- **taskdetail:** Add content for event log tab ([377e99d](https://github.com/fewangsit/wangsvue/commit/377e99d))
+- **taskdetail:** Add content for event log tab ([fcbe660](https://github.com/fewangsit/wangsvue/commit/fcbe660))
+
+### 🩹 Fixes
+
+- **timeline:** Update timeline content for embed type ([4cfbb08](https://github.com/fewangsit/wangsvue/commit/4cfbb08))
+- **timeline:** Update timeline content for embed type ([f55ff84](https://github.com/fewangsit/wangsvue/commit/f55ff84))
+- **taskdetail:** Update header of changelog for task link ([de091e9](https://github.com/fewangsit/wangsvue/commit/de091e9))
+
+### 🏡 Chore
+
+- **presets:** Update version ([6bcac82](https://github.com/fewangsit/wangsvue/commit/6bcac82))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Dzulqtera <dzul@qtera.co.id>
+
+## v1.5.54
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.52...v1.5.54)
+
+### 🏡 Chore
+
+- Update version ([6703796](https://github.com/fewangsit/wangsvue/commit/6703796))
+
+### 🤖 CI
+
+- Update release.yml to push changes to main branch after release ([08df431](https://github.com/fewangsit/wangsvue/commit/08df431))
+- Add workflow_dispatch on release workflpow ([a20a270](https://github.com/fewangsit/wangsvue/commit/a20a270))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.52
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.51...v1.5.52)
+
+## v1.5.51
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.48...v1.5.51)
+
+### 🚀 Enhancements
+
+- **tasktable:** Add table actions for restore and delete permanently ([df2f1c8](https://github.com/fewangsit/wangsvue/commit/df2f1c8))
+- **tasktable:** Add table actions for restore and delete permanently ([38697e7](https://github.com/fewangsit/wangsvue/commit/38697e7))
+- **tasktable:** Add condition for fetching task table based on props.page ([3977b8f](https://github.com/fewangsit/wangsvue/commit/3977b8f))
+- **DataTable:** Implement emit rowSelect when click a row ([6b18539](https://github.com/fewangsit/wangsvue/commit/6b18539))
+- **tasktable:** Open dialogselectproject while click '+ Task' button in tab all ([d7946ef](https://github.com/fewangsit/wangsvue/commit/d7946ef))
+- **tasktable:** Connect dialogconfirmrestoretask with API ([0c5e5f0](https://github.com/fewangsit/wangsvue/commit/0c5e5f0))
+- **tasktable:** Connect dialogconfirmdeletetaskpermanently with API ([5bfd0d2](https://github.com/fewangsit/wangsvue/commit/5bfd0d2))
+- **taskdetail:** Add edit button for API Spec task with 'Selesai' as its status ([686000e](https://github.com/fewangsit/wangsvue/commit/686000e))
+
+### 🩹 Fixes
+
+- **tasktable:** Update condition for showing button of create task based on props.page ([b2d7944](https://github.com/fewangsit/wangsvue/commit/b2d7944))
+- **taskdetail:** Change projectId from session storage to props and inject ([c687f03](https://github.com/fewangsit/wangsvue/commit/c687f03))
+- **task:** Make project id in dialogassignmember become dynamic, so it can use props or inject for project id ([f7e5d43](https://github.com/fewangsit/wangsvue/commit/f7e5d43))
+
+### 🏡 Chore
+
+- **release:** V1.5.48 ([5916c93](https://github.com/fewangsit/wangsvue/commit/5916c93))
+- Push to main after publish ([7fc66db](https://github.com/fewangsit/wangsvue/commit/7fc66db))
+- **release:** V1.5.49 ([73bf3fe](https://github.com/fewangsit/wangsvue/commit/73bf3fe))
+- **release:** V1.5.50 ([66e3af4](https://github.com/fewangsit/wangsvue/commit/66e3af4))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.50
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.49...v1.5.50)

@@ -96,7 +96,12 @@ const formatActionTitle = (action: string): string => {
 
               <template v-else-if="'type' in value">
                 <div class="grid grid-rows-[max-content,auto] gap-1">
-                  <span class="flex gap-1">
+                  <span
+                    :class="[
+                      'flex gap-1',
+                      { 'flex-col': value.type === 'embed' },
+                    ]"
+                  >
                     <span class="font-semibold whitespace-nowrap">
                       {{ key }}:
                     </span>
