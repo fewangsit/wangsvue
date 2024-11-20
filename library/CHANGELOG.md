@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.5.56
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.55...v1.5.56)
+
+### 🏡 Chore
+
+- **presets:** Update version ([cb1662d](https://github.com/fewangsit/wangsvue/commit/cb1662d))
+
+### 🎨 Styles
+
+- Add icons ([e18dc10](https://github.com/fewangsit/wangsvue/commit/e18dc10))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.55
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.54...v1.5.55)
