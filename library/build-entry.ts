@@ -60,6 +60,7 @@ import {
   convertJsonImage,
   isEmptyObject,
   isIntersect,
+  formatDateReadable,
 } from 'lib/utils';
 
 // Directives
@@ -153,6 +154,7 @@ export {
   convertJsonImage,
   isEmptyObject,
   isIntersect,
+  formatDateReadable,
 
   // Components
   Badge,
