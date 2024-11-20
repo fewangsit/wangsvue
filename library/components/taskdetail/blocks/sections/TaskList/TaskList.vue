@@ -57,7 +57,7 @@ const getSimilarTasks = async (): Promise<void> => {
     const { data: response } = await TaskServices.getTaskList(params);
 
     if (response) {
-      tasks.value = response.data.data.filter(
+      tasks.value = response.data?.data?.filter(
         (task) => task._id !== taskId.value,
       );
     }
