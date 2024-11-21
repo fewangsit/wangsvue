@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Button from 'lib/components/button/Button.vue';
 import Icon from 'lib/components/icon/Icon.vue';
-import { computed, inject, onMounted, Ref, ref, watch } from 'vue';
+import { computed, ComputedRef, inject, onMounted, Ref, ref, watch } from 'vue';
 import { TaskDetailData, TaskLink, TaskLinkType } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 import TaskLinkServices from 'lib/services/taskLink.service';
@@ -9,9 +9,14 @@ import UserName from 'lib/components/username/UserName.vue';
 import { formatDateReadable } from 'lib/utils/date.util';
 import DialogSetTaskLink from './DialogSetTaskLink.vue';
 import TaskLinkChangelog from './TaskLinkChangelog.vue';
+import { WangsitStatus } from 'lib/types/wangsStatus.type';
 
 const toast = useToast();
 
+const userType =
+  inject<ComputedRef<'member' | 'admin' | 'pm' | 'teamLeader' | 'guest'>>(
+    'userType',
+  );
 const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 
@@ -28,6 +33,14 @@ const taskLink = ref<TaskLink>();
 const serviceLink = ref<TaskLink>();
 
 const linkType = ref<TaskLinkType>();
+
+const isDisabled = computed(() => {
+  const disabledStatus = (
+    ['Selesai', 'Reported Bug'] as WangsitStatus[]
+  ).includes(taskDetail.value?.status);
+
+  return disabledStatus || userType.value === 'guest';
+});
 
 const isProcessHasRepository = computed(() => {
   if (!taskDetail.value) return false;
@@ -121,6 +134,7 @@ watch(taskDetail, async () => {
             text
           />
           <Button
+            :disabled="isDisabled"
             :label="taskLink ? 'Edit Link' : 'Link Task'"
             @click="dialogSetTaskRepositoryLink = true"
             icon="add"
@@ -174,6 +188,7 @@ watch(taskDetail, async () => {
             text
           />
           <Button
+            :disabled="isDisabled"
             :label="serviceLink ? 'Edit Link' : 'Task Link'"
             @click="dialogSetTaskMicroserviceLink = true"
             icon="add"
@@ -228,6 +243,7 @@ watch(taskDetail, async () => {
           text
         />
         <Button
+          :disabled="isDisabled"
           :label="taskLink ? 'Edit Link' : 'Link Task'"
           @click="dialogSetTaskLink = true"
           icon="add"

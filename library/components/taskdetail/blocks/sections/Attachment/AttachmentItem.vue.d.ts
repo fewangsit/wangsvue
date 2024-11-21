@@ -33,6 +33,7 @@ export interface AttachmentItemProps {
   type: 'attachment' | 'checklist';
   item?: AttachmentItemData;
   readonly?: boolean;
+  disabled?: boolean;
 }
 
 /**

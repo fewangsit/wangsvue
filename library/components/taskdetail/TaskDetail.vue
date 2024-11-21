@@ -65,7 +65,9 @@ onUnmounted(() => {
 });
 
 const userType = computed(() => {
-  const { permission } = JSON.parse(localStorage.getItem('user') || '{}');
+  const { permission, _id: userId } = JSON.parse(
+    localStorage.getItem('user') || '{}',
+  );
   const isAdmin = Object.values(permission?.manageProject || {}).every(
     (value) => value === true,
   );
@@ -73,6 +75,9 @@ const userType = computed(() => {
   const processTeam = selectedProcess.value?.team?.[0]?.initial;
   const isTeamLeader =
     processTeam && leaders?.length && leaders?.includes(processTeam);
+  const isMember =
+    userId &&
+    taskDetail.value?.assignedTo.find((assigned) => assigned._id === userId);
 
   if (isAdmin) {
     return 'admin';
@@ -80,8 +85,10 @@ const userType = computed(() => {
     return 'pm';
   } else if (isTeamLeader) {
     return 'teamLeader';
+  } else if (isMember) {
+    return 'member';
   }
-  return 'member';
+  return 'guest';
 });
 
 const user = ref<User>(
@@ -377,7 +384,16 @@ watch(visible, (value) => {
             severity="secondary"
             text
           />
-          <TaskMore v-if="!isNewTask" :task-detail="taskDetail" />
+          <TaskMore
+            v-if="
+              !isNewTask &&
+              userType !== 'guest' &&
+              ['Backlog', 'Sprint', 'Waiting Approval'].includes(
+                taskDetail?.status,
+              )
+            "
+            :task-detail="taskDetail"
+          />
           <Button
             @click="visible = false"
             class="!p-0.5 !text-general-200 dark:!text-general-200"
