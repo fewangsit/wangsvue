@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, shallowRef, watch } from 'vue';
+import { useToast } from 'lib/utils';
 import { QueryParams } from '../datatable/DataTable.vue.d';
 import { UpdateTaskMemberDTO, UpdateTaskMemberItem } from 'lib/dto/task.dto';
 import { FormPayload } from '../form/Form.vue.d';
@@ -25,10 +26,13 @@ import eventBus from 'lib/event-bus';
 import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
 import Icon from '../icon/Icon.vue';
 
+const toast = useToast();
+
 const props = withDefaults(defineProps<DialogAdjustmentTaskProps>(), {
   autoClose: false,
   preventAppear: false,
   closeOnSubmit: true,
+  header: 'Assign Task',
 });
 
 const visibility = defineModel('visibility');
@@ -106,20 +110,20 @@ const getTaskList = async (
   try {
     const { data } = await TaskServices.getTaskList({
       ...params,
-      Member: JSON.stringify(props.members.map((item) => item._id)),
+      member: JSON.stringify(props.members.map((item) => item._id)),
     });
     const taskListData = data as TaskListResponse;
 
     if (taskListData?.data?.data?.length > 0) {
       visibility.value = true;
       dialogVisibility.value = true;
+      emit('emptyList');
       return findUnassignMember(taskListData);
     }
 
     if (preventAppear) {
       dialogVisibility.value = false;
       visibility.value = false;
-      emit('emptyList');
     }
     return findUnassignMember(taskListData);
   } catch (error) {
@@ -132,9 +136,17 @@ const putNewAssign = async (payload: UpdateTaskMemberDTO): Promise<void> => {
     await TaskServices.updateTaskMember(payload);
     refreshDataTable();
     emit('successAssignUnAssign');
+    toast.add({
+      message: 'Task telah dialihkan.',
+      severity: 'success',
+    });
   } catch (error) {
     emit('failedAssignUnAssign');
-    console.error(error);
+    toast.add({
+      message: 'Task gagal dialihkan.',
+      severity: 'error',
+      error,
+    });
   }
 };
 
@@ -240,7 +252,7 @@ watch(
   >
     <template #header>
       <div class="flex flex-col gap-3">
-        <p class="!text-base !leading-4 !font-semibold">Assign Task</p>
+        <p class="!text-base !leading-4 !font-semibold">{{ props.header }}</p>
         <p class="!text-xs !leading-4">
           Member Awal: {{ members?.map((item) => item?.nickName)?.join(', ') }}
         </p>
