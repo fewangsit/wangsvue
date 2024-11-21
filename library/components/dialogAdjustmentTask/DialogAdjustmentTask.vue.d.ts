@@ -3,7 +3,7 @@ import { ClassComponent } from '../ts-helpers';
 
 export interface DialogAdjustmentTaskProps {
   /**
-   * Pass Member id to get task that connectted to memberI
+   * Pass Member id to get task that connected to memberId
    */
   members: Pick<AssignedTo, '_id' | 'nickName'>[];
   /**
@@ -14,13 +14,17 @@ export interface DialogAdjustmentTaskProps {
    * Prevent Dialog To even show when data list length 0 and then emptylist emit will be trigger
    * @default false
    */
-  preventAppear: boolean;
+  preventAppear?: boolean;
   /**
    * Close dialog after form validated and submitted.
-   *
    * @default true
    */
   closeOnSubmit?: boolean;
+  /**
+   * Header Dialog Title.
+   * @default 'Assign Task'
+   */
+  header?: string;
 }
 
 export type DialogAdjustmentTaskEmits = {
@@ -32,15 +36,19 @@ export type DialogAdjustmentTaskEmits = {
   /**
    * Get trigger everytime visibility change
    */
-  'update:visibility': [];
+  'update:visibility': [visible: boolean];
   /**
-   * Trigger when assign & unassig successfully save to server
+   * Trigger when assign & unassign successfully save to server
    */
   'successAssignUnAssign': [];
   /**
-   * Trigger when assign & unassig failed save to server
+   * Trigger when assign & unassign failed save to server
    */
   'failedAssignUnAssign': [];
+  /**
+   * Trigger when cancel btn clicked
+   */
+  'cancel': [];
 };
 
 declare class DialogAdjustmentTask extends ClassComponent<

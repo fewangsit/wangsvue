@@ -93,6 +93,7 @@ export const dialogAdjustmentTaskTableColumn: TableColumn[] = [
     header: 'Reported Bug',
     sortable: true,
     fixed: false,
+    bodyTemplate: (data: Task): string => `${data.timeReportedBug} Kali`,
   },
   {
     field: 'lastUpdatedAt',
