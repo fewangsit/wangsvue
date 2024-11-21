@@ -26,6 +26,7 @@ import DialogAddChecklist, {
 } from './DialogAddChecklist.vue';
 import { AxiosResponse } from 'axios';
 import Editor from 'lib/components/editor/Editor.vue';
+import ChecklistChangelog from './ChecklistChangelog.vue';
 
 const toast = useToast();
 
@@ -83,6 +84,7 @@ const dialogDeleteChecklist = ref<boolean>(false);
 const dialogDeleteChecklistItem = ref<boolean>(false);
 const dialogUncheckChecklistItem = ref<boolean>(false);
 const dialogAddAttachment = ref<boolean>(false);
+const dialogChangelog = ref<boolean>(false);
 
 const selectedChecklist = ref<TaskChecklist>();
 const selectedChecklistItem = ref<TaskChecklistItem>();
@@ -359,6 +361,7 @@ watch(
       <div class="flex items-center gap-2">
         <Button
           v-if="!props.static"
+          @click="dialogChangelog = true"
           class="!p-1"
           icon="file-history"
           icon-class="!w-6 !h-6"
@@ -643,4 +646,6 @@ watch(
   <DialogDetailChecklistTemplate
     v-model:visible="dialogDetailChecklistTemplate"
   />
+
+  <ChecklistChangelog v-model:visible="dialogChangelog" />
 </template>

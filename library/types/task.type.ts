@@ -230,3 +230,35 @@ export interface TaskAttachmentChangelogItem {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface TaskLinkChangelogItem {
+  _id: string;
+  type: TaskLinkType;
+  action: string;
+  oldValue: TaskLinkChangelogItemValue;
+  newValue: TaskLinkChangelogItemValue;
+  user: Member;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TaskLinkChangelogItemValue {
+  type: TaskLinkURLType;
+  link: string;
+}
+
+export interface TaskChecklistChangelogItem {
+  _id: string;
+  task: string;
+  action: string;
+  oldValue: string;
+  newValue: string;
+  attachment: {
+    type: FileType;
+    name: string;
+    src: string;
+  };
+  user: Member;
+  createdAt: string;
+  updatedAt: string;
+}

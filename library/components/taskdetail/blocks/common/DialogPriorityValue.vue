@@ -44,22 +44,22 @@ const handleSubmit = async (e: FormPayload): Promise<void> => {
       visible.value = false;
     }
   } catch (error) {
-    /*
-     * TODO: Adjust error message from backend later.
-     * if (error.message === 'Priority value taken') {
-     *   priorityValueMessage.value = 'Nilai prioritas sudah ada';
-     *   priorityValueInvalid.value = true;
-     * }
-     */
-
     toast.add({
       message: 'Nilai prioritas gagal disimpan.',
       error,
     });
+    if (error.response?.status === 400) {
+      priorityValueInvalid.value = true;
+      const el = document.querySelector(
+        '#tambah-nilai-prioritas-inputnumber',
+      ) as HTMLElement;
+      el?.blur();
+    }
   } finally {
     setLoading(false);
   }
 };
+const inputKey = ref(0);
 </script>
 
 <template>
@@ -67,14 +67,18 @@ const handleSubmit = async (e: FormPayload): Promise<void> => {
     v-model:visible="visible"
     :buttons-template="['cancel', 'submit']"
     :closable="false"
+    :close-on-submit="false"
+    :reset-after-submit="false"
     :show-stay-checkbox="false"
     :use-clear-btn="false"
+    @hide="priorityValueInvalid = false"
     @submit="handleSubmit"
     data-wv-name="dialog-priority-value"
     header="Nilai Prioritas"
   >
     <template #fields>
       <InputNumber
+        :key="inputKey"
         :invalid="priorityValueInvalid"
         :max="9999"
         :max-digit="4"
@@ -86,6 +90,7 @@ const handleSubmit = async (e: FormPayload): Promise<void> => {
         mandatory
         placeholder="0"
         use-validator
+        validator-message="Nilai prioritas sudah ada"
       />
     </template>
   </DialogForm>

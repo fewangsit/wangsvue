@@ -1,5 +1,8 @@
 import axios, { AxiosInstance, AxiosProgressEvent, AxiosResponse } from 'axios';
-import { QueryParams } from 'lib/components/datatable/DataTable.vue.d';
+import {
+  QueryParams,
+  ShortFetchResponse,
+} from 'lib/components/datatable/DataTable.vue.d';
 import {
   AddTaskChecklistAttachmentFileDTO,
   AddTaskChecklistAttachmentUrlDTO,
@@ -10,6 +13,7 @@ import {
   UpdateTaskChecklistDTO,
   UpdateTaskChecklistItemDTO,
 } from 'lib/dto/taskChecklist.dto';
+import { TaskChecklistChangelogItem } from 'lib/types/task.type';
 import { getBaseURL } from 'lib/utils/getBaseURL.util';
 
 type AxiosInstanceOptions = {
@@ -128,6 +132,12 @@ const TaskChecklistServices = {
 
   deleteTaskAttachment: (attachmentId: string): Promise<AxiosResponse> => {
     return API().delete(`/checklist-item/attachment/${attachmentId}`);
+  },
+
+  getTaskChecklistChangelog: (
+    taskId: string,
+  ): Promise<AxiosResponse<ShortFetchResponse<TaskChecklistChangelogItem>>> => {
+    return API().get(`/task/${taskId}/change-log`);
   },
 };
 
