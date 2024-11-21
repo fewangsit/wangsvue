@@ -38,6 +38,7 @@ const userType =
   inject<ComputedRef<'member' | 'admin' | 'pm' | 'teamLeader' | 'guest'>>(
     'userType',
   );
+const isProcessTeamLeader = inject<ComputedRef<boolean>>('isProcessTeamLeader');
 
 const props = defineProps<{
   initialModule?: {
@@ -1018,7 +1019,7 @@ watch(
         <Button
           v-if="
             taskDetail?.status === 'Pending Review Leader' &&
-            userType === 'teamLeader'
+            isProcessTeamLeader
           "
           @click="openReviewDialog"
           label="Review"

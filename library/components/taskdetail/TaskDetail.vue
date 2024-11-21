@@ -27,7 +27,6 @@ import DescriptionTab from './blocks/Tabs/DescriptionTab.vue';
 import TaskMore from './blocks/common/TaskMore.vue';
 import ProjectServices from 'lib/services/project.service';
 import { ProjectDetail } from 'lib/types/project.type';
-import { ProjectProcess } from 'lib/types/projectProcess.type';
 
 import TaskDetail from './TaskDetail.vue';
 import Comment from '../comment/Comment.vue';
@@ -51,11 +50,6 @@ type TaskMenu = MenuItem & {
   component: DefineComponent<any, any, any>;
 };
 
-type SelectedProcess = Pick<
-  ProjectProcess,
-  '_id' | 'name' | 'team' | 'processPosition'
->;
-
 onMounted(async () => {
   attachEventListener();
 });
@@ -71,10 +65,7 @@ const userType = computed(() => {
   const isAdmin = Object.values(permission?.manageProject || {}).every(
     (value) => value === true,
   );
-  const { isPM, leaders } = projectDetail.value ?? {};
-  const processTeam = selectedProcess.value?.team?.[0]?.initial;
-  const isTeamLeader =
-    processTeam && leaders?.length && leaders?.includes(processTeam);
+  const { isPM } = projectDetail.value ?? {};
   const isMember =
     userId &&
     taskDetail.value?.assignedTo.find((assigned) => assigned._id === userId);
@@ -83,12 +74,21 @@ const userType = computed(() => {
     return 'admin';
   } else if (isPM) {
     return 'pm';
-  } else if (isTeamLeader) {
+  } else if (isProcessTeamLeader.value) {
     return 'teamLeader';
   } else if (isMember) {
     return 'member';
   }
   return 'guest';
+});
+
+const isProcessTeamLeader = computed(() => {
+  const { leaders } = projectDetail.value ?? {};
+  const processTeam = legendForm.value?.process?.team?.[0]?.initial;
+  const isLeader = processTeam
+    ? leaders?.length && leaders?.includes(processTeam)
+    : false;
+  return isLeader;
 });
 
 const user = ref<User>(
@@ -106,7 +106,6 @@ const isNewTask = ref<boolean>(false);
 const taskMenuIndex = ref<number>(0);
 
 const projectDetail = ref<ProjectDetail>();
-const selectedProcess = ref<SelectedProcess>();
 
 const legendForm = ref<TaskLegendForm>({});
 
@@ -282,10 +281,11 @@ const handleShow = (): void => {
 const reset = (): void => {
   firstFetch.value = true;
   taskMenuIndex.value = 0;
-};
-
-const handleProcessChange = (process: SelectedProcess): void => {
-  selectedProcess.value = process;
+  taskId.value = undefined;
+  taskDetail.value = undefined;
+  legendForm.value = {};
+  isNewTask.value = false;
+  showCommentSection.value = false;
 };
 
 provide('projectId', projectId);
@@ -293,6 +293,7 @@ provide('taskId', taskId);
 provide('taskDetail', taskDetail);
 provide('isNewTask', isNewTask);
 provide('userType', userType);
+provide('isProcessTeamLeader', isProcessTeamLeader);
 provide('legendForm', legendForm);
 provide('loadingTask', loadingTask);
 provide('openDetailTask', openDetailTask);
@@ -308,17 +309,6 @@ watch(
     }
   },
 );
-
-watch(visible, (value) => {
-  if (!value) {
-    taskId.value = undefined;
-    taskDetail.value = undefined;
-    selectedProcess.value = undefined;
-    legendForm.value = {};
-    isNewTask.value = false;
-    showCommentSection.value = false;
-  }
-});
 </script>
 
 <template>
@@ -415,7 +405,6 @@ watch(visible, (value) => {
           <Legend
             :initial-module="props.initialModule"
             :initial-sub-module="props.initialSubModule"
-            @process-change="handleProcessChange"
           />
           <TabMenu
             v-model:active-index="taskMenuIndex"
