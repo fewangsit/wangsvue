@@ -117,10 +117,10 @@ const getTaskList = async (
     if (taskListData?.data?.data?.length > 0) {
       visibility.value = true;
       dialogVisibility.value = true;
-      emit('emptyList');
       return findUnassignMember(taskListData);
     }
 
+    emit('emptyList');
     if (preventAppear) {
       dialogVisibility.value = false;
       visibility.value = false;
