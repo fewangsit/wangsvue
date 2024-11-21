@@ -41,6 +41,10 @@ export type DialogAdjustmentTaskEmits = {
    * Trigger when assign & unassig failed save to server
    */
   'failedAssignUnAssign': [];
+  /**
+   * Trigger when cancel btn clicked
+   */
+  'cancel': [];
 };
 
 declare class DialogAdjustmentTask extends ClassComponent<

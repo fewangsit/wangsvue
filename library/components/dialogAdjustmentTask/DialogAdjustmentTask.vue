@@ -23,6 +23,7 @@ import MemberServices from 'lib/services/member.service';
 import Dropdown from '../dropdown/Dropdown.vue';
 import eventBus from 'lib/event-bus';
 import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
+import Icon from '../icon/Icon.vue';
 
 const props = withDefaults(defineProps<DialogAdjustmentTaskProps>(), {
   autoClose: false,
@@ -105,7 +106,7 @@ const getTaskList = async (
   try {
     const { data } = await TaskServices.getTaskList({
       ...params,
-      member: JSON.stringify(props.members.map((item) => item._id)),
+      Member: JSON.stringify(props.members.map((item) => item._id)),
     });
     const taskListData = data as TaskListResponse;
 
@@ -225,6 +226,7 @@ watch(
     v-model:visible="dialogVisibility"
     :buttons-template="['cancel', 'submit']"
     :close-on-submit="closeOnSubmit"
+    @close="$emit('cancel')"
     @submit="
       () => {
         putNewAssign({
@@ -289,6 +291,17 @@ watch(
         use-validator
         validator-message="Member harus diisi"
       />
+
+      <div class="flex justify-between">
+        <span class="flex gap-1">
+          <Icon class="!text-base !text-gold" icon="check-double-fill" />
+          Progress Task: 50% (100/200)
+        </span>
+        <span class="!flex !text-gold">
+          Detail
+          <Icon class="text-base" icon="arrow-right" />
+        </span>
+      </div>
     </template>
   </DialogForm>
 
