@@ -32,11 +32,10 @@ const getSeverity = (status?: string): BadgeProps['severity'] => {
   let severity: BadgeProps['severity'];
 
   switch (status) {
-    case 'approve':
+    case 'menyetujui':
       severity = 'success';
       break;
-    case 'ditolak':
-    case 'reject':
+    case 'menolak':
       severity = 'danger';
       break;
     default:
@@ -119,7 +118,7 @@ const getSeverity = (status?: string): BadgeProps['severity'] => {
             }}</span>
             <Badge
               v-if="approver.action"
-              :label="approver.action === 'approve' ? 'menyetujui' : 'menolak'"
+              :label="approver.action"
               :severity="getSeverity(approver.action)"
             />
           </div>
