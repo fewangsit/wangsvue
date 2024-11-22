@@ -25,6 +25,7 @@ import DialogFinishReview from '../sections/Review/DialogFinishReview.vue';
 import DialogConfirmFinishTask from './DialogConfirmFinishTask.vue';
 import DialogConfirmEdit from './DialogConfirmEdit.vue';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';
+import DialogReportBug from 'lib/components/dialogreportbug/DialogReportBug.vue';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -208,6 +209,7 @@ const dialogReview = ref<boolean>(false);
 const dialogFinishReview = ref<boolean>(false);
 const dialogConfirmFinishTask = ref<boolean>(false);
 const dialogConfirmEdit = ref<boolean>(false);
+const dialogReportBug = ref<boolean>(false);
 
 const subModuleVisibility = ref(true);
 const repositoryVisibility = ref(true);
@@ -754,6 +756,30 @@ const loadInitialData = async (): Promise<void> => {
   }
 };
 
+const reportBugTask = async (note?: string): Promise<void> => {
+  try {
+    setLoading(true);
+    const { data } = await TaskServices.reportBugTask(taskId.value, {
+      note: note,
+    });
+    if (data) {
+      toast.add({
+        message: 'Task telah direport bug.',
+        severity: 'success',
+      });
+      dialogReportBug.value = false;
+      eventBus.emit('detail-task:update', { taskId: taskId.value });
+    }
+  } catch (error) {
+    toast.add({
+      message: 'Task gagal direport bug.',
+      error,
+    });
+  } finally {
+    setLoading(false);
+  }
+};
+
 watch(
   taskDetail,
   () => {
@@ -1025,31 +1051,45 @@ watch(
           label="Review"
           severity="secondary"
         />
+        <Button
+          v-if="taskDetail?.status === 'Selesai'"
+          @click="dialogReportBug = true"
+          label="Report Bug"
+          severity="danger"
+        />
       </div>
     </div>
   </div>
+
   <DialogPriorityValue
     v-model:visible="dialogPriorityValue"
     :priority-value="taskDetail?.priority"
   />
+
   <DialogReviewLeader
     v-model:visible="dialogReview"
     @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
   />
+
   <DialogFinishReview
     v-model:visible="dialogFinishReview"
+    @report-bug="dialogReportBug = true"
     @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
   />
+
   <DialogConfirmFinishTask
     v-model:visible="dialogConfirmFinishTask"
     :task-detail="taskDetail"
     @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
   />
+
   <DialogConfirmEdit
     v-model:visible="dialogConfirmEdit"
     :task-detail="taskDetail"
     @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
   />
+
+  <DialogReportBug v-model:visible="dialogReportBug" @submit="reportBugTask" />
 </template>
 
 <style scoped>
