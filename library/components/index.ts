@@ -60,6 +60,8 @@ import TaskDetailPbi from './dialogdetailpbi/TaskDetailPbi.vue';
 import ApproverInfo from './approverinfo/ApproverInfo.vue';
 import DetailMember from './detailmember/DetailMember.vue';
 import DialogAdjustmentTask from './dialogAdjustmentTask/DialogAdjustmentTask.vue';
+import TaskDetail from './taskdetail/TaskDetail.vue';
+import TaskTable from './tasktable/TaskTable.vue';
 
 export {
   Badge,
@@ -124,4 +126,6 @@ export {
   ApproverInfo,
   DetailMember,
   DialogAdjustmentTask,
+  TaskDetail,
+  TaskTable,
 };
