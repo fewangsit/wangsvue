@@ -159,7 +159,7 @@ const getDuration = (duration: number): string => {
               '!min-w-[150px] !h-[30px] !text-left !rounded',
               {
                 'pointer-events-none':
-                  userType === 'member' ||
+                  !['admin', 'pm', 'teamLeader'].includes(userType) ||
                   taskDetail?.process?.name === 'API Spec',
               },
             ]"
@@ -181,7 +181,10 @@ const getDuration = (duration: number): string => {
           <Button
             :class="[
               '!w-[150px] !h-[30px] !text-left !rounded',
-              { 'pointer-events-none': isContinousDuration },
+              {
+                'pointer-events-none':
+                  isContinousDuration || taskDetail?.status !== 'Backlog',
+              },
             ]"
             :disabled="isNewTask"
             :label="
@@ -198,7 +201,7 @@ const getDuration = (duration: number): string => {
                 {
                   'pointer-events-none':
                     taskDetail?.process?.name === 'API Spec' ||
-                    taskDetail?.status === 'Sprint',
+                    taskDetail?.status !== 'Backlog',
                 },
               ]"
               :disabled="isNewTask"

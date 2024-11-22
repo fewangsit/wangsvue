@@ -27,7 +27,6 @@ import DescriptionTab from './blocks/Tabs/DescriptionTab.vue';
 import TaskMore from './blocks/common/TaskMore.vue';
 import ProjectServices from 'lib/services/project.service';
 import { ProjectDetail } from 'lib/types/project.type';
-import { ProjectProcess } from 'lib/types/projectProcess.type';
 
 import TaskDetail from './TaskDetail.vue';
 import Comment from '../comment/Comment.vue';
@@ -51,11 +50,6 @@ type TaskMenu = MenuItem & {
   component: DefineComponent<any, any, any>;
 };
 
-type SelectedProcess = Pick<
-  ProjectProcess,
-  '_id' | 'name' | 'team' | 'processPosition'
->;
-
 onMounted(async () => {
   attachEventListener();
 });
@@ -65,23 +59,36 @@ onUnmounted(() => {
 });
 
 const userType = computed(() => {
-  const { permission } = JSON.parse(localStorage.getItem('user') || '{}');
+  const { permission, _id: userId } = JSON.parse(
+    localStorage.getItem('user') || '{}',
+  );
   const isAdmin = Object.values(permission?.manageProject || {}).every(
     (value) => value === true,
   );
-  const { isPM, leaders } = projectDetail.value ?? {};
-  const processTeam = selectedProcess.value?.team?.[0]?.initial;
-  const isTeamLeader =
-    processTeam && leaders?.length && leaders?.includes(processTeam);
+  const { isPM } = projectDetail.value ?? {};
+  const isMember =
+    userId &&
+    taskDetail.value?.assignedTo.find((assigned) => assigned._id === userId);
 
   if (isAdmin) {
     return 'admin';
   } else if (isPM) {
     return 'pm';
-  } else if (isTeamLeader) {
+  } else if (isProcessTeamLeader.value) {
     return 'teamLeader';
+  } else if (isMember) {
+    return 'member';
   }
-  return 'member';
+  return 'guest';
+});
+
+const isProcessTeamLeader = computed(() => {
+  const { leaders } = projectDetail.value ?? {};
+  const processTeam = legendForm.value?.process?.team?.[0]?.initial;
+  const isLeader = processTeam
+    ? leaders?.length && leaders?.includes(processTeam)
+    : false;
+  return isLeader;
 });
 
 const user = ref<User>(
@@ -99,7 +106,6 @@ const isNewTask = ref<boolean>(false);
 const taskMenuIndex = ref<number>(0);
 
 const projectDetail = ref<ProjectDetail>();
-const selectedProcess = ref<SelectedProcess>();
 
 const legendForm = ref<TaskLegendForm>({});
 
@@ -275,10 +281,11 @@ const handleShow = (): void => {
 const reset = (): void => {
   firstFetch.value = true;
   taskMenuIndex.value = 0;
-};
-
-const handleProcessChange = (process: SelectedProcess): void => {
-  selectedProcess.value = process;
+  taskId.value = undefined;
+  taskDetail.value = undefined;
+  legendForm.value = {};
+  isNewTask.value = false;
+  showCommentSection.value = false;
 };
 
 provide('projectId', projectId);
@@ -286,6 +293,7 @@ provide('taskId', taskId);
 provide('taskDetail', taskDetail);
 provide('isNewTask', isNewTask);
 provide('userType', userType);
+provide('isProcessTeamLeader', isProcessTeamLeader);
 provide('legendForm', legendForm);
 provide('loadingTask', loadingTask);
 provide('openDetailTask', openDetailTask);
@@ -301,17 +309,6 @@ watch(
     }
   },
 );
-
-watch(visible, (value) => {
-  if (!value) {
-    taskId.value = undefined;
-    taskDetail.value = undefined;
-    selectedProcess.value = undefined;
-    legendForm.value = {};
-    isNewTask.value = false;
-    showCommentSection.value = false;
-  }
-});
 </script>
 
 <template>
@@ -377,7 +374,16 @@ watch(visible, (value) => {
             severity="secondary"
             text
           />
-          <TaskMore v-if="!isNewTask" :task-detail="taskDetail" />
+          <TaskMore
+            v-if="
+              !isNewTask &&
+              userType !== 'guest' &&
+              ['Backlog', 'Sprint', 'Waiting Approval'].includes(
+                taskDetail?.status,
+              )
+            "
+            :task-detail="taskDetail"
+          />
           <Button
             @click="visible = false"
             class="!p-0.5 !text-general-200 dark:!text-general-200"
@@ -395,11 +401,9 @@ watch(visible, (value) => {
         <div
           class="w-[800px] max-h-[600px] flex flex-col gap-3 !px-6 !py-3 overflow-y-auto detailtask-scrollbar-hide"
         >
-          <pre>{{ userType }}</pre>
           <Legend
             :initial-module="props.initialModule"
             :initial-sub-module="props.initialSubModule"
-            @process-change="handleProcessChange"
           />
           <TabMenu
             v-model:active-index="taskMenuIndex"

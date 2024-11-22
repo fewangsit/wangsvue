@@ -1,6 +1,55 @@
 # Changelog
 
 
+## v1.5.59
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.58...v1.5.59)
+
+### 🚀 Enhancements
+
+- **dialogreportbug:** Add dialogreportbug component ([13ab166](https://github.com/fewangsit/wangsvue/commit/13ab166))
+
+### 🩹 Fixes
+
+- **taskdetail:** Add optional chaining while fetch task list ([c9122fd](https://github.com/fewangsit/wangsvue/commit/c9122fd))
+- **taskdetail:** Add visibility and disability rules for task detail ([565f902](https://github.com/fewangsit/wangsvue/commit/565f902))
+- **taskdetail:** Update identifier for team leader based on process ([5875444](https://github.com/fewangsit/wangsvue/commit/5875444))
+- **taskdetail:** Update payload while review in dialogfinishreview ([f82681e](https://github.com/fewangsit/wangsvue/commit/f82681e))
+- **taskdetail:** Remove pre tag for usertype ([2b308f2](https://github.com/fewangsit/wangsvue/commit/2b308f2))
+
+### 🏡 Chore
+
+- Export taskdetail and tasktable component to build-entry ([36cc3d3](https://github.com/fewangsit/wangsvue/commit/36cc3d3))
+- **presets:** Update version ([f962669](https://github.com/fewangsit/wangsvue/commit/f962669))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Dzulqtera <dzul@qtera.co.id>
+
+## v1.5.58
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.57...v1.5.58)
+
+## v1.5.57
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.55...v1.5.57)
+
+### 🏡 Chore
+
+- **presets:** Update version ([cb1662d](https://github.com/fewangsit/wangsvue/commit/cb1662d))
+- **release:** V1.5.56 ([7ccda2d](https://github.com/fewangsit/wangsvue/commit/7ccda2d))
+- **presets:** Update version ([f1cc57c](https://github.com/fewangsit/wangsvue/commit/f1cc57c))
+
+### 🎨 Styles
+
+- Add icons ([e18dc10](https://github.com/fewangsit/wangsvue/commit/e18dc10))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.56
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.55...v1.5.56)

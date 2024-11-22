@@ -24,6 +24,8 @@ import TaskChecklistServices from 'lib/services/taskChecklist.service';
 import DialogFinishReview from '../sections/Review/DialogFinishReview.vue';
 import DialogConfirmFinishTask from './DialogConfirmFinishTask.vue';
 import DialogConfirmEdit from './DialogConfirmEdit.vue';
+import { WangsitStatus } from 'lib/types/wangsStatus.type';
+import DialogReportBug from 'lib/components/dialogreportbug/DialogReportBug.vue';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -34,7 +36,10 @@ const isNewTask = inject<Ref<boolean>>('isNewTask');
 const legendForm = inject<Ref<TaskLegendForm>>('legendForm');
 const loadingTask = inject<Ref<boolean>>('loadingTask');
 const userType =
-  inject<ComputedRef<'member' | 'admin' | 'pm' | 'teamLeader'>>('userType');
+  inject<ComputedRef<'member' | 'admin' | 'pm' | 'teamLeader' | 'guest'>>(
+    'userType',
+  );
+const isProcessTeamLeader = inject<ComputedRef<boolean>>('isProcessTeamLeader');
 
 const props = defineProps<{
   initialModule?: {
@@ -204,6 +209,7 @@ const dialogReview = ref<boolean>(false);
 const dialogFinishReview = ref<boolean>(false);
 const dialogConfirmFinishTask = ref<boolean>(false);
 const dialogConfirmEdit = ref<boolean>(false);
+const dialogReportBug = ref<boolean>(false);
 
 const subModuleVisibility = ref(true);
 const repositoryVisibility = ref(true);
@@ -211,6 +217,41 @@ const repositoryVisibility = ref(true);
 const bindProcess = computed(() => legendForm.value.process);
 const bindModule = computed(() => legendForm.value.module);
 const bindSubModule = computed(() => legendForm.value.submodule);
+
+/**
+ * The condition for isLegendEditable is as follows:
+ * - The task's status is 'Backlog' (i.e., the task is in the backlog and has not been started yet).
+ * - The user is not a guest (i.e., the user is logged in and has the necessary permissions to edit the task).
+ *
+ * If both conditions are true, then the legend is editable.
+ */
+const isLegendEditable = computed(() => {
+  const isBacklog = taskDetail.value?.status
+    ? taskDetail.value?.status === 'Backlog'
+    : true;
+
+  return isBacklog && userType.value !== 'guest';
+});
+
+/**
+ * Determines if the priority value input should be disabled based on the task's status and user type.
+ *
+ * Conditions for disabling the input should include at least one of the following conditions:
+ * - The task is new.
+ * - The user is a guest.
+ * - The task is one of the following statuses: 'Selesai', 'Reported Bug', 'Pending Review Leader'.
+ *
+ * @returns {boolean} True if the priority value input should be disabled, false otherwise.
+ */
+const isPriorityValueDisabled = computed(() => {
+  return (
+    isNewTask.value ||
+    userType.value === 'guest' ||
+    (
+      ['Selesai', 'Reported Bug', 'Pending Review Leader'] as WangsitStatus[]
+    ).includes(taskDetail.value?.status)
+  );
+});
 
 const getProcessOptions = async (): Promise<void> => {
   try {
@@ -396,9 +437,14 @@ const getSubmoduleOptions = async (): Promise<void> => {
  * Disable Rules:
  * 1. If the process hasn't been selected.
  * 2. If the props.initialModule is defined.
+ * 3. If the legend is not editable.
  */
 const isModuleDropdownDisabled = computed<boolean>(() => {
-  return !legendForm.value.process || !!props.initialModule;
+  return (
+    !isLegendEditable.value ||
+    !legendForm.value.process ||
+    !!props.initialModule
+  );
 });
 
 /**
@@ -406,28 +452,37 @@ const isModuleDropdownDisabled = computed<boolean>(() => {
  * 1. If the process hasn't been selected.
  * 2. If the module hasn't been selected.
  * 3. If the props.initialSubModule is defined.
- * 4. If the submodule visibility is set to false.
+ * 4. If the legend is not editable..
+ * 5. If the submodule visibility is set to false.
  */
 const isSubmoduleDropdownDisabled = computed<boolean>(() => {
   const { process, module } = legendForm.value;
   if (subModuleVisibility.value) {
-    return !process || !module || !!props.initialSubModule;
+    return (
+      !isLegendEditable.value || !process || !module || !!props.initialSubModule
+    );
   }
   return true;
 });
 
 /**
- * Disable Rules:
- * 1. If the process hasn't been selected.
- * 2. If the module hasn't been selected.
- * 3. If the submodule visibility is set to true and submodule hasn't been selected.
+ * Condition to disable the title input field :
+ * 1. The process hasn't been selected.
+ * 2. The module hasn't been selected.
+ * 3. The submodule hasn't been selected (if the submodule is visible).
+ * 4. The task status is 'Selesai' or 'Reported Bug'.
  */
 const isTitleInputDisabled = computed<boolean>(() => {
   const { process, module, submodule } = legendForm.value;
   const isProcessSelected = !!process;
   const isModuleSelected = !!module;
   const isSubmoduleSelected = subModuleVisibility.value ? !!submodule : true;
-  return !(isProcessSelected && isModuleSelected && isSubmoduleSelected);
+  return (
+    !(isProcessSelected && isModuleSelected && isSubmoduleSelected) ||
+    (['Selesai', 'Reported Bug'] as WangsitStatus[]).includes(
+      taskDetail.value?.status,
+    )
+  );
 });
 
 const focusTitleInput = (): void => {
@@ -701,6 +756,30 @@ const loadInitialData = async (): Promise<void> => {
   }
 };
 
+const reportBugTask = async (note?: string): Promise<void> => {
+  try {
+    setLoading(true);
+    const { data } = await TaskServices.reportBugTask(taskId.value, {
+      note: note,
+    });
+    if (data) {
+      toast.add({
+        message: 'Task telah direport bug.',
+        severity: 'success',
+      });
+      dialogReportBug.value = false;
+      eventBus.emit('detail-task:update', { taskId: taskId.value });
+    }
+  } catch (error) {
+    toast.add({
+      message: 'Task gagal direport bug.',
+      error,
+    });
+  } finally {
+    setLoading(false);
+  }
+};
+
 watch(
   taskDetail,
   () => {
@@ -852,6 +931,7 @@ watch(
           <div>
             <LiteDropdown
               v-model="legendForm.process"
+              :disabled="!isLegendEditable"
               :loading="legendLoading.process"
               :options="legendOptions.process"
               @change="handleTaskChange"
@@ -907,7 +987,7 @@ watch(
       </div>
       <Button
         v-if="taskDetail && taskDetail.priority"
-        :disabled="isNewTask"
+        :disabled="isPriorityValueDisabled"
         :label="taskDetail.priority.toString()"
         @click="dialogPriorityValue = true"
         class="!min-w-8"
@@ -915,7 +995,7 @@ watch(
       />
       <Button
         v-else
-        :disabled="isNewTask"
+        :disabled="isPriorityValueDisabled"
         @click="dialogPriorityValue = true"
         data-wv-section="add-nilai-prioritas-button"
         icon="add"
@@ -946,49 +1026,70 @@ watch(
         <Button
           v-if="
             taskDetail?.status === 'Selesai' &&
-            taskDetail?.process?.name === 'API Spec'
+            taskDetail?.process?.name === 'API Spec' &&
+            userType !== 'guest'
           "
           @click="dialogConfirmEdit = true"
           label="Edit"
           severity="secondary"
         />
         <Button
-          v-if="['Sprint', 'Fixing Bug'].includes(taskDetail?.status)"
+          v-if="
+            ['Sprint', 'Fixing Bug'].includes(taskDetail?.status) &&
+            userType === 'member'
+          "
           @click="dialogConfirmFinishTask = true"
           label="Tandai Selesai"
           severity="secondary"
         />
         <Button
-          v-if="taskDetail?.status === 'Pending Review Leader'"
+          v-if="
+            taskDetail?.status === 'Pending Review Leader' &&
+            isProcessTeamLeader
+          "
           @click="openReviewDialog"
           label="Review"
           severity="secondary"
         />
+        <Button
+          v-if="taskDetail?.status === 'Selesai'"
+          @click="dialogReportBug = true"
+          label="Report Bug"
+          severity="danger"
+        />
       </div>
     </div>
   </div>
+
   <DialogPriorityValue
     v-model:visible="dialogPriorityValue"
     :priority-value="taskDetail?.priority"
   />
+
   <DialogReviewLeader
     v-model:visible="dialogReview"
     @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
   />
+
   <DialogFinishReview
     v-model:visible="dialogFinishReview"
+    @report-bug="dialogReportBug = true"
     @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
   />
+
   <DialogConfirmFinishTask
     v-model:visible="dialogConfirmFinishTask"
     :task-detail="taskDetail"
     @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
   />
+
   <DialogConfirmEdit
     v-model:visible="dialogConfirmEdit"
     :task-detail="taskDetail"
     @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
   />
+
+  <DialogReportBug v-model:visible="dialogReportBug" @submit="reportBugTask" />
 </template>
 
 <style scoped>

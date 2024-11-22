@@ -28,6 +28,7 @@ export type TaskDetailData = {
   duration: number | null;
   timerStartedAt: string | null;
   timerStartedValue: number | null;
+  approvalStatus: string;
 };
 
 export type TaskDescription = {
