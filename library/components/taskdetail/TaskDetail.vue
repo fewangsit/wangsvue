@@ -401,7 +401,6 @@ watch(
         <div
           class="w-[800px] max-h-[600px] flex flex-col gap-3 !px-6 !py-3 overflow-y-auto detailtask-scrollbar-hide"
         >
-          <pre>{{ userType }}</pre>
           <Legend
             :initial-module="props.initialModule"
             :initial-sub-module="props.initialSubModule"
