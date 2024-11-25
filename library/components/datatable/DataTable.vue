@@ -598,9 +598,14 @@ const getDisabledRows = (tableData: Data[] | undefined = []): string[] => {
 
 const downloadExcel = async ({
   tableName,
+  multiTableNames,
   fileName,
 }: Events['data-table:download']): Promise<void> => {
-  if (tableName !== props.tableName) return;
+  if (
+    tableName !== props.tableName &&
+    !multiTableNames?.includes(props.tableName)
+  )
+    return;
 
   const excelColumns = visibleColumns.value.filter(
     (col) => col.visible !== false,
@@ -621,62 +626,81 @@ const downloadExcel = async ({
   };
 
   try {
-    setLoading(true, 'Mengunduh data');
+    // To make sure, 1 time event didn't listened twice
+    eventBus.off('data-table:download', downloadHandler);
+    // To make sure, if property `multiTableNames` is exist in event, then its tableName should equal to DataTable's tableName to call the fetch function and the rest of logics
+    if (tableName === props.tableName) {
+      setLoading(true, 'Mengunduh data');
 
-    const { data } = props.fetchFunction
-      ? await fetchAllData(true)
-      : { data: props.data };
+      const { data } = props.fetchFunction
+        ? await fetchAllData(true)
+        : { data: props.data };
 
-    const excelBody = (data ?? []).map((item: Data) => {
-      const body = {} as Record<string, unknown>;
+      const excelBody = (data ?? []).map((item: Data) => {
+        const body = {} as Record<string, unknown>;
 
-      includedColumns.forEach((col) => {
-        const { field: colField, exportField } = col;
-        const field = exportField ?? colField; // Prioritize the exportField than colField.
-        const fieldValue = getNestedProperyValue(item, field) || '-';
+        includedColumns.forEach((col) => {
+          const { field: colField, exportField } = col;
+          const field = exportField ?? colField; // Prioritize the exportField than colField.
+          const fieldValue = getNestedProperyValue(item, field) || '-';
 
-        if (col.includeTruthyProperties) {
-          const objectValue = (fieldValue ?? {}) as Record<string, Booleanish>;
+          if (col.includeTruthyProperties) {
+            const objectValue = (fieldValue ?? {}) as Record<
+              string,
+              Booleanish
+            >;
 
-          const truthyProperties = Object.keys(objectValue)
-            .map((key) => {
-              if (objectValue[key]) return key;
-            })
-            .filter(Boolean);
+            const truthyProperties = Object.keys(objectValue)
+              .map((key) => {
+                if (objectValue[key]) return key;
+              })
+              .filter(Boolean);
 
-          body[field] = truthyProperties.join(',');
-        } else if (Array.isArray(fieldValue)) {
-          let arrayValue = fieldValue;
+            body[field] = truthyProperties.join(',');
+          } else if (Array.isArray(fieldValue)) {
+            let arrayValue = fieldValue;
 
-          if (col.arrayValueField) {
-            /**
-             * Support for export array data with deeply nested array.
-             *
-             * If the array is only string array, only return its value.
-             */
-            arrayValue = fieldValue.map((value) => {
-              if (col.arrayValueField)
-                return getNestedProperyValue(value, col.arrayValueField);
-              return value;
-            });
+            if (col.arrayValueField) {
+              /**
+               * Support for export array data with deeply nested array.
+               *
+               * If the array is only string array, only return its value.
+               */
+              arrayValue = fieldValue.map((value) => {
+                if (col.arrayValueField)
+                  return getNestedProperyValue(value, col.arrayValueField);
+                return value;
+              });
+            }
+
+            body[field] = arrayValue.join(arrayValue.length > 1 ? ',' : ''); // Only join with comma if the length at least two item
+          } else if (col.booleanValue) {
+            body[field] = fieldValue ? 'Ya' : 'Tidak';
+          } else {
+            body[field] = fieldValue;
           }
+        });
 
-          body[field] = arrayValue.join(arrayValue.length > 1 ? ',' : ''); // Only join with comma if the length at least two item
-        } else if (col.booleanValue) {
-          body[field] = fieldValue ? 'Ya' : 'Tidak';
-        } else {
-          body[field] = fieldValue;
-        }
+        return body;
       });
 
-      return body;
-    });
+      if (multiTableNames?.length) {
+        eventBus.emit('button-download:multi-tables', {
+          table: { headers, data: excelBody },
+          tableName,
+        });
 
-    await exportToExcel({
-      headers,
-      data: excelBody,
-      fileName: formatFileName(),
-    });
+        return;
+      }
+
+      /**
+       * There's a little change to call util `exportToExcel`, just put `{headers, data}` as the value of key "tables"
+       */
+      await exportToExcel({
+        tables: [{ headers, data: excelBody }],
+        fileName: formatFileName(),
+      });
+    }
   } catch (error) {
     console.error(error);
     toast.removeAllGroups();
@@ -687,6 +711,7 @@ const downloadExcel = async ({
     });
   } finally {
     setLoading(false);
+    eventBus.on('data-table:download', downloadHandler); // Re-listen the event when export excel finished
   }
 };
 
@@ -788,7 +813,10 @@ const clearSelectedDataHandler = (
 };
 
 const downloadHandler = (e: Events['data-table:download']): void => {
-  if (e.tableName === props.tableName) {
+  if (
+    e.tableName === props.tableName ||
+    e.multiTableNames?.includes(props.tableName)
+  ) {
     downloadExcel(e);
   }
 };

@@ -97,6 +97,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
           import('./docs/button/ButtonDocs.vue'),
       },
       {
+        path: 'buttondownload',
+        name: 'ButtonDownloadDocs',
+        component: (): Promise<Component> =>
+          import('./docs/buttondownload/ButtonDownloadDocs.vue'),
+      },
+      {
         path: 'buttonradio',
         name: 'ButtonRadioDocs',
         component: (): Promise<Component> =>
