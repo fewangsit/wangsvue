@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.62
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.61...v1.5.62)
+
+### 💅 Refactors
+
+- **Export Excel:** Implement export multi tables in 1 excel sheet ([6a192c2](https://github.com/fewangsit/wangsvue/commit/6a192c2))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.61
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.59...v1.5.61)
