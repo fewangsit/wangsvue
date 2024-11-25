@@ -223,14 +223,14 @@ const bindSubModule = computed(() => legendForm.value.submodule);
  * - The task's status is 'Backlog' (i.e., the task is in the backlog and has not been started yet).
  * - The user is not a guest (i.e., the user is logged in and has the necessary permissions to edit the task).
  *
- * If both conditions are true, then the legend is editable.
+ * If both conditions are true or the task is new, then the legend is editable.
  */
 const isLegendEditable = computed(() => {
   const isBacklog = taskDetail.value?.status
     ? taskDetail.value?.status === 'Backlog'
     : true;
 
-  return isBacklog && userType.value !== 'guest';
+  return (isBacklog && userType.value !== 'guest') || isNewTask.value;
 });
 
 /**
@@ -506,7 +506,7 @@ const createTask = async (): Promise<void> => {
       repository: legendForm.value?.repository,
       name: legendForm.value.title,
       team: legendForm.value.process.team.map((team) => team.initial),
-      assignedTo: ['member', 'teamLeader'].includes(userType.value)
+      assignedTo: ['member', 'teamLeader', 'guest'].includes(userType.value)
         ? [user._id]
         : undefined,
     };
