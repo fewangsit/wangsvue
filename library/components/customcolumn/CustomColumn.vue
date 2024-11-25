@@ -55,7 +55,10 @@ const visibilityMenuId = computed<string>(
 const columnVisibilityModel = computed({
   get: () => props.visibleColumns,
   set: (cols: TableColumn[]) => {
-    emit('update:visibleColumns', cols);
+    emit(
+      'update:visibleColumns',
+      cols.filter((col) => col.visible != false),
+    );
   },
 });
 

@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v1.5.61
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.59...v1.5.61)
+
+### 🩹 Fixes
+
+- **CustomColumn:** Unchecked column becomes visible when reordered ([d31ed83](https://github.com/fewangsit/wangsvue/commit/d31ed83))
+- **Calendar:** End date should have time 23.59.59 to fix filtering issue ([33ac9e4](https://github.com/fewangsit/wangsvue/commit/33ac9e4))
+
+### 🏡 Chore
+
+- **release:** V1.5.60 ([4b34c6a](https://github.com/fewangsit/wangsvue/commit/4b34c6a))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.60
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.59...v1.5.60)
