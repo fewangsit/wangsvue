@@ -344,6 +344,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
           import('./docs/detailmember/DetailMemberDocs.vue'),
       },
       {
+        path: 'detailsprint',
+        name: 'Detail Sprint Docs',
+        component: (): Promise<Component> =>
+          import('./docs/detailsprint/DetailSprintDocs.vue'),
+      },
+      {
         path: 'dialogAdjustmentTask',
         name: 'Dialog Adjustment Task',
         component: (): Promise<Component> =>

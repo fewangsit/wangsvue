@@ -59,6 +59,7 @@ import DialogDetailPbi from './dialogdetailpbi/DialogDetailPbi.vue';
 import TaskDetailPbi from './dialogdetailpbi/TaskDetailPbi.vue';
 import ApproverInfo from './approverinfo/ApproverInfo.vue';
 import DetailMember from './detailmember/DetailMember.vue';
+import DetailSprint from './detailsprint/DetailSprint.vue';
 import DialogAdjustmentTask from './dialogAdjustmentTask/DialogAdjustmentTask.vue';
 import TaskDetail from './taskdetail/TaskDetail.vue';
 import TaskTable from './tasktable/TaskTable.vue';
@@ -125,6 +126,7 @@ export {
   TaskDetailPbi,
   ApproverInfo,
   DetailMember,
+  DetailSprint,
   DialogAdjustmentTask,
   TaskDetail,
   TaskTable,

@@ -3,9 +3,10 @@ import { MultiSelectOption } from 'lib/types/options.type';
 import { Pbi } from '../DialogDetailPbi.vue.d';
 import TaskServices from 'lib/services/task.service';
 
-const projectId = sessionStorage.getItem('projectId') as string;
-
-const filterFields = (selectedPbi?: Partial<Pbi>): FilterField[] => [
+const filterFields = (
+  projectId: string,
+  selectedPbi?: Partial<Pbi>,
+): FilterField[] => [
   {
     label: 'Modul',
     field: 'module',
