@@ -23,14 +23,16 @@ export type Events = {
     table: {
       headers: string[];
       data: Record<string, unknown>[];
+      tableName: string;
+      tableTitle?: string;
     };
-    tableName: string;
   };
 
   'data-table:update': TableEvent;
   'data-table:download': TableEvent & {
     fileName: string;
     multiTableNames?: string[];
+    additionalTexts?: string[];
   };
   'data-table:select-all-record': TableEvent;
   'data-table:update-total-record': TableEvent & { total: number };

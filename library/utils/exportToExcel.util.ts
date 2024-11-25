@@ -3,11 +3,14 @@ import * as XLSX from 'xlsx';
 export interface ITable {
   headers: string[];
   data: Record<string, unknown>[];
+  tableName: string;
+  tableTitle?: string;
 }
 
 interface IExcelOptions {
   tables: ITable[];
   fileName: string;
+  additionalTexts?: string[];
 }
 
 /**
@@ -25,6 +28,13 @@ const exportToExcel = async (options: IExcelOptions): Promise<void> => {
 
   // Loop through each table
   options.tables.forEach((table) => {
+    if (table.tableTitle) {
+      XLSX.utils.sheet_add_aoa(workSheet, [[table.tableTitle]], {
+        origin: { r: currentRow, c: 0 },
+      });
+      currentRow += 1; // Add padding
+    }
+
     // Add table headers
     const heading = [table.headers];
     XLSX.utils.sheet_add_aoa(workSheet, heading, {
@@ -38,8 +48,19 @@ const exportToExcel = async (options: IExcelOptions): Promise<void> => {
     });
 
     // Update currentRow to start below the current table
-    currentRow += table.data.length + 2; // Add padding
+    currentRow += table.data.length + 3; // Add padding
   });
+
+  // Add additional text below all tables
+  if (options.additionalTexts) {
+    currentRow += 1; // Add padding
+
+    options.additionalTexts.forEach((text, index) => {
+      XLSX.utils.sheet_add_aoa(workSheet, [[text]], {
+        origin: { r: currentRow + index, c: 0 }, // Add text row by row
+      });
+    });
+  }
 
   XLSX.utils.book_append_sheet(workbook, workSheet, 'Sheet1');
   const timestamps = new Date()

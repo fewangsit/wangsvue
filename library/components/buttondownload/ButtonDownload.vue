@@ -9,6 +9,7 @@ import type { ButtonDownloadProps } from './ButtonDownload.vue.d';
 const props = withDefaults(defineProps<ButtonDownloadProps>(), {
   tableName: 'datatable',
   multiTableNames: undefined,
+  additionalTextBelowTable: undefined,
 });
 
 const Preset = inject<Record<string, any>>('preset', {}).buttondownload;
@@ -33,11 +34,17 @@ const downloadExcel = (): void => {
 
     // To emit an event for each `tableName` to component DataTable to format the excel body
     multiTableNames.forEach((each) => {
+      // If downloading multi tables, doesn't need to pass additionalTexts and showTableName here, because it was handled in function `handleMultiTables`
       const event = { fileName, tableName: each, multiTableNames };
       eventBus.emit('data-table:download', event);
     });
   } else {
-    const event = { fileName, tableName };
+    // If not downlaoding multi tables, then additionalTexts directly assigned here
+    const event = {
+      fileName,
+      tableName,
+      additionalTexts: props.additionalTextBelowTable,
+    };
 
     eventBus.emit('data-table:download', event);
   }
@@ -49,8 +56,9 @@ const downloadExcel = (): void => {
  */
 const handleMultiTables = async ({
   table,
-  tableName,
 }: Events['button-download:multi-tables']): Promise<void> => {
+  // Attribute `tableName` moved into `table`
+  const { tableName } = table;
   if (!usedTableNames.value.includes(tableName)) {
     tables.value[tableName] = table;
   }
@@ -76,6 +84,7 @@ const handleMultiTables = async ({
 
   await exportToExcel({
     tables: exportedTable,
+    additionalTexts: props.additionalTextBelowTable,
     fileName: formatFileName(),
   });
 };

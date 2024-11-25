@@ -50,6 +50,7 @@ type DragableRow = Data & { draggable?: boolean; order?: number };
 
 const props = withDefaults(defineProps<DataTableProps>(), {
   tableName: 'datatable',
+  tableTitle: undefined,
   lazy: true,
   options: [],
   dataKey: '_id',
@@ -600,6 +601,8 @@ const downloadExcel = async ({
   tableName,
   multiTableNames,
   fileName,
+  additionalTexts,
+  showTableName = false,
 }: Events['data-table:download']): Promise<void> => {
   if (
     tableName !== props.tableName &&
@@ -686,8 +689,12 @@ const downloadExcel = async ({
 
       if (multiTableNames?.length) {
         eventBus.emit('button-download:multi-tables', {
-          table: { headers, data: excelBody },
-          tableName,
+          table: {
+            headers,
+            data: excelBody,
+            tableName,
+            tableTitle: props.tableTitle,
+          },
         });
 
         return;
@@ -697,8 +704,11 @@ const downloadExcel = async ({
        * There's a little change to call util `exportToExcel`, just put `{headers, data}` as the value of key "tables"
        */
       await exportToExcel({
-        tables: [{ headers, data: excelBody }],
+        tables: [
+          { headers, data: excelBody, tableName, tableTitle: props.tableTitle },
+        ],
         fileName: formatFileName(),
+        additionalTexts,
       });
     }
   } catch (error) {

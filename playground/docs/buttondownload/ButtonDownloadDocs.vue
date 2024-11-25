@@ -88,9 +88,24 @@ const getTableData = async (
     </template>
     <template #title> Button download </template>
     <template #content>
+      <span class="font-semibold text-lg">Single Table</span>
+
       <div class="flex justify-between gap-4">
-        <span>Single Table</span>
+        <span>Single Table Normal</span>
         <ButtonDownload
+          file-name="Download single table"
+          table-name="first-table"
+        />
+      </div>
+
+      <div class="flex justify-between gap-4">
+        <span>Single Table With Additional Texts & Show Table Name</span>
+        <ButtonDownload
+          :additional-text-below-table="[
+            'ini text pertama',
+            'ini text kedua',
+            'ini text yang ada di urutan ketiga',
+          ]"
           file-name="Download single table"
           table-name="first-table"
         />
@@ -106,12 +121,19 @@ const getTableData = async (
         lazy
         selection-type="single"
         table-name="first-table"
+        table-title="Ini Table Pertama"
         use-paginator
       />
 
+      <span class="font-semibold text-lg">Multi Table</span>
       <div class="flex justify-between gap-4">
-        <span>Multi Table</span>
+        <span>Download 2 Tables in 1 Excel</span>
         <ButtonDownload
+          :additional-text-below-table="[
+            'ini text pertama',
+            'ini text kedua',
+            'ini text yang ada di urutan ketiga',
+          ]"
           :multi-table-names="['second-table', 'third-table']"
           file-name="Download multi tables"
         />
@@ -127,6 +149,7 @@ const getTableData = async (
         lazy
         selection-type="single"
         table-name="second-table"
+        table-title="Ini Table Kedua"
         use-paginator
       />
 
@@ -144,6 +167,7 @@ const getTableData = async (
         lazy
         selection-type="single"
         table-name="third-table"
+        table-title="Ini Table Ketiga"
         use-paginator
       />
     </template>
