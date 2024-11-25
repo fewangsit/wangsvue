@@ -18,6 +18,7 @@ import xls from 'lib/assets/icons/xls.svg';
 import data from 'lib/assets/icons/data.svg';
 import Icon from '../icon/Icon.vue';
 import UserName from '../username/UserName.vue';
+import CodeSnippet from '../codesnippet/CodeSnippet.vue';
 
 defineProps<{
   detail:
@@ -92,8 +93,8 @@ const getAttchmentFileName = (detail: AttachmentFile): string | undefined => {
   </span>
 
   <template v-else-if="detail.type == 'embed'">
-    <div class="w-full overflow-auto" style="scrollbar-width: none">
-      <pre class="w-max">{{ detail?.code }}</pre>
+    <div class="w-[520px] overflow-auto" style="scrollbar-width: none">
+      <CodeSnippet :code="detail.code" readonly />
     </div>
   </template>
 

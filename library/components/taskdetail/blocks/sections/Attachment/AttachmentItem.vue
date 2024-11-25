@@ -39,7 +39,10 @@ const submitCaption = async (e: FormPayload): Promise<void> => {
       showInputCaption.value = false;
     }
   } catch (error) {
-    console.error(error);
+    toast.add({
+      error,
+      message: 'Caption gagal disimpan.',
+    });
   }
 };
 
@@ -109,13 +112,15 @@ const truncateText = (text: string): string => {
           <div class="flex gap-1">
             <a class="cursor-pointer text-primary-400">Komentar</a>
             <span>|</span>
-            <a
-              @click="showInputCaption = true"
-              class="cursor-pointer text-primary-400"
-            >
-              Caption
-            </a>
-            <span>|</span>
+            <template v-if="!props.disabled">
+              <a
+                @click="showInputCaption = true"
+                class="cursor-pointer text-primary-400"
+              >
+                Caption
+              </a>
+              <span>|</span>
+            </template>
             <template v-if="item.type !== 'link'">
               <a
                 @click="downloadFile(item.url, item.displayName)"
@@ -126,6 +131,7 @@ const truncateText = (text: string): string => {
               <span>|</span>
             </template>
             <a
+              v-if="!props.disabled"
               @click="dialogConfirmDelete = true"
               class="cursor-pointer text-danger-500"
             >
@@ -223,6 +229,7 @@ const truncateText = (text: string): string => {
         />
         <Button
           v-if="!props.readonly"
+          :disabled="props.disabled"
           @click="dialogConfirmDelete = true"
           class="!p-1"
           icon="close"

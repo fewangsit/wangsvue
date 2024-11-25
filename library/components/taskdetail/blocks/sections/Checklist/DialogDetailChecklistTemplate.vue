@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, inject, ref, shallowRef } from 'vue';
+import { computed, inject, Ref, ref, shallowRef } from 'vue';
 import { useToast } from 'lib/utils';
 import TaskChecklistServices from 'lib/services/taskChecklist.service';
 import Dialog from 'lib/components/dialog/Dialog.vue';
@@ -18,7 +18,7 @@ import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
 
 const toast = useToast();
 
-const projectId = sessionStorage.getItem('projectId') ?? '';
+const projectId = inject<Ref<string>>('projectId');
 
 const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 
@@ -92,7 +92,7 @@ const getChecklistTemplates = async (
 ): Promise<FetchResponse> => {
   try {
     const { data } = await TaskChecklistServices.getTaskChecklistTemplates(
-      projectId,
+      projectId.value,
       params,
     );
     return data;

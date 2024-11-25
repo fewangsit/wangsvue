@@ -1,6 +1,280 @@
 # Changelog
 
 
+## v1.5.63
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.61...v1.5.63)
+
+### 🩹 Fixes
+
+- **taskdetail:** Update conditions while create task with guest ([ee1c94a](https://github.com/fewangsit/wangsvue/commit/ee1c94a))
+
+### 💅 Refactors
+
+- **Export Excel:** Implement export multi tables in 1 excel sheet ([6a192c2](https://github.com/fewangsit/wangsvue/commit/6a192c2))
+
+### 🏡 Chore
+
+- **release:** V1.5.62 ([7c210cc](https://github.com/fewangsit/wangsvue/commit/7c210cc))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.62
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.61...v1.5.62)
+
+### 💅 Refactors
+
+- **Export Excel:** Implement export multi tables in 1 excel sheet ([6a192c2](https://github.com/fewangsit/wangsvue/commit/6a192c2))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.61
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.59...v1.5.61)
+
+### 🩹 Fixes
+
+- **CustomColumn:** Unchecked column becomes visible when reordered ([d31ed83](https://github.com/fewangsit/wangsvue/commit/d31ed83))
+- **Calendar:** End date should have time 23.59.59 to fix filtering issue ([33ac9e4](https://github.com/fewangsit/wangsvue/commit/33ac9e4))
+
+### 🏡 Chore
+
+- **release:** V1.5.60 ([4b34c6a](https://github.com/fewangsit/wangsvue/commit/4b34c6a))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.60
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.59...v1.5.60)
+
+## v1.5.59
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.58...v1.5.59)
+
+### 🚀 Enhancements
+
+- **dialogreportbug:** Add dialogreportbug component ([13ab166](https://github.com/fewangsit/wangsvue/commit/13ab166))
+
+### 🩹 Fixes
+
+- **taskdetail:** Add optional chaining while fetch task list ([c9122fd](https://github.com/fewangsit/wangsvue/commit/c9122fd))
+- **taskdetail:** Add visibility and disability rules for task detail ([565f902](https://github.com/fewangsit/wangsvue/commit/565f902))
+- **taskdetail:** Update identifier for team leader based on process ([5875444](https://github.com/fewangsit/wangsvue/commit/5875444))
+- **taskdetail:** Update payload while review in dialogfinishreview ([f82681e](https://github.com/fewangsit/wangsvue/commit/f82681e))
+- **taskdetail:** Remove pre tag for usertype ([2b308f2](https://github.com/fewangsit/wangsvue/commit/2b308f2))
+
+### 🏡 Chore
+
+- Export taskdetail and tasktable component to build-entry ([36cc3d3](https://github.com/fewangsit/wangsvue/commit/36cc3d3))
+- **presets:** Update version ([f962669](https://github.com/fewangsit/wangsvue/commit/f962669))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Dzulqtera <dzul@qtera.co.id>
+
+## v1.5.58
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.57...v1.5.58)
+
+## v1.5.57
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.55...v1.5.57)
+
+### 🏡 Chore
+
+- **presets:** Update version ([cb1662d](https://github.com/fewangsit/wangsvue/commit/cb1662d))
+- **release:** V1.5.56 ([7ccda2d](https://github.com/fewangsit/wangsvue/commit/7ccda2d))
+- **presets:** Update version ([f1cc57c](https://github.com/fewangsit/wangsvue/commit/f1cc57c))
+
+### 🎨 Styles
+
+- Add icons ([e18dc10](https://github.com/fewangsit/wangsvue/commit/e18dc10))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.56
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.55...v1.5.56)
+
+### 🏡 Chore
+
+- **presets:** Update version ([cb1662d](https://github.com/fewangsit/wangsvue/commit/cb1662d))
+
+### 🎨 Styles
+
+- Add icons ([e18dc10](https://github.com/fewangsit/wangsvue/commit/e18dc10))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.55
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.54...v1.5.55)
+
+### 🚀 Enhancements
+
+- **taskdetail:** Add props for initialmodule and initialsubmodule ([202c275](https://github.com/fewangsit/wangsvue/commit/202c275))
+- **taskdetail:** Add attachment changelog ([c3efefc](https://github.com/fewangsit/wangsvue/commit/c3efefc))
+- **taskdetail:** Add task link changelog ([eae6230](https://github.com/fewangsit/wangsvue/commit/eae6230))
+- **taskdetail:** Add task checklist changelog ([97398bc](https://github.com/fewangsit/wangsvue/commit/97398bc))
+- **taskdetail:** Add content for fallback if no data in changelog ([9b4e7f2](https://github.com/fewangsit/wangsvue/commit/9b4e7f2))
+- **taskdetail:** Show validator if counter an error while update priority value ([8878abb](https://github.com/fewangsit/wangsvue/commit/8878abb))
+- **taskdetail:** Add content for event log tab ([377e99d](https://github.com/fewangsit/wangsvue/commit/377e99d))
+- **taskdetail:** Add content for event log tab ([fcbe660](https://github.com/fewangsit/wangsvue/commit/fcbe660))
+
+### 🩹 Fixes
+
+- **timeline:** Update timeline content for embed type ([4cfbb08](https://github.com/fewangsit/wangsvue/commit/4cfbb08))
+- **timeline:** Update timeline content for embed type ([f55ff84](https://github.com/fewangsit/wangsvue/commit/f55ff84))
+- **taskdetail:** Update header of changelog for task link ([de091e9](https://github.com/fewangsit/wangsvue/commit/de091e9))
+
+### 🏡 Chore
+
+- **presets:** Update version ([6bcac82](https://github.com/fewangsit/wangsvue/commit/6bcac82))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Dzulqtera <dzul@qtera.co.id>
+
+## v1.5.54
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.52...v1.5.54)
+
+### 🏡 Chore
+
+- Update version ([6703796](https://github.com/fewangsit/wangsvue/commit/6703796))
+
+### 🤖 CI
+
+- Update release.yml to push changes to main branch after release ([08df431](https://github.com/fewangsit/wangsvue/commit/08df431))
+- Add workflow_dispatch on release workflpow ([a20a270](https://github.com/fewangsit/wangsvue/commit/a20a270))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.52
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.51...v1.5.52)
+
+## v1.5.51
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.48...v1.5.51)
+
+### 🚀 Enhancements
+
+- **tasktable:** Add table actions for restore and delete permanently ([df2f1c8](https://github.com/fewangsit/wangsvue/commit/df2f1c8))
+- **tasktable:** Add table actions for restore and delete permanently ([38697e7](https://github.com/fewangsit/wangsvue/commit/38697e7))
+- **tasktable:** Add condition for fetching task table based on props.page ([3977b8f](https://github.com/fewangsit/wangsvue/commit/3977b8f))
+- **DataTable:** Implement emit rowSelect when click a row ([6b18539](https://github.com/fewangsit/wangsvue/commit/6b18539))
+- **tasktable:** Open dialogselectproject while click '+ Task' button in tab all ([d7946ef](https://github.com/fewangsit/wangsvue/commit/d7946ef))
+- **tasktable:** Connect dialogconfirmrestoretask with API ([0c5e5f0](https://github.com/fewangsit/wangsvue/commit/0c5e5f0))
+- **tasktable:** Connect dialogconfirmdeletetaskpermanently with API ([5bfd0d2](https://github.com/fewangsit/wangsvue/commit/5bfd0d2))
+- **taskdetail:** Add edit button for API Spec task with 'Selesai' as its status ([686000e](https://github.com/fewangsit/wangsvue/commit/686000e))
+
+### 🩹 Fixes
+
+- **tasktable:** Update condition for showing button of create task based on props.page ([b2d7944](https://github.com/fewangsit/wangsvue/commit/b2d7944))
+- **taskdetail:** Change projectId from session storage to props and inject ([c687f03](https://github.com/fewangsit/wangsvue/commit/c687f03))
+- **task:** Make project id in dialogassignmember become dynamic, so it can use props or inject for project id ([f7e5d43](https://github.com/fewangsit/wangsvue/commit/f7e5d43))
+
+### 🏡 Chore
+
+- **release:** V1.5.48 ([5916c93](https://github.com/fewangsit/wangsvue/commit/5916c93))
+- Push to main after publish ([7fc66db](https://github.com/fewangsit/wangsvue/commit/7fc66db))
+- **release:** V1.5.49 ([73bf3fe](https://github.com/fewangsit/wangsvue/commit/73bf3fe))
+- **release:** V1.5.50 ([66e3af4](https://github.com/fewangsit/wangsvue/commit/66e3af4))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.50
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.49...v1.5.50)
+
+### 🚀 Enhancements
+
+- **tasktable:** Add table actions for restore and delete permanently ([df2f1c8](https://github.com/fewangsit/wangsvue/commit/df2f1c8))
+- **tasktable:** Add table actions for restore and delete permanently ([38697e7](https://github.com/fewangsit/wangsvue/commit/38697e7))
+- **tasktable:** Add condition for fetching task table based on props.page ([3977b8f](https://github.com/fewangsit/wangsvue/commit/3977b8f))
+- **DataTable:** Implement emit rowSelect when click a row ([6b18539](https://github.com/fewangsit/wangsvue/commit/6b18539))
+
+### 🩹 Fixes
+
+- **tasktable:** Update condition for showing button of create task based on props.page ([b2d7944](https://github.com/fewangsit/wangsvue/commit/b2d7944))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Dzulqtera <dzul@qtera.co.id>
+
+## v1.5.49
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.48...v1.5.49)
+
+### 🏡 Chore
+
+- **release:** V1.5.48 ([5916c93](https://github.com/fewangsit/wangsvue/commit/5916c93))
+- Push to main after publish ([7fc66db](https://github.com/fewangsit/wangsvue/commit/7fc66db))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.48
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.47...v1.5.48)
+
+### 🚀 Enhancements
+
+- **tasktable:** Add DialogAssignMember, DialogReviewLeader into tasktable ([94c8b6a](https://github.com/fewangsit/wangsvue/commit/94c8b6a))
+- **tasktable:** Add actions for children table in tasktable ([20dddd0](https://github.com/fewangsit/wangsvue/commit/20dddd0))
+- **tasktable:** Separate 'dialog confirm to mark task as done' to new file ([61bb5ec](https://github.com/fewangsit/wangsvue/commit/61bb5ec))
+- **usergroup:** Add props withDialogDetail for usergroup component ([137a04f](https://github.com/fewangsit/wangsvue/commit/137a04f))
+- **tasktable:** Add bulk actions for tasktable with backlog tab ([8e39ffa](https://github.com/fewangsit/wangsvue/commit/8e39ffa))
+- **tasktable:** Add bulk action functionality for assign member and delete task in task table ([0907bad](https://github.com/fewangsit/wangsvue/commit/0907bad))
+- **tasktable:** Add visibility conditions for columns, filter fields and query for fetching table ([35fd948](https://github.com/fewangsit/wangsvue/commit/35fd948))
+
+### 🩹 Fixes
+
+- **tasktable:** Update export fields for assignedTo and dependecy in tasktable ([231282e](https://github.com/fewangsit/wangsvue/commit/231282e))
+- **tasktable:** Update visibility conditions for tasktable options based on user role ([2027b5a](https://github.com/fewangsit/wangsvue/commit/2027b5a))
+- **tasktable:** Add admin usertype in tasktable as visibility conditions for table actions ([31dbdc3](https://github.com/fewangsit/wangsvue/commit/31dbdc3))
+- **tasktable:** Remove pre tag for selected data ([a290ae5](https://github.com/fewangsit/wangsvue/commit/a290ae5))
+- **usergroup:** Add flex-wrap class for usergroup dialog content container ([b094072](https://github.com/fewangsit/wangsvue/commit/b094072))
+- **usergroup:** Add flex-wrap class for usergroup dialog content container ([ec7c162](https://github.com/fewangsit/wangsvue/commit/ec7c162))
+
+### 💅 Refactors
+
+- **tasktable:** Reorder ref variable in tasktable ([80deacb](https://github.com/fewangsit/wangsvue/commit/80deacb))
+- **DialogDetailPbi:** Add visible prop ([e57a1da](https://github.com/fewangsit/wangsvue/commit/e57a1da))
+- **DataTable:** Assign watched columns prop to visibleColumns ([b05787a](https://github.com/fewangsit/wangsvue/commit/b05787a))
+- **ApproverInfo:** Adjust props ([917fd35](https://github.com/fewangsit/wangsvue/commit/917fd35))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Dzulqtera <dzul@qtera.co.id>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.47
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.46...v1.5.47)

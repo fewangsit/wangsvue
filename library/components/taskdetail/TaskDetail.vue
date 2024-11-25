@@ -27,11 +27,11 @@ import DescriptionTab from './blocks/Tabs/DescriptionTab.vue';
 import TaskMore from './blocks/common/TaskMore.vue';
 import ProjectServices from 'lib/services/project.service';
 import { ProjectDetail } from 'lib/types/project.type';
-import { ProjectProcess } from 'lib/types/projectProcess.type';
 
 import TaskDetail from './TaskDetail.vue';
 import Comment from '../comment/Comment.vue';
 import { User } from 'lib/types/user.type';
+import EventLogTab from './blocks/Tabs/EventLogTab.vue';
 
 const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 
@@ -50,11 +50,6 @@ type TaskMenu = MenuItem & {
   component: DefineComponent<any, any, any>;
 };
 
-type SelectedProcess = Pick<
-  ProjectProcess,
-  '_id' | 'name' | 'team' | 'processPosition'
->;
-
 onMounted(async () => {
   attachEventListener();
 });
@@ -64,23 +59,36 @@ onUnmounted(() => {
 });
 
 const userType = computed(() => {
-  const { permission } = JSON.parse(localStorage.getItem('user') || '{}');
+  const { permission, _id: userId } = JSON.parse(
+    localStorage.getItem('user') || '{}',
+  );
   const isAdmin = Object.values(permission?.manageProject || {}).every(
     (value) => value === true,
   );
-  const { isPM, leaders } = projectDetail.value ?? {};
-  const processTeam = selectedProcess.value?.team?.[0]?.initial;
-  const isTeamLeader =
-    processTeam && leaders?.length && leaders?.includes(processTeam);
+  const { isPM } = projectDetail.value ?? {};
+  const isMember =
+    userId &&
+    taskDetail.value?.assignedTo.find((assigned) => assigned._id === userId);
 
   if (isAdmin) {
     return 'admin';
   } else if (isPM) {
     return 'pm';
-  } else if (isTeamLeader) {
+  } else if (isProcessTeamLeader.value) {
     return 'teamLeader';
+  } else if (isMember) {
+    return 'member';
   }
-  return 'member';
+  return 'guest';
+});
+
+const isProcessTeamLeader = computed(() => {
+  const { leaders } = projectDetail.value ?? {};
+  const processTeam = legendForm.value?.process?.team?.[0]?.initial;
+  const isLeader = processTeam
+    ? leaders?.length && leaders?.includes(processTeam)
+    : false;
+  return isLeader;
 });
 
 const user = ref<User>(
@@ -92,16 +100,16 @@ const user = ref<User>(
  */
 const firstFetch = ref<boolean>(true);
 const taskId = ref<string>();
+const projectId = ref<string>();
 const taskDetail = ref<TaskDetailData>();
 const isNewTask = ref<boolean>(false);
 const taskMenuIndex = ref<number>(0);
 
 const projectDetail = ref<ProjectDetail>();
-const selectedProcess = ref<SelectedProcess>();
 
 const legendForm = ref<TaskLegendForm>({});
 
-const loadingTask = ref(true);
+const loadingTask = ref(false);
 
 const dialogDetailTask = ref(false);
 const selectedTaskId = ref<string>();
@@ -130,7 +138,7 @@ const taskMenu = computed<TaskMenu[]>(() => {
     {
       label: 'Event Log',
       disabled: isNewTask.value,
-      component: InfoTaskTab,
+      component: EventLogTab,
     },
   ];
 });
@@ -147,15 +155,11 @@ const toggleCommentSection = (): void => {
 
 const getProjectDetail = async (): Promise<void> => {
   try {
-    const projectId = sessionStorage.getItem('projectId');
-    if (projectId) {
-      const { data } = await ProjectServices.getProjectDetail(projectId);
-      projectDetail.value = data.data;
-    }
+    const { data } = await ProjectServices.getProjectDetail(props.projectId);
+    projectDetail.value = data.data;
   } catch (error) {
     toast.add({
       message: 'Gagal memuat proyek detail.',
-      severity: 'error',
       error,
     });
   }
@@ -205,7 +209,7 @@ const refreshAndEmitHandler = async (
 ): Promise<void> => {
   try {
     // Skip this function if id doesn't equal the task id.
-    if (id !== taskId.value) return;
+    if (id !== taskId.value || !taskId.value) return;
 
     if (eventName === 'delete') {
       emit('delete');
@@ -260,6 +264,8 @@ const removeEventListener = (): void => {
 };
 
 const handleShow = (): void => {
+  projectId.value = props.projectId;
+
   if (props.taskId) {
     taskId.value = props.taskId;
   } else {
@@ -275,16 +281,19 @@ const handleShow = (): void => {
 const reset = (): void => {
   firstFetch.value = true;
   taskMenuIndex.value = 0;
+  taskId.value = undefined;
+  taskDetail.value = undefined;
+  legendForm.value = {};
+  isNewTask.value = false;
+  showCommentSection.value = false;
 };
 
-const handleProcessChange = (process: SelectedProcess): void => {
-  selectedProcess.value = process;
-};
-
+provide('projectId', projectId);
 provide('taskId', taskId);
 provide('taskDetail', taskDetail);
 provide('isNewTask', isNewTask);
 provide('userType', userType);
+provide('isProcessTeamLeader', isProcessTeamLeader);
 provide('legendForm', legendForm);
 provide('loadingTask', loadingTask);
 provide('openDetailTask', openDetailTask);
@@ -300,17 +309,6 @@ watch(
     }
   },
 );
-
-watch(visible, (value) => {
-  if (!value) {
-    taskId.value = undefined;
-    taskDetail.value = undefined;
-    selectedProcess.value = undefined;
-    legendForm.value = {};
-    isNewTask.value = false;
-    showCommentSection.value = false;
-  }
-});
 </script>
 
 <template>
@@ -376,7 +374,16 @@ watch(visible, (value) => {
             severity="secondary"
             text
           />
-          <TaskMore v-if="!isNewTask" :task-detail="taskDetail" />
+          <TaskMore
+            v-if="
+              !isNewTask &&
+              userType !== 'guest' &&
+              ['Backlog', 'Sprint', 'Waiting Approval'].includes(
+                taskDetail?.status,
+              )
+            "
+            :task-detail="taskDetail"
+          />
           <Button
             @click="visible = false"
             class="!p-0.5 !text-general-200 dark:!text-general-200"
@@ -394,8 +401,10 @@ watch(visible, (value) => {
         <div
           class="w-[800px] max-h-[600px] flex flex-col gap-3 !px-6 !py-3 overflow-y-auto detailtask-scrollbar-hide"
         >
-          <pre>{{ userType }}</pre>
-          <Legend @process-change="handleProcessChange" />
+          <Legend
+            :initial-module="props.initialModule"
+            :initial-sub-module="props.initialSubModule"
+          />
           <TabMenu
             v-model:active-index="taskMenuIndex"
             :menu="taskMenu"
@@ -441,7 +450,10 @@ watch(visible, (value) => {
   <TaskDetail
     v-if="selectedTaskId"
     v-model:visible="dialogDetailTask"
-    :task-id="selectedTaskId ?? ''"
+    :initial-module="props.initialModule ?? undefined"
+    :initial-sub-module="props.initialSubModule ?? undefined"
+    :project-id="projectId"
+    :task-id="selectedTaskId"
     @create="emit('create')"
     @delete="emit('delete')"
     @update="emit('update')"

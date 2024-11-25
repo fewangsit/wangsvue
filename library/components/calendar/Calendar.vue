@@ -51,8 +51,8 @@ const calendar = ref<CalendarState>();
 const invalidInput = computed(() => props.invalid || !!field.errorMessage);
 const dateFormat = 'dd/mm/yy';
 
-const getGMTTime = (dateString: Date | string): number => {
-  return new Date(new Date(dateString).toUTCString()).getTime();
+const getGMTTime = (dateString: Date | string): Date => {
+  return new Date(new Date(dateString).toUTCString());
 };
 
 const getLocalTime = (timeStamp?: number): Date | undefined => {
@@ -79,11 +79,11 @@ const parseDateFromProps = (): Date | Date[] | undefined => {
 };
 
 const parseDate = (dateToParse: Date | Date[]): number | number[] => {
-  if (!Array.isArray(dateToParse)) return getGMTTime(dateToParse);
+  if (!Array.isArray(dateToParse)) return getGMTTime(dateToParse).getTime();
 
   return [
-    getGMTTime(dateToParse[0]),
-    getGMTTime(dateToParse[1] ?? dateToParse[0]),
+    getGMTTime(dateToParse[0]).getTime(),
+    getGMTTime(dateToParse[1] ?? dateToParse[0]).setHours(23, 59, 59),
   ];
 };
 

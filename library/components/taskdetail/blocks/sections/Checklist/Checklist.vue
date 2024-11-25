@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, nextTick, Ref, ref, watch } from 'vue';
+import { computed, ComputedRef, inject, nextTick, Ref, ref, watch } from 'vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import Button from 'lib/components/button/Button.vue';
 import Menu from 'lib/components/menu/Menu.vue';
@@ -9,7 +9,11 @@ import Checkbox from 'lib/components/checkbox/Checkbox.vue';
 import UserName from 'lib/components/username/UserName.vue';
 import ProgressBar from 'lib/components/progressbar/ProgressBar.vue';
 import TaskChecklistServices from 'lib/services/taskChecklist.service';
-import { TaskChecklist, TaskChecklistItem } from 'lib/types/task.type';
+import {
+  TaskChecklist,
+  TaskChecklistItem,
+  TaskDetailData,
+} from 'lib/types/task.type';
 import {
   AddTaskChecklistItemDTO,
   ToggleTaskChecklistItemDTO,
@@ -26,6 +30,8 @@ import DialogAddChecklist, {
 } from './DialogAddChecklist.vue';
 import { AxiosResponse } from 'axios';
 import Editor from 'lib/components/editor/Editor.vue';
+import ChecklistChangelog from './ChecklistChangelog.vue';
+import { WangsitStatus } from 'lib/types/wangsStatus.type';
 
 const toast = useToast();
 
@@ -37,7 +43,12 @@ const emit = defineEmits<{
   updated: [checklists: TaskChecklist[]];
 }>();
 
+const userType =
+  inject<ComputedRef<'member' | 'admin' | 'pm' | 'teamLeader' | 'guest'>>(
+    'userType',
+  );
 const taskId = inject<Ref<string>>('taskId');
+const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 
 const checklistMenuOptions: MenuItem[] = [
   {
@@ -83,12 +94,21 @@ const dialogDeleteChecklist = ref<boolean>(false);
 const dialogDeleteChecklistItem = ref<boolean>(false);
 const dialogUncheckChecklistItem = ref<boolean>(false);
 const dialogAddAttachment = ref<boolean>(false);
+const dialogChangelog = ref<boolean>(false);
 
 const selectedChecklist = ref<TaskChecklist>();
 const selectedChecklistItem = ref<TaskChecklistItem>();
 const moreMenu = ref();
 
 const togglingItem = ref(false);
+
+const isDisabled = computed(() => {
+  const disabledStatus = (
+    ['Selesai', 'Reported Bug', 'Pending Review Leader'] as WangsitStatus[]
+  ).includes(taskDetail.value?.status);
+
+  return disabledStatus || userType.value === 'guest';
+});
 
 const handleMore = (e: Event, check: any): void => {
   selectedChecklist.value = check;
@@ -230,6 +250,7 @@ const openAttachmentDialog = (args: {
   checklistIndex: number;
   itemIndex: number;
 }): void => {
+  if (isDisabled.value) return;
   const checklist = checklists.value[args.checklistIndex];
   selectedChecklist.value = checklist;
   selectedChecklistItem.value = checklist.checklistItems[args.itemIndex];
@@ -359,6 +380,7 @@ watch(
       <div class="flex items-center gap-2">
         <Button
           v-if="!props.static"
+          @click="dialogChangelog = true"
           class="!p-1"
           icon="file-history"
           icon-class="!w-6 !h-6"
@@ -366,6 +388,7 @@ watch(
           text
         />
         <Button
+          :disabled="isDisabled"
           @click="dialogAddChecklist = true"
           icon="add"
           label="Ceklis"
@@ -376,7 +399,7 @@ watch(
     <div v-if="checklists?.length" class="pl-8 flex flex-col gap-3">
       <Menu
         ref="moreMenu"
-        :model="checklistMenuOptions"
+        :model="isDisabled ? [] : checklistMenuOptions"
         class="bg-primary-500 !min-w-[170px]"
       />
       <div
@@ -399,7 +422,14 @@ watch(
         <template v-else>
           <div class="flex items-center justify-between">
             <span
-              @click="checklist.showRenameChecklist = true"
+              @click="
+                () => {
+                  if (isDisabled) {
+                    return;
+                  }
+                  checklist.showRenameChecklist = true;
+                }
+              "
               class="text-xs font-semibold cursor-pointer"
             >
               {{ checklist.name }}
@@ -455,7 +485,7 @@ watch(
               <Checkbox
                 :key="item.key"
                 v-model="item.checked"
-                :disabled="props.static"
+                :disabled="props.static || isDisabled"
                 :label="item.name"
                 @update:model-value="
                   toggleChecklistItem({
@@ -477,6 +507,7 @@ watch(
                   type="icon"
                 />
                 <Button
+                  :disabled="isDisabled"
                   @click="item.showRenameItem = true"
                   class="!p-1"
                   icon="edit"
@@ -485,6 +516,7 @@ watch(
                   text
                 />
                 <Button
+                  :disabled="isDisabled"
                   @click="
                     openAttachmentDialog({ checklistIndex: index, itemIndex })
                   "
@@ -495,6 +527,7 @@ watch(
                   text
                 />
                 <Button
+                  :disabled="isDisabled"
                   @click="item.showCaptionItem = !item.showCaptionItem"
                   class="!p-1"
                   icon="chat-new-line"
@@ -511,6 +544,7 @@ watch(
                 />
               </template>
               <Button
+                :disabled="isDisabled"
                 @click="
                   props.static
                     ? deleteStaticChecklist(index, itemIndex)
@@ -522,7 +556,7 @@ watch(
                 "
                 class="!p-1"
                 icon="close"
-                icon-class="!w-6 !h-6 !text-danger-500"
+                icon-class="!w-6 !h-6"
                 severity="danger"
                 text
               />
@@ -557,6 +591,7 @@ watch(
             <TaskAttachmentItem
               :key="`${index}-${itemIndex}-${attachIndex}`"
               v-for="(attachment, attachIndex) in item.attachments"
+              :disabled="isDisabled"
               :item="attachment"
               @deleted="getChecklists"
               type="checklist"
@@ -586,6 +621,7 @@ watch(
           />
           <Button
             v-else
+            :disabled="isDisabled"
             @click="checklist.showAddItem = true"
             icon="add"
             label="Item"
@@ -643,4 +679,6 @@ watch(
   <DialogDetailChecklistTemplate
     v-model:visible="dialogDetailChecklistTemplate"
   />
+
+  <ChecklistChangelog v-model:visible="dialogChangelog" />
 </template>

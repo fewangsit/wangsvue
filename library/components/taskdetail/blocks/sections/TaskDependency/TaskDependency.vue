@@ -6,7 +6,7 @@ import TaskServices from 'lib/services/task.service';
 import ProjectProcessServices from 'lib/services/projectProcess.service';
 import { TaskDependency, TaskDetailData } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
-import { computed, inject, nextTick, Ref, ref, watch } from 'vue';
+import { computed, ComputedRef, inject, nextTick, Ref, ref, watch } from 'vue';
 import TaskDependencyServices from 'lib/services/taskDependency.service';
 import Button from 'lib/components/button/Button.vue';
 import UserName from 'lib/components/username/UserName.vue';
@@ -18,13 +18,17 @@ import DialogCustomDependency from './DialogCustomDependency.vue';
 import Dropdown from 'lib/components/dropdown/Dropdown.vue';
 import SubModuleServices from 'lib/services/submodule.service';
 import { cloneDeep } from 'lodash';
+import { WangsitStatus } from 'lib/types/wangsStatus.type';
 
 const toast = useToast();
 
-const projectId = sessionStorage.getItem('projectId') ?? '';
-
 const whitelistIframeTag = /<\s*\/?\s*(iframe)\b.*?>/;
 
+const userType =
+  inject<ComputedRef<'member' | 'admin' | 'pm' | 'teamLeader' | 'guest'>>(
+    'userType',
+  );
+const projectId = inject<Ref<string>>('projectId');
 const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 const isNewTask = inject<Ref<boolean>>('isNewTask');
@@ -40,6 +44,30 @@ const loadingData = ref(false);
 const showDialogCustomDependency = ref(false);
 
 const taskProcess = computed(() => taskDetail.value?.process ?? undefined);
+
+/**
+ * Checks if the task dependency input is disabled based on the task's status and user type.
+ *
+ * The task dependency input is disabled if the task is new
+ *
+ * the task is in the following statuses:
+ * - 'Pending Review Leader'
+ * - 'Selesai'
+ * - 'Reported Bug'
+ *
+ * The user type is 'guest'.
+ *
+ * @returns {boolean}
+ */
+const isDisabled = computed(() => {
+  return (
+    isNewTask.value ||
+    (
+      ['Pending Review Leader', 'Selesai', 'Reported Bug'] as WangsitStatus[]
+    ).includes(taskDetail.value?.status) ||
+    userType.value === 'guest'
+  );
+});
 
 const customProcessOptions = computed(() =>
   processDependencies.value
@@ -75,7 +103,7 @@ const getTaskOptions = async (args: {
     dependencies.value[args.index].loading = true;
 
     const params = {
-      project: JSON.stringify([projectId]),
+      project: JSON.stringify([projectId.value]),
       process: JSON.stringify([args.processId]),
       module: JSON.stringify([args.moduleId]),
       subModule: args.subModuleId
@@ -210,7 +238,7 @@ const loadData = async (): Promise<void> => {
 const getProcessDependencies = async (): Promise<TaskDependency[]> => {
   try {
     const { data: response } = await ProjectProcessServices.getProcessList(
-      projectId,
+      projectId.value,
       { name: JSON.stringify([taskDetail?.value?.process.name]) },
       'active',
     );
@@ -282,7 +310,7 @@ const getTaskDependencies = async (): Promise<TaskDependency[]> => {
 
 const getProjectModules = async (): Promise<ProjectModule[]> => {
   try {
-    const { data } = await ModuleServices.getModuleList(projectId);
+    const { data } = await ModuleServices.getModuleList(projectId.value);
     if (data) {
       return data.data;
     }
@@ -454,7 +482,6 @@ const showSubModuleByProcess = (depIndex: number): void => {
 };
 
 const getCustomModuleOptions = async (depIndex: number): Promise<void> => {
-  if (!projectId) return;
   try {
     const modules = await getProjectModules();
 
@@ -496,10 +523,10 @@ const getCustomModuleOptions = async (depIndex: number): Promise<void> => {
 
 const getCustomSubmoduleOptions = async (depIndex: number): Promise<void> => {
   const currentModule = dependencies.value[depIndex].module;
-  if (!projectId || !currentModule) return;
+  if (!currentModule) return;
   try {
     const { data: response } = await SubModuleServices.getSubmoduleList(
-      projectId,
+      projectId.value,
       {
         module: JSON.stringify([currentModule._id]),
       },
@@ -616,7 +643,7 @@ watch(
         <div class="text-xs font-semibold">Task Dependensi</div>
       </div>
       <Button
-        :disabled="isNewTask || (taskDetail && taskDetail.status === 'Selesai')"
+        :disabled="isDisabled"
         @click="showDialogCustomDependency = true"
         icon="add"
         label="Custom"
@@ -631,6 +658,7 @@ watch(
             <Dropdown
               v-if="dep.custom"
               v-model="dep.process"
+              :disabled="isDisabled"
               :initial-value="dep.process"
               :options="customProcessOptions"
               @update:model-value="onProcessChange(index)"
@@ -648,6 +676,7 @@ watch(
             <Dropdown
               v-if="dep.custom"
               v-model="dep.module"
+              :disabled="isDisabled"
               :initial-value="dep.module"
               :options="dep.moduleOptions"
               @show="getCustomModuleOptions(index)"
@@ -666,6 +695,7 @@ watch(
             <Dropdown
               v-if="dep.custom"
               v-model="dep.subModule"
+              :disabled="isDisabled"
               :initial-value="dep.subModule"
               :options="dep.subModuleOptions"
               @show="getCustomSubmoduleOptions(index)"
@@ -686,6 +716,7 @@ watch(
             <span class="text-xs font-semibold">Task: </span>
             <MultiSelect
               v-model="dep.selectedOptions"
+              :disabled="isDisabled"
               :initial-value="dep.selectedOptions"
               :loading="dep.loading"
               :options="dep.options"
@@ -707,6 +738,7 @@ watch(
           </div>
           <Button
             v-if="dep.custom"
+            :disabled="isDisabled"
             @click="removeCustomDependency(index)"
             class="text-danger-500"
             icon="close"
@@ -740,12 +772,14 @@ watch(
                   <Badge :label="task.status" />
                   <Button
                     v-if="task.status === 'Selesai'"
+                    :disabled="isDisabled"
                     label="Report Bug"
                     severity="danger"
                     text
                   />
                 </div>
                 <Button
+                  :disabled="isDisabled"
                   @click="task.showCaption = !task.showCaption"
                   icon="chat-new-line"
                   severity="secondary"

@@ -8,6 +8,7 @@ import { ProjectSubModule } from './projectSubmodule.type';
 import { WangsitStatus } from './wangsStatus.type';
 import { JSONContent } from 'lib/components/editor/Editor.vue.d';
 import { ChildGroup } from 'lib/components/datatable/DataTable.vue.d';
+import { FileType } from 'lib/components/taskdetail/blocks/sections/Attachment/AttachmentItem.vue.d';
 
 export type TaskDetailData = {
   _id: string;
@@ -15,6 +16,7 @@ export type TaskDetailData = {
   process: ProjectProcess;
   module: ProjectModule;
   subModule: ProjectSubModule;
+  repository: string;
   name: string;
   assignedTo: Member[];
   team: string[]; // Team Initial
@@ -26,6 +28,7 @@ export type TaskDetailData = {
   duration: number | null;
   timerStartedAt: string | null;
   timerStartedValue: number | null;
+  approvalStatus: string;
 };
 
 export type TaskDescription = {
@@ -202,6 +205,9 @@ export interface TaskTableOptionQuery {
   memberOptions?: boolean;
   taskOptions?: boolean;
   processOptions?: boolean;
+  project?: string;
+  module?: string;
+  subModule?: string;
 }
 
 export interface TaskTableFamily {
@@ -213,4 +219,47 @@ export interface TaskTableFamilyResponse {
   status: number;
   message: string;
   data: TaskTableFamily;
+}
+
+export interface TaskAttachmentChangelogItem {
+  _id: string;
+  type: FileType;
+  attachmentSrc: string;
+  attachment: string;
+  action: string;
+  user: Member;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TaskLinkChangelogItem {
+  _id: string;
+  type: TaskLinkType;
+  action: string;
+  oldValue: TaskLinkChangelogItemValue;
+  newValue: TaskLinkChangelogItemValue;
+  user: Member;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TaskLinkChangelogItemValue {
+  type: TaskLinkURLType;
+  link: string;
+}
+
+export interface TaskChecklistChangelogItem {
+  _id: string;
+  task: string;
+  action: string;
+  oldValue: string;
+  newValue: string;
+  attachment: {
+    type: FileType;
+    name: string;
+    src: string;
+  };
+  user: Member;
+  createdAt: string;
+  updatedAt: string;
 }

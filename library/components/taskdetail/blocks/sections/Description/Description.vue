@@ -8,9 +8,19 @@ import { EditDescriptionTaskDTO } from 'lib/dto/task.dto';
 import eventBus from 'lib/event-bus';
 import TaskServices from 'lib/services/task.service';
 import { TaskDescription, TaskDetailData } from 'lib/types/task.type';
+import { WangsitStatus } from 'lib/types/wangsStatus.type';
 import { useToast } from 'lib/utils';
 import { formatDateReadable } from 'lib/utils/date.util';
-import { computed, inject, onMounted, Ref, ref, toRaw, watch } from 'vue';
+import {
+  computed,
+  ComputedRef,
+  inject,
+  onMounted,
+  Ref,
+  ref,
+  toRaw,
+  watch,
+} from 'vue';
 
 const toast = useToast();
 
@@ -20,6 +30,10 @@ onMounted(async () => {
   await getDescription();
 });
 
+const userType =
+  inject<ComputedRef<'member' | 'admin' | 'pm' | 'teamLeader' | 'guest'>>(
+    'userType',
+  );
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 const taskId = inject<Ref<string>>('taskId');
 
@@ -31,6 +45,14 @@ const isCurrentlyFocused = ref<boolean>(false);
 const content = ref();
 const initialContent = ref<JSONContent>();
 
+const isDisabled = computed(() => {
+  const disabledStatus = (
+    ['Selesai', 'Reported Bug'] as WangsitStatus[]
+  ).includes(taskDetail.value?.status);
+
+  return disabledStatus || userType.value === 'guest';
+});
+
 const insideContent = computed(() => content.value?.content ?? []);
 
 const anyContent = computed<boolean>(() => {
@@ -41,9 +63,12 @@ const anyContent = computed<boolean>(() => {
   return false;
 });
 
-const bindEditorState = computed(() =>
-  anyContent.value ? editorState.value : 'editable',
-);
+const bindEditorState = computed(() => {
+  if (isDisabled.value) {
+    return 'readonly';
+  }
+  return anyContent.value ? editorState.value : 'editable';
+});
 
 const getDescription = async (): Promise<void> => {
   try {
@@ -64,6 +89,10 @@ const getDescription = async (): Promise<void> => {
 };
 
 const handleOnFocus = (): void => {
+  if (isDisabled.value) {
+    return;
+  }
+
   editorState.value = 'editable';
   isCurrentlyFocused.value = true;
 

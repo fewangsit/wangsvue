@@ -12,6 +12,10 @@ export interface ButtonDownloadProps {
    * @default 'datatable'
    */
   tableName?: string;
+  /**
+   * If you want to download multiple table in 1 excel
+   */
+  multiTableNames?: string[];
 }
 
 /**

@@ -81,9 +81,12 @@ const memberTeams = computed(() => taskDetail.value.team.join(', '));
  * If no member is assigned, then the label should be 'Member'.
  */
 const memberLabel = computed(() => {
-  if (isNewTask.value && ['member', 'teamLeader'].includes(userType.value)) {
+  if (
+    isNewTask.value &&
+    ['member', 'teamLeader', 'guest'].includes(userType.value)
+  ) {
     /*
-     * If the task is new and the user is a team leader or a member,
+     * If the task is new and the user is a team leader or a member or a guest,
      * then get the user's nickname from local storage.
      */
     const { nickName } = JSON.parse(localStorage.getItem('user') || '{}');
@@ -145,7 +148,10 @@ const getDuration = (duration: number): string => {
 
 <template>
   <div data-wv-section="detailtask-info-task-tab">
-    <DialogAssignMember v-model:visible="showDialogAssignMember" />
+    <DialogAssignMember
+      v-model:visible="showDialogAssignMember"
+      @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
+    />
     <DialogSetDuration v-model:visible="showDialogSetDuration" />
     <DialogCustomDependency v-model:visible="showDialogCustomDependency" />
     <div class="flex flex-col gap-6">
@@ -156,7 +162,7 @@ const getDuration = (duration: number): string => {
               '!min-w-[150px] !h-[30px] !text-left !rounded',
               {
                 'pointer-events-none':
-                  userType === 'member' ||
+                  !['admin', 'pm', 'teamLeader'].includes(userType) ||
                   taskDetail?.process?.name === 'API Spec',
               },
             ]"
@@ -178,7 +184,10 @@ const getDuration = (duration: number): string => {
           <Button
             :class="[
               '!w-[150px] !h-[30px] !text-left !rounded',
-              { 'pointer-events-none': isContinousDuration },
+              {
+                'pointer-events-none':
+                  isContinousDuration || taskDetail?.status !== 'Backlog',
+              },
             ]"
             :disabled="isNewTask"
             :label="
@@ -195,7 +204,7 @@ const getDuration = (duration: number): string => {
                 {
                   'pointer-events-none':
                     taskDetail?.process?.name === 'API Spec' ||
-                    taskDetail?.status === 'Sprint',
+                    taskDetail?.status !== 'Backlog',
                 },
               ]"
               :disabled="isNewTask"

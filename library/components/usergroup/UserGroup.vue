@@ -52,7 +52,7 @@ const totalRemainingUser = computed<number>(
       :pt="Preset.showmoredialog"
       modal
     >
-      <div class="flex gap-3 items-center">
+      <div class="flex flex-wrap gap-3 items-center">
         <UserName
           :key="user._id"
           v-for="user in props.users"

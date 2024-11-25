@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, inject, ref, Ref } from 'vue';
+import { computed, inject, Ref } from 'vue';
 import Button from 'lib/components/button/Button.vue';
 import Dialog from 'lib/components/dialog/Dialog.vue';
 import { useToast } from 'lib/utils';
@@ -23,11 +23,10 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   saved: [];
+  reportBug: [];
 }>();
 
 const taskIdInject = inject<Ref<string>>('taskId');
-
-const dialogReportBug = ref(false);
 
 const taskId = computed(() =>
   taskIdInject ? taskIdInject.value : props.taskIdProp,
@@ -36,30 +35,9 @@ const taskId = computed(() =>
 const markReviewTaskAsDone = async (): Promise<void> => {
   try {
     setLoading(true);
-    const { data } = await TaskServices.reviewTask(taskId.value, []);
-    if (data) {
-      toast.add({
-        message: 'Task telah ditandai selesai review.',
-        severity: 'success',
-      });
-      emit('saved');
-      visible.value = false;
-    }
-  } catch (error) {
-    toast.add({
-      message: 'Task gagal ditandai selesai review.',
-      error,
-    });
-  } finally {
-    setLoading(false);
-  }
-};
-
-const reportBugTask = async (): Promise<void> => {
-  try {
-    setLoading(true);
-    const { data } = await TaskServices.reportBugTask(taskId.value, {
-      note: '',
+    const { data } = await TaskServices.reviewTask(taskId.value, {
+      data: [],
+      checklists: [],
     });
     if (data) {
       toast.add({
@@ -80,7 +58,7 @@ const reportBugTask = async (): Promise<void> => {
 };
 
 const openReportBugDialog = (): void => {
-  dialogReportBug.value = true;
+  emit('reportBug');
   visible.value = false;
 };
 </script>
@@ -131,38 +109,5 @@ const openReportBugDialog = (): void => {
         severity="success"
       />
     </template>
-  </Dialog>
-
-  <Dialog
-    v-model:visible="dialogReportBug"
-    :closable="false"
-    class="w-[400px]"
-    header="Review Leader"
-    modal
-  >
-    <template #header>
-      <div class="flex justify-between items-center w-full">
-        <div class="flex gap-2 items-center">
-          <Icon
-            v-bind="DialogConfirmPreset?.headericon"
-            icon="checkbox-circle"
-            severity="success"
-          />
-          <span class="text-lg font-semibold leading-4 text-success-700">
-            Report BUG
-          </span>
-        </div>
-        <Button
-          @click="dialogReportBug = false"
-          class="!p-0.5 !text-general-200 dark:!text-general-200"
-          data-wv-section="closebutton"
-          icon="close"
-          icon-class="w-[22px] h-[22px]"
-          severity="secondary"
-          text
-        />
-      </div>
-    </template>
-    <p>Report Task Will Be Here.</p>
   </Dialog>
 </template>

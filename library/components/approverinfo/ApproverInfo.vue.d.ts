@@ -4,20 +4,29 @@ import {
 } from 'lib/components/ts-helpers';
 
 export interface ApproverDetail {
-  _id: string;
+  _id?: string;
   level: number;
   type: 'and' | 'or';
-  status: 'Selesai' | 'Menunggu Approval';
+  status: 'selesai' | 'menunggu approval';
   approvers: {
-    userId: string;
-    userFullName: string;
-    actionTimeStamp?: string;
-    action?: 'approve' | 'reject';
+    _id: string;
+    fullName: string;
+    actionAt?: string;
+    action?: 'menyetujui' | 'menolak' | null;
   }[];
 }
 
 export interface ApproverInfoProps {
   approvals?: ApproverDetail[];
+  /**
+   * To determine whether this component show short information about approval or not
+   * @default true
+   */
+  showShortInfo?: boolean;
+  /**
+   * To set label text when showShortInfo is false
+   */
+  label?: string;
 }
 
 declare class ApproverInfo extends ClassComponent<

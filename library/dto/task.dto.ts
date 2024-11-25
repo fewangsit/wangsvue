@@ -35,6 +35,7 @@ export interface EditTaskDTO {
   /**
    * Members assigned to the task (Member _id)
    */
+  repository?: string;
   assignedTo?: string[];
   /**
    * Team initials.
@@ -43,6 +44,15 @@ export interface EditTaskDTO {
   duration?: number;
   startDate?: string | Date;
   priority?: number;
+}
+
+export interface UpdateTaskMemberDTO {
+  data: UpdateTaskMemberItem[];
+}
+
+export interface UpdateTaskMemberItem {
+  task: string;
+  member: string;
 }
 
 export interface EditDescriptionTaskDTO {

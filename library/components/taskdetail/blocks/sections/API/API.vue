@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { inject, onMounted, ref, Ref } from 'vue';
+import { computed, ComputedRef, inject, onMounted, ref, Ref } from 'vue';
 import Icon from 'lib/components/icon/Icon.vue';
-import Changelog from 'lib/components/changelog/Changelog.vue';
 import Button from 'lib/components/button/Button.vue';
 import TaskApiItem from './APIItem.vue';
 import DialogAddEditApi from './DialogAddEditApi.vue';
 import TaskApiServices from 'lib/services/taskApi.service';
-import { TaskAPIFormDataCustom } from 'lib/types/task.type';
+import { TaskAPIFormDataCustom, TaskDetailData } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
+import { WangsitStatus } from 'lib/types/wangsStatus.type';
 
 const toast = useToast();
 
@@ -15,12 +15,27 @@ onMounted(() => {
   getTaskAPIs();
 });
 
+const userType =
+  inject<ComputedRef<'member' | 'admin' | 'pm' | 'teamLeader' | 'guest'>>(
+    'userType',
+  );
 const taskId = inject<Ref<string>>('taskId');
+const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 
 const dialogAddApi = ref(false);
 const dialogEditApi = ref(false);
 const taskApis = ref<TaskAPIFormDataCustom[]>();
 const selectedTaskApi = ref<TaskAPIFormDataCustom>();
+
+const isDisabled = computed(() => {
+  const disabledStatus = (
+    ['Selesai', 'Reported Bug'] as WangsitStatus[]
+  ).includes(taskDetail.value?.status);
+
+  const isTaskCreateAPI = taskDetail.value?.process?.name === 'Create API';
+
+  return disabledStatus || isTaskCreateAPI || userType.value === 'guest';
+});
 
 const getTaskAPIs = async (): Promise<void> => {
   try {
@@ -56,8 +71,8 @@ const openRenameDialog = (index: number): void => {
         <span class="text-xs font-semibold">API</span>
       </div>
       <div class="flex items-center gap-2">
-        <Changelog object="objects" />
         <Button
+          :disabled="isDisabled"
           @click="dialogAddApi = true"
           icon="add"
           label="API"
@@ -71,6 +86,7 @@ const openRenameDialog = (index: number): void => {
         :key="api._id"
         v-for="(api, index) in taskApis"
         v-model:task-api="taskApis[index]"
+        :disabled="isDisabled"
         @deleted="getTaskAPIs"
         @open-edit="openRenameDialog(index)"
         @updated="getTaskAPIs"

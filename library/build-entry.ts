@@ -131,6 +131,9 @@ import {
   ApproverInfo,
   DetailMember,
   DetailSprint,
+  DialogAdjustmentTask,
+  TaskDetail,
+  TaskTable,
 } from './components';
 
 export {
@@ -219,6 +222,9 @@ export {
   ApproverInfo,
   DetailMember,
   DetailSprint,
+  DialogAdjustmentTask,
+  TaskDetail,
+  TaskTable,
 
   // Component store
   useLoadingStore,

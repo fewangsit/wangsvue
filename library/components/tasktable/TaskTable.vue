@@ -19,7 +19,7 @@ import { FilterField } from '../filtercontainer/FilterContainer.vue.d';
 import { MultiSelectOption } from 'lib/types/options.type';
 import DataTable from '../datatable/DataTable.vue';
 import TaskServices from 'lib/services/task.service';
-import { TaskTableProps } from './TaskTable.vue.d';
+import { TaskTablePage, TaskTableProps, TaskTableTab } from './TaskTable.vue.d';
 import { TaskTableItem, TaskTableOptionQuery } from 'lib/types/task.type';
 import Badge from '../badge/Badge.vue';
 import { useToast } from 'lib/utils';
@@ -35,42 +35,260 @@ import { useLoadingStore } from 'lib/build-entry';
 import DialogConfirmFinishTask from '../taskdetail/blocks/common/DialogConfirmFinishTask.vue';
 import UserGroup from '../usergroup/UserGroup.vue';
 import ButtonBulkAction from '../buttonbulkaction/ButtonBulkAction.vue';
+import DialogConfirmRestoreTask from './DialogConfirmRestoreTask.vue';
+import DialogConfirmDeleteTaskPermanently from './DialogConfirmDeleteTaskPermanently.vue';
+import DialogSelectProject from './DialogSelectProject.vue';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
 
 const props = defineProps<TaskTableProps>();
 
-const quickFilterField: FilterField[] = [
+type CustomFilterField = FilterField & {
+  visible: boolean;
+};
+
+const userData = JSON.parse(localStorage.getItem('user') as string);
+
+const showFilter = ref(false);
+const dialogSelectProject = ref(false);
+const dialogNewTask = ref(false);
+const dialogDetailTask = ref(false);
+const dialogAssignMember = ref(false);
+const dialogAssignMemberBulk = ref(false);
+const dialogConfirmDeleteTask = ref(false);
+const dialogConfirmDeleteTaskBulk = ref(false);
+const dialogConfirmFinishTask = ref(false);
+const dialogReview = ref(false);
+const dialogFinishReview = ref(false);
+const dialogConfirmRestoreTask = ref(false);
+const dialogConfirmRestoreTaskBulk = ref(false);
+const dialogConfirmDeleteTaskPermanently = ref(false);
+const dialogConfirmDeleteTaskPermanentlyBulk = ref(false);
+
+const selectedTask = ref<TaskTableItem>();
+
+const selectedTasks = ref<TaskTableItem[]>([]);
+
+const selectedProjectId = ref<string>();
+
+const filters = ref<any>({
+  global: { value: undefined, matchMode: FilterMatchMode.CONTAINS },
+});
+
+const tableName = computed(() =>
+  props.subTab ? `task-table-${props.tab}-${props.subTab}` : props.tab,
+);
+
+const tableColumns = computed<TableColumn[]>(() => {
+  return [
+    {
+      field: 'project.name',
+      header: 'Proyek',
+      sortable: true,
+      fixed: true,
+      visible: (
+        ['task', 'member-detail', 'my-profile'] as TaskTablePage[]
+      ).includes(props.page),
+    },
+    {
+      field: 'module.name',
+      header: 'Modul',
+      sortable: true,
+      fixed: true,
+      visible: (
+        [
+          'task',
+          'member-detail',
+          'my-profile',
+          'project-task',
+        ] as TaskTablePage[]
+      ).includes(props.page),
+    },
+    {
+      field: 'subModule.name',
+      header: 'Sub Modul',
+      sortable: true,
+      visible: (
+        [
+          'task',
+          'member-detail',
+          'my-profile',
+          'project-task',
+          'project-module',
+        ] as TaskTablePage[]
+      ).includes(props.page),
+    },
+    {
+      field: 'process.name',
+      header: 'Proses',
+      sortable: true,
+      visible: true,
+    },
+    {
+      field: 'name',
+      header: 'Task',
+      sortable: true,
+      fixed: true,
+      visible: true,
+    },
+    {
+      field: 'status',
+      header: 'Status',
+      sortable: true,
+      fixed: true,
+      bodyComponent: (data: TaskTableItem): TableCellComponent => {
+        return {
+          component: Badge,
+          props: {
+            label: data.status,
+            format: 'nowrap',
+          },
+        };
+      },
+      visible: true,
+    },
+    {
+      field: 'priority',
+      header: 'Nilai Prioritas',
+      sortable: true,
+      visible: true,
+    },
+    {
+      field: 'team',
+      header: 'Tim',
+      sortable: true,
+      bodyTemplate: (data: TaskTableItem): string =>
+        data.team.map((t) => t).join(', '),
+      visible: true,
+    },
+    {
+      field: 'assignedTo',
+      header: 'Assign',
+      sortable: true,
+      fixed: true,
+      arrayValueField: 'nickName',
+      exportField: 'assignedTo',
+      bodyComponent: (data: TaskTableItem): TableCellComponent => {
+        return {
+          component: UserGroup,
+          props: {
+            users: data.assignedTo,
+            profilePictureField: 'profilePictureBig',
+            withDialogDetail: true,
+            dialogHeaderLabel: 'Assigned To',
+          },
+        };
+      },
+      visible: true,
+    },
+    {
+      field: 'childTask',
+      header: 'Child Task',
+      sortable: true,
+      bodyTemplate: (data: TaskTableItem): string =>
+        data.childTask ? data.childTask.toString() : '-',
+      visible: true,
+    },
+    {
+      field: 'dependency',
+      header: 'Dependensi',
+      sortable: true,
+      exportField: 'exportDependencyField',
+      bodyComponent: (data: TaskTableItem): TableCellComponent => {
+        return {
+          component: DependencyCol,
+          props: {
+            dependency: data.dependency,
+          },
+        };
+      },
+      visible: true,
+    },
+    {
+      field: 'timeReportedBug',
+      header: 'Reported Bug',
+      sortable: true,
+      bodyTemplate: (data: TaskTableItem): string =>
+        data.timeReportedBug ? data.timeReportedBug.toString() + ' Kali' : '-',
+      visible: true,
+    },
+    {
+      field: 'lastUpdatedAt',
+      header: 'Last Modified Status',
+      sortable: true,
+      visible: true,
+    },
+  ];
+});
+
+/**
+ * Generate quick filter fields based on task table page and tab.
+ *
+ * Quick filter fields:
+ * - Nilai Prioritas (always visible)
+ * - Member (based on tab, sub tab, and user role)
+ * - Proyek (only for task, member-detail, my-profile pages)
+ * - Modul (only for task, member-detail, my-profile, project-task pages)
+ * - Task (always visible)
+ * - Status (only for all, active, deleted tabs)
+ */
+const quickFilterFields = computed<CustomFilterField[]>(() => [
   {
     fields: ['minPriority', 'maxPriority'],
     type: 'rangenumber',
     placeholder: '0',
     tooltip: 'Nilai Prioritas',
+    visible: true,
   },
   {
     field: 'member',
     type: 'multiselect',
     placeholder: 'Pilih member',
-    fetchOptionFn: () => getTaskOptionsByTab('memberOptions'),
+    fetchOptionFn: (): Promise<MultiSelectOption[]> =>
+      getTaskOptions('memberOptions'),
+    visible:
+      /*
+       * Conditions for member filter be visible :
+       * - The sub tab is 'myTask' and the user is a team leader
+       * - The tab is 'backlog' or 'deleted' and the user is a team leader
+       * - The sub tab is 'relatedTask'
+       *
+       * The member filter will be hidden if the user is not a team leader and
+       * (the sub tab is 'myTask' or the tab is 'backlog' | 'deleted')
+       */
+      ((props.subTab === 'myTask' ||
+        ['backlog', 'deleted'].includes(props.tab)) &&
+        userData.isTeamLeader) ||
+      props.subTab === 'relatedTask',
   },
   {
     field: 'project',
     type: 'multiselect',
     placeholder: 'Pilih proyek',
-    fetchOptionFn: () => getTaskOptionsByTab('projectOptions'),
+    fetchOptionFn: (): Promise<MultiSelectOption[]> =>
+      getTaskOptions('projectOptions'),
+    visible: (
+      ['task', 'member-detail', 'my-profile'] as TaskTablePage[]
+    ).includes(props.page),
   },
   {
     field: 'module',
     type: 'multiselect',
     placeholder: 'Pilih modul',
-    fetchOptionFn: () => getTaskOptionsByTab('moduleOptions'),
+    fetchOptionFn: (): Promise<MultiSelectOption[]> =>
+      getTaskOptions('moduleOptions'),
+    visible: (
+      ['task', 'member-detail', 'my-profile', 'project-task'] as TaskTablePage[]
+    ).includes(props.page),
   },
   {
     field: 'task',
     type: 'multiselect',
     placeholder: 'Pilih task',
-    fetchOptionFn: () => getTaskOptionsByTab('taskOptions'),
+    fetchOptionFn: (): Promise<MultiSelectOption[]> =>
+      getTaskOptions('taskOptions'),
+    visible: true,
   },
   {
     field: 'status',
@@ -102,23 +320,48 @@ const quickFilterField: FilterField[] = [
         value: 'Penyesuaian',
       },
     ],
+    visible: (['all', 'active', 'deleted'] as TaskTableTab[]).includes(
+      props.tab,
+    ),
   },
-];
+]);
 
-const filterFields: FilterField[] = [
+/**
+ * Generate custom filter fields based on task table page.
+ *
+ * Filter fields:
+ * - Sub Modul (only for task, member-detail, my-profile, project-task, project-module pages)
+ * - Proses (always visible)
+ * - Dependensi (always visible)
+ * - Reported Bug (Kali) (always visible)
+ * - Last Modified Status (always visible)
+ */
+const filterFields = computed<CustomFilterField[]>(() => [
   {
     label: 'Sub Modul',
     field: 'subModule',
     type: 'multiselect',
     placeholder: 'Pilih sub modul',
-    fetchOptionFn: () => getTaskOptionsByTab('subModuleOptions'),
+    fetchOptionFn: (): Promise<MultiSelectOption[]> =>
+      getTaskOptions('subModuleOptions'),
+    visible: (
+      [
+        'task',
+        'member-detail',
+        'my-profile',
+        'project-task',
+        'project-module',
+      ] as TaskTablePage[]
+    ).includes(props.page),
   },
   {
     label: 'Proses',
     field: 'process',
     type: 'multiselect',
     placeholder: 'Pilih proses',
-    fetchOptionFn: () => getTaskOptionsByTab('processOptions'),
+    fetchOptionFn: (): Promise<MultiSelectOption[]> =>
+      getTaskOptions('processOptions'),
+    visible: true,
   },
   {
     label: 'Dependensi',
@@ -139,149 +382,23 @@ const filterFields: FilterField[] = [
         value: 'Selesai',
       },
     ],
+    visible: true,
   },
   {
     label: 'Reported Bug (Kali)',
     fields: ['minTimeReportedBug', 'maxTimeReportedBug'],
     type: 'rangenumber',
     placeholder: '0',
+    visible: true,
   },
   {
     label: 'Last Modified Status',
     type: 'calendar',
     field: 'lastUpdatedAt',
     placeholder: 'Pilih tanggal',
+    visible: true,
   },
-];
-
-const userData = JSON.parse(localStorage.getItem('user') as string);
-
-const showFilter = ref(false);
-const dialogNewTask = ref(false);
-const dialogDetailTask = ref(false);
-const dialogAssignMember = ref(false);
-const dialogConfirmDeleteTask = ref(false);
-const dialogConfirmFinishTask = ref(false);
-const dialogReview = ref(false);
-const dialogFinishReview = ref(false);
-
-const selectedTask = ref<TaskTableItem>();
-
-const selectedTasks = ref<TaskTableItem[]>([]);
-
-const filters = ref<any>({
-  global: { value: undefined, matchMode: FilterMatchMode.CONTAINS },
-});
-
-const tableColumns = computed<TableColumn[]>(() => {
-  return [
-    {
-      field: 'module.name',
-      header: 'Modul',
-      sortable: true,
-      fixed: true,
-    },
-    {
-      field: 'subModule.name',
-      header: 'Sub Modul',
-      sortable: true,
-    },
-    {
-      field: 'process.name',
-      header: 'Proses',
-      sortable: true,
-    },
-    {
-      field: 'name',
-      header: 'Task',
-      sortable: true,
-      fixed: true,
-    },
-    {
-      field: 'status',
-      header: 'Status',
-      sortable: true,
-      fixed: true,
-      bodyComponent: (data: TaskTableItem): TableCellComponent => {
-        return {
-          component: Badge,
-          props: {
-            label: data.status,
-            format: 'nowrap',
-          },
-        };
-      },
-    },
-    {
-      field: 'priority',
-      header: 'Nilai Prioritas',
-      sortable: true,
-    },
-    {
-      field: 'team',
-      header: 'Tim',
-      sortable: true,
-      bodyTemplate: (data: TaskTableItem): string =>
-        data.team.map((t) => t).join(', '),
-    },
-    {
-      field: 'assignedTo',
-      header: 'Assign',
-      sortable: true,
-      fixed: true,
-      arrayValueField: 'nickName',
-      exportField: 'assignedTo',
-      bodyComponent: (data: TaskTableItem): TableCellComponent => {
-        return {
-          component: UserGroup,
-          props: {
-            users: data.assignedTo,
-            profilePictureField: 'profilePictureBig',
-            withDialogDetail: true,
-            dialogHeaderLabel: 'Assigned To',
-          },
-        };
-      },
-    },
-    {
-      field: 'childTask',
-      header: 'Child Task',
-      sortable: true,
-      bodyTemplate: (data: TaskTableItem): string =>
-        data.childTask ? data.childTask.toString() : '-',
-    },
-    {
-      field: 'dependency',
-      header: 'Dependensi',
-      sortable: true,
-      exportField: 'exportDependencyField',
-      bodyComponent: (data: TaskTableItem): TableCellComponent => {
-        return {
-          component: DependencyCol,
-          props: {
-            dependency: data.dependency,
-          },
-        };
-      },
-    },
-    {
-      field: 'timeReportedBug',
-      header: 'Reported Bug',
-      sortable: true,
-      bodyTemplate: (data: TaskTableItem): string =>
-        data.timeReportedBug ? data.timeReportedBug.toString() + ' Kali' : '-',
-    },
-    {
-      field: 'lastUpdatedAt',
-      header: 'Last Modified Status',
-      sortable: true,
-    },
-  ];
-});
-
-const tableName = computed(() =>
-  props.subTab ? `task-table-${props.tab}-${props.subTab}` : props.tab,
-);
+]);
 
 /**
  * Generate table actions based on task status and user type.
@@ -292,99 +409,171 @@ const tableName = computed(() =>
  * - Tandai Selesai (only for Member and task status is Sprint/Fixing Bug/Penyesuaian)
  * - Detail Task (only for Admin/PM/Leader/Member and task type is parent/dependency)
  * - Hapus (only for Admin/PM/Leader/Member and task status is Backlog/Sprint)
+ * - Pulihkan (only if props.tab is 'deleted' )
+ * - Hapus Permanen (only if props.tab is 'deleted')
  */
-const tableActions = computed<MenuItem[]>(() => [
-  {
-    label: 'Assign Member',
-    icon: 'user-received-2-line',
-    visible:
-      selectedTask.value?.status === 'Backlog' &&
-      selectedTask.value?.taskType === 'parent' &&
-      ['admin', 'pm', 'teamLeader'].includes(userType.value),
-    command: (): void => {
-      dialogAssignMember.value = true;
+const tableActions = computed<MenuItem[]>(() => {
+  const commonTableActions: MenuItem[] = [
+    {
+      label: 'Detail Task',
+      icon: 'file-copy-2-line',
+      visible:
+        ['parent', 'dependency'].includes(selectedTask.value?.taskType) &&
+        ['admin', 'pm', 'teamLeader', 'member'].includes(userType.value),
+      command: (): void => {
+        dialogDetailTask.value = true;
+      },
     },
-  },
-  {
-    label: 'Review',
-    icon: 'chat-check',
-    visible:
-      selectedTask.value?.status === 'Pending Review Leader' &&
-      selectedTask.value?.taskType === 'parent' &&
-      userType.value === 'teamLeader',
-    command: (): void => {
-      openReviewDialog();
+  ];
+
+  const otherTableActions: MenuItem[] = [
+    {
+      label: 'Assign Member',
+      icon: 'user-received-2-line',
+      visible:
+        selectedTask.value?.status === 'Backlog' &&
+        selectedTask.value?.taskType === 'parent' &&
+        ['admin', 'pm', 'teamLeader'].includes(userType.value),
+      command: (): void => {
+        dialogAssignMember.value = true;
+      },
     },
-  },
-  {
-    label: 'Tandai Selesai',
-    icon: 'check-double-fill',
-    visible:
-      ['Sprint', 'Fixing Bug', 'Penyesuaian'].includes(
-        selectedTask.value?.status,
-      ) &&
-      selectedTask.value?.taskType === 'parent' &&
-      userType.value === 'member',
-    command: (): void => {
-      dialogConfirmFinishTask.value = true;
+    {
+      label: 'Review',
+      icon: 'chat-check',
+      visible:
+        selectedTask.value?.status === 'Pending Review Leader' &&
+        selectedTask.value?.taskType === 'parent' &&
+        userType.value === 'teamLeader',
+      command: (): void => {
+        openReviewDialog();
+      },
     },
-  },
-  {
-    label: 'Detail Task',
-    icon: 'file-copy-2-line',
-    visible:
-      ['parent', 'dependency'].includes(selectedTask.value?.taskType) &&
-      ['admin', 'pm', 'teamLeader', 'member'].includes(userType.value),
-    command: (): void => {
-      dialogDetailTask.value = true;
+    {
+      label: 'Tandai Selesai',
+      icon: 'check-double-fill',
+      visible:
+        ['Sprint', 'Fixing Bug', 'Penyesuaian'].includes(
+          selectedTask.value?.status,
+        ) &&
+        selectedTask.value?.taskType === 'parent' &&
+        userType.value === 'member',
+      command: (): void => {
+        dialogConfirmFinishTask.value = true;
+      },
     },
-  },
-  {
-    label: 'Hapus',
-    icon: 'delete-bin',
-    danger: true,
-    visible:
-      ['Backlog', 'Sprint'].includes(selectedTask.value?.status) &&
-      selectedTask.value?.taskType === 'parent' &&
-      ['admin', 'pm', 'teamLeader', 'member'].includes(userType.value),
-    command: (): void => {
-      dialogConfirmDeleteTask.value = true;
+    ...commonTableActions,
+    {
+      label: 'Hapus',
+      icon: 'delete-bin',
+      danger: true,
+      visible:
+        ['Backlog', 'Sprint'].includes(selectedTask.value?.status) &&
+        selectedTask.value?.taskType === 'parent' &&
+        ['admin', 'pm', 'teamLeader', 'member'].includes(userType.value),
+      command: (): void => {
+        dialogConfirmDeleteTask.value = true;
+      },
     },
-  },
-]);
+  ];
+
+  const deletedTabActions: MenuItem[] = [
+    ...commonTableActions,
+    {
+      label: 'Pulihkan',
+      icon: 'history',
+      visible:
+        selectedTask.value?.taskType === 'parent' && props.tab === 'deleted',
+      command: (): void => {
+        dialogConfirmRestoreTask.value = true;
+      },
+    },
+    {
+      label: 'Hapus Permanen',
+      icon: 'delete-bin',
+      danger: true,
+      visible:
+        selectedTask.value?.taskType === 'parent' && props.tab === 'deleted',
+      command: (): void => {
+        dialogConfirmDeleteTaskPermanently.value = true;
+      },
+    },
+  ];
+
+  return props.tab === 'deleted' ? deletedTabActions : otherTableActions;
+});
 
 /**
  * Generate bulk actions for task table based on user type.
  *
  * Bulk actions:
- * - Assign Member (only for Admin/PM/Leader)
- * - Hapus (only for Admin/PM/Leader or every task is assigned to current user)
+ * - Assign Member (only visible if Admin/PM/Leader & every tasks has the same project and team)
+ * - Hapus (only visible if Admin/PM/Leader or every task is assigned to current user)
+ * - Pulihkan (only visible if props.tab is 'deleted' )
+ * - Hapus Permanen (only visible if props.tab is 'deleted')
  */
-const tableBulkActions = computed<MenuItem[]>(() => [
-  {
-    label: 'Assign Member',
-    icon: 'user-received-2-line',
-    visible:
-      selectedTasks.value?.every(
-        (task) => task.isProjectManager || task.isTeamLeader,
-      ) || userData?.permission?.manageProject,
-  },
-  {
-    label: 'Hapus',
-    icon: 'delete-bin',
-    danger: true,
-    visible:
-      selectedTasks.value?.every(
-        (task) => task.isProjectManager || task.isTeamLeader,
-      ) ||
-      userData?.permission?.manageProject ||
-      selectedTasks.value?.every((task) =>
-        task.assignedTo.some(
-          (assignedUser) => assignedUser._id === userData?._id,
+const tableBulkActions = computed<MenuItem[]>(() => {
+  const otherBulkActions: MenuItem[] = [
+    {
+      label: 'Assign Member',
+      icon: 'user-received-2-line',
+      visible:
+        (selectedTasks.value?.every(
+          (task) => task.isProjectManager || task.isTeamLeader,
+        ) ||
+          userData?.permission?.manageProject) &&
+        selectedTasks.value?.every(
+          (task) =>
+            selectedTasks.value?.[0].project._id === task.project._id &&
+            JSON.stringify(selectedTasks.value?.[0].team) ===
+              JSON.stringify(task.team),
         ),
-      ),
-  },
-]);
+      command: (): void => {
+        dialogAssignMemberBulk.value = true;
+      },
+    },
+    {
+      label: 'Hapus',
+      icon: 'delete-bin',
+      danger: true,
+      visible:
+        selectedTasks.value?.every(
+          (task) => task.isProjectManager || task.isTeamLeader,
+        ) ||
+        userData?.permission?.manageProject ||
+        selectedTasks.value?.every((task) =>
+          task.assignedTo.some(
+            (assignedUser) => assignedUser._id === userData?._id,
+          ),
+        ),
+      command: (): void => {
+        dialogConfirmDeleteTaskBulk.value = true;
+      },
+    },
+  ];
+
+  const deletedBulkActions: MenuItem[] = [
+    {
+      label: 'Pulihkan',
+      icon: 'history',
+      visible: true,
+      command: (): void => {
+        dialogConfirmRestoreTaskBulk.value = true;
+      },
+    },
+    {
+      label: 'Hapus Permanen',
+      icon: 'delete-bin',
+      danger: true,
+      visible: true,
+      command: (): void => {
+        dialogConfirmDeleteTaskPermanentlyBulk.value = true;
+      },
+    },
+  ];
+
+  return props.tab === 'deleted' ? deletedBulkActions : otherBulkActions;
+});
 
 const userType = computed(() => {
   const isAdmin = Object.values(
@@ -407,20 +596,57 @@ const userType = computed(() => {
   return memberType;
 });
 
-const getTasksByTab = async (
+const queryParamsByPage = computed(() => ({
+  project: props.page.includes('project')
+    ? JSON.stringify([props.projectId])
+    : undefined,
+  module: props.page.toLowerCase().includes('module')
+    ? JSON.stringify([props.moduleId])
+    : undefined,
+  subModule: props.page.includes('subModule')
+    ? JSON.stringify([props.subModuleId])
+    : undefined,
+}));
+
+const onClickCreateTask = (): void => {
+  if (props.page === 'task') {
+    dialogSelectProject.value = true;
+  } else {
+    dialogNewTask.value = true;
+  }
+};
+
+const getTasks = async (
   params: QueryParams,
 ): Promise<FetchResponse<TaskTableItem> | undefined> => {
   try {
-    const { data } = await TaskServices.getTasksByTab({
-      tab: props.tab,
-      subTab: props.subTab,
-      query: params,
-    });
+    let responseData: FetchResponse<TaskTableItem>;
+    if (
+      (['member-detail', 'my-profile'] as TaskTablePage[]).includes(props.page)
+    ) {
+      const response = await TaskServices.getTasksByUser({
+        userId: props.page === 'my-profile' ? userData._id : props.userId,
+        tab: props.tab,
+        query: params,
+      });
+      responseData = response.data;
+    } else {
+      const response = await TaskServices.getTasksByTab({
+        tab: props.tab,
+        subTab: props.subTab,
+        query: {
+          ...queryParamsByPage.value,
+          ...params,
+        },
+      });
+      responseData = response.data;
+    }
+
     const formattedData: FetchResponse<TaskTableItem> = {
-      ...data,
+      ...responseData,
       data: {
-        ...data.data,
-        data: data.data.data.map((task: TaskTableItem) => ({
+        ...responseData.data,
+        data: responseData.data.data.map((task: TaskTableItem) => ({
           ...task,
           hasChildren:
             task.childTask > 0 ||
@@ -439,16 +665,30 @@ const getTasksByTab = async (
   }
 };
 
-const getTaskOptionsByTab = async (
+const getTaskOptions = async (
   field: keyof TaskTableOptionQuery,
 ): Promise<MultiSelectOption[]> => {
   try {
-    const { data } = await TaskServices.getTaskOptionsByTab({
-      tab: props.tab,
-      subTab: props.subTab,
-      query: { [field]: true },
-    });
-    return data.data[field];
+    let responseData: FetchResponse;
+    if (
+      (['member-detail', 'my-profile'] as TaskTablePage[]).includes(props.page)
+    ) {
+      const response = await TaskServices.getTaskOptionsByUser({
+        userId: props.page === 'my-profile' ? userData._id : props.userId,
+        tab: props.tab,
+        query: { ...queryParamsByPage.value, [field]: true },
+      });
+      responseData = response.data;
+    } else {
+      const response = await TaskServices.getTaskOptionsByTab({
+        tab: props.tab,
+        subTab: props.subTab,
+        query: { ...queryParamsByPage.value, [field]: true },
+      });
+      responseData = response.data;
+    }
+
+    return responseData.data[field];
   } catch (error) {
     toast.add({
       message: 'Data options gagal dimuat.',
@@ -491,8 +731,12 @@ const getTaskFamily = async (parentData: {
   }
 };
 
-const refreshTable = (): void => {
+const reloadTable = (): void => {
+  selectedTasks.value = [];
   eventBus.emit('data-table:update', { tableName: tableName.value });
+  eventBus.emit('data-table:clear-selected-data', {
+    tableName: tableName.value,
+  });
 };
 
 const openReviewDialog = async (): Promise<void> => {
@@ -521,12 +765,16 @@ const getChecklists = async (): Promise<any[]> => {
     setLoading(false);
   }
 };
+
+const selectProject = (projectId: string): void => {
+  selectedProjectId.value = projectId;
+  dialogNewTask.value = true;
+};
 </script>
 
 <template>
   <div class="flex flex-col gap-2">
     <div class="flex justify-end gap-4">
-      <pre>{{ userType }}</pre>
       <ButtonBulkAction
         v-model:selected-data="selectedTasks"
         :options="tableBulkActions"
@@ -541,17 +789,33 @@ const getChecklists = async (): Promise<any[]> => {
       <ButtonDownload :table-name="tableName" file-name="Download" />
       <ButtonFilter v-model:show-filter="showFilter" :table-name="tableName" />
       <Button
-        v-if="props.tab === 'all'"
-        @click="dialogNewTask = true"
+        v-if="
+          props.tab === 'all' &&
+          (
+            [
+              'task',
+              'project-task',
+              'project-module',
+              'project-subModule',
+            ] as TaskTablePage[]
+          ).includes(props.page)
+        "
+        @click="onClickCreateTask"
         icon="add"
         label="Task"
         severity="secondary"
       />
     </div>
 
-    <QuickFilter :fields="quickFilterField" :table-name="tableName" />
+    <QuickFilter
+      :fields="quickFilterFields.filter((field) => field.visible)"
+      :table-name="tableName"
+    />
 
-    <FilterContainer :fields="filterFields" :table-name="tableName" />
+    <FilterContainer
+      :fields="filterFields.filter((field) => field.visible)"
+      :table-name="tableName"
+    />
 
     <DataTable
       v-model:selected-data="selectedTasks"
@@ -561,9 +825,13 @@ const getChecklists = async (): Promise<any[]> => {
         fetchFunction: getTaskFamily,
       }"
       :columns="tableColumns"
-      :fetch-function="getTasksByTab"
+      :fetch-function="getTasks"
       :options="tableActions"
-      :selection-type="props.tab === 'backlog' ? 'checkbox' : 'none'"
+      :selection-type="
+        (['backlog', 'deleted'] as TaskTableTab[]).includes(props.tab)
+          ? 'checkbox'
+          : 'none'
+      "
       :table-name="tableName"
       :tree-table="true"
       @toggle-option="selectedTask = $event"
@@ -577,44 +845,100 @@ const getChecklists = async (): Promise<any[]> => {
 
   <TaskDetail
     v-model:visible="dialogNewTask"
-    @create="refreshTable"
-    @delete="refreshTable"
-    @update="refreshTable"
+    :initial-module="props.moduleId ? { _id: props.moduleId } : undefined"
+    :initial-sub-module="
+      props.subModuleId ? { _id: props.subModuleId } : undefined
+    "
+    :project-id="props.page === 'task' ? selectedProjectId : props.projectId"
+    @create="reloadTable"
+    @delete="reloadTable"
+    @update="reloadTable"
   />
 
   <TaskDetail
     v-model:visible="dialogDetailTask"
+    :initial-module="props.moduleId ? { _id: props.moduleId } : undefined"
+    :initial-sub-module="
+      props.subModuleId ? { _id: props.subModuleId } : undefined
+    "
+    :project-id="selectedTask?.project?._id"
     :task-id="selectedTask?._id"
-    @create="refreshTable"
-    @delete="refreshTable"
-    @update="refreshTable"
+    @create="reloadTable"
+    @delete="reloadTable"
+    @update="reloadTable"
+  />
+
+  <DialogSelectProject
+    v-model:visible="dialogSelectProject"
+    @saved="selectProject"
   />
 
   <DialogAssignMember
     v-model:visible="dialogAssignMember"
-    :task-id-prop="selectedTask?._id"
+    :project-id-prop="selectedTask?.project?._id"
+    :task-id-prop="[selectedTask?._id]"
+    @saved="reloadTable"
+  />
+
+  <DialogAssignMember
+    v-model:visible="dialogAssignMemberBulk"
+    :project-id-prop="selectedTasks?.[0]?.project?._id"
+    :task-id-prop="selectedTasks?.map((task) => task._id)"
+    @saved="reloadTable"
   />
 
   <DialogReviewLeader
     v-model:visible="dialogReview"
     :task-detail-prop="selectedTask"
     :task-id-prop="selectedTask?._id"
-    @saved="eventBus.emit('detail-task:update', { taskId: selectedTask?._id })"
+    @saved="reloadTable"
   />
 
   <DialogFinishReview
     v-model:visible="dialogFinishReview"
     :task-id-prop="selectedTask?._id"
-    @saved="eventBus.emit('detail-task:update', { taskId: selectedTask?._id })"
+    @saved="reloadTable"
   />
 
   <DialogConfirmFinishTask
     v-model:visible="dialogConfirmFinishTask"
     :task-detail="selectedTask"
+    @saved="reloadTable"
   />
 
   <DialogConfirmDeleteTask
     v-model:visible="dialogConfirmDeleteTask"
-    :task-detail="selectedTask"
+    :tasks="[selectedTask]"
+    @saved="reloadTable"
+  />
+
+  <DialogConfirmDeleteTask
+    v-model:visible="dialogConfirmDeleteTaskBulk"
+    :tasks="selectedTasks"
+    @saved="reloadTable"
+  />
+
+  <DialogConfirmRestoreTask
+    v-model:visible="dialogConfirmRestoreTask"
+    :tasks="[selectedTask]"
+    @saved="reloadTable"
+  />
+
+  <DialogConfirmRestoreTask
+    v-model:visible="dialogConfirmRestoreTaskBulk"
+    :tasks="selectedTasks"
+    @saved="reloadTable"
+  />
+
+  <DialogConfirmDeleteTaskPermanently
+    v-model:visible="dialogConfirmDeleteTaskPermanently"
+    :tasks="[selectedTask]"
+    @saved="reloadTable"
+  />
+
+  <DialogConfirmDeleteTaskPermanently
+    v-model:visible="dialogConfirmDeleteTaskPermanentlyBulk"
+    :tasks="selectedTasks"
+    @saved="reloadTable"
   />
 </template>

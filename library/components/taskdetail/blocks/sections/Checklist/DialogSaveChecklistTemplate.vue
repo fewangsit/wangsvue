@@ -15,7 +15,7 @@ import InputText from 'lib/components/inputtext/InputText.vue';
 const { setLoading } = useLoadingStore();
 const toast = useToast();
 
-const projectId = sessionStorage.getItem('projectId') ?? '';
+const projectId = inject<Ref<string>>('projectId');
 
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 
@@ -32,7 +32,7 @@ const getChecklistTemplates = async (): Promise<void> => {
   try {
     templateLoading.value = true;
     const { data: response } =
-      await TaskChecklistServices.getTaskChecklistTemplates(projectId);
+      await TaskChecklistServices.getTaskChecklistTemplates(projectId.value);
     if (response) {
       const defaultOption = {
         label: 'Template Baru',
@@ -59,7 +59,7 @@ const handleSubmit = async (e: FormPayload): Promise<void> => {
 
     const template = e.formValues?.template as unknown as FormValue;
     const body: AddTaskChecklistTemplateDTO = {
-      project: projectId,
+      project: projectId.value,
       checklist: props.checklist._id,
       module: taskDetail.value?.module?.name,
       subModule: taskDetail.value?.subModule?.name,

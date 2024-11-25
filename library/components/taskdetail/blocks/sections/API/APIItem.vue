@@ -23,6 +23,10 @@ const taskApi = defineModel<TaskAPIFormDataCustom>('taskApi', {
   required: true,
 });
 
+const props = defineProps<{
+  disabled?: boolean;
+}>();
+
 const emit = defineEmits<{
   deleted: [];
   updated: [];
@@ -194,6 +198,7 @@ const contentTypeChange = (): void => {
       <span class="text-xs font-semibold">{{ taskApi.name }}</span>
       <div class="flex gap-1">
         <Button
+          :disabled="props.disabled"
           @click="emit('openEdit')"
           class="!w-6 !min-w-6 !h-6"
           icon="edit"
@@ -211,6 +216,7 @@ const contentTypeChange = (): void => {
       </div>
     </div>
     <Button
+      :disabled="props.disabled"
       @click="dialogDeleteConfirm = true"
       icon="close"
       severity="danger"
@@ -241,14 +247,6 @@ const contentTypeChange = (): void => {
                   type="button"
                 />
                 <Button
-                  class="!p-1"
-                  icon="file-history"
-                  icon-class="!w-6 !h-6"
-                  severity="secondary"
-                  text
-                  type="button"
-                />
-                <Button
                   @click="dialogTestApi = true"
                   label="Tes API"
                   severity="secondary"
@@ -271,6 +269,7 @@ const contentTypeChange = (): void => {
                 <div class="pl-8 pt-3 flex flex-col gap-2">
                   <Dropdown
                     v-model="taskApi.method"
+                    :disabled="props.disabled"
                     :initial-value="taskApi.method"
                     :options="methodOptions"
                     @update:model-value="makeChanges"
@@ -284,6 +283,7 @@ const contentTypeChange = (): void => {
                   />
                   <InputText
                     v-model="taskApi.url"
+                    :disabled="props.disabled"
                     :validator-message="{
                       empty: 'Endpoint harus diisi.',
                     }"
@@ -299,6 +299,7 @@ const contentTypeChange = (): void => {
                     <span class="font-normal">Header</span>
                     <CodeSnippet
                       v-model:code="taskApi.header"
+                      :readonly="props.disabled"
                       @update:code="makeChanges"
                       class="max-h-[306px] overflow-y-auto"
                       lang="json"
@@ -306,6 +307,7 @@ const contentTypeChange = (): void => {
                   </div>
                   <Dropdown
                     v-model="taskApi.contentType"
+                    :disabled="props.disabled"
                     :initial-value="taskApi.contentType"
                     :options="contentTypeOptions"
                     @update:model-value="contentTypeChange"
@@ -326,6 +328,7 @@ const contentTypeChange = (): void => {
                     >
                       <InputText
                         v-model="taskApi.query[index]"
+                        :disabled="props.disabled"
                         :field-name="`query-${index}`"
                         :validator-message="{
                           empty: 'Query param harus diisi.',
@@ -337,6 +340,7 @@ const contentTypeChange = (): void => {
                         use-validator
                       />
                       <Button
+                        :disabled="props.disabled"
                         @click="removeQueryParam(index)"
                         icon="delete-bin"
                         outlined
@@ -345,6 +349,7 @@ const contentTypeChange = (): void => {
                       />
                     </div>
                     <Button
+                      :disabled="props.disabled"
                       @click="addQueryParam"
                       icon="add"
                       label="Query Param"
@@ -365,6 +370,7 @@ const contentTypeChange = (): void => {
                       >
                         <InputText
                           v-model="taskApi.formDataBody[index].key"
+                          :disabled="props.disabled"
                           :field-name="`body-key-${index}`"
                           :validator-message="{
                             empty: 'Key harus diisi.',
@@ -378,6 +384,7 @@ const contentTypeChange = (): void => {
                         />
                         <Dropdown
                           v-model="taskApi.formDataBody[index].type"
+                          :disabled="props.disabled"
                           :field-name="`body-type-${index}`"
                           :initial-value="taskApi.formDataBody[index].type"
                           :options="bodyTypeOptions"
@@ -391,6 +398,7 @@ const contentTypeChange = (): void => {
                         />
                         <Dropdown
                           v-model="taskApi.formDataBody[index].isMandatory"
+                          :disabled="props.disabled"
                           :field-name="`body-mandatory-${index}`"
                           :initial-value="
                             taskApi.formDataBody[index].isMandatory
@@ -405,6 +413,7 @@ const contentTypeChange = (): void => {
                           use-validator
                         />
                         <Button
+                          :disabled="props.disabled"
                           @click="removeFormDataBody(index)"
                           icon="delete-bin"
                           outlined
@@ -413,6 +422,7 @@ const contentTypeChange = (): void => {
                         />
                       </div>
                       <Button
+                        :disabled="props.disabled"
                         @click="addFormDataBody"
                         icon="add"
                         label="Body"
@@ -423,6 +433,7 @@ const contentTypeChange = (): void => {
                     <CodeSnippet
                       v-else
                       v-model:code="taskApi.jsonBody"
+                      :readonly="props.disabled"
                       @update:code="makeChanges"
                       class="max-h-[306px] overflow-y-auto"
                       lang="json"
@@ -435,6 +446,7 @@ const contentTypeChange = (): void => {
                 <div class="pl-8 pt-3">
                   <CodeSnippet
                     v-model:code="taskApi.response"
+                    :readonly="props.disabled"
                     @update:code="makeChanges"
                     class="max-h-[306px] overflow-y-auto"
                     lang="json"
