@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v1.5.65
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.64...v1.5.65)
+
+### 🚀 Enhancements
+
+- Add gallerypreview component ([4d1bb95](https://github.com/fewangsit/wangsvue/commit/4d1bb95))
+
+### 💅 Refactors
+
+- Implement additional texts and table title when exporting into excel ([b6b44b6](https://github.com/fewangsit/wangsvue/commit/b6b44b6))
+
+### 🏡 Chore
+
+- **presets:** Update version ([a1d8379](https://github.com/fewangsit/wangsvue/commit/a1d8379))
+
+### 🎨 Styles
+
+- Adjust style when hover a highlighted row ([1460aff](https://github.com/fewangsit/wangsvue/commit/1460aff))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.64
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.63...v1.5.64)
