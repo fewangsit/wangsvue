@@ -59,6 +59,7 @@ import DialogDetailPbi from './dialogdetailpbi/DialogDetailPbi.vue';
 import TaskDetailPbi from './dialogdetailpbi/TaskDetailPbi.vue';
 import ApproverInfo from './approverinfo/ApproverInfo.vue';
 import DetailMember from './detailmember/DetailMember.vue';
+import DetailSprint from './detailsprint/DetailSprint.vue';
 
 export {
   Badge,
@@ -122,4 +123,5 @@ export {
   TaskDetailPbi,
   ApproverInfo,
   DetailMember,
+  DetailSprint,
 };

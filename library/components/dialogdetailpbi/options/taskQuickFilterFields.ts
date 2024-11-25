@@ -2,9 +2,7 @@ import { FilterField } from 'lib/components/filtercontainer/FilterContainer.vue.
 import { MultiSelectOption } from 'lib/types/options.type';
 import TaskServices from 'lib/services/task.service';
 
-const projectId = sessionStorage.getItem('projectId') as string;
-
-const filterFields = (pbiId?: string): FilterField[] => [
+const filterFields = (projectId: string, pbiId?: string): FilterField[] => [
   {
     label: 'Modul',
     field: 'module',

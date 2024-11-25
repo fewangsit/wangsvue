@@ -130,6 +130,7 @@ import {
   TaskDetailPbi,
   ApproverInfo,
   DetailMember,
+  DetailSprint,
 } from './components';
 
 export {
@@ -217,6 +218,7 @@ export {
   TaskDetailPbi,
   ApproverInfo,
   DetailMember,
+  DetailSprint,
 
   // Component store
   useLoadingStore,
