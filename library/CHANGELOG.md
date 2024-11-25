@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v1.5.63
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.61...v1.5.63)
+
+### 🩹 Fixes
+
+- **taskdetail:** Update conditions while create task with guest ([ee1c94a](https://github.com/fewangsit/wangsvue/commit/ee1c94a))
+
+### 💅 Refactors
+
+- **Export Excel:** Implement export multi tables in 1 excel sheet ([6a192c2](https://github.com/fewangsit/wangsvue/commit/6a192c2))
+
+### 🏡 Chore
+
+- **release:** V1.5.62 ([7c210cc](https://github.com/fewangsit/wangsvue/commit/7c210cc))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.62
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.61...v1.5.62)
