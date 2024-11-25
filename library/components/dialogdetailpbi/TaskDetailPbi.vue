@@ -234,7 +234,7 @@ const getPbiTasks = async (
       </div>
     </div>
     <FilterContainer
-      :fields="taskFilterFields(selectedPbi)"
+      :fields="taskFilterFields(projectId, selectedPbi)"
       :table-name="`list-pbi-task-table-${selectedPbi?._id}`"
     />
     <DataTable

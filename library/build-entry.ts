@@ -60,6 +60,7 @@ import {
   convertJsonImage,
   isEmptyObject,
   isIntersect,
+  formatDateReadable,
 } from 'lib/utils';
 
 // Directives
@@ -129,6 +130,7 @@ import {
   TaskDetailPbi,
   ApproverInfo,
   DetailMember,
+  DetailSprint,
   DialogAdjustmentTask,
   TaskDetail,
   TaskTable,
@@ -156,6 +158,7 @@ export {
   convertJsonImage,
   isEmptyObject,
   isIntersect,
+  formatDateReadable,
 
   // Components
   Badge,
@@ -218,6 +221,7 @@ export {
   TaskDetailPbi,
   ApproverInfo,
   DetailMember,
+  DetailSprint,
   DialogAdjustmentTask,
   TaskDetail,
   TaskTable,

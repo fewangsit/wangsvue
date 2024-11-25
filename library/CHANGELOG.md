@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v1.5.64
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.63...v1.5.64)
+
+### 🚀 Enhancements
+
+- **Icon:** Add 'chat' icon ([24ddf1d](https://github.com/fewangsit/wangsvue/commit/24ddf1d))
+- Export formatDateReadable util ([6fb97c3](https://github.com/fewangsit/wangsvue/commit/6fb97c3))
+- DetailSprint component ([1ab60b0](https://github.com/fewangsit/wangsvue/commit/1ab60b0))
+
+### 💅 Refactors
+
+- **Icon:** Remove fixed width and height from icons ([ef3b032](https://github.com/fewangsit/wangsvue/commit/ef3b032))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.63
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.61...v1.5.63)

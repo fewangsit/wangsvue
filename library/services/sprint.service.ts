@@ -4,8 +4,15 @@ import {
   QueryParams,
 } from 'lib/components/datatable/DataTable.vue.d';
 import {
+  IntervalPut,
+  PbiOptions,
+  SprintDetail,
+  SprintSummary,
+} from 'lib/components/detailsprint/DetailSprint.vue.d';
+import {
   AssignedMember,
   AssignedMemberOptions,
+  Pbi,
 } from 'lib/components/dialogdetailpbi/DialogDetailPbi.vue.d';
 import { FetchOptionResponse } from 'lib/components/filtercontainer/FilterContainer.vue.d';
 import { getBaseURL } from 'lib/utils/getBaseURL.util';
@@ -28,6 +35,109 @@ const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
 };
 
 const SprintServices = {
+  getSprintSummary: (
+    query: QueryParams,
+    projectId: string,
+    sprintId?: string,
+  ): Promise<AxiosResponse<FetchResponse<SprintSummary>>> => {
+    return API().get(
+      `/${projectId}/project-detail/sprint/${sprintId}/summary`,
+      { params: query },
+    );
+  },
+
+  getSprintDetail: (
+    projectId: string,
+    sprintId: string,
+  ): Promise<AxiosResponse<AxiosResponse<SprintDetail>>> => {
+    return API().get(`/${projectId}/project-detail/sprint/${sprintId}`);
+  },
+
+  deleteSprint: (
+    projectId: string,
+    sprintId?: string,
+  ): Promise<AxiosResponse> => {
+    return API().delete(`/${projectId}/project-detail/sprint/${sprintId}`);
+  },
+
+  addSprintPbis: (
+    projectId: string,
+    sprintId: string,
+    body: { pbiIds: string[] },
+  ): Promise<AxiosResponse> => {
+    return API().post(
+      `/${projectId}/project-detail/sprint/${sprintId}/product-backlog-item`,
+      body,
+    );
+  },
+
+  deleteSprintPbi: (
+    projectId: string,
+    sprintId: string,
+    body: { pbiId: string },
+  ): Promise<AxiosResponse> => {
+    return API().delete(
+      `/${projectId}/project-detail/sprint/${sprintId}/product-backlog-item`,
+      {
+        data: body,
+      },
+    );
+  },
+
+  updateSprintStatus: (
+    projectId: string,
+    sprintId?: string,
+  ): Promise<AxiosResponse> => {
+    return API().put(
+      `/${projectId}/project-detail/sprint/${sprintId}/approval-status`,
+    );
+  },
+
+  updateSprintInterval: (
+    projectId: string,
+    sprintId: string,
+    body: IntervalPut,
+  ): Promise<AxiosResponse> => {
+    return API().put(
+      `/${projectId}/project-detail/sprint/${sprintId}/period`,
+      body,
+    );
+  },
+
+  updateSprintStartDate: (
+    projectId: string,
+    sprintId: string,
+    body: {
+      startAt: number;
+    },
+  ): Promise<AxiosResponse> => {
+    return API().put(
+      `/${projectId}/project-detail/sprint/${sprintId}/start-date`,
+      body,
+    );
+  },
+
+  getListPbis: (
+    projectId: string,
+    query: QueryParams,
+  ): Promise<AxiosResponse<FetchResponse<Pbi>>> => {
+    return API().get(
+      `/${projectId}/project-detail/sprint/product-backlog-item`,
+      {
+        params: query,
+      },
+    );
+  },
+
+  getPbiOptions: (
+    projectId: string,
+    params: PbiOptions,
+  ): Promise<AxiosResponse<FetchOptionResponse<PbiOptions>>> => {
+    return API({ params }).get(
+      `/${projectId}/project-detail/sprint/product-backlog-item/options`,
+    );
+  },
+
   getPbiAssignedMembers: (
     projectId: string,
     pbiId: string,
