@@ -96,7 +96,11 @@ const truncateText = (text: string): string => {
   <div v-if="props.type === 'attachment'" class="flex flex-col gap-2">
     <div class="flex justify-between">
       <div class="flex gap-2">
-        <TaskAttachmentThumbnail :item="item" />
+        <TaskAttachmentThumbnail
+          :item="item"
+          @click="emit('clickItem', item)"
+          class="cursor-pointer"
+        />
         <div class="max-w-[430px] flex flex-col gap-1">
           <a
             v-if="item.type === 'link'"
@@ -106,7 +110,11 @@ const truncateText = (text: string): string => {
           >
             {{ item.displayName?.length ? item.displayName : item.url }}
           </a>
-          <span v-else class="text-xs font-semibold">
+          <span
+            v-else
+            @click="emit('clickItem', item)"
+            class="text-xs font-semibold cursor-pointer"
+          >
             {{ item.displayName }}
           </span>
           <div class="flex gap-1">

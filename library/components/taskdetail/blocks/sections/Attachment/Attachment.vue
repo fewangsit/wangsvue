@@ -10,6 +10,8 @@ import AttachmentChangelog from './AttachmentChangelog.vue';
 import { useToast } from 'lib/utils';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';
 import { TaskDetailData } from 'lib/types/task.type';
+import GalleryPreview from 'lib/components/gallerypreview/GalleryPreview.vue';
+import { File } from 'lib/components/gallerypreview/GalleryPreview.vue.d';
 
 const toast = useToast();
 
@@ -43,12 +45,28 @@ const getAttachments = async (): Promise<void> => {
       taskId.value,
     );
     attachments.value = response.data;
+    files.value = attachments.value?.map((attachment) => ({
+      _id: attachment._id,
+      name: attachment.displayName,
+      src: attachment.url,
+      type: attachment.type,
+      createdAt: attachment.createdAt,
+    }));
   } catch (error) {
     toast.add({
       error,
-      message: 'Attachment gagal dihapus.',
+      message: 'Attachment gagal dimuat.',
     });
   }
+};
+
+const galleryVisible = ref(false);
+const selectedAttachmentId = ref<string>();
+const files = ref<File[]>([]);
+
+const openGallery = (item: AttachmentItemData): void => {
+  galleryVisible.value = true;
+  selectedAttachmentId.value = item._id;
 };
 </script>
 
@@ -82,6 +100,7 @@ const getAttachments = async (): Promise<void> => {
         :key="index"
         v-for="(item, index) in attachments"
         :item="item"
+        @click-item="openGallery"
         @deleted="getAttachments"
         @update-caption="getAttachments"
         type="attachment"
@@ -99,4 +118,10 @@ const getAttachments = async (): Promise<void> => {
   />
 
   <AttachmentChangelog v-model:visible="dialogChangelog" />
+
+  <GalleryPreview
+    v-model:selected-id="selectedAttachmentId"
+    v-model:visible="galleryVisible"
+    :files="files"
+  />
 </template>

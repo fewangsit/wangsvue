@@ -42,6 +42,7 @@ export interface AttachmentItemProps {
 export type AttachmentItemEmits = {
   updateCaption: [];
   deleted: [];
+  clickItem: [item: AttachmentItemData];
 };
 
 /**
@@ -56,8 +57,8 @@ export type AttachmentItemEmits = {
  */
 declare class AttachmentItem extends ClassComponent<
   AttachmentItemProps,
-  AttachmentItemEmits,
-  unknown
+  unknown,
+  AttachmentItemEmits
 > {}
 
 export default AttachmentItem;
