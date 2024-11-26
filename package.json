@@ -29,7 +29,7 @@
   "dependencies": {
     "@lottiefiles/dotlottie-vue": "^0.4.15",
     "@lottiefiles/vue-lottie-player": "^1.1.0",
-    "@tiptap/core": "2.6.6",
+    "@tiptap/core": "2.9.1",
     "@tiptap/extension-blockquote": "^2.6.6",
     "@tiptap/extension-bold": "^2.6.6",
     "@tiptap/extension-bullet-list": "^2.6.6",
