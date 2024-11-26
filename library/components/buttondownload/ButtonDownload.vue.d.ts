@@ -19,7 +19,7 @@ export interface ButtonDownloadProps {
   /**
    * Texts below table in downloaded excel
    */
-  additionalTextBelowTable?: string[];
+  additionalTextBelowTable?: (string | string[])[];
 }
 
 /**

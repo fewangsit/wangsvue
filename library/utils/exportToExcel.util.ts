@@ -10,7 +10,7 @@ export interface ITable {
 interface IExcelOptions {
   tables: ITable[];
   fileName: string;
-  additionalTexts?: string[];
+  additionalTexts?: (string | string[])[];
 }
 
 /**
@@ -55,10 +55,18 @@ const exportToExcel = async (options: IExcelOptions): Promise<void> => {
   if (options.additionalTexts) {
     currentRow += 1; // Add padding
 
-    options.additionalTexts.forEach((text, index) => {
-      XLSX.utils.sheet_add_aoa(workSheet, [[text]], {
-        origin: { r: currentRow + index, c: 0 }, // Add text row by row
-      });
+    options.additionalTexts.forEach((each, index) => {
+      if (Array.isArray(each)) {
+        each.forEach((text, colIndex) => {
+          XLSX.utils.sheet_add_aoa(workSheet, [[text]], {
+            origin: { r: currentRow + index, c: colIndex }, // Add text col by col
+          });
+        });
+      } else {
+        XLSX.utils.sheet_add_aoa(workSheet, [[each]], {
+          origin: { r: currentRow + index, c: 0 }, // Add text row by row
+        });
+      }
     });
   }
 
