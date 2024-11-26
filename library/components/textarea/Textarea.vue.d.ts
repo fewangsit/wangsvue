@@ -3,7 +3,7 @@ import {
   ClassComponent,
   GlobalComponentConstructor,
   Nullable,
-} from 'lib/components/ts-helpers.d';
+} from 'lib/components/ts-helpers';
 import { InputTextProps } from '../inputtext/InputText.vue.d';
 
 export type Condition = 'empty' | 'exceed';

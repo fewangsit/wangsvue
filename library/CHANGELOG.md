@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.66
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.65...v1.5.66)
+
+### 🩹 Fixes
+
+- Failed to resolve ts-helpers ([8ff3508](https://github.com/fewangsit/wangsvue/commit/8ff3508))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.65
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.64...v1.5.65)
