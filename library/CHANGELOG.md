@@ -1,6 +1,116 @@
 # Changelog
 
 
+## v1.5.66
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.65...v1.5.66)
+
+### 🩹 Fixes
+
+- Failed to resolve ts-helpers ([8ff3508](https://github.com/fewangsit/wangsvue/commit/8ff3508))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.65
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.64...v1.5.65)
+
+### 🚀 Enhancements
+
+- Add gallerypreview component ([4d1bb95](https://github.com/fewangsit/wangsvue/commit/4d1bb95))
+
+### 💅 Refactors
+
+- Implement additional texts and table title when exporting into excel ([b6b44b6](https://github.com/fewangsit/wangsvue/commit/b6b44b6))
+
+### 🏡 Chore
+
+- **presets:** Update version ([a1d8379](https://github.com/fewangsit/wangsvue/commit/a1d8379))
+
+### 🎨 Styles
+
+- Adjust style when hover a highlighted row ([1460aff](https://github.com/fewangsit/wangsvue/commit/1460aff))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Dzulqtera <dzul@qtera.co.id>
+
+## v1.5.64
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.63...v1.5.64)
+
+### 🚀 Enhancements
+
+- **Icon:** Add 'chat' icon ([24ddf1d](https://github.com/fewangsit/wangsvue/commit/24ddf1d))
+- Export formatDateReadable util ([6fb97c3](https://github.com/fewangsit/wangsvue/commit/6fb97c3))
+- DetailSprint component ([1ab60b0](https://github.com/fewangsit/wangsvue/commit/1ab60b0))
+
+### 💅 Refactors
+
+- **Icon:** Remove fixed width and height from icons ([ef3b032](https://github.com/fewangsit/wangsvue/commit/ef3b032))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
+## v1.5.63
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.61...v1.5.63)
+
+### 🩹 Fixes
+
+- **taskdetail:** Update conditions while create task with guest ([ee1c94a](https://github.com/fewangsit/wangsvue/commit/ee1c94a))
+
+### 💅 Refactors
+
+- **Export Excel:** Implement export multi tables in 1 excel sheet ([6a192c2](https://github.com/fewangsit/wangsvue/commit/6a192c2))
+
+### 🏡 Chore
+
+- **release:** V1.5.62 ([7c210cc](https://github.com/fewangsit/wangsvue/commit/7c210cc))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.62
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.61...v1.5.62)
+
+### 💅 Refactors
+
+- **Export Excel:** Implement export multi tables in 1 excel sheet ([6a192c2](https://github.com/fewangsit/wangsvue/commit/6a192c2))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.61
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.59...v1.5.61)
+
+### 🩹 Fixes
+
+- **CustomColumn:** Unchecked column becomes visible when reordered ([d31ed83](https://github.com/fewangsit/wangsvue/commit/d31ed83))
+- **Calendar:** End date should have time 23.59.59 to fix filtering issue ([33ac9e4](https://github.com/fewangsit/wangsvue/commit/33ac9e4))
+
+### 🏡 Chore
+
+- **release:** V1.5.60 ([4b34c6a](https://github.com/fewangsit/wangsvue/commit/4b34c6a))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.60
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.59...v1.5.60)
+
 ## v1.5.59
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.58...v1.5.59)

@@ -12,7 +12,7 @@ export interface ApproverDetail {
     _id: string;
     fullName: string;
     actionAt?: string;
-    action?: 'approve' | 'reject' | null;
+    action?: 'menyetujui' | 'menolak' | null;
   }[];
 }
 

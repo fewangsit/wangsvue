@@ -62,6 +62,7 @@ const formatFilePath = (url: string): string => {
       { 'w-[70px]': !props.small, 'h-[70px]': !props.small },
       { 'w-[30px]': props.small, 'h-[30px]': props.small },
     ]"
+    :preview="false"
     :src="formatFilePath(props.item.url)"
   />
   <div

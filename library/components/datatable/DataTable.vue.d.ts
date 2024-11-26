@@ -426,6 +426,12 @@ export interface BaseDataTableProps {
    */
   tableName?: string;
   /**
+   * Optional property to set a unique name for the table. This name will be used as table title when export table into excel.
+   *
+   * @optional
+   */
+  tableTitle?: string;
+  /**
    * An array of table columns to display.
    */
   columns: TableColumn[];

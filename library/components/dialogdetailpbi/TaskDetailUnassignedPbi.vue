@@ -156,7 +156,7 @@ const addPbiTasks = async (): Promise<void> => {
         table-name="list-unassigned-task-table"
       />
       <QuickFilter
-        :fields="taskQuickFilterFields(selectedPbi?._id)"
+        :fields="taskQuickFilterFields(projectId, selectedPbi?._id)"
         table-name="list-unassigned-task-table"
       />
       <DataTable

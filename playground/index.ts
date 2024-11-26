@@ -97,6 +97,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
           import('./docs/button/ButtonDocs.vue'),
       },
       {
+        path: 'buttondownload',
+        name: 'ButtonDownloadDocs',
+        component: (): Promise<Component> =>
+          import('./docs/buttondownload/ButtonDownloadDocs.vue'),
+      },
+      {
         path: 'buttonradio',
         name: 'ButtonRadioDocs',
         component: (): Promise<Component> =>
@@ -336,6 +342,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
         name: 'Detail member Docs',
         component: (): Promise<Component> =>
           import('./docs/detailmember/DetailMemberDocs.vue'),
+      },
+      {
+        path: 'detailsprint',
+        name: 'Detail Sprint Docs',
+        component: (): Promise<Component> =>
+          import('./docs/detailsprint/DetailSprintDocs.vue'),
       },
       {
         path: 'dialogAdjustmentTask',
