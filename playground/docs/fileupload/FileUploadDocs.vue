@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { watch } from 'vue';
 import { useForm } from 'lib/build-entry';
-import Toast from 'lib/components/toast/Toast.vue';
 import Card from 'lib/components/card/Card.vue';
-import DocTitle from '../DocTitle.vue';
 import FileUpload from 'lib/components/fileupload/FileUpload.vue';
+import Toast from 'lib/components/toast/Toast.vue';
+import { watch } from 'vue';
+import DocTitle from '../DocTitle.vue';
 
 const { values } = useForm();
 
@@ -21,11 +21,47 @@ watch(values, () => {
     </template>
     <template #content>
       <span>Will Show Toast Error when file size more than 1MB </span>
+      <span>Single with upload</span>
       <FileUpload
         :max-file-size="1000000"
         @error="console.log"
+        @upload="console.log"
         accept=".pdf,.xlsx,.xls.docx"
         file-extensions=".pdf .xls .docx"
+        use-error-toast
+        use-validator
+      />
+      <span>Single without upload</span>
+      <FileUpload
+        :max-file-size="1000000"
+        :with-upload="false"
+        @error="console.log"
+        @upload="console.log"
+        accept=".pdf,.xlsx,.xls.docx"
+        file-extensions=".pdf .xls .docx"
+        use-error-toast
+        use-validator
+      />
+      <span>Multiple with upload</span>
+      <FileUpload
+        :max-file-size="1000000"
+        @error="console.log"
+        @upload="console.log"
+        accept=".pdf,.xlsx,.xls.docx"
+        file-extensions=".pdf .xls .docx"
+        multiple
+        use-error-toast
+        use-validator
+      />
+      <span>Multiple without upload</span>
+      <FileUpload
+        :max-file-size="1000000"
+        :with-upload="false"
+        @error="console.log"
+        @upload="console.log"
+        accept=".pdf,.xlsx,.xls.docx"
+        file-extensions=".pdf .xls .docx"
+        multiple
         use-error-toast
         use-validator
       />

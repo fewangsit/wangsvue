@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { FieldValidation } from 'lib/components/form/Form.vue.d';
+import { useToast } from 'lib/utils';
+import { useField } from 'vee-validate';
 import {
   computed,
   inject,
@@ -8,13 +11,10 @@ import {
   shallowRef,
   watch,
 } from 'vue';
-import { useField } from 'vee-validate';
-import { useToast } from 'lib/utils';
-import { FieldValidation } from 'lib/components/form/Form.vue.d';
 import { FileUploadEmits, FileUploadProps } from './FileUpload.vue.d';
 
-import PrimeVueFileUpload from 'primevue/fileupload';
 import InputText from 'lib/components/inputtext/InputText.vue';
+import PrimeVueFileUpload from 'primevue/fileupload';
 
 import FieldWrapper from 'lib/components/fieldwrapper/FieldWrapper.vue';
 import TSButton from '../button/Button.vue';
@@ -24,7 +24,7 @@ const BYTES_TO_MEGABYTES = 1048576;
 
 const toast = useToast();
 
-const model = defineModel<File>();
+const model = defineModel<File | File[]>();
 
 const props = withDefaults(defineProps<FileUploadProps>(), {
   label: 'Upload File',
@@ -33,14 +33,15 @@ const props = withDefaults(defineProps<FileUploadProps>(), {
   withUpload: true,
   useErrorToast: true,
   fieldName: 'fileUpload',
+  multiple: false,
 });
 
 const emit = defineEmits<FileUploadEmits>();
 
 const { fileupload: Preset = {} } = inject<Record<string, any>>('preset', {});
 
-const fileName = shallowRef<string>();
-const currentFile = shallowRef<File>();
+const fileName = shallowRef<string | string[]>();
+const currentFile = shallowRef<File | File[]>();
 
 const field = reactive<FieldValidation>({ value: undefined });
 
@@ -62,8 +63,13 @@ onMounted(() => {
   }
 
   if (model.value) {
-    currentFile.value = model.value;
-    fileName.value = currentFile.value.name;
+    if (props.multiple) {
+      currentFile.value = model.value;
+      fileName.value = (currentFile.value as File[]).map((each) => each.name);
+    } else {
+      currentFile.value = model.value;
+      fileName.value = (currentFile.value as File).name;
+    }
   }
 });
 
@@ -82,8 +88,13 @@ const setValidatorMessage = (value: string): boolean | string => {
 
 const selectHandler = (event: { files: File[] }): void => {
   try {
-    currentFile.value = event.files[0];
-    fileName.value = event.files[0]?.name;
+    if (props.multiple) {
+      currentFile.value = event.files;
+      fileName.value = event.files.map((each) => each.name);
+    } else {
+      currentFile.value = event.files[0];
+      fileName.value = event.files[0]?.name;
+    }
   } catch (error) {
     console.error(error);
   }
@@ -192,7 +203,7 @@ watch(errorMessages, (message) => {
 <template>
   <PrimeVueFileUpload
     v-bind="props"
-    :file-limit="1"
+    :file-limit="multiple ? undefined : 1"
     :pt="{ input: { style: 'display: none' } }"
     @select="selectHandler"
     @upload="$emit('upload', $event)"
@@ -212,7 +223,9 @@ watch(errorMessages, (message) => {
             :disabled="props.disabled || uploadDisabled"
             :input-class="Preset.input({ state: { fileName } }).class"
             :invalid="invalidInput"
-            :model-value="fileName"
+            :model-value="
+              Array.isArray(fileName) ? fileName.join(', ') : fileName
+            "
             :placeholder="props.placeholder"
             @click="chooseFile(chooseCallback, clearCallback)"
             @keydown.prevent="onKeydown($event, chooseCallback, clearCallback)"

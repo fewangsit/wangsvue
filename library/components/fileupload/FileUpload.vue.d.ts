@@ -25,6 +25,12 @@ export type FileUploadProps = {
    */
   maxFileSize?: number | undefined;
   /**
+   * Props to determine whether file upload support multiple files or not
+   *
+   * @default false
+   */
+  multiple?: boolean;
+  /**
    * Message of the invalid fize size.
    * - Use {0} to get the file's name
    * - Use {1} to get the max file size
