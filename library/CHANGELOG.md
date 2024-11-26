@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.68
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.67...v1.5.68)
+
+### 🩹 Fixes
+
+- Adjust initial value if component `Calendar` use props.showTime ([9001674](https://github.com/fewangsit/wangsvue/commit/9001674))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.67
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.66...v1.5.67)
