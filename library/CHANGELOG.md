@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.5.67
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.66...v1.5.67)
+
+### 🚀 Enhancements
+
+- Implement multiple upload for component `FileUpload` ([c03c4c9](https://github.com/fewangsit/wangsvue/commit/c03c4c9))
+
+### 🩹 Fixes
+
+- **taskdetail:** Update condition for showing button of 'Tandai Selesai' ([57f62e6](https://github.com/fewangsit/wangsvue/commit/57f62e6))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.66
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.65...v1.5.66)
