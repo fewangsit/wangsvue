@@ -1038,6 +1038,7 @@ watch(
           v-if="
             ['Sprint', 'Fixing Bug'].includes(taskDetail?.status) && isMember
           "
+          :disabled="repositoryVisibility && !legendForm.repository"
           @click="dialogConfirmFinishTask = true"
           label="Tandai Selesai"
           severity="secondary"
@@ -1052,7 +1053,7 @@ watch(
           severity="secondary"
         />
         <Button
-          v-if="taskDetail?.status === 'Selesai'"
+          v-if="taskDetail?.status === 'Selesai' && !isMember"
           @click="dialogReportBug = true"
           label="Report Bug"
           severity="danger"
