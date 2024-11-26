@@ -49,6 +49,10 @@ const userType =
   );
 const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
+const toggleCommentSection = inject<() => void>('toggleCommentSection');
+const updateMentionSectionText = inject<(sectionTitle: string) => void>(
+  'updateMentionSectionText',
+);
 
 const checklistMenuOptions: MenuItem[] = [
   {
@@ -536,6 +540,12 @@ watch(
                   text
                 />
                 <Button
+                  @click="
+                    () => {
+                      toggleCommentSection();
+                      updateMentionSectionText(item.name);
+                    }
+                  "
                   class="!p-1"
                   icon="chat-1-line"
                   icon-class="!w-6 !h-6"

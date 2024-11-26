@@ -32,6 +32,7 @@ import TaskDetail from './TaskDetail.vue';
 import Comment from '../comment/Comment.vue';
 import { User } from 'lib/types/user.type';
 import EventLogTab from './blocks/Tabs/EventLogTab.vue';
+import { MentionSectionFunc } from '../comment/Comment.vue.d';
 
 const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 
@@ -120,6 +121,10 @@ const selectedTaskId = ref<string>();
 const showCommentSection = ref(false);
 
 const taskMenuKey = ref(0);
+
+const mentionSectionFunc = ref<MentionSectionFunc>();
+
+const mentionedSectionText = ref<string>();
 
 const taskMenu = computed<TaskMenu[]>(() => {
   return [
@@ -291,6 +296,10 @@ const reset = (): void => {
   showCommentSection.value = false;
 };
 
+const updateMentionedSectionText = (sectionTitle: string): void => {
+  mentionedSectionText.value = sectionTitle;
+};
+
 provide('projectId', projectId);
 provide('taskId', taskId);
 provide('taskDetail', taskDetail);
@@ -302,6 +311,8 @@ provide('legendForm', legendForm);
 provide('loadingTask', loadingTask);
 provide('openDetailTask', openDetailTask);
 provide('toggleCommentSection', toggleCommentSection);
+provide('mentionAction', mentionSectionFunc);
+provide('updateMentionSectionText', updateMentionedSectionText);
 
 watch(
   () => props.taskId,
@@ -437,6 +448,14 @@ watch(
           </div>
           <div class="py-3 px-6">
             <Comment
+              :mention-section="
+                (cb: MentionSectionFunc) => {
+                  if (mentionedSectionText !== undefined) {
+                    cb?.(mentionedSectionText);
+                  }
+                  mentionedSectionText = undefined;
+                }
+              "
               :object-id="taskDetail?._id"
               :user="{
                 _id: user?._id,

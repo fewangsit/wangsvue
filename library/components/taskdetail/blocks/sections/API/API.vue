@@ -87,6 +87,7 @@ const openRenameDialog = (index: number): void => {
         v-for="(api, index) in taskApis"
         v-model:task-api="taskApis[index]"
         :disabled="isDisabled"
+        :project="taskDetail.project"
         @deleted="getTaskAPIs"
         @open-edit="openRenameDialog(index)"
         @updated="getTaskAPIs"

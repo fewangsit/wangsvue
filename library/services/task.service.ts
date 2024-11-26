@@ -25,6 +25,7 @@ import {
   TaskTableItem,
   TaskTableOptionQuery,
 } from 'lib/types/task.type';
+import { queryParamsStringfy } from 'lib/utils/queryParamsStringfy.util';
 
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
   const user = JSON.parse(localStorage.getItem('user') as string) ?? {};
@@ -58,7 +59,7 @@ const TaskServices = {
   },
 
   getTaskList: (params?: Record<string, string>): Promise<AxiosResponse> => {
-    return API({ params }).get('/');
+    return API({ params: queryParamsStringfy(params) }).get('/');
   },
 
   getTaskOptions: (

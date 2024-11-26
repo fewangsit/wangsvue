@@ -58,6 +58,7 @@ import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
 import Form from '../form/Form.vue';
 import suggestion from './suggestion';
 import CodeSnippetExtension from './codeSnippetExtension';
+import MentionSectionExtension from './mentionSectionExtension';
 
 const MenuPreset = inject<Record<string, any>>('preset', {}).menu;
 
@@ -199,6 +200,7 @@ const editor = useEditor({
         };
       },
     }),
+    MentionSectionExtension,
     OrderedList.configure({
       HTMLAttributes: {
         class: 'list-decimal px-3 py-1',
@@ -673,6 +675,20 @@ const goToNextLine = (): void => {
   }
 };
 
+const mentionSectionTrigger = (title: string): void => {
+  try {
+    const { insertMentionSection } = editor.value?.commands as any;
+
+    insertMentionSection(title, props.editorState === 'editable');
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+defineExpose({
+  mentionSectionTrigger,
+});
+
 watch(
   () => props.modelValue,
   (value) => {
@@ -769,6 +785,41 @@ watch(registeredMentionList, () => {
         spellcheck="false"
       />
 
+      <Menu ref="headingMenu" :model="headings" popup>
+        <template #item="{ item }">
+          <a
+            :class="[
+              ...MenuPreset?.action.class,
+              item.class,
+              'flex items-center !justify-between h-[30px]',
+              {
+                'bg-primary-50':
+                  (editor?.isActive('heading', { level: 1 }) &&
+                    item.label === 'Heading 1') ||
+                  (editor?.isActive('heading', { level: 2 }) &&
+                    item.label === 'Heading 2') ||
+                  (editor?.isActive('heading', { level: 3 }) &&
+                    item.label === 'Heading 3') ||
+                  (editor?.isActive('heading', { level: 4 }) &&
+                    item.label === 'Heading 4') ||
+                  (editor?.isActive('heading', { level: 5 }) &&
+                    item.label === 'Heading 5') ||
+                  (editor?.isActive('heading', { level: 6 }) &&
+                    item.label === 'Heading 6') ||
+                  (editor?.isActive('paragraph') && item.label === 'Paragraf'),
+              },
+            ]"
+            :title="item.label as string"
+            @click="item.command?.({ item, originalEvent: $event })"
+          >
+            {{ item.label }}
+            <code class="!text-[9px] !leading-3 !h-max !font-normal">
+              {{ item.shortCut }}
+            </code>
+          </a>
+        </template>
+      </Menu>
+
       <FloatingMenu
         v-if="editor && !linkFormShown && props.editorState === 'editable'"
         :editor="editor"
@@ -849,41 +900,6 @@ watch(registeredMentionList, () => {
         </div>
       </FloatingMenu>
 
-      <Menu ref="headingMenu" :model="headings" popup>
-        <template #item="{ item }">
-          <a
-            :class="[
-              ...MenuPreset?.action.class,
-              item.class,
-              'flex items-center !justify-between h-[30px]',
-              {
-                'bg-primary-50':
-                  (editor?.isActive('heading', { level: 1 }) &&
-                    item.label === 'Heading 1') ||
-                  (editor?.isActive('heading', { level: 2 }) &&
-                    item.label === 'Heading 2') ||
-                  (editor?.isActive('heading', { level: 3 }) &&
-                    item.label === 'Heading 3') ||
-                  (editor?.isActive('heading', { level: 4 }) &&
-                    item.label === 'Heading 4') ||
-                  (editor?.isActive('heading', { level: 5 }) &&
-                    item.label === 'Heading 5') ||
-                  (editor?.isActive('heading', { level: 6 }) &&
-                    item.label === 'Heading 6') ||
-                  (editor?.isActive('paragraph') && item.label === 'Paragraf'),
-              },
-            ]"
-            :title="item.label as string"
-            @click="item.command?.({ item, originalEvent: $event })"
-          >
-            {{ item.label }}
-            <code class="!text-[9px] !leading-3 !h-max !font-normal">
-              {{ item.shortCut }}
-            </code>
-          </a>
-        </template>
-      </Menu>
-
       <Dialog
         v-model:visible="imageDialogUploader"
         class="w-[400px]"
@@ -953,7 +969,16 @@ watch(registeredMentionList, () => {
         class="-mt-1.5 shadow-panel"
         plugin-key="editImageToolbar"
       >
-        <div>
+        <div
+          :class="[
+            'flex gap-2 bg-white border-[0.5px] px-2 py-1 rounded-sm',
+
+            `[&_.separator::after]:content-['|']`,
+            `[&_.separator::after]:text-xl`,
+            `[&_.separator::after]:font-thin`,
+            `[&_.separator]:h-6`,
+          ]"
+        >
           <EditorButton
             @click="unsetImage"
             icon="delete-bin"
