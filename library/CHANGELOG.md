@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v1.5.72
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.71...v1.5.72)
+
+### 💅 Refactors
+
+- Handle for nested array in additionalTexts ([1c67e5e](https://github.com/fewangsit/wangsvue/commit/1c67e5e))
+- Update import ts-helpers ([add2099](https://github.com/fewangsit/wangsvue/commit/add2099))
+
+### 🏡 Chore
+
+- **release:** V1.5.71 ([27db992](https://github.com/fewangsit/wangsvue/commit/27db992))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.71
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.70...v1.5.71)
