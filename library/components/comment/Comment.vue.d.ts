@@ -46,7 +46,11 @@ export interface CommentProps {
    * To pass comments data from external services
    */
   data?: GetCommentsResponse;
+
+  mentionSection?: (cb: MentionSectionFunc) => void;
 }
+
+export type MentionSectionFunc = (titleText: string) => void;
 
 export interface PostCommentsBody {
   objectId: string;

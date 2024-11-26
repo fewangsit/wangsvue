@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import Button from 'lib/components/button/Button.vue';
-import Icon from 'lib/components/icon/Icon.vue';
 import { computed, ComputedRef, inject, onMounted, Ref, ref, watch } from 'vue';
-import { TaskDetailData, TaskLink, TaskLinkType } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
-import TaskLinkServices from 'lib/services/taskLink.service';
-import UserName from 'lib/components/username/UserName.vue';
 import { formatDateReadable } from 'lib/utils/date.util';
+import { WangsitStatus } from 'lib/types/wangsStatus.type';
+import { TaskDetailData, TaskLink, TaskLinkType } from 'lib/types/task.type';
+
+import UserName from 'lib/components/username/UserName.vue';
 import DialogSetTaskLink from './DialogSetTaskLink.vue';
 import TaskLinkChangelog from './TaskLinkChangelog.vue';
-import { WangsitStatus } from 'lib/types/wangsStatus.type';
+import Button from 'lib/components/button/Button.vue';
+import Icon from 'lib/components/icon/Icon.vue';
+import TaskLinkServices from 'lib/services/taskLink.service';
 
 const toast = useToast();
 
@@ -19,6 +20,10 @@ const userType =
   );
 const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
+const toggleCommentSection = inject<() => void>('toggleCommentSection');
+const updateMentionSectionText = inject<(sectionTitle: string) => void>(
+  'updateMentionSectionText',
+);
 
 onMounted(() => {
   getTaskLink();
@@ -117,8 +122,13 @@ watch(taskDetail, async () => {
             :user="taskLink.updatedBy"
             type="icon"
           />
-          <!-- TODO: Handle chat icon on click -->
           <Button
+            @click="
+              () => {
+                toggleCommentSection();
+                updateMentionSectionText('Task Link');
+              }
+            "
             class="!p-1"
             icon="chat-1-line"
             icon-class="!w-6 !h-6"
@@ -171,8 +181,13 @@ watch(taskDetail, async () => {
             :user="serviceLink.updatedBy"
             type="icon"
           />
-          <!-- TODO: Handle chat icon on click -->
           <Button
+            @click="
+              () => {
+                toggleCommentSection();
+                updateMentionSectionText('Task Link');
+              }
+            "
             class="!p-1"
             icon="chat-1-line"
             icon-class="!w-6 !h-6"
@@ -226,8 +241,13 @@ watch(taskDetail, async () => {
           :user="taskLink.updatedBy"
           type="icon"
         />
-        <!-- TODO: Handle chat icon on click -->
         <Button
+          @click="
+            () => {
+              toggleCommentSection();
+              updateMentionSectionText('Task Link');
+            }
+          "
           class="!p-1"
           icon="chat-1-line"
           icon-class="!w-6 !h-6"

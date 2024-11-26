@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { GetCommentsResponse } from 'lib/components/comment/Comment.vue.d';
+import {
+  GetCommentsResponse,
+  MentionSectionFunc,
+} from 'lib/components/comment/Comment.vue.d';
 import { getImageURL } from 'lib/utils';
 import Card from 'lib/components/card/Card.vue';
 import Comment from 'lib/components/comment/Comment.vue';
@@ -88,6 +91,11 @@ const data: GetCommentsResponse = {
     <template #content>
       <Comment
         :data="data"
+        :mention-section="
+          (cb: MentionSectionFunc) => {
+            cb?.('Dari Comment');
+          }
+        "
         :use-reactions="false"
         :use-replies="false"
         :use-time-stamp="false"

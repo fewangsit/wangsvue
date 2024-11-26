@@ -1,20 +1,27 @@
 <script setup lang="ts">
-import { ref, shallowRef } from 'vue';
+import { ref, shallowRef, inject } from 'vue';
+import { UpdateTaskApiDTO } from 'lib/dto/taskApi.dto';
+import { TaskAPIFormDataCustom } from 'lib/types/task.type';
+import { formatDateReadable } from 'lib/utils/date.util';
+import { useToast } from 'lib/utils';
+import { useLoadingStore } from 'lib/build-entry';
+import { FormPayload } from 'lib/components/form/Form.vue.d';
+import { Project } from 'lib/types/project.type';
+
 import Button from 'lib/components/button/Button.vue';
 import CodeSnippet from 'lib/components/codesnippet/CodeSnippet.vue';
 import Dropdown from 'lib/components/dropdown/Dropdown.vue';
 import InputText from 'lib/components/inputtext/InputText.vue';
 import UserName from 'lib/components/username/UserName.vue';
 import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
-import { UpdateTaskApiDTO } from 'lib/dto/taskApi.dto';
-import { TaskAPIFormDataCustom } from 'lib/types/task.type';
-import { formatDateReadable } from 'lib/utils/date.util';
-import TaskApiServices from 'lib/services/taskApi.service';
-import { useToast } from 'lib/utils';
-import { useLoadingStore } from 'lib/build-entry';
-import Form from 'lib/components/form/Form.vue';
-import { FormPayload } from 'lib/components/form/Form.vue.d';
 import DialogTestApi from './DialogTestApi.vue';
+import Form from 'lib/components/form/Form.vue';
+import TaskApiServices from 'lib/services/taskApi.service';
+
+const toggleCommentSection = inject<() => void>('toggleCommentSection');
+const updateMentionSectionText = inject<(sectionTitle: string) => void>(
+  'updateMentionSectionText',
+);
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -25,6 +32,7 @@ const taskApi = defineModel<TaskAPIFormDataCustom>('taskApi', {
 
 const props = defineProps<{
   disabled?: boolean;
+  project: Project;
 }>();
 
 const emit = defineEmits<{
@@ -239,6 +247,12 @@ const contentTypeChange = (): void => {
                 }}</span>
                 <UserName :user="taskApi.updatedBy" type="icon" />
                 <Button
+                  @click="
+                    () => {
+                      toggleCommentSection();
+                      updateMentionSectionText(taskApi.name);
+                    }
+                  "
                   class="!p-1"
                   icon="chat-1-line"
                   icon-class="!w-6 !h-6"
@@ -470,7 +484,7 @@ const contentTypeChange = (): void => {
     severity="danger"
   />
 
-  <DialogTestApi v-model:visible="dialogTestApi" />
+  <DialogTestApi v-model:visible="dialogTestApi" :task-api="taskApi" />
 </template>
 
 <style scoped>

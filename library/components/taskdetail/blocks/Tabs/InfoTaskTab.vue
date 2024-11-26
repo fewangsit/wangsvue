@@ -231,7 +231,7 @@ const getDuration = (duration: number): string => {
       </div>
       <TaskDependency />
       <TaskList child />
-      <Ticket :tickets="[]" />
+      <Ticket />
       <TaskList />
     </div>
   </div>

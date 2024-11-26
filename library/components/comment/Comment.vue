@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, reactive, ref, shallowRef } from 'vue';
+import { onMounted, onUnmounted, reactive, ref, shallowRef, watch } from 'vue';
 import { JSONContent } from '@tiptap/vue-3';
 import { CommentServices } from 'lib/services/comment.service';
 import { getNestedProperyValue } from 'lib/utils';
@@ -14,6 +14,7 @@ import {
   GetMentionSuggestionResponse,
   PostImage,
 } from '../editor/Editor.vue.d';
+import { getBaseURL } from 'lib/utils/getBaseURL.util';
 
 import Image from '../image/Image.vue';
 import InputText from '../inputtext/InputText.vue';
@@ -21,11 +22,13 @@ import Editor from '../editor/Editor.vue';
 import CommentBlock from './CommentBlock.vue';
 import Skeleton from 'primevue/skeleton';
 import Button from '../button/Button.vue';
-import { getBaseURL } from 'lib/utils/getBaseURL.util';
 
 onMounted(() => {
   joinRoom();
   fetchGetComments();
+  if (props.mentionSection !== undefined) {
+    editorVisibility.value = false;
+  }
 });
 
 onUnmounted(() => {
@@ -44,6 +47,8 @@ const commentsList = reactive<CommentData[]>([]);
 const isLoading = shallowRef<boolean>(true);
 const mentionSuggestionList = shallowRef<GetMentionSuggestionResponse>();
 const mentionedList = ref<string[]>();
+const editorRef = ref();
+
 const socket = CommentServices.commentSocketIo();
 
 const setEditorVisibility = (): void => {
@@ -192,6 +197,10 @@ const uploadImage = async (value: PostImage): Promise<void> => {
     console.error(error);
   }
 };
+
+watch(editorVisibility, () => {
+  props.mentionSection(editorRef.value?.mentionSectionTrigger);
+});
 </script>
 
 <template>
@@ -235,14 +244,16 @@ const uploadImage = async (value: PostImage): Promise<void> => {
         placeholder="Tulis Komentar"
       />
 
-      <Editor
-        v-else
-        v-model:mentioned-list="mentionedList"
-        v-model:model-value="editorData"
-        :fetch-mention-suggestion-function="fetchMentionSuggestionFunction"
-        @post-image-local="uploadImage"
-        placeholder="Tulis Komentar"
-      />
+      <div :class="`${editorVisibility ? 'opacity-0 !h-0' : ''}`">
+        <Editor
+          ref="editorRef"
+          v-model:mentioned-list="mentionedList"
+          v-model:model-value="editorData"
+          :fetch-mention-suggestion-function="fetchMentionSuggestionFunction"
+          @post-image-local="uploadImage"
+          placeholder="Tulis Komentar"
+        />
+      </div>
 
       <div v-if="!editorVisibility" class="mt-2 flex gap-1">
         <Button @click="postComment()" label="Kirim" severity="success" />
