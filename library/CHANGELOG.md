@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v1.5.69
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.67...v1.5.69)
+
+### 🩹 Fixes
+
+- Adjust initial value if component `Calendar` use props.showTime ([9001674](https://github.com/fewangsit/wangsvue/commit/9001674))
+- **taskdetail:** Hide 'Report Bug' button if the user is member of that task ([60f6d8d](https://github.com/fewangsit/wangsvue/commit/60f6d8d))
+- **taskdetail:** Update condition for button disability in checklist ([5a37002](https://github.com/fewangsit/wangsvue/commit/5a37002))
+- **taskdetail:** Add condition for disability of 'Tandai Selesai' button ([5bc877d](https://github.com/fewangsit/wangsvue/commit/5bc877d))
+
+### 🏡 Chore
+
+- **release:** V1.5.68 ([2b33aab](https://github.com/fewangsit/wangsvue/commit/2b33aab))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.68
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.67...v1.5.68)
