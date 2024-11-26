@@ -1,6 +1,6 @@
 import { Slot } from 'vue';
 import { ClassComponent } from '../ts-helpers';
-import { GlobalComponentConstructor } from 'lib/components/ts-helpers';
+import { GlobalComponentConstructor } from '../ts-helpers.d';
 
 /**
  * Defines valid properties in ProgressBar component.

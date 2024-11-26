@@ -1,5 +1,5 @@
 import { BadgeProps } from 'lib/components/badge/Badge.vue.d';
-import { ClassComponent } from 'lib/components/ts-helpers';
+import { ClassComponent } from '../ts-helpers.d';
 
 export interface BadgeGroupProps
   extends Omit<BadgeProps, 'label' | 'disabled' | 'removable'> {

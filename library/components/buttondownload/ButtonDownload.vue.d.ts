@@ -1,7 +1,7 @@
 import {
   ClassComponent,
   GlobalComponentConstructor,
-} from 'lib/components/ts-helpers';
+} from '../ts-helpers.d';
 
 export interface ButtonDownloadProps {
   fileName: string;

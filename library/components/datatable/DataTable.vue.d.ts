@@ -1,6 +1,6 @@
 import { DialogConfirmProps } from 'lib/components/dialogconfirm/DialogConfirm.vue.d';
 import { MenuItem } from 'lib/components/menuitem';
-import { ClassComponent, HintedString } from 'lib/components/ts-helpers';
+import { ClassComponent, HintedString } from '../ts-helpers.d';
 import { Component } from 'vue';
 
 export type ChildGroup = {
