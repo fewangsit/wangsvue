@@ -32,6 +32,7 @@ import TaskDetail from './TaskDetail.vue';
 import Comment from '../comment/Comment.vue';
 import { User } from 'lib/types/user.type';
 import EventLogTab from './blocks/Tabs/EventLogTab.vue';
+import { MentionSectionFunc } from '../comment/Comment.vue.d';
 
 const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 
@@ -59,16 +60,11 @@ onUnmounted(() => {
 });
 
 const userType = computed(() => {
-  const { permission, _id: userId } = JSON.parse(
-    localStorage.getItem('user') || '{}',
-  );
+  const { permission } = JSON.parse(localStorage.getItem('user') || '{}');
   const isAdmin = Object.values(permission?.manageProject || {}).every(
     (value) => value === true,
   );
   const { isPM } = projectDetail.value ?? {};
-  const isMember =
-    userId &&
-    taskDetail.value?.assignedTo.find((assigned) => assigned._id === userId);
 
   if (isAdmin) {
     return 'admin';
@@ -76,7 +72,7 @@ const userType = computed(() => {
     return 'pm';
   } else if (isProcessTeamLeader.value) {
     return 'teamLeader';
-  } else if (isMember) {
+  } else if (isMember.value) {
     return 'member';
   }
   return 'guest';
@@ -89,6 +85,14 @@ const isProcessTeamLeader = computed(() => {
     ? leaders?.length && leaders?.includes(processTeam)
     : false;
   return isLeader;
+});
+
+const isMember = computed(() => {
+  return user.value?._id
+    ? !!taskDetail.value?.assignedTo.find(
+        (assigned) => assigned._id === user.value?._id,
+      )
+    : false;
 });
 
 const user = ref<User>(
@@ -117,6 +121,10 @@ const selectedTaskId = ref<string>();
 const showCommentSection = ref(false);
 
 const taskMenuKey = ref(0);
+
+const mentionSectionFunc = ref<MentionSectionFunc>();
+
+const mentionedSectionText = ref<string>();
 
 const taskMenu = computed<TaskMenu[]>(() => {
   return [
@@ -288,16 +296,23 @@ const reset = (): void => {
   showCommentSection.value = false;
 };
 
+const updateMentionedSectionText = (sectionTitle: string): void => {
+  mentionedSectionText.value = sectionTitle;
+};
+
 provide('projectId', projectId);
 provide('taskId', taskId);
 provide('taskDetail', taskDetail);
 provide('isNewTask', isNewTask);
 provide('userType', userType);
 provide('isProcessTeamLeader', isProcessTeamLeader);
+provide('isMember', isMember);
 provide('legendForm', legendForm);
 provide('loadingTask', loadingTask);
 provide('openDetailTask', openDetailTask);
 provide('toggleCommentSection', toggleCommentSection);
+provide('mentionAction', mentionSectionFunc);
+provide('updateMentionSectionText', updateMentionedSectionText);
 
 watch(
   () => props.taskId,
@@ -433,6 +448,14 @@ watch(
           </div>
           <div class="py-3 px-6">
             <Comment
+              :mention-section="
+                (cb: MentionSectionFunc) => {
+                  if (mentionedSectionText !== undefined) {
+                    cb?.(mentionedSectionText);
+                  }
+                  mentionedSectionText = undefined;
+                }
+              "
               :object-id="taskDetail?._id"
               :user="{
                 _id: user?._id,

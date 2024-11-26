@@ -40,6 +40,7 @@ const userType =
     'userType',
   );
 const isProcessTeamLeader = inject<ComputedRef<boolean>>('isProcessTeamLeader');
+const isMember = inject<ComputedRef<boolean>>('isMember');
 
 const props = defineProps<{
   initialModule?: {
@@ -1035,8 +1036,7 @@ watch(
         />
         <Button
           v-if="
-            ['Sprint', 'Fixing Bug'].includes(taskDetail?.status) &&
-            userType === 'member'
+            ['Sprint', 'Fixing Bug'].includes(taskDetail?.status) && isMember
           "
           @click="dialogConfirmFinishTask = true"
           label="Tandai Selesai"
