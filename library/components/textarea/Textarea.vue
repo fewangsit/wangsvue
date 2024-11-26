@@ -3,7 +3,7 @@ import { computed, inject, onMounted, reactive, watch } from 'vue';
 import type { TextareaEmits, TextareaProps } from './Textarea.vue.d';
 
 import { FieldValidation } from '../form/Form.vue.d';
-import { Nullable } from 'lib/components/ts-helpers.d';
+import { Nullable } from 'lib/components/ts-helpers';
 import { useField } from 'vee-validate';
 
 import Textarea from 'primevue/textarea';

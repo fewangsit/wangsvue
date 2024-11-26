@@ -1,4 +1,4 @@
-import { ClassComponent } from '../ts-helpers.d';
+import { ClassComponent } from '../ts-helpers';
 
 /**
  * Props for Badge component
