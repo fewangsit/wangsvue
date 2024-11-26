@@ -130,8 +130,8 @@ const getTableData = async (
         <span>Download 2 Tables in 1 Excel</span>
         <ButtonDownload
           :additional-text-below-table="[
-            'ini text pertama',
-            'ini text kedua',
+            ['pertama', 'ini text pertama'],
+            ['kedua', 'ini text kedua'],
             'ini text yang ada di urutan ketiga',
           ]"
           :multi-table-names="['second-table', 'third-table']"
