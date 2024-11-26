@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.71
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.70...v1.5.71)
+
+### 💅 Refactors
+
+- Handle for nested array in additionalTexts ([1c67e5e](https://github.com/fewangsit/wangsvue/commit/1c67e5e))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.70
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.69...v1.5.70)
