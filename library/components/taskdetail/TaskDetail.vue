@@ -60,16 +60,11 @@ onUnmounted(() => {
 });
 
 const userType = computed(() => {
-  const { permission, _id: userId } = JSON.parse(
-    localStorage.getItem('user') || '{}',
-  );
+  const { permission } = JSON.parse(localStorage.getItem('user') || '{}');
   const isAdmin = Object.values(permission?.manageProject || {}).every(
     (value) => value === true,
   );
   const { isPM } = projectDetail.value ?? {};
-  const isMember =
-    userId &&
-    taskDetail.value?.assignedTo.find((assigned) => assigned._id === userId);
 
   if (isAdmin) {
     return 'admin';
@@ -77,7 +72,7 @@ const userType = computed(() => {
     return 'pm';
   } else if (isProcessTeamLeader.value) {
     return 'teamLeader';
-  } else if (isMember) {
+  } else if (isMember.value) {
     return 'member';
   }
   return 'guest';
@@ -90,6 +85,14 @@ const isProcessTeamLeader = computed(() => {
     ? leaders?.length && leaders?.includes(processTeam)
     : false;
   return isLeader;
+});
+
+const isMember = computed(() => {
+  return user.value?._id
+    ? !!taskDetail.value?.assignedTo.find(
+        (assigned) => assigned._id === user.value?._id,
+      )
+    : false;
 });
 
 const user = ref<User>(
@@ -303,6 +306,7 @@ provide('taskDetail', taskDetail);
 provide('isNewTask', isNewTask);
 provide('userType', userType);
 provide('isProcessTeamLeader', isProcessTeamLeader);
+provide('isMember', isMember);
 provide('legendForm', legendForm);
 provide('loadingTask', loadingTask);
 provide('openDetailTask', openDetailTask);

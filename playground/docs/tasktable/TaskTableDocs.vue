@@ -26,6 +26,17 @@ const projectId = sessionStorage.getItem('projectId') ?? '';
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-xl font-semibold">
+            Project (Shopea) > Task > All > My Task
+          </span>
+          <TaskTable
+            page="project-task"
+            project-id="6745365361c91ef9b2fb7a62"
+            sub-tab="myTask"
+            tab="all"
+          />
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-xl font-semibold">
             Project - Module > All > My Tasks
           </span>
           <TaskTable

@@ -40,6 +40,7 @@ const userType =
     'userType',
   );
 const isProcessTeamLeader = inject<ComputedRef<boolean>>('isProcessTeamLeader');
+const isMember = inject<ComputedRef<boolean>>('isMember');
 
 const props = defineProps<{
   initialModule?: {
@@ -1035,9 +1036,9 @@ watch(
         />
         <Button
           v-if="
-            ['Sprint', 'Fixing Bug'].includes(taskDetail?.status) &&
-            userType === 'member'
+            ['Sprint', 'Fixing Bug'].includes(taskDetail?.status) && isMember
           "
+          :disabled="repositoryVisibility && !legendForm.repository"
           @click="dialogConfirmFinishTask = true"
           label="Tandai Selesai"
           severity="secondary"
@@ -1052,7 +1053,7 @@ watch(
           severity="secondary"
         />
         <Button
-          v-if="taskDetail?.status === 'Selesai'"
+          v-if="taskDetail?.status === 'Selesai' && !isMember"
           @click="dialogReportBug = true"
           label="Report Bug"
           severity="danger"

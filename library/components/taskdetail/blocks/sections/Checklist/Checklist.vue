@@ -107,6 +107,7 @@ const moreMenu = ref();
 const togglingItem = ref(false);
 
 const isDisabled = computed(() => {
+  if (props.static) return false;
   const disabledStatus = (
     ['Selesai', 'Reported Bug', 'Pending Review Leader'] as WangsitStatus[]
   ).includes(taskDetail.value?.status);

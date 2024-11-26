@@ -1,24 +1,24 @@
 <script setup lang="ts">
 import {
+  computed,
+  inject,
+  nextTick,
   onMounted,
   reactive,
   ref,
-  watch,
-  nextTick,
-  computed,
   shallowRef,
-  inject,
+  watch,
 } from 'vue';
 import { useField } from 'vee-validate';
-import { CalendarProps, CalendarEmits } from './Calendar.vue.d';
+import { CalendarEmits, CalendarProps } from './Calendar.vue.d';
 import { FieldValidation } from '../form/Form.vue.d';
 
 import Calendar, { CalendarState } from 'primevue/calendar';
+import Button from '../button/Button.vue';
 import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
 import Icon from '../icon/Icon.vue';
 import InputGroup from '../inputgroup/InputGroup.vue';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
-import Button from '../button/Button.vue';
 
 const CalendarPresets = inject<Record<string, any>>('preset', {}).calendar;
 
@@ -33,6 +33,7 @@ const emit = defineEmits<CalendarEmits>();
 
 onMounted(() => {
   setValidator();
+  if (props.mode === 'range') date.value = [];
   if (props.dateValue && props.useValidator) {
     date.value = parseDateFromProps();
     field.value = props.dateValue;

@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import Button from 'lib/components/button/Button.vue';
 import Card from 'lib/components/card/Card.vue';
+import FileUpload from 'lib/components/fileupload/FileUpload.vue';
 import Form from 'lib/components/form/Form.vue';
 import { FormValue } from 'lib/components/form/Form.vue.d';
+import InputNumber from 'lib/components/inputnumber/InputNumber.vue';
+import InputRangeNumber from 'lib/components/inputrangenumber/InputRangeNumber.vue';
 import InputText from 'lib/components/inputtext/InputText.vue';
 import InvisibleField from 'lib/components/invisiblefield/InvisibleField.vue';
 import { ref } from 'vue';
 import DocTitle from '../DocTitle.vue';
-import FileUpload from 'lib/components/fileupload/FileUpload.vue';
-import InputRangeNumber from 'lib/components/inputrangenumber/InputRangeNumber.vue';
-import InputNumber from 'lib/components/inputnumber/InputNumber.vue';
 
 const formValues = ref<(FormValue | null)[]>([null, null, null, null]);
 const showResult = ref<boolean[]>([]);
@@ -64,19 +64,21 @@ const apply = (
               :with-upload="false"
               @error="console.log"
               accept=".pdf,.xlsx,.xls.docx"
-              field-name="inifile"
+              field-name="inisinglefile"
               file-extensions=".pdf .xls .docx"
               mandatory
               use-validator
             />
             <FileUpload
               :max-file-size="1000000"
+              :validator-message="{ empty: 'KOSONG' }"
               :with-upload="false"
               @error="console.log"
               accept=".pdf,.xlsx,.xls.docx"
-              field-name="iniwfile"
+              field-name="inimultifile"
               file-extensions=".pdf .xls .docx"
               mandatory
+              multiple
               use-validator
             />
             <InvisibleField
