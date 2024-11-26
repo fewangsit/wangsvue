@@ -3,9 +3,9 @@ import { ref } from 'vue';
 import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
 import Button from 'lib/components/button/Button.vue';
-import DialogAdjustmentTask from '../../../library/components/dialogAdjustmentTask/DialogAdjustmentTask.vue';
+import DialogAdjustmentTask from 'lib/components/dialogAdjustmentTask/DialogAdjustmentTask.vue';
 
-const visibility = ref<boolean>(false);
+const visibility = ref<boolean>(true);
 </script>
 <template>
   <Card>
