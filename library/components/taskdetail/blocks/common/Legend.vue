@@ -1052,7 +1052,7 @@ watch(
           severity="secondary"
         />
         <Button
-          v-if="taskDetail?.status === 'Selesai'"
+          v-if="taskDetail?.status === 'Selesai' && !isMember"
           @click="dialogReportBug = true"
           label="Report Bug"
           severity="danger"
