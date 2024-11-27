@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 export type TDateFormat =
   | 'd/m/yy'
   | 'd/mm/yy'
@@ -16,14 +17,23 @@ export type TDateFormat =
   | 'DD, dd MM yy'
   | 'DD, dd MM yyyy';
 
-export type TTimeFormat = 'HH:mm' | 'HH:mm:ss' | 'without-time';
+export type TTimeFormat = 'HH:mm' | 'HH:mm a' | 'HH:mm:ss' | 'HH:mm:ss a';
+
+export type TTimeOptions = {
+  locale?: string;
+  dateFormat?: TDateFormat;
+  timeFormat?: TTimeFormat;
+};
 
 export const formatDate = (
   date: Date,
-  locale: string = 'en-GB',
-  dateFormat: TDateFormat = 'dd/mm/yy',
-  timeFormat: TTimeFormat = 'HH:mm',
+  options: TTimeOptions = {
+    locale: 'en-GB',
+    dateFormat: 'dd/mm/yy',
+    timeFormat: 'HH:mm',
+  },
 ): string => {
+  const { locale, dateFormat, timeFormat } = options;
   let format = {};
 
   switch (dateFormat) {
@@ -123,15 +133,22 @@ export const formatDate = (
 
   switch (timeFormat) {
     case 'HH:mm':
-      format = { ...format, hour: '2-digit', minute: '2-digit', hour12: false };
+    case 'HH:mm a':
+      format = {
+        ...format,
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: timeFormat.includes('a'),
+      };
       break;
     case 'HH:mm:ss':
+    case 'HH:mm:ss a':
       format = {
         ...format,
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
-        hour12: false,
+        hour12: timeFormat.includes('a'),
       };
       break;
     default:
