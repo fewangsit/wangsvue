@@ -1,14 +1,145 @@
-export const formatDate = (date: Date): string => {
-  return date
-    .toLocaleString('en-GB', {
-      year: '2-digit',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    })
-    .replace(',', '');
+export type TDateFormat =
+  | 'd/m/yy'
+  | 'd/mm/yy'
+  | 'dd/mm/yy'
+  | 'dd/mm/yyyy'
+  | 'dd M yy'
+  | 'dd M yyyy'
+  | 'dd MM yy'
+  | 'dd MM yyyy'
+  | 'D dd M yy'
+  | 'D dd M yyyy'
+  | 'DD dd MM yy'
+  | 'DD dd MM yyyy'
+  | 'D, dd M yy'
+  | 'D, dd M yyyy'
+  | 'DD, dd MM yy'
+  | 'DD, dd MM yyyy';
+
+export type TTimeFormat = 'HH:mm' | 'HH:mm:ss' | undefined;
+
+export const formatDate = (
+  date: Date,
+  locale: string = 'en-GB',
+  dateFormat: TDateFormat = 'dd/mm/yy',
+  timeFormat: TTimeFormat = 'HH:mm',
+): string => {
+  let format = {};
+
+  switch (dateFormat) {
+    case 'd/m/yy':
+      format = {
+        year: '2-digit',
+        month: 'numeric',
+        day: 'numeric',
+      };
+      break;
+    case 'd/mm/yy':
+      format = {
+        year: '2-digit',
+        month: '2-digit',
+        day: 'numeric',
+      };
+      break;
+    case 'dd/mm/yyyy':
+      format = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      };
+      break;
+    case 'dd M yy':
+      format = {
+        year: '2-digit',
+        month: 'short',
+        day: '2-digit',
+      };
+      break;
+    case 'dd M yyyy':
+      format = {
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit',
+      };
+      break;
+    case 'dd MM yy':
+      format = {
+        year: '2-digit',
+        month: 'long',
+        day: '2-digit',
+      };
+      break;
+    case 'dd MM yyyy':
+      format = {
+        year: 'numeric',
+        month: 'long',
+        day: '2-digit',
+      };
+      break;
+    case 'D dd M yy':
+    case 'D, dd M yy':
+      format = {
+        weekday: 'short',
+        year: '2-digit',
+        month: 'short',
+        day: '2-digit',
+      };
+      break;
+    case 'D dd M yyyy':
+    case 'D, dd M yyyy':
+      format = {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit',
+      };
+      break;
+    case 'DD dd MM yy':
+    case 'DD, dd MM yy':
+      format = {
+        weekday: 'long',
+        year: '2-digit',
+        month: 'long',
+        day: '2-digit',
+      };
+      break;
+    case 'DD dd MM yyyy':
+    case 'DD, dd MM yyyy':
+      format = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: '2-digit',
+      };
+      break;
+    default: // Format dd/mm/yy
+      format = {
+        year: '2-digit',
+        month: '2-digit',
+        day: '2-digit',
+      };
+      break;
+  }
+
+  switch (timeFormat) {
+    case 'HH:mm':
+      format = { ...format, hour: '2-digit', minute: '2-digit', hour12: false };
+      break;
+    case 'HH:mm:ss':
+      format = {
+        ...format,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+      };
+      break;
+    default:
+      break;
+  }
+
+  if (dateFormat.includes(',')) return date.toLocaleString(locale, format);
+  return date.toLocaleString(locale, format).replace(',', '');
 };
 
 /**
