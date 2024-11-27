@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.74
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.73...v1.5.74)
+
+### 🏡 Chore
+
+- Update build-entry ([9f2dac7](https://github.com/fewangsit/wangsvue/commit/9f2dac7))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.73
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.72...v1.5.73)
