@@ -22,65 +22,79 @@ const formatExamples: {
   },
   {
     dateFormat: 'dd/mm/yy',
+    timeFormat: 'without-time',
     description: 'Two-digit Day/Two-digit Month/Two-digit Year (dd/mm/yy)',
   },
   {
     dateFormat: 'dd/mm/yyyy',
+    timeFormat: 'without-time',
     description: 'Two-digit Day/Two-digit Month/Four-digit Year (dd/mm/yyyy)',
   },
   {
     dateFormat: 'dd M yy',
+    timeFormat: 'without-time',
     description: 'Two-digit Day/Short Month/Two-digit Year (dd M yy)',
   },
   {
     dateFormat: 'dd M yyyy',
+    timeFormat: 'without-time',
     description: 'Two-digit Day/Short Month/Four-digit Year (dd M yyyy)',
   },
   {
     dateFormat: 'dd MM yy',
+    timeFormat: 'without-time',
     description: 'Two-digit Day/Full Month/Two-digit Year (dd MM yy)',
   },
   {
     dateFormat: 'dd MM yyyy',
+    timeFormat: 'without-time',
     description: 'Two-digit Day/Full Month/Four-digit Year (dd MM yyyy)',
   },
   {
     dateFormat: 'D dd M yy',
+    timeFormat: 'without-time',
     description:
       'Short Day Name Two-digit Day/Short Month/Two-digit Year (D, dd M yy)',
   },
   {
     dateFormat: 'D dd M yyyy',
+    timeFormat: 'without-time',
     description:
       'Short Day Name Two-digit Day/Short Month/Four-digit Year (D, dd M yyyy)',
   },
   {
     dateFormat: 'DD dd MM yy',
+    timeFormat: 'without-time',
     description:
       'Full Day Name Two-digit Day/Full Month/Two-digit Year (DD, dd MM yy)',
   },
   {
     dateFormat: 'DD dd MM yyyy',
+    timeFormat: 'without-time',
     description:
       'Full Day Name Two-digit Day/Full Month/Four-digit Year (DD, dd MM yyyy)',
   },
   {
     dateFormat: 'D, dd M yy',
+    timeFormat: 'without-time',
     description:
       'Short Day Name, Two-digit Day/Short Month/Two-digit Year (D, dd M yy)',
   },
   {
     dateFormat: 'D, dd M yyyy',
+    timeFormat: 'without-time',
     description:
       'Short Day Name, Two-digit Day/Short Month/Four-digit Year (D, dd M yyyy)',
   },
   {
     dateFormat: 'DD, dd MM yy',
+    timeFormat: 'without-time',
     description:
       'Full Day Name, Two-digit Day/Full Month/Two-digit Year (DD, dd MM yy)',
   },
   {
     dateFormat: 'DD, dd MM yyyy',
+    timeFormat: 'without-time',
     description:
       'Full Day Name, Two-digit Day/Full Month/Four-digit Year (DD, dd MM yyyy)',
   },

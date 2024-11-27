@@ -16,7 +16,7 @@ export type TDateFormat =
   | 'DD, dd MM yy'
   | 'DD, dd MM yyyy';
 
-export type TTimeFormat = 'HH:mm' | 'HH:mm:ss' | undefined;
+export type TTimeFormat = 'HH:mm' | 'HH:mm:ss' | 'without-time';
 
 export const formatDate = (
   date: Date,
