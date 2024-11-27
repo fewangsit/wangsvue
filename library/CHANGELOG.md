@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.5.73
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.72...v1.5.73)
+
+### 💅 Refactors
+
+- Adjust util `formatDate` to support more format, without removing its default format (previous util) ([159be9e](https://github.com/fewangsit/wangsvue/commit/159be9e))
+- Adjust initializer ([c9403db](https://github.com/fewangsit/wangsvue/commit/c9403db))
+
+### 🏡 Chore
+
+- Adjust DocTitle to receive category attrs ([877cb22](https://github.com/fewangsit/wangsvue/commit/877cb22))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.72
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.71...v1.5.72)
