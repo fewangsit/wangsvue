@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.75
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.74...v1.5.75)
+
+### 💅 Refactors
+
+- Refine condition and initializer for formatDate ([73f974b](https://github.com/fewangsit/wangsvue/commit/73f974b))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.74
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.73...v1.5.74)
