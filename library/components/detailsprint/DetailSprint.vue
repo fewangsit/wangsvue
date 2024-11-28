@@ -4,12 +4,15 @@ import { AxiosError } from 'axios';
 import { getUserPermission, useToast } from 'lib/utils';
 import { DropdownOption } from 'lib/types/options.type';
 import {
+  DetailSprintEmits,
   DetailSprintProps,
   IntervalPut,
   SprintDetail,
 } from './DetailSprint.vue.d';
 import { Pbi } from '../dialogdetailpbi/DialogDetailPbi.vue.d';
 import { FormPayload } from '../form/Form.vue.d';
+import { UpdateDoApprovalProcessBody } from 'lib/types/projectApproval.type';
+
 import SprintServices from 'lib/services/sprint.service';
 import DialogConfirmSprint from './DialogConfirmSprint.vue';
 import DialogAddPbi from './DialogAddPbi.vue';
@@ -23,10 +26,13 @@ import Calendar from '../calendar/Calendar.vue';
 import DialogDetailPbi from '../dialogdetailpbi/DialogDetailPbi.vue';
 import updateSprintStatus from './helpers/updateSprintStatus.util';
 import SprintSummary from './SprintSummary.vue';
+import ApprovalServices from 'lib/services/approval.service';
 
 const toast = useToast();
 
 const props = defineProps<DetailSprintProps>();
+
+const emit = defineEmits<DetailSprintEmits>();
 
 onMounted(() => {
   getSprint();
@@ -172,6 +178,18 @@ const getPbis = async (): Promise<void> => {
     console.error(error);
   }
 };
+
+const putDoApprovalProcess = async (
+  body: UpdateDoApprovalProcessBody,
+): Promise<void> => {
+  try {
+    await ApprovalServices.putDoApprovalProcess(props.approvalId, body);
+    emit('approveAndRejectApprovalResponse', body.isApproved, true);
+  } catch (error) {
+    emit('approveAndRejectApprovalResponse', body.isApproved, false);
+    console.error(error);
+  }
+};
 </script>
 
 <!-- eslint-disable vue/html-indent -->
@@ -185,12 +203,20 @@ const getPbis = async (): Promise<void> => {
       </span>
       <template v-if="isApproving">
         <Button
-          @click="console.error('reject')"
+          @click="
+            putDoApprovalProcess({
+              isApproved: false,
+            })
+          "
           label="Tolak"
           severity="danger"
         />
         <Button
-          @click="console.error('approve')"
+          @click="
+            putDoApprovalProcess({
+              isApproved: true,
+            })
+          "
           label="Setuju"
           severity="success"
         />
