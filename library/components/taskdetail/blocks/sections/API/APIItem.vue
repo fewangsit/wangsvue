@@ -6,7 +6,6 @@ import { formatDateReadable } from 'lib/utils/date.util';
 import { useToast } from 'lib/utils';
 import { useLoadingStore } from 'lib/build-entry';
 import { FormPayload } from 'lib/components/form/Form.vue.d';
-import { Project } from 'lib/types/project.type';
 
 import Button from 'lib/components/button/Button.vue';
 import CodeSnippet from 'lib/components/codesnippet/CodeSnippet.vue';
@@ -32,7 +31,6 @@ const taskApi = defineModel<TaskAPIFormDataCustom>('taskApi', {
 
 const props = defineProps<{
   disabled?: boolean;
-  project: Project;
 }>();
 
 const emit = defineEmits<{

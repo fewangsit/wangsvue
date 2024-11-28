@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import { UpdateDoApprovalProcessBody } from 'lib/types/projectApproval.type';
 import { getBaseURL } from 'lib/utils/getBaseURL.util';
 
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
@@ -27,6 +28,13 @@ const ApprovalServices = {
       project: projectId,
       sprint: sprintId,
     });
+  },
+
+  putDoApprovalProcess: (
+    approvalId: string,
+    body: UpdateDoApprovalProcessBody,
+  ): Promise<AxiosResponse> => {
+    return API().put(`/api/approval/${approvalId}/do-approval`, body);
   },
 };
 

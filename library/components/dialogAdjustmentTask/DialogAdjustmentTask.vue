@@ -110,7 +110,7 @@ const getTaskList = async (
   try {
     const { data } = await TaskServices.getTaskList({
       ...params,
-      member: JSON.stringify(props.members.map((item) => item._id)),
+      member: props.members.map((item) => item._id),
     });
     const taskListData = data as TaskListResponse;
 

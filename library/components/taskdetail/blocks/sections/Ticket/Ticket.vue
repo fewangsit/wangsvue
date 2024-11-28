@@ -6,10 +6,14 @@ import BadgeTicketStatus from './BadgeTicketStatus.vue';
 import TicketServices from 'lib/services/ticket.service';
 
 const taskId = inject<Ref<string>>('taskId');
+const isNewTask = inject<Ref<boolean>>('isNewTask');
 
 const ticketDatas = shallowRef<TicketTaskId[]>();
 
 const getTicketList = async (): Promise<void> => {
+  if (taskId.value === undefined || isNewTask.value) {
+    return;
+  }
   try {
     const { data } = await TicketServices.getTicketTaskId(taskId.value);
     ticketDatas.value = data.data;

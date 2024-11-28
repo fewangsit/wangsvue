@@ -73,10 +73,14 @@ export interface DetailSprintProps {
   approvalId?: string;
 }
 
+export type DetailSprintEmits = {
+  approveAndRejectApprovalResponse: [isApprove: boolean, isSuccess: boolean];
+};
+
 declare class DetailSprint extends ClassComponent<
   DetailSprintProps,
   unknown,
-  unknown
+  DetailSprintEmits
 > {}
 
 export default DetailSprint;

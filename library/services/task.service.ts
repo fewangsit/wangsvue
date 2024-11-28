@@ -58,8 +58,8 @@ const TaskServices = {
     return API().put('/assignee', data);
   },
 
-  getTaskList: (params?: Record<string, string>): Promise<AxiosResponse> => {
-    return API({ params: queryParamsStringfy(params) }).get('/');
+  getTaskList: (params?: Record<string, unknown>): Promise<AxiosResponse> => {
+    return API({ params: queryParamsStringfy(params) }).get('');
   },
 
   getTaskOptions: (
