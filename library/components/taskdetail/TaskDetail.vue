@@ -124,8 +124,6 @@ const taskMenuKey = ref(0);
 
 const mentionSectionFunc = ref<MentionSectionFunc>();
 
-const mentionedSectionText = ref<string>();
-
 const taskMenu = computed<TaskMenu[]>(() => {
   return [
     {
@@ -297,7 +295,14 @@ const reset = (): void => {
 };
 
 const updateMentionedSectionText = (sectionTitle: string): void => {
-  mentionedSectionText.value = sectionTitle;
+  if (!showCommentSection.value) {
+    toggleCommentSection();
+  }
+  setTimeout(() => {
+    if (sectionTitle !== undefined) {
+      mentionSectionFunc.value?.(sectionTitle);
+    }
+  }, 100);
 };
 
 provide('projectId', projectId);
@@ -311,7 +316,6 @@ provide('legendForm', legendForm);
 provide('loadingTask', loadingTask);
 provide('openDetailTask', openDetailTask);
 provide('toggleCommentSection', toggleCommentSection);
-provide('mentionAction', mentionSectionFunc);
 provide('updateMentionSectionText', updateMentionedSectionText);
 
 watch(
@@ -450,10 +454,7 @@ watch(
             <Comment
               :mention-section="
                 (cb: MentionSectionFunc) => {
-                  if (mentionedSectionText !== undefined) {
-                    cb?.(mentionedSectionText);
-                  }
-                  mentionedSectionText = undefined;
+                  mentionSectionFunc = cb;
                 }
               "
               :object-id="taskDetail?._id"

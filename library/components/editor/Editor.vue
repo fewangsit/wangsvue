@@ -676,13 +676,20 @@ const goToNextLine = (): void => {
 };
 
 const mentionSectionTrigger = (title: string): void => {
+  editorLoading();
   try {
     const { insertMentionSection } = editor.value?.commands as any;
-
     insertMentionSection(title, props.editorState === 'editable');
   } catch (error) {
     console.error(error);
   }
+};
+
+const editorLoading = (): void => {
+  isLoading.value = true;
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 100);
 };
 
 defineExpose({
