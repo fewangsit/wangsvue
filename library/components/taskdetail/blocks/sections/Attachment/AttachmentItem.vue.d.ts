@@ -1,4 +1,4 @@
-import { ClassComponent } from 'lib/components/ts-helpers';
+import { ClassComponent } from '../ts-helpers.d';
 
 export type FileType =
   | 'link'

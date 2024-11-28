@@ -231,6 +231,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
         component: (): Promise<Component> => import('./docs/form/FormDocs.vue'),
       },
       {
+        path: 'formatdate',
+        name: 'Format Date Docs',
+        component: (): Promise<Component> =>
+          import('./docs/formatdate/FormatDateDocs.vue'),
+      },
+      {
         path: 'workcalendar',
         name: 'Work Calendar Docs',
         component: (): Promise<Component> =>

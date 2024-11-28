@@ -1,6 +1,6 @@
 import { DevelopmentStatus, ProjectStatus } from 'lib/types/wangsStatus.type';
-import { ClassComponent } from '../ts-helpers';
 import { ImageCompressorPayload } from '../imagecompressor/ImageCompressor.vue.d';
+import { ClassComponent } from '../ts-helpers.d';
 
 export interface Summary {
   name: string;

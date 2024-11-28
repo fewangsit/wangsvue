@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes, VNode } from 'vue';
 import { WangsIcons } from '../icon/Icon.vue.d';
 import { TooltipOptions } from 'primevue/tooltip';
-import { GlobalComponentConstructor } from 'lib/components/ts-helpers';
+import { GlobalComponentConstructor } from '../ts-helpers.d';
 import { ClassComponent, HintedString } from '../ts-helpers';
 
 /**

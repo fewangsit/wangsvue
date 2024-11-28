@@ -3,7 +3,7 @@
     <div
       class="text-[#6e7191] text-xs font-bold font-['Plus Jakarta Sans'] leading-3"
     >
-      COMPONENTS
+      {{ $attrs['category'] ?? 'COMPONENTS' }}
     </div>
     <div
       class="w-[342px] text-[#262627] text-3xl font-bold font-['Plus Jakarta Sans']"

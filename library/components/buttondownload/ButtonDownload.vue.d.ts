@@ -1,7 +1,7 @@
 import {
   ClassComponent,
   GlobalComponentConstructor,
-} from 'lib/components/ts-helpers';
+} from '../ts-helpers.d';
 
 export interface ButtonDownloadProps {
   fileName: string;
@@ -19,7 +19,7 @@ export interface ButtonDownloadProps {
   /**
    * Texts below table in downloaded excel
    */
-  additionalTextBelowTable?: string[];
+  additionalTextBelowTable?: (string | string[])[];
 }
 
 /**

@@ -60,8 +60,11 @@ import {
   convertJsonImage,
   isEmptyObject,
   isIntersect,
+  formatDate,
   formatDateReadable,
 } from 'lib/utils';
+
+import { formatCurrency } from './components/inputcurrency/helpers/currency.helper';
 
 // Directives
 import Tooltip from 'primevue/tooltip';
@@ -158,7 +161,9 @@ export {
   convertJsonImage,
   isEmptyObject,
   isIntersect,
+  formatDate,
   formatDateReadable,
+  formatCurrency,
 
   // Components
   Badge,

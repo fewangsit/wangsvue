@@ -1,7 +1,7 @@
 import useToast from './toast.util';
 import { formatUserName, getInititalName } from './textFormatter.util';
 import { checkRouteAccess } from './role.util';
-import { formatDateReadable } from './date.util';
+import { formatDate, formatDateReadable } from './date.util';
 import filterOptions from './filterOptions.util';
 import exportToExcel from './exportToExcel.util';
 import getImageURL from './getImageURL.util';
@@ -46,5 +46,6 @@ export {
   getUserPermission,
   isIntersect,
   convertJsonImage,
+  formatDate,
   formatDateReadable,
 };

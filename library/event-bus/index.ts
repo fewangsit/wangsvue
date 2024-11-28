@@ -32,7 +32,7 @@ export type Events = {
   'data-table:download': TableEvent & {
     fileName: string;
     multiTableNames?: string[];
-    additionalTexts?: string[];
+    additionalTexts?: (string | string[])[];
   };
   'data-table:select-all-record': TableEvent;
   'data-table:update-total-record': TableEvent & { total: number };
