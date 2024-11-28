@@ -36,8 +36,8 @@ const visible = defineModel<boolean>('visible', { required: true });
 const detailEndpoint = shallowRef<EndpointDetail>();
 const isLoading = shallowRef<boolean>(false);
 const executeEndpointResponse = shallowRef<ExecuteEndpoint>();
-const pathVariablesData = ref<Record<string, unknown>[]>([]);
-const queryParamsData = ref<Record<string, unknown>[]>([]);
+const pathVariablesData = reactive<Record<string, unknown>>({});
+const queryParamsData = reactive<Record<string, unknown>>({});
 const requestBodyJson = ref();
 const formDataBody = reactive<Record<string, unknown>>({});
 
@@ -111,12 +111,17 @@ const getEndpointDetail = async (): Promise<void> => {
     );
     detailEndpoint.value = data.data;
 
-    pathVariablesData.value = data.data?.pathVariables?.map((item) => ({
-      [item]: data.data?.savedPathVariables?.[item] ?? undefined,
-    }));
-    queryParamsData.value = data.data?.query?.map((item) => ({
-      [item]: data.data?.savedQueryParams?.[item] ?? undefined,
-    }));
+    data.data?.pathVariables?.map((item) =>
+      Object.assign(pathVariablesData, {
+        [item]: data.data?.savedPathVariables?.[item] ?? undefined,
+      }),
+    );
+
+    data.data?.query?.map((item) =>
+      Object.assign(queryParamsData, {
+        [item]: data.data?.savedQueryParams?.[item] ?? undefined,
+      }),
+    );
 
     if (data.data.type === 'json' && data.data.jsonBody) {
       requestBodyJson.value = JSON.stringify(
@@ -143,8 +148,8 @@ const postExecuteEndpoint = async (): Promise<void> => {
       props.taskApi._id,
       detailEndpoint.value.type,
       {
-        pathVariables: pathVariablesData.value,
-        queryParams: queryParamsData.value,
+        pathVariables: JSON.stringify(pathVariablesData.value),
+        queryParams: JSON.stringify(queryParamsData.value),
       },
       getBodyExecute.value,
     );
@@ -167,32 +172,34 @@ const postExecuteEndpoint = async (): Promise<void> => {
 };
 
 const getTableDataQueryParams = async (): Promise<FetchResponse> => {
+  const queryParamsList = Object.entries(queryParamsData);
   return {
     data: {
-      data: Object.entries(queryParamsData.value).map((item) => {
+      data: queryParamsList.map((item) => {
         const [key, value] = item;
         return {
           keys: key,
           values: value,
         };
       }),
-      totalRecords: queryParamsData.value.length,
+      totalRecords: queryParamsList.length,
     },
     message: '',
   };
 };
 
 const getTableDataPathVariable = async (): Promise<FetchResponse> => {
+  const pathVariableList = Object.entries(pathVariablesData);
   return {
     data: {
-      data: Object.entries(pathVariablesData.value).map((item) => {
+      data: pathVariableList.map((item) => {
         const [key, value] = item;
         return {
           keys: key,
           values: value,
         };
       }),
-      totalRecords: pathVariablesData.value.length,
+      totalRecords: pathVariableList.length,
     },
     message: '',
   };
@@ -211,13 +218,13 @@ const getTableDataFormDataTable = async (): Promise<FetchResponse> => {
 };
 
 const queryParamsCellEdited = (event: DataTableCellEditedEvent): void => {
-  const { keys, value } = event.item;
-  queryParamsData.value[keys] = { [keys]: value };
+  const { keys } = event.item;
+  Object.assign(queryParamsData, { [keys]: event.value });
 };
 
 const pathVariableCellEdited = (event: DataTableCellEditedEvent): void => {
-  const { keys, value } = event.item;
-  pathVariablesData.value[keys] = { [keys]: value };
+  const { keys } = event.item;
+  Object.assign(pathVariablesData, { [keys]: event.value });
 };
 </script>
 
@@ -275,7 +282,7 @@ const pathVariableCellEdited = (event: DataTableCellEditedEvent): void => {
       </div>
       <div class="flex flex-col gap-3">
         <span class="font-semibold">Query Params</span>
-        <template v-if="queryParamsData?.length <= 0">
+        <template v-if="detailEndpoint.query?.length <= 0">
           <span class="text-center">Tidak ada parameter.</span>
         </template>
         <template v-else>
@@ -294,7 +301,7 @@ const pathVariableCellEdited = (event: DataTableCellEditedEvent): void => {
       </div>
       <div class="flex flex-col gap-3">
         <span class="font-semibold">Path Variable</span>
-        <template v-if="pathVariablesData.length <= 0">
+        <template v-if="detailEndpoint.pathVariables.length <= 0">
           <span class="text-center">Tidak ada parameter.</span>
         </template>
         <template v-else>
