@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import Calendar from 'lib/components/calendar/Calendar.vue';
 import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
-import Calendar from 'lib/components/calendar/Calendar.vue';
 </script>
 
 <template>
@@ -12,6 +12,7 @@ import Calendar from 'lib/components/calendar/Calendar.vue';
         <Calendar mode="range" />
         <Calendar label="Calendar" mode="range" use-validator />
         <Calendar disabled label="Calendar Disabled" mode="range" />
+        <Calendar label="Calendar Time" mode="range" show-time />
       </div>
     </template>
   </Card>

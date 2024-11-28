@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, inject, Ref } from 'vue';
+import { computed, ComputedRef, inject, Ref } from 'vue';
 import Button from 'lib/components/button/Button.vue';
 import Dialog from 'lib/components/dialog/Dialog.vue';
 import { useToast } from 'lib/utils';
@@ -14,6 +14,7 @@ const DialogConfirmPreset = inject<Record<string, any>>(
   'preset',
   {},
 ).dialogconfirm;
+const isMember = inject<ComputedRef<boolean>>('isMember');
 
 const visible = defineModel<boolean>('visible', { required: true });
 
@@ -97,6 +98,7 @@ const openReportBugDialog = (): void => {
     <p>Task akan ditandai selesai, pastikan task telah dicek dengan teliti.</p>
     <template #footer>
       <Button
+        v-if="!isMember"
         @click="openReportBugDialog"
         label="Report Bug"
         severity="secondary"
