@@ -78,10 +78,10 @@ const formDataTableColumn: TableColumn[] = [
         },
         events: {
           textInput: (value: string | undefined): void => {
-            formDataBody.value[data.key] = value;
+            formDataBody[data.key] = value;
           },
           fileInput: (value: File): void => {
-            formDataBody.value[data.key] = value;
+            formDataBody[data.key] = value;
           },
         },
       };
@@ -94,7 +94,7 @@ const getBodyExecute = computed<string | FormData>(() => {
     return requestBodyJson.value;
   }
   const formData = new FormData();
-  Object.entries(formDataBody.value).forEach((item) => {
+  Object.entries(formDataBody).forEach((item) => {
     if (item[1] === undefined) {
       return;
     }
@@ -111,13 +111,13 @@ const getEndpointDetail = async (): Promise<void> => {
     );
     detailEndpoint.value = data.data;
 
-    data.data?.pathVariables?.map((item) =>
+    data.data?.pathVariables?.forEach((item) =>
       Object.assign(pathVariablesData, {
         [item]: data.data?.savedPathVariables?.[item] ?? undefined,
       }),
     );
 
-    data.data?.query?.map((item) =>
+    data.data?.query?.forEach((item) =>
       Object.assign(queryParamsData, {
         [item]: data.data?.savedQueryParams?.[item] ?? undefined,
       }),
@@ -130,7 +130,7 @@ const getEndpointDetail = async (): Promise<void> => {
         8,
       );
     } else if (data.data.type === 'form-data') {
-      formDataBody.value = data.data.formDataBody.map((item) => {
+      data.data.formDataBody.forEach((item) => {
         Object.assign(formDataBody, {
           [item?.key]: data.data.savedBody?.[item?.key],
         });
@@ -148,8 +148,10 @@ const postExecuteEndpoint = async (): Promise<void> => {
       props.taskApi._id,
       detailEndpoint.value.type,
       {
-        pathVariables: JSON.stringify(pathVariablesData.value),
-        queryParams: JSON.stringify(queryParamsData.value),
+        pathVariables: JSON.stringify(
+          excludeEmptyValueObject(pathVariablesData),
+        ),
+        queryParams: JSON.stringify(excludeEmptyValueObject(queryParamsData)),
       },
       getBodyExecute.value,
     );
@@ -219,12 +221,32 @@ const getTableDataFormDataTable = async (): Promise<FetchResponse> => {
 
 const queryParamsCellEdited = (event: DataTableCellEditedEvent): void => {
   const { keys } = event.item;
-  Object.assign(queryParamsData, { [keys]: event.value });
+  if (event.value !== '-') {
+    Object.assign(queryParamsData, { [keys]: event.value });
+  }
 };
 
 const pathVariableCellEdited = (event: DataTableCellEditedEvent): void => {
   const { keys } = event.item;
-  Object.assign(pathVariablesData, { [keys]: event.value });
+  if (event.value !== '-') {
+    Object.assign(pathVariablesData, { [keys]: event.value });
+  }
+};
+
+const excludeEmptyValueObject = (
+  data: Record<string, unknown>,
+): Record<string, unknown> => {
+  const temporaryData = {};
+
+  Object.keys(data).forEach((item) => {
+    if (data[item] !== '') {
+      Object.assign(temporaryData, {
+        [item]: data[item],
+      });
+    }
+  });
+
+  if (Object.keys(temporaryData).length > 0) return temporaryData;
 };
 </script>
 
@@ -282,7 +304,7 @@ const pathVariableCellEdited = (event: DataTableCellEditedEvent): void => {
       </div>
       <div class="flex flex-col gap-3">
         <span class="font-semibold">Query Params</span>
-        <template v-if="detailEndpoint.query?.length <= 0">
+        <template v-if="false">
           <span class="text-center">Tidak ada parameter.</span>
         </template>
         <template v-else>
@@ -301,7 +323,7 @@ const pathVariableCellEdited = (event: DataTableCellEditedEvent): void => {
       </div>
       <div class="flex flex-col gap-3">
         <span class="font-semibold">Path Variable</span>
-        <template v-if="detailEndpoint.pathVariables.length <= 0">
+        <template v-if="false">
           <span class="text-center">Tidak ada parameter.</span>
         </template>
         <template v-else>
