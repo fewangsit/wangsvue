@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.77
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.76...v1.5.77)
+
+### 🚀 Enhancements
+
+- Add shield-user-line icon ([8065d6e](https://github.com/fewangsit/wangsvue/commit/8065d6e))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.76
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.72...v1.5.76)
