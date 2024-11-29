@@ -193,6 +193,7 @@ export type WangsIcons =
   | 'run-line'
   | 'user-unfollow-line'
   | 'archive-line'
+  | 'shield-user-line'
   | 'emotion-happy-line';
 
 export interface IconProps {
