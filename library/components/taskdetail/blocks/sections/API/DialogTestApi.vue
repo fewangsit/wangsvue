@@ -304,7 +304,7 @@ const excludeEmptyValueObject = (
       </div>
       <div class="flex flex-col gap-3">
         <span class="font-semibold">Query Params</span>
-        <template v-if="false">
+        <template v-if="detailEndpoint?.query?.length <= 0">
           <span class="text-center">Tidak ada parameter.</span>
         </template>
         <template v-else>
@@ -323,7 +323,7 @@ const excludeEmptyValueObject = (
       </div>
       <div class="flex flex-col gap-3">
         <span class="font-semibold">Path Variable</span>
-        <template v-if="false">
+        <template v-if="detailEndpoint?.pathVariables?.length <= 0">
           <span class="text-center">Tidak ada parameter.</span>
         </template>
         <template v-else>
