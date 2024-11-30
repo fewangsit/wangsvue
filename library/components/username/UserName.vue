@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, shallowRef } from 'vue';
+import { computed, ref, shallowRef } from 'vue';
 import { getNestedProperyValue } from 'lib/utils';
 import { UserNameProps } from './UserName.vue.d';
 import Image from '../image/Image.vue';
@@ -18,6 +18,11 @@ const props = withDefaults(defineProps<UserNameProps>(), {
 const overlayId = +new Date();
 const loadingUser = shallowRef<boolean>(false);
 const fullUserObject = shallowRef<Member>();
+const miniProfile = ref<OverlayPanel>();
+
+const userDisplayName = computed<string>(
+  () => getNestedProperyValue(props.user ?? {}, props.userNameField) as string,
+);
 
 const adjustPosition = async (): Promise<void> => {
   if (!fullUserObject.value) {
@@ -39,18 +44,19 @@ const adjustPosition = async (): Promise<void> => {
   <span v-if="props.emptyable && Object.keys(props.user).length < 2">-</span>
   <span
     v-else
-    @click="($refs['miniProfile'] as OverlayPanel).toggle"
+    @click="miniProfile.toggle"
     class="flex items-center gap-1"
     data-wv-name="username"
     data-wv-section="root"
   >
     <Image
       v-if="type == 'picture'"
+      :preview="userDisplayName !== undefined"
       :src="
         getNestedProperyValue(props.user ?? {}, profilePictureField) as string
       "
       :width="30"
-      @click.stop=""
+      @click.stop="if (!userDisplayName) miniProfile.toggle($event);"
       class="w-[30px] h-[30px]"
       rounded
     />
@@ -64,7 +70,7 @@ const adjustPosition = async (): Promise<void> => {
         { 'text-general-800': props.type !== 'icon' },
       ]"
     >
-      {{ getNestedProperyValue(props.user ?? {}, userNameField) }}
+      {{ userDisplayName }}
     </span>
 
     <OverlayPanel :id="overlayId" ref="miniProfile" @show="adjustPosition">
