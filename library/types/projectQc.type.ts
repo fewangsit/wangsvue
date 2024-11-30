@@ -54,10 +54,10 @@ export interface FormDataBody {
   isMandatory: boolean;
 }
 
-// Both is Stringified object containing "key" and "value"
+// Both is Stringified object containing "key" and "value" that already get stringify
 export interface ExecuteEndpointQueryParams {
-  pathVariables: Record<string, unknown>[];
-  queryParams: Record<string, unknown>[];
+  pathVariables: string;
+  queryParams: string;
 }
 
 export type ExecuteEndpointBody = string | FormData;

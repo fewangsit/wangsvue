@@ -4,6 +4,10 @@ import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
  * Detail task component props
  */
 export interface DetailTaskProps {
+  /**
+   * V-model visible
+   */
+  visible: boolean;
   projectId: string;
   /**
    * The task's id.
@@ -28,21 +32,25 @@ export interface DetailTaskProps {
  */
 export type DetailTaskEmits = {
   /**
+   *
+   */
+  'update:visible': [value: boolean];
+  /**
    * Emits when dialog shown.
    */
-  show: [];
+  'show': [];
   /**
    * Emits when new task is created.
    */
-  create: [];
+  'create': [];
   /**
    * Emits when there is an update on the task.
    */
-  update: [];
+  'update': [];
   /**
    * Emits when the task is deleted.
    */
-  delete: [];
+  'delete': [];
 };
 
 /**

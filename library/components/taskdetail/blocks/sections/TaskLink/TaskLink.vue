@@ -20,7 +20,6 @@ const userType =
   );
 const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
-const toggleCommentSection = inject<() => void>('toggleCommentSection');
 const updateMentionSectionText = inject<(sectionTitle: string) => void>(
   'updateMentionSectionText',
 );
@@ -123,12 +122,7 @@ watch(taskDetail, async () => {
             type="icon"
           />
           <Button
-            @click="
-              () => {
-                toggleCommentSection();
-                updateMentionSectionText('Task Link');
-              }
-            "
+            @click="updateMentionSectionText('Task Link')"
             class="!p-1"
             icon="chat-1-line"
             icon-class="!w-6 !h-6"
@@ -182,12 +176,7 @@ watch(taskDetail, async () => {
             type="icon"
           />
           <Button
-            @click="
-              () => {
-                toggleCommentSection();
-                updateMentionSectionText('Task Link');
-              }
-            "
+            @click="updateMentionSectionText('Task Link')"
             class="!p-1"
             icon="chat-1-line"
             icon-class="!w-6 !h-6"
@@ -242,12 +231,7 @@ watch(taskDetail, async () => {
           type="icon"
         />
         <Button
-          @click="
-            () => {
-              toggleCommentSection();
-              updateMentionSectionText('Task Link');
-            }
-          "
+          @click="updateMentionSectionText('Link Task')"
           class="!p-1"
           icon="chat-1-line"
           icon-class="!w-6 !h-6"
