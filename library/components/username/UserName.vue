@@ -4,7 +4,8 @@ import { getNestedProperyValue } from 'lib/utils';
 import { UserNameProps } from './UserName.vue.d';
 import Image from '../image/Image.vue';
 import Icon from '../icon/Icon.vue';
-import OverlayPanel from 'primevue/overlaypanel';
+import OverlayPanel from '../overlaypanel/OverlayPanel.vue';
+import OverlayPanelClass from '../overlaypanel/OverlayPanel.vue.d';
 import MemberServices, { Member } from 'lib/services/member.service';
 import Skeleton from 'primevue/skeleton';
 
@@ -15,10 +16,9 @@ const props = withDefaults(defineProps<UserNameProps>(), {
   emptyable: false,
 });
 
-const overlayId = +new Date();
 const loadingUser = shallowRef<boolean>(false);
 const fullUserObject = shallowRef<Member>();
-const miniProfile = ref<OverlayPanel>();
+const miniProfile = ref<OverlayPanelClass>();
 
 const userDisplayName = computed<string>(
   () => getNestedProperyValue(props.user ?? {}, props.userNameField) as string,
@@ -73,7 +73,7 @@ const adjustPosition = async (): Promise<void> => {
       {{ userDisplayName }}
     </span>
 
-    <OverlayPanel :id="overlayId" ref="miniProfile" @show="adjustPosition">
+    <OverlayPanel ref="miniProfile" @show="adjustPosition">
       <div
         class="relative overflow-hidden flex flex-col gap-2 w-[200px] h-max items-center justify-center p-3 rounded-[10px] border border-grayscale-900 text-grayscale-900"
       >
