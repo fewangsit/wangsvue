@@ -105,7 +105,7 @@ const adjustPosition = async (): Promise<void> => {
             {{ fullUserObject?.email }}
           </span>
         </div>
-        <Skeleton v-else width="100px" />
+        <Skeleton v-else height="29px" width="100px" />
 
         <span v-if="!loadingUser" class="text-[8px] font-normal leading-3">
           {{ fullUserObject?.division }}
@@ -125,7 +125,7 @@ const adjustPosition = async (): Promise<void> => {
           Detail Member
         </a>
 
-        <Skeleton v-else height="14px" width="75px" />
+        <Skeleton v-else width="75px" />
       </div>
     </OverlayPanel>
   </span>
