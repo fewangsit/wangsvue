@@ -20,16 +20,6 @@ const loadingUser = shallowRef<boolean>(false);
 const fullUserObject = shallowRef<Member>();
 
 const adjustPosition = async (): Promise<void> => {
-  const overlay = document.getElementById(overlayId.toString());
-
-  if (overlay) {
-    await nextTick(() => {
-      overlay.style.top = 'revert-layer';
-      overlay.style.bottom = '0';
-      overlay.style.translate = '-25%';
-    });
-  }
-
   if (!fullUserObject.value) {
     try {
       loadingUser.value = true;
