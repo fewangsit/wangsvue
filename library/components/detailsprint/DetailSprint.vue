@@ -153,7 +153,15 @@ const getSprint = async (): Promise<void> => {
     visibleDialogDetail.value = new Array(
       data.data.productBacklogItems.length,
     ).fill(false);
-    currentSprint.value = data.data;
+    currentSprint.value = {
+      ...data.data,
+      productBacklogItems: data.data.productBacklogItems.map((pbi) => ({
+        ...pbi,
+        canViewDetail:
+          data.data.status !== 'Selesai' ||
+          !['Overdue', 'Reported Bug'].includes(pbi.status),
+      })),
+    };
 
     initInterval();
     getPbis();
@@ -324,8 +332,9 @@ const putDoApprovalProcess = async (
   >
     <div class="bg-primary-50 rounded-lg p-3 w-full text-grayscale-900">
       <div
-        @click="expanded[index] = !expanded[index]"
-        class="flex justify-between cursor-pointer"
+        :class="[{ 'cursor-pointer': pbi.canViewDetail }]"
+        @click="if (pbi.canViewDetail) expanded[index] = !expanded[index];"
+        class="flex justify-between"
       >
         <div class="flex items-center gap-3">
           <span class="font-semibold text-normal leading-4">
@@ -333,7 +342,7 @@ const putDoApprovalProcess = async (
           </span>
           <Badge :label="pbi.status" format="nowrap" />
         </div>
-        <div class="flex items-center gap-3">
+        <div v-if="pbi.canViewDetail" class="flex items-center gap-3">
           <Button
             @click.stop="visibleDialogDetail[index] = true"
             class="!py-0.5 !px-1.5 text-primary-400"
