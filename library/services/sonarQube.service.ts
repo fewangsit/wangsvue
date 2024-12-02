@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
   const instance = axios.create({
-    baseURL: '/api',
+    baseURL: 'https://sonarqube.qwertysystem.net/api',
     headers: {
       'Content-Type': 'application/json',
       ...headers,
