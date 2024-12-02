@@ -435,6 +435,18 @@ const getSubmoduleOptions = async (): Promise<void> => {
   }
 };
 
+const getRepositoryOptions = async (): Promise<void> => {
+  try {
+    await getSubmoduleOptions();
+    assignRepository();
+  } catch (error) {
+    toast.add({
+      message: 'Data repository gagal dimuat.',
+      error,
+    });
+  }
+};
+
 /**
  * Disable Rules:
  * 1. If the process hasn't been selected.
@@ -462,6 +474,32 @@ const isSubmoduleDropdownDisabled = computed<boolean>(() => {
   if (subModuleVisibility.value) {
     return (
       !isLegendEditable.value || !process || !module || !!props.initialSubModule
+    );
+  }
+  return true;
+});
+
+/**
+ * Determines if the repository dropdown should be disabled.
+ *
+ * The dropdown is disabled if:
+ * 1. The process hasn't been selected.
+ * 2. The module hasn't been selected.
+ * 3. The current user is a guest.
+ * 4. The task status is either 'Selesai', 'Reported Bug', or 'Pending Review Leader'.
+ *
+ * If repository visibility is false, the dropdown is always disabled.
+ */
+const isRepositoryDropdownDisabled = computed<boolean>(() => {
+  const { process, module } = legendForm.value;
+  if (repositoryVisibility.value) {
+    return (
+      !process ||
+      !module ||
+      userType.value === 'guest' ||
+      (
+        ['Selesai', 'Reported Bug', 'Pending Review Leader'] as WangsitStatus[]
+      ).includes(taskDetail.value?.status)
     );
   }
   return true;
@@ -978,8 +1016,10 @@ watch(
             <LiteDropdown
               v-if="repositoryVisibility"
               v-model="legendForm.repository"
-              :disabled="true"
+              :disabled="isRepositoryDropdownDisabled"
               :options="legendOptions.repository"
+              @change="handleTaskChange()"
+              @show="getRepositoryOptions"
               data-wv-section="detailtask-repository-input"
               option-label="label"
               option-value="value"
