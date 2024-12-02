@@ -419,7 +419,7 @@ const tableActions = computed<MenuItem[]>(() => {
       icon: 'file-copy-2-line',
       visible:
         ['parent', 'dependency'].includes(selectedTask.value?.taskType) &&
-        ['admin', 'pm', 'teamLeader', 'member'].includes(userType.value),
+        isIntersect(['admin', 'pm', 'teamLeader', 'member'], userType.value),
       command: (): void => {
         dialogDetailTask.value = true;
       },
@@ -433,7 +433,7 @@ const tableActions = computed<MenuItem[]>(() => {
       visible:
         selectedTask.value?.status === 'Backlog' &&
         selectedTask.value?.taskType === 'parent' &&
-        ['admin', 'pm', 'teamLeader'].includes(userType.value),
+        isIntersect(['admin', 'pm', 'teamLeader'], userType.value),
       command: (): void => {
         dialogAssignMember.value = true;
       },
@@ -444,10 +444,8 @@ const tableActions = computed<MenuItem[]>(() => {
       visible:
         selectedTask.value?.status === 'Pending Review Leader' &&
         selectedTask.value?.taskType === 'parent' &&
-        userType.value === 'teamLeader',
-      command: (): void => {
-        openReviewDialog();
-      },
+        userType.value.includes('teamLeader'),
+      command: openReviewDialog,
     },
     {
       label: 'Tandai Selesai',
@@ -457,7 +455,7 @@ const tableActions = computed<MenuItem[]>(() => {
           selectedTask.value?.status,
         ) &&
         selectedTask.value?.taskType === 'parent' &&
-        userType.value === 'member',
+        userType.value.includes('member'),
       command: (): void => {
         dialogConfirmFinishTask.value = true;
       },
@@ -470,7 +468,7 @@ const tableActions = computed<MenuItem[]>(() => {
       visible:
         ['Backlog', 'Sprint'].includes(selectedTask.value?.status) &&
         selectedTask.value?.taskType === 'parent' &&
-        ['admin', 'pm', 'teamLeader', 'member'].includes(userType.value),
+        isIntersect(['admin', 'pm', 'teamLeader', 'member'], userType.value),
       command: (): void => {
         dialogConfirmDeleteTask.value = true;
       },
@@ -540,7 +538,7 @@ const tableBulkActions = computed<MenuItem[]>(() => {
         selectedTasks.value?.every(
           (task) => task.isProjectManager || task.isTeamLeader,
         ) ||
-        userData?.permission?.manageProject ||
+        userType.value.includes('admin') ||
         selectedTasks.value?.every((task) =>
           task.assignedTo.some(
             (assignedUser) => assignedUser._id === userData?._id,
@@ -575,7 +573,8 @@ const tableBulkActions = computed<MenuItem[]>(() => {
   return props.tab === 'deleted' ? deletedBulkActions : otherBulkActions;
 });
 
-const userType = computed(() => {
+const userType = computed<string[]>(() => {
+  const returnArray: string[] = [];
   const isAdmin = Object.values(
     userData?.permission?.manageProject || {},
   ).every((value) => value === true);
@@ -586,14 +585,10 @@ const userType = computed(() => {
     ? 'member'
     : 'guest';
 
-  if (isAdmin) {
-    return 'admin';
-  } else if (selectedTask.value?.isProjectManager) {
-    return 'pm';
-  } else if (selectedTask.value?.isTeamLeader) {
-    return 'teamLeader';
-  }
-  return memberType;
+  if (isAdmin) returnArray.push('admin');
+  if (selectedTask.value?.isProjectManager) returnArray.push('pm');
+  if (selectedTask.value?.isTeamLeader) returnArray.push('teamLeader');
+  return [memberType, ...returnArray];
 });
 
 const queryParamsByPage = computed(() => ({
