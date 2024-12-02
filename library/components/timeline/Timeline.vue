@@ -42,7 +42,9 @@ const formatActionTitle = (action: string): string => {
             user-name-field="nickName"
           />
         </div>
-        {{ item.createdAt }}
+        {{
+          new Date(item.createdAt).toISOString().slice(0, 19).replace('T', ' ')
+        }}
       </div>
 
       <template v-if="item.showDetail && item.detail">
