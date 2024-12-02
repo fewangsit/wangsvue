@@ -15,4 +15,6 @@ export type User = {
   position: string;
   teams: Teams[];
   permission: RoleDetailAccess;
+  isTeamLeader: boolean;
+  isProjectManager: boolean;
 };

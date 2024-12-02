@@ -8,8 +8,8 @@ import {
   FetchResponse,
   TableColumn,
 } from '../datatable/DataTable.vue.d';
-import { AssignedMember, Pbi, Task } from './DialogDetailPbi.vue.d';
-import Badge from '../badge/Badge.vue';
+import { AssignedMember, Pbi } from './DialogDetailPbi.vue.d';
+import { TaskTableItem } from 'lib/types/task.type';
 import UserName from '../username/UserName.vue';
 import Dialog from '../dialog/Dialog.vue';
 import QuickFilter from '../quickfilter/QuickFilter.vue';
@@ -74,21 +74,15 @@ const taskColumns: TableColumn[] = [
     field: 'team',
     header: 'Team',
     sortable: true,
-    bodyComponent: (data: Task): TableCellComponent => {
-      return {
-        component: Badge,
-        props: {
-          label: data.team,
-        },
-      };
-    },
+    bodyTemplate: (data: TaskTableItem): string =>
+      data.team.map((t) => t).join(', '),
   },
   {
     field: 'assignedTo.0',
     header: 'Assign',
     fixed: true,
     sortable: true,
-    bodyComponent: (data: Task): TableCellComponent => {
+    bodyComponent: (data: TaskTableItem): TableCellComponent => {
       return {
         component: UserName,
         props: {
@@ -104,11 +98,11 @@ const taskColumns: TableColumn[] = [
 ];
 
 const visible = defineModel<boolean>('visible', { required: true });
-const selectedTasks = shallowRef<Task[]>();
+const selectedTasks = shallowRef<TaskTableItem[]>();
 
 const getPbiTasks = async (
   query: QueryParams,
-): Promise<FetchResponse<Task> | undefined> => {
+): Promise<FetchResponse<TaskTableItem> | undefined> => {
   try {
     const { data } = await TaskServices.getTasks(query);
     return data;
@@ -126,7 +120,7 @@ const addPbiTasks = async (): Promise<void> => {
     );
 
     eventBus.emit('data-table:update', {
-      tableName: `list-pbi-task-table-${props.selectedPbi?._id}`,
+      tableName: 'all',
     });
     visible.value = false;
     toast.add({

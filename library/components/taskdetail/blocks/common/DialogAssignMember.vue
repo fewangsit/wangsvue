@@ -10,6 +10,7 @@ import { useToast } from 'lib/utils';
 import TaskServices from 'lib/services/task.service';
 import { UpdateTaskMemberDTO } from 'lib/dto/task.dto';
 import { FormPayload } from 'lib/components/form/Form.vue.d';
+import { AssignedMember } from 'lib/components/dialogdetailpbi/DialogDetailPbi.vue.d';
 import ProjectTeamServices from 'lib/services/projectTeam.service';
 import SubModuleServices from 'lib/services/submodule.service';
 
@@ -44,6 +45,11 @@ const projectIdFromInject = inject<Ref<string>>('projectId', undefined);
 
 const taskDetail =
   inject<Ref<TaskDetailData>>('taskDetail', undefined) ?? ref<TaskDetailData>();
+
+const assignedPbiMembers = inject<Ref<AssignedMember[]>>(
+  'assignedPbiMembers',
+  undefined,
+);
 
 const formKey = ref(0);
 
@@ -91,6 +97,11 @@ const getDetailTask = async (): Promise<void> => {
 const getMemberOptions = async (): Promise<void> => {
   if (taskDetail.value.subModule) {
     await getSubModuleTeamMembers();
+  } else if (assignedPbiMembers?.value) {
+    memberOptions.value = assignedPbiMembers?.value.map((member) => ({
+      label: member.nickName,
+      value: member._id,
+    }));
   } else {
     await getProjectTeamMembers();
   }

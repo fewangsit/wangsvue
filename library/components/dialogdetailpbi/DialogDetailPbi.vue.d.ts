@@ -52,43 +52,6 @@ export type TaskStatus =
   | 'Penyesuaian'
   | 'Selesai';
 
-export type Task = {
-  _id: string;
-  process: {
-    _id: string;
-    name: string;
-  };
-  subModule?: {
-    _id: string;
-    name: string;
-  };
-  project?: {
-    _id: string;
-    name: string;
-    initial: string;
-  };
-  module?: {
-    _id: string;
-    name: string;
-    initial: string;
-  };
-  productBacklogItem?: {
-    _id: string;
-    name: string;
-  };
-  name: string;
-  assignedTo: Partial<User>[];
-  team: Teams[];
-  status: TaskStatus;
-  childTask: number;
-  timeReportedBug: number;
-  dependency: {
-    done: number;
-    onProgress: number;
-  };
-  lastUpdatedAt: string;
-};
-
 export interface TaskOptions {
   project?: string;
   module?: string;
