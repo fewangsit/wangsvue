@@ -17,7 +17,6 @@ import DialogTestApi from './DialogTestApi.vue';
 import Form from 'lib/components/form/Form.vue';
 import TaskApiServices from 'lib/services/taskApi.service';
 
-const toggleCommentSection = inject<() => void>('toggleCommentSection');
 const updateMentionSectionText = inject<(sectionTitle: string) => void>(
   'updateMentionSectionText',
 );
@@ -245,12 +244,7 @@ const contentTypeChange = (): void => {
                 }}</span>
                 <UserName :user="taskApi.updatedBy" type="icon" />
                 <Button
-                  @click="
-                    () => {
-                      toggleCommentSection();
-                      updateMentionSectionText(taskApi.name);
-                    }
-                  "
+                  @click="updateMentionSectionText(taskApi.name)"
                   class="!p-1"
                   icon="chat-1-line"
                   icon-class="!w-6 !h-6"

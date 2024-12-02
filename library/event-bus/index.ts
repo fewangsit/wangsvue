@@ -48,6 +48,8 @@ export type Events = {
   'work-calendar:reset-year': unknown;
 
   'toast:add': ToastParams;
+
+  'overlay:show': { overlayId: number };
 };
 
 const eventBus = mitt<Events>();

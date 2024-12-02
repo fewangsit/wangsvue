@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, inject } from 'vue';
 import UserName from 'lib/components/username/UserName.vue';
 import {
   AttachmentItemProps,
@@ -18,6 +18,10 @@ import TaskAttachmentThumbnail from '../../common/AttachmentThumbnail.vue';
 import TaskChecklistServices from 'lib/services/taskChecklist.service';
 
 const toast = useToast();
+
+const updateMentionSectionText = inject<(sectionTitle: string) => void>(
+  'updateMentionSectionText',
+);
 
 const props = defineProps<AttachmentItemProps>();
 const emit = defineEmits<AttachmentItemEmits>();
@@ -118,7 +122,12 @@ const truncateText = (text: string): string => {
             {{ item.displayName }}
           </span>
           <div class="flex gap-1">
-            <a class="cursor-pointer text-primary-400">Komentar</a>
+            <span
+              @click="updateMentionSectionText(item.displayName)"
+              class="cursor-pointer text-primary-400"
+            >
+              Komentar
+            </span>
             <span>|</span>
             <template v-if="!props.disabled">
               <a

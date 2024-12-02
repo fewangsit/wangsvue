@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { computed, inject, ref } from 'vue';
-import { getNestedProperyValue } from 'lib/utils';
 import { UserGroupProps } from './UserGroup.vue.d';
 import PrimeAvatar from 'primevue/avatar';
 import PrimeAvatarGroup from 'primevue/avatargroup';
-import Image from '../image/Image.vue';
 import UserName from '../username/UserName.vue';
 import Dialog from '../dialog/Dialog.vue';
 
@@ -69,12 +67,11 @@ const totalRemainingUser = computed<number>(
       <template :key="user" v-for="user in showedUsers">
         <PrimeAvatar shape="circle">
           <template #icon>
-            <Image
-              :src="
-                getNestedProperyValue(user ?? {}, profilePictureField) as string
-              "
+            <UserName
+              :key="user._id"
+              :profile-picture-field="props.profilePictureField"
+              :user="{ ...user, nickName: undefined }"
               class="w-[29px] h-[29px]"
-              rounded
             />
           </template>
         </PrimeAvatar>

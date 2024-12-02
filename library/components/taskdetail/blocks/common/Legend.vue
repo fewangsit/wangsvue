@@ -923,6 +923,7 @@ watch(
 );
 </script>
 
+<!-- eslint-disable vue/html-indent -->
 <template>
   <div class="flex flex-col gap-6 mb-3" data-wv-section="detailtask-legend">
     <div class="flex justify-between items-center">

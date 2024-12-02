@@ -772,6 +772,7 @@ const selectProject = (projectId: string): void => {
 };
 </script>
 
+<!-- eslint-disable vue/html-indent -->
 <template>
   <div class="flex flex-col gap-2">
     <div class="flex justify-end gap-4">
