@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v1.5.79
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.78...v1.5.79)
+
+### 🚀 Enhancements
+
+- **taskdetail:** Add sonarqube summary in task detail ([8ec6c40](https://github.com/fewangsit/wangsvue/commit/8ec6c40))
+
+### 🩹 Fixes
+
+- **jBeUplib:** Add margin-bottom for taskdetail dialog ([21b7e9d](https://github.com/fewangsit/wangsvue/commit/21b7e9d))
+- **taskdetail:** Remove 'Create API' from taskdetail process options ([ac46b83](https://github.com/fewangsit/wangsvue/commit/ac46b83))
+- Update baseurl for sonarqube.service ([e8ba0d9](https://github.com/fewangsit/wangsvue/commit/e8ba0d9))
+
+### 🏡 Chore
+
+- Add explanation comments in vite.config files ([6e5b729](https://github.com/fewangsit/wangsvue/commit/6e5b729))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.78
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.77...v1.5.78)
