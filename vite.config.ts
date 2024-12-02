@@ -14,6 +14,7 @@ export default defineConfig({
     watch: {
       ignored: ['**/dist/**'],
     },
+    // Use proxy for temporary only
     proxy: {
       '/api': {
         target: 'https://sonarqube.qwertysystem.net',

@@ -48,6 +48,7 @@ export default defineConfig({
     hmr: {
       overlay: false,
     },
+    // Use proxy for temporary only
     proxy: {
       '/api': {
         target: 'https://sonarqube.qwertysystem.net',
