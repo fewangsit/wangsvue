@@ -14,7 +14,7 @@ const DialogConfirmPreset = inject<Record<string, any>>(
   'preset',
   {},
 ).dialogconfirm;
-const isMember = inject<ComputedRef<boolean>>('isMember');
+const isMember = inject<ComputedRef<boolean>>('isMember', undefined);
 
 const visible = defineModel<boolean>('visible', { required: true });
 
@@ -27,7 +27,7 @@ const emit = defineEmits<{
   reportBug: [];
 }>();
 
-const taskIdInject = inject<Ref<string>>('taskId');
+const taskIdInject = inject<Ref<string>>('taskId', undefined);
 
 const taskId = computed(() =>
   taskIdInject ? taskIdInject.value : props.taskIdProp,

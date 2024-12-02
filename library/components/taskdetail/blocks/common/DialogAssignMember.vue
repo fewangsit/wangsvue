@@ -36,14 +36,14 @@ const emit = defineEmits<{
 /**
  * This task id inject is used in task detail dialog.
  */
-const taskIdFromInject = inject<Ref<string>>('taskId');
+const taskIdFromInject = inject<Ref<string>>('taskId', undefined);
 /**
  * This project id inject is used in task detail dialog.
  */
-const projectIdFromInject = inject<Ref<string>>('projectId');
+const projectIdFromInject = inject<Ref<string>>('projectId', undefined);
 
 const taskDetail =
-  inject<Ref<TaskDetailData>>('taskDetail') ?? ref<TaskDetailData>();
+  inject<Ref<TaskDetailData>>('taskDetail', undefined) ?? ref<TaskDetailData>();
 
 const formKey = ref(0);
 

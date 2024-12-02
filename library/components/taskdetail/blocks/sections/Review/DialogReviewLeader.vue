@@ -43,11 +43,10 @@ const emit = defineEmits<{
   saved: [];
 }>();
 
-const taskIdInject = inject<Ref<string>>('taskId');
-const taskDetailInject =
-  inject<
-    Ref<Pick<TaskDetailData, 'process' | 'module' | 'subModule' | 'name'>>
-  >('taskDetail');
+const taskIdInject = inject<Ref<string>>('taskId', undefined);
+const taskDetailInject = inject<
+  Ref<Pick<TaskDetailData, 'process' | 'module' | 'subModule' | 'name'>>
+>('taskDetail', undefined);
 
 const checklistItems = ref<ReviewTaskChecklist[]>();
 const activeIndex = ref<number>(0);
