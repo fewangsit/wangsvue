@@ -365,6 +365,7 @@ watch(
 );
 </script>
 
+<!-- eslint-disable vue/html-indent -->
 <template>
   <div class="flex flex-col gap-3" data-wv-section="detailtask-task-checklist">
     <div class="flex items-center justify-between">
