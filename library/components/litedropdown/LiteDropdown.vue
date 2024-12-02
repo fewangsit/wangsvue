@@ -9,7 +9,7 @@ import { OptionValue } from 'lib/types/options.type';
 
 const DropdownPreset = inject<Record<string, any>>('preset', {}).dropdown;
 
-const model = defineModel<OptionValue>({ required: true });
+const model = defineModel<OptionValue | undefined>({ required: true });
 
 const props = withDefaults(defineProps<LiteDropdownProps>(), {
   filter: true,
