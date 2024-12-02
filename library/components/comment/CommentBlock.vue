@@ -31,6 +31,9 @@ const editorInputVisibility = ref(false);
 const editorReplyData = ref<JSONContent>();
 const editorTypeInput = ref<'edit' | 'reply'>();
 const emojiOverlayPanel = ref<OverlayPanel>();
+const savedEmojiOverlayPanel = ref<OverlayPanel>();
+const selectedSavedReaction = ref<Reaction[]>();
+
 const emojiByGroup = ref(emojiByGroupJson);
 const emojiQuerySearch = ref<string>('');
 const isLoading = shallowRef<boolean>(false);
@@ -192,9 +195,12 @@ watch(props, () => {
         rounded
       />
       <p class="text-grayscale-900 !font-semibold text-xs">{{ sender.name }}</p>
-      <p v-if="useTimeStamp" class="text-[8px] leading-4 text-general-300">
-        {{ createdAt }}
-      </p>
+      <div v-if="useTimeStamp" class="text-[8px] leading-4 text-general-300">
+        <p v-if="editedAt">(edit) {{ editedAt }}</p>
+        <p v-else>
+          {{ createdAt }}
+        </p>
+      </div>
     </div>
 
     <div class="ml-[34px]">
@@ -214,16 +220,24 @@ watch(props, () => {
         <div v-if="reactions.length > 0" class="flex items-center gap-1">
           <div
             :key="index"
-            v-for="(reaction, index) in reactions"
+            v-for="(reaction, index) in reactions.slice(0, 3)"
             :class="[
               `${reaction.users.some((value) => value._id === props.user._id) ? 'border-[1px] border-primary-400' : ''}`,
-              'flex gap-[1px] items-center bg-grayscale-200 px-[1px] py-[0.5px] rounded-md cursor-pointer',
+              'flex gap-[1px] items-center bg-grayscale-200 py-[1px] px-[1.5px] rounded-md cursor-pointer',
             ]"
             @click="deleteReaction(props._id, reaction)"
           >
             <p>{{ reaction.emoji }}</p>
             <p>{{ reaction.count }}</p>
           </div>
+
+          <span
+            v-if="reactions.length > 3"
+            @click="savedEmojiOverlayPanel.toggle($event)"
+            class="cursor-pointer"
+          >
+            ...
+          </span>
         </div>
 
         <Icon
@@ -234,18 +248,74 @@ watch(props, () => {
         />
       </div>
 
+      <OverlayPanel ref="savedEmojiOverlayPanel">
+        <div class="w-52 h-40 flex">
+          <div
+            class="flex flex-col bg-grayscale-200 py-[1px] px-[5px] items-center cursor-pointer"
+          >
+            <p @click="selectedSavedReaction = reactions" class="py-1">All</p>
+            <div
+              :key="index"
+              v-for="(reaction, index) in reactions"
+              @click="selectedSavedReaction = [reaction]"
+              class="py-1 flex"
+            >
+              <p>
+                {{ reaction.emoji }}
+              </p>
+              <p>
+                {{ reaction.count }}
+              </p>
+            </div>
+          </div>
+          <div class="w-full flex flex-col">
+            <div
+              :key="index"
+              v-for="(selectedReaction, index) in selectedSavedReaction"
+              class="px-1"
+            >
+              <div
+                :key="i"
+                v-for="(user, i) in selectedReaction.users"
+                :class="[
+                  `${user._id === props.user._id ? 'border-[1px] border-primary-400' : ''}`,
+                  'flex gap-1 w-full py-1 justify-between flex-1 rounded-sm items-center',
+                ]"
+                @click="deleteReaction(props._id, selectedReaction)"
+              >
+                <div class="w-full flex-5 rounded-sm px-1">
+                  <Image
+                    :src="
+                      getNestedProperyValue(user, 'profilePicture') as string
+                    "
+                    class="w-[20px] h-[20px]"
+                    rounded
+                  />
+                  <p class="!text-[10px] leading-3 !font-light">
+                    {{ user.name }}
+                  </p>
+                </div>
+                <div>
+                  {{ selectedReaction.emoji }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </OverlayPanel>
+
       <p v-if="useReplies" class="text-grayscale-900 text-xs font-medium">|</p>
       <p
         v-if="props.user._id !== props.sender._id && useReplies"
         @click="initialPostCommentsById"
-        class="text-[10px] leading-4 font-medium"
+        class="text-[10px] leading-4 font-medium cursor-pointer"
       >
         Balas
       </p>
       <p
         v-else
         @click="initialPutCommentsById"
-        class="text-[10px] leading-4 font-medium"
+        class="text-[10px] leading-4 font-medium cursor-pointer"
       >
         Edit
       </p>
@@ -277,7 +347,7 @@ watch(props, () => {
     >
       <div @click="setReplyMessageVisibility" class="flex gap-2 items-center">
         <Icon class="w-[18px] h-[18px]" icon="arrow-down" />
-        <p class="text-xs !font-medium text-grayscale-900">
+        <p class="text-xs !font-medium text-grayscale-900 cursor-pointer">
           {{ replies.length }} Balasan
         </p>
       </div>

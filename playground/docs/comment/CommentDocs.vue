@@ -91,25 +91,18 @@ const data: GetCommentsResponse = {
     <template #content>
       <Comment
         :data="data"
-        :mention-section="
-          (cb: MentionSectionFunc) => {
-            cb?.('Dari Comment');
-          }
-        "
-        :use-reactions="false"
-        :use-replies="false"
-        :use-time-stamp="false"
+        :query-params="{
+          search: 'itu',
+        }"
         :user="{
-          _id: '66f2876214c6d63fb6ab3f17',
+          _id: '66d1771c1ebe5344bc2b9dab',
           fullName: 'Super Admins',
           profilePicture: getImageURL(
             '/members/1726721700029-big.webp',
           ) as string,
         }"
-        comment-position="above"
         comment-type="module"
-        object-id="66f2876214c6d63fb6ab3f17"
-        use-external-services
+        object-id="6729a27bf65b6f68578b4dc4"
       />
     </template>
   </Card>

@@ -66,6 +66,9 @@ const fetchGetComments = async (): Promise<void> => {
 
     const { data } = await CommentServices.getCommentsByObjectId(
       props.objectId,
+      {
+        search: props.search,
+      },
     );
     commentsList.push(...data.data);
     isLoading.value = false;
@@ -201,6 +204,13 @@ const uploadImage = async (value: PostImage): Promise<void> => {
 watch(editorVisibility, () => {
   props.mentionSection(editorRef.value?.mentionSectionTrigger);
 });
+
+watch(
+  () => props.search,
+  () => {
+    fetchGetComments();
+  },
+);
 </script>
 
 <template>
