@@ -4,7 +4,7 @@ export type Project = {
   _id: string;
   name: string;
   initialName: string;
-  priority: number;
+  priority: number | null;
   status: string;
   totalModule: number;
   totalCompletedModule: number;

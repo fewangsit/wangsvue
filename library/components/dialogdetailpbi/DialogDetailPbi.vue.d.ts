@@ -21,7 +21,7 @@ export type Pbi = {
   sprint?: {
     _id: string;
     key: number;
-  };
+  } | null;
   category: PbiCategory;
   status: PbiStatus;
   totalTask?: number;
