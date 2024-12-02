@@ -14,6 +14,13 @@ export default defineConfig({
     watch: {
       ignored: ['**/dist/**'],
     },
+    proxy: {
+      '/api': {
+        target: 'https://sonarqube.qwertysystem.net',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '/api'),
+      },
+    },
   },
   assetsInclude: ['**/*.lottie'],
 });

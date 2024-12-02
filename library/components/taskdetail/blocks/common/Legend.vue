@@ -26,6 +26,7 @@ import DialogConfirmFinishTask from './DialogConfirmFinishTask.vue';
 import DialogConfirmEdit from './DialogConfirmEdit.vue';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';
 import DialogReportBug from 'lib/components/dialogreportbug/DialogReportBug.vue';
+import SonarQubeSummary from './SonarQubeSummary.vue';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -1060,6 +1061,12 @@ watch(
         />
       </div>
     </div>
+
+    <SonarQubeSummary
+      v-if="!isNewTask && legendForm.repository"
+      :process-team="legendForm.process?.team?.[0]?.initial"
+      :repository="legendForm.repository"
+    />
   </div>
 
   <DialogPriorityValue

@@ -48,6 +48,13 @@ export default defineConfig({
     hmr: {
       overlay: false,
     },
+    proxy: {
+      '/api': {
+        target: 'https://sonarqube.qwertysystem.net',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '/api'),
+      },
+    },
   },
   resolve: {
     alias: {
