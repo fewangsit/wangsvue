@@ -17,7 +17,8 @@ import { InputBadgeProps, InputBadgeEmits } from './InputBadge.vue.d';
 import Badge from '../badge/Badge.vue';
 import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
 import ValidatorMessage from '../validatormessage/ValidatorMessage.vue';
-import OverlayPanel from 'primevue/overlaypanel';
+import OverlayPanel from '../overlaypanel/OverlayPanel.vue';
+import OverlayPanelClass from '../overlaypanel/OverlayPanel.vue.d';
 import Icon from '../icon/Icon.vue';
 
 const props = withDefaults(defineProps<InputBadgeProps>(), {
@@ -46,7 +47,7 @@ onMounted(() => {
 
 const Preset = inject<Record<string, any>>('preset', {}).inputbadge;
 const badgeInput = ref<HTMLInputElement | null>(null);
-const op = ref<OverlayPanel | null>(null);
+const op = ref<OverlayPanelClass>();
 const newLabel = shallowRef<string>();
 const field = reactive<FieldValidation<string[]>>({
   value: props.initialValue ?? props.modelValue ?? [],

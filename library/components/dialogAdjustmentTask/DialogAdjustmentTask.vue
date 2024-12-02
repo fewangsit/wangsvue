@@ -25,6 +25,7 @@ import Dropdown from '../dropdown/Dropdown.vue';
 import eventBus from 'lib/event-bus';
 import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
 import Icon from '../icon/Icon.vue';
+import TaskDetail from '../taskdetail/TaskDetail.vue';
 
 const toast = useToast();
 
@@ -49,6 +50,7 @@ const newMemberPayload = shallowRef<string>();
 const dialogVisibility = shallowRef<boolean>(false);
 const assignNewMemberVisbility = shallowRef<boolean>(false);
 const dialogConfirmAssignVisibility = shallowRef<boolean>(false);
+const dialogDetailTaskVisibility = shallowRef<boolean>(false);
 
 const singleActionEmitter = (
   singleActipnType: DialogAdjustmentTaskSingleActionType,
@@ -71,6 +73,7 @@ const singleActionEmitter = (
       break;
     }
     case 'detail-task': {
+      dialogDetailTaskVisibility.value = true;
       break;
     }
   }
@@ -110,6 +113,7 @@ const getTaskList = async (
   try {
     const { data } = await TaskServices.getTaskList({
       ...params,
+      ...props.customQueryParams,
       member: props.members.map((item) => item._id),
     });
     const taskListData = data as TaskListResponse;
@@ -346,5 +350,11 @@ watch(
     header="Pengalihan Task"
     message="Task yang sudah di-assign ke member baru akan langsung dialihkan dan task yang belum di-assign ke member baru akan menjadi Backlog. Apakah kamu yakin ingin melanjutkannya?"
     severity="success"
+  />
+
+  <TaskDetail
+    v-model:visible="dialogDetailTaskVisibility"
+    :project-id="singleSelectedData?.project?._id"
+    :task-id="singleSelectedData?._id"
   />
 </template>

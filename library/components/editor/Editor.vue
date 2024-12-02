@@ -47,7 +47,8 @@ import History from '@tiptap/extension-history';
 import FloatingMenuExt from '@tiptap/extension-floating-menu';
 import Mention from '@tiptap/extension-mention';
 import Menu from 'primevue/menu';
-import OverlayPanel from 'primevue/overlaypanel';
+import OverlayPanel from '../overlaypanel/OverlayPanel.vue';
+import OverlayPanelClass from '../overlaypanel/OverlayPanel.vue.d';
 import InputURL from '../inputurl/InputURL.vue';
 import InputText from '../inputtext/InputText.vue';
 import EditorButton from './EditorButton.vue';
@@ -94,7 +95,7 @@ onMounted(() => {
 
 const linkFormShown = shallowRef(false);
 const headingMenu = ref<Menu>();
-const editLinkOverlay = ref<OverlayPanel>();
+const editLinkOverlay = ref<OverlayPanelClass>();
 const root = ref<HTMLDivElement>();
 const previewImages = ref<string[]>([]);
 const imageDialogUploader = shallowRef<boolean>(false);
@@ -676,13 +677,20 @@ const goToNextLine = (): void => {
 };
 
 const mentionSectionTrigger = (title: string): void => {
+  editorLoading();
   try {
     const { insertMentionSection } = editor.value?.commands as any;
-
     insertMentionSection(title, props.editorState === 'editable');
   } catch (error) {
     console.error(error);
   }
+};
+
+const editorLoading = (): void => {
+  isLoading.value = true;
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 100);
 };
 
 defineExpose({

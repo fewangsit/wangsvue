@@ -25,12 +25,15 @@ export interface DialogAdjustmentTaskProps {
    * @default 'Assign Task'
    */
   header?: string;
+  /**
+   * Custom Query Params Get List
+   */
+  customQueryParams?: Record<string, unknown>;
 }
 
 export type DialogAdjustmentTaskEmits = {
   /**
    * Will get trigger if data list length below or equal with 0
-   * !!! preventAppear must be true if you want to use emptlist emit !!!
    */
   'emptyList': [];
   /**

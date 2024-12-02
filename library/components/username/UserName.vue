@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { nextTick, shallowRef } from 'vue';
+import { computed, ref, shallowRef } from 'vue';
 import { getNestedProperyValue } from 'lib/utils';
 import { UserNameProps } from './UserName.vue.d';
 import Image from '../image/Image.vue';
 import Icon from '../icon/Icon.vue';
-import OverlayPanel from 'primevue/overlaypanel';
+import OverlayPanel from '../overlaypanel/OverlayPanel.vue';
+import OverlayPanelClass from '../overlaypanel/OverlayPanel.vue.d';
 import MemberServices, { Member } from 'lib/services/member.service';
 import Skeleton from 'primevue/skeleton';
 
@@ -15,21 +16,15 @@ const props = withDefaults(defineProps<UserNameProps>(), {
   emptyable: false,
 });
 
-const overlayId = +new Date();
 const loadingUser = shallowRef<boolean>(false);
 const fullUserObject = shallowRef<Member>();
+const miniProfile = ref<OverlayPanelClass>();
+
+const userDisplayName = computed<string>(
+  () => getNestedProperyValue(props.user ?? {}, props.userNameField) as string,
+);
 
 const adjustPosition = async (): Promise<void> => {
-  const overlay = document.getElementById(overlayId.toString());
-
-  if (overlay) {
-    await nextTick(() => {
-      overlay.style.top = 'revert-layer';
-      overlay.style.bottom = '0';
-      overlay.style.translate = '-25%';
-    });
-  }
-
   if (!fullUserObject.value) {
     try {
       loadingUser.value = true;
@@ -49,18 +44,19 @@ const adjustPosition = async (): Promise<void> => {
   <span v-if="props.emptyable && Object.keys(props.user).length < 2">-</span>
   <span
     v-else
-    @click="($refs['miniProfile'] as OverlayPanel).toggle"
+    @click="miniProfile.toggle"
     class="flex items-center gap-1"
     data-wv-name="username"
     data-wv-section="root"
   >
     <Image
       v-if="type == 'picture'"
+      :preview="userDisplayName !== undefined"
       :src="
         getNestedProperyValue(props.user ?? {}, profilePictureField) as string
       "
       :width="30"
-      @click.stop=""
+      @click.stop="if (!userDisplayName) miniProfile.toggle($event);"
       class="w-[30px] h-[30px]"
       rounded
     />
@@ -74,10 +70,10 @@ const adjustPosition = async (): Promise<void> => {
         { 'text-general-800': props.type !== 'icon' },
       ]"
     >
-      {{ getNestedProperyValue(props.user ?? {}, userNameField) }}
+      {{ userDisplayName }}
     </span>
 
-    <OverlayPanel :id="overlayId" ref="miniProfile" @show="adjustPosition">
+    <OverlayPanel ref="miniProfile" @show="adjustPosition">
       <div
         class="relative overflow-hidden flex flex-col gap-2 w-[200px] h-max items-center justify-center p-3 rounded-[10px] border border-grayscale-900 text-grayscale-900"
       >
@@ -105,7 +101,7 @@ const adjustPosition = async (): Promise<void> => {
             {{ fullUserObject?.email }}
           </span>
         </div>
-        <Skeleton v-else width="100px" />
+        <Skeleton v-else height="29px" width="100px" />
 
         <span v-if="!loadingUser" class="text-[8px] font-normal leading-3">
           {{ fullUserObject?.division }}
@@ -125,7 +121,7 @@ const adjustPosition = async (): Promise<void> => {
           Detail Member
         </a>
 
-        <Skeleton v-else height="14px" width="75px" />
+        <Skeleton v-else width="75px" />
       </div>
     </OverlayPanel>
   </span>
