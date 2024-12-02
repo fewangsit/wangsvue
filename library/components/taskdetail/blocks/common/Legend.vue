@@ -52,6 +52,7 @@ const props = defineProps<{
     name?: string;
     repository?: string;
   };
+  productBacklogItemId?: string;
 }>();
 
 const emit = defineEmits<{
@@ -504,6 +505,7 @@ const createTask = async (): Promise<void> => {
       process: legendForm.value.process._id,
       module: legendForm.value.module?._id,
       subModule: legendForm.value?.submodule?._id,
+      productBacklogItem: props.productBacklogItemId,
       repository: legendForm.value?.repository,
       name: legendForm.value.title,
       team: legendForm.value.process.team.map((team) => team.initial),

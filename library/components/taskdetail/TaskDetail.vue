@@ -424,6 +424,7 @@ watch(
           <Legend
             :initial-module="props.initialModule"
             :initial-sub-module="props.initialSubModule"
+            :product-backlog-item-id="props.productBacklogItemId"
           />
           <TabMenu
             v-model:active-index="taskMenuIndex"
