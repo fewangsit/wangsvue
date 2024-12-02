@@ -194,7 +194,8 @@ export type WangsIcons =
   | 'user-unfollow-line'
   | 'archive-line'
   | 'shield-user-line'
-  | 'emotion-happy-line';
+  | 'emotion-happy-line'
+  | 'list-settings-line';
 
 export interface IconProps {
   icon: WangsIcons;

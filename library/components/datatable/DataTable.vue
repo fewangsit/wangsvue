@@ -602,7 +602,6 @@ const downloadExcel = async ({
   multiTableNames,
   fileName,
   additionalTexts,
-  showTableName = false,
 }: Events['data-table:download']): Promise<void> => {
   if (
     tableName !== props.tableName &&

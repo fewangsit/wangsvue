@@ -39,7 +39,9 @@ export type SprintDetail = Omit<Sprint, 'finishedAt'> & {
   finishAt: number;
   sprintInterval: number;
   sprintIntervalUnit: string;
-  productBacklogItems: Pick<Pbi, '_id' | 'name' | 'status'>[];
+  productBacklogItems: (Pick<Pbi, '_id' | 'name' | 'status'> & {
+    canViewDetail?: boolean;
+  })[];
 };
 
 export interface PbiOptions {

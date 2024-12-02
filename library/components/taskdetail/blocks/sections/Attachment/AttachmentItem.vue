@@ -125,8 +125,9 @@ const truncateText = (text: string): string => {
             <span
               @click="updateMentionSectionText(item.displayName)"
               class="cursor-pointer text-primary-400"
-              >Komentar</span
             >
+              Komentar
+            </span>
             <span>|</span>
             <template v-if="!props.disabled">
               <a
