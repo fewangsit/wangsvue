@@ -273,10 +273,10 @@ const getProcessOptions = async (): Promise<void> => {
          * 2. If the initial module is defined, then :
          *    a. If the initial module is 'Komponen', only show default processes that have 'Komponen' in their names.
          *    b. If the initial module is 'Konsep', only show 'Pengonsepan' process.
-         *    c. Otherwise show all processes by user EXCEPT 'API Spec', 'Pengonsepan' and processes that have 'Komponen' in their names.
-         * 3. Otherwise show all processes by user EXCEPT 'API Spec'.
+         *    c. Otherwise show all processes by user EXCEPT 'API Spec', 'Create API', 'Pengonsepan' and processes that have 'Komponen' in their names.
+         * 3. Otherwise show all processes by user EXCEPT 'API Spec', 'Create API'.
          */
-        const isApiSpec = d.name === 'API Spec';
+        const isApiTaskBE = ['API Spec', 'Create API'].includes(d.name);
 
         const componentModuleProcess = defaultProcesses
           .filter((process) => process.name.includes('Komponen'))
@@ -288,7 +288,7 @@ const getProcessOptions = async (): Promise<void> => {
             .filter((process) => !process.hasSubModule)
             .map((process) => process.name)
             .includes(d.name);
-          return hasSubModuleProcess && !isApiSpec;
+          return hasSubModuleProcess && !isApiTaskBE;
         } else if (props.initialModule) {
           const initialModuleConcept =
             legendForm.value.module?.name === 'Konsep';
@@ -300,10 +300,10 @@ const getProcessOptions = async (): Promise<void> => {
             return d.name === 'Pengonsepan';
           }
           return (
-            !isApiSpec && !componentModuleProcess && d.name !== 'Pengonsepan'
+            !isApiTaskBE && !componentModuleProcess && d.name !== 'Pengonsepan'
           );
         }
-        return !isApiSpec;
+        return !isApiTaskBE;
       })
       .map((d) => ({
         label: d.name,
