@@ -26,6 +26,7 @@ import DialogConfirmFinishTask from './DialogConfirmFinishTask.vue';
 import DialogConfirmEdit from './DialogConfirmEdit.vue';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';
 import DialogReportBug from 'lib/components/dialogreportbug/DialogReportBug.vue';
+import SonarQubeSummary from './SonarQubeSummary.vue';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -273,10 +274,10 @@ const getProcessOptions = async (): Promise<void> => {
          * 2. If the initial module is defined, then :
          *    a. If the initial module is 'Komponen', only show default processes that have 'Komponen' in their names.
          *    b. If the initial module is 'Konsep', only show 'Pengonsepan' process.
-         *    c. Otherwise show all processes by user EXCEPT 'API Spec', 'Pengonsepan' and processes that have 'Komponen' in their names.
-         * 3. Otherwise show all processes by user EXCEPT 'API Spec'.
+         *    c. Otherwise show all processes by user EXCEPT 'API Spec', 'Create API', 'Pengonsepan' and processes that have 'Komponen' in their names.
+         * 3. Otherwise show all processes by user EXCEPT 'API Spec', 'Create API'.
          */
-        const isApiSpec = d.name === 'API Spec';
+        const isApiTaskBE = ['API Spec', 'Create API'].includes(d.name);
 
         const componentModuleProcess = defaultProcesses
           .filter((process) => process.name.includes('Komponen'))
@@ -288,7 +289,7 @@ const getProcessOptions = async (): Promise<void> => {
             .filter((process) => !process.hasSubModule)
             .map((process) => process.name)
             .includes(d.name);
-          return hasSubModuleProcess && !isApiSpec;
+          return hasSubModuleProcess && !isApiTaskBE;
         } else if (props.initialModule) {
           const initialModuleConcept =
             legendForm.value.module?.name === 'Konsep';
@@ -300,10 +301,10 @@ const getProcessOptions = async (): Promise<void> => {
             return d.name === 'Pengonsepan';
           }
           return (
-            !isApiSpec && !componentModuleProcess && d.name !== 'Pengonsepan'
+            !isApiTaskBE && !componentModuleProcess && d.name !== 'Pengonsepan'
           );
         }
-        return !isApiSpec;
+        return !isApiTaskBE;
       })
       .map((d) => ({
         label: d.name,
@@ -435,6 +436,18 @@ const getSubmoduleOptions = async (): Promise<void> => {
   }
 };
 
+const getRepositoryOptions = async (): Promise<void> => {
+  try {
+    await getSubmoduleOptions();
+    assignRepository();
+  } catch (error) {
+    toast.add({
+      message: 'Data repository gagal dimuat.',
+      error,
+    });
+  }
+};
+
 /**
  * Disable Rules:
  * 1. If the process hasn't been selected.
@@ -462,6 +475,32 @@ const isSubmoduleDropdownDisabled = computed<boolean>(() => {
   if (subModuleVisibility.value) {
     return (
       !isLegendEditable.value || !process || !module || !!props.initialSubModule
+    );
+  }
+  return true;
+});
+
+/**
+ * Determines if the repository dropdown should be disabled.
+ *
+ * The dropdown is disabled if:
+ * 1. The process hasn't been selected.
+ * 2. The module hasn't been selected.
+ * 3. The current user is a guest.
+ * 4. The task status is either 'Selesai', 'Reported Bug', or 'Pending Review Leader'.
+ *
+ * If repository visibility is false, the dropdown is always disabled.
+ */
+const isRepositoryDropdownDisabled = computed<boolean>(() => {
+  const { process, module } = legendForm.value;
+  if (repositoryVisibility.value) {
+    return (
+      !process ||
+      !module ||
+      userType.value === 'guest' ||
+      (
+        ['Selesai', 'Reported Bug', 'Pending Review Leader'] as WangsitStatus[]
+      ).includes(taskDetail.value?.status)
     );
   }
   return true;
@@ -979,8 +1018,10 @@ watch(
             <LiteDropdown
               v-if="repositoryVisibility"
               v-model="legendForm.repository"
-              :disabled="true"
+              :disabled="isRepositoryDropdownDisabled"
               :options="legendOptions.repository"
+              @change="handleTaskChange()"
+              @show="getRepositoryOptions"
               data-wv-section="detailtask-repository-input"
               option-label="label"
               option-value="value"
@@ -1063,6 +1104,12 @@ watch(
         />
       </div>
     </div>
+
+    <SonarQubeSummary
+      v-if="!isNewTask && legendForm.repository"
+      :process-team="legendForm.process?.team?.[0]?.initial"
+      :repository="legendForm.repository"
+    />
   </div>
 
   <DialogPriorityValue

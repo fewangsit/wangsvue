@@ -370,7 +370,7 @@ watch(
 
           // Customs
           // '!pl-6 !py-3 !pr-6',
-          'detailtask-scrollbar-hide',
+          'detailtask-scrollbar-hide !mb-2',
         ],
       },
       footer: {

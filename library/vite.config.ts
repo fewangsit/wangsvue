@@ -48,6 +48,14 @@ export default defineConfig({
     hmr: {
       overlay: false,
     },
+    // Use proxy for temporary only
+    proxy: {
+      '/api': {
+        target: 'https://sonarqube.qwertysystem.net',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '/api'),
+      },
+    },
   },
   resolve: {
     alias: {
