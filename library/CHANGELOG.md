@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.83
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.82...v1.5.83)
+
+### 🚀 Enhancements
+
+- **DataTable:** Emits sort with payload ([92b1411](https://github.com/fewangsit/wangsvue/commit/92b1411))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.82
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.81...v1.5.82)
