@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.84
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.83...v1.5.84)
+
+### 🩹 Fixes
+
+- **WOlbD1MV:** Set condition for repository disability in taskdetail ([c455155](https://github.com/fewangsit/wangsvue/commit/c455155))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.83
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.82...v1.5.83)
