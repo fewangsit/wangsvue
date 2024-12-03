@@ -33,6 +33,20 @@ const toast = useToast();
 
 const whitelistIframeTag = /<\s*\/?\s*(iframe)\b.*?>/;
 
+const noSubModuleProcesses = [
+  'Pengonsepan',
+  'Diagram',
+  'Wireframe',
+  'Komponen Web',
+  'Komponen Mobile',
+  'Dokumentasi API',
+  'User Manual Web',
+  'User Manual Mobile',
+  'Slicing Komponen Web',
+  'Slicing Komponen Mobile',
+  'Detailing',
+];
+
 const userType =
   inject<ComputedRef<'member' | 'admin' | 'pm' | 'teamLeader' | 'guest'>>(
     'userType',
@@ -192,7 +206,15 @@ const loadData = async (): Promise<void> => {
         };
       }
       // If the task data is not found, return the process dependency
-      return { ...process, subModuleVisibility: !!process.subModule };
+      return {
+        ...process,
+        subModuleVisibility: !noSubModuleProcesses.includes(
+          process.process.name,
+        ),
+        subModule: !noSubModuleProcesses.includes(process.process.name)
+          ? process.subModule
+          : undefined,
+      };
     });
 
     // Iterate through taskDependencies and add new processes that don't exist in processDependencies
@@ -216,8 +238,25 @@ const loadData = async (): Promise<void> => {
           process: { _id: task.process?._id, name: task.process?.name },
           processOptions: customProcessOptions.value,
           module: { _id: task.module?._id, name: task.module?.name },
+          moduleOptions: [
+            {
+              label: task.module?.name,
+              value: { _id: task.module?._id, name: task.module?.name },
+            },
+          ],
           subModule: task.subModule
             ? { _id: task.subModule?._id, name: task.subModule?.name }
+            : undefined,
+          subModuleOptions: task.subModule
+            ? [
+                {
+                  label: task.subModule?.name,
+                  value: {
+                    _id: task.subModule?._id,
+                    name: task.subModule?.name,
+                  },
+                },
+              ]
             : undefined,
           subModuleVisibility: !!task.subModule,
           task: task.task,
@@ -467,20 +506,6 @@ const addCustomDependency = (type: string): void => {
  * Otherwise, submodule will be shown.
  */
 const showSubModuleByProcess = (depIndex: number): void => {
-  const noSubModuleProcesses = [
-    'Pengonsepan',
-    'Diagram',
-    'Wireframe',
-    'Komponen Web',
-    'Komponen Mobile',
-    'Dokumentasi API',
-    'User Manual Web',
-    'User Manual Mobile',
-    'Slicing Komponen Web',
-    'Slicing Komponen Mobile',
-    'Detailing',
-  ];
-
   const haveNoSubModule = noSubModuleProcesses.includes(
     dependencies.value[depIndex].process.name,
   );
@@ -770,7 +795,7 @@ watch(
                   >
                     {{ task.name }}
                   </span>
-                  <div v-if="task.assignedTo?.length" class="flex">
+                  <div v-if="task.assignedTo?.length" class="flex gap-2">
                     <UserName
                       :key="userIndex"
                       v-for="(user, userIndex) in task.assignedTo"
@@ -778,7 +803,7 @@ watch(
                       type="icon"
                     />
                   </div>
-                  <Badge :label="task.status" />
+                  <Badge :label="task.status" format="nowrap" />
                   <Button
                     v-if="task.status === 'Selesai'"
                     :disabled="isDisabled"
