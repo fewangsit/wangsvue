@@ -114,7 +114,7 @@ const getTaskList = async (
     const { data } = await TaskServices.getTaskList({
       ...params,
       ...props.customQueryParams,
-      member: props.members.map((item) => item._id),
+      member: props.members.map((item) => item.key),
     });
     const taskListData = data as TaskListResponse;
 
@@ -157,7 +157,7 @@ const putNewAssign = async (payload: UpdateTaskMemberDTO): Promise<void> => {
 const getMemberList = async (team: string[]): Promise<void> => {
   try {
     const { data } = await MemberServices.getMemberList({
-      team: JSON.stringify(team),
+      team: team,
     });
     memberListData.value = data.data.data.map((item) => {
       return {

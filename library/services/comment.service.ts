@@ -7,6 +7,7 @@ import {
   PostCommentsUploadResponse,
   PutCommentsByIdBody,
   CommentsMentionQueryParams,
+  CommentsQueryParams,
 } from 'lib/components/comment/Comment.vue.d';
 import { GetMentionSuggestionResponse } from 'lib/components/editor/Editor.vue.d';
 import { getBaseURL } from 'lib/utils/getBaseURL.util';
@@ -36,8 +37,9 @@ export const CommentServices = {
 
   getCommentsByObjectId: (
     objectId: string,
+    params?: CommentsQueryParams,
   ): Promise<AxiosResponse<GetCommentsResponse>> => {
-    return API().get(`/${objectId}`);
+    return API({ params }).get(`/${objectId}`);
   },
 
   getCommentsMention: (

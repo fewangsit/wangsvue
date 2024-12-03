@@ -66,6 +66,9 @@ const fetchGetComments = async (): Promise<void> => {
 
     const { data } = await CommentServices.getCommentsByObjectId(
       props.objectId,
+      {
+        search: props.search,
+      },
     );
     commentsList.push(...data.data);
     isLoading.value = false;
@@ -199,8 +202,19 @@ const uploadImage = async (value: PostImage): Promise<void> => {
 };
 
 watch(editorVisibility, () => {
-  props.mentionSection(editorRef.value?.mentionSectionTrigger);
+  try {
+    props?.mentionSection?.(editorRef.value?.mentionSectionTrigger);
+  } catch (error) {
+    console.error(error);
+  }
 });
+
+watch(
+  () => props.search,
+  () => {
+    fetchGetComments();
+  },
+);
 </script>
 
 <template>
@@ -229,7 +243,7 @@ watch(editorVisibility, () => {
     </div>
   </template>
 
-  <div class="flex gap-1 items-start">
+  <div class="flex gap-1 items-start mt-1">
     <Image
       :src="getNestedProperyValue(user, 'profilePicture') as string"
       @click.stop=""
@@ -244,7 +258,9 @@ watch(editorVisibility, () => {
         placeholder="Tulis Komentar"
       />
 
-      <div :class="`${editorVisibility ? 'opacity-0 !h-0' : ''}`">
+      <div
+        :class="`${editorVisibility ? 'opacity-0 !h-0 !w-0 overflow-hidden' : ''}`"
+      >
         <Editor
           ref="editorRef"
           v-model:mentioned-list="mentionedList"

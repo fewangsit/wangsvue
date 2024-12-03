@@ -1,6 +1,40 @@
 # Changelog
 
 
+## v1.5.85
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.84...v1.5.85)
+
+### 🚀 Enhancements
+
+- **TaskDetail:** Create PBI task ([9e13f46](https://github.com/fewangsit/wangsvue/commit/9e13f46))
+- GetUserType util ([e15600b](https://github.com/fewangsit/wangsvue/commit/e15600b))
+- **TaskTable:** PBI page ([a7d937a](https://github.com/fewangsit/wangsvue/commit/a7d937a))
+
+### 🩹 Fixes
+
+- **TaskDetail:** Warnings for undefined props ([c966f77](https://github.com/fewangsit/wangsvue/commit/c966f77))
+- **TaskDetail:** Warnings for undefined injects ([7ed63d3](https://github.com/fewangsit/wangsvue/commit/7ed63d3))
+- **UserGroup:** Extraneous attributes & event listeners ([68c5acd](https://github.com/fewangsit/wangsvue/commit/68c5acd))
+- **TaskTable:** UserType only returned one value ([059d1a0](https://github.com/fewangsit/wangsvue/commit/059d1a0))
+- **Timeline:** Incorrect date format ([2bf0bde](https://github.com/fewangsit/wangsvue/commit/2bf0bde))
+- 'ref' is defined but never used ([eeacd82](https://github.com/fewangsit/wangsvue/commit/eeacd82))
+
+### 💅 Refactors
+
+- Rename role detail access file ([9744251](https://github.com/fewangsit/wangsvue/commit/9744251))
+- **util:** GetImageUrl returns value if base URL is included ([e67f452](https://github.com/fewangsit/wangsvue/commit/e67f452))
+- **UserName:** Cursor pointer on hover profpic ([87b4a8a](https://github.com/fewangsit/wangsvue/commit/87b4a8a))
+- Use 'shallowRef' instead of 'ref' for primitive data types ([180439f](https://github.com/fewangsit/wangsvue/commit/180439f))
+
+### 📖 Documentation
+
+- **DetailSprint:** Update project & PBI response ([891fbce](https://github.com/fewangsit/wangsvue/commit/891fbce))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.84
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.83...v1.5.84)
