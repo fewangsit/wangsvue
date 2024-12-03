@@ -1075,7 +1075,15 @@ watch(
         />
       </div>
       <div class="flex items-center gap-2">
-        <Badge :label="taskDetail?.status ?? 'Backlog'" format="nowrap" />
+        <Badge
+          :label="taskDetail?.status ?? 'Backlog'"
+          :severity="
+            taskDetail?.status === 'Waiting for Approval'
+              ? 'warning'
+              : undefined
+          "
+          format="nowrap"
+        />
         <Button
           v-if="
             taskDetail?.status === 'Selesai' &&

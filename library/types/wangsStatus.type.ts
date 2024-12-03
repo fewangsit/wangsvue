@@ -1,7 +1,7 @@
 export type UserStatus = 'Aktif' | 'Nonaktif';
 export type ProjectStatus = 'Sprint' | 'Backlog' | 'Selesai';
 export type TaskStatus =
-  | 'Waiting Approval'
+  | 'Waiting for Approval'
   | 'Backlog'
   | 'Sprint'
   | 'Pending Review Leader'
