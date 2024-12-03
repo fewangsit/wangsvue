@@ -1096,7 +1096,9 @@ watch(
         />
         <Button
           v-if="
-            ['Sprint', 'Fixing Bug'].includes(taskDetail?.status) && isMember
+            ['Sprint', 'Fixing Bug', 'Penyesuaian'].includes(
+              taskDetail?.status,
+            ) && isMember
           "
           :disabled="repositoryVisibility && !legendForm.repository"
           @click="dialogConfirmFinishTask = true"

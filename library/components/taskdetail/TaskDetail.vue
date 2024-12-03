@@ -399,9 +399,7 @@ watch(
             v-if="
               !isNewTask &&
               userType !== 'guest' &&
-              ['Backlog', 'Sprint', 'Waiting Approval'].includes(
-                taskDetail?.status,
-              )
+              ['Backlog', 'Sprint'].includes(taskDetail?.status)
             "
             :task-detail="taskDetail"
           />
