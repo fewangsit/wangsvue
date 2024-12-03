@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.88
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.87...v1.5.88)
+
+### 🩹 Fixes
+
+- **badge:** Update badge severity for 'Waiting for Approval' ([b773357](https://github.com/fewangsit/wangsvue/commit/b773357))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.87
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.85...v1.5.87)
