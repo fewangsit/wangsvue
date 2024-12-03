@@ -31,8 +31,8 @@ const mentionedList = ref<string[]>();
 const editorInputVisibility = ref(false);
 const editorReplyData = ref<JSONContent>();
 const editorTypeInput = ref<'edit' | 'reply'>();
-const emojiOverlayPanel = ref<OverlayPanel>();
-const savedEmojiOverlayPanel = ref<OverlayPanel>();
+const emojiOverlayPanel = ref<OverlayPanelClass>();
+const savedEmojiOverlayPanel = ref<OverlayPanelClass>();
 const selectedSavedReaction = ref<Reaction[]>();
 
 const emojiByGroup = ref(emojiByGroupJson);
