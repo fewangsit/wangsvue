@@ -61,13 +61,13 @@ const bodyMandatoryOptions = shallowRef([
   { label: 'Tidak', value: 'tidak' },
 ]);
 
-const dialogDeleteConfirm = ref(false);
-const dialogTestApi = ref(false);
-const expanded = ref(false);
+const dialogDeleteConfirm = shallowRef<boolean>(false);
+const dialogTestApi = shallowRef<boolean>(false);
+const expanded = shallowRef<boolean>(false);
 
-const formKey = ref(0);
+const formKey = shallowRef<number>(0);
 
-const saving = ref(false);
+const saving = shallowRef<boolean>(false);
 
 const toggleAccordion = (): void => {
   expanded.value = !expanded.value;

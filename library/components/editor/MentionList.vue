@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { shallowRef, watch } from 'vue';
 import UserName from '../username/UserName.vue';
 
 const props = defineProps<{
@@ -12,7 +12,7 @@ const props = defineProps<{
   command: (arg: { id: string; label: string }) => void;
 }>();
 
-const selectedIndex = ref(0);
+const selectedIndex = shallowRef<number>(0);
 
 const onKeyDown = (event: KeyboardEvent): boolean => {
   if (event.key === 'ArrowUp') {

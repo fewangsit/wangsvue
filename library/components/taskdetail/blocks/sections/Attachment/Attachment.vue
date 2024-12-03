@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { computed, ComputedRef, inject, onMounted, Ref, ref } from 'vue';
+import {
+  computed,
+  ComputedRef,
+  inject,
+  onMounted,
+  Ref,
+  ref,
+  shallowRef,
+} from 'vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import Button from 'lib/components/button/Button.vue';
 import AttachmentItem from './AttachmentItem.vue';
@@ -28,8 +36,8 @@ const taskId = inject<Ref<string>>('taskId');
 
 const attachments = ref<AttachmentItemData[]>([]);
 
-const dialogAddAttachment = ref(false);
-const dialogChangelog = ref(false);
+const dialogAddAttachment = shallowRef<boolean>(false);
+const dialogChangelog = shallowRef<boolean>(false);
 
 const isDisabled = computed(() => {
   const disabledStatus = (
@@ -60,7 +68,7 @@ const getAttachments = async (): Promise<void> => {
   }
 };
 
-const galleryVisible = ref(false);
+const galleryVisible = shallowRef<boolean>(false);
 const selectedAttachmentId = ref<string>();
 const files = ref<File[]>([]);
 

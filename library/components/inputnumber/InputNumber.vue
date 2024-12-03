@@ -6,6 +6,7 @@ import {
   onMounted,
   reactive,
   ref,
+  shallowRef,
   watch,
 } from 'vue';
 import { useField } from 'vee-validate';
@@ -40,7 +41,7 @@ const InputGroupAddonPreset = inject<Record<string, any>>(
   {},
 ).inputgroupaddon;
 
-const inputKey = ref<number>(0);
+const inputKey = shallowRef<number>(0);
 const inputNumber = ref<InputNumber>();
 
 const field = reactive<FieldValidation<number | undefined>>({

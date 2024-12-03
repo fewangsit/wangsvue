@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ComputedRef, inject, Ref, ref } from 'vue';
+import { computed, ComputedRef, inject, Ref, shallowRef } from 'vue';
 
 import Button from 'lib/components/button/Button.vue';
 import { TaskDetailData } from 'lib/types/task.type';
@@ -26,11 +26,11 @@ const userType =
 const legendForm = inject<Ref<TaskLegendForm>>('legendForm');
 const taskId = inject<Ref<string>>('taskId');
 
-const showDialogAssignMember = ref<boolean>(false);
-const showDialogSetDuration = ref<boolean>(false);
-const showDialogCustomDependency = ref<boolean>(false);
+const showDialogAssignMember = shallowRef<boolean>(false);
+const showDialogSetDuration = shallowRef<boolean>(false);
+const showDialogCustomDependency = shallowRef<boolean>(false);
 
-const startDate = ref<number>();
+const startDate = shallowRef<number>();
 
 const startDateLabel = computed(() =>
   taskDetail.value?.startDate

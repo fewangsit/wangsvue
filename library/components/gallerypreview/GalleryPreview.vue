@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { formatDate } from 'lib/utils/date.util';
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, onMounted, onUnmounted, shallowRef, watch } from 'vue';
 import { GalleryPreviewProps } from './GalleryPreview.vue.d';
 import Button from '../button/Button.vue';
 
@@ -9,7 +9,7 @@ const props = defineProps<GalleryPreviewProps>();
 const visible = defineModel<boolean>('visible', { default: false });
 const selectedId = defineModel<string>('selectedId');
 
-const currentIndex = ref(0);
+const currentIndex = shallowRef<number>(0);
 
 onMounted(() => {
   window.addEventListener('keydown', handleKeydown);

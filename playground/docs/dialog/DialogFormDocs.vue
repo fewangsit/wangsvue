@@ -14,7 +14,7 @@ import DocTitle from '../DocTitle.vue';
 
 const showForm = shallowRef<boolean>(false);
 const formValues = ref<FormValue>();
-const showResult = ref<boolean>(false);
+const showResult = shallowRef<boolean>(false);
 const kananKiri = ref<string>();
 const repositoryName = ref<string>('');
 

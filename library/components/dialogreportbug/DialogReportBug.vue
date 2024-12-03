@@ -41,7 +41,7 @@ const handleSubmit = (
 };
 
 const showImageOverlay = shallowRef(false);
-const currentIndex = ref(0);
+const currentIndex = shallowRef<number>(0);
 
 const showPreview = (index: number): void => {
   currentIndex.value = index;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, inject } from 'vue';
+import { shallowRef, inject } from 'vue';
 import UserName from 'lib/components/username/UserName.vue';
 import {
   AttachmentItemProps,
@@ -26,8 +26,8 @@ const updateMentionSectionText = inject<(sectionTitle: string) => void>(
 const props = defineProps<AttachmentItemProps>();
 const emit = defineEmits<AttachmentItemEmits>();
 
-const showInputCaption = ref(false);
-const dialogConfirmDelete = ref(false);
+const showInputCaption = shallowRef<boolean>(false);
+const dialogConfirmDelete = shallowRef<boolean>(false);
 
 const submitCaption = async (e: FormPayload): Promise<void> => {
   try {

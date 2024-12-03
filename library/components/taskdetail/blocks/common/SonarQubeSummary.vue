@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, inject, Ref, ref, watch } from 'vue';
+import { computed, inject, Ref, ref, shallowRef, watch } from 'vue';
 import { useToast } from 'lib/utils';
 import SonarQubeServices from 'lib/services/sonarQube.service';
 import Button from 'lib/components/button/Button.vue';
@@ -39,7 +39,7 @@ interface MeasureItem {
 const projectId = inject<Ref<string>>('projectId');
 
 const summaryData = ref<Summary>();
-const isExpanded = ref(false);
+const isExpanded = shallowRef<boolean>(false);
 
 const reachMinCoverage = computed(
   () => summaryData.value?.measures?.coverage?.value >= 75,

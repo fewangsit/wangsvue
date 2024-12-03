@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, inject, Ref, ref, watch } from 'vue';
+import { computed, inject, Ref, ref, shallowRef, watch } from 'vue';
 
 import DialogForm from 'lib/components/dialogform/DialogForm.vue';
 import Dropdown from 'lib/components/dropdown/Dropdown.vue';
@@ -51,10 +51,10 @@ const assignedPbiMembers = inject<Ref<AssignedMember[]>>(
   undefined,
 );
 
-const formKey = ref(0);
+const formKey = shallowRef<number>(0);
 
 const memberOptions = ref<DropdownOption[]>();
-const memberLoading = ref<boolean>(false);
+const memberLoading = shallowRef<boolean>(false);
 
 /**
  * Single task id, either props from task table or inject from task detail dialog.

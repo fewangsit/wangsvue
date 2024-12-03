@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { computed, ComputedRef, inject, Ref, ref, watch } from 'vue';
+import {
+  computed,
+  ComputedRef,
+  inject,
+  Ref,
+  ref,
+  shallowRef,
+  watch,
+} from 'vue';
 
 import { DropdownOption } from 'lib/types/options.type';
 import LiteDropdown from 'lib/components/litedropdown/LiteDropdown.vue';
@@ -207,15 +215,15 @@ const legendLoading = ref<TaskLegendLoading>({
   submodule: false,
 });
 
-const dialogPriorityValue = ref<boolean>(false);
-const dialogReview = ref<boolean>(false);
-const dialogFinishReview = ref<boolean>(false);
-const dialogConfirmFinishTask = ref<boolean>(false);
-const dialogConfirmEdit = ref<boolean>(false);
-const dialogReportBug = ref<boolean>(false);
+const dialogPriorityValue = shallowRef<boolean>(false);
+const dialogReview = shallowRef<boolean>(false);
+const dialogFinishReview = shallowRef<boolean>(false);
+const dialogConfirmFinishTask = shallowRef<boolean>(false);
+const dialogConfirmEdit = shallowRef<boolean>(false);
+const dialogReportBug = shallowRef<boolean>(false);
 
-const subModuleVisibility = ref(true);
-const repositoryVisibility = ref(true);
+const subModuleVisibility = shallowRef<boolean>(true);
+const repositoryVisibility = shallowRef<boolean>(true);
 
 const bindProcess = computed(() => legendForm.value.process);
 const bindModule = computed(() => legendForm.value.module);

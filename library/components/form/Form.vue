@@ -42,9 +42,9 @@ const { handleSubmit, values, resetForm, errors, resetField } = useForm();
 const stayAfterSubmit = shallowRef<boolean>(false);
 
 const formElement = ref<HTMLFormElement>();
-const showValidator = ref<boolean>(false);
-const validated = ref<boolean>(false);
-const fieldsKey = ref<number>(0);
+const showValidator = shallowRef<boolean>(false);
+const validated = shallowRef<boolean>(false);
+const fieldsKey = shallowRef<number>(0);
 const footer = ref<HTMLDivElement>();
 
 const fieldsWrapper = ref<HTMLDivElement | null>(null);

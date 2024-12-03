@@ -18,6 +18,7 @@ import {
   onMounted,
   Ref,
   ref,
+  shallowRef,
   toRaw,
   watch,
 } from 'vue';
@@ -40,7 +41,7 @@ const taskId = inject<Ref<string>>('taskId');
 const taskDescription = ref<TaskDescription>();
 
 const editorState = ref<EditorState>('readonly');
-const isCurrentlyFocused = ref<boolean>(false);
+const isCurrentlyFocused = shallowRef<boolean>(false);
 
 const content = ref();
 const initialContent = ref<JSONContent>();

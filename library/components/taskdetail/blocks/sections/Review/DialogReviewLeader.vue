@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, inject, ref, Ref, watch } from 'vue';
+import { computed, inject, ref, shallowRef, Ref, watch } from 'vue';
 import Button from 'lib/components/button/Button.vue';
 import Dialog from 'lib/components/dialog/Dialog.vue';
 import { TaskChecklist, TaskDetailData } from 'lib/types/task.type';
@@ -49,8 +49,8 @@ const taskDetailInject = inject<
 >('taskDetail', undefined);
 
 const checklistItems = ref<ReviewTaskChecklist[]>();
-const activeIndex = ref<number>(0);
-const confirmReview = ref(false);
+const activeIndex = shallowRef<number>(0);
+const confirmReview = shallowRef<boolean>(false);
 
 const newChecklists = ref<TaskChecklist[]>();
 

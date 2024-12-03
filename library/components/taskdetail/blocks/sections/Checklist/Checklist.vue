@@ -1,5 +1,14 @@
 <script setup lang="ts">
-import { computed, ComputedRef, inject, nextTick, Ref, ref, watch } from 'vue';
+import {
+  computed,
+  ComputedRef,
+  inject,
+  nextTick,
+  Ref,
+  ref,
+  shallowRef,
+  watch,
+} from 'vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import Button from 'lib/components/button/Button.vue';
 import Menu from 'lib/components/menu/Menu.vue';
@@ -90,20 +99,20 @@ const checklistMenuOptions: MenuItem[] = [
 
 const checklists = ref<TaskChecklist[]>(props.static ? [] : undefined);
 
-const dialogAddChecklist = ref<boolean>(false);
-const dialogSaveChecklistTemplate = ref<boolean>(false);
-const dialogDetailChecklistTemplate = ref<boolean>(false);
-const dialogDeleteChecklist = ref<boolean>(false);
-const dialogDeleteChecklistItem = ref<boolean>(false);
-const dialogUncheckChecklistItem = ref<boolean>(false);
-const dialogAddAttachment = ref<boolean>(false);
-const dialogChangelog = ref<boolean>(false);
+const dialogAddChecklist = shallowRef<boolean>(false);
+const dialogSaveChecklistTemplate = shallowRef<boolean>(false);
+const dialogDetailChecklistTemplate = shallowRef<boolean>(false);
+const dialogDeleteChecklist = shallowRef<boolean>(false);
+const dialogDeleteChecklistItem = shallowRef<boolean>(false);
+const dialogUncheckChecklistItem = shallowRef<boolean>(false);
+const dialogAddAttachment = shallowRef<boolean>(false);
+const dialogChangelog = shallowRef<boolean>(false);
 
 const selectedChecklist = ref<TaskChecklist>();
 const selectedChecklistItem = ref<TaskChecklistItem>();
 const moreMenu = ref();
 
-const togglingItem = ref(false);
+const togglingItem = shallowRef<boolean>(false);
 
 const isDisabled = computed(() => {
   if (props.static) return false;

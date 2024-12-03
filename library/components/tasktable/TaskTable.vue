@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, shallowRef } from 'vue';
 import { MenuItem } from '../menuitem';
 import QuickFilter from '../quickfilter/QuickFilter.vue';
 import FilterContainer from '../filtercontainer/FilterContainer.vue';
@@ -70,27 +70,27 @@ const taskStatuses: string[] = [
   'Penyesuaian',
 ];
 
-const showFilter = ref(false);
-const dialogSelectProject = ref(false);
-const dialogNewTask = ref(false);
-const dialogDetailTask = ref(false);
-const dialogAssignMember = ref(false);
-const dialogAssignMemberBulk = ref(false);
-const dialogConfirmDeleteTask = ref(false);
-const dialogConfirmDeleteTaskBulk = ref(false);
-const dialogConfirmFinishTask = ref(false);
-const dialogReview = ref(false);
-const dialogFinishReview = ref(false);
-const dialogConfirmRestoreTask = ref(false);
-const dialogConfirmRestoreTaskBulk = ref(false);
-const dialogConfirmDeleteTaskPermanently = ref(false);
-const dialogConfirmDeleteTaskPermanentlyBulk = ref(false);
+const showFilter = shallowRef<boolean>(false);
+const dialogSelectProject = shallowRef<boolean>(false);
+const dialogNewTask = shallowRef<boolean>(false);
+const dialogDetailTask = shallowRef<boolean>(false);
+const dialogAssignMember = shallowRef<boolean>(false);
+const dialogAssignMemberBulk = shallowRef<boolean>(false);
+const dialogConfirmDeleteTask = shallowRef<boolean>(false);
+const dialogConfirmDeleteTaskBulk = shallowRef<boolean>(false);
+const dialogConfirmFinishTask = shallowRef<boolean>(false);
+const dialogReview = shallowRef<boolean>(false);
+const dialogFinishReview = shallowRef<boolean>(false);
+const dialogConfirmRestoreTask = shallowRef<boolean>(false);
+const dialogConfirmRestoreTaskBulk = shallowRef<boolean>(false);
+const dialogConfirmDeleteTaskPermanently = shallowRef<boolean>(false);
+const dialogConfirmDeleteTaskPermanentlyBulk = shallowRef<boolean>(false);
 
 const selectedTask = ref<TaskTableItem>();
 
 const selectedTasks = ref<TaskTableItem[]>([]);
 
-const selectedProjectId = ref<string>();
+const selectedProjectId = shallowRef<string>();
 
 const filters = ref<any>({
   global: { value: undefined, matchMode: FilterMatchMode.CONTAINS },
