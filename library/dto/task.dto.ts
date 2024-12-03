@@ -5,6 +5,7 @@ export interface CreateTaskDTO {
   process: string;
   module: string;
   subModule?: string;
+  productBacklogItem?: string;
   repository?: string;
   name: string;
   team?: string[];

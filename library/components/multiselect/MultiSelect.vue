@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, reactive, ref, watch } from 'vue';
+import {
+  computed,
+  onMounted,
+  onUnmounted,
+  reactive,
+  ref,
+  shallowRef,
+  watch,
+} from 'vue';
 import { useField } from 'vee-validate';
 
 import type {
@@ -38,7 +46,7 @@ onUnmounted(() => {
   eventBus.off('multi-select:hide-overlay');
 });
 
-const isShowOverlay = ref<boolean>(false);
+const isShowOverlay = shallowRef<boolean>(false);
 const multiselect = ref<MultiSelect>();
 
 const field = reactive<FieldValidation<OptionValue[] | undefined>>({

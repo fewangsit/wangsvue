@@ -2,15 +2,15 @@
 import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
 import ButtonToggle from 'lib/components/buttontoggle/ButtonToggle.vue';
-import { ref } from 'vue';
+import { shallowRef } from 'vue';
 
-const trueFirst = ref<boolean>(true);
-const trueFirstDisabled = ref<boolean>(true);
-const falseFirst = ref<boolean>(false);
-const falseFirstDisabled = ref<boolean>(false);
+const trueFirst = shallowRef<boolean>(true);
+const trueFirstDisabled = shallowRef<boolean>(true);
+const falseFirst = shallowRef<boolean>(false);
+const falseFirstDisabled = shallowRef<boolean>(false);
 
-const trueTriState = ref<boolean>(true);
-const falseTriState = ref<boolean>(false);
+const trueTriState = shallowRef<boolean>(true);
+const falseTriState = shallowRef<boolean>(false);
 </script>
 
 <template>

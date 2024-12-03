@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { shallowRef } from 'vue';
 import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
 import Button from 'lib/components/button/Button.vue';
 import DialogAdjustmentTask from 'lib/components/dialogAdjustmentTask/DialogAdjustmentTask.vue';
 
-const visibility = ref<boolean>(true);
+const visibility = shallowRef<boolean>(true);
 </script>
 <template>
   <Card>

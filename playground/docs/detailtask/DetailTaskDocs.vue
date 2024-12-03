@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, shallowRef, watch } from 'vue';
 
 import DocTitle from '../DocTitle.vue';
 import TaskDetail from 'lib/components/taskdetail/TaskDetail.vue';
@@ -31,11 +31,11 @@ onUnmounted(() => {
 
 const selectedItem = ref<TaskDetailData>();
 
-const showDetailTask = ref<boolean>(false);
-const showNewTask = ref<boolean>(false);
-const invalidTaskInput = ref<boolean>(false);
-const invalidTokenInput = ref<boolean>(false);
-const invalidProjectInput = ref<boolean>(false);
+const showDetailTask = shallowRef<boolean>(false);
+const showNewTask = shallowRef<boolean>(false);
+const invalidTaskInput = shallowRef<boolean>(false);
+const invalidTokenInput = shallowRef<boolean>(false);
+const invalidProjectInput = shallowRef<boolean>(false);
 const invalidMessage = ref<CustomValidation>();
 
 const jwtToken = ref<string>(

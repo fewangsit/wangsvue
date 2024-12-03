@@ -1,5 +1,14 @@
 <script setup lang="ts">
-import { computed, ComputedRef, inject, onMounted, Ref, ref, watch } from 'vue';
+import {
+  computed,
+  ComputedRef,
+  inject,
+  onMounted,
+  Ref,
+  ref,
+  shallowRef,
+  watch,
+} from 'vue';
 import { useToast } from 'lib/utils';
 import { formatDateReadable } from 'lib/utils/date.util';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';
@@ -28,10 +37,10 @@ onMounted(() => {
   getTaskLink();
 });
 
-const dialogSetTaskLink = ref<boolean>(false);
-const dialogSetTaskRepositoryLink = ref<boolean>(false);
-const dialogSetTaskMicroserviceLink = ref<boolean>(false);
-const dialogChangelog = ref<boolean>(false);
+const dialogSetTaskLink = shallowRef<boolean>(false);
+const dialogSetTaskRepositoryLink = shallowRef<boolean>(false);
+const dialogSetTaskMicroserviceLink = shallowRef<boolean>(false);
+const dialogChangelog = shallowRef<boolean>(false);
 
 const taskLink = ref<TaskLink>();
 const serviceLink = ref<TaskLink>();

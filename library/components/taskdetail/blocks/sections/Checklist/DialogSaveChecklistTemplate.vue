@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, Ref, ref } from 'vue';
+import { inject, Ref, ref, shallowRef } from 'vue';
 
 import DialogForm from 'lib/components/dialogform/DialogForm.vue';
 import Dropdown from 'lib/components/dropdown/Dropdown.vue';
@@ -26,7 +26,7 @@ const props = defineProps<{
 }>();
 
 const templateOptions = ref<DropdownOption[]>();
-const templateLoading = ref<boolean>(false);
+const templateLoading = shallowRef<boolean>(false);
 
 const getChecklistTemplates = async (): Promise<void> => {
   try {

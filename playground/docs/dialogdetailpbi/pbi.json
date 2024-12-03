@@ -1,15 +1,16 @@
 {
-  "_id": "67222f7148d5b42224d2fa23",
-  "name": "asdf",
+  "_id": "6745278ef24eefd277d99774",
+  "name": "Ini PBI",
+  "sprint": null,
   "status": "Backlog",
   "platform": "Web",
   "iteration": 0,
   "editedBy": {
     "_id": "66d1771c1ebe5344bc2b9dab",
     "nickName": "Super Admin",
-    "imageUrl": "/members/1726721700029-big.webp"
+    "imageUrl": "/members/1731906347509-big.webp"
   },
-  "category": "Bug",
+  "category": "Fitur",
   "description": {
     "type": "doc",
     "content": [
@@ -18,13 +19,13 @@
         "content": [
           {
             "type": "text",
-            "text": "asdf"
+            "text": "ini fitur"
           }
         ]
       }
     ]
   },
-  "createdAt": "2024-10-30 13:06:57",
+  "createdAt": "2024-11-26 01:42:38",
   "totalTask": 0,
   "totalTaskDurationMinutes": 0,
   "isInActiveSprint": false,
@@ -32,7 +33,8 @@
   "estimateDuration": "00h 00j 00m",
   "createdBy": {
     "_id": "66d1771c1ebe5344bc2b9dab",
-    "teams": ["DEV", "MOB", "TW", "IOT"]
+    "teams": ["BE", "MOB", "TW"]
   },
-  "lastModified": "2024-10-30 13:06:57"
+  "lastModified": "2024-11-26 01:42:38",
+  "memberDetails": []
 }

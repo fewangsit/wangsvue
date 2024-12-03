@@ -1,4 +1,4 @@
-import { Ref, ref } from 'vue';
+import { Ref, ref, shallowRef } from 'vue';
 
 export interface LoadingStore {
   loading: Ref<boolean>;
@@ -6,7 +6,7 @@ export interface LoadingStore {
   setLoading: (state: boolean, message?: string) => void;
 }
 
-const loading = ref<boolean>(false);
+const loading = shallowRef<boolean>(false);
 const message = ref<string>();
 
 const useLoadingStore = (): LoadingStore => {

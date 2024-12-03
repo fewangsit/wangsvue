@@ -10,6 +10,7 @@ import getStatusSeverity from './statusSeverity.util';
 import getAttachmentIcon from './getAttachmentIcon.util';
 import isEmptyObject from './object.util';
 import getUser from './getUser.util';
+import getUserType from './getUserType.util';
 import getUserPermission from './getUserPermission.util';
 import isIntersect from './isIntersect';
 import convertJsonImage from './convertJsonImage.util';
@@ -44,6 +45,7 @@ export {
   getAttachmentIcon,
   getUser,
   getUserPermission,
+  getUserType,
   isIntersect,
   convertJsonImage,
   formatDate,

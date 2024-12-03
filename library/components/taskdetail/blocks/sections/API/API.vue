@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { computed, ComputedRef, inject, onMounted, ref, Ref } from 'vue';
+import {
+  computed,
+  ComputedRef,
+  inject,
+  onMounted,
+  ref,
+  Ref,
+  shallowRef,
+} from 'vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import Button from 'lib/components/button/Button.vue';
 import TaskApiItem from './APIItem.vue';
@@ -22,8 +30,8 @@ const userType =
 const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 
-const dialogAddApi = ref(false);
-const dialogEditApi = ref(false);
+const dialogAddApi = shallowRef<boolean>(false);
+const dialogEditApi = shallowRef<boolean>(false);
 const taskApis = ref<TaskAPIFormDataCustom[]>();
 const selectedTaskApi = ref<TaskAPIFormDataCustom>();
 

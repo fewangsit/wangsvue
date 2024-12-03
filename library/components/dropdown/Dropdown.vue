@@ -9,6 +9,7 @@ import {
   onMounted,
   reactive,
   ref,
+  shallowRef,
   watch,
 } from 'vue';
 import type {
@@ -50,7 +51,7 @@ onMounted(() => {
 });
 
 const dropdown = ref<Dropdown>();
-const isShowOverlay = ref<boolean>(false);
+const isShowOverlay = shallowRef<boolean>(false);
 
 const invalidInput = computed(() => props.invalid || !!field.errorMessage);
 

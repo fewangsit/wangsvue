@@ -6,7 +6,16 @@ import TaskServices from 'lib/services/task.service';
 import ProjectProcessServices from 'lib/services/projectProcess.service';
 import { TaskDependency, TaskDetailData } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
-import { computed, ComputedRef, inject, nextTick, Ref, ref, watch } from 'vue';
+import {
+  computed,
+  ComputedRef,
+  inject,
+  nextTick,
+  Ref,
+  ref,
+  shallowRef,
+  watch,
+} from 'vue';
 import TaskDependencyServices from 'lib/services/taskDependency.service';
 import Button from 'lib/components/button/Button.vue';
 import UserName from 'lib/components/username/UserName.vue';
@@ -40,8 +49,8 @@ const processDependencies = ref<TaskDependency[]>();
 const taskDependencies = ref<TaskDependency[]>();
 const dependencies = ref<TaskDependency[]>();
 
-const loadingData = ref(false);
-const showDialogCustomDependency = ref(false);
+const loadingData = shallowRef<boolean>(false);
+const showDialogCustomDependency = shallowRef<boolean>(false);
 
 const taskProcess = computed(() => taskDetail.value?.process ?? undefined);
 

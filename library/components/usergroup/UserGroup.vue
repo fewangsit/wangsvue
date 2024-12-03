@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, inject, ref } from 'vue';
+import { computed, inject, shallowRef } from 'vue';
 import { UserGroupProps } from './UserGroup.vue.d';
 import PrimeAvatar from 'primevue/avatar';
 import PrimeAvatarGroup from 'primevue/avatargroup';
@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<UserGroupProps>(), {
 
 const Preset = inject<Record<string, any>>('preset', {}).badgegroup;
 
-const dialogDetail = ref(false);
+const dialogDetail = shallowRef(false);
 
 const showedUsers = computed(() => {
   return props.users.slice(0, props.limit); // When limit undefined, it will return full array
@@ -26,7 +26,7 @@ const totalRemainingUser = computed<number>(
 </script>
 
 <template>
-  <template v-if="props.withDialogDetail">
+  <div v-if="props.withDialogDetail">
     <span v-if="!props.users.length">-</span>
     <div v-else class="flex gap-2 items-center">
       <UserName
@@ -60,7 +60,7 @@ const totalRemainingUser = computed<number>(
         />
       </div>
     </Dialog>
-  </template>
+  </div>
 
   <template v-else>
     <PrimeAvatarGroup>

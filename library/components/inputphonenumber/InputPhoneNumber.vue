@@ -7,7 +7,6 @@ import {
   watch,
   onBeforeMount,
   shallowRef,
-  ref,
   inject,
 } from 'vue';
 import axios from 'axios';
@@ -84,7 +83,7 @@ const dialCodes = shallowRef<DialCode[]>();
 const selectedDialCode = shallowRef();
 const rawValue = shallowRef<number>();
 
-const phoneKey = ref(0);
+const phoneKey = shallowRef<number>(0);
 
 const field = reactive<FieldValidation<Nullable<string>>>({ value: null });
 

@@ -9,6 +9,7 @@ import { WangsitStatus } from './wangsStatus.type';
 import { JSONContent } from 'lib/components/editor/Editor.vue.d';
 import { ChildGroup } from 'lib/components/datatable/DataTable.vue.d';
 import { FileType } from 'lib/components/taskdetail/blocks/sections/Attachment/AttachmentItem.vue.d';
+import { Pbi } from 'lib/components/dialogdetailpbi/DialogDetailPbi.vue.d';
 
 export type TaskDetailData = {
   _id: string;
@@ -16,6 +17,7 @@ export type TaskDetailData = {
   process: ProjectProcess;
   module: ProjectModule;
   subModule: ProjectSubModule;
+  productBacklogItem?: Pick<Pbi, '_id' | 'name'>;
   repository: string;
   name: string;
   assignedTo: Member[];

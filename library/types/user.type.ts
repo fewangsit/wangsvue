@@ -1,5 +1,5 @@
 import { Teams } from './project.type';
-import { RoleDetailAccess } from './role.detail.access.type';
+import { RoleDetailAccess } from './roleDetailAccess.type';
 
 export type User = {
   _id: string;
@@ -15,4 +15,6 @@ export type User = {
   position: string;
   teams: Teams[];
   permission: RoleDetailAccess;
+  isTeamLeader: boolean;
+  isProjectManager: boolean;
 };

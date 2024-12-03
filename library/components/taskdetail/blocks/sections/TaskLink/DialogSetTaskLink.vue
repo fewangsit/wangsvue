@@ -11,7 +11,7 @@ import eventBus from 'lib/event-bus';
 import TaskLinkServices from 'lib/services/taskLink.service';
 import { TaskLink, TaskLinkURLType } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
-import { computed, inject, Ref, ref } from 'vue';
+import { computed, inject, Ref, ref, shallowRef } from 'vue';
 
 const toast = useToast();
 
@@ -40,9 +40,9 @@ const whitelistIframeTag = /<\s*\/?\s*(iframe)\b.*?>/;
 const visible = defineModel<boolean>('visible', { required: true });
 
 const dialogForm = ref();
-const customInvalidEmbed = ref(false);
+const customInvalidEmbed = shallowRef<boolean>(false);
 
-const linkMenuIndex = ref<number>(0);
+const linkMenuIndex = shallowRef<number>(0);
 const linkMenu = computed<MenuItem[]>(() => [
   {
     label: 'URL',

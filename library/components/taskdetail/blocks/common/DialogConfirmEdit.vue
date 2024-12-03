@@ -9,7 +9,7 @@ const toast = useToast();
 const { setLoading } = useLoadingStore();
 
 const props = defineProps<{
-  taskDetail: Pick<TaskDetailData, '_id' | 'name'>;
+  taskDetail: Pick<TaskDetailData, '_id' | 'name'> | undefined;
 }>();
 
 const emit = defineEmits<{

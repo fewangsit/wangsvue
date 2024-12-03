@@ -26,9 +26,9 @@ const props = withDefaults(defineProps<CommentBlockProps>(), {
   useTimeStamp: true,
 });
 
-const replyMessageVisibility = ref(false);
+const replyMessageVisibility = shallowRef<boolean>(false);
 const mentionedList = ref<string[]>();
-const editorInputVisibility = ref(false);
+const editorInputVisibility = shallowRef<boolean>(false);
 const editorReplyData = ref<JSONContent>();
 const editorTypeInput = ref<'edit' | 'reply'>();
 const emojiOverlayPanel = ref<OverlayPanelClass>();
