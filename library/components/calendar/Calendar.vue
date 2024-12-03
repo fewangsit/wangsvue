@@ -91,23 +91,60 @@ const parseDate = (dateToParse: Date | Date[]): number | number[] => {
 const setClass = async (): Promise<void> => {
   await nextTick();
 
-  const highlights = document.querySelectorAll(
+  const nonHighlights: NodeListOf<HTMLElement> = document.querySelectorAll(
+    '.datepicker-panel table [data-p-highlight="false"]',
+  );
+
+  /**
+   * Styles for the non-selected days.
+   */
+  nonHighlights.forEach((element) => {
+    element.style.backgroundColor = 'rgb(255 255 255 / var(--tw-bg-opacity))';
+    element.style.borderRadius = '0px';
+  });
+
+  const today: HTMLElement = document.querySelector(
+    '.datepicker-panel table [data-p-today="true"] span',
+  );
+
+  /**
+   * Styles for the current day.
+   */
+  if (today) {
+    today.style.backgroundColor = 'rgb(189 165 82 / var(--tw-bg-opacity))';
+    today.style.borderRadius = '0px';
+  }
+
+  const highlights: NodeListOf<HTMLElement> = document.querySelectorAll(
     '.datepicker-panel table [data-p-highlight="true"]',
   );
 
   /**
-   * The special class for the first and last seleted days.
+   * Styles for the selected days.
    */
-  const firstAndLast = '!bg-primary-1000 hover:!bg-primary-1000/90';
+  highlights.forEach((element) => {
+    element.style.backgroundColor = 'rgb(189 165 82 / var(--tw-bg-opacity))';
+    element.style.borderRadius = '0px';
+  });
 
-  const first = 'rounded-tl-full rounded-bl-full';
-  const last = 'rounded-tr-full rounded-br-full';
+  /**
+   * Styles for the first and last selected days.
+   */
+  if (highlights[0]) {
+    highlights[0].style.backgroundColor =
+      'rgb(105 82 0 / var(--tw-bg-opacity))';
+    highlights[0].style.borderTopLeftRadius = '9999px';
+    highlights[0].style.borderBottomLeftRadius = '9999px';
+    highlights[0].style.borderTopRightRadius = '0px';
+    highlights[0].style.borderBottomRightRadius = '0px';
+  }
 
-  highlights[0]?.classList.add(...firstAndLast.split(' '), ...first.split(' '));
-  highlights[highlights.length - 1]?.classList.add(
-    ...firstAndLast.split(' '),
-    ...last.split(' '),
-  );
+  if (highlights[highlights.length - 1]) {
+    highlights[highlights.length - 1].style.backgroundColor =
+      'rgb(105 82 0 / var(--tw-bg-opacity))';
+    highlights[highlights.length - 1].style.borderTopRightRadius = '9999px';
+    highlights[highlights.length - 1].style.borderBottomRightRadius = '9999px';
+  }
 };
 
 const onShowOverlay = (): void => {
@@ -243,6 +280,7 @@ watch(date, formatDateText);
         :show-time="props.showTime"
         :view="view"
         @hide="onHideOverlay"
+        @month-change="setClass"
         @show="onShowOverlay"
         @update:model-value="
           onUpdateModelValue($event as unknown as Date | Date[])
