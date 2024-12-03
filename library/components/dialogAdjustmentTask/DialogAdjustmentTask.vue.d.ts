@@ -5,7 +5,7 @@ export interface DialogAdjustmentTaskProps {
   /**
    * Pass Member id to get task that connected to memberId
    */
-  members: Pick<AssignedTo, '_id' | 'nickName'>[];
+  members: Pick<AssignedTo, '_id' | 'nickName' | 'key'>[];
   /**
    * V-model dialog visibility
    */
