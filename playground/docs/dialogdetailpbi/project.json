@@ -1,32 +1,36 @@
 {
-  "_id": "66e901c165b533fbe0c72c03",
-  "type": "Proyek Baru",
-  "name": "Wangsit",
-  "initialName": "WGST",
-  "method": "Deployment",
-  "priority": 4,
-  "startAt": "2024-09-18T05:28:09.758Z",
-  "isApprover": false,
-  "leaders": ["DEV", "TW", "IOT"],
-  "members": ["DEV", "TW", "IOT"],
-  "isPM": true,
-  "totalModule": 4,
+  "_id": "6722dfe34b50d65e441a2537",
+  "type": "Proyek Pengembangan",
+  "name": "cek pengembangan",
+  "initialName": "cek",
+  "method": "Sprint",
+  "priority": null,
+  "startAt": "2024-10-31T17:00:00.000Z",
+  "isApprover": true,
+  "leaders": ["BE"],
+  "members": ["BE", "MOB", "TW"],
+  "isPM": false,
+  "totalModule": 3,
   "totalCompletedModule": 0,
-  "totalSprintTask": 4,
-  "totalCompletedTask": 1,
-  "totalBacklogTask": 2,
+  "totalSprintTask": 3,
+  "totalCompletedTask": 0,
+  "totalBacklogTask": 0,
   "totalBugHistories": 0,
   "totalSprintPoint": 0,
   "status": "Sprint",
   "managers": [
     {
-      "id": "66d1771c1ebe5344bc2b9dab",
-      "name": "Super Admin"
+      "id": "66e90198e64712c4e5eb0de9",
+      "name": "Aga"
     }
   ],
   "templateProcess": {
-    "_id": "66e901c165b533fbe0c72c06",
-    "name": "Wangsit"
+    "_id": "6722dfe34b50d65e441a2539",
+    "name": "Default Process"
   },
-  "createdAt": "2024-09-17 04:12:50"
+  "developedProject": {
+    "id": "66fe2ea7d7c316a8f61846bf",
+    "name": "Buat Debug"
+  },
+  "createdAt": "2024-10-31 01:39:47"
 }

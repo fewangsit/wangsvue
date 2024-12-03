@@ -1,6 +1,6 @@
 <!-- eslint-disable @typescript-eslint/no-explicit-any -->
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, shallowRef } from 'vue';
 import { TransformableImage } from 'vue-advanced-cropper';
 
 const props = defineProps<{
@@ -15,7 +15,7 @@ defineEmits<{
   resize: [e: any];
 }>();
 
-const notificationVisible = ref(false);
+const notificationVisible = shallowRef<boolean>(false);
 const notificationType = ref();
 
 const eventsFilter = (nativeEvent: any, transforming: any): unknown => {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, inject, Ref, ref, watch } from 'vue';
+import { computed, inject, Ref, ref, shallowRef, watch } from 'vue';
 
 import DialogForm from 'lib/components/dialogform/DialogForm.vue';
 import Dropdown from 'lib/components/dropdown/Dropdown.vue';
@@ -10,6 +10,7 @@ import { useToast } from 'lib/utils';
 import TaskServices from 'lib/services/task.service';
 import { UpdateTaskMemberDTO } from 'lib/dto/task.dto';
 import { FormPayload } from 'lib/components/form/Form.vue.d';
+import { AssignedMember } from 'lib/components/dialogdetailpbi/DialogDetailPbi.vue.d';
 import ProjectTeamServices from 'lib/services/projectTeam.service';
 import SubModuleServices from 'lib/services/submodule.service';
 
@@ -36,19 +37,24 @@ const emit = defineEmits<{
 /**
  * This task id inject is used in task detail dialog.
  */
-const taskIdFromInject = inject<Ref<string>>('taskId');
+const taskIdFromInject = inject<Ref<string>>('taskId', undefined);
 /**
  * This project id inject is used in task detail dialog.
  */
-const projectIdFromInject = inject<Ref<string>>('projectId');
+const projectIdFromInject = inject<Ref<string>>('projectId', undefined);
 
 const taskDetail =
-  inject<Ref<TaskDetailData>>('taskDetail') ?? ref<TaskDetailData>();
+  inject<Ref<TaskDetailData>>('taskDetail', undefined) ?? ref<TaskDetailData>();
 
-const formKey = ref(0);
+const assignedPbiMembers = inject<Ref<AssignedMember[]>>(
+  'assignedPbiMembers',
+  undefined,
+);
+
+const formKey = shallowRef<number>(0);
 
 const memberOptions = ref<DropdownOption[]>();
-const memberLoading = ref<boolean>(false);
+const memberLoading = shallowRef<boolean>(false);
 
 /**
  * Single task id, either props from task table or inject from task detail dialog.
@@ -91,6 +97,11 @@ const getDetailTask = async (): Promise<void> => {
 const getMemberOptions = async (): Promise<void> => {
   if (taskDetail.value.subModule) {
     await getSubModuleTeamMembers();
+  } else if (assignedPbiMembers?.value) {
+    memberOptions.value = assignedPbiMembers?.value.map((member) => ({
+      label: member.nickName,
+      value: member._id,
+    }));
   } else {
     await getProjectTeamMembers();
   }

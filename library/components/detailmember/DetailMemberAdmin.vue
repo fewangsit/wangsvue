@@ -8,7 +8,7 @@ import {
 import { MemberAdminRole } from './DetailMember.vue.d';
 import { useToast } from 'lib/utils';
 import { MenuItem } from '../menuitem';
-import { RoleMemberPermission } from 'lib/types/role.detail.access.type';
+import { RoleMemberPermission } from 'lib/types/roleDetailAccess.type';
 import { FilterField } from '../filtercontainer/FilterContainer.vue.d';
 import { MultiSelectOption } from 'lib/types/options.type';
 import ButtonSearch from '../buttonsearch/ButtonSearch.vue';

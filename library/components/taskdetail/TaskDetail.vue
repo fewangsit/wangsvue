@@ -8,6 +8,7 @@ import {
   onUnmounted,
   watch,
   inject,
+  shallowRef,
 } from 'vue';
 
 import Dialog from 'primevue/dialog';
@@ -102,25 +103,25 @@ const user = ref<User>(
 /**
  * To be used for the first initial loading.
  */
-const firstFetch = ref<boolean>(true);
+const firstFetch = shallowRef<boolean>(true);
 const taskId = ref<string>();
 const projectId = ref<string>();
 const taskDetail = ref<TaskDetailData>();
-const isNewTask = ref<boolean>(false);
-const taskMenuIndex = ref<number>(0);
+const isNewTask = shallowRef<boolean>(false);
+const taskMenuIndex = shallowRef<number>(0);
 
 const projectDetail = ref<ProjectDetail>();
 
 const legendForm = ref<TaskLegendForm>({});
 
-const loadingTask = ref(false);
+const loadingTask = shallowRef<boolean>(false);
 
-const dialogDetailTask = ref(false);
+const dialogDetailTask = shallowRef<boolean>(false);
 const selectedTaskId = ref<string>();
 
-const showCommentSection = ref(false);
+const showCommentSection = shallowRef<boolean>(false);
 
-const taskMenuKey = ref(0);
+const taskMenuKey = shallowRef<number>(0);
 
 const mentionSectionFunc = ref<MentionSectionFunc>();
 
@@ -424,6 +425,7 @@ watch(
           <Legend
             :initial-module="props.initialModule"
             :initial-sub-module="props.initialSubModule"
+            :product-backlog-item-id="props.productBacklogItemId"
           />
           <TabMenu
             v-model:active-index="taskMenuIndex"

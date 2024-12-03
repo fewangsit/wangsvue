@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, Ref, ref } from 'vue';
+import { inject, Ref, shallowRef } from 'vue';
 
 import InputNumber from 'lib/components/inputnumber/InputNumber.vue';
 import { useToast } from 'lib/utils';
@@ -21,7 +21,7 @@ const props = defineProps<{
   priorityValue?: number;
 }>();
 
-const priorityValueInvalid = ref<boolean>(false);
+const priorityValueInvalid = shallowRef<boolean>(false);
 
 const handleSubmit = async (e: FormPayload): Promise<void> => {
   try {
@@ -59,7 +59,7 @@ const handleSubmit = async (e: FormPayload): Promise<void> => {
     setLoading(false);
   }
 };
-const inputKey = ref(0);
+const inputKey = shallowRef<number>(0);
 </script>
 
 <template>

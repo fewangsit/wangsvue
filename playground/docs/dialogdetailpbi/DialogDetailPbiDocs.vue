@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { shallowRef } from 'vue';
+import { onMounted, shallowRef } from 'vue';
 import { Pbi } from 'lib/components/dialogdetailpbi/DialogDetailPbi.vue.d';
 import { Project } from 'lib/types/project.type';
 import Card from 'lib/components/card/Card.vue';
@@ -9,6 +9,10 @@ import DialogDetailPbi from 'lib/components/dialogdetailpbi/DialogDetailPbi.vue'
 import pbi from './pbi.json';
 import project from './project.json';
 import Toast from 'lib/components/toast/Toast.vue';
+
+onMounted(() => {
+  sessionStorage.setItem('projectId', '6722dfe34b50d65e441a2537');
+});
 
 const showDialog = shallowRef<boolean>(false);
 const showDialogNonEditable = shallowRef<boolean>(false);

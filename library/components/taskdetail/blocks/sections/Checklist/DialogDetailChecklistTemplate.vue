@@ -42,8 +42,8 @@ const tableOptions = shallowRef<MenuItem[]>([
   },
 ]);
 
-const dialogDetail = ref(false);
-const dialogConfirmDelete = ref(false);
+const dialogDetail = shallowRef<boolean>(false);
+const dialogConfirmDelete = shallowRef<boolean>(false);
 
 const filters = ref<any>({
   global: { value: undefined, matchMode: FilterMatchMode.CONTAINS },
@@ -51,7 +51,7 @@ const filters = ref<any>({
 
 const selectedTemplate = ref<TaskChecklistTemplate>();
 
-const tableKey = ref(0);
+const tableKey = shallowRef<number>(0);
 
 const tableColumns = computed<TableColumn[]>(() => {
   return [

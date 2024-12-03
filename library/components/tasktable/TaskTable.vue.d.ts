@@ -1,3 +1,4 @@
+import { AssignedMember, Pbi } from '../dialogdetailpbi/DialogDetailPbi.vue.d';
 import { ClassComponent } from '../ts-helpers';
 
 export type TaskTablePage =
@@ -5,6 +6,7 @@ export type TaskTablePage =
   | 'project-task'
   | 'project-module'
   | 'project-subModule'
+  | 'project-productBacklogItem'
   | 'member-detail'
   | 'my-profile';
 
@@ -38,16 +40,31 @@ export interface TaskTableProps {
    */
   subModuleId?: string;
   /**
+   * Used as query params while fetching data table
+   * in project-productBacklogItem page, and
+   * to edit the selected PBI
+   */
+  selectedPbi?: Pbi;
+  assignedPbiMembers?: AssignedMember[];
+  editablePbi?: boolean;
+  /**
    * Used as parameter while fetching data table
    * in member-detail page
    */
   userId?: string;
 }
 
+export type TaskTableEmits = {
+  /**
+   * Emit on click 'Ambil Task' button
+   */
+  showUnassignedTask: [];
+};
+
 declare class TaskTable extends ClassComponent<
   TaskTableProps,
   unknown,
-  unknown
+  TaskTableEmits
 > {}
 
 export default TaskTable;

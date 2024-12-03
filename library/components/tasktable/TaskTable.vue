@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, shallowRef } from 'vue';
 import { MenuItem } from '../menuitem';
 import QuickFilter from '../quickfilter/QuickFilter.vue';
 import FilterContainer from '../filtercontainer/FilterContainer.vue';
@@ -15,14 +15,24 @@ import {
   TableColumn,
 } from '../datatable/DataTable.vue.d';
 import { FilterMatchMode } from '../datatable/helpers/filter.helper';
-import { FilterField } from '../filtercontainer/FilterContainer.vue.d';
+import {
+  FetchOptionResponse,
+  FilterField,
+} from '../filtercontainer/FilterContainer.vue.d';
 import { MultiSelectOption } from 'lib/types/options.type';
 import DataTable from '../datatable/DataTable.vue';
+import { TaskOptions } from '../dialogdetailpbi/DialogDetailPbi.vue.d';
 import TaskServices from 'lib/services/task.service';
-import { TaskTablePage, TaskTableProps, TaskTableTab } from './TaskTable.vue.d';
+import {
+  TaskTableEmits,
+  TaskTablePage,
+  TaskTableProps,
+  TaskTableTab,
+} from './TaskTable.vue.d';
+import { User } from 'lib/types/user.type';
 import { TaskTableItem, TaskTableOptionQuery } from 'lib/types/task.type';
 import Badge from '../badge/Badge.vue';
-import { useToast } from 'lib/utils';
+import { isIntersect, useToast } from 'lib/utils';
 import DependencyCol from './DependencyCol.vue';
 import Button from '../button/Button.vue';
 import TaskDetail from '../taskdetail/TaskDetail.vue';
@@ -44,33 +54,43 @@ const { setLoading } = useLoadingStore();
 
 const props = defineProps<TaskTableProps>();
 
+defineEmits<TaskTableEmits>();
+
 type CustomFilterField = FilterField & {
   visible: boolean;
 };
 
-const userData = JSON.parse(localStorage.getItem('user') as string);
+const userData = JSON.parse(localStorage.getItem('user') as string) as User;
+const taskStatuses: string[] = [
+  'Selesai',
+  'Pending Review Leader',
+  'Sprint',
+  'Fixing Bug',
+  'Reported Bug',
+  'Penyesuaian',
+];
 
-const showFilter = ref(false);
-const dialogSelectProject = ref(false);
-const dialogNewTask = ref(false);
-const dialogDetailTask = ref(false);
-const dialogAssignMember = ref(false);
-const dialogAssignMemberBulk = ref(false);
-const dialogConfirmDeleteTask = ref(false);
-const dialogConfirmDeleteTaskBulk = ref(false);
-const dialogConfirmFinishTask = ref(false);
-const dialogReview = ref(false);
-const dialogFinishReview = ref(false);
-const dialogConfirmRestoreTask = ref(false);
-const dialogConfirmRestoreTaskBulk = ref(false);
-const dialogConfirmDeleteTaskPermanently = ref(false);
-const dialogConfirmDeleteTaskPermanentlyBulk = ref(false);
+const showFilter = shallowRef<boolean>(false);
+const dialogSelectProject = shallowRef<boolean>(false);
+const dialogNewTask = shallowRef<boolean>(false);
+const dialogDetailTask = shallowRef<boolean>(false);
+const dialogAssignMember = shallowRef<boolean>(false);
+const dialogAssignMemberBulk = shallowRef<boolean>(false);
+const dialogConfirmDeleteTask = shallowRef<boolean>(false);
+const dialogConfirmDeleteTaskBulk = shallowRef<boolean>(false);
+const dialogConfirmFinishTask = shallowRef<boolean>(false);
+const dialogReview = shallowRef<boolean>(false);
+const dialogFinishReview = shallowRef<boolean>(false);
+const dialogConfirmRestoreTask = shallowRef<boolean>(false);
+const dialogConfirmRestoreTaskBulk = shallowRef<boolean>(false);
+const dialogConfirmDeleteTaskPermanently = shallowRef<boolean>(false);
+const dialogConfirmDeleteTaskPermanentlyBulk = shallowRef<boolean>(false);
 
 const selectedTask = ref<TaskTableItem>();
 
 const selectedTasks = ref<TaskTableItem[]>([]);
 
-const selectedProjectId = ref<string>();
+const selectedProjectId = shallowRef<string>();
 
 const filters = ref<any>({
   global: { value: undefined, matchMode: FilterMatchMode.CONTAINS },
@@ -102,6 +122,7 @@ const tableColumns = computed<TableColumn[]>(() => {
           'member-detail',
           'my-profile',
           'project-task',
+          'project-productBacklogItem',
         ] as TaskTablePage[]
       ).includes(props.page),
     },
@@ -109,6 +130,7 @@ const tableColumns = computed<TableColumn[]>(() => {
       field: 'subModule.name',
       header: 'Sub Modul',
       sortable: true,
+      fixed: props.page === 'project-productBacklogItem',
       visible: (
         [
           'task',
@@ -116,6 +138,7 @@ const tableColumns = computed<TableColumn[]>(() => {
           'my-profile',
           'project-task',
           'project-module',
+          'project-productBacklogItem',
         ] as TaskTablePage[]
       ).includes(props.page),
     },
@@ -123,6 +146,7 @@ const tableColumns = computed<TableColumn[]>(() => {
       field: 'process.name',
       header: 'Proses',
       sortable: true,
+      fixed: props.page === 'project-productBacklogItem',
       visible: true,
     },
     {
@@ -136,7 +160,7 @@ const tableColumns = computed<TableColumn[]>(() => {
       field: 'status',
       header: 'Status',
       sortable: true,
-      fixed: true,
+      fixed: props.page !== 'project-productBacklogItem',
       bodyComponent: (data: TaskTableItem): TableCellComponent => {
         return {
           component: Badge,
@@ -152,7 +176,7 @@ const tableColumns = computed<TableColumn[]>(() => {
       field: 'priority',
       header: 'Nilai Prioritas',
       sortable: true,
-      visible: true,
+      visible: props.page !== 'project-productBacklogItem',
     },
     {
       field: 'team',
@@ -160,7 +184,7 @@ const tableColumns = computed<TableColumn[]>(() => {
       sortable: true,
       bodyTemplate: (data: TaskTableItem): string =>
         data.team.map((t) => t).join(', '),
-      visible: true,
+      visible: props.page !== 'project-productBacklogItem',
     },
     {
       field: 'assignedTo',
@@ -188,7 +212,7 @@ const tableColumns = computed<TableColumn[]>(() => {
       sortable: true,
       bodyTemplate: (data: TaskTableItem): string =>
         data.childTask ? data.childTask.toString() : '-',
-      visible: true,
+      visible: props.page !== 'project-productBacklogItem',
     },
     {
       field: 'dependency',
@@ -203,7 +227,7 @@ const tableColumns = computed<TableColumn[]>(() => {
           },
         };
       },
-      visible: true,
+      visible: props.page !== 'project-productBacklogItem',
     },
     {
       field: 'timeReportedBug',
@@ -211,12 +235,20 @@ const tableColumns = computed<TableColumn[]>(() => {
       sortable: true,
       bodyTemplate: (data: TaskTableItem): string =>
         data.timeReportedBug ? data.timeReportedBug.toString() + ' Kali' : '-',
-      visible: true,
+      visible: props.page !== 'project-productBacklogItem',
     },
     {
       field: 'lastUpdatedAt',
       header: 'Last Modified Status',
       sortable: true,
+      bodyTemplate: (data: TaskTableItem): string => {
+        if (props.page !== 'project-productBacklogItem')
+          return data.lastUpdatedAt;
+        return new Date(data.lastUpdatedAt)
+          .toISOString()
+          .slice(0, 19)
+          .replace('T', ' ');
+      },
       visible: true,
     },
   ];
@@ -293,33 +325,12 @@ const quickFilterFields = computed<CustomFilterField[]>(() => [
   {
     field: 'status',
     type: 'multiselect',
-    placeholder: 'Pilih Status',
-    fetchOptionFn: (): MultiSelectOption[] => [
-      {
-        label: 'Selesai',
-        value: 'Selesai',
-      },
-      {
-        label: 'Pending Review Leader',
-        value: 'Pending Review Leader',
-      },
-      {
-        label: 'Sprint',
-        value: 'Sprint',
-      },
-      {
-        label: 'Fixing Bug',
-        value: 'Fixing Bug',
-      },
-      {
-        label: 'Reported Bug',
-        value: 'Reported Bug',
-      },
-      {
-        label: 'Penyesuaian',
-        value: 'Penyesuaian',
-      },
-    ],
+    placeholder: 'Pilih status',
+    fetchOptionFn: (): MultiSelectOption[] =>
+      taskStatuses.map((status) => ({
+        label: status,
+        value: status,
+      })),
     visible: (['all', 'active', 'deleted'] as TaskTableTab[]).includes(
       props.tab,
     ),
@@ -338,6 +349,15 @@ const quickFilterFields = computed<CustomFilterField[]>(() => [
  */
 const filterFields = computed<CustomFilterField[]>(() => [
   {
+    label: 'Modul',
+    field: 'module',
+    type: 'multiselect',
+    placeholder: 'Pilih modul',
+    fetchOptionFn: (): Promise<MultiSelectOption[]> =>
+      getTaskOptions('moduleOptions'),
+    visible: props.page === 'project-productBacklogItem',
+  },
+  {
     label: 'Sub Modul',
     field: 'subModule',
     type: 'multiselect',
@@ -351,6 +371,7 @@ const filterFields = computed<CustomFilterField[]>(() => [
         'my-profile',
         'project-task',
         'project-module',
+        'project-productBacklogItem',
       ] as TaskTablePage[]
     ).includes(props.page),
   },
@@ -362,6 +383,36 @@ const filterFields = computed<CustomFilterField[]>(() => [
     fetchOptionFn: (): Promise<MultiSelectOption[]> =>
       getTaskOptions('processOptions'),
     visible: true,
+  },
+  {
+    label: 'Task',
+    field: 'task',
+    type: 'multiselect',
+    placeholder: 'Pilih task',
+    fetchOptionFn: (): Promise<MultiSelectOption[]> =>
+      getTaskOptions('taskOptions'),
+    visible: props.page === 'project-productBacklogItem',
+  },
+  {
+    label: 'Assign',
+    field: 'member',
+    type: 'multiselect',
+    placeholder: 'Pilih member',
+    fetchOptionFn: (): Promise<MultiSelectOption[]> =>
+      getTaskOptions('memberOptions'),
+    visible: props.page === 'project-productBacklogItem',
+  },
+  {
+    label: 'Status',
+    field: 'status',
+    type: 'multiselect',
+    placeholder: 'Pilih Status',
+    fetchOptionFn: (): MultiSelectOption[] =>
+      taskStatuses.map((status) => ({
+        label: status,
+        value: status,
+      })),
+    visible: props.page === 'project-productBacklogItem',
   },
   {
     label: 'Dependensi',
@@ -382,14 +433,14 @@ const filterFields = computed<CustomFilterField[]>(() => [
         value: 'Selesai',
       },
     ],
-    visible: true,
+    visible: props.page !== 'project-productBacklogItem',
   },
   {
     label: 'Reported Bug (Kali)',
     fields: ['minTimeReportedBug', 'maxTimeReportedBug'],
     type: 'rangenumber',
     placeholder: '0',
-    visible: true,
+    visible: props.page !== 'project-productBacklogItem',
   },
   {
     label: 'Last Modified Status',
@@ -419,7 +470,7 @@ const tableActions = computed<MenuItem[]>(() => {
       icon: 'file-copy-2-line',
       visible:
         ['parent', 'dependency'].includes(selectedTask.value?.taskType) &&
-        ['admin', 'pm', 'teamLeader', 'member'].includes(userType.value),
+        isIntersect(['admin', 'pm', 'teamLeader', 'member'], userType.value),
       command: (): void => {
         dialogDetailTask.value = true;
       },
@@ -433,7 +484,7 @@ const tableActions = computed<MenuItem[]>(() => {
       visible:
         selectedTask.value?.status === 'Backlog' &&
         selectedTask.value?.taskType === 'parent' &&
-        ['admin', 'pm', 'teamLeader'].includes(userType.value),
+        isIntersect(['admin', 'pm', 'teamLeader'], userType.value),
       command: (): void => {
         dialogAssignMember.value = true;
       },
@@ -444,10 +495,8 @@ const tableActions = computed<MenuItem[]>(() => {
       visible:
         selectedTask.value?.status === 'Pending Review Leader' &&
         selectedTask.value?.taskType === 'parent' &&
-        userType.value === 'teamLeader',
-      command: (): void => {
-        openReviewDialog();
-      },
+        userType.value.includes('teamLeader'),
+      command: openReviewDialog,
     },
     {
       label: 'Tandai Selesai',
@@ -457,7 +506,7 @@ const tableActions = computed<MenuItem[]>(() => {
           selectedTask.value?.status,
         ) &&
         selectedTask.value?.taskType === 'parent' &&
-        userType.value === 'member',
+        userType.value.includes('member'),
       command: (): void => {
         dialogConfirmFinishTask.value = true;
       },
@@ -470,7 +519,7 @@ const tableActions = computed<MenuItem[]>(() => {
       visible:
         ['Backlog', 'Sprint'].includes(selectedTask.value?.status) &&
         selectedTask.value?.taskType === 'parent' &&
-        ['admin', 'pm', 'teamLeader', 'member'].includes(userType.value),
+        isIntersect(['admin', 'pm', 'teamLeader', 'member'], userType.value),
       command: (): void => {
         dialogConfirmDeleteTask.value = true;
       },
@@ -540,7 +589,7 @@ const tableBulkActions = computed<MenuItem[]>(() => {
         selectedTasks.value?.every(
           (task) => task.isProjectManager || task.isTeamLeader,
         ) ||
-        userData?.permission?.manageProject ||
+        userType.value.includes('admin') ||
         selectedTasks.value?.every((task) =>
           task.assignedTo.some(
             (assignedUser) => assignedUser._id === userData?._id,
@@ -575,7 +624,16 @@ const tableBulkActions = computed<MenuItem[]>(() => {
   return props.tab === 'deleted' ? deletedBulkActions : otherBulkActions;
 });
 
-const userType = computed(() => {
+const canAssignPbiTask = computed<boolean>(
+  () =>
+    props.assignedPbiMembers?.length &&
+    !['Selesai', 'Pending Testing'].includes(props.selectedPbi?.status ?? '') &&
+    isIntersect(['admin', 'pm', 'teamLeader', 'member'], userType.value) &&
+    props.editablePbi,
+);
+
+const userType = computed<string[]>(() => {
+  const returnArray: string[] = [];
   const isAdmin = Object.values(
     userData?.permission?.manageProject || {},
   ).every((value) => value === true);
@@ -586,14 +644,10 @@ const userType = computed(() => {
     ? 'member'
     : 'guest';
 
-  if (isAdmin) {
-    return 'admin';
-  } else if (selectedTask.value?.isProjectManager) {
-    return 'pm';
-  } else if (selectedTask.value?.isTeamLeader) {
-    return 'teamLeader';
-  }
-  return memberType;
+  if (isAdmin) returnArray.push('admin');
+  if (selectedTask.value?.isProjectManager) returnArray.push('pm');
+  if (selectedTask.value?.isTeamLeader) returnArray.push('teamLeader');
+  return [memberType, ...returnArray];
 });
 
 const queryParamsByPage = computed(() => ({
@@ -605,6 +659,9 @@ const queryParamsByPage = computed(() => ({
     : undefined,
   subModule: props.page.includes('subModule')
     ? JSON.stringify([props.subModuleId])
+    : undefined,
+  pbi: props.page.includes('productBacklogItem')
+    ? JSON.stringify([props.selectedPbi?._id])
     : undefined,
 }));
 
@@ -630,6 +687,12 @@ const getTasks = async (
         query: params,
       });
       responseData = response.data;
+    } else if (props.page === 'project-productBacklogItem') {
+      const response = await TaskServices.getTasks({
+        ...queryParamsByPage.value,
+        ...params,
+      });
+      responseData = response.data;
     } else {
       const response = await TaskServices.getTasksByTab({
         tab: props.tab,
@@ -642,11 +705,11 @@ const getTasks = async (
       responseData = response.data;
     }
 
-    const formattedData: FetchResponse<TaskTableItem> = {
+    return {
       ...responseData,
       data: {
         ...responseData.data,
-        data: responseData.data.data.map((task: TaskTableItem) => ({
+        data: responseData.data?.data.map((task: TaskTableItem) => ({
           ...task,
           hasChildren:
             task.childTask > 0 ||
@@ -656,8 +719,8 @@ const getTasks = async (
         })),
       },
     };
-    return formattedData;
   } catch (error) {
+    console.error(error);
     toast.add({
       message: 'Data Task gagal dimuat.',
       error,
@@ -669,7 +732,7 @@ const getTaskOptions = async (
   field: keyof TaskTableOptionQuery,
 ): Promise<MultiSelectOption[]> => {
   try {
-    let responseData: FetchResponse;
+    let responseData: FetchOptionResponse<TaskOptions>;
     if (
       (['member-detail', 'my-profile'] as TaskTablePage[]).includes(props.page)
     ) {
@@ -677,6 +740,12 @@ const getTaskOptions = async (
         userId: props.page === 'my-profile' ? userData._id : props.userId,
         tab: props.tab,
         query: { ...queryParamsByPage.value, [field]: true },
+      });
+      responseData = response.data;
+    } else if (props.page === 'project-productBacklogItem') {
+      const response = await TaskServices.getTaskOptions({
+        ...queryParamsByPage.value,
+        [field]: true,
       });
       responseData = response.data;
     } else {
@@ -775,7 +844,10 @@ const selectProject = (projectId: string): void => {
 <!-- eslint-disable vue/html-indent -->
 <template>
   <div class="flex flex-col gap-2">
-    <div class="flex justify-end gap-4">
+    <div
+      :class="[{ '!gap-2': page === 'project-productBacklogItem' }]"
+      class="flex justify-end gap-4"
+    >
       <ButtonBulkAction
         v-model:selected-data="selectedTasks"
         :options="tableBulkActions"
@@ -787,28 +859,40 @@ const selectProject = (projectId: string): void => {
         @search="filters.global.value = $event"
         class="ml-auto"
       />
-      <ButtonDownload :table-name="tableName" file-name="Download" />
+      <ButtonDownload
+        v-if="page !== 'project-productBacklogItem'"
+        :table-name="tableName"
+        file-name="Download"
+      />
       <ButtonFilter v-model:show-filter="showFilter" :table-name="tableName" />
       <Button
+        v-if="page === 'project-productBacklogItem' && canAssignPbiTask"
+        @click="$emit('showUnassignedTask')"
+        label="Ambil Task"
+        severity="secondary"
+      />
+      <Button
         v-if="
-          props.tab === 'all' &&
-          (
-            [
-              'task',
-              'project-task',
-              'project-module',
-              'project-subModule',
-            ] as TaskTablePage[]
-          ).includes(props.page)
+          (props.tab === 'all' &&
+            (
+              [
+                'task',
+                'project-task',
+                'project-module',
+                'project-subModule',
+              ] as TaskTablePage[]
+            ).includes(props.page)) ||
+          (page === 'project-productBacklogItem' && canAssignPbiTask)
         "
+        :label="page === 'project-productBacklogItem' ? 'Task Baru' : 'Task'"
         @click="onClickCreateTask"
         icon="add"
-        label="Task"
         severity="secondary"
       />
     </div>
 
     <QuickFilter
+      v-if="page !== 'project-productBacklogItem'"
       :fields="quickFilterFields.filter((field) => field.visible)"
       :table-name="tableName"
     />
@@ -834,7 +918,7 @@ const selectProject = (projectId: string): void => {
           : 'none'
       "
       :table-name="tableName"
-      :tree-table="true"
+      :tree-table="page !== 'project-productBacklogItem'"
       @toggle-option="selectedTask = $event"
       data-key="_id"
       excel-toast-error-message="Data task gagal diunduh."
@@ -850,6 +934,7 @@ const selectProject = (projectId: string): void => {
     :initial-sub-module="
       props.subModuleId ? { _id: props.subModuleId } : undefined
     "
+    :product-backlog-item-id="props.selectedPbi?._id"
     :project-id="props.page === 'task' ? selectedProjectId : props.projectId"
     @create="reloadTable"
     @delete="reloadTable"
@@ -862,6 +947,7 @@ const selectProject = (projectId: string): void => {
     :initial-sub-module="
       props.subModuleId ? { _id: props.subModuleId } : undefined
     "
+    :product-backlog-item-id="props.selectedPbi?._id"
     :project-id="selectedTask?.project?._id"
     :task-id="selectedTask?._id"
     @create="reloadTable"

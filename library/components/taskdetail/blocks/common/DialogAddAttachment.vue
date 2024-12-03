@@ -61,11 +61,11 @@ const menus = shallowRef<MenuItem[]>([
 const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1 MB in bytes
 const MAX_VIDEO_SIZE = 10 * 1024 * 1024; // 10 MB in bytes
 
-const activeIndex = ref(0);
+const activeIndex = shallowRef<number>(0);
 
 const fileInput = ref<HTMLInputElement | null>(null);
-const fileInputKey = ref(0);
-const isHighlighted = ref(false);
+const fileInputKey = shallowRef<number>(0);
+const isHighlighted = shallowRef<boolean>(false);
 const files = ref<FormattedFile[]>([]);
 
 /**

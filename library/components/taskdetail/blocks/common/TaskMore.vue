@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, shallowRef } from 'vue';
 import Button from 'lib/components/button/Button.vue';
 import Menu from 'lib/components/menu/Menu.vue';
 import { MenuItem } from 'lib/components/menuitem';
@@ -12,7 +12,7 @@ const props = defineProps<{
 }>();
 
 const moreMenu = ref();
-const deleteConfirm = ref<boolean>(false);
+const deleteConfirm = shallowRef<boolean>(false);
 
 const moreModel: MenuItem[] = [
   {

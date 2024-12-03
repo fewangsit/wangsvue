@@ -5,7 +5,9 @@ const getImageURL = (
   if (!name) return;
 
   const BASE_URL = import.meta.env.VITE_APP_WANGSIT_FILES_API;
-  return `${BASE_URL}/files${width ? '/' + width : ''}${name}`;
+  return name.includes(BASE_URL)
+    ? name
+    : `${BASE_URL}/files${width ? '/' + width : ''}${name}`;
 };
 
 export default getImageURL;

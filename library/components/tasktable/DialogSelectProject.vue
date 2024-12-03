@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import DialogForm from 'lib/components/dialogform/DialogForm.vue';
-import { ref } from 'vue';
+import { ref, shallowRef } from 'vue';
 import Dropdown from '../dropdown/Dropdown.vue';
 import { DropdownOption } from 'lib/types/options.type';
 import { useToast } from 'lib/utils';
@@ -15,7 +15,7 @@ const emit = defineEmits<{
   saved: [projectId: string];
 }>();
 
-const isLoadingOptions = ref<boolean>(false);
+const isLoadingOptions = shallowRef<boolean>(false);
 const projectOptions = ref<DropdownOption[]>();
 
 const getProjectOptions = async (): Promise<void> => {

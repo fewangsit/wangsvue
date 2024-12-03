@@ -8,7 +8,7 @@ export interface DetailTaskProps {
    * V-model visible
    */
   visible: boolean;
-  projectId: string;
+  projectId: string | undefined;
   /**
    * The task's id.
    *
@@ -25,6 +25,7 @@ export interface DetailTaskProps {
     name?: string;
     repository?: string;
   };
+  productBacklogItemId?: string;
 }
 
 /**

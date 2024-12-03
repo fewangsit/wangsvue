@@ -57,7 +57,7 @@ const adjustPosition = async (): Promise<void> => {
       "
       :width="30"
       @click.stop="if (!userDisplayName) miniProfile.toggle($event);"
-      class="w-[30px] h-[30px]"
+      class="w-[30px] h-[30px] cursor-pointer"
       rounded
     />
 

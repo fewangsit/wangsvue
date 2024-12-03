@@ -1,7 +1,7 @@
 import isIntersect from './isIntersect';
 import getUser from './getUser.util';
 import { Project, Teams } from 'lib/types/project.type';
-import { RoleMemberPermission } from 'lib/types/role.detail.access.type';
+import { RoleMemberPermission } from 'lib/types/roleDetailAccess.type';
 
 const getUserPermission = (
   project?: Project,

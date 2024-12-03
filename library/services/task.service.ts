@@ -11,10 +11,7 @@ import {
   FetchResponse,
   QueryParams,
 } from 'lib/components/datatable/DataTable.vue.d';
-import {
-  Task,
-  TaskOptions,
-} from 'lib/components/dialogdetailpbi/DialogDetailPbi.vue.d';
+import { TaskOptions } from 'lib/components/dialogdetailpbi/DialogDetailPbi.vue.d';
 import { FetchOptionResponse } from 'lib/components/filtercontainer/FilterContainer.vue.d';
 import {
   TaskTableSubTab,
@@ -109,7 +106,7 @@ const TaskServices = {
 
   getTasks: (
     query: QueryParams,
-  ): Promise<AxiosResponse<FetchResponse<Task>>> => {
+  ): Promise<AxiosResponse<FetchResponse<TaskTableItem>>> => {
     return API().get('/', {
       params: query,
     });
@@ -131,7 +128,7 @@ const TaskServices = {
     tab: TaskTableTab;
     subTab?: TaskTableSubTab;
     query?: TaskTableOptionQuery;
-  }): Promise<AxiosResponse<FetchResponse>> => {
+  }): Promise<AxiosResponse<FetchOptionResponse<TaskOptions>>> => {
     const { tab, query, subTab } = args;
     const endpoint = subTab ? `/${tab}/${subTab}/options` : `/${tab}/options`;
     return API().get(endpoint, {
@@ -154,7 +151,7 @@ const TaskServices = {
     userId: string;
     tab: TaskTableTab;
     query?: TaskTableOptionQuery;
-  }): Promise<AxiosResponse<FetchResponse>> => {
+  }): Promise<AxiosResponse<FetchOptionResponse<TaskOptions>>> => {
     const { tab, query, userId } = args;
     return API().get(`/${tab}/user/${userId}/options`, {
       params: query,
