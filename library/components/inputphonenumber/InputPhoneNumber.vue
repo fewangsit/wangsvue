@@ -7,7 +7,6 @@ import {
   watch,
   onBeforeMount,
   shallowRef,
-  ref,
   inject,
 } from 'vue';
 import axios from 'axios';
