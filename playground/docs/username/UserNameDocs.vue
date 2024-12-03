@@ -6,7 +6,7 @@ import UserGroup from 'lib/components/usergroup/UserGroup.vue';
 import { ref } from 'vue';
 
 const user = ref({
-  _id: '66d1771c1ebe5344bc2b9dab',
+  _id: '673ee87e4e75dd5bb41d970f',
   company: '65ea78abf45825785b68a2d7',
   companyName: 'PT V2',
   companyCode: '000v2',
@@ -41,11 +41,17 @@ const testUser = {
         <div class="flex gap-4">
           <UserName :user="user" user-name-field="fullName" />
           <UserName :user="user" type="icon" user-name-field="fullName" />
+          <UserName :user="user" type="icon" user-name-field="fullName" />
           <UserName
             :user="testUser"
             profile-picture-field="photo"
             type="picture"
             user-name-field="name"
+          />
+          <UserName
+            :user="testUser"
+            profile-picture-field="photo"
+            type="picture"
           />
         </div>
       </div>
@@ -57,7 +63,7 @@ const testUser = {
           <div>
             <UserGroup
               :limit="2"
-              :users="[testUser, testUser, testUser]"
+              :users="[user, testUser, testUser]"
               profile-picture-field="photo"
             />
           </div>

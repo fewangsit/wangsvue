@@ -206,7 +206,7 @@ const getGalleryImageSrc = (src?: string | Blob): string | undefined => {
               { '!opacity-100': currentGalleryImage == index },
             ]"
             :onerror="onErrorLoadImage"
-            :src="getImageURL(src as string)"
+            :src="getGalleryImageSrc(src)"
             :style="slotProps.style"
             @click.stop="handleThumbnailClick(index)"
             alt=""

@@ -1,6 +1,86 @@
 # Changelog
 
 
+## v1.5.83
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.82...v1.5.83)
+
+### 🚀 Enhancements
+
+- **DataTable:** Emits sort with payload ([92b1411](https://github.com/fewangsit/wangsvue/commit/92b1411))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.82
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.81...v1.5.82)
+
+## v1.5.81
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.80...v1.5.81)
+
+## v1.5.80
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.79...v1.5.80)
+
+## v1.5.79
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.78...v1.5.79)
+
+### 🚀 Enhancements
+
+- **taskdetail:** Add sonarqube summary in task detail ([8ec6c40](https://github.com/fewangsit/wangsvue/commit/8ec6c40))
+
+### 🩹 Fixes
+
+- **jBeUplib:** Add margin-bottom for taskdetail dialog ([21b7e9d](https://github.com/fewangsit/wangsvue/commit/21b7e9d))
+- **taskdetail:** Remove 'Create API' from taskdetail process options ([ac46b83](https://github.com/fewangsit/wangsvue/commit/ac46b83))
+- Update baseurl for sonarqube.service ([e8ba0d9](https://github.com/fewangsit/wangsvue/commit/e8ba0d9))
+
+### 🏡 Chore
+
+- Add explanation comments in vite.config files ([6e5b729](https://github.com/fewangsit/wangsvue/commit/6e5b729))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
+## v1.5.78
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.77...v1.5.78)
+
+### 🚀 Enhancements
+
+- **Icon:** Add list-settings-line icon ([5447711](https://github.com/fewangsit/wangsvue/commit/5447711))
+- **UserName:** Show overlay instead of image preview if undefined nickname ([a0f2c1a](https://github.com/fewangsit/wangsvue/commit/a0f2c1a))
+- Notification item component ([0511de4](https://github.com/fewangsit/wangsvue/commit/0511de4))
+
+### 🩹 Fixes
+
+- **Detail Task:** Error query params data ([c838482](https://github.com/fewangsit/wangsvue/commit/c838482))
+- **OverlayPanel:** Hide on click other overlay ([2977044](https://github.com/fewangsit/wangsvue/commit/2977044))
+- Linter issues ([488b072](https://github.com/fewangsit/wangsvue/commit/488b072))
+
+### 💅 Refactors
+
+- **SprintDetail:** Detail of overdue and bugged PBI cannot be viewed ([55b9051](https://github.com/fewangsit/wangsvue/commit/55b9051))
+- **Image:** Change get image function ([1320c39](https://github.com/fewangsit/wangsvue/commit/1320c39))
+- **UserGroup:** Use UserName instead of Image ([fc7c3e0](https://github.com/fewangsit/wangsvue/commit/fc7c3e0))
+- **UserName:** Change skeleton heights ([9ae0284](https://github.com/fewangsit/wangsvue/commit/9ae0284))
+- **UserName:** Place overlay below username ([d9b85b4](https://github.com/fewangsit/wangsvue/commit/d9b85b4))
+
+### 🏡 Chore
+
+- **presets:** Update version ([07112dd](https://github.com/fewangsit/wangsvue/commit/07112dd))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Programmer-mob5 <programmer-mob5@qwertysystem.net>
+
 ## v1.5.77
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.76...v1.5.77)

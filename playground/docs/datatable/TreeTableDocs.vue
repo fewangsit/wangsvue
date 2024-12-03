@@ -360,6 +360,7 @@ const filters = ref<any>({
         :use-paginator="usePaginator"
         @input="console.log($event)"
         @row-reorder="console.log($event)"
+        @sort="console.log"
         @toggle-option="console.log"
         @update:single-selection="console.log"
         data-key="_id"

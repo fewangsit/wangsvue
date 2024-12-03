@@ -484,7 +484,7 @@ const handlePageChange = async (event: PageState): Promise<void> => {
   });
 };
 
-const sortColumn = (field: string): void => {
+const sortColumn = (field: string, e: Event): void => {
   if (field !== sortBy.value) sortOrder.value = undefined; // Resets the sort order when the column sorted changed
 
   sortBy.value = field;
@@ -497,6 +497,13 @@ const sortColumn = (field: string): void => {
   } else {
     sortOrder.value = -1;
   }
+
+  emit('sort', {
+    sortOrder: sortOrder.value,
+    sortField: sortBy.value,
+    originalEvent: e,
+    rows: tableRows.value,
+  });
 
   resetPage();
   reFetch();
@@ -602,7 +609,6 @@ const downloadExcel = async ({
   multiTableNames,
   fileName,
   additionalTexts,
-  showTableName = false,
 }: Events['data-table:download']): Promise<void> => {
   if (
     tableName !== props.tableName &&
@@ -908,7 +914,7 @@ const listenUpdateTableEvent = (): void => {
                 v-for="col in visibleColumns"
                 :class="[col.headerClass, col.class]"
                 v-bind="headerCellPreset(col)"
-                @click="col.sortable ? sortColumn(col.field) : null"
+                @click="col.sortable ? sortColumn(col.field, $event) : null"
               >
                 <span v-bind="Preset.headercellcontent">
                   {{ col.header }}

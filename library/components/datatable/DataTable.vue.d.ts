@@ -27,10 +27,6 @@ export interface DataTableSortEvent {
    */
   originalEvent: Event;
   /**
-   * Index of first record
-   */
-  first: number;
-  /**
    * Number of rows to display in new page
    */
   rows: number;
@@ -42,34 +38,6 @@ export interface DataTableSortEvent {
    * Sort order as integer
    */
   sortOrder: 1 | 0 | -1 | undefined | null;
-  /**
-   * Collection of active filters
-   * @see DataTableFilterMeta
-   */
-  filters: DataTableFilterMeta;
-  /**
-   * Match modes per field
-   */
-  filterMatchModes:
-    | HintedString<
-        | 'startsWith'
-        | 'contains'
-        | 'notContains'
-        | 'endsWith'
-        | 'equals'
-        | 'notEquals'
-        | 'in'
-        | 'lt'
-        | 'lte'
-        | 'gt'
-        | 'gte'
-        | 'between'
-        | 'dateIs'
-        | 'dateIsNot'
-        | 'dateBefore'
-        | 'dateAfter'
-      >
-    | undefined;
 }
 
 /**

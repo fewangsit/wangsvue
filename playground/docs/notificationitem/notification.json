@@ -1,0 +1,226 @@
+{
+  "status": 200,
+  "message": "Successfully get readed notification",
+  "data": {
+    "totalRecords": 3479,
+    "data": [
+      {
+        "_id": "67497e6109e54f1f61aa4d8b",
+        "user": "66d1771c1ebe5344bc2b9dab",
+        "title": "Reminder: Ganti Password Akun Performance Testing",
+        "detail": "Proyek Tes QC",
+        "isRead": false,
+        "isManager": false,
+        "isActioned": true,
+        "isReadOnly": false,
+        "module": "Account Member",
+        "severity": "warning",
+        "category": "change-password",
+        "type": null,
+        "__v": 0,
+        "createdAt": "2024-11-29T08:42:09.917Z",
+        "updatedAt": "2024-11-29T08:42:09.917Z"
+      },
+      {
+        "_id": "67497e6109e54f1f61aa4d82",
+        "user": "66d1771c1ebe5344bc2b9dab",
+        "title": "Reminder: Ganti Password Skenario Testing",
+        "detail": "Proyek Tes QC",
+        "isRead": false,
+        "isManager": false,
+        "isActioned": true,
+        "isReadOnly": false,
+        "module": "Account Member",
+        "severity": "warning",
+        "category": "change-password",
+        "type": null,
+        "__v": 0,
+        "createdAt": "2024-11-29T08:42:09.901Z",
+        "updatedAt": "2024-11-29T08:42:09.901Z"
+      },
+      {
+        "_id": "674965e709e54f1f61aa4c30",
+        "user": "66d1771c1ebe5344bc2b9dab",
+        "title": "Reminder: Ganti Password Akun Figma & Github",
+        "detail": "Project",
+        "isRead": false,
+        "isManager": false,
+        "isActioned": true,
+        "isReadOnly": false,
+        "module": "Account Member",
+        "severity": "warning",
+        "category": "change-password",
+        "type": null,
+        "__v": 0,
+        "createdAt": "2024-11-29T06:57:43.882Z",
+        "updatedAt": "2024-11-29T06:57:43.882Z"
+      },
+      {
+        "_id": "67497db009e54f1f61aa4d52",
+        "user": "66d1771c1ebe5344bc2b9dab",
+        "title": "Ada 1 sub modul yang siap di E2E testing",
+        "detail": "Proyek Kamis Indah > Backend > Backend",
+        "isRead": false,
+        "isManager": false,
+        "isActioned": true,
+        "isReadOnly": false,
+        "data": {
+          "projectId": "674812cee485d2467bc3296b",
+          "moduleId": "67482700d1ee5d01c326ff6d",
+          "subModuleId": "674919c52847477dc9867ed3",
+          "platform": "mobile"
+        },
+        "module": "Quality Control",
+        "severity": "success",
+        "category": "barricade",
+        "type": null,
+        "__v": 0,
+        "createdAt": "2024-11-29T08:39:12.434Z",
+        "updatedAt": "2024-11-29T08:39:12.434Z"
+      },
+      {
+        "_id": "6749370109e54f1f61aa4b64",
+        "user": "66d1771c1ebe5344bc2b9dab",
+        "title": "Proyek telah diedit",
+        "detail": "Tokopaedi",
+        "isRead": false,
+        "isManager": false,
+        "isActioned": true,
+        "isReadOnly": false,
+        "data": {
+          "projectId": "6706205a9bdcad72db257110"
+        },
+        "module": "Project",
+        "severity": "warning",
+        "category": "barricade",
+        "type": null,
+        "__v": 0,
+        "createdAt": "2024-11-29T03:37:37.859Z",
+        "updatedAt": "2024-11-29T03:46:37.885Z"
+      },
+      {
+        "_id": "67493ec109e54f1f61aa4bad",
+        "user": "66d1771c1ebe5344bc2b9dab",
+        "title": "Kamu telah di-assign sebagai proyek manager",
+        "detail": "Celalu Indah Aku",
+        "isRead": false,
+        "isManager": false,
+        "isActioned": true,
+        "isReadOnly": false,
+        "data": {
+          "projectId": "67493ebff8ab8a4bbdb99568"
+        },
+        "module": "Project",
+        "severity": "success",
+        "category": "user-star",
+        "type": null,
+        "__v": 0,
+        "createdAt": "2024-11-29T04:10:41.980Z",
+        "updatedAt": "2024-11-29T04:10:41.980Z"
+      },
+      {
+        "_id": "6749814309e54f1f61aa4db9",
+        "user": "66d1771c1ebe5344bc2b9dab",
+        "title": "Ticket Report Bug Performane ditandai Cancel Ticket",
+        "detail": "#TP291124004 Report Bug Performane",
+        "isRead": false,
+        "isManager": false,
+        "isActioned": true,
+        "isReadOnly": false,
+        "data": {
+          "ticketId": "67495eb2e0340477df9b4ce5",
+          "user": {
+            "_id": "673ee87e4e75dd5bb41d970f",
+            "nickName": "Ucok"
+          }
+        },
+        "module": "Ticket",
+        "severity": "danger",
+        "category": "ticket",
+        "type": null,
+        "__v": 0,
+        "createdAt": "2024-11-29T08:54:27.356Z",
+        "updatedAt": "2024-11-29T08:54:27.356Z"
+      },
+      {
+        "_id": "6749685309e54f1f61aa4c46",
+        "user": "66d1771c1ebe5344bc2b9dab",
+        "title": "Ada komentar baru pada modul Komponen",
+        "detail": "Matex Wall Filler > Komponen",
+        "isRead": false,
+        "isManager": false,
+        "isActioned": true,
+        "isReadOnly": false,
+        "data": {
+          "moduleId": "67496769f8ab8a4bbdb9a43a",
+          "projectId": "67496769f8ab8a4bbdb9a3f6"
+        },
+        "module": "Comment",
+        "severity": "success",
+        "category": "chat",
+        "type": null,
+        "__v": 0,
+        "createdAt": "2024-11-29T07:08:03.589Z",
+        "updatedAt": "2024-11-29T07:08:03.589Z"
+      },
+      {
+        "_id": "6749690809e54f1f61aa4c5f",
+        "user": "66d1771c1ebe5344bc2b9dab",
+        "title": "Reminder: Masukkan Domain Name Server",
+        "detail": "Proyek Kamis Indah",
+        "isRead": false,
+        "isManager": false,
+        "isActioned": true,
+        "isReadOnly": false,
+        "data": {
+          "projectId": "674812cee485d2467bc3296b"
+        },
+        "module": "API & Server ",
+        "severity": "success",
+        "category": "barricade",
+        "type": null,
+        "__v": 0,
+        "createdAt": "2024-11-29T07:11:04.550Z",
+        "updatedAt": "2024-11-29T07:11:04.550Z"
+      },
+      {
+        "_id": "6749877209e54f1f61aa4dec",
+        "user": "66d1771c1ebe5344bc2b9dab",
+        "title": "Kamu telah di-unassign dari sub modul",
+        "detail": "Proyek Selasa Test Sprint > Modul Buat Submodul > test hapus",
+        "isRead": false,
+        "isManager": false,
+        "isActioned": true,
+        "isReadOnly": true,
+        "module": "Sub Modul",
+        "severity": "danger",
+        "category": "barricade",
+        "type": null,
+        "__v": 0,
+        "createdAt": "2024-11-29T09:20:50.743Z",
+        "updatedAt": "2024-11-29T09:20:50.743Z"
+      },
+      {
+        "_id": "67496f6609e54f1f61aa4d14",
+        "user": "66d1771c1ebe5344bc2b9dab",
+        "title": "Ada komentar baru pada Form Input task",
+        "detail": "Matex Wall Filler > Komponen > Form Input",
+        "isRead": false,
+        "isManager": false,
+        "isActioned": true,
+        "isReadOnly": false,
+        "data": {
+          "projectId": "67496769f8ab8a4bbdb9a3f6",
+          "taskId": "67496e2dcbcdd736d25eddfc"
+        },
+        "module": "Comment",
+        "severity": "success",
+        "category": "chat",
+        "type": null,
+        "__v": 0,
+        "createdAt": "2024-11-29T07:38:14.603Z",
+        "updatedAt": "2024-11-29T07:45:30.512Z"
+      }
+    ]
+  }
+}
