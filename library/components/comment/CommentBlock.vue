@@ -251,7 +251,7 @@ watch(props, () => {
       <OverlayPanel ref="savedEmojiOverlayPanel">
         <div class="w-52 h-40 flex">
           <div
-            class="flex flex-col bg-grayscale-200 py-[1px] px-[5px] items-center cursor-pointer"
+            class="flex flex-col bg-grayscale-200 py-[1px] px-[5px] items-center cursor-pointer overflow-y-scroll overflow-x-hidden"
           >
             <p @click="selectedSavedReaction = reactions" class="py-1">All</p>
             <div
@@ -268,7 +268,7 @@ watch(props, () => {
               </p>
             </div>
           </div>
-          <div class="w-full flex flex-col">
+          <div class="w-full flex flex-col overflow-y-scroll overflow-x-hidden">
             <div
               :key="index"
               v-for="(selectedReaction, index) in selectedSavedReaction"
@@ -279,7 +279,7 @@ watch(props, () => {
                 v-for="(user, i) in selectedReaction.users"
                 :class="[
                   `${user._id === props.user._id ? 'border-[1px] border-primary-400' : ''}`,
-                  'flex gap-1 w-full py-1 justify-between flex-1 rounded-sm items-center',
+                  'flex gap-1 w-full py-1 justify-between flex-1 rounded-sm items-center ',
                 ]"
                 @click="deleteReaction(props._id, selectedReaction)"
               >
