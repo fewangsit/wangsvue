@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { navigateToUrl } from 'single-spa';
+import { computed } from 'vue';
 import {
   goToAccountMember,
   goToProject,
@@ -19,12 +20,12 @@ import NotificationServices from 'lib/services/notification.service';
 
 const toast = useToast();
 
-defineProps<NotificationItemProps>();
+const props = defineProps<NotificationItemProps>();
 
 const emit = defineEmits<NotificationItemEmits>();
 
-const getBgClass = (notification: NotificationItemType): string => {
-  switch (notification.severity) {
+const bgClass = computed<string>(() => {
+  switch (props.notification.severity) {
     case 'danger':
       return 'bg-danger-500';
     case 'warning':
@@ -37,10 +38,10 @@ const getBgClass = (notification: NotificationItemType): string => {
     default:
       return 'bg-grayscale-900';
   }
-};
+});
 
-const getIcon = (notification: NotificationItemType): WangsIcons => {
-  switch (notification.category) {
+const icon = computed<WangsIcons>(() => {
+  switch (props.notification.category) {
     case 'barricade':
       return 'barricade-line';
     case 'bug':
@@ -48,9 +49,9 @@ const getIcon = (notification: NotificationItemType): WangsIcons => {
     case 'delete':
       return 'delete-bin';
     default:
-      return notification.category as WangsIcons;
+      return props.notification.category;
   }
-};
+});
 
 const onClickNotification = async (
   notification: NotificationItemType,
@@ -128,10 +129,10 @@ const goToDetail = (notification: NotificationItemType): void => {
     <!-- Notification Icon -->
     <div class="flex items-center">
       <div
-        :class="getBgClass(notification)"
+        :class="bgClass"
         class="flex size-[30px] rounded-full justify-center items-center border border-general relative"
       >
-        <Icon :icon="getIcon(notification)" class="text-base text-white" />
+        <Icon :icon="icon" class="text-base text-white" />
         <div
           v-if="!notification.isRead"
           class="size-[10px] border border-white rounded-full bg-success-500 absolute top-0 -left-[3px]"
