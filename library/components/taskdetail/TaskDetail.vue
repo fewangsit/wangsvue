@@ -470,7 +470,7 @@ watch(
               :search="commentSearch"
               :user="{
                 _id: user?._id,
-                fullName: user?.fullName,
+                name: user?.fullName,
                 profilePicture: user?.profilePictureMedium,
               }"
               comment-type="task"
