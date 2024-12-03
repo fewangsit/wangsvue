@@ -401,9 +401,7 @@ watch(
             v-if="
               !isNewTask &&
               userType !== 'guest' &&
-              ['Backlog', 'Sprint', 'Waiting Approval'].includes(
-                taskDetail?.status,
-              )
+              ['Backlog', 'Sprint'].includes(taskDetail?.status)
             "
             :task-detail="taskDetail"
           />
@@ -472,7 +470,7 @@ watch(
               :search="commentSearch"
               :user="{
                 _id: user?._id,
-                fullName: user?.fullName,
+                name: user?.fullName,
                 profilePicture: user?.profilePictureMedium,
               }"
               comment-type="task"

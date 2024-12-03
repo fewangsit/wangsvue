@@ -186,7 +186,10 @@ const getDuration = (duration: number): string => {
               '!w-[150px] !h-[30px] !text-left !rounded',
               {
                 'pointer-events-none':
-                  isContinousDuration || taskDetail?.status !== 'Backlog',
+                  isContinousDuration ||
+                  !['Backlog', 'Waiting for Approval'].includes(
+                    taskDetail?.status,
+                  ),
               },
             ]"
             :disabled="isNewTask"
@@ -204,7 +207,9 @@ const getDuration = (duration: number): string => {
                 {
                   'pointer-events-none':
                     taskDetail?.process?.name === 'API Spec' ||
-                    taskDetail?.status !== 'Backlog',
+                    !['Backlog', 'Waiting for Approval'].includes(
+                      taskDetail?.status,
+                    ),
                 },
               ]"
               :disabled="isNewTask"
