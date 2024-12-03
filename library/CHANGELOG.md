@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v1.5.87
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.85...v1.5.87)
+
+### 🚀 Enhancements
+
+- Add dropdown to QuickFilter ([23cdde5](https://github.com/fewangsit/wangsvue/commit/23cdde5))
+
+### 🩹 Fixes
+
+- **Hi69eZl4:** Update conditions for showing submodule field in taskdependency ([13b0f40](https://github.com/fewangsit/wangsvue/commit/13b0f40))
+- **8Yla8Mue:** Update badge status severity for 'Waiting for Approval' in taskdetail and tasktable ([2e440a6](https://github.com/fewangsit/wangsvue/commit/2e440a6))
+- **8MgTxoJ7:** Update conditions for disabling set duration and start date ib taskdetail ([2333124](https://github.com/fewangsit/wangsvue/commit/2333124))
+- **c5ngZcIY:** Update condition for showing 'Tandai Selesai' button in taskdetail ([c17e284](https://github.com/fewangsit/wangsvue/commit/c17e284))
+- **taskdetail:** Update field for user props in comment of taskdetail ([770fa46](https://github.com/fewangsit/wangsvue/commit/770fa46))
+
+### 🏡 Chore
+
+- **release:** V1.5.86 ([2f07119](https://github.com/fewangsit/wangsvue/commit/2f07119))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.86
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.85...v1.5.86)
