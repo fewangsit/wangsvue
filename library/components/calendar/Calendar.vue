@@ -99,8 +99,8 @@ const setClass = async (): Promise<void> => {
    * Styles for the non-selected days.
    */
   nonHighlights.forEach((element) => {
-    element.style.backgroundColor = 'rgb(255 255 255 / var(--tw-bg-opacity))';
-    element.style.borderRadius = '0px';
+    element.style.backgroundColor = '';
+    element.style.borderRadius = '';
   });
 
   const today: HTMLElement = document.querySelector(
@@ -111,8 +111,8 @@ const setClass = async (): Promise<void> => {
    * Styles for the current day.
    */
   if (today) {
-    today.style.backgroundColor = 'rgb(189 165 82 / var(--tw-bg-opacity))';
-    today.style.borderRadius = '0px';
+    today.style.backgroundColor = '';
+    today.style.borderRadius = '';
   }
 
   const highlights: NodeListOf<HTMLElement> = document.querySelectorAll(
@@ -123,8 +123,8 @@ const setClass = async (): Promise<void> => {
    * Styles for the selected days.
    */
   highlights.forEach((element) => {
-    element.style.backgroundColor = 'rgb(189 165 82 / var(--tw-bg-opacity))';
-    element.style.borderRadius = '0px';
+    element.style.backgroundColor = '';
+    element.style.borderRadius = '';
   });
 
   /**
@@ -135,8 +135,8 @@ const setClass = async (): Promise<void> => {
       'rgb(105 82 0 / var(--tw-bg-opacity))';
     highlights[0].style.borderTopLeftRadius = '9999px';
     highlights[0].style.borderBottomLeftRadius = '9999px';
-    highlights[0].style.borderTopRightRadius = '0px';
-    highlights[0].style.borderBottomRightRadius = '0px';
+    highlights[0].style.borderTopRightRadius = '';
+    highlights[0].style.borderBottomRightRadius = '';
   }
 
   if (highlights[highlights.length - 1]) {
