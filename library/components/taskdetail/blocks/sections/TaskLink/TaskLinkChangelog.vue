@@ -15,7 +15,7 @@ const toast = useToast();
 const visible = defineModel<boolean>('visible', { required: true });
 
 const props = defineProps<{
-  type: TaskLinkType;
+  type?: TaskLinkType;
 }>();
 
 const taskId = inject<Ref<string>>('taskId');
