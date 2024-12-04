@@ -295,7 +295,7 @@ const setField = (): void => {
 
           return (props.label ?? 'Photo') + ' must be uploaded';
         } else if (props.invalid && props.validatorMessage) {
-          return props.validatorMessage;
+          return props.validatorMessage as string;
         } else if (invalidMessage.value) {
           return invalidMessage.value;
         }
