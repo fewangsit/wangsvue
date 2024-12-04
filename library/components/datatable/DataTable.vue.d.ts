@@ -257,7 +257,7 @@ export interface TableColumn {
    */
   booleanValue?: boolean;
   bodyTemplate?: (data: any, index: number) => string | undefined;
-  bodyComponent?: (data: any) => TableCellComponent;
+  bodyComponent?: (data: any, index: number) => TableCellComponent;
   headerTemplate?: () => string;
   headerComponent?: () => {
     component: string | Component;

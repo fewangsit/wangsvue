@@ -1206,20 +1206,22 @@ const listenUpdateTableEvent = (): void => {
                       "
                     >
                       <component
-                        :is="col.bodyComponent!(item).component"
+                        :is="col.bodyComponent!(item, index).component"
                         v-if="col.bodyComponent"
-                        v-model="col.bodyComponent!(item).model"
-                        :disabled="col.bodyComponent!(item).disabled"
-                        v-bind="col.bodyComponent!(item).props"
+                        v-model="col.bodyComponent!(item, index).model"
+                        :disabled="col.bodyComponent!(item, index).disabled"
+                        v-bind="col.bodyComponent!(item, index).props"
                         v-on="
-                          col.bodyComponent!(item).events
-                            ? col.bodyComponent!(item).events
+                          col.bodyComponent!(item, index).events
+                            ? col.bodyComponent!(item, index).events
                             : {}
                         "
-                        @change="col.bodyComponent!(item).onChange?.(item)"
+                        @change="
+                          col.bodyComponent!(item, index).onChange?.(item)
+                        "
                         @click.stop=""
                         @update:model-value="
-                          col.bodyComponent!(item).onChange?.(item)
+                          col.bodyComponent!(item, index).onChange?.(item)
                         "
                       />
 
