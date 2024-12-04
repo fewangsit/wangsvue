@@ -47,7 +47,7 @@ const hasReachMaxColumn = computed(() => {
 const columnReorderData = ref<DragableColumn[]>([]);
 
 const draggedColumn = shallowRef<DragableColumn>();
-const visibilityMenu = ref<typeof Menu>();
+const visibilityMenu = ref<Menu>();
 const visibilityMenuId = computed<string>(
   () => 'column-visibility-menu-' + props.tableId,
 );

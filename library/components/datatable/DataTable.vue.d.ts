@@ -178,7 +178,7 @@ export interface ColumnMultiRowPreset {
 
 export interface MultiRowAttribute {
   class?: string | string[];
-  value: string;
+  value?: string;
 }
 
 export type ColumnPreset = ColumnTogglePreset | ColumnMultiRowPreset;
@@ -364,10 +364,16 @@ export type ChildTableProps = Partial<Omit<TreeTableProps, 'fetchFunction'>> & {
   /**
    * The function to fetch data on row expand
    */
-  fetchFunction?: (parentData: Data) => Promise<ShortFetchResponse | undefined>;
+  fetchFunction?: (
+    parentData: Data,
+  ) => Promise<ShortFetchResponse<ChildGroup> | undefined>;
 };
 
-export interface TreeTableProps extends Omit<BaseDataTableProps, 'columns'> {
+export interface TreeTableProps
+  extends Omit<
+    BaseDataTableProps,
+    'columns' | 'treeTable' | 'childTableProps'
+  > {
   /**
    * Activate tree table mode
    */
@@ -387,6 +393,11 @@ export interface TreeTableProps extends Omit<BaseDataTableProps, 'columns'> {
 }
 
 export interface BaseDataTableProps {
+  /**
+   * Disable tree table mode
+   */
+  treeTable?: false;
+  childTableProps?: undefined;
   /**
    * Optional property to set a unique name for the table. This name will be used as part of the unique table ID.
    *
@@ -612,7 +623,7 @@ export type TreeTableEmits = BaseDataTableEmits & {
   'rowReorder': [payload?: DataTableRowReorderEvent];
 };
 
-export type DataTableEmits = BaseDataTableEmits | TreeTableEmits;
+export type DataTableEmits = TreeTableEmits;
 
 /**
  * **WangsVue - DataTable**

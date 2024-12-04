@@ -3,6 +3,8 @@ import { MenuItem } from 'lib/components/menuitem';
 import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
 import {
+  ChildGroup,
+  Data,
   FetchResponse,
   QueryParams,
   ShortFetchResponse,
@@ -230,9 +232,9 @@ const subColumns: TreeTableColumns[] = [
   },
 ];
 
-const getTableChildData = async (parentData: {
-  _id: string;
-}): Promise<ShortFetchResponse | undefined> => {
+const getTableChildData = async (
+  parentData: Data,
+): Promise<ShortFetchResponse<ChildGroup> | undefined> => {
   // eslint-disable-next-line no-console
   console.log('🚀 ~ params:', parentData._id);
   // Simulate an asynchronous operation (even though we're returning static data)
