@@ -9,7 +9,7 @@ const props = defineProps<Dependency>();
     <span class="flex items-center">
       {{ props.done }}
       <Icon
-        class="w-[24px] h-[24px] ml-[2px]"
+        class="!w-[24px] !h-[24px] ml-[2px]"
         icon="checkbox-circle-fill"
         severity="success"
       />
@@ -18,7 +18,7 @@ const props = defineProps<Dependency>();
     <span class="flex items-center">
       {{ props.onProgress ?? 0 }}
       <Icon
-        class="w-[24px] h-[24px] ml-[2px]"
+        class="!w-[24px] !h-[24px] ml-[2px]"
         icon="close-circle-fill"
         severity="danger"
       />

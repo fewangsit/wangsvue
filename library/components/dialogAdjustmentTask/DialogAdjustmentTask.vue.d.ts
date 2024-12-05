@@ -1,3 +1,4 @@
+import { Member } from 'lib/dto/member.dto';
 import { FetchResponse } from '../datatable/DataTable.vue.d';
 import { ClassComponent } from '../ts-helpers';
 
@@ -106,7 +107,8 @@ export type TaskStatus =
   | 'Reported Bug'
   | 'Pending Review Leader'
   | 'Sprint'
-  | 'Backlog';
+  | 'Backlog'
+  | 'Selesai';
 
 interface Process {
   name: string;
@@ -125,7 +127,7 @@ interface Module {
   _id: string;
 }
 
-interface AssignedTo {
+export interface AssignedTo extends Record<string, unknown> {
   fullName: string;
   nickName: string;
   key: number;
@@ -138,4 +140,9 @@ interface AssignedTo {
 export interface Dependency {
   done: number;
   onProgress: number;
+}
+
+export interface UpdateTaskMemberItemLocal {
+  task: Task;
+  newMember: AssignedTo[];
 }

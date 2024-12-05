@@ -22,6 +22,11 @@ const badgeSeverity = computed((): Pick<BadgeProps, 'severity'> => {
       return {
         severity: 'dark',
       };
+    case 'Selesai': {
+      return {
+        severity: 'success',
+      };
+    }
     default:
       return {
         severity: 'danger',

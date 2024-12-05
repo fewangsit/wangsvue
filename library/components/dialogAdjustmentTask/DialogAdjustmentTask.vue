@@ -2,17 +2,18 @@
 import { ref, shallowRef, watch } from 'vue';
 import { useToast } from 'lib/utils';
 import { QueryParams } from '../datatable/DataTable.vue.d';
-import { UpdateTaskMemberDTO, UpdateTaskMemberItem } from 'lib/dto/task.dto';
 import { FormPayload } from '../form/Form.vue.d';
-import { DropdownOption } from 'lib/types/options.type';
 import {
+  AssignedTo,
   DialogAdjustmentTaskBulkActionType,
   DialogAdjustmentTaskEmits,
   DialogAdjustmentTaskProps,
   DialogAdjustmentTaskSingleActionType,
   Task,
   TaskListResponse,
+  UpdateTaskMemberItemLocal,
 } from './DialogAdjustmentTask.vue.d';
+import { Member } from 'lib/dto/member.dto';
 import { dialogAdjustmentTaskTableColumn } from './options/dialogAdjustmentTaskTableColumn';
 import { dialogAdjustmentTaskSingleAction } from './options/dialogAdjustmentTaskSingleAction';
 
@@ -26,6 +27,7 @@ import eventBus from 'lib/event-bus';
 import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
 import Icon from '../icon/Icon.vue';
 import TaskDetail from '../taskdetail/TaskDetail.vue';
+import SubModuleServices from 'lib/services/submodule.service';
 
 const toast = useToast();
 
@@ -38,14 +40,13 @@ const props = withDefaults(defineProps<DialogAdjustmentTaskProps>(), {
 
 const visibility = defineModel('visibility');
 const emit = defineEmits<DialogAdjustmentTaskEmits>();
-const actionType = shallowRef<'single' | 'bulk'>();
+const actionType = shallowRef<'single' | 'bulk' | 'submitAll'>();
 
 const selectedData = ref<Task[]>();
 const singleSelectedData = shallowRef<Task>();
 
-const unassignNewMember = ref<UpdateTaskMemberItem[]>([]);
-const memberListData = shallowRef<DropdownOption[]>();
-const newMemberPayload = shallowRef<string>();
+const unassignNewMember = ref<UpdateTaskMemberItemLocal[]>([]);
+const memberListData = shallowRef<Member[]>();
 
 const dialogVisibility = shallowRef<boolean>(false);
 const assignNewMemberVisbility = shallowRef<boolean>(false);
@@ -59,15 +60,14 @@ const singleActionEmitter = (
   selectedData.value = undefined;
   switch (singleActipnType) {
     case 'assign-new-member': {
-      unassignNewMember.value = [];
       getMemberList(singleSelectedData.value.team);
       assignNewMemberVisbility.value = true;
       break;
     }
     case 'unassign-new-member': {
       unassignNewMember.value.push({
-        task: singleSelectedData.value._id,
-        member: '',
+        task: singleSelectedData.value,
+        newMember: [],
       });
       refreshDataTable();
       break;
@@ -86,7 +86,6 @@ const bulkActionEmitter = (
   singleSelectedData.value = undefined;
   switch (bulkActionType) {
     case 'assign-new-member': {
-      unassignNewMember.value = [];
       getMemberList(
         Array.from(new Set(selectedData.value.flatMap((item) => item.team))),
       );
@@ -96,8 +95,8 @@ const bulkActionEmitter = (
     case 'unassign-new-member': {
       selectedData.value.forEach((item) => {
         unassignNewMember.value.push({
-          task: item._id,
-          member: '',
+          task: item,
+          newMember: [],
         });
       });
       refreshDataTable();
@@ -135,9 +134,17 @@ const getTaskList = async (
   }
 };
 
-const putNewAssign = async (payload: UpdateTaskMemberDTO): Promise<void> => {
+const putNewAssign = async (
+  payload: UpdateTaskMemberItemLocal[],
+): Promise<void> => {
   try {
-    await TaskServices.updateTaskMember(payload);
+    await TaskServices.updateTaskMember({
+      data: payload.map((item) => ({
+        member: item?.newMember?.[0]?._id,
+        task: item.task._id,
+      })),
+    });
+    updateTimeTaskTransfer(payload);
     refreshDataTable();
     emit('successAssignUnAssign');
     toast.add({
@@ -154,17 +161,30 @@ const putNewAssign = async (payload: UpdateTaskMemberDTO): Promise<void> => {
   }
 };
 
+const updateTimeTaskTransfer = async (
+  payload: UpdateTaskMemberItemLocal[],
+): Promise<void> => {
+  try {
+    await Promise.all(
+      payload.map((item) =>
+        SubModuleServices.putTimelineTaskTransfer(item.task.subModule, {
+          sourceMemberId: item.task?.assignedTo?.[0]?._id,
+          targetMemberId: item?.newMember?.[0]._id,
+        }),
+      ),
+    );
+    getTaskList({ limit: 10, page: 1 });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const getMemberList = async (team: string[]): Promise<void> => {
   try {
     const { data } = await MemberServices.getMemberList({
       team: team,
     });
-    memberListData.value = data.data.data.map((item) => {
-      return {
-        label: item.nickName,
-        value: item._id,
-      };
-    });
+    memberListData.value = data.data.data;
   } catch (error) {
     console.error(error);
   }
@@ -179,19 +199,34 @@ const refreshDataTable = (): void => {
 const findUnassignMember = (
   taskListData: TaskListResponse,
 ): TaskListResponse => {
+  const uniqueObject = new Set(
+    unassignNewMember.value.map((item) => item.task._id),
+  );
+
+  const temporaryUniquObject = [];
+
+  Array.from(uniqueObject).map((item) => {
+    temporaryUniquObject.push(
+      unassignNewMember.value.find((newMember) => newMember.task._id === item),
+    );
+  });
+
+  unassignNewMember.value = temporaryUniquObject;
+
   if (unassignNewMember?.value?.length <= 0) {
     return taskListData;
   }
+
   return {
     data: {
       data: taskListData.data.data.map((item) => {
-        const unassignNewMemberUnique = Array.from(
-          new Set(unassignNewMember.value),
+        const checkedData = unassignNewMember.value.find(
+          (d) => d.task._id === item._id,
         );
-        if (unassignNewMemberUnique.some((d) => d.task === item._id)) {
+        if (checkedData) {
           return {
             ...item,
-            assignedTo: [],
+            assignedTo: checkedData.newMember,
           };
         }
         return item;
@@ -203,12 +238,56 @@ const findUnassignMember = (
   };
 };
 
+const confirmAssignUnassignMember = (
+  action: 'single' | 'bulk' | 'submitAll',
+): void => {
+  if (action === 'submitAll') {
+    putNewAssign(unassignNewMember.value);
+    unassignNewMember.value = [];
+  }
+};
+
+const assignMember = (
+  action: 'single' | 'bulk' | 'submitAll',
+  newMember: Member,
+): void => {
+  switch (action) {
+    case 'single': {
+      unassignNewMember.value.push({
+        task: singleSelectedData.value,
+        newMember: [memberToAssignedMapper(newMember)],
+      });
+      break;
+    }
+    case 'bulk': {
+      selectedData.value.forEach((item) => {
+        unassignNewMember.value.push({
+          task: item,
+          newMember: [memberToAssignedMapper(newMember)],
+        });
+      });
+      break;
+    }
+  }
+  refreshDataTable();
+};
+
+const memberToAssignedMapper = (newMember: Member): AssignedTo => ({
+  _id: newMember._id,
+  fullName: newMember.fullName,
+  key: newMember.key,
+  nickName: newMember.nickName,
+  profilePictureBig: newMember.profilePictureBig,
+  profilePictureMedium: newMember.profilePictureMedium,
+  profilePictureSmall: newMember.profilePictureSmall,
+});
+
 watch(
   visibility,
   (newValue: boolean) => {
     if (newValue) {
       if (props.preventAppear) {
-        getTaskList({}, true);
+        getTaskList({ limit: 10, page: 1 }, true);
         return;
       }
       dialogVisibility.value = true;
@@ -226,7 +305,6 @@ watch(
   (newValue: boolean) => {
     if (!newValue) {
       visibility.value = false;
-      unassignNewMember.value = [];
     }
   },
   {
@@ -245,9 +323,8 @@ watch(
     @close="$emit('cancel')"
     @submit="
       () => {
-        putNewAssign({
-          data: unassignNewMember,
-        });
+        actionType = 'submitAll';
+        dialogConfirmAssignVisibility = true;
       }
     "
     closable
@@ -273,7 +350,11 @@ watch(
           :columns="dialogAdjustmentTaskTableColumn"
           :fetch-function="getTaskList"
           :options="dialogAdjustmentTaskSingleAction(singleActionEmitter)"
-          @toggle-option="singleSelectedData = $event"
+          @toggle-option="
+            (event) => {
+              singleSelectedData = event as Task;
+            }
+          "
           table-name="dialog-addjustment-task"
           use-option
           use-paginator
@@ -287,10 +368,8 @@ watch(
     v-model:visible="assignNewMemberVisbility"
     :buttons-template="['cancel', 'submit']"
     @submit="
-      (payload: FormPayload<{ dropdown: string }>) => {
-        dialogConfirmAssignVisibility = true;
-        newMemberPayload = payload.formValues.dropdown;
-        refreshDataTable();
+      (payload: FormPayload<{ dropdown: Member }>) => {
+        assignMember(actionType, payload.formValues.dropdown);
       }
     "
     header="Assign Member Baru"
@@ -298,12 +377,11 @@ watch(
   >
     <template #fields>
       <Dropdown
-        :initial-value="singleSelectedData?.assignedTo?.[0]?._id"
+        :initial-value="singleSelectedData?.assignedTo?.[0]"
         :options="memberListData"
         label="Member"
         mandatory
-        option-label="label"
-        option-value="value"
+        option-label="nickName"
         use-validator
         validator-message="Member harus diisi"
       />
@@ -324,27 +402,8 @@ watch(
   <!-- Dialog Confirm Make User Aware assign member to task -->
   <DialogConfirm
     v-model:visible="dialogConfirmAssignVisibility"
-    @confirm="
-      () => {
-        if (actionType === 'single') {
-          putNewAssign({
-            data: [
-              {
-                member: newMemberPayload,
-                task: singleSelectedData._id,
-              },
-            ],
-          });
-          return;
-        }
-        putNewAssign({
-          data: selectedData.map((item) => ({
-            member: newMemberPayload,
-            task: item._id,
-          })),
-        });
-      }
-    "
+    @confirm="confirmAssignUnassignMember(actionType)"
+    @hide="unassignNewMember = []"
     close-label="Tetap di halaman ini"
     confirm-label="Lanjutkan"
     header="Pengalihan Task"

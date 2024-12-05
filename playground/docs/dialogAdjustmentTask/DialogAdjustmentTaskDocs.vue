@@ -26,7 +26,8 @@ const visibility = shallowRef<boolean>(true);
         :members="[
           {
             _id: '66d1771c1ebe5344bc2b9dab',
-            nickName: 'Cak Rudi',
+            nickName: 'Super Admin',
+            key: 24,
           },
         ]"
         prevent-appear
