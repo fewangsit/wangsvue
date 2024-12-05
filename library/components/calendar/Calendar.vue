@@ -91,6 +91,7 @@ const parseDate = (dateToParse: Date | Date[]): number | number[] => {
 const setClass = async (): Promise<void> => {
   await nextTick();
 
+  // eslint-disable-next-line no-undef
   const nonHighlights: NodeListOf<HTMLElement> = document.querySelectorAll(
     '.datepicker-panel table [data-p-highlight="false"]',
   );
@@ -115,6 +116,7 @@ const setClass = async (): Promise<void> => {
     today.style.borderRadius = '';
   }
 
+  // eslint-disable-next-line no-undef
   const highlights: NodeListOf<HTMLElement> = document.querySelectorAll(
     '.datepicker-panel table [data-p-highlight="true"]',
   );

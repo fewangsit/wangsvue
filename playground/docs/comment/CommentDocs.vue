@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import {
-  GetCommentsResponse,
-  MentionSectionFunc,
-} from 'lib/components/comment/Comment.vue.d';
+import { GetCommentsResponse } from 'lib/components/comment/Comment.vue.d';
 import { getImageURL } from 'lib/utils';
 import Card from 'lib/components/card/Card.vue';
 import Comment from 'lib/components/comment/Comment.vue';
@@ -96,7 +93,7 @@ const data: GetCommentsResponse = {
         }"
         :user="{
           _id: '66d1771c1ebe5344bc2b9dab',
-          fullName: 'Super Admins',
+          name: 'Super Admins',
           profilePicture: getImageURL(
             '/members/1726721700029-big.webp',
           ) as string,
