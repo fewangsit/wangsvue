@@ -37,6 +37,7 @@ const userType =
   );
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 const taskId = inject<Ref<string>>('taskId');
+const isApproverHasAccess = inject<Ref<boolean>>('isApproverHasAccess');
 
 const taskDescription = ref<TaskDescription>();
 
@@ -51,7 +52,9 @@ const isDisabled = computed(() => {
     ['Selesai', 'Reported Bug'] as WangsitStatus[]
   ).includes(taskDetail.value?.status);
 
-  return disabledStatus || userType.value === 'guest';
+  return (
+    disabledStatus || (userType.value === 'guest' && !isApproverHasAccess.value)
+  );
 });
 
 const insideContent = computed(() => content.value?.content ?? []);

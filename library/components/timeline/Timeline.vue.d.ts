@@ -84,6 +84,11 @@ export type TimelineProps = {
    * @defaultValue false
    */
   alignDetail?: boolean;
+  /**
+   * Whether the createdAt field should be displayed in raw format or not.
+   * @defaultValue false
+   */
+  noFormatDate?: boolean;
 };
 
 /**

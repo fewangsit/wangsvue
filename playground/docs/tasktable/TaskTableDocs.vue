@@ -3,8 +3,13 @@ import TaskTable from 'lib/components/tasktable/TaskTable.vue';
 import DocTitle from '../DocTitle.vue';
 import Card from 'lib/components/card/Card.vue';
 import Toast from 'lib/components/toast/Toast.vue';
+import Button from 'lib/components/button/Button.vue';
+import TaskDetail from 'lib/components/taskdetail/TaskDetail.vue';
+import { ref } from 'vue';
 
 const projectId = sessionStorage.getItem('projectId') ?? '';
+
+const dialogDetailTask = ref(false);
 </script>
 
 <template>
@@ -34,6 +39,15 @@ const projectId = sessionStorage.getItem('projectId') ?? '';
             sub-tab="myTask"
             tab="all"
           />
+          <div class="">
+            <Button @click="dialogDetailTask = true" label="Open Approval" />
+            <TaskDetail
+              v-model:visible="dialogDetailTask"
+              approval-id="675163826a20cedef1e69413"
+              project-id="6745365361c91ef9b2fb7a62"
+              task-id="675163826a20cedef1e6940d"
+            />
+          </div>
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-xl font-semibold">

@@ -29,6 +29,7 @@ const userType =
   );
 const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
+const isApproverHasAccess = inject<Ref<boolean>>('isApproverHasAccess');
 
 const dialogAddApi = shallowRef<boolean>(false);
 const dialogEditApi = shallowRef<boolean>(false);
@@ -42,7 +43,11 @@ const isDisabled = computed(() => {
 
   const isTaskCreateAPI = taskDetail.value?.process?.name === 'Create API';
 
-  return disabledStatus || isTaskCreateAPI || userType.value === 'guest';
+  return (
+    disabledStatus ||
+    isTaskCreateAPI ||
+    (userType.value === 'guest' && !isApproverHasAccess.value)
+  );
 });
 
 const getTaskAPIs = async (): Promise<void> => {
