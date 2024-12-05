@@ -79,9 +79,9 @@ const logFilterField: FilterField[] = [
   {
     label: 'Nama Objek',
     type: 'multiselect',
-    field: 'assetName',
+    field: 'objectName',
     fetchOptionFn: async (): Promise<MultiSelectOption[]> => {
-      return await fetchOptions('assetNameOptions');
+      return await fetchOptions('objectNameOptions');
     },
   },
 ];
