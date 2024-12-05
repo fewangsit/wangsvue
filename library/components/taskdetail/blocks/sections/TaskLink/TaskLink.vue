@@ -32,6 +32,7 @@ const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 const updateMentionSectionText = inject<(sectionTitle: string) => void>(
   'updateMentionSectionText',
 );
+const isApproverHasAccess = inject<Ref<boolean>>('isApproverHasAccess');
 
 onMounted(() => {
   getTaskLink();
@@ -52,7 +53,9 @@ const isDisabled = computed(() => {
     ['Selesai', 'Reported Bug'] as WangsitStatus[]
   ).includes(taskDetail.value?.status);
 
-  return disabledStatus || userType.value === 'guest';
+  return (
+    disabledStatus || (userType.value === 'guest' && !isApproverHasAccess.value)
+  );
 });
 
 const isProcessHasRepository = computed(() => {

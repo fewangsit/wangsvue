@@ -61,41 +61,7 @@ const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 const updateMentionSectionText = inject<(sectionTitle: string) => void>(
   'updateMentionSectionText',
 );
-
-const checklistMenuOptions: MenuItem[] = [
-  {
-    icon: 'save',
-    label: 'Simpan Template',
-    command: (): void => {
-      dialogSaveChecklistTemplate.value = true;
-    },
-    visible: !props.static,
-  },
-  {
-    icon: 'file-copy-2-line',
-    label: 'Detail Template',
-    command: (): void => {
-      dialogDetailChecklistTemplate.value = true;
-    },
-    visible: !props.static,
-  },
-  {
-    icon: 'delete-bin',
-    label: 'Hapus Ceklis',
-    danger: true,
-    command: (): void => {
-      if (props.static) {
-        const checklistIndex = checklists.value.findIndex(
-          (checklist) => checklist._id === selectedChecklist.value._id,
-        );
-        deleteStaticChecklist(checklistIndex);
-      } else {
-        dialogDeleteChecklist.value = true;
-      }
-    },
-    visible: true,
-  },
-];
+const isApproverHasAccess = inject<Ref<boolean>>('isApproverHasAccess');
 
 const checklists = ref<TaskChecklist[]>(props.static ? [] : undefined);
 
@@ -120,8 +86,49 @@ const isDisabled = computed(() => {
     ['Selesai', 'Reported Bug', 'Pending Review Leader'] as WangsitStatus[]
   ).includes(taskDetail.value?.status);
 
-  return disabledStatus || userType.value === 'guest';
+  return (
+    disabledStatus || (userType.value === 'guest' && !isApproverHasAccess.value)
+  );
 });
+
+const getMenuOptions = (disabled: boolean): MenuItem[] => {
+  return disabled || selectedChecklist.value?.isRequested
+    ? []
+    : [
+        {
+          icon: 'save',
+          label: 'Simpan Template',
+          command: (): void => {
+            dialogSaveChecklistTemplate.value = true;
+          },
+          visible: !props.static,
+        },
+        {
+          icon: 'file-copy-2-line',
+          label: 'Detail Template',
+          command: (): void => {
+            dialogDetailChecklistTemplate.value = true;
+          },
+          visible: !props.static,
+        },
+        {
+          icon: 'delete-bin',
+          label: 'Hapus Ceklis',
+          danger: true,
+          command: (): void => {
+            if (props.static) {
+              const checklistIndex = checklists.value.findIndex(
+                (checklist) => checklist._id === selectedChecklist.value._id,
+              );
+              deleteStaticChecklist(checklistIndex);
+            } else {
+              dialogDeleteChecklist.value = true;
+            }
+          },
+          visible: true,
+        },
+      ];
+};
 
 const handleMore = (e: Event, check: any): void => {
   selectedChecklist.value = check;
@@ -413,7 +420,7 @@ watch(
     <div v-if="checklists?.length" class="pl-8 flex flex-col gap-3">
       <Menu
         ref="moreMenu"
-        :model="isDisabled ? [] : checklistMenuOptions"
+        :model="getMenuOptions(isDisabled)"
         class="bg-primary-500 !min-w-[170px]"
       />
       <div
@@ -438,7 +445,7 @@ watch(
             <span
               @click="
                 () => {
-                  if (isDisabled) {
+                  if (isDisabled || checklist.isRequested) {
                     return;
                   }
                   checklist.showRenameChecklist = true;
@@ -499,7 +506,12 @@ watch(
               <Checkbox
                 :key="item.key"
                 v-model="item.checked"
-                :disabled="props.static || isDisabled"
+                :disabled="
+                  props.static ||
+                  isDisabled ||
+                  item.isRequested ||
+                  checklist.isRequested
+                "
                 :label="item.name"
                 @update:model-value="
                   toggleChecklistItem({
@@ -521,7 +533,9 @@ watch(
                   type="icon"
                 />
                 <Button
-                  :disabled="isDisabled"
+                  :disabled="
+                    isDisabled || item.isRequested || checklist.isRequested
+                  "
                   @click="item.showRenameItem = true"
                   class="!p-1"
                   icon="edit"
@@ -530,7 +544,9 @@ watch(
                   text
                 />
                 <Button
-                  :disabled="isDisabled"
+                  :disabled="
+                    isDisabled || item.isRequested || checklist.isRequested
+                  "
                   @click="
                     openAttachmentDialog({ checklistIndex: index, itemIndex })
                   "
@@ -541,7 +557,9 @@ watch(
                   text
                 />
                 <Button
-                  :disabled="isDisabled"
+                  :disabled="
+                    isDisabled || item.isRequested || checklist.isRequested
+                  "
                   @click="item.showCaptionItem = !item.showCaptionItem"
                   class="!p-1"
                   icon="chat-new-line"
@@ -559,7 +577,9 @@ watch(
                 />
               </template>
               <Button
-                :disabled="isDisabled"
+                :disabled="
+                  isDisabled || item.isRequested || checklist.isRequested
+                "
                 @click="
                   props.static
                     ? deleteStaticChecklist(index, itemIndex)
@@ -606,7 +626,9 @@ watch(
             <TaskAttachmentItem
               :key="`${index}-${itemIndex}-${attachIndex}`"
               v-for="(attachment, attachIndex) in item.attachments"
-              :disabled="isDisabled"
+              :disabled="
+                isDisabled || item.isRequested || checklist.isRequested
+              "
               :item="attachment"
               @deleted="getChecklists"
               type="checklist"
@@ -636,7 +658,7 @@ watch(
           />
           <Button
             v-else
-            :disabled="isDisabled"
+            :disabled="isDisabled || checklist.isRequested"
             @click="checklist.showAddItem = true"
             icon="add"
             label="Item"

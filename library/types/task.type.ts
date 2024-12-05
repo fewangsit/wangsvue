@@ -86,6 +86,7 @@ export type TaskChecklist = {
   checklistItems?: TaskChecklistItem[];
   showRenameChecklist?: boolean;
   showAddItem?: boolean;
+  isRequested?: boolean;
 };
 
 export type TaskChecklistItem = {

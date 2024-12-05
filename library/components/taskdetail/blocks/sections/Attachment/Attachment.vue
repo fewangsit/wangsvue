@@ -33,6 +33,7 @@ const userType =
   );
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 const taskId = inject<Ref<string>>('taskId');
+const isApproverHasAccess = inject<Ref<string>>('isApproverHasAccess');
 
 const attachments = ref<AttachmentItemData[]>([]);
 
@@ -44,7 +45,9 @@ const isDisabled = computed(() => {
     ['Selesai', 'Reported Bug'] as WangsitStatus[]
   ).includes(taskDetail.value?.status);
 
-  return disabledStatus || userType.value === 'guest';
+  return (
+    disabledStatus || (userType.value === 'guest' && !isApproverHasAccess.value)
+  );
 });
 
 const getAttachments = async (): Promise<void> => {

@@ -21,10 +21,12 @@ const toast = useToast();
 
 const isNewTask = inject<Ref<boolean>>('isNewTask');
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
+const isMember = inject<Ref<boolean>>('isMember');
 const userType =
   inject<ComputedRef<'member' | 'admin' | 'pm' | 'teamLeader'>>('userType');
 const legendForm = inject<Ref<TaskLegendForm>>('legendForm');
 const taskId = inject<Ref<string>>('taskId');
+const isApproverHasAccess = inject<Ref<string>>('isApproverHasAccess');
 
 const showDialogAssignMember = shallowRef<boolean>(false);
 const showDialogSetDuration = shallowRef<boolean>(false);
@@ -162,7 +164,8 @@ const getDuration = (duration: number): string => {
               '!min-w-[150px] !h-[30px] !text-left !rounded',
               {
                 'pointer-events-none':
-                  !['admin', 'pm', 'teamLeader'].includes(userType) ||
+                  (!['admin', 'pm', 'teamLeader'].includes(userType) &&
+                    !isApproverHasAccess) ||
                   taskDetail?.process?.name === 'API Spec',
               },
             ]"
@@ -189,7 +192,10 @@ const getDuration = (duration: number): string => {
                   isContinousDuration ||
                   !['Backlog', 'Waiting for Approval'].includes(
                     taskDetail?.status,
-                  ),
+                  ) ||
+                  (!['admin', 'pm', 'teamLeader'].includes(userType) &&
+                    !isApproverHasAccess &&
+                    !isMember),
               },
             ]"
             :disabled="isNewTask"
@@ -209,7 +215,10 @@ const getDuration = (duration: number): string => {
                     taskDetail?.process?.name === 'API Spec' ||
                     !['Backlog', 'Waiting for Approval'].includes(
                       taskDetail?.status,
-                    ),
+                    ) ||
+                    (!['admin', 'pm', 'teamLeader'].includes(userType) &&
+                      !isApproverHasAccess &&
+                      !isMember),
                 },
               ]"
               :disabled="isNewTask"
