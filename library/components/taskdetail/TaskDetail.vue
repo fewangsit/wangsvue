@@ -390,7 +390,7 @@ watch(
 
           //   Customs
           '!w-auto',
-          // '!h-[648px]',
+          '!h-[90vh]',
           '!max-w-none',
           '!border-grayscale-900 !border',
           '!p-0',
