@@ -17,7 +17,7 @@ const props = withDefaults(
     /**
      * Whether to give the legend list bold style
      */
-    bold: boolean;
+    bold?: boolean;
   }>(),
   {
     bold: false,

@@ -307,7 +307,7 @@ const assignMember = async (
             :options="singleAction(assignSection)"
             :selection-type="assignSection ? 'none' : 'checkbox'"
             :table-name="`product-backlog-items-member-${assignSection}`"
-            @toggle-option="selectedMember = $event"
+            @toggle-option="selectedMember = $event as AssignedMember"
             class="min-h-[70px]"
             use-paginator
           />

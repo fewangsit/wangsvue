@@ -1,5 +1,6 @@
 import { StatusSeverity } from 'lib/types/wangsStatus.type';
 import { ClassComponent } from '../ts-helpers';
+import { WangsIcons } from '../icon/Icon.vue.d';
 
 export type GetNotificationParam = {
   isRead?: boolean;
@@ -17,30 +18,18 @@ export type NotificationItemType = {
   user: string;
   title: string;
   detail: string;
-  category:
-    | 'settings'
-    | 'user'
-    | 'chat'
-    | 'barricade'
-    | 'file-edit'
-    | 'list-check'
-    | 'team'
-    | 'user-star'
-    | 'change-password'
-    | 'check'
-    | 'close'
-    | 'delete'
-    | 'ticket'
-    | 'bug';
+  category: WangsIcons | 'barricade' | 'bug' | 'delete';
   isManager?: boolean;
   isRead: boolean;
+  isActioned: boolean;
   isReadOnly: boolean;
   module:
     | 'Account Member'
     | 'Project'
     | 'API & Server '
     | 'Comment'
-    | 'Quality Control';
+    | 'Quality Control'
+    | 'Task Improvement';
   severity: StatusSeverity;
   type?: string | null;
   data?: {
@@ -65,6 +54,10 @@ export interface NotificationItemProps {
    * The notification item to show
    */
   notification: NotificationItemType;
+  /**
+   * Whether the length of the container is long or not
+   */
+  longNotif?: boolean;
 }
 
 export type NotificationItemEmits = {
@@ -76,6 +69,14 @@ export type NotificationItemEmits = {
    * Emits when a notification should open a task detail dialog
    */
   openTask: [taskId?: string, projectId?: string];
+  /**
+   * Emits when a notification should open a task improvement dialog
+   */
+  openTaskImprovement: [
+    taskId?: string,
+    projectId?: string,
+    notificationId?: string,
+  ];
   /**
    * Emits when the notification container should be closed
    */

@@ -19,11 +19,12 @@ const taskId = inject<Ref<string>>('taskId');
 
 const props = withDefaults(
   defineProps<{
-    type: 'link' | 'repositori' | 'microservices';
-    initialValue: TaskLink;
+    type?: 'link' | 'repositori' | 'microservices';
+    initialValue?: TaskLink;
   }>(),
   {
     type: 'link',
+    initialValue: undefined,
   },
 );
 

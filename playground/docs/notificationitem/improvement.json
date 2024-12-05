@@ -1,0 +1,109 @@
+{
+  "status": 200,
+  "message": "Successfully get task data",
+  "data": [
+    {
+      "task": [
+        {
+          "_id": "6717251a0f4e49675c46f7f7",
+          "name": "Database 1",
+          "assignedTo": [
+            {
+              "fullName": "Super Admin",
+              "nickName": "Super Admin",
+              "key": 24,
+              "profilePictureBig": "/members/1731906347509-big.webp",
+              "profilePictureMedium": "/members/1731906347509-medium.webp",
+              "profilePictureSmall": "/members/1731906347509-small.webp",
+              "_id": "66d1771c1ebe5344bc2b9dab"
+            },
+            {
+              "fullName": "Super Admin",
+              "nickName": "Super Admin",
+              "key": 24,
+              "profilePictureBig": "/members/1731906347509-big.webp",
+              "profilePictureMedium": "/members/1731906347509-medium.webp",
+              "profilePictureSmall": "/members/1731906347509-small.webp",
+              "_id": "66d1771c1ebe5344bc2b9dab"
+            }
+          ]
+        },
+        {
+          "_id": "6717251a0f4e49675c46f7g7",
+          "name": "Database 2",
+          "assignedTo": [
+            {
+              "fullName": "Super Admin",
+              "nickName": "Super Admin",
+              "key": 24,
+              "profilePictureBig": "/members/1731906347509-big.webp",
+              "profilePictureMedium": "/members/1731906347509-medium.webp",
+              "profilePictureSmall": "/members/1731906347509-small.webp",
+              "_id": "66d1771c1ebe5344bc2b9dab"
+            }
+          ]
+        },
+        {
+          "_id": "6717251a0f4e49673546f7g7",
+          "name": "Database 3",
+          "assignedTo": [
+            {
+              "fullName": "Super Admin",
+              "nickName": "Super Admin",
+              "key": 24,
+              "profilePictureBig": "/members/1731906347509-big.webp",
+              "profilePictureMedium": "/members/1731906347509-medium.webp",
+              "profilePictureSmall": "/members/1731906347509-small.webp",
+              "_id": "66d1771c1ebe5344bc2b9dab"
+            }
+          ]
+        }
+      ],
+      "process": {
+        "name": "Database",
+        "_id": "6706205a9bdcad72db257121"
+      },
+      "module": {
+        "name": "Modul Tokopaedi",
+        "initial": "MT",
+        "_id": "670620dd3be0c0a2ed7edcc4"
+      },
+      "subModule": {
+        "name": "Sub Module MT",
+        "_id": "6706211e872d8431a33e68b4"
+      }
+    },
+    {
+      "task": [
+        {
+          "_id": "6717251a0f4e49675c46f7f8",
+          "name": "Database 1",
+          "assignedTo": [
+            {
+              "fullName": "Super Admin",
+              "nickName": "Super Admin",
+              "key": 24,
+              "profilePictureBig": "/members/1731906347509-big.webp",
+              "profilePictureMedium": "/members/1731906347509-medium.webp",
+              "profilePictureSmall": "/members/1731906347509-small.webp",
+              "_id": "66d1771c1ebe5344bc2b9dab"
+            }
+          ]
+        }
+      ],
+      "process": {
+        "name": "Databaseasdf",
+        "_id": "6706205a9bdcad723b257121"
+      },
+      "module": {
+        "name": "Modul Tokopaedi",
+        "initial": "MT",
+        "_id": "670620dd3be0c0a2ed7edcc4"
+      },
+      "subModule": {
+        "name": "Sub Module MT",
+        "_id": "6706211e872d8431a33e68b4"
+      }
+    }
+  ]
+}

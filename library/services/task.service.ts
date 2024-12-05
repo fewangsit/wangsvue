@@ -179,6 +179,12 @@ const TaskServices = {
   markAsSprint: (taskId: string): Promise<AxiosResponse> => {
     return API().put(`/${taskId}/mark-as-sprint`);
   },
+
+  markAsImprovement: (taskIds: string[]): Promise<AxiosResponse> => {
+    return API().put('/mark-as-improvement/bulk', {
+      taskIds,
+    });
+  },
 };
 
 export default TaskServices;

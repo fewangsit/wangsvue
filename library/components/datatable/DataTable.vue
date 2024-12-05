@@ -25,6 +25,8 @@ import {
   FetchResponse,
   QueryParams,
   Data,
+  ColumnTogglePreset,
+  ChildTableProps,
 } from './DataTable.vue.d';
 
 import loadingTableLottie from 'lib/assets/lottie/loading-table.lottie';
@@ -52,7 +54,7 @@ const props = withDefaults(defineProps<DataTableProps>(), {
   tableName: 'datatable',
   tableTitle: undefined,
   lazy: true,
-  options: [],
+  options: () => [],
   dataKey: '_id',
   disableKey: 'isDefault',
   selectionType: 'checkbox',
@@ -566,7 +568,7 @@ const selectAllData = async (event: TableEvent): Promise<void> => {
 const headerCellPreset = (
   col?: TreeTableColumns,
   useCustomColumn?: boolean,
-): object => {
+): Record<string, unknown> => {
   return Preset?.headercell({
     props,
     context: {
@@ -867,6 +869,7 @@ const listenUpdateTableEvent = (): void => {
 };
 </script>
 
+<!-- eslint-disable vue/html-indent -->
 <template>
   <div v-bind="Preset?.root">
     <div v-bind="Preset?.tablewrapper" ref="tableWrapper">
@@ -1115,15 +1118,19 @@ const listenUpdateTableEvent = (): void => {
                         @click.stop=""
                         @update:model-value="
                           async (e) => {
-                            col.preset?.onToggle?.(
+                            (col.preset as ColumnTogglePreset)?.onToggle?.(
                               e,
                               item,
                               () => (item[col.field] = !item[col.field]),
                             );
 
-                            if (col.preset?.confirmDialogProps) {
-                              const { showWhen } =
-                                col.preset?.confirmDialogProps;
+                            if (
+                              (col.preset as ColumnTogglePreset)
+                                ?.confirmDialogProps
+                            ) {
+                              const { showWhen } = (
+                                col.preset as ColumnTogglePreset
+                              )?.confirmDialogProps;
 
                               if (typeof showWhen === 'function') {
                                 showConfirmToggle[item[dataKey]] =
@@ -1149,10 +1156,10 @@ const listenUpdateTableEvent = (): void => {
                               (item[col.field] = !item[col.field]);
 
                             if (
-                              col.preset?.confirmDialogProps?.actionable ==
-                              false
+                              (col.preset as ColumnTogglePreset)
+                                ?.confirmDialogProps?.actionable == false
                             ) {
-                              col.preset?.onConfirm?.(
+                              (col.preset as ColumnTogglePreset)?.onConfirm?.(
                                 item[col.field],
                                 item,
                                 revert,
@@ -1206,20 +1213,22 @@ const listenUpdateTableEvent = (): void => {
                       "
                     >
                       <component
-                        :is="col.bodyComponent!(item).component"
+                        :is="col.bodyComponent!(item, index).component"
                         v-if="col.bodyComponent"
-                        v-model="col.bodyComponent!(item).model"
-                        :disabled="col.bodyComponent!(item).disabled"
-                        v-bind="col.bodyComponent!(item).props"
+                        v-model="col.bodyComponent!(item, index).model"
+                        :disabled="col.bodyComponent!(item, index).disabled"
+                        v-bind="col.bodyComponent!(item, index).props"
                         v-on="
-                          col.bodyComponent!(item).events
-                            ? col.bodyComponent!(item).events
+                          col.bodyComponent!(item, index).events
+                            ? col.bodyComponent!(item, index).events
                             : {}
                         "
-                        @change="col.bodyComponent!(item).onChange?.(item)"
+                        @change="
+                          col.bodyComponent!(item, index).onChange?.(item)
+                        "
                         @click.stop=""
                         @update:model-value="
-                          col.bodyComponent!(item).onChange?.(item)
+                          col.bodyComponent!(item, index).onChange?.(item)
                         "
                       />
 
@@ -1243,7 +1252,8 @@ const listenUpdateTableEvent = (): void => {
                     v-if="
                       (() =>
                         ((useOption || customColumn) && !item.childRow) ||
-                        (item.childRow && childTableProps?.useOption))()
+                        (item.childRow &&
+                          (childTableProps as ChildTableProps)?.useOption))()
                     "
                     v-bind="
                       Preset?.rowsingleactioncell({
@@ -1258,7 +1268,10 @@ const listenUpdateTableEvent = (): void => {
                     :style="`right: ${rightDistanceFrozenColumn}px`"
                   >
                     <div
-                      v-if="useOption || childTableProps?.useOption"
+                      v-if="
+                        useOption ||
+                        (childTableProps as ChildTableProps)?.useOption
+                      "
                       v-bind="Preset.singleactionwrapper"
                     >
                       <Button

@@ -220,6 +220,27 @@
         "__v": 0,
         "createdAt": "2024-11-29T07:38:14.603Z",
         "updatedAt": "2024-11-29T07:45:30.512Z"
+      },
+      {
+        "_id": "67496f6609e54f1f61aa4d15",
+        "user": "66d1771c1ebe5344bc2b9dab",
+        "title": "task uiux selesai penyesuaian",
+        "detail": "Matex Wall Filler > Komponen > Form Input",
+        "isRead": false,
+        "isManager": false,
+        "isActioned": false,
+        "isReadOnly": false,
+        "data": {
+          "projectId": "6706205a9bdcad72db257110",
+          "taskId": "6717251a0f4e49675c46f7f7"
+        },
+        "module": "Task Improvement",
+        "severity": "warning",
+        "category": "list-settings-line",
+        "type": null,
+        "__v": 0,
+        "createdAt": "2024-11-29T07:38:14.603Z",
+        "updatedAt": "2024-11-29T07:45:30.512Z"
       }
     ]
   }

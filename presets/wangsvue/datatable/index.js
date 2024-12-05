@@ -46,7 +46,7 @@ export default {
   },
   bodyrow: ({ context, props }) => ({
     class: [
-      'border-b border-general-100',
+      'border-b border-general-100 group',
       {
         '!h-[35px]': props.rowHeight === 'fixed', // Style(DXJCiX2e): set table row height to fixed 35px
       },
@@ -61,10 +61,6 @@ export default {
       {
         'focus:outline-none focus:outline-offset-0': props.selectionType,
         // To sets the bg to single action td
-        'group':
-          props.selectionType &&
-          props.selectionType !== 'none' &&
-          !context.disabled,
         'hover:!bg-primary-50': !context.highlighted,
         'hover:!bg-warning-300 !bg-warning-200': context.highlighted,
       },
