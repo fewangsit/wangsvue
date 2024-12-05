@@ -56,6 +56,7 @@ const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 const isNewTask = inject<Ref<boolean>>('isNewTask');
 const openDetailTask = inject<(taskIdParam: string) => void>('openDetailTask');
+const isApproverHasAccess = inject<Ref<boolean>>('isApproverHasAccess');
 
 const projectModules = ref<ProjectModule[]>();
 
@@ -88,7 +89,7 @@ const isDisabled = computed(() => {
     (
       ['Pending Review Leader', 'Selesai', 'Reported Bug'] as WangsitStatus[]
     ).includes(taskDetail.value?.status) ||
-    userType.value === 'guest'
+    (userType.value === 'guest' && !isApproverHasAccess.value)
   );
 });
 
@@ -176,16 +177,16 @@ const loadData = async (): Promise<void> => {
       // Find the corresponding task from taskDependencies based on process id
       const taskData = taskDependencies.value.find(
         (task) =>
-          task.process._id === process.process._id &&
-          task.module._id === process.module._id,
+          task?.process?._id === process?.process?._id &&
+          task?.module?._id === process?.module?._id,
       );
 
       if (taskData) {
         // Find the current dependency in dependencies based on process id and module id
         const currentDependency = dependencies.value?.find(
           (dep) =>
-            dep.process._id === taskData.process._id &&
-            dep.module._id === taskData.module._id,
+            dep?.process?._id === taskData?.process?._id &&
+            dep?.module?._id === taskData?.module?._id,
         );
 
         /*
@@ -221,16 +222,16 @@ const loadData = async (): Promise<void> => {
     taskDependencies.value.forEach((task) => {
       const processExists = mergedDependencies.some(
         (process) =>
-          process.process._id === task.process._id &&
-          process.module._id === task.module._id,
+          process?.process?._id === task?.process?._id &&
+          process?.module?._id === task?.module?._id,
       );
 
       if (!processExists) {
         // Find the current dependency in dependencies based on process id and module id
         const currentDependency = dependencies.value?.find(
           (dep) =>
-            dep.process._id === task.process._id &&
-            dep.module._id === task.module._id,
+            dep?.process?._id === task?.process?._id &&
+            dep?.module?._id === task?.module?._id,
         );
 
         // Add a new process dependency with the task options and selected options

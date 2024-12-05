@@ -43,7 +43,12 @@ const formatActionTitle = (action: string): string => {
           />
         </div>
         {{
-          new Date(item.createdAt).toISOString().slice(0, 19).replace('T', ' ')
+          noFormatDate
+            ? item.createdAt
+            : new Date(item.createdAt)
+                .toISOString()
+                .slice(0, 19)
+                .replace('T', ' ')
         }}
       </div>
 
