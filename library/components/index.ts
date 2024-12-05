@@ -64,6 +64,7 @@ import DialogAdjustmentTask from './dialogAdjustmentTask/DialogAdjustmentTask.vu
 import TaskDetail from './taskdetail/TaskDetail.vue';
 import TaskTable from './tasktable/TaskTable.vue';
 import NotificationItem from './notificationitem/NotificationItem.vue';
+import DialogImprovementTask from './dialogimprovementtask/DialogImprovementTask.vue';
 
 export {
   Badge,
@@ -132,4 +133,5 @@ export {
   TaskDetail,
   TaskTable,
   NotificationItem,
+  DialogImprovementTask,
 };
