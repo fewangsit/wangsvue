@@ -7,7 +7,11 @@ export default function getStatusSeverity(
   if (['Backlog', 'Waiting Approval', 'Not Ready Yet'].includes(status)) {
     return 'dark';
   }
-  if (['Sprint', 'Penyesuaian', 'On Deployment'].includes(status)) {
+  if (
+    ['Sprint', 'Penyesuaian', 'On Deployment', 'Waiting for Approval'].includes(
+      status,
+    )
+  ) {
     return 'warning';
   }
   if (

@@ -10,6 +10,7 @@ import InputRangeNumber from '../inputrangenumber/InputRangeNumber.vue';
 import MultiSelect from '../multiselect/MultiSelect.vue';
 import applyFilter from '../filtercontainer/helpers/applyFilter.helper';
 import Calendar from '../calendar/Calendar.vue';
+import Dropdown from '../dropdown/Dropdown.vue';
 
 const { values, resetForm } = useForm();
 
@@ -74,6 +75,19 @@ const getOptions = async (
           :max-field-name="field.fields[1]"
           :min-field-name="field.fields[0]"
           @update:model-value="apply"
+          use-validator
+        />
+        <Dropdown
+          v-else-if="field.type == 'dropdown'"
+          v-bind="field"
+          :field-name="field.field"
+          :label="undefined"
+          :loading="loading[field.field]"
+          :options="filterOption[field.field]"
+          @show="getOptions(field.fetchOptionFn, field.field)"
+          @update:model-value="apply"
+          option-label="label"
+          option-value="value"
           use-validator
         />
         <MultiSelect

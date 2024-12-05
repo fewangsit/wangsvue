@@ -34,6 +34,7 @@ import Comment from '../comment/Comment.vue';
 import { User } from 'lib/types/user.type';
 import EventLogTab from './blocks/Tabs/EventLogTab.vue';
 import { MentionSectionFunc } from '../comment/Comment.vue.d';
+import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
 
 const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 
@@ -124,6 +125,7 @@ const showCommentSection = shallowRef<boolean>(false);
 const taskMenuKey = shallowRef<number>(0);
 
 const mentionSectionFunc = ref<MentionSectionFunc>();
+const commentSearch = ref<string>();
 
 const taskMenu = computed<TaskMenu[]>(() => {
   return [
@@ -399,9 +401,7 @@ watch(
             v-if="
               !isNewTask &&
               userType !== 'guest' &&
-              ['Backlog', 'Sprint', 'Waiting Approval'].includes(
-                taskDetail?.status,
-              )
+              ['Backlog', 'Sprint'].includes(taskDetail?.status)
             "
             :task-detail="taskDetail"
           />
@@ -445,7 +445,13 @@ watch(
             class="flex items-center justify-between py-4 px-6 border-b border-grayscale-900"
           >
             <span class="text-base font-semibold">Komentar</span>
-            <Button
+            <ButtonSearch
+              @search="
+                (payload) => {
+                  commentSearch = payload;
+                  console.log(commentSearch);
+                }
+              "
               class="!p-1"
               icon="search"
               icon-class="!w-6 !h-6"
@@ -461,9 +467,10 @@ watch(
                 }
               "
               :object-id="taskDetail?._id"
+              :search="commentSearch"
               :user="{
                 _id: user?._id,
-                fullName: user?.fullName,
+                name: user?.fullName,
                 profilePicture: user?.profilePictureMedium,
               }"
               comment-type="task"

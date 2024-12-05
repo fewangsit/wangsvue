@@ -1,6 +1,98 @@
 # Changelog
 
 
+## v1.5.88
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.87...v1.5.88)
+
+### 🩹 Fixes
+
+- **badge:** Update badge severity for 'Waiting for Approval' ([b773357](https://github.com/fewangsit/wangsvue/commit/b773357))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
+## v1.5.87
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.85...v1.5.87)
+
+### 🚀 Enhancements
+
+- Add dropdown to QuickFilter ([23cdde5](https://github.com/fewangsit/wangsvue/commit/23cdde5))
+
+### 🩹 Fixes
+
+- **Hi69eZl4:** Update conditions for showing submodule field in taskdependency ([13b0f40](https://github.com/fewangsit/wangsvue/commit/13b0f40))
+- **8Yla8Mue:** Update badge status severity for 'Waiting for Approval' in taskdetail and tasktable ([2e440a6](https://github.com/fewangsit/wangsvue/commit/2e440a6))
+- **8MgTxoJ7:** Update conditions for disabling set duration and start date ib taskdetail ([2333124](https://github.com/fewangsit/wangsvue/commit/2333124))
+- **c5ngZcIY:** Update condition for showing 'Tandai Selesai' button in taskdetail ([c17e284](https://github.com/fewangsit/wangsvue/commit/c17e284))
+- **taskdetail:** Update field for user props in comment of taskdetail ([770fa46](https://github.com/fewangsit/wangsvue/commit/770fa46))
+
+### 🏡 Chore
+
+- **release:** V1.5.86 ([2f07119](https://github.com/fewangsit/wangsvue/commit/2f07119))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Dzulqtera <dzul@qtera.co.id>
+
+## v1.5.86
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.85...v1.5.86)
+
+### 🚀 Enhancements
+
+- Add dropdown to QuickFilter ([23cdde5](https://github.com/fewangsit/wangsvue/commit/23cdde5))
+
+### 🩹 Fixes
+
+- **Hi69eZl4:** Update conditions for showing submodule field in taskdependency ([13b0f40](https://github.com/fewangsit/wangsvue/commit/13b0f40))
+- **8Yla8Mue:** Update badge status severity for 'Waiting for Approval' in taskdetail and tasktable ([2e440a6](https://github.com/fewangsit/wangsvue/commit/2e440a6))
+- **8MgTxoJ7:** Update conditions for disabling set duration and start date ib taskdetail ([2333124](https://github.com/fewangsit/wangsvue/commit/2333124))
+- **c5ngZcIY:** Update condition for showing 'Tandai Selesai' button in taskdetail ([c17e284](https://github.com/fewangsit/wangsvue/commit/c17e284))
+- **taskdetail:** Update field for user props in comment of taskdetail ([770fa46](https://github.com/fewangsit/wangsvue/commit/770fa46))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.85
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.84...v1.5.85)
+
+### 🚀 Enhancements
+
+- **TaskDetail:** Create PBI task ([9e13f46](https://github.com/fewangsit/wangsvue/commit/9e13f46))
+- GetUserType util ([e15600b](https://github.com/fewangsit/wangsvue/commit/e15600b))
+- **TaskTable:** PBI page ([a7d937a](https://github.com/fewangsit/wangsvue/commit/a7d937a))
+
+### 🩹 Fixes
+
+- **TaskDetail:** Warnings for undefined props ([c966f77](https://github.com/fewangsit/wangsvue/commit/c966f77))
+- **TaskDetail:** Warnings for undefined injects ([7ed63d3](https://github.com/fewangsit/wangsvue/commit/7ed63d3))
+- **UserGroup:** Extraneous attributes & event listeners ([68c5acd](https://github.com/fewangsit/wangsvue/commit/68c5acd))
+- **TaskTable:** UserType only returned one value ([059d1a0](https://github.com/fewangsit/wangsvue/commit/059d1a0))
+- **Timeline:** Incorrect date format ([2bf0bde](https://github.com/fewangsit/wangsvue/commit/2bf0bde))
+- 'ref' is defined but never used ([eeacd82](https://github.com/fewangsit/wangsvue/commit/eeacd82))
+
+### 💅 Refactors
+
+- Rename role detail access file ([9744251](https://github.com/fewangsit/wangsvue/commit/9744251))
+- **util:** GetImageUrl returns value if base URL is included ([e67f452](https://github.com/fewangsit/wangsvue/commit/e67f452))
+- **UserName:** Cursor pointer on hover profpic ([87b4a8a](https://github.com/fewangsit/wangsvue/commit/87b4a8a))
+- Use 'shallowRef' instead of 'ref' for primitive data types ([180439f](https://github.com/fewangsit/wangsvue/commit/180439f))
+
+### 📖 Documentation
+
+- **DetailSprint:** Update project & PBI response ([891fbce](https://github.com/fewangsit/wangsvue/commit/891fbce))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.84
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.83...v1.5.84)

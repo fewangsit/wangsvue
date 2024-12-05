@@ -1,5 +1,6 @@
 import axios, { AxiosResponse, AxiosInstance } from 'axios';
 import { MemberListResponse } from 'lib/dto/member.dto';
+import { queryParamsStringfy } from 'lib/utils/queryParamsStringfy.util';
 
 export interface Member {
   _id: string;
@@ -37,9 +38,9 @@ const MemberServices = {
   },
 
   getMemberList: (params?: {
-    team: string;
+    team: string[];
   }): Promise<AxiosResponse<MemberListResponse>> => {
-    return API({ params }).get('');
+    return API({ params: queryParamsStringfy(params) }).get('');
   },
 };
 

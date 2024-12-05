@@ -167,6 +167,8 @@ const tableColumns = computed<TableColumn[]>(() => {
           props: {
             label: data.status,
             format: 'nowrap',
+            severity:
+              data.status === 'Waiting for Approval' ? 'warning' : undefined,
           },
         };
       },

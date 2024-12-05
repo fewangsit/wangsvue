@@ -46,8 +46,14 @@ export interface CommentProps {
    * To pass comments data from external services
    */
   data?: GetCommentsResponse;
-
+  /**
+   * Mention Section or String to highlight where you really comment
+   */
   mentionSection?: (cb: MentionSectionFunc) => void;
+  /**
+   * Query Params Comment for search, etc
+   */
+  search?: string;
 }
 
 export type MentionSectionFunc = (titleText: string) => void;
@@ -74,6 +80,10 @@ export interface GetCommentsResponse<T = CommentData> {
   data: T[];
 }
 
+export interface CommentsQueryParams extends QueryParams {
+  search: string;
+}
+
 export type CommentType = 'ticket' | 'task' | 'module' | 'sub-module';
 
 export interface Reaction {
@@ -84,7 +94,7 @@ export interface Reaction {
 
 export interface User {
   _id: string;
-  fullName: string;
+  name: string;
   profilePicture: string;
 }
 

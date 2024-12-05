@@ -1075,7 +1075,15 @@ watch(
         />
       </div>
       <div class="flex items-center gap-2">
-        <Badge :label="taskDetail?.status ?? 'Backlog'" format="nowrap" />
+        <Badge
+          :label="taskDetail?.status ?? 'Backlog'"
+          :severity="
+            taskDetail?.status === 'Waiting for Approval'
+              ? 'warning'
+              : undefined
+          "
+          format="nowrap"
+        />
         <Button
           v-if="
             taskDetail?.status === 'Selesai' &&
@@ -1088,7 +1096,9 @@ watch(
         />
         <Button
           v-if="
-            ['Sprint', 'Fixing Bug'].includes(taskDetail?.status) && isMember
+            ['Sprint', 'Fixing Bug', 'Penyesuaian'].includes(
+              taskDetail?.status,
+            ) && isMember
           "
           :disabled="repositoryVisibility && !legendForm.repository"
           @click="dialogConfirmFinishTask = true"
