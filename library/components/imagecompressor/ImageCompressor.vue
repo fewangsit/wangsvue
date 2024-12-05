@@ -140,7 +140,7 @@ const canvasToFile = async (): Promise<File> => {
   return new Promise((resolve) => {
     canvasPlaceholder.value?.toBlob((blob) => {
       resolve(
-        new File([blob ?? new Blob()], props.initialName?.toLowerCase() ?? '', {
+        new File([blob ?? new Blob()], Date.now() + '.png', {
           type: 'image/png',
         }),
       );
@@ -295,7 +295,7 @@ const setField = (): void => {
 
           return (props.label ?? 'Photo') + ' must be uploaded';
         } else if (props.invalid && props.validatorMessage) {
-          return props.validatorMessage;
+          return props.validatorMessage as string;
         } else if (invalidMessage.value) {
           return invalidMessage.value;
         }

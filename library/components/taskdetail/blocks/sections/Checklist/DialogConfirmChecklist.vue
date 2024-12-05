@@ -18,7 +18,7 @@ const DialogFormPreset = inject<Record<string, any>>('preset', {}).dialogform;
 const visible = defineModel<boolean>('visible', { required: true });
 
 const props = defineProps<{
-  checklist: TaskChecklist;
+  checklist?: TaskChecklist;
   type: 'deleteList' | 'deleteItem' | 'uncheckItem';
   item?: TaskChecklistItem;
 }>();

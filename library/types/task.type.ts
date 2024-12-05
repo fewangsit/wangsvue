@@ -40,6 +40,15 @@ export type TaskDescription = {
   updatedAt: string | Date | null;
 };
 
+export type TaskChildren = {
+  process?: Pick<ProjectProcess, '_id' | 'name'>;
+  module?: Pick<ProjectModule, '_id' | 'name'>;
+  subModule?: Pick<ProjectSubModule, '_id' | 'name'>;
+  tasks?: TaskDependencyDetail[];
+  options?: DropdownOption[];
+  selectedOptions?: string[];
+};
+
 export type TaskDependency = {
   process?: Pick<ProjectProcess, '_id' | 'name'>;
   module?: Pick<ProjectModule, '_id' | 'name' | 'initial'>;
