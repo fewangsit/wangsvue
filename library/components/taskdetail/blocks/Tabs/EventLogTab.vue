@@ -45,7 +45,7 @@ watch(
 </script>
 
 <template>
-  <Timeline v-if="eventLogs?.length" :value="eventLogs" />
+  <Timeline v-if="eventLogs?.length" :value="eventLogs" no-format-date />
   <div v-else v-bind="Preset.nodatalottiewrapper">
     <DotLottieVue
       :src="noDataLottie as string"
