@@ -1,7 +1,7 @@
 <!-- eslint-disable no-nested-ternary -->
 <script setup lang="ts">
 import { useToast } from 'lib/utils';
-import { computed, ref, shallowRef } from 'vue';
+import { computed, ref, shallowRef, watch } from 'vue';
 import {
   DialogImprovementTaskEmits,
   DialogImprovementTaskProps,
@@ -40,6 +40,11 @@ const buttonsTemplate = computed<('submit' | 'cancel')[]>(() => {
 const openDetailTask = (taskIdParam: string): void => {
   selectedTaskId.value = taskIdParam;
   dialogDetailTask.value = true;
+};
+
+const resetForm = (): void => {
+  invalidForm.value = false;
+  validatorMessage.value = undefined;
 };
 
 const loadData = async (): Promise<void> => {
@@ -87,8 +92,7 @@ const markAsImprovement = async (): Promise<void> => {
       validatorMessage.value = 'Tidak ada task yang dipilih.';
       return;
     }
-    invalidForm.value = false;
-    validatorMessage.value = undefined;
+    resetForm();
 
     await TaskServices.markAsImprovement(taskIds);
     await NotificationServices.readNotification(props.notificationId);
@@ -107,6 +111,8 @@ const markAsImprovement = async (): Promise<void> => {
     });
   }
 };
+
+watch(children, resetForm, { deep: true });
 </script>
 
 <template>
@@ -127,6 +133,7 @@ const markAsImprovement = async (): Promise<void> => {
     :invalid="invalidForm"
     :reset-after-submit="false"
     :validator-message="validatorMessage"
+    @close="resetForm"
     @show="loadData"
     @submit="markAsImprovement"
     class="w-[800px]"
