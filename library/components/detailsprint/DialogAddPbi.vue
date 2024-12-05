@@ -20,6 +20,7 @@ import DialogDetailPbi from '../dialogdetailpbi/DialogDetailPbi.vue';
 import SprintServices from 'lib/services/sprint.service';
 import quickFilterFields from './options/quickFilterFields';
 import Badge from '../badge/Badge.vue';
+import eventBus from 'lib/event-bus';
 
 const route = useRoute();
 
@@ -123,6 +124,9 @@ const addPbis = async (): Promise<void> => {
       { pbiIds: selectedPbis.value.map((pbi) => pbi._id) },
     );
 
+    eventBus.emit('data-table:clear-selected-data', {
+      tableName: 'list-pbi-table-unassigned',
+    });
     emit('add');
     visible.value = false;
   } catch (error) {

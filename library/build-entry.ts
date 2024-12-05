@@ -139,6 +139,7 @@ import {
   TaskDetail,
   TaskTable,
   NotificationItem,
+  DialogImprovementTask,
 } from './components';
 
 export {
@@ -234,6 +235,7 @@ export {
   TaskDetail,
   TaskTable,
   NotificationItem,
+  DialogImprovementTask,
 
   // Component store
   useLoadingStore,

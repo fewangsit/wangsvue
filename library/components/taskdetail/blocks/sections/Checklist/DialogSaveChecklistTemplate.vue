@@ -22,7 +22,7 @@ const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 const visible = defineModel<boolean>('visible', { required: true });
 
 const props = defineProps<{
-  checklist: TaskChecklist;
+  checklist?: TaskChecklist;
 }>();
 
 const templateOptions = ref<DropdownOption[]>();

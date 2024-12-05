@@ -35,7 +35,7 @@ const emit = defineEmits<{
 }>();
 
 const props = defineProps<{
-  objectId: string;
+  objectId?: string;
   uploadFileService: (params: {
     id?: string;
     body: Record<string, any>;

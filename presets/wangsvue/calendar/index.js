@@ -295,10 +295,7 @@ export default {
     ],
   },
   weeknumber: {
-    class: [
-      'text-surface-600/70 font-normal',
-      'opacity-40 cursor-default',
-    ],
+    class: ['text-surface-600/70 font-normal', 'opacity-40 cursor-default'],
   },
   weekday: {
     class: [
@@ -327,8 +324,7 @@ export default {
       {
         'text-surface-600/70 bg-transparent':
           !context.selected && !context.disabled,
-        'text-primary-400 ':
-          context.selected && !context.disabled,
+        'text-primary-400 ': context.selected && !context.disabled,
       },
 
       // States
@@ -358,7 +354,7 @@ export default {
       },
 
       {
-        '!rounded-full': context.date.today && !context.selected,
+        '!rounded-full': !context.selected,
       },
 
       // States
@@ -397,8 +393,7 @@ export default {
       {
         'text-grayscale-900 bg-transparent':
           !context.selected && !context.disabled,
-        'bg-primary-400 text-white':
-          context.selected && !context.disabled,
+        'bg-primary-400 text-white': context.selected && !context.disabled,
       },
 
       // States
@@ -435,8 +430,7 @@ export default {
       {
         'text-grayscale-900 bg-transparent':
           !context.selected && !context.disabled,
-        'bg-primary-400 text-white':
-          context.selected && !context.disabled,
+        'bg-primary-400 text-white': context.selected && !context.disabled,
       },
 
       // States
