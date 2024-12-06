@@ -17,7 +17,11 @@ const formatActionTitle = (action: string): string => {
 </script>
 
 <template>
-  <Timeline :value="ref(value).value">
+  <Timeline
+    :class="[{ 'overflow-auto': !noScroll }]"
+    :value="ref(value).value"
+    style="scrollbar-width: none"
+  >
     <template #marker="{ item }">
       <div
         @click="item.showDetail = !item.showDetail"

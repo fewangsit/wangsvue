@@ -85,6 +85,11 @@ export type TimelineProps = {
    */
   alignDetail?: boolean;
   /**
+   * Whether the detail values should be aligned with each other or not.
+   * @defaultValue false
+   */
+  noScroll?: boolean;
+  /**
    * Whether the createdAt field should be displayed in raw format or not.
    * @defaultValue false
    */
