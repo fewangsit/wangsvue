@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject, ref } from 'vue';
 import { DetailType, TimelineProps } from './Timeline.vue.d';
+import { formatISODate } from 'lib/utils';
 import Timeline from 'primevue/timeline';
 import Icon from '../icon/Icon.vue';
 import UserName from '../username/UserName.vue';
@@ -42,14 +43,7 @@ const formatActionTitle = (action: string): string => {
             user-name-field="nickName"
           />
         </div>
-        {{
-          noFormatDate
-            ? item.createdAt
-            : new Date(item.createdAt)
-                .toISOString()
-                .slice(0, 19)
-                .replace('T', ' ')
-        }}
+        {{ noFormatDate ? item.createdAt : formatISODate(item.createdAt) }}
       </div>
 
       <template v-if="item.showDetail && item.detail">

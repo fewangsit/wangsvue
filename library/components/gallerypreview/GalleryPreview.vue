@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { formatDate } from 'lib/utils/date.util';
+import { formatISODate } from 'lib/utils';
 import { computed, onMounted, onUnmounted, shallowRef, watch } from 'vue';
 import { GalleryPreviewProps } from './GalleryPreview.vue.d';
 import Button from '../button/Button.vue';
@@ -144,7 +144,7 @@ watch(visible, (value) => {
                 Ditambahkan
                 {{
                   props.files[currentIndex].createdAt
-                    ? formatDate(new Date(props.files[currentIndex].createdAt))
+                    ? formatISODate(props.files[currentIndex].createdAt)
                     : '-'
                 }}
               </span>
