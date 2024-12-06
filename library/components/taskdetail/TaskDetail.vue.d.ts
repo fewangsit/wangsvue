@@ -26,6 +26,7 @@ export interface DetailTaskProps {
     repository?: string;
   };
   productBacklogItemId?: string;
+  approvalId?: string;
 }
 
 /**
