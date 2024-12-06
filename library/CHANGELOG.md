@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.5.90
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.89...v1.5.90)
+
+### 🏡 Chore
+
+- **presets:** Update version ([dc1592c](https://github.com/fewangsit/wangsvue/commit/dc1592c))
+
+### 🎨 Styles
+
+- **DataTable:** Remove sticky class from paginator ([1539fcc](https://github.com/fewangsit/wangsvue/commit/1539fcc))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.89
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.88...v1.5.89)
