@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v1.5.92
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.91...v1.5.92)
+
+### 🩹 Fixes
+
+- **pPKDjARR:** Handle sub module field in task dependency if the process task has no sub module ([7abec86](https://github.com/fewangsit/wangsvue/commit/7abec86))
+- **4lEQ22ah:** Update logic for getmoduleoptions in legend of taskdetail ([8b5a3fd](https://github.com/fewangsit/wangsvue/commit/8b5a3fd))
+- **taskdetail:** Update spacing in taskdetail dialog ([0932042](https://github.com/fewangsit/wangsvue/commit/0932042))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.91
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.90...v1.5.91)
