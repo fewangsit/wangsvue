@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.91
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.90...v1.5.91)
+
+### 🩹 Fixes
+
+- **a4qDO5zf:** Update z-index in gallerypreview container ([3700c42](https://github.com/fewangsit/wangsvue/commit/3700c42))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.90
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.89...v1.5.90)
