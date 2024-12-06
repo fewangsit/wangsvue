@@ -1,37 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { TaskStatus } from '../DialogAdjustmentTask.vue.d';
 import { BadgeProps } from 'lib/components/badge/Badge.vue.d';
+import { TaskStatus } from 'lib/types/wangsStatus.type';
+import { getStatusSeverity } from 'lib/utils';
 
 import Badge from 'lib/components/badge/Badge.vue';
 
 const props = defineProps<{ status: TaskStatus }>();
 
 const badgeSeverity = computed((): Pick<BadgeProps, 'severity'> => {
-  switch (props.status) {
-    case 'Pending Review Leader':
-    case 'Sprint':
-      return {
-        severity: 'primary',
-      };
-    case 'Penyesuaian':
-      return {
-        severity: 'warning',
-      };
-    case 'Backlog':
-      return {
-        severity: 'dark',
-      };
-    case 'Selesai': {
-      return {
-        severity: 'success',
-      };
-    }
-    default:
-      return {
-        severity: 'danger',
-      };
-  }
+  return getStatusSeverity(props.status) as Pick<BadgeProps, 'severity'>;
 });
 </script>
 <template>

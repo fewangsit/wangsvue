@@ -23,6 +23,12 @@ const visibility = shallowRef<boolean>(true);
       />
       <DialogAdjustmentTask
         v-model:visibility="visibility"
+        :custom-status-filter="[
+          {
+            label: 'asd',
+            value: 'asd',
+          },
+        ]"
         :members="[
           {
             _id: '66d1771c1ebe5344bc2b9dab',

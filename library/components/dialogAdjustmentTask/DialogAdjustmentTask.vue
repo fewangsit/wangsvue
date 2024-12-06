@@ -140,11 +140,17 @@ const putNewAssign = async (
   try {
     await TaskServices.updateTaskMember({
       data: payload.map((item) => ({
-        member: item?.newMember?.[0]?._id,
+        member: item?.newMember?.[0]?._id ?? '',
         task: item.task._id,
       })),
     });
-    updateTimeTaskTransfer(payload);
+
+    try {
+      await updateTimeTaskTransfer(payload);
+    } catch (error) {
+      console.error(error);
+    }
+
     refreshDataTable();
     emit('successAssignUnAssign');
     toast.add({
@@ -166,14 +172,28 @@ const updateTimeTaskTransfer = async (
 ): Promise<void> => {
   try {
     await Promise.all(
-      payload.map((item) =>
-        SubModuleServices.putTimelineTaskTransfer(item.task.subModule, {
-          sourceMemberId: item.task?.assignedTo?.[0]?._id,
-          targetMemberId: item?.newMember?.[0]._id,
-        }),
-      ),
+      payload.map((item) => {
+        if (
+          item.task.status !== 'Waiting for Approval' &&
+          item.task.status !== 'Selesai' &&
+          item.task.status !== 'Backlog' &&
+          item.newMember.length > 0
+        ) {
+          return SubModuleServices.putTimelineTaskTransfer(
+            item?.task?.subModule?._id,
+            {
+              sourceMemberId: item.task?.assignedTo?.[0]?._id,
+              targetMemberId: item?.newMember?.[0]?._id,
+            },
+          );
+        }
+      }),
     );
-    getTaskList({ limit: 10, page: 1 });
+    try {
+      await getTaskList({ limit: 10, page: 1 });
+    } catch (error) {
+      console.error(error);
+    }
   } catch (error) {
     console.error(error);
   }
@@ -343,6 +363,9 @@ watch(
       <div class="flex flex-col gap-2">
         <DialogAddjustmentTaskHeader
           :bulk-action-emitter="bulkActionEmitter"
+          :custom-filter-option="{
+            taskStatus: props.customStatusFilter,
+          }"
           :member-ids="props.members.map((item) => item._id)"
         />
         <DataTable

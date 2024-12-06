@@ -1,6 +1,7 @@
-import { Member } from 'lib/dto/member.dto';
+import { TaskStatus } from 'lib/types/wangsStatus.type';
 import { FetchResponse } from '../datatable/DataTable.vue.d';
 import { ClassComponent } from '../ts-helpers';
+import { MultiSelectOption } from 'lib/types/options.type';
 
 export interface DialogAdjustmentTaskProps {
   /**
@@ -30,6 +31,10 @@ export interface DialogAdjustmentTaskProps {
    * Custom Query Params Get List
    */
   customQueryParams?: Record<string, unknown>;
+  /**
+   * Custom Status Filter Option
+   */
+  customStatusFilter?: MultiSelectOption[];
 }
 
 export type DialogAdjustmentTaskEmits = {
@@ -88,7 +93,7 @@ export interface Task {
   process: Process;
   project: Project;
   module: Module;
-  subModule: string | null;
+  subModule: Module;
   name: string;
   assignedTo: AssignedTo[];
   team: string[];
@@ -100,15 +105,6 @@ export interface Task {
   dependency: Dependency;
   lastUpdatedAt: string;
 }
-
-export type TaskStatus =
-  | 'Penyesuaian'
-  | 'Fixing Bug'
-  | 'Reported Bug'
-  | 'Pending Review Leader'
-  | 'Sprint'
-  | 'Backlog'
-  | 'Selesai';
 
 interface Process {
   name: string;
