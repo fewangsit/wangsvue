@@ -437,6 +437,14 @@ const getProcessOptions = async (): Promise<void> => {
   }
 };
 
+/**
+ * Asynchronously fetches and sets module options for the task legend.
+ *
+ * Filters the modules based on the current process:
+ *   1. If the process involves components, only the 'Komponen' module is shown.
+ *   2. If the process is 'Pengonsepan', only the 'Konsep' module is shown.
+ *   3. Otherwise, excludes 'Komponen' and 'Konsep' from the options.
+ */
 const getModuleOptions = async (): Promise<void> => {
   try {
     legendLoading.value.module = true;
@@ -445,38 +453,21 @@ const getModuleOptions = async (): Promise<void> => {
 
     legendOptions.value.module = data.data
       .filter((d) => {
-        /*
-         * Filter out modules that are not supposed to be used for the current process.
-         * The following modules are only used for their respective processes:
-         * - Komponen module is only used for Komponen Web/Mobile process.
-         * - Konsep module is only used for Pengonsepan process.
-         * - Other modules are used for other processes.
-         */
-        const isComponent =
-          defaultProcesses
-            .filter((process) => process.name.includes('Komponen'))
-            .map((process) => process.name)
-            .includes(legendForm.value.process.name) && d.name === 'Komponen';
+        const isProcessComponent = defaultProcesses
+          .filter((process) => process.name.includes('Komponen'))
+          .map((process) => process.name)
+          .includes(legendForm.value.process.name);
+        const isProcessConcept =
+          legendForm.value.process.name === 'Pengonsepan';
 
-        const isConcept =
-          legendForm.value.process.name === 'Pengonsepan' &&
-          d.name === 'Konsep';
-
-        const isOtherModule =
-          defaultProcesses
-            .filter(
-              (process) =>
-                !process.name.includes('Komponen') &&
-                !process.name.includes('Pengonsepan'),
-            )
-            .map((process) => process.name)
-            .includes(legendForm.value.process.name) &&
-          !['Komponen', 'Konsep'].includes(d.name);
-
-        if (isComponent || isConcept || isOtherModule) {
-          return true;
+        if (isProcessComponent) {
+          return d.name === 'Komponen';
         }
-        return false;
+        if (isProcessConcept) {
+          return d.name === 'Konsep';
+        }
+
+        return !['Komponen', 'Konsep'].includes(d.name);
       })
       .map((d) => ({
         label: d.name,
