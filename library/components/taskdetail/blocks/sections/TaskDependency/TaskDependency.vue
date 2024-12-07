@@ -204,6 +204,15 @@ const loadData = async (): Promise<void> => {
               })),
           selectedOptions: taskData.task.map((task) => task._id),
           subModuleVisibility: !!taskData.subModule,
+          subModule: taskData?.subModule ?? process.subModule,
+          subModuleOptions: taskData?.subModule
+            ? [
+                {
+                  label: taskData?.subModule?.name,
+                  value: taskData?.subModule,
+                },
+              ]
+            : [],
         };
       }
       // If the task data is not found, return the process dependency
@@ -728,7 +737,10 @@ watch(
           <div v-if="dep.subModuleVisibility" class="flex items-center gap-1">
             <span class="text-xs font-semibold">Sub Modul: </span>
             <Dropdown
-              v-if="dep.custom"
+              v-if="
+                dep.custom ||
+                noSubModuleProcesses.includes(taskDetail.process.name)
+              "
               v-model="dep.subModule"
               :disabled="isDisabled"
               :initial-value="dep.subModule"

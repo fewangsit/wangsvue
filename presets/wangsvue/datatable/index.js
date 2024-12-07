@@ -238,7 +238,7 @@ export default {
       ? 'Menampilkan {first} - {last} dari {totalRecords}'
       : 'Tidak ditemukan data',
 
-    'class': 'sticky left-0 bottom-0',
+    'class': '',
 
     'template':
       'FirstPageLink PrevPageLink PageLinks JumpToPageInput NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown',
