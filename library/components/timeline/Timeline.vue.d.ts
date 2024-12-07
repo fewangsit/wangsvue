@@ -85,7 +85,7 @@ export type TimelineProps = {
    */
   alignDetail?: boolean;
   /**
-   * Whether the detail values should be aligned with each other or not.
+   * Whether the timeline should be scrollable or not.
    * @defaultValue false
    */
   noScroll?: boolean;
