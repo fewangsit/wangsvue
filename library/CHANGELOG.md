@@ -1,6 +1,33 @@
 # Changelog
 
 
+## v1.5.93
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.92...v1.5.93)
+
+### 🚀 Enhancements
+
+- FormatISODate util ([cd64300](https://github.com/fewangsit/wangsvue/commit/cd64300))
+
+### 🩹 Fixes
+
+- Changelog filters ([a1d7b58](https://github.com/fewangsit/wangsvue/commit/a1d7b58))
+- **UserName:** Image preview closes username overlay on preview button click ([1e128fd](https://github.com/fewangsit/wangsvue/commit/1e128fd))
+- **DialogDetailPBI:** Unscrollable event log ([d55cf36](https://github.com/fewangsit/wangsvue/commit/d55cf36))
+- **NotificationItem:** Text size ([476cf8f](https://github.com/fewangsit/wangsvue/commit/476cf8f))
+
+### 💅 Refactors
+
+- Standardize date format ([ba48ae4](https://github.com/fewangsit/wangsvue/commit/ba48ae4))
+
+### 📖 Documentation
+
+- **Timeline:** Declaration type ([df38a39](https://github.com/fewangsit/wangsvue/commit/df38a39))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.92
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.91...v1.5.92)

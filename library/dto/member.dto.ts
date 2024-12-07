@@ -11,9 +11,10 @@ interface MemberData {
   data: Member[];
 }
 
-export interface Member {
+export interface Member extends Record<string, unknown> {
   _id: string;
   isActive: boolean;
+  key: number;
   profilePictureBig: string;
   profilePictureMedium: string;
   profilePictureSmall: string;
