@@ -24,7 +24,7 @@ export interface DropdownProps {
   /**
    * List of options to display.
    */
-  options?: DropdownOption[] | string[];
+  options?: DropdownOption[] | string[] | Record<string, any>;
   /**
    * Specify the property name of option to be used as label.
    *

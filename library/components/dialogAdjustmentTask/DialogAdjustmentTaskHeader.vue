@@ -19,6 +19,9 @@ const props = defineProps<{
   bulkActionEmitter: (
     bulkActionType: DialogAdjustmentTaskBulkActionType,
   ) => void;
+  customFilterOption?: {
+    taskStatus?: MultiSelectOption[];
+  };
   memberIds: string[];
 }>();
 
@@ -39,8 +42,16 @@ const dependencyStatus: MultiSelectOption[] = [
 
 const taskStatus: MultiSelectOption[] = [
   {
-    label: 'Penyesuaian',
-    value: 'Penyesuaian',
+    label: 'Selesai',
+    value: 'Selesai',
+  },
+  {
+    label: 'Pending Review Leader',
+    value: 'Pending Review Leader',
+  },
+  {
+    label: 'Sprint',
+    value: 'Sprint',
   },
   {
     label: 'Fixing Bug',
@@ -51,12 +62,16 @@ const taskStatus: MultiSelectOption[] = [
     value: 'Reported Bug',
   },
   {
-    label: 'Pending Review Leader',
-    value: 'Pending Review Leader',
+    label: 'Penyesuaian',
+    value: 'Penyesuaian',
   },
   {
-    label: 'Sprint',
-    value: 'Sprint',
+    label: 'Backlog',
+    value: 'Backlog',
+  },
+  {
+    label: 'Waiting for Approval',
+    value: 'Waiting for Approval',
   },
 ];
 
@@ -152,7 +167,8 @@ const filterFieldsQuick: FilterField[] = [
     field: 'status',
     type: 'multiselect',
     placeholder: 'Pilih status',
-    fetchOptionFn: (): MultiSelectOption[] => taskStatus,
+    fetchOptionFn: (): MultiSelectOption[] =>
+      props.customFilterOption.taskStatus ?? taskStatus,
   },
 ];
 

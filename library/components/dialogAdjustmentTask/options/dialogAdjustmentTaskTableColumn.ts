@@ -100,6 +100,8 @@ export const dialogAdjustmentTaskTableColumn: TableColumn[] = [
     header: 'Last Modified Status',
     sortable: true,
     fixed: false,
+    bodyTemplate: (data: Task): string =>
+      new Date(data.lastUpdatedAt).toISOString().slice(0, 19).replace('T', ' '),
   },
   {
     field: 'assignedTo',
