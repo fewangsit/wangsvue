@@ -18,6 +18,7 @@ const props = withDefaults(defineProps<UserNameProps>(), {
 
 const loadingUser = shallowRef<boolean>(false);
 const fullUserObject = shallowRef<Member>();
+const showPreview = shallowRef<boolean>(false);
 const miniProfile = ref<OverlayPanelClass>();
 
 const userDisplayName = computed<string>(
@@ -73,7 +74,11 @@ const adjustPosition = async (): Promise<void> => {
       {{ userDisplayName }}
     </span>
 
-    <OverlayPanel ref="miniProfile" @show="adjustPosition">
+    <OverlayPanel
+      ref="miniProfile"
+      :dismissable="!showPreview"
+      @show="adjustPosition"
+    >
       <div
         class="relative overflow-hidden flex flex-col gap-2 w-[200px] h-max items-center justify-center p-3 rounded-[10px] border border-grayscale-900 text-grayscale-900"
       >
@@ -83,6 +88,8 @@ const adjustPosition = async (): Promise<void> => {
           :src="
             fullUserObject?.profilePicture ?? fullUserObject?.profilePictureBig
           "
+          @hide="showPreview = false"
+          @show="showPreview = true"
           class="w-[60px] h-[60px]"
           rounded
         />

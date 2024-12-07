@@ -4,11 +4,10 @@ import { computed, ComputedRef, inject, Ref, shallowRef } from 'vue';
 import Button from 'lib/components/button/Button.vue';
 import { TaskDetailData } from 'lib/types/task.type';
 import Calendar from 'lib/components/calendar/Calendar.vue';
-import { formatDate } from 'lib/utils/date.util';
 import TaskServices from 'lib/services/task.service';
 import { EditTaskDTO } from 'lib/dto/task.dto';
 import eventBus from 'lib/event-bus';
-import { useToast } from 'lib/utils';
+import { formatISODate, useToast } from 'lib/utils';
 import { TaskLegendForm } from '../common/Legend.vue';
 import DialogAssignMember from '../common/DialogAssignMember.vue';
 import DialogSetDuration from '../common/DialogSetDuration.vue';
@@ -36,7 +35,7 @@ const startDate = shallowRef<number>();
 
 const startDateLabel = computed(() =>
   taskDetail.value?.startDate
-    ? formatDate(new Date(taskDetail.value?.startDate))
+    ? formatISODate(taskDetail.value?.startDate)
     : 'Tanggal Mulai',
 );
 
@@ -209,7 +208,7 @@ const getDuration = (duration: number): string => {
           <div class="">
             <Button
               :class="[
-                '!w-[150px] !h-[30px] !text-left !rounded',
+                '!w-[165px] !h-[30px] !text-left !rounded',
                 {
                   'pointer-events-none':
                     taskDetail?.process?.name === 'API Spec' ||

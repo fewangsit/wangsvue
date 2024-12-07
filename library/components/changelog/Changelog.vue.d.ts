@@ -48,7 +48,7 @@ export type ChangelogOptionQuery = {
   objectOptions?: boolean;
   fieldOptions?: boolean;
   nameOptions?: boolean;
-  assetNameOptions?: boolean;
+  objectNameOptions?: boolean;
   object?: string;
   objects?: string;
 };
@@ -59,7 +59,7 @@ export type ChangelogOptionFilter = {
   objectOptions?: MultiSelectOption[];
   fieldOptions?: MultiSelectOption[];
   nameOptions?: MultiSelectOption[];
-  assetNameOptions?: MultiSelectOption[];
+  objectNameOptions?: MultiSelectOption[];
 };
 
 /**

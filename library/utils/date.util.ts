@@ -159,6 +159,9 @@ export const formatDate = (
   return date.toLocaleString(locale, format).replace(',', '');
 };
 
+export const formatISODate = (date: string | Date): string =>
+  new Date(date).toISOString().slice(0, 19).replace('T', ' ');
+
 /**
  * Formats a date to human readable form (timeago / relative time from now).
  *

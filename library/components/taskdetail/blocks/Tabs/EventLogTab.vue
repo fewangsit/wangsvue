@@ -4,8 +4,7 @@ import noDataLottie from 'lib/assets/lottie/no-data.lottie';
 import Timeline from 'lib/components/timeline/Timeline.vue';
 import { TimelineItem } from 'lib/components/timeline/Timeline.vue.d';
 import LogServices from 'lib/services/log.service';
-import { useToast } from 'lib/utils';
-import { formatDate } from 'lib/utils/date.util';
+import { formatISODate, useToast } from 'lib/utils';
 import { watch, inject, Ref, ref } from 'vue';
 
 const toast = useToast();
@@ -23,7 +22,7 @@ const getEventLog = async (): Promise<void> => {
     });
     eventLogs.value = data.data.map((d) => ({
       ...d,
-      createdAt: formatDate(new Date(d.createdAt)),
+      createdAt: formatISODate(d.createdAt),
     }));
   } catch (error) {
     toast.add({

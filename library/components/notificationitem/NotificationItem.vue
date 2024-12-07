@@ -138,7 +138,7 @@ const goToDetail = (notification: NotificationItemType): void => {
         : 'default',
     }"
     @click="onClickNotification(notification)"
-    class="rounded-[8px] bg-primary-50 border border-primary-100 py-3 px-3.5 flex"
+    class="rounded-[8px] bg-primary-50 border border-primary-100 py-3 px-3.5 flex text-xs"
     data-wv-name="notif-item-container"
   >
     <div :class="{ 'w-full': !longNotif }" class="flex gap-3.5">

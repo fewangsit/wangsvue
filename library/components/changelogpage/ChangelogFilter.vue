@@ -44,11 +44,11 @@ const fields = ((): FilterField[] => {
     {
       label: 'Objek',
       type: 'multiselect',
-      field: 'object',
+      field: 'objects',
       visible:
         (props.moduleId || props.subModuleId) &&
         !props.additionalTemplateFilters?.length &&
-        !props.removedFilters?.includes('object'),
+        !props.removedFilters?.includes('objects'),
       fetchOptionFn: async (): Promise<MultiSelectOption[]> => {
         return await fetchOptions('objectOptions');
       },
@@ -59,12 +59,12 @@ const fields = ((): FilterField[] => {
           ? 'Objek Name'
           : (props.objectNameColumn ?? props.object),
       type: 'multiselect',
-      field: 'assetName',
+      field: 'objectName',
       visible:
         !props.additionalTemplateFilters?.length &&
         !props.removedFilters?.includes('objectName'),
       fetchOptionFn: async (): Promise<MultiSelectOption[]> => {
-        return await fetchOptions('assetNameOptions');
+        return await fetchOptions('objectNameOptions');
       },
     },
     {
