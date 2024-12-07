@@ -8,6 +8,8 @@ import NotificationItem from 'lib/components/notificationitem/NotificationItem.v
 import Toast from 'lib/components/toast/Toast.vue';
 import TaskDetail from 'lib/components/taskdetail/TaskDetail.vue';
 import DialogImprovementTask from 'lib/components/dialogimprovementtask/DialogImprovementTask.vue';
+import Button from 'lib/components/button/Button.vue';
+import OverlayPanel from 'lib/components/overlaypanel/OverlayPanel.vue';
 
 const notifications = ref(data.data as NotificationItemType[]);
 const showDetailTask = shallowRef<boolean>(false);
@@ -15,6 +17,9 @@ const showImprovementTask = shallowRef<boolean>(false);
 const currentTaskId = shallowRef<string>();
 const currentProjectId = shallowRef<string>();
 const currentNotificationId = shallowRef<string>();
+const notificationPanel = ref<{
+  toggle: (event?: Event, target?: unknown) => void;
+}>();
 
 const onRead = (id: string): void => {
   const index = notifications.value.findIndex(
@@ -65,6 +70,14 @@ const onOpenTaskImprovement = (
       <DocTitle name="Notification Item" />
     </template>
     <template #content>
+      <Button
+        @click="notificationPanel?.toggle($event)"
+        class="relative bg-white !overflow-visible"
+        data-wv-name="toggle-notif-btn"
+        icon="notification"
+        severity="secondary"
+        text
+      />
       <div
         v-if="notifications?.length"
         class="w-full flex flex-col gap-2 justify-center"
@@ -82,5 +95,23 @@ const onOpenTaskImprovement = (
       </div>
     </template>
   </Card>
+
+  <OverlayPanel ref="notificationPanel" :dismissable-overlay="false">
+    <div
+      v-if="notifications?.length"
+      class="w-full flex flex-col gap-2 justify-center"
+    >
+      <NotificationItem
+        :key="notif._id"
+        v-for="notif in notifications"
+        :notification="notif"
+        @open-task="onOpenTask"
+        @open-task-improvement="onOpenTaskImprovement"
+        @read="onRead"
+        data-wv-name="notif-item"
+        long-notif
+      />
+    </div>
+  </OverlayPanel>
   <Toast />
 </template>

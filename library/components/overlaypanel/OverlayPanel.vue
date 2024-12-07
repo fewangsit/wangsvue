@@ -1,17 +1,28 @@
 <script setup lang="ts">
-import OverlayPanel from 'primevue/overlaypanel';
 import { ref } from 'vue';
+import { OverlayPanelProps } from './OverlayPanel.vue.d';
+import OverlayPanel from 'primevue/overlaypanel';
 import eventBus from 'lib/event-bus';
 
 const overlayId = +new Date();
 const op = ref<OverlayPanel>();
+const props = withDefaults(defineProps<OverlayPanelProps>(), {
+  dismissable: true,
+  dismissableOverlay: true,
+  showCloseIcon: false,
+  baseZIndex: 0,
+  autoZIndex: true,
+  unstyled: false,
+  closeOnEscape: true,
+});
 
 const onHideOverlay = (): void => {
   eventBus.off('overlay:show', hideOverlay);
 };
 
 const hideOverlay = (event: { overlayId: number }): void => {
-  if (op.value && event.overlayId !== overlayId) op.value.hide();
+  if (op.value && event.overlayId !== overlayId && props.dismissableOverlay)
+    op.value.hide();
 };
 
 const onShowOverlay = async (): Promise<void> => {
@@ -28,6 +39,7 @@ defineExpose({ toggle });
 
 <template>
   <OverlayPanel
+    v-bind="$props"
     :id="overlayId"
     ref="op"
     @hide="onHideOverlay"
