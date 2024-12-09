@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v1.5.94
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.93...v1.5.94)
+
+### 🚀 Enhancements
+
+- **OverlayPanel:** Add prop to keep overlay open on click another overlay ([2ec9f68](https://github.com/fewangsit/wangsvue/commit/2ec9f68))
+
+### 🏡 Chore
+
+- **presets:** Update version ([2b4a648](https://github.com/fewangsit/wangsvue/commit/2b4a648))
+
+### 🎨 Styles
+
+- **WorkCalendar:** Move inline class to preset ([d7e9d21](https://github.com/fewangsit/wangsvue/commit/d7e9d21))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.93
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.92...v1.5.93)
