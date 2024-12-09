@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v1.5.96
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.95...v1.5.96)
+
+### 🚀 Enhancements
+
+- **Toast:** Custom message ([0c2b225](https://github.com/fewangsit/wangsvue/commit/0c2b225))
+
+### 🩹 Fixes
+
+- **Dropdown, MultiSelect:** Loading placeholder ([6eff0d5](https://github.com/fewangsit/wangsvue/commit/6eff0d5))
+- **DataTable:** Bulk fold/unfold ([9078bcf](https://github.com/fewangsit/wangsvue/commit/9078bcf))
+- **DataTable:** Disable toggle expand when loading rows ([472ca7b](https://github.com/fewangsit/wangsvue/commit/472ca7b))
+- **DataTable:** Disable toggle expand all if loading rows ([c2d2cdd](https://github.com/fewangsit/wangsvue/commit/c2d2cdd))
+
+### 💅 Refactors
+
+- **DetailMember:** Update user log param ([23ae79a](https://github.com/fewangsit/wangsvue/commit/23ae79a))
+- **Dropdown:** Use visible options as condition instead of all options ([89c9709](https://github.com/fewangsit/wangsvue/commit/89c9709))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.95
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.94...v1.5.95)
