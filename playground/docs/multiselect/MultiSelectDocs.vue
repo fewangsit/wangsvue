@@ -24,7 +24,7 @@ const selectedProcess = {
   nonactivable: false,
   default: false,
   dependencies: [
-    { _id: '6707a73a2492eb56557b6bab', name: 'Repositori BE' },
+    { _id: '6707a73a2492eb56557b6bab', name: 'Repositori B' },
     {
       _id: '6707a73a2492eb56557b6bac',
       name: 'Repositori FE',
@@ -139,7 +139,9 @@ const dependenciesOptions = [
             data-key="_id"
             field-name="dependencies"
             label="Dependensi"
+            loading
             option-label="name"
+            placeholder="Pilih dependensi"
             use-validator
           />
 

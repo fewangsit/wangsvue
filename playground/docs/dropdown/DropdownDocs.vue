@@ -45,7 +45,9 @@ const items = ref(
               { label: 'Waiting for Handover', value: 'Handover' },
             ]"
             field-name="status12"
+            initial-value="Approva"
             label="Status"
+            loading
             mandatory
             option-label="label"
             option-value="value"
@@ -71,6 +73,7 @@ const items = ref(
             value-type="badge"
           />
           <Dropdown
+            :initial-value="{ text: 'Approval', _id: 'id' }"
             :options="[
               {
                 label: 'Waiting for Approval',
@@ -86,6 +89,7 @@ const items = ref(
             field-name="status213"
             input-border="none"
             label="Status 213"
+            loading
             mandatory
             option-label="label"
             option-value="value"

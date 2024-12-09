@@ -205,7 +205,10 @@ defineExpose({
         @hide="isShowOverlay = false"
         @show="$emit('show'), (isShowOverlay = true)"
       >
-        <template #value="slotProps">
+        <template #value="{ placeholder }" v-if="loading">
+          <div class="text-general-200 font-normal">{{ placeholder }}</div>
+        </template>
+        <template #value="slotProps" v-else>
           <template v-if="slotProps.value">
             <slot :value="getOptionLabel()" name="value">
               <Badge
