@@ -59,7 +59,7 @@ const field = reactive<FieldValidation<Nullable<OptionValue>>>({
   value: props.initialValue ? props.initialValue : props.modelValue,
 });
 
-const visibleOptions = computed(() => filterOptions(props.options));
+const visibleOptions = computed(() => filterOptions(props.options as string[]));
 
 const dropdownPlaceholder = computed(() => {
   return props.loading
@@ -199,13 +199,16 @@ defineExpose({
           wrapper: Preset?.wrapper({ props }),
         }"
         :virtual-scroller-options="
-          options?.length > 10 ? { itemSize: 32 } : undefined
+          visibleOptions?.length > 10 ? { itemSize: 32 } : undefined
         "
         @change="updateFieldValue"
         @hide="isShowOverlay = false"
         @show="$emit('show'), (isShowOverlay = true)"
       >
-        <template #value="slotProps">
+        <template #value="{ placeholder }" v-if="loading">
+          <div class="text-general-200 font-normal">{{ placeholder }}</div>
+        </template>
+        <template #value="slotProps" v-else>
           <template v-if="slotProps.value">
             <slot :value="getOptionLabel()" name="value">
               <Badge
