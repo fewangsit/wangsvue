@@ -232,7 +232,11 @@
         "isReadOnly": false,
         "data": {
           "projectId": "6706205a9bdcad72db257110",
-          "taskId": "6717251a0f4e49675c46f7f7"
+          "taskId": "6717251a0f4e49675c46f7f7",
+          "user": {
+            "_id": "66d1771c1ebe5344bc2b9dab",
+            "nickName": "Super Admin"
+          }
         },
         "module": "Task Improvement",
         "severity": "warning",

@@ -89,6 +89,7 @@ import badgegroup from './badgegroup/index.js';
 import breadcrumb from './breadcrumb/index.js';
 import inputcurrency from './inputcurrency';
 import fileupload from './fileupload';
+import workcalendar from './workcalendar';
 
 const directives = {
   badge: badgedirective,
@@ -204,6 +205,7 @@ const wangsvue = {
   scrolltop,
   terminal,
   image,
+  workcalendar,
 };
 
 export default wangsvue;

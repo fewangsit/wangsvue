@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, shallowRef, onMounted } from 'vue';
+import { ref, computed, shallowRef, onMounted, inject } from 'vue';
 import { WorkCalendarProps } from './WorkCalendar.vue.d';
 import { isEmptyObject } from 'lib/utils';
 import { useField } from 'vee-validate';
@@ -76,6 +76,8 @@ const calendarWeeks = ref<WCDate[][]>([]);
 
 const holidays = ref<Holiday[]>([]);
 const isLoading = shallowRef(false);
+
+const Preset = inject<Record<string, any>>('preset', {}).workcalendar;
 
 const workDaysField = useField<WorkCalendarProps['workDays']>(
   'workDays',
@@ -420,11 +422,8 @@ const resetDefaultThisYear = (): void => {
         data-wv-section="navigation"
       >
         <Icon
-          :class="[
-            'text-2xl text-general-900 rotate-180',
-            { '!text-general-300 pointer-events-none': disablePrevButton },
-          ]"
           @click="prevMonth"
+          v-bind="Preset?.prev({ context: { disablePrevButton } })"
           icon="arrow-right"
         />
 
@@ -434,11 +433,8 @@ const resetDefaultThisYear = (): void => {
         </div>
 
         <Icon
-          :class="[
-            'text-2xl text-general-900',
-            { '!text-general-300 pointer-events-none': disableNextButton },
-          ]"
           @click="nextMonth"
+          v-bind="Preset?.next({ context: { disableNextButton } })"
           icon="arrow-right"
         />
       </div>
@@ -490,16 +486,8 @@ const resetDefaultThisYear = (): void => {
                   },
                 },
               }"
+              v-bind="Preset?.daylabel({ context: { day } })"
               :aria-disabled="day.isOtherMonth"
-              :class="{
-                'flex items-center justify-center w-12 h-12 focus:outline-none focus-visible:outline-none cursor-pointer': true,
-                'hidden': day.isOtherMonth,
-                'text-white !rounded-full focus:outline-none focus-visible:outline-none cursor-pointer':
-                  day.isWorkDay || day.isNationalHoliday,
-                'bg-danger-500 hover:bg-danger-500/90': day.state === 'holiday',
-                'bg-primary-1000 hover:bg-primary-1000/90':
-                  day.state === 'workday',
-              }"
               :data-p-disabled="day.isOtherMonth"
               aria-selected="false"
               data-p-highlight="false"

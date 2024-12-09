@@ -142,6 +142,11 @@ export interface OverlayPanelProps {
    */
   dismissable?: boolean;
   /**
+   * Enables to hide the overlay when another overlay is clicked.
+   * @defaultValue true
+   */
+  dismissableOverlay?: boolean;
+  /**
    * When enabled, displays a close icon at top right corner.
    * @defaultValue false
    */
