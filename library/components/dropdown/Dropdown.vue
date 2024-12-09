@@ -59,7 +59,7 @@ const field = reactive<FieldValidation<Nullable<OptionValue>>>({
   value: props.initialValue ? props.initialValue : props.modelValue,
 });
 
-const visibleOptions = computed(() => filterOptions(props.options));
+const visibleOptions = computed(() => filterOptions(props.options as string[]));
 
 const dropdownPlaceholder = computed(() => {
   return props.loading
@@ -199,7 +199,7 @@ defineExpose({
           wrapper: Preset?.wrapper({ props }),
         }"
         :virtual-scroller-options="
-          options?.length > 10 ? { itemSize: 32 } : undefined
+          visibleOptions?.length > 10 ? { itemSize: 32 } : undefined
         "
         @change="updateFieldValue"
         @hide="isShowOverlay = false"
