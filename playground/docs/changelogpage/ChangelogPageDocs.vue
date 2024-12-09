@@ -11,8 +11,8 @@ import Card from 'lib/components/card/Card.vue';
     <template #content>
       <ChangelogPage object="Tim" object-name-column="Tim" />
       <ChangelogPage
-        module-id="66d809a4b23684578bc69c2b"
-        object="Tim"
+        module-id="670620dd3be0c0a2ed7edcc4"
+        object="Module"
         use-button-download
       />
     </template>

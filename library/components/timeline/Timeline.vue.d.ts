@@ -85,6 +85,11 @@ export type TimelineProps = {
    */
   alignDetail?: boolean;
   /**
+   * Whether the timeline should be scrollable or not.
+   * @defaultValue false
+   */
+  noScroll?: boolean;
+  /**
    * Whether the createdAt field should be displayed in raw format or not.
    * @defaultValue false
    */

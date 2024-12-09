@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { formatDate } from 'lib/utils/date.util';
+import { formatISODate } from 'lib/utils';
 import { computed, onMounted, onUnmounted, shallowRef, watch } from 'vue';
 import { GalleryPreviewProps } from './GalleryPreview.vue.d';
 import Button from '../button/Button.vue';
@@ -73,7 +73,8 @@ watch(visible, (value) => {
     >
       <div
         v-if="visible"
-        class="fixed backdrop-blur-[1px] inset-0 flex items-center justify-center w-full z-[3205] bg-gray-900 bg-opacity-80 p-6"
+        class="fixed backdrop-blur-[1px] inset-0 flex items-center justify-center w-full bg-gray-900 bg-opacity-80 p-6"
+        style="z-index: 999999999999999999999 !important"
       >
         <div
           class="relative flex flex-col gap-3 h-[90vh] self-start w-full items-center justify-between"
@@ -144,7 +145,7 @@ watch(visible, (value) => {
                 Ditambahkan
                 {{
                   props.files[currentIndex].createdAt
-                    ? formatDate(new Date(props.files[currentIndex].createdAt))
+                    ? formatISODate(props.files[currentIndex].createdAt)
                     : '-'
                 }}
               </span>

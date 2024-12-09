@@ -1,6 +1,59 @@
 # Changelog
 
 
+## v1.5.93
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.92...v1.5.93)
+
+### 🚀 Enhancements
+
+- FormatISODate util ([cd64300](https://github.com/fewangsit/wangsvue/commit/cd64300))
+
+### 🩹 Fixes
+
+- Changelog filters ([a1d7b58](https://github.com/fewangsit/wangsvue/commit/a1d7b58))
+- **UserName:** Image preview closes username overlay on preview button click ([1e128fd](https://github.com/fewangsit/wangsvue/commit/1e128fd))
+- **DialogDetailPBI:** Unscrollable event log ([d55cf36](https://github.com/fewangsit/wangsvue/commit/d55cf36))
+- **NotificationItem:** Text size ([476cf8f](https://github.com/fewangsit/wangsvue/commit/476cf8f))
+
+### 💅 Refactors
+
+- Standardize date format ([ba48ae4](https://github.com/fewangsit/wangsvue/commit/ba48ae4))
+
+### 📖 Documentation
+
+- **Timeline:** Declaration type ([df38a39](https://github.com/fewangsit/wangsvue/commit/df38a39))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
+## v1.5.92
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.91...v1.5.92)
+
+### 🩹 Fixes
+
+- **pPKDjARR:** Handle sub module field in task dependency if the process task has no sub module ([7abec86](https://github.com/fewangsit/wangsvue/commit/7abec86))
+- **4lEQ22ah:** Update logic for getmoduleoptions in legend of taskdetail ([8b5a3fd](https://github.com/fewangsit/wangsvue/commit/8b5a3fd))
+- **taskdetail:** Update spacing in taskdetail dialog ([0932042](https://github.com/fewangsit/wangsvue/commit/0932042))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
+## v1.5.91
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.90...v1.5.91)
+
+### 🩹 Fixes
+
+- **a4qDO5zf:** Update z-index in gallerypreview container ([3700c42](https://github.com/fewangsit/wangsvue/commit/3700c42))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.90
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.89...v1.5.90)

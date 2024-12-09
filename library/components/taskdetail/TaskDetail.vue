@@ -418,6 +418,7 @@ watch(
           // Customs
           // '!pl-6 !py-3 !pr-6',
           'detailtask-scrollbar-hide !mb-2',
+          '!mt-0',
         ],
       },
       footer: {
@@ -464,7 +465,7 @@ watch(
     <template #default>
       <div class="flex">
         <div
-          class="w-[800px] max-h-[600px] flex flex-col gap-3 !px-6 !py-3 overflow-y-auto detailtask-scrollbar-hide"
+          class="w-[800px] flex flex-col gap-3 !px-6 !py-3 overflow-y-auto detailtask-scrollbar-hide"
         >
           <Legend
             :approval-id="props.approvalId"
@@ -484,7 +485,7 @@ watch(
         </div>
         <div
           v-if="showCommentSection"
-          class="w-[520px] max-h-[600px] border-l border-grayscale-900 overflow-y-auto detailtask-scrollbar-hide"
+          class="w-[520px] border-l border-grayscale-900 overflow-y-auto detailtask-scrollbar-hide"
         >
           <div
             class="flex items-center justify-between py-4 px-6 border-b border-grayscale-900"
