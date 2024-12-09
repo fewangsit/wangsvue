@@ -58,6 +58,10 @@ export type DialogAdjustmentTaskEmits = {
    * Trigger when cancel btn clicked
    */
   'cancel': [];
+  /**
+   * Trigger When Failed getting task list
+   */
+  'failedGetTaskList': [];
 };
 
 declare class DialogAdjustmentTask extends ClassComponent<
