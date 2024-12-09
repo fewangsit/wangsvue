@@ -130,6 +130,7 @@ const getTaskList = async (
     }
     return findUnassignMember(taskListData);
   } catch (error) {
+    emit('failedGetTaskList');
     console.error(error);
   }
 };
@@ -411,10 +412,10 @@ watch(
 
       <div class="flex justify-between">
         <span class="flex gap-1">
-          <Icon class="!text-base !text-gold" icon="check-double-fill" />
+          <Icon class="!text-base !text-primary-400" icon="check-double-fill" />
           Progress Task: 50% (100/200)
         </span>
-        <span class="!flex !text-gold">
+        <span class="!flex !text-primary-400">
           Detail
           <Icon class="text-base" icon="arrow-right" />
         </span>
