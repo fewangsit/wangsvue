@@ -295,8 +295,10 @@ const toggleRowSelection = (event: Event, data: Data, index: number): void => {
 };
 
 const toggleExpandAll = (): void => {
+  const isExpanding = !isExpandedAll.value;
   currentPageTableData.value.forEach((data, index) => {
-    if (data.children?.length || data.hasChildren) toggleRowExpand(data, index);
+    if (data.children?.length || data.hasChildren)
+      toggleRowExpand(data, index, isExpanding);
   });
 };
 
