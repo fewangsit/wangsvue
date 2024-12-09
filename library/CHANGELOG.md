@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.5.95
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.94...v1.5.95)
+
+### 🚀 Enhancements
+
+- **approverinfo:** Add props useFormatDate in approverinfo ([048f516](https://github.com/fewangsit/wangsvue/commit/048f516))
+
+### 🏡 Chore
+
+- **presets:** Update version ([093b9f0](https://github.com/fewangsit/wangsvue/commit/093b9f0))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.94
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.93...v1.5.94)
