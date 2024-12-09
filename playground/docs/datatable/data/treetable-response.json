@@ -89,7 +89,8 @@
           "key": 1
         },
         "isSelfService": false,
-        "sequence": 8
+        "sequence": 8,
+        "hasChildren": true
       },
       {
         "_id": "665d8fbb0b74698b05cb3879",
@@ -127,7 +128,8 @@
         "isActive": true,
         "lastModifier": null,
         "isSelfService": false,
-        "sequence": 9
+        "sequence": 9,
+        "hasChildren": true
       },
       {
         "_id": "6668feaf253a2c8521dd9cf0",
@@ -170,7 +172,8 @@
           "key": 1
         },
         "isSelfService": false,
-        "sequence": 10
+        "sequence": 10,
+        "hasChildren": true
       },
       {
         "_id": "6668feaf253a2c8521dd9d04",
@@ -213,7 +216,8 @@
           "key": 1
         },
         "isSelfService": false,
-        "sequence": 11
+        "sequence": 11,
+        "hasChildren": true
       },
       {
         "_id": "6699edd8ac59ff97700fd98d",
@@ -257,7 +261,8 @@
           "key": 1
         },
         "isSelfService": false,
-        "sequence": 12
+        "sequence": 12,
+        "hasChildren": true
       },
       {
         "_id": "66a4bf930367f41e338d2455",
@@ -301,7 +306,8 @@
           "key": 1
         },
         "isSelfService": false,
-        "sequence": 13
+        "sequence": 13,
+        "hasChildren": true
       },
       {
         "_id": "66a4bf930367f41e338d2467",
@@ -345,7 +351,8 @@
           "key": 1
         },
         "isSelfService": false,
-        "sequence": 14
+        "sequence": 14,
+        "hasChildren": true
       },
       {
         "_id": "66a4c1e92e4816c0a80a2d62",
@@ -389,7 +396,8 @@
           "key": 1
         },
         "isSelfService": false,
-        "sequence": 15
+        "sequence": 15,
+        "hasChildren": true
       },
       {
         "_id": "66a4c1e92e4816c0a80a2d622",
@@ -433,7 +441,8 @@
           "key": 1
         },
         "isSelfService": false,
-        "sequence": 15
+        "sequence": 15,
+        "hasChildren": true
       },
       {
         "_id": "66a4c1e92e4816c0a80a2d623",
