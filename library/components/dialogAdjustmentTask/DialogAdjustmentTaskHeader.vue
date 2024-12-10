@@ -22,7 +22,8 @@ const props = defineProps<{
   customFilterOption?: {
     taskStatus?: MultiSelectOption[];
   };
-  memberIds: string[];
+  customQueryParams?: Record<string, unknown>;
+  memberKeys: number[];
 }>();
 
 const dependencyStatus: MultiSelectOption[] = [
@@ -178,7 +179,8 @@ const getTaskListOption = async (
   try {
     const { data } = await TaskServices.getTaskOptions({
       ...params,
-      member: JSON.stringify(props.memberIds),
+      ...props.customQueryParams,
+      member: JSON.stringify(props.memberKeys),
     });
     return data.data;
   } catch (error) {

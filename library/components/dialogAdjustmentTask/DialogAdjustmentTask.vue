@@ -367,7 +367,8 @@ watch(
           :custom-filter-option="{
             taskStatus: props.customStatusFilter,
           }"
-          :member-ids="props.members.map((item) => item._id)"
+          :custom-query-params="customQueryParams"
+          :member-keys="props.members.map((item) => item.key)"
         />
         <DataTable
           v-model:selected-data="selectedData"
@@ -411,7 +412,7 @@ watch(
       />
 
       <div class="flex justify-between">
-        <span class="flex gap-1">
+        <span class="flex gap-1 font-normal">
           <Icon class="!text-base !text-primary-400" icon="check-double-fill" />
           Progress Task: 50% (100/200)
         </span>
