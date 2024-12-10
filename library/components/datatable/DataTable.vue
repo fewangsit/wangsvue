@@ -300,13 +300,16 @@ const toggleRowSelection = (event: Event, data: Data, index: number): void => {
   }
 };
 
-const toggleExpandAll = (): void => {
+const toggleExpandAll = async (): Promise<void> => {
   const isExpanding = !isExpandedAll.value;
   if (!loadingRows.value) {
-    currentPageTableData.value.forEach((data, index) => {
-      if (data.children?.length || data.hasChildren)
-        toggleRowExpand(data, index, isExpanding);
-    });
+    let index = 0;
+    for (const data of currentPageTableData.value) {
+      if (data.children?.length || data.hasChildren) {
+        await toggleRowExpand(data, index, isExpanding);
+      }
+      index++;
+    }
   }
 };
 

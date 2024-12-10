@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { shallowRef } from 'vue';
 import { dialogAddjusmentTaskBulkAction } from './options/dialogAdjustmentTaskBulkAction';
 import FilterContainer from '../filtercontainer/FilterContainer.vue';
 import {
@@ -7,7 +8,10 @@ import {
 } from '../filtercontainer/FilterContainer.vue.d';
 import { TaskOptions } from '../dialogdetailpbi/DialogDetailPbi.vue.d';
 import { MultiSelectOption } from 'lib/types/options.type';
-import { DialogAdjustmentTaskBulkActionType } from './DialogAdjustmentTask.vue.d';
+import {
+  DialogAdjustmentTaskBulkActionType,
+  Task,
+} from './DialogAdjustmentTask.vue.d';
 
 import QuickFilter from '../quickfilter/QuickFilter.vue';
 import TaskServices from 'lib/services/task.service';
@@ -22,7 +26,8 @@ const props = defineProps<{
   customFilterOption?: {
     taskStatus?: MultiSelectOption[];
   };
-  memberIds: string[];
+  customQueryParams?: Record<string, unknown>;
+  memberKeys: number[];
 }>();
 
 const dependencyStatus: MultiSelectOption[] = [
@@ -172,13 +177,16 @@ const filterFieldsQuick: FilterField[] = [
   },
 ];
 
+const selectedData = shallowRef<Task[]>([]);
+
 const getTaskListOption = async (
   params: TaskOptions,
 ): Promise<FilterOptions<TaskOptions>> => {
   try {
     const { data } = await TaskServices.getTaskOptions({
       ...params,
-      member: JSON.stringify(props.memberIds),
+      ...props.customQueryParams,
+      member: JSON.stringify(props.memberKeys),
     });
     return data.data;
   } catch (error) {
@@ -190,6 +198,7 @@ const getTaskListOption = async (
   <div class="flex justify-between items-center">
     <ButtonBulkAction
       :options="dialogAddjusmentTaskBulkAction(props?.bulkActionEmitter)"
+      :selected-data="selectedData"
       table-name="dialog-addjustment-task"
     />
     <div class="flex gap-4 flex-1 justify-end">

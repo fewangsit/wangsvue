@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, shallowRef, watch } from 'vue';
-import { useToast } from 'lib/utils';
+import { navigateToUrl } from 'single-spa';
+import { getUser, useToast } from 'lib/utils';
 import { QueryParams } from '../datatable/DataTable.vue.d';
 import { FormPayload } from '../form/Form.vue.d';
 import {
@@ -44,9 +45,16 @@ const actionType = shallowRef<'single' | 'bulk' | 'submitAll'>();
 
 const selectedData = ref<Task[]>();
 const singleSelectedData = shallowRef<Task>();
+const selectedMember = shallowRef<AssignedTo>();
 
 const unassignNewMember = ref<UpdateTaskMemberItemLocal[]>([]);
-const memberListData = shallowRef<Member[]>();
+const memberListData =
+  shallowRef<
+    Pick<
+      Member,
+      '_id' | 'key' | 'nickName' | 'profilePictureBig' | 'progress'
+    >[]
+  >();
 
 const dialogVisibility = shallowRef<boolean>(false);
 const assignNewMemberVisbility = shallowRef<boolean>(false);
@@ -110,9 +118,14 @@ const getTaskList = async (
   preventAppear?: boolean,
 ): Promise<TaskListResponse> => {
   try {
+    // Delete empty params
+    for (const k in params) {
+      if (params[k] === undefined) delete params[k];
+    }
+
     const { data } = await TaskServices.getTaskList({
-      ...params,
       ...props.customQueryParams,
+      ...params,
       member: props.members.map((item) => item.key),
     });
     const taskListData = data as TaskListResponse;
@@ -202,6 +215,10 @@ const updateTimeTaskTransfer = async (
 
 const getMemberList = async (team: string[]): Promise<void> => {
   try {
+    if (props.customMemberOptions?.length > 0) {
+      memberListData.value = props.customMemberOptions;
+      return;
+    }
     const { data } = await MemberServices.getMemberList({
       team: team,
     });
@@ -212,6 +229,9 @@ const getMemberList = async (team: string[]): Promise<void> => {
 };
 
 const refreshDataTable = (): void => {
+  eventBus.emit('data-table:clear-selected-data', {
+    tableName: 'dialog-addjustment-task',
+  });
   eventBus.emit('data-table:update', {
     tableName: 'dialog-addjustment-task',
   });
@@ -221,7 +241,7 @@ const findUnassignMember = (
   taskListData: TaskListResponse,
 ): TaskListResponse => {
   const uniqueObject = new Set(
-    unassignNewMember.value.map((item) => item.task._id),
+    unassignNewMember.value.reverse().map((item) => item.task._id),
   );
 
   const temporaryUniquObject = [];
@@ -276,7 +296,7 @@ const assignMember = (
     case 'single': {
       unassignNewMember.value.push({
         task: singleSelectedData.value,
-        newMember: [memberToAssignedMapper(newMember)],
+        newMember: [newMember],
       });
       break;
     }
@@ -284,7 +304,7 @@ const assignMember = (
       selectedData.value.forEach((item) => {
         unassignNewMember.value.push({
           task: item,
-          newMember: [memberToAssignedMapper(newMember)],
+          newMember: [newMember],
         });
       });
       break;
@@ -292,16 +312,6 @@ const assignMember = (
   }
   refreshDataTable();
 };
-
-const memberToAssignedMapper = (newMember: Member): AssignedTo => ({
-  _id: newMember._id,
-  fullName: newMember.fullName,
-  key: newMember.key,
-  nickName: newMember.nickName,
-  profilePictureBig: newMember.profilePictureBig,
-  profilePictureMedium: newMember.profilePictureMedium,
-  profilePictureSmall: newMember.profilePictureSmall,
-});
 
 watch(
   visibility,
@@ -314,6 +324,7 @@ watch(
       dialogVisibility.value = true;
       return;
     }
+    unassignNewMember.value = [];
     dialogVisibility.value = false;
   },
   {
@@ -337,7 +348,6 @@ watch(
 <template>
   <!-- Main Dialog adjustment -->
   <DialogForm
-    v-if="dialogVisibility"
     v-model:visible="dialogVisibility"
     :buttons-template="['cancel', 'submit']"
     :close-on-submit="closeOnSubmit"
@@ -367,7 +377,8 @@ watch(
           :custom-filter-option="{
             taskStatus: props.customStatusFilter,
           }"
-          :member-ids="props.members.map((item) => item._id)"
+          :custom-query-params="customQueryParams"
+          :member-keys="props.members.map((item) => item.key)"
         />
         <DataTable
           v-model:selected-data="selectedData"
@@ -391,6 +402,8 @@ watch(
   <DialogForm
     v-model:visible="assignNewMemberVisbility"
     :buttons-template="['cancel', 'submit']"
+    @hide="selectedMember = undefined"
+    @show="selectedMember = singleSelectedData?.assignedTo?.[0]"
     @submit="
       (payload: FormPayload<{ dropdown: Member }>) => {
         assignMember(actionType, payload.formValues.dropdown);
@@ -401,7 +414,7 @@ watch(
   >
     <template #fields>
       <Dropdown
-        :initial-value="singleSelectedData?.assignedTo?.[0]"
+        v-model="selectedMember"
         :options="memberListData"
         label="Member"
         mandatory
@@ -410,12 +423,20 @@ watch(
         validator-message="Member harus diisi"
       />
 
-      <div class="flex justify-between">
-        <span class="flex gap-1">
+      <div v-if="selectedMember" class="flex justify-between">
+        <span class="flex gap-1 font-normal">
           <Icon class="!text-base !text-primary-400" icon="check-double-fill" />
-          Progress Task: 50% (100/200)
+          Progress Task: {{ selectedMember.progress }}
         </span>
-        <span class="!flex !text-primary-400">
+        <span
+          v-if="getUser().permission?.teamAndMember.read"
+          @click="
+            navigateToUrl(
+              `/tim-member/member/${selectedMember._id}/detail-member`,
+            )
+          "
+          class="!flex !text-primary-400 cursor-pointer"
+        >
           Detail
           <Icon class="text-base" icon="arrow-right" />
         </span>
