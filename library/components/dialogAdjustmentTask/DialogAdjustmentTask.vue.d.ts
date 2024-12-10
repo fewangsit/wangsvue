@@ -2,6 +2,7 @@ import { TaskStatus } from 'lib/types/wangsStatus.type';
 import { FetchResponse } from '../datatable/DataTable.vue.d';
 import { ClassComponent } from '../ts-helpers';
 import { MultiSelectOption } from 'lib/types/options.type';
+import { Member } from 'lib/dto/member.dto';
 
 export interface DialogAdjustmentTaskProps {
   /**
@@ -35,6 +36,13 @@ export interface DialogAdjustmentTaskProps {
    * Custom Status Filter Option
    */
   customStatusFilter?: MultiSelectOption[];
+  /**
+   * Custom members for assign member dropdown
+   */
+  customMemberOptions?: Pick<
+    Member,
+    '_id' | 'key' | 'nickName' | 'profilePictureBig' | 'progress'
+  >[];
 }
 
 export type DialogAdjustmentTaskEmits = {
@@ -131,6 +139,7 @@ export interface AssignedTo extends Record<string, unknown> {
   fullName: string;
   nickName: string;
   key: number;
+  progress: string;
   profilePictureBig: string;
   profilePictureMedium: string;
   profilePictureSmall: string;
@@ -138,8 +147,8 @@ export interface AssignedTo extends Record<string, unknown> {
 }
 
 export interface Dependency {
-  done: number;
-  onProgress: number;
+  done?: number;
+  onProgress?: number;
 }
 
 export interface UpdateTaskMemberItemLocal {

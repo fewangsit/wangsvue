@@ -43,6 +43,7 @@ export interface Member extends Record<string, unknown> {
   isAssignedToTask: boolean;
   isProjectManager: boolean;
   isActivate: boolean;
+  progress: string; // Task progress in percentage
 }
 
 interface GroupMember {

@@ -5,12 +5,15 @@ import DocTitle from '../DocTitle.vue';
 import Button from 'lib/components/button/Button.vue';
 import DialogAdjustmentTask from 'lib/components/dialogAdjustmentTask/DialogAdjustmentTask.vue';
 
+const customQueryParams = {
+  subModule: '["6706211e872d8431a33e68b4"]',
+};
 const visibility = shallowRef<boolean>(true);
 </script>
 <template>
   <Card>
     <template #header>
-      <DocTitle name="Dialog Addjusment Task" />
+      <DocTitle name="Dialog Adjusment Task" />
     </template>
     <template #content>
       <Button
@@ -23,6 +26,7 @@ const visibility = shallowRef<boolean>(true);
       />
       <DialogAdjustmentTask
         v-model:visibility="visibility"
+        :custom-query-params="customQueryParams"
         :custom-status-filter="[
           {
             label: 'asd',
