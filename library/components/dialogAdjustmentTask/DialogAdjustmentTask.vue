@@ -46,7 +46,13 @@ const selectedData = ref<Task[]>();
 const singleSelectedData = shallowRef<Task>();
 
 const unassignNewMember = ref<UpdateTaskMemberItemLocal[]>([]);
-const memberListData = shallowRef<Member[]>();
+const memberListData =
+  shallowRef<
+    Pick<
+      Member,
+      '_id' | 'key' | 'nickName' | 'profilePictureBig' | 'progress'
+    >[]
+  >();
 
 const dialogVisibility = shallowRef<boolean>(false);
 const assignNewMemberVisbility = shallowRef<boolean>(false);
@@ -202,6 +208,10 @@ const updateTimeTaskTransfer = async (
 
 const getMemberList = async (team: string[]): Promise<void> => {
   try {
+    if (props.customMemberOptions?.length > 0) {
+      memberListData.value = props.customMemberOptions;
+      return;
+    }
     const { data } = await MemberServices.getMemberList({
       team: team,
     });
@@ -212,6 +222,9 @@ const getMemberList = async (team: string[]): Promise<void> => {
 };
 
 const refreshDataTable = (): void => {
+  eventBus.emit('data-table:clear-selected-data', {
+    tableName: 'dialog-addjustment-task',
+  });
   eventBus.emit('data-table:update', {
     tableName: 'dialog-addjustment-task',
   });
@@ -221,7 +234,7 @@ const findUnassignMember = (
   taskListData: TaskListResponse,
 ): TaskListResponse => {
   const uniqueObject = new Set(
-    unassignNewMember.value.map((item) => item.task._id),
+    unassignNewMember.value.reverse().map((item) => item.task._id),
   );
 
   const temporaryUniquObject = [];
@@ -276,7 +289,7 @@ const assignMember = (
     case 'single': {
       unassignNewMember.value.push({
         task: singleSelectedData.value,
-        newMember: [memberToAssignedMapper(newMember)],
+        newMember: [newMember],
       });
       break;
     }
@@ -284,7 +297,7 @@ const assignMember = (
       selectedData.value.forEach((item) => {
         unassignNewMember.value.push({
           task: item,
-          newMember: [memberToAssignedMapper(newMember)],
+          newMember: [newMember],
         });
       });
       break;
@@ -292,16 +305,6 @@ const assignMember = (
   }
   refreshDataTable();
 };
-
-const memberToAssignedMapper = (newMember: Member): AssignedTo => ({
-  _id: newMember._id,
-  fullName: newMember.fullName,
-  key: newMember.key,
-  nickName: newMember.nickName,
-  profilePictureBig: newMember.profilePictureBig,
-  profilePictureMedium: newMember.profilePictureMedium,
-  profilePictureSmall: newMember.profilePictureSmall,
-});
 
 watch(
   visibility,
@@ -314,6 +317,7 @@ watch(
       dialogVisibility.value = true;
       return;
     }
+    unassignNewMember.value = [];
     dialogVisibility.value = false;
   },
   {
@@ -337,7 +341,6 @@ watch(
 <template>
   <!-- Main Dialog adjustment -->
   <DialogForm
-    v-if="dialogVisibility"
     v-model:visible="dialogVisibility"
     :buttons-template="['cancel', 'submit']"
     :close-on-submit="closeOnSubmit"
