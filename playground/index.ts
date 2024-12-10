@@ -367,6 +367,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
         component: (): Promise<Component> =>
           import('./docs/notificationitem/NotificationItemDocs.vue'),
       },
+      {
+        path: 'pdfviewer',
+        name: 'PDF Viewer Docs',
+        component: (): Promise<Component> =>
+          import('./docs/pdfviewer/PDFViewerDocs.vue'),
+      },
     ],
   },
 ];
