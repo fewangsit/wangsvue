@@ -14,6 +14,7 @@ const applyFilter = (
 
   fields.forEach((field) => {
     const isArray = Array.isArray(values[field]);
+    const isAlreadyString = typeof values[field] === 'string';
 
     // First, filter all undefined/null value
     const filterredValues: GenericObject = isArray
@@ -21,8 +22,9 @@ const applyFilter = (
       : values[field];
 
     if (
-      (filterredValues != null && !isArray) ||
-      (isArray && filterredValues.length)
+      ((filterredValues != null && !isArray) ||
+        (isArray && filterredValues.length)) &&
+      !isAlreadyString
     ) {
       // If filterred value still has length then original value will be used,
       parsedFilter[field] = filterredValues?.length
