@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, shallowRef, watch } from 'vue';
-import { useToast } from 'lib/utils';
+import { navigateToUrl } from 'single-spa';
+import { getUser, useToast } from 'lib/utils';
 import { QueryParams } from '../datatable/DataTable.vue.d';
 import { FormPayload } from '../form/Form.vue.d';
 import {
@@ -44,6 +45,7 @@ const actionType = shallowRef<'single' | 'bulk' | 'submitAll'>();
 
 const selectedData = ref<Task[]>();
 const singleSelectedData = shallowRef<Task>();
+const selectedMember = shallowRef<AssignedTo>();
 
 const unassignNewMember = ref<UpdateTaskMemberItemLocal[]>([]);
 const memberListData =
@@ -116,9 +118,14 @@ const getTaskList = async (
   preventAppear?: boolean,
 ): Promise<TaskListResponse> => {
   try {
+    // Delete empty params
+    for (const k in params) {
+      if (params[k] === undefined) delete params[k];
+    }
+
     const { data } = await TaskServices.getTaskList({
-      ...params,
       ...props.customQueryParams,
+      ...params,
       member: props.members.map((item) => item.key),
     });
     const taskListData = data as TaskListResponse;
@@ -395,6 +402,8 @@ watch(
   <DialogForm
     v-model:visible="assignNewMemberVisbility"
     :buttons-template="['cancel', 'submit']"
+    @hide="selectedMember = undefined"
+    @show="selectedMember = singleSelectedData?.assignedTo?.[0]"
     @submit="
       (payload: FormPayload<{ dropdown: Member }>) => {
         assignMember(actionType, payload.formValues.dropdown);
@@ -405,7 +414,7 @@ watch(
   >
     <template #fields>
       <Dropdown
-        :initial-value="singleSelectedData?.assignedTo?.[0]"
+        v-model="selectedMember"
         :options="memberListData"
         label="Member"
         mandatory
@@ -414,12 +423,20 @@ watch(
         validator-message="Member harus diisi"
       />
 
-      <div class="flex justify-between">
+      <div v-if="selectedMember" class="flex justify-between">
         <span class="flex gap-1 font-normal">
           <Icon class="!text-base !text-primary-400" icon="check-double-fill" />
-          Progress Task: 50% (100/200)
+          Progress Task: {{ selectedMember.progress }}
         </span>
-        <span class="!flex !text-primary-400">
+        <span
+          v-if="getUser().permission?.teamAndMember.read"
+          @click="
+            navigateToUrl(
+              `/tim-member/member/${selectedMember._id}/detail-member`,
+            )
+          "
+          class="!flex !text-primary-400 cursor-pointer"
+        >
           Detail
           <Icon class="text-base" icon="arrow-right" />
         </span>
