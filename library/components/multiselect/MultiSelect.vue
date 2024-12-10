@@ -169,9 +169,12 @@ defineExpose({
         @hide="(isShowOverlay = false), $emit('hide')"
         @show="$emit('show'), (isShowOverlay = true)"
       >
+        <template #value="{ placeholder }" v-if="loading">
+          <div class="text-general-200 font-normal">{{ placeholder }}</div>
+        </template>
         <template
           #value="{ placeholder }"
-          v-if="props.fontMediumPlaceholder && !field.value"
+          v-else-if="props.fontMediumPlaceholder && !field.value"
         >
           <div class="text-grayscale-800 font-medium">{{ placeholder }}</div>
         </template>

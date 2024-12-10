@@ -71,7 +71,7 @@ const logFilterField: FilterField[] = [
   {
     label: 'Objek',
     type: 'multiselect',
-    field: 'object',
+    field: 'objects',
     fetchOptionFn: async (): Promise<MultiSelectOption[]> => {
       return await fetchOptions('objectOptions');
     },
@@ -79,9 +79,9 @@ const logFilterField: FilterField[] = [
   {
     label: 'Nama Objek',
     type: 'multiselect',
-    field: 'assetName',
+    field: 'objectName',
     fetchOptionFn: async (): Promise<MultiSelectOption[]> => {
-      return await fetchOptions('assetNameOptions');
+      return await fetchOptions('objectNameOptions');
     },
   },
 ];
@@ -106,7 +106,7 @@ const getUserLog = async (
   try {
     const { data } = await LogServices.getUserlog({
       ...query,
-      memberId: props.memberId,
+      userId: props.memberId,
     });
     return data;
   } catch (error) {

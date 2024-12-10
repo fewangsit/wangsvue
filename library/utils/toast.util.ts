@@ -4,6 +4,10 @@ import { WangsIcons } from 'lib/components/icon/Icon.vue.d';
 
 export interface ToastParams {
   message: string;
+  /**
+   * Whether the message should be prepended with the default message template.
+   */
+  customMessage?: boolean;
   severity?: 'success' | 'error' | 'info';
   /**
    * @default emotion-happy-fill
@@ -39,7 +43,7 @@ const useToast = (): ToastMethod => {
   const toast = usePrimevueToast();
   return {
     add: (params: ToastParams): void => {
-      const { message, error, severity, life, group } = params;
+      const { message, customMessage, error, severity, life, group } = params;
 
       const detail = (
         error || severity === 'error'
@@ -51,7 +55,7 @@ const useToast = (): ToastMethod => {
 
       toast.add({
         severity: formattedSeverity,
-        detail,
+        detail: customMessage ? message : detail,
         life: life ?? 3000,
         group,
       });

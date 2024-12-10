@@ -32,7 +32,7 @@ import {
 import { User } from 'lib/types/user.type';
 import { TaskTableItem, TaskTableOptionQuery } from 'lib/types/task.type';
 import Badge from '../badge/Badge.vue';
-import { isIntersect, useToast } from 'lib/utils';
+import { formatISODate, isIntersect, useToast } from 'lib/utils';
 import DependencyCol from './DependencyCol.vue';
 import Button from '../button/Button.vue';
 import TaskDetail from '../taskdetail/TaskDetail.vue';
@@ -246,10 +246,7 @@ const tableColumns = computed<TableColumn[]>(() => {
       bodyTemplate: (data: TaskTableItem): string => {
         if (props.page !== 'project-productBacklogItem')
           return data.lastUpdatedAt;
-        return new Date(data.lastUpdatedAt)
-          .toISOString()
-          .slice(0, 19)
-          .replace('T', ' ');
+        return formatISODate(data.lastUpdatedAt);
       },
       visible: true,
     },

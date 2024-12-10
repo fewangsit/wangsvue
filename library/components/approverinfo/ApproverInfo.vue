@@ -5,6 +5,7 @@ import Dialog from '../dialog/Dialog.vue';
 import Icon from '../icon/Icon.vue';
 import { ApproverInfoProps } from './ApproverInfo.vue.d';
 import { BadgeProps } from '../badge/Badge.vue.d';
+import { formatDate } from 'lib/utils';
 
 const props = withDefaults(defineProps<ApproverInfoProps>(), {
   showShortInfo: true,
@@ -44,6 +45,13 @@ const getSeverity = (status?: string): BadgeProps['severity'] => {
 
   return severity;
 };
+
+const getDate = (dateString?: string): string => {
+  if (props.useFormatDate) {
+    return dateString ? formatDate(new Date(dateString)) : '-';
+  }
+  return dateString;
+};
 </script>
 
 <template>
@@ -57,7 +65,7 @@ const getSeverity = (status?: string): BadgeProps['severity'] => {
         <Icon class="!text-general-200 !text-base" icon="user" />
         <span class="text-primary-500">{{ approverData.name }}</span>
         <span class="text-general-800">
-          {{ approverData.date }}
+          {{ getDate(approverData.date) }}
         </span>
         <span
           @click="showApprovalPopUp = true"
@@ -114,7 +122,9 @@ const getSeverity = (status?: string): BadgeProps['severity'] => {
           </span>
           <div v-else class="flex gap-1 justify-end items-center">
             <span class="text-general-800 font-normal text-xs">{{
-              approver.actionAt ? approver.actionAt : 'Menunggu approval...'
+              approver.actionAt
+                ? getDate(approver.actionAt)
+                : 'Menunggu approval...'
             }}</span>
             <Badge
               v-if="approver.action"

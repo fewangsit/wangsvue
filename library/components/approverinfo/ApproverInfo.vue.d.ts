@@ -1,7 +1,4 @@
-import {
-  ClassComponent,
-  GlobalComponentConstructor,
-} from '../ts-helpers.d';
+import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers.d';
 
 export interface ApproverDetail {
   _id?: string;
@@ -27,6 +24,7 @@ export interface ApproverInfoProps {
    * To set label text when showShortInfo is false
    */
   label?: string;
+  useFormatDate?: boolean;
 }
 
 declare class ApproverInfo extends ClassComponent<

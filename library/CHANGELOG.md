@@ -1,6 +1,184 @@
 # Changelog
 
 
+## v1.5.96
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.95...v1.5.96)
+
+### 🚀 Enhancements
+
+- **Toast:** Custom message ([0c2b225](https://github.com/fewangsit/wangsvue/commit/0c2b225))
+
+### 🩹 Fixes
+
+- **Dropdown, MultiSelect:** Loading placeholder ([6eff0d5](https://github.com/fewangsit/wangsvue/commit/6eff0d5))
+- **DataTable:** Bulk fold/unfold ([9078bcf](https://github.com/fewangsit/wangsvue/commit/9078bcf))
+- **DataTable:** Disable toggle expand when loading rows ([472ca7b](https://github.com/fewangsit/wangsvue/commit/472ca7b))
+- **DataTable:** Disable toggle expand all if loading rows ([c2d2cdd](https://github.com/fewangsit/wangsvue/commit/c2d2cdd))
+
+### 💅 Refactors
+
+- **DetailMember:** Update user log param ([23ae79a](https://github.com/fewangsit/wangsvue/commit/23ae79a))
+- **Dropdown:** Use visible options as condition instead of all options ([89c9709](https://github.com/fewangsit/wangsvue/commit/89c9709))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
+## v1.5.95
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.94...v1.5.95)
+
+### 🚀 Enhancements
+
+- **approverinfo:** Add props useFormatDate in approverinfo ([048f516](https://github.com/fewangsit/wangsvue/commit/048f516))
+
+### 🏡 Chore
+
+- **presets:** Update version ([093b9f0](https://github.com/fewangsit/wangsvue/commit/093b9f0))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Dzulqtera <dzul@qtera.co.id>
+
+## v1.5.94
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.93...v1.5.94)
+
+### 🚀 Enhancements
+
+- **OverlayPanel:** Add prop to keep overlay open on click another overlay ([2ec9f68](https://github.com/fewangsit/wangsvue/commit/2ec9f68))
+
+### 🏡 Chore
+
+- **presets:** Update version ([2b4a648](https://github.com/fewangsit/wangsvue/commit/2b4a648))
+
+### 🎨 Styles
+
+- **WorkCalendar:** Move inline class to preset ([d7e9d21](https://github.com/fewangsit/wangsvue/commit/d7e9d21))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
+## v1.5.93
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.92...v1.5.93)
+
+### 🚀 Enhancements
+
+- FormatISODate util ([cd64300](https://github.com/fewangsit/wangsvue/commit/cd64300))
+
+### 🩹 Fixes
+
+- Changelog filters ([a1d7b58](https://github.com/fewangsit/wangsvue/commit/a1d7b58))
+- **UserName:** Image preview closes username overlay on preview button click ([1e128fd](https://github.com/fewangsit/wangsvue/commit/1e128fd))
+- **DialogDetailPBI:** Unscrollable event log ([d55cf36](https://github.com/fewangsit/wangsvue/commit/d55cf36))
+- **NotificationItem:** Text size ([476cf8f](https://github.com/fewangsit/wangsvue/commit/476cf8f))
+
+### 💅 Refactors
+
+- Standardize date format ([ba48ae4](https://github.com/fewangsit/wangsvue/commit/ba48ae4))
+
+### 📖 Documentation
+
+- **Timeline:** Declaration type ([df38a39](https://github.com/fewangsit/wangsvue/commit/df38a39))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
+## v1.5.92
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.91...v1.5.92)
+
+### 🩹 Fixes
+
+- **pPKDjARR:** Handle sub module field in task dependency if the process task has no sub module ([7abec86](https://github.com/fewangsit/wangsvue/commit/7abec86))
+- **4lEQ22ah:** Update logic for getmoduleoptions in legend of taskdetail ([8b5a3fd](https://github.com/fewangsit/wangsvue/commit/8b5a3fd))
+- **taskdetail:** Update spacing in taskdetail dialog ([0932042](https://github.com/fewangsit/wangsvue/commit/0932042))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
+## v1.5.91
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.90...v1.5.91)
+
+### 🩹 Fixes
+
+- **a4qDO5zf:** Update z-index in gallerypreview container ([3700c42](https://github.com/fewangsit/wangsvue/commit/3700c42))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
+## v1.5.90
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.89...v1.5.90)
+
+### 🏡 Chore
+
+- **presets:** Update version ([dc1592c](https://github.com/fewangsit/wangsvue/commit/dc1592c))
+
+### 🎨 Styles
+
+- **DataTable:** Remove sticky class from paginator ([1539fcc](https://github.com/fewangsit/wangsvue/commit/1539fcc))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.89
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.88...v1.5.89)
+
+### 🚀 Enhancements
+
+- **DataTable:** Add index as param of bodyComponent function ([9dfa3b4](https://github.com/fewangsit/wangsvue/commit/9dfa3b4))
+- DialogImprovementTask component ([bc47f48](https://github.com/fewangsit/wangsvue/commit/bc47f48))
+- **NotificationItem:** Implement action buttons for task improvement ([7d9c520](https://github.com/fewangsit/wangsvue/commit/7d9c520))
+- **taskdetail:** Add approval buttons in taskdetail ([f29ae5c](https://github.com/fewangsit/wangsvue/commit/f29ae5c))
+
+### 🩹 Fixes
+
+- **Calendar:** Update style instead of class on update modelValue ([d4f512b](https://github.com/fewangsit/wangsvue/commit/d4f512b))
+- **ImageCompressor:** Type not assignable ([52a5edc](https://github.com/fewangsit/wangsvue/commit/52a5edc))
+- **DataTable:** 'properties don't exist' warnings ([490ca8c](https://github.com/fewangsit/wangsvue/commit/490ca8c))
+- **TaskDetail:** Missing prop & type check warnings ([e3db2d7](https://github.com/fewangsit/wangsvue/commit/e3db2d7))
+- Linter issues ([6f8ee1e](https://github.com/fewangsit/wangsvue/commit/6f8ee1e))
+- **DialogImprovementTask:** Reset form on close and on child change ([17b92a2](https://github.com/fewangsit/wangsvue/commit/17b92a2))
+- **taskdetail:** Fix formatting date for eventlog in taskdetail ([c2509d5](https://github.com/fewangsit/wangsvue/commit/c2509d5))
+- **taskdetail:** Update taskdetail height ([3c7b80c](https://github.com/fewangsit/wangsvue/commit/3c7b80c))
+
+### 💅 Refactors
+
+- **notificationItem:** Computed instead of function ([bcf74d5](https://github.com/fewangsit/wangsvue/commit/bcf74d5))
+- **ImageCompressor:** Change filename ([45c732c](https://github.com/fewangsit/wangsvue/commit/45c732c))
+
+### 📖 Documentation
+
+- **Timeline:** Update timeline response ([3c6ef98](https://github.com/fewangsit/wangsvue/commit/3c6ef98))
+
+### 🏡 Chore
+
+- **presets:** Update version ([003ccd4](https://github.com/fewangsit/wangsvue/commit/003ccd4))
+- **presets:** Update version ([1c244dc](https://github.com/fewangsit/wangsvue/commit/1c244dc))
+
+### 🎨 Styles
+
+- **Calendar:** Apply empty styles instead of default styles ([ee30f51](https://github.com/fewangsit/wangsvue/commit/ee30f51))
+- **DataTable:** Adjust style on row hover ([bcbf809](https://github.com/fewangsit/wangsvue/commit/bcbf809))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Dzulqtera <dzul@qtera.co.id>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.88
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.87...v1.5.88)

@@ -35,6 +35,7 @@ import DialogConfirmEdit from './DialogConfirmEdit.vue';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';
 import DialogReportBug from 'lib/components/dialogreportbug/DialogReportBug.vue';
 import SonarQubeSummary from './SonarQubeSummary.vue';
+import DialogConfirmApproval from './DialogConfirmApproval.vue';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -50,6 +51,7 @@ const userType =
   );
 const isProcessTeamLeader = inject<ComputedRef<boolean>>('isProcessTeamLeader');
 const isMember = inject<ComputedRef<boolean>>('isMember');
+const isApproverHasAccess = inject<ComputedRef<boolean>>('isApproverHasAccess');
 
 const props = defineProps<{
   initialModule?: {
@@ -62,6 +64,7 @@ const props = defineProps<{
     repository?: string;
   };
   productBacklogItemId?: string;
+  approvalId?: string;
 }>();
 
 const emit = defineEmits<{
@@ -198,16 +201,6 @@ const defaultProcesses = [
   },
 ];
 
-/**
- * Necessary to watch old and new value changes.
- *
- * @see <https://github.com/vuejs/vue/issues/2164>
- */
-/*
- * Const computedLegendForm = computed<TaskLegendForm>(() =>
- *   Object.assign({}, legendForm.value),
- * );
- */
 const legendOptions = ref<TaskLegendOptions>({});
 const legendLoading = ref<TaskLegendLoading>({
   process: false,
@@ -215,12 +208,17 @@ const legendLoading = ref<TaskLegendLoading>({
   submodule: false,
 });
 
+const approvalId = ref(props.approvalId);
+
 const dialogPriorityValue = shallowRef<boolean>(false);
 const dialogReview = shallowRef<boolean>(false);
 const dialogFinishReview = shallowRef<boolean>(false);
 const dialogConfirmFinishTask = shallowRef<boolean>(false);
 const dialogConfirmEdit = shallowRef<boolean>(false);
+const dialogConfirmApproval = shallowRef<boolean>(false);
 const dialogReportBug = shallowRef<boolean>(false);
+
+const isApproved = shallowRef<boolean>(false);
 
 const subModuleVisibility = shallowRef<boolean>(true);
 const repositoryVisibility = shallowRef<boolean>(true);
@@ -231,8 +229,8 @@ const bindSubModule = computed(() => legendForm.value.submodule);
 
 /**
  * The condition for isLegendEditable is as follows:
- * - The task's status is 'Backlog' (i.e., the task is in the backlog and has not been started yet).
- * - The user is not a guest (i.e., the user is logged in and has the necessary permissions to edit the task).
+ * - The task's status is 'Backlog' or 'Waiting for Approval' (i.e., the task is in the backlog and has not been started yet).
+ * - The user is not a guest (i.e., 'admin' | 'pm' | 'teamLeader' | 'member').
  *
  * If both conditions are true or the task is new, then the legend is editable.
  */
@@ -241,7 +239,11 @@ const isLegendEditable = computed(() => {
     ? taskDetail.value?.status === 'Backlog'
     : true;
 
-  return (isBacklog && userType.value !== 'guest') || isNewTask.value;
+  return (
+    (isBacklog && userType.value !== 'guest') ||
+    isNewTask.value ||
+    isApproverHasAccess.value
+  );
 });
 
 /**
@@ -249,7 +251,7 @@ const isLegendEditable = computed(() => {
  *
  * Conditions for disabling the input should include at least one of the following conditions:
  * - The task is new.
- * - The user is a guest.
+ * - The user is a guest and does not have approver access for the task.
  * - The task is one of the following statuses: 'Selesai', 'Reported Bug', 'Pending Review Leader'.
  *
  * @returns {boolean} True if the priority value input should be disabled, false otherwise.
@@ -257,10 +259,97 @@ const isLegendEditable = computed(() => {
 const isPriorityValueDisabled = computed(() => {
   return (
     isNewTask.value ||
-    userType.value === 'guest' ||
+    (userType.value === 'guest' && !isApproverHasAccess.value) ||
     (
       ['Selesai', 'Reported Bug', 'Pending Review Leader'] as WangsitStatus[]
     ).includes(taskDetail.value?.status)
+  );
+});
+
+/**
+ * Disable Rules:
+ * 1. If the process hasn't been selected.
+ * 2. If the props.initialModule is defined.
+ * 3. If the legend is not editable.
+ */
+const isModuleDropdownDisabled = computed<boolean>(() => {
+  return (
+    !isLegendEditable.value ||
+    !legendForm.value.process ||
+    !!props.initialModule
+  );
+});
+
+/**
+ * Disable Rules:
+ * 1. If the process hasn't been selected.
+ * 2. If the module hasn't been selected.
+ * 3. If the props.initialSubModule is defined.
+ * 4. If the legend is not editable..
+ * 5. If the submodule visibility is set to false.
+ */
+const isSubmoduleDropdownDisabled = computed<boolean>(() => {
+  const { process, module } = legendForm.value;
+  if (subModuleVisibility.value) {
+    return (
+      !isLegendEditable.value || !process || !module || !!props.initialSubModule
+    );
+  }
+  return true;
+});
+
+/**
+ * Determines if the repository dropdown should be disabled.
+ *
+ * The dropdown is disabled if:
+ * 1. The process hasn't been selected.
+ * 2. The module hasn't been selected.
+ * 3. The current user is a guest and does not have approver access for the task.
+ * 4. The task status is either 'Selesai', 'Reported Bug', or 'Pending Review Leader'.
+ *
+ * If repository visibility is false, the dropdown is always disabled.
+ */
+const isRepositoryDropdownDisabled = computed<boolean>(() => {
+  const { process, module } = legendForm.value;
+  if (repositoryVisibility.value) {
+    return (
+      !process ||
+      !module ||
+      (userType.value === 'guest' && !isApproverHasAccess.value) ||
+      (
+        ['Selesai', 'Reported Bug', 'Pending Review Leader'] as WangsitStatus[]
+      ).includes(taskDetail.value?.status)
+    );
+  }
+  return true;
+});
+
+/**
+ * Condition to disable the title input field :
+ *
+ * 1. The process hasn't been selected.
+ * 2. The module hasn't been selected.
+ * 3. The submodule hasn't been selected (if the submodule is visible).
+ * 4. The task status is either 'Selesai' or 'Reported Bug'.
+ * 5. The user is neither an admin, pm, team leader, nor a member assigned to the task.
+ *    And the user is not an approver with access to the task.
+ */
+const isTitleInputDisabled = computed<boolean>(() => {
+  const { process, module, submodule } = legendForm.value;
+  const isProcessSelected = !!process;
+  const isModuleSelected = !!module;
+  const isSubmoduleSelected = subModuleVisibility.value ? !!submodule : true;
+  const isUserAuthorized =
+    ['admin', 'pm', 'teamLeader'].includes(userType.value) ||
+    isApproverHasAccess.value ||
+    isMember.value;
+
+  return (
+    !(isProcessSelected && isModuleSelected && isSubmoduleSelected) ||
+    (['Selesai', 'Reported Bug'] as WangsitStatus[]).includes(
+      taskDetail.value?.status,
+    ) ||
+    !isUserAuthorized
   );
 });
 
@@ -348,6 +437,14 @@ const getProcessOptions = async (): Promise<void> => {
   }
 };
 
+/**
+ * Asynchronously fetches and sets module options for the task legend.
+ *
+ * Filters the modules based on the current process:
+ *   1. If the process involves components, only the 'Komponen' module is shown.
+ *   2. If the process is 'Pengonsepan', only the 'Konsep' module is shown.
+ *   3. Otherwise, excludes 'Komponen' and 'Konsep' from the options.
+ */
 const getModuleOptions = async (): Promise<void> => {
   try {
     legendLoading.value.module = true;
@@ -356,38 +453,21 @@ const getModuleOptions = async (): Promise<void> => {
 
     legendOptions.value.module = data.data
       .filter((d) => {
-        /*
-         * Filter out modules that are not supposed to be used for the current process.
-         * The following modules are only used for their respective processes:
-         * - Komponen module is only used for Komponen Web/Mobile process.
-         * - Konsep module is only used for Pengonsepan process.
-         * - Other modules are used for other processes.
-         */
-        const isComponent =
-          defaultProcesses
-            .filter((process) => process.name.includes('Komponen'))
-            .map((process) => process.name)
-            .includes(legendForm.value.process.name) && d.name === 'Komponen';
+        const isProcessComponent = defaultProcesses
+          .filter((process) => process.name.includes('Komponen'))
+          .map((process) => process.name)
+          .includes(legendForm.value.process.name);
+        const isProcessConcept =
+          legendForm.value.process.name === 'Pengonsepan';
 
-        const isConcept =
-          legendForm.value.process.name === 'Pengonsepan' &&
-          d.name === 'Konsep';
-
-        const isOtherModule =
-          defaultProcesses
-            .filter(
-              (process) =>
-                !process.name.includes('Komponen') &&
-                !process.name.includes('Pengonsepan'),
-            )
-            .map((process) => process.name)
-            .includes(legendForm.value.process.name) &&
-          !['Komponen', 'Konsep'].includes(d.name);
-
-        if (isComponent || isConcept || isOtherModule) {
-          return true;
+        if (isProcessComponent) {
+          return d.name === 'Komponen';
         }
-        return false;
+        if (isProcessConcept) {
+          return d.name === 'Konsep';
+        }
+
+        return !['Komponen', 'Konsep'].includes(d.name);
       })
       .map((d) => ({
         label: d.name,
@@ -455,84 +535,6 @@ const getRepositoryOptions = async (): Promise<void> => {
     });
   }
 };
-
-/**
- * Disable Rules:
- * 1. If the process hasn't been selected.
- * 2. If the props.initialModule is defined.
- * 3. If the legend is not editable.
- */
-const isModuleDropdownDisabled = computed<boolean>(() => {
-  return (
-    !isLegendEditable.value ||
-    !legendForm.value.process ||
-    !!props.initialModule
-  );
-});
-
-/**
- * Disable Rules:
- * 1. If the process hasn't been selected.
- * 2. If the module hasn't been selected.
- * 3. If the props.initialSubModule is defined.
- * 4. If the legend is not editable..
- * 5. If the submodule visibility is set to false.
- */
-const isSubmoduleDropdownDisabled = computed<boolean>(() => {
-  const { process, module } = legendForm.value;
-  if (subModuleVisibility.value) {
-    return (
-      !isLegendEditable.value || !process || !module || !!props.initialSubModule
-    );
-  }
-  return true;
-});
-
-/**
- * Determines if the repository dropdown should be disabled.
- *
- * The dropdown is disabled if:
- * 1. The process hasn't been selected.
- * 2. The module hasn't been selected.
- * 3. The current user is a guest.
- * 4. The task status is either 'Selesai', 'Reported Bug', or 'Pending Review Leader'.
- *
- * If repository visibility is false, the dropdown is always disabled.
- */
-const isRepositoryDropdownDisabled = computed<boolean>(() => {
-  const { process, module } = legendForm.value;
-  if (repositoryVisibility.value) {
-    return (
-      !process ||
-      !module ||
-      userType.value === 'guest' ||
-      (
-        ['Selesai', 'Reported Bug', 'Pending Review Leader'] as WangsitStatus[]
-      ).includes(taskDetail.value?.status)
-    );
-  }
-  return true;
-});
-
-/**
- * Condition to disable the title input field :
- * 1. The process hasn't been selected.
- * 2. The module hasn't been selected.
- * 3. The submodule hasn't been selected (if the submodule is visible).
- * 4. The task status is 'Selesai' or 'Reported Bug'.
- */
-const isTitleInputDisabled = computed<boolean>(() => {
-  const { process, module, submodule } = legendForm.value;
-  const isProcessSelected = !!process;
-  const isModuleSelected = !!module;
-  const isSubmoduleSelected = subModuleVisibility.value ? !!submodule : true;
-  return (
-    !(isProcessSelected && isModuleSelected && isSubmoduleSelected) ||
-    (['Selesai', 'Reported Bug'] as WangsitStatus[]).includes(
-      taskDetail.value?.status,
-    )
-  );
-});
 
 const focusTitleInput = (): void => {
   const titleInputEl = document.querySelector(
@@ -830,6 +832,23 @@ const reportBugTask = async (note?: string): Promise<void> => {
   }
 };
 
+const openApprovalDialogConfirm = (approvalState: boolean): void => {
+  isApproved.value = approvalState;
+  dialogConfirmApproval.value = true;
+};
+
+const onSubmitApproval = (): void => {
+  if (
+    taskDetail.value?.status === 'Waiting for Approval' &&
+    !isApproved.value
+  ) {
+    eventBus.emit('detail-task:delete', { taskId: taskId.value });
+  } else {
+    approvalId.value = null;
+    eventBus.emit('detail-task:update', { taskId: taskId.value });
+  }
+};
+
 watch(
   taskDetail,
   () => {
@@ -1030,6 +1049,7 @@ watch(
               :options="legendOptions.repository"
               @change="handleTaskChange()"
               @show="getRepositoryOptions"
+              @update:model-value="handleTaskChange()"
               data-wv-section="detailtask-repository-input"
               option-label="label"
               option-value="value"
@@ -1120,6 +1140,18 @@ watch(
           label="Report Bug"
           severity="danger"
         />
+        <template v-if="isApproverHasAccess && approvalId">
+          <Button
+            @click="openApprovalDialogConfirm(false)"
+            label="Tolak"
+            severity="danger"
+          />
+          <Button
+            @click="openApprovalDialogConfirm(true)"
+            label="Setuju"
+            severity="success"
+          />
+        </template>
       </div>
     </div>
 
@@ -1156,6 +1188,14 @@ watch(
     v-model:visible="dialogConfirmEdit"
     :task-detail="taskDetail"
     @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
+  />
+
+  <DialogConfirmApproval
+    v-model:visible="dialogConfirmApproval"
+    :approval-id="approvalId"
+    :is-approved="isApproved"
+    :status="taskDetail?.status"
+    @saved="onSubmitApproval"
   />
 
   <DialogReportBug v-model:visible="dialogReportBug" @submit="reportBugTask" />

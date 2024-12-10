@@ -39,6 +39,8 @@ const openToast = (message: string, isError?: boolean): void => {
               toast.add({
                 icon: 'check-double-fill',
                 iconClass: 'text-white',
+                message: 'Group soal berhasil dihapus.',
+                customMessage: true,
               })
             "
             label="Custom Toast"

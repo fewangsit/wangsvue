@@ -87,6 +87,7 @@ const rowSingleActionCell = ref<HTMLTableCellElement>();
 
 const customColumnKey = shallowRef<number>(0);
 const loadingTable = shallowRef<boolean>(false);
+const loadingRows = shallowRef<boolean>(false);
 const columnKey = shallowRef<number>(0);
 const tableKey = shallowRef<number>(0);
 const dragging = shallowRef<boolean>(false);
@@ -215,54 +216,59 @@ const toggleRowExpand = async (
 ): Promise<void> => {
   const isExpandingRow = isExpanding ?? !isRowExpanded(data[props.dataKey]);
 
-  if (!isExpandingRow) {
-    currentPageTableData.value.splice(
-      indexOfData + 1,
-      expandedRows.value[data[props.dataKey]],
-    );
-    delete expandedRows.value[data[props.dataKey]];
-  } else {
-    expandedRows.value[data[props.dataKey]] = 1;
+  if (!loadingRows.value) {
+    if (!isExpandingRow) {
+      currentPageTableData.value.splice(
+        indexOfData + 1,
+        expandedRows.value[data[props.dataKey]],
+      );
+      delete expandedRows.value[data[props.dataKey]];
+    } else {
+      expandedRows.value[data[props.dataKey]] = 1;
 
-    let { children } = data;
+      let { children } = data;
 
-    if (props.childTableProps?.fetchFunction && data.hasChildren) {
-      try {
-        // Add loading animation row
+      if (props.childTableProps?.fetchFunction && data.hasChildren) {
+        try {
+          // Add loading animation row
+          currentPageTableData.value.splice(indexOfData + 1, 0, {
+            childRow: true,
+            loadingRow: true,
+          });
+          loadingRows.value = true;
+          const fetchChildren =
+            await props.childTableProps?.fetchFunction(data);
+          children = fetchChildren.data;
+        } catch (error) {
+          console.error('🚀 ~ toggleRowExpand ~ error:', error);
+        } finally {
+          // Remove loading animation row
+          currentPageTableData.value.splice(indexOfData + 1, 1);
+          loadingRows.value = false;
+        }
+      }
+
+      if (indexOfData >= 0 && children?.length) {
+        const childrenRows = children.flatMap((child) => {
+          const rowHeader: Data = {
+            childRowHeader: true,
+            header: child.groupHeader,
+          };
+
+          return [
+            rowHeader,
+            ...(child.groupItems ?? []).map((d) => ({ childRow: true, ...d })),
+          ];
+        });
+
+        expandedRows.value[data[props.dataKey]] = childrenRows.length;
+        currentPageTableData.value.splice(indexOfData + 1, 0, ...childrenRows);
+      } else {
         currentPageTableData.value.splice(indexOfData + 1, 0, {
           childRow: true,
-          loadingRow: true,
+          noDataRow: true,
         });
-        const fetchChildren = await props.childTableProps?.fetchFunction(data);
-        children = fetchChildren.data;
-      } catch (error) {
-        console.error('🚀 ~ toggleRowExpand ~ error:', error);
-      } finally {
-        // Remove loading animation row
-        currentPageTableData.value.splice(indexOfData + 1, 1);
       }
-    }
-
-    if (indexOfData >= 0 && children?.length) {
-      const childrenRows = children.flatMap((child) => {
-        const rowHeader: Data = {
-          childRowHeader: true,
-          header: child.groupHeader,
-        };
-
-        return [
-          rowHeader,
-          ...(child.groupItems ?? []).map((d) => ({ childRow: true, ...d })),
-        ];
-      });
-
-      expandedRows.value[data[props.dataKey]] = childrenRows.length;
-      currentPageTableData.value.splice(indexOfData + 1, 0, ...childrenRows);
-    } else {
-      currentPageTableData.value.splice(indexOfData + 1, 0, {
-        childRow: true,
-        noDataRow: true,
-      });
     }
   }
 };
@@ -295,9 +301,13 @@ const toggleRowSelection = (event: Event, data: Data, index: number): void => {
 };
 
 const toggleExpandAll = (): void => {
-  currentPageTableData.value.forEach((data, index) => {
-    if (data.children?.length || data.hasChildren) toggleRowExpand(data, index);
-  });
+  const isExpanding = !isExpandedAll.value;
+  if (!loadingRows.value) {
+    currentPageTableData.value.forEach((data, index) => {
+      if (data.children?.length || data.hasChildren)
+        toggleRowExpand(data, index, isExpanding);
+    });
+  }
 };
 
 const toggleOptions = async (event: MouseEvent, data: Data): Promise<void> => {

@@ -4,11 +4,10 @@ import { computed, ComputedRef, inject, Ref, shallowRef } from 'vue';
 import Button from 'lib/components/button/Button.vue';
 import { TaskDetailData } from 'lib/types/task.type';
 import Calendar from 'lib/components/calendar/Calendar.vue';
-import { formatDate } from 'lib/utils/date.util';
 import TaskServices from 'lib/services/task.service';
 import { EditTaskDTO } from 'lib/dto/task.dto';
 import eventBus from 'lib/event-bus';
-import { useToast } from 'lib/utils';
+import { formatISODate, useToast } from 'lib/utils';
 import { TaskLegendForm } from '../common/Legend.vue';
 import DialogAssignMember from '../common/DialogAssignMember.vue';
 import DialogSetDuration from '../common/DialogSetDuration.vue';
@@ -21,10 +20,12 @@ const toast = useToast();
 
 const isNewTask = inject<Ref<boolean>>('isNewTask');
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
+const isMember = inject<Ref<boolean>>('isMember');
 const userType =
   inject<ComputedRef<'member' | 'admin' | 'pm' | 'teamLeader'>>('userType');
 const legendForm = inject<Ref<TaskLegendForm>>('legendForm');
 const taskId = inject<Ref<string>>('taskId');
+const isApproverHasAccess = inject<Ref<string>>('isApproverHasAccess');
 
 const showDialogAssignMember = shallowRef<boolean>(false);
 const showDialogSetDuration = shallowRef<boolean>(false);
@@ -34,7 +35,7 @@ const startDate = shallowRef<number>();
 
 const startDateLabel = computed(() =>
   taskDetail.value?.startDate
-    ? formatDate(new Date(taskDetail.value?.startDate))
+    ? formatISODate(taskDetail.value?.startDate)
     : 'Tanggal Mulai',
 );
 
@@ -162,7 +163,8 @@ const getDuration = (duration: number): string => {
               '!min-w-[150px] !h-[30px] !text-left !rounded',
               {
                 'pointer-events-none':
-                  !['admin', 'pm', 'teamLeader'].includes(userType) ||
+                  (!['admin', 'pm', 'teamLeader'].includes(userType) &&
+                    !isApproverHasAccess) ||
                   taskDetail?.process?.name === 'API Spec',
               },
             ]"
@@ -189,7 +191,10 @@ const getDuration = (duration: number): string => {
                   isContinousDuration ||
                   !['Backlog', 'Waiting for Approval'].includes(
                     taskDetail?.status,
-                  ),
+                  ) ||
+                  (!['admin', 'pm', 'teamLeader'].includes(userType) &&
+                    !isApproverHasAccess &&
+                    !isMember),
               },
             ]"
             :disabled="isNewTask"
@@ -203,13 +208,16 @@ const getDuration = (duration: number): string => {
           <div class="">
             <Button
               :class="[
-                '!w-[150px] !h-[30px] !text-left !rounded',
+                '!w-[165px] !h-[30px] !text-left !rounded',
                 {
                   'pointer-events-none':
                     taskDetail?.process?.name === 'API Spec' ||
                     !['Backlog', 'Waiting for Approval'].includes(
                       taskDetail?.status,
-                    ),
+                    ) ||
+                    (!['admin', 'pm', 'teamLeader'].includes(userType) &&
+                      !isApproverHasAccess &&
+                      !isMember),
                 },
               ]"
               :disabled="isNewTask"

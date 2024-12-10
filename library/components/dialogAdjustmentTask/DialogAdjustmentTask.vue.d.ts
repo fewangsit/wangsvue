@@ -1,5 +1,7 @@
+import { TaskStatus } from 'lib/types/wangsStatus.type';
 import { FetchResponse } from '../datatable/DataTable.vue.d';
 import { ClassComponent } from '../ts-helpers';
+import { MultiSelectOption } from 'lib/types/options.type';
 
 export interface DialogAdjustmentTaskProps {
   /**
@@ -29,6 +31,10 @@ export interface DialogAdjustmentTaskProps {
    * Custom Query Params Get List
    */
   customQueryParams?: Record<string, unknown>;
+  /**
+   * Custom Status Filter Option
+   */
+  customStatusFilter?: MultiSelectOption[];
 }
 
 export type DialogAdjustmentTaskEmits = {
@@ -52,6 +58,10 @@ export type DialogAdjustmentTaskEmits = {
    * Trigger when cancel btn clicked
    */
   'cancel': [];
+  /**
+   * Trigger When Failed getting task list
+   */
+  'failedGetTaskList': [];
 };
 
 declare class DialogAdjustmentTask extends ClassComponent<
@@ -87,7 +97,7 @@ export interface Task {
   process: Process;
   project: Project;
   module: Module;
-  subModule: string | null;
+  subModule: Module;
   name: string;
   assignedTo: AssignedTo[];
   team: string[];
@@ -99,14 +109,6 @@ export interface Task {
   dependency: Dependency;
   lastUpdatedAt: string;
 }
-
-export type TaskStatus =
-  | 'Penyesuaian'
-  | 'Fixing Bug'
-  | 'Reported Bug'
-  | 'Pending Review Leader'
-  | 'Sprint'
-  | 'Backlog';
 
 interface Process {
   name: string;
@@ -125,7 +127,7 @@ interface Module {
   _id: string;
 }
 
-interface AssignedTo {
+export interface AssignedTo extends Record<string, unknown> {
   fullName: string;
   nickName: string;
   key: number;
@@ -138,4 +140,9 @@ interface AssignedTo {
 export interface Dependency {
   done: number;
   onProgress: number;
+}
+
+export interface UpdateTaskMemberItemLocal {
+  task: Task;
+  newMember: AssignedTo[];
 }

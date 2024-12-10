@@ -177,6 +177,11 @@ const getEventLog = async (): Promise<void> => {
       />
     </template>
     <TaskDetailPbi v-else-if="activeTab === 1" v-bind="$props" />
-    <Timeline v-else :align-detail="true" :value="eventLogItems" />
+    <Timeline
+      v-else
+      :align-detail="true"
+      :value="eventLogItems"
+      class="h-[400px]"
+    />
   </Dialog>
 </template>

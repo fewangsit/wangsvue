@@ -19,7 +19,7 @@ import { MenuItem } from '../menuitem';
 import TabMenu from '../tabmenu/TabMenu.vue';
 import InfoTaskTab from './blocks/Tabs/InfoTaskTab.vue';
 import ReviewTab from './blocks/Tabs/ReviewTab.vue';
-import { TaskDetailData } from 'lib/types/task.type';
+import { TaskChecklist, TaskDetailData } from 'lib/types/task.type';
 import eventBus from 'lib/event-bus';
 import useLoadingStore from '../loading/store/loading.store';
 import { useToast } from 'lib/utils';
@@ -35,6 +35,7 @@ import { User } from 'lib/types/user.type';
 import EventLogTab from './blocks/Tabs/EventLogTab.vue';
 import { MentionSectionFunc } from '../comment/Comment.vue.d';
 import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
+import TaskChecklistServices from 'lib/services/taskChecklist.service';
 
 const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 
@@ -97,6 +98,29 @@ const isMember = computed(() => {
     : false;
 });
 
+const isApprover = computed(() => {
+  return projectDetail.value?.isApprover;
+});
+
+/**
+ * Check if the current user has access to approve the task.
+ * Access is granted if the user is an approver and the task is in "Waiting for Approval" status or
+ * if the user has requested checklists in the task.
+ */
+const isApproverHasAccess = computed(() => {
+  const hasRequestedChecklists = checklists.value.some(
+    (checklist) =>
+      checklist?.isRequested ||
+      checklist?.checklistItems?.some((item) => item?.isRequested),
+  );
+
+  return (
+    isApprover.value &&
+    (taskDetail.value?.status === 'Waiting for Approval' ||
+      hasRequestedChecklists)
+  );
+});
+
 const user = ref<User>(
   JSON.parse(localStorage.getItem('user') as string) ?? {},
 );
@@ -126,6 +150,8 @@ const taskMenuKey = shallowRef<number>(0);
 
 const mentionSectionFunc = ref<MentionSectionFunc>();
 const commentSearch = ref<string>();
+
+const checklists = ref<TaskChecklist[]>([]);
 
 const taskMenu = computed<TaskMenu[]>(() => {
   return [
@@ -230,6 +256,7 @@ const refreshAndEmitHandler = async (
 
     await getDetailTask();
     await getProjectDetail();
+    await getChecklists();
 
     firstFetch.value = false;
     setLoading(false);
@@ -270,6 +297,22 @@ const removeEventListener = (): void => {
   eventBus.off('detail-task:show');
   eventBus.off('detail-task:create');
   eventBus.off('detail-task:update');
+};
+
+const getChecklists = async (): Promise<void> => {
+  try {
+    const { data } = await TaskChecklistServices.getTaskChecklists(
+      taskId.value,
+    );
+    if (data) {
+      checklists.value = data.data;
+    }
+  } catch (error) {
+    toast.add({
+      message: 'Gagal memuat data ceklis.',
+      error,
+    });
+  }
 };
 
 const handleShow = (): void => {
@@ -315,6 +358,7 @@ provide('isNewTask', isNewTask);
 provide('userType', userType);
 provide('isProcessTeamLeader', isProcessTeamLeader);
 provide('isMember', isMember);
+provide('isApproverHasAccess', isApproverHasAccess);
 provide('legendForm', legendForm);
 provide('loadingTask', loadingTask);
 provide('openDetailTask', openDetailTask);
@@ -346,7 +390,7 @@ watch(
 
           //   Customs
           '!w-auto',
-          // '!h-[648px]',
+          '!h-[90vh]',
           '!max-w-none',
           '!border-grayscale-900 !border',
           '!p-0',
@@ -374,6 +418,7 @@ watch(
           // Customs
           // '!pl-6 !py-3 !pr-6',
           'detailtask-scrollbar-hide !mb-2',
+          '!mt-0',
         ],
       },
       footer: {
@@ -420,9 +465,10 @@ watch(
     <template #default>
       <div class="flex">
         <div
-          class="w-[800px] max-h-[600px] flex flex-col gap-3 !px-6 !py-3 overflow-y-auto detailtask-scrollbar-hide"
+          class="w-[800px] flex flex-col gap-3 !px-6 !py-3 overflow-y-auto detailtask-scrollbar-hide"
         >
           <Legend
+            :approval-id="props.approvalId"
             :initial-module="props.initialModule"
             :initial-sub-module="props.initialSubModule"
             :product-backlog-item-id="props.productBacklogItemId"
@@ -439,7 +485,7 @@ watch(
         </div>
         <div
           v-if="showCommentSection"
-          class="w-[520px] max-h-[600px] border-l border-grayscale-900 overflow-y-auto detailtask-scrollbar-hide"
+          class="w-[520px] border-l border-grayscale-900 overflow-y-auto detailtask-scrollbar-hide"
         >
           <div
             class="flex items-center justify-between py-4 px-6 border-b border-grayscale-900"
