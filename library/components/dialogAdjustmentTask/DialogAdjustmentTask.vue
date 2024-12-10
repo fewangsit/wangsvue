@@ -20,7 +20,7 @@ import { dialogAdjustmentTaskSingleAction } from './options/dialogAdjustmentTask
 
 import TaskServices from 'lib/services/task.service';
 import DialogForm from '../dialogform/DialogForm.vue';
-import DialogAddjustmentTaskHeader from './DialogAdjustmentTaskHeader.vue';
+import DialogAdjustmentTaskHeader from './DialogAdjustmentTaskHeader.vue';
 import DataTable from '../datatable/DataTable.vue';
 import MemberServices from 'lib/services/member.service';
 import Dropdown from '../dropdown/Dropdown.vue';
@@ -230,10 +230,10 @@ const getMemberList = async (team: string[]): Promise<void> => {
 
 const refreshDataTable = (): void => {
   eventBus.emit('data-table:clear-selected-data', {
-    tableName: 'dialog-addjustment-task',
+    tableName: 'dialog-adjustment-task',
   });
   eventBus.emit('data-table:update', {
-    tableName: 'dialog-addjustment-task',
+    tableName: 'dialog-adjustment-task',
   });
 };
 
@@ -372,7 +372,7 @@ watch(
     </template>
     <template #fields>
       <div class="flex flex-col gap-2">
-        <DialogAddjustmentTaskHeader
+        <DialogAdjustmentTaskHeader
           :bulk-action-emitter="bulkActionEmitter"
           :custom-filter-option="{
             taskStatus: props.customStatusFilter,
@@ -390,7 +390,7 @@ watch(
               singleSelectedData = event as Task;
             }
           "
-          table-name="dialog-addjustment-task"
+          table-name="dialog-adjustment-task"
           use-option
           use-paginator
         />
