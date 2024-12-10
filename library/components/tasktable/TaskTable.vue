@@ -407,7 +407,7 @@ const filterFields = computed<CustomFilterField[]>(() => [
     type: 'multiselect',
     placeholder: 'Pilih Status',
     fetchOptionFn: (): MultiSelectOption[] =>
-      taskStatuses.map((status) => ({
+      [...taskStatuses, 'Backlog', 'Waiting for Approval'].map((status) => ({
         label: status,
         value: status,
       })),
