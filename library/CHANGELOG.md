@@ -1,6 +1,58 @@
 # Changelog
 
 
+## v1.5.98
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.97...v1.5.98)
+
+### 🚀 Enhancements
+
+- Add component PDFViewer ([d0d2601](https://github.com/fewangsit/wangsvue/commit/d0d2601))
+
+### 🏡 Chore
+
+- **presets:** Update version ([7d9e821](https://github.com/fewangsit/wangsvue/commit/7d9e821))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.97
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.96...v1.5.97)
+
+### 🚀 Enhancements
+
+- Implement pdf viewer using iframe (not yet finished, missing excel viewer) ([2e571b8](https://github.com/fewangsit/wangsvue/commit/2e571b8))
+- **DialogAdjustmentTask:** Custom member options ([acb6784](https://github.com/fewangsit/wangsvue/commit/acb6784))
+- **DialogAdjustmentTask:** Member progress and navigate to member detail ([c778810](https://github.com/fewangsit/wangsvue/commit/c778810))
+
+### 🩹 Fixes
+
+- **DataTable:** Await each toggle expand ([2571ba3](https://github.com/fewangsit/wangsvue/commit/2571ba3))
+- **DialogAdjustmentTask:** Add custom params to filter ([31d55fd](https://github.com/fewangsit/wangsvue/commit/31d55fd))
+- **PDFViewer:** Remove unused libraries ([56be1b3](https://github.com/fewangsit/wangsvue/commit/56be1b3))
+- **TaskTable:** Add filter statuses for PBI page ([dea73e8](https://github.com/fewangsit/wangsvue/commit/dea73e8))
+
+### 💅 Refactors
+
+- **HCALaFO3:** If query's raw value is already string, doesn't need to be stringified anymore ([fa34c99](https://github.com/fewangsit/wangsvue/commit/fa34c99))
+
+### 🏡 Chore
+
+- Remove pdf and excel viewer libraries ([5712464](https://github.com/fewangsit/wangsvue/commit/5712464))
+- **presets:** Update version ([0742afc](https://github.com/fewangsit/wangsvue/commit/0742afc))
+
+### 🎨 Styles
+
+- **Icon:** Star-fill ([0457dd2](https://github.com/fewangsit/wangsvue/commit/0457dd2))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.96
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.95...v1.5.96)
