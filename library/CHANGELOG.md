@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.100
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.99...v1.5.100)
+
+### 🩹 Fixes
+
+- **UWbKnnpj:** Update condition for showing team label in taskdetail ([df31039](https://github.com/fewangsit/wangsvue/commit/df31039))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.99
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.98...v1.5.99)
