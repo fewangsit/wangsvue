@@ -1,6 +1,32 @@
 # Changelog
 
 
+## v1.5.100
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.99...v1.5.100)
+
+### 🩹 Fixes
+
+- **UWbKnnpj:** Update condition for showing team label in taskdetail ([df31039](https://github.com/fewangsit/wangsvue/commit/df31039))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
+## v1.5.99
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.98...v1.5.99)
+
+### 🩹 Fixes
+
+- **DialogAdjustmentTask:** Replace addjustment with adjustment ([b05d0fe](https://github.com/fewangsit/wangsvue/commit/b05d0fe))
+- **DialogAdjustmentTask:** Dialog closed (resulting in emptied payload) on form submit ([b17d858](https://github.com/fewangsit/wangsvue/commit/b17d858))
+- **DataTable:** Don't expand row if it's already expanded ([46a48b0](https://github.com/fewangsit/wangsvue/commit/46a48b0))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.98
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.97...v1.5.98)

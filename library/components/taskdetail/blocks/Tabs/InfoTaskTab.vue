@@ -104,7 +104,7 @@ const memberLabel = computed(() => {
 });
 
 const teamLabel = computed(() => {
-  if (legendForm.value?.process?.team[0]?.initial)
+  if (legendForm.value?.process?.team[0]?.initial && isNewTask.value)
     return legendForm.value?.process?.team[0]?.initial;
   return taskDetail.value?.team.length > 0 ? memberTeams.value : 'Tim';
 });
