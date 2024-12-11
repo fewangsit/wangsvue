@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.101
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.100...v1.5.101)
+
+### 🩹 Fixes
+
+- **FilterContainer:** False can be accepted as a filter value ([fb1ad5e](https://github.com/fewangsit/wangsvue/commit/fb1ad5e))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.100
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.99...v1.5.100)
