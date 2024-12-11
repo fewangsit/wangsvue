@@ -199,20 +199,20 @@ const getTaskListOption = async (
     <ButtonBulkAction
       :options="dialogAddjusmentTaskBulkAction(props?.bulkActionEmitter)"
       :selected-data="selectedData"
-      table-name="dialog-addjustment-task"
+      table-name="dialog-adjustment-task"
     />
     <div class="flex gap-4 flex-1 justify-end">
-      <ButtonSearch table-name="dialog-addjustment-task" />
-      <ButtonFilter table-name="dialog-addjustment-task" />
+      <ButtonSearch table-name="dialog-adjustment-task" />
+      <ButtonFilter table-name="dialog-adjustment-task" />
     </div>
   </div>
   <FilterContainer
     :fields="filterFields"
     :fields-per-row="3"
-    table-name="dialog-addjustment-task"
+    table-name="dialog-adjustment-task"
   />
   <QuickFilter
     :fields="filterFieldsQuick"
-    table-name="dialog-addjustment-task"
+    table-name="dialog-adjustment-task"
   />
 </template>

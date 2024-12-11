@@ -61,7 +61,7 @@ export type DialogAdjustmentTaskEmits = {
   /**
    * Trigger when assign & unassign failed save to server
    */
-  'failedAssignUnAssign': [];
+  'failedAssignUnAssign': [error: unknown];
   /**
    * Trigger when cancel btn clicked
    */
