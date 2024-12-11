@@ -140,6 +140,7 @@ import {
   TaskTable,
   NotificationItem,
   DialogImprovementTask,
+  PDFViewer,
 } from './components';
 
 export {
@@ -236,6 +237,7 @@ export {
   TaskTable,
   NotificationItem,
   DialogImprovementTask,
+  PDFViewer,
 
   // Component store
   useLoadingStore,
