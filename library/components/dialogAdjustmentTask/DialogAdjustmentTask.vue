@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, shallowRef, watch } from 'vue';
 import { navigateToUrl } from 'single-spa';
-import { getUser, useToast } from 'lib/utils';
+import { getUser } from 'lib/utils';
 import { QueryParams } from '../datatable/DataTable.vue.d';
 import { FormPayload } from '../form/Form.vue.d';
 import {
@@ -30,12 +30,10 @@ import Icon from '../icon/Icon.vue';
 import TaskDetail from '../taskdetail/TaskDetail.vue';
 import SubModuleServices from 'lib/services/submodule.service';
 
-const toast = useToast();
-
 const props = withDefaults(defineProps<DialogAdjustmentTaskProps>(), {
   autoClose: false,
   preventAppear: false,
-  closeOnSubmit: true,
+  closeOnSubmit: false,
   header: 'Assign Task',
 });
 
@@ -165,19 +163,11 @@ const putNewAssign = async (
       console.error(error);
     }
 
-    refreshDataTable();
+    dialogVisibility.value = false;
     emit('successAssignUnAssign');
-    toast.add({
-      message: 'Task telah dialihkan.',
-      severity: 'success',
-    });
   } catch (error) {
-    emit('failedAssignUnAssign');
-    toast.add({
-      message: 'Task gagal dialihkan.',
-      severity: 'error',
-      error,
-    });
+    console.error(error);
+    emit('failedAssignUnAssign', error);
   }
 };
 
@@ -279,11 +269,11 @@ const findUnassignMember = (
   };
 };
 
-const confirmAssignUnassignMember = (
+const confirmAssignUnassignMember = async (
   action: 'single' | 'bulk' | 'submitAll',
-): void => {
+): Promise<void> => {
   if (action === 'submitAll') {
-    putNewAssign(unassignNewMember.value);
+    await putNewAssign(unassignNewMember.value);
     unassignNewMember.value = [];
   }
 };
@@ -351,6 +341,7 @@ watch(
     v-model:visible="dialogVisibility"
     :buttons-template="['cancel', 'submit']"
     :close-on-submit="closeOnSubmit"
+    :reset-after-submit="false"
     @close="$emit('cancel')"
     @submit="
       () => {
