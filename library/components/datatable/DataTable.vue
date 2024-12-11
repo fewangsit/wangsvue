@@ -214,6 +214,7 @@ const toggleRowExpand = async (
   indexOfData: number,
   isExpanding?: boolean,
 ): Promise<void> => {
+  if (isRowExpanded(data[props.dataKey]) === isExpanding) return;
   const isExpandingRow = isExpanding ?? !isRowExpanded(data[props.dataKey]);
 
   if (!loadingRows.value) {
