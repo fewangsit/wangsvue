@@ -18,7 +18,7 @@ const applyFilter = (
 
     // First, filter all undefined/null value
     const filterredValues: GenericObject = isArray
-      ? values[field]?.filter((each: keyof GenericObject) => !!each)
+      ? values[field]?.filter((each: unknown) => !!each || each === false)
       : values[field];
 
     if (
