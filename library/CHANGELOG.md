@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.5.98
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.97...v1.5.98)
+
+### 🚀 Enhancements
+
+- Add component PDFViewer ([d0d2601](https://github.com/fewangsit/wangsvue/commit/d0d2601))
+
+### 🏡 Chore
+
+- **presets:** Update version ([7d9e821](https://github.com/fewangsit/wangsvue/commit/7d9e821))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.97
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.96...v1.5.97)
