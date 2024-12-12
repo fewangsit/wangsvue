@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.5.104
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.102...v1.5.104)
+
+### 🚀 Enhancements
+
+- Export ExampleAPI axios intance from service to be tested on mfe modules ([fcf2d87](https://github.com/fewangsit/wangsvue/commit/fcf2d87))
+
+### 🏡 Chore
+
+- **release:** V1.5.103 ([4a5aebc](https://github.com/fewangsit/wangsvue/commit/4a5aebc))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.102
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.101...v1.5.102)
