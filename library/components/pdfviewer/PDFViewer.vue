@@ -26,6 +26,11 @@ const getFile = async (): Promise<void> => {
 </script>
 
 <template>
-  <h1>Document Viewer</h1>
-  <iframe :src="fileContent" height="1000" title="pdf-viewer" />
+  <iframe
+    :class="`!w-full ${props.class}`"
+    :src="fileContent"
+    :style="props.style"
+    height="1000"
+    title="pdf-viewer"
+  />
 </template>
