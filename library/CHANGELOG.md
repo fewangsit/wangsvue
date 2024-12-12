@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.5.102
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.101...v1.5.102)
+
+### 🚀 Enhancements
+
+- **Service:** Introduce centralize API service creations ([8f66804](https://github.com/fewangsit/wangsvue/commit/8f66804))
+
+### 💅 Refactors
+
+- **PDFViewer:** Add class and style into iframe ([69230a3](https://github.com/fewangsit/wangsvue/commit/69230a3))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.101
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.100...v1.5.101)
