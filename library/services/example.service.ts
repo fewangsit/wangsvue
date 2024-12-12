@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { User } from 'lib/types/user.type';
-import createAPI from './index';
+import { ExampleAPI as API } from '.';
 
 export interface GetListQueryParams {
   search?: string;
@@ -16,8 +16,6 @@ export interface GetListResponseBody {
 export interface GetDetailResponseBody {
   data: User;
 }
-
-const API = createAPI({ env: 'APP_EXAMPLE_API', prefix: '/api' });
 
 const ExampleService = {
   getList: (
