@@ -6,7 +6,15 @@ export interface PDFViewerProps {
    *
    * @example '/elsa/file_1733395763186.pdf'
    */
-  fileName?: string;
+  fileName: string;
+  /**
+   * Add class into `iframe` element
+   */
+  class?: string;
+  /**
+   * Add style into `iframe` element
+   */
+  style?: string;
 }
 
 /**
