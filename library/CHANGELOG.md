@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.106
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.105...v1.5.106)
+
+### 🚀 Enhancements
+
+- **DataTable:** Support dynamic condition for preset toggle disable ([481efeb](https://github.com/fewangsit/wangsvue/commit/481efeb))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.105
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.104...v1.5.105)
