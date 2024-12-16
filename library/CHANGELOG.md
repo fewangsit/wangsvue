@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.107
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.106...v1.5.107)
+
+### 🩹 Fixes
+
+- **J9Xljrd3:** Add new dependency task directly after click '+ Custom' without open dialog first in task detail ([22ded0c](https://github.com/fewangsit/wangsvue/commit/22ded0c))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.106
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.105...v1.5.106)
