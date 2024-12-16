@@ -19,7 +19,7 @@ export interface APIRequestConfig extends Omit<AxiosRequestConfig, 'env'> {
   prefix?: string;
 }
 
-const createAPI = (config: APIRequestConfig = {}): AxiosInstance => {
+const createAxiosInstance = (config: APIRequestConfig = {}): AxiosInstance => {
   const { env = '', prefix = '', headers = {}, ...restConfig } = config;
 
   const baseURL = `${getBaseURL(env)}/${prefix}`.replaceAll('//', '/');
@@ -37,4 +37,4 @@ const createAPI = (config: APIRequestConfig = {}): AxiosInstance => {
   });
 };
 
-export default createAPI;
+export default createAxiosInstance;
