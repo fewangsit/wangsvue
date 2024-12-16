@@ -1,4 +1,4 @@
-import createAPI from './createApi.service';
+import createAPI from './createInstance';
 
 export const ExampleAPI = createAPI({ env: 'APP_EXAMPLE_API', prefix: '/api' });
 
