@@ -1126,7 +1126,10 @@ const listenUpdateTableEvent = (): void => {
                       <InputSwitch
                         v-model="item[col.field]"
                         :disabled="
-                          isRowDisabled(item[dataKey]) || col.preset?.disabled
+                          isRowDisabled(item[dataKey]) ||
+                          (typeof col.preset?.disabled === 'function'
+                            ? col.preset?.disabled(item)
+                            : col.preset?.disabled)
                         "
                         :input-id="item[dataKey]"
                         @click.stop=""

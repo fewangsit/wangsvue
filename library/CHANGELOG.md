@@ -1,6 +1,55 @@
 # Changelog
 
 
+## v1.5.106
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.105...v1.5.106)
+
+### 🚀 Enhancements
+
+- **DataTable:** Support dynamic condition for preset toggle disable ([481efeb](https://github.com/fewangsit/wangsvue/commit/481efeb))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.105
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.104...v1.5.105)
+
+## v1.5.104
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.102...v1.5.104)
+
+### 🚀 Enhancements
+
+- Export ExampleAPI axios intance from service to be tested on mfe modules ([fcf2d87](https://github.com/fewangsit/wangsvue/commit/fcf2d87))
+
+### 🏡 Chore
+
+- **release:** V1.5.103 ([4a5aebc](https://github.com/fewangsit/wangsvue/commit/4a5aebc))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.102
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.101...v1.5.102)
+
+### 🚀 Enhancements
+
+- **Service:** Introduce centralize API service creations ([8f66804](https://github.com/fewangsit/wangsvue/commit/8f66804))
+
+### 💅 Refactors
+
+- **PDFViewer:** Add class and style into iframe ([69230a3](https://github.com/fewangsit/wangsvue/commit/69230a3))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.101
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.100...v1.5.101)

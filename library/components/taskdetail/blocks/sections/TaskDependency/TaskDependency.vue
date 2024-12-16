@@ -23,7 +23,6 @@ import Badge from 'lib/components/badge/Badge.vue';
 import InputAdditional from '../../common/InputAdditional.vue';
 import ModuleServices from 'lib/services/module.service';
 import { ProjectModule } from 'lib/types/projectModule.type';
-import DialogCustomDependency from './DialogCustomDependency.vue';
 import Dropdown from 'lib/components/dropdown/Dropdown.vue';
 import SubModuleServices from 'lib/services/submodule.service';
 import { cloneDeep } from 'lodash';
@@ -65,7 +64,6 @@ const taskDependencies = ref<TaskDependency[]>();
 const dependencies = ref<TaskDependency[]>();
 
 const loadingData = shallowRef<boolean>(false);
-const showDialogCustomDependency = shallowRef<boolean>(false);
 
 const taskProcess = computed(() => taskDetail.value?.process ?? undefined);
 
@@ -688,7 +686,7 @@ watch(
       </div>
       <Button
         :disabled="isDisabled"
-        @click="showDialogCustomDependency = true"
+        @click="addCustomDependency('one-way')"
         icon="add"
         label="Custom"
         severity="secondary"
@@ -879,8 +877,4 @@ watch(
       </div>
     </div>
   </div>
-  <DialogCustomDependency
-    v-model:visible="showDialogCustomDependency"
-    @submit="addCustomDependency"
-  />
 </template>

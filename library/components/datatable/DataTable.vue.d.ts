@@ -168,7 +168,10 @@ export interface ColumnTogglePreset {
       | ((data: Data) => Promise<boolean>);
   };
   onConfirm?: (state: boolean, data: Data, revertFunction: () => void) => void;
-  disabled?: boolean;
+  /**
+   * Add conditional disabling toggle for each row
+   */
+  disabled?: boolean | ((data: Data) => boolean);
 }
 
 export interface ColumnMultiRowPreset {
