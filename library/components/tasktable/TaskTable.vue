@@ -4,7 +4,6 @@ import { MenuItem } from '../menuitem';
 import QuickFilter from '../quickfilter/QuickFilter.vue';
 import FilterContainer from '../filtercontainer/FilterContainer.vue';
 import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
-import ButtonDownload from '../buttondownload/ButtonDownload.vue';
 import ButtonFilter from '../buttonfilter/ButtonFilter.vue';
 import eventBus from 'lib/event-bus';
 import {
@@ -857,11 +856,6 @@ const selectProject = (projectId: string): void => {
         :table-name="tableName"
         @search="filters.global.value = $event"
         class="ml-auto"
-      />
-      <ButtonDownload
-        v-if="page !== 'project-productBacklogItem'"
-        :table-name="tableName"
-        file-name="Download"
       />
       <ButtonFilter v-model:show-filter="showFilter" :table-name="tableName" />
       <Button
