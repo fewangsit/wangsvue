@@ -459,10 +459,12 @@ watch(
               <ProgressBar
                 v-if="checklist.checklistItems.length && !props.static"
                 :value="
-                  (checklist.checklistItems.filter((item) => item.checked)
-                    .length /
-                    checklist.checklistItems.length) *
-                  100
+                  Math.round(
+                    (checklist.checklistItems.filter((item) => item.checked)
+                      .length /
+                      checklist.checklistItems.length) *
+                      100,
+                  )
                 "
                 class="w-[235px]"
                 severity="success"
@@ -602,7 +604,7 @@ watch(
               :validator-message="{
                 empty: 'Caption item ceklis harus diisi.',
               }"
-              :value="item.caption"
+              :value="item.caption?.length ? item.caption : undefined"
               @cancel="item.showCaptionItem = false"
               @submit="
                 updateChecklistItem({

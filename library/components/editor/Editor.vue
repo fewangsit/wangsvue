@@ -107,6 +107,7 @@ const field = reactive<FieldValidation<Nullable<JSONContent>>>({
 });
 const isLoading = shallowRef<boolean>(false);
 const registeredMentionList = ref<string[]>([]);
+const mentionSectionTitle = shallowRef<string>();
 
 const inputPlaceholder = computed(
   () =>
@@ -677,10 +678,16 @@ const goToNextLine = (): void => {
 };
 
 const mentionSectionTrigger = (title: string): void => {
-  editorLoading();
   try {
     const { insertMentionSection } = editor.value?.commands as any;
     insertMentionSection(title, props.editorState === 'editable');
+    if (
+      mentionSectionTitle.value !== title &&
+      mentionSectionTitle.value !== undefined
+    ) {
+      editorLoading();
+    }
+    mentionSectionTitle.value = title;
   } catch (error) {
     console.error(error);
   }
