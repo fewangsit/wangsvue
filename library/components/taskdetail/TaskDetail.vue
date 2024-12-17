@@ -255,7 +255,6 @@ const refreshAndEmitHandler = async (
     if (firstFetch.value) setLoading(true);
 
     await getDetailTask();
-    await getProjectDetail();
     await getChecklists();
 
     firstFetch.value = false;
@@ -315,8 +314,10 @@ const getChecklists = async (): Promise<void> => {
   }
 };
 
-const handleShow = (): void => {
+const handleShow = async (): Promise<void> => {
   projectId.value = props.projectId;
+
+  await getProjectDetail();
 
   if (props.taskId) {
     taskId.value = props.taskId;
