@@ -459,10 +459,12 @@ watch(
               <ProgressBar
                 v-if="checklist.checklistItems.length && !props.static"
                 :value="
-                  (checklist.checklistItems.filter((item) => item.checked)
-                    .length /
-                    checklist.checklistItems.length) *
-                  100
+                  Math.round(
+                    (checklist.checklistItems.filter((item) => item.checked)
+                      .length /
+                      checklist.checklistItems.length) *
+                      100,
+                  )
                 "
                 class="w-[235px]"
                 severity="success"
