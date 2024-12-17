@@ -149,6 +149,9 @@ importers:
       vuex:
         specifier: 4.1.0
         version: 4.1.0(vue@3.4.37)
+      wangsit-api-services:
+        specifier: ^1.0.0
+        version: 1.0.0
       xlsx:
         specifier: 0.18.5
         version: 0.18.5
@@ -7988,6 +7991,10 @@ packages:
     transitivePeerDependencies:
       - debug
     dev: true
+
+  /wangsit-api-services@1.0.0:
+    resolution: {integrity: sha512-CSnaXLv1wosW5qrz4nO7vYol63STm7EXXuq9A4o1MKD2KChzLihd1HI2Nc0bEKZS1+2KaxEy1B7DIRfR7HbNPg==}
+    dev: false
 
   /watchpack@2.4.2:
     resolution: {integrity: sha512-TnbFSbcOCcDgjZ4piURLCbJ3nJhznVh9kw6F6iokjiFPl8ONxe9A6nMDVXDiNbrSfLILs6vB07F7wLBrwPYzJw==}
