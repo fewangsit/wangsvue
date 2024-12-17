@@ -9,6 +9,7 @@ import {
   watch,
   inject,
   shallowRef,
+  onBeforeUnmount,
 } from 'vue';
 
 import Dialog from 'primevue/dialog';
@@ -59,6 +60,10 @@ onMounted(async () => {
 });
 
 onUnmounted(() => {
+  removeEventListener();
+});
+
+onBeforeUnmount(() => {
   removeEventListener();
 });
 
@@ -255,11 +260,9 @@ const refreshAndEmitHandler = async (
     if (firstFetch.value) setLoading(true);
 
     await getDetailTask();
-    await getProjectDetail();
     await getChecklists();
 
     firstFetch.value = false;
-    setLoading(false);
 
     switch (eventName) {
       case 'show':
@@ -275,6 +278,8 @@ const refreshAndEmitHandler = async (
     }
   } catch (error) {
     console.error(error);
+  } finally {
+    setLoading(false);
   }
 };
 
@@ -315,8 +320,12 @@ const getChecklists = async (): Promise<void> => {
   }
 };
 
-const handleShow = (): void => {
+const handleShow = async (): Promise<void> => {
+  setLoading(true);
+
   projectId.value = props.projectId;
+
+  await getProjectDetail();
 
   if (props.taskId) {
     taskId.value = props.taskId;

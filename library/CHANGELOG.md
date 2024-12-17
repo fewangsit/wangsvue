@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v1.5.109
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.108...v1.5.109)
+
+## v1.5.108
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.107...v1.5.108)
+
+### 🩹 Fixes
+
+- **mJAMaUWD:** Fetch project detail every time task detail is opened ([fb1a591](https://github.com/fewangsit/wangsvue/commit/fb1a591))
+- **TYGPBiDT:** Remove download button in tasktable ([9d5c185](https://github.com/fewangsit/wangsvue/commit/9d5c185))
+- **ekGtu4nn:** Fomat percentage for progress bar in task checklist ([44df9df](https://github.com/fewangsit/wangsvue/commit/44df9df))
+- **R5Lij0on:** Update value binding for checklist caption in taskdetail ([286065e](https://github.com/fewangsit/wangsvue/commit/286065e))
+
+### 💅 Refactors
+
+- Change funciton createApi to createAxiosInstance ([1d22898](https://github.com/fewangsit/wangsvue/commit/1d22898))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.107
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.106...v1.5.107)

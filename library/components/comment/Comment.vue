@@ -94,12 +94,16 @@ const postComment = async (): Promise<void> => {
 };
 
 const joinRoom = (): void => {
-  socket.on('connect', () => {
-    socket.emit('joinRoom', `${props.commentType}_${props.objectId}`);
-    listenNewMessage();
-    listenUpdatedMessage();
-    listenReactionUpdatedMessage();
-  });
+  try {
+    socket.on('connect', () => {
+      socket.emit('joinRoom', `${props.commentType}_${props.objectId}`);
+      listenNewMessage();
+      listenUpdatedMessage();
+      listenReactionUpdatedMessage();
+    });
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const listenNewMessage = (): void => {
@@ -203,7 +207,10 @@ const uploadImage = async (value: PostImage): Promise<void> => {
 
 watch(editorVisibility, () => {
   try {
-    props?.mentionSection?.(editorRef.value?.mentionSectionTrigger);
+    props?.mentionSection?.((titleText: string) => {
+      editorVisibility.value = false;
+      editorRef.value?.mentionSectionTrigger(titleText);
+    });
   } catch (error) {
     console.error(error);
   }
