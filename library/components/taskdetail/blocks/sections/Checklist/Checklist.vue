@@ -604,7 +604,7 @@ watch(
               :validator-message="{
                 empty: 'Caption item ceklis harus diisi.',
               }"
-              :value="item.caption"
+              :value="item.caption?.length ? item.caption : undefined"
               @cancel="item.showCaptionItem = false"
               @submit="
                 updateChecklistItem({
