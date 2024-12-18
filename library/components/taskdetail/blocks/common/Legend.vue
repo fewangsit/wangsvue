@@ -66,6 +66,7 @@ const props = defineProps<{
   productBacklogItemId?: string;
   approvalId?: string;
   isAllChecklistDone?: boolean;
+  isAllDependencyDone?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -1125,7 +1126,8 @@ watch(
           :disabled="
             repositoryVisibility &&
             !legendForm.repository &&
-            !props.isAllChecklistDone
+            !props.isAllChecklistDone &&
+            !props.isAllDependencyDone
           "
           @click="dialogConfirmFinishTask = true"
           label="Tandai Selesai"
