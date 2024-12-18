@@ -375,7 +375,9 @@ const getTaskDependencies = async (): Promise<TaskDependency[]> => {
 
 const getProjectModules = async (): Promise<ProjectModule[]> => {
   try {
-    const { data } = await ModuleServices.getModuleList(projectId.value);
+    const { data } = await ModuleServices.getModuleList(projectId.value, {
+      hasNoRestriction: true,
+    });
     if (data) {
       return data.data;
     }
