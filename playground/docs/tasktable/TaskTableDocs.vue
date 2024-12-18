@@ -55,11 +55,11 @@ const dialogDetailTask = ref(false);
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-xl font-semibold">
-            Project - Module > All > My Tasks
+            ~ Project - Module > All > My Tasks
           </span>
           <TaskTable
             :project-id="projectId"
-            module-id="6706205a9bdcad72db25715f"
+            module-id="67613d876ae5fdd54f9c8797"
             page="project-module"
             sub-tab="myTask"
             tab="all"
