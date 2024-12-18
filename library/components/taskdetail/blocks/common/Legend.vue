@@ -1164,9 +1164,9 @@ watch(
     </div>
 
     <SonarQubeSummary
-      v-if="!isNewTask && legendForm.repository"
+      v-if="!isNewTask && taskDetail?.sonarqube"
+      :name="taskDetail?.sonarqube"
       :process-team="legendForm.process?.team?.[0]?.initial"
-      :repository="legendForm.repository"
     />
   </div>
 
