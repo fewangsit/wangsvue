@@ -26,8 +26,12 @@ const dialogDetailTask = ref(false);
           <TaskTable page="task" tab="backlog" />
         </div>
         <div class="flex flex-col gap-2">
-          <span class="text-xl font-semibold">Task > All</span>
+          <span class="text-xl font-semibold">Task > All > My</span>
           <TaskTable page="task" sub-tab="myTask" tab="all" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-xl font-semibold">Task > All > Related</span>
+          <TaskTable page="task" sub-tab="relatedTask" tab="all" />
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-xl font-semibold">
