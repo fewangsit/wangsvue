@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v1.5.110
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.109...v1.5.110)
+
+### 🩹 Fixes
+
+- **cYEwea2j:** Add dialogreportbug into task dependency ([5e64c6d](https://github.com/fewangsit/wangsvue/commit/5e64c6d))
+- **DkDrt7l9:** Update label for assigned members in task detail ([78b6463](https://github.com/fewangsit/wangsvue/commit/78b6463))
+- **taskdetail:** Update condition for task name disability ([82b84e6](https://github.com/fewangsit/wangsvue/commit/82b84e6))
+- **eXvcoHPj:** Check checklists and dependencies for disabling 'Tandai Selesai' button in task detail ([eef732e](https://github.com/fewangsit/wangsvue/commit/eef732e))
+- **ATgop3Ao:** Set initial member options while dialogassignmember is visible ([1408953](https://github.com/fewangsit/wangsvue/commit/1408953))
+- **taskdetail:** Update field that used for get sonarqube metrics in taskdetail ([b971b13](https://github.com/fewangsit/wangsvue/commit/b971b13))
+- **vbIuEQZ7:** Add query params for getprojectmodules in taskdependency ([91c4f68](https://github.com/fewangsit/wangsvue/commit/91c4f68))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.109
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.108...v1.5.109)
