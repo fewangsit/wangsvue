@@ -19,6 +19,7 @@ export type TaskDetailData = {
   subModule: ProjectSubModule;
   productBacklogItem?: Pick<Pbi, '_id' | 'name'>;
   repository: string;
+  sonarqube?: string;
   name: string;
   assignedTo: Member[];
   team: string[]; // Team Initial

@@ -207,20 +207,26 @@ const handleSubmit = async (payload: FormPayload): Promise<void> => {
   }
 };
 
+const setInitialMemberOptions = (): void => {
+  memberOptions.value = taskDetail.value.assignedTo.map((member) => ({
+    label: member.nickName,
+    value: member._id,
+  }));
+};
+
 watch(
   taskDetail,
   () => {
-    // Set the initial member options
-    memberOptions.value = taskDetail.value.assignedTo.map((member) => ({
-      label: member.nickName,
-      value: member._id,
-    }));
+    setInitialMemberOptions();
   },
   { deep: true },
 );
 
 watch(visible, (value) => {
   if (value) {
+    if (taskDetail.value?.assignedTo) {
+      setInitialMemberOptions();
+    }
     // Only load detail task if props.taskIdProp is defined
     if (props.taskIdProp?.length) {
       getDetailTask();

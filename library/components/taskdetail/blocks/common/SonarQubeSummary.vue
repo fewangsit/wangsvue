@@ -10,7 +10,7 @@ import ProjectApiServerServices from 'lib/services/projectApiServer.service';
 const toast = useToast();
 
 const props = defineProps<{
-  repository: string;
+  name: string;
   processTeam: string;
 }>();
 
@@ -148,7 +148,7 @@ const getSonarQubeMetrics = async (
 ): Promise<void> => {
   try {
     const payload = {
-      name: props.repository,
+      name: props.name,
       username: username,
       password: password,
     };

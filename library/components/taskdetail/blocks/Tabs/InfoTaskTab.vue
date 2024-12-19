@@ -70,7 +70,9 @@ const continousDurationLabel = computed(() => {
 });
 
 const memberNicknames = computed(() =>
-  taskDetail.value.assignedTo.map((member) => member.nickName).join(', '),
+  taskDetail.value.assignedTo.length > 1
+    ? taskDetail.value.assignedTo[0].nickName + ' dkk'
+    : taskDetail.value.assignedTo[0].nickName,
 );
 
 const memberTeams = computed(() => taskDetail.value.team.join(', '));
