@@ -19,8 +19,6 @@ import {
   FieldOptions,
 } from 'vee-validate';
 
-import { ExampleAPI } from 'lib/services';
-
 interface FormContext<T> {
   values: T;
   handleSubmit: VeeFormContext['handleSubmit'];
@@ -151,9 +149,6 @@ export {
   WangsVue,
   ToastService,
   eventBus,
-
-  // APIs
-  ExampleAPI,
 
   // Directives
   Focus,
