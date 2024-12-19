@@ -356,6 +356,23 @@ const isTitleInputDisabled = computed<boolean>(() => {
   );
 });
 
+/**
+ * Computed property to determine if the "Mark as Done" button should be disabled.
+ *
+ * The button is disabled if:
+ * - The repository is visible but not selected in the legend form.
+ * - Not all checklists are done.
+ * - Not all dependencies are done.
+ *
+ * @returns {boolean} - True if the button should be disabled, false otherwise.
+ */
+const isMarkAsDoneDisabled = computed(
+  () =>
+    (repositoryVisibility.value && !legendForm.value.repository) ||
+    !props.isAllChecklistDone ||
+    !props.isAllDependencyDone,
+);
+
 const getProcessOptions = async (): Promise<void> => {
   try {
     legendLoading.value.process = true;
@@ -1123,12 +1140,7 @@ watch(
               taskDetail?.status,
             ) && isMember
           "
-          :disabled="
-            repositoryVisibility &&
-            !legendForm.repository &&
-            !props.isAllChecklistDone &&
-            !props.isAllDependencyDone
-          "
+          :disabled="isMarkAsDoneDisabled"
           @click="dialogConfirmFinishTask = true"
           label="Tandai Selesai"
           severity="secondary"

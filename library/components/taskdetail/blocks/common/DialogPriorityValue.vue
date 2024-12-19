@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, Ref, shallowRef } from 'vue';
+import { computed, inject, Ref, shallowRef } from 'vue';
 
 import InputNumber from 'lib/components/inputnumber/InputNumber.vue';
 import { useToast } from 'lib/utils';
@@ -22,6 +22,14 @@ const props = defineProps<{
 }>();
 
 const priorityValueInvalid = shallowRef<boolean>(false);
+const inputKey = shallowRef<number>(0);
+const inputValue = shallowRef<number>(0);
+
+const validatorMessage = computed(() => {
+  return inputValue.value
+    ? 'Nilai prioritas sudah ada'
+    : 'Nilai prioritas tidak boleh kosong';
+});
 
 const handleSubmit = async (e: FormPayload): Promise<void> => {
   try {
@@ -59,7 +67,15 @@ const handleSubmit = async (e: FormPayload): Promise<void> => {
     setLoading(false);
   }
 };
-const inputKey = shallowRef<number>(0);
+
+const onInput = (value: number): void => {
+  inputValue.value = value;
+  if (value) {
+    priorityValueInvalid.value = false;
+  } else {
+    priorityValueInvalid.value = true;
+  }
+};
 </script>
 
 <template>
@@ -83,14 +99,15 @@ const inputKey = shallowRef<number>(0);
         :max="9999"
         :max-digit="4"
         :min="0"
+        :validator-message="validatorMessage"
         :value="props.priorityValue"
+        @input="onInput"
         class="!w-full"
         field-name="priorityValue"
         label="Tambah Nilai Prioritas"
         mandatory
         placeholder="0"
         use-validator
-        validator-message="Nilai prioritas sudah ada"
       />
     </template>
   </DialogForm>
