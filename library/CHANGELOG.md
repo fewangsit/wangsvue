@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v1.5.112
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.111...v1.5.112)
+
+### 🚀 Enhancements
+
+- Export queryParamsStringify util ([efc7df8](https://github.com/fewangsit/wangsvue/commit/efc7df8))
+
+### 🩹 Fixes
+
+- **LiteDropdown:** Type check failed for prop "modelValue ([c01febb](https://github.com/fewangsit/wangsvue/commit/c01febb))
+
+### 🏡 Chore
+
+- Wangsit-api-services package ([669a982](https://github.com/fewangsit/wangsvue/commit/669a982))
+- Update wangsit services library ([c9a7a9e](https://github.com/fewangsit/wangsvue/commit/c9a7a9e))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.111
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.110...v1.5.111)
