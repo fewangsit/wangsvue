@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v1.5.114
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.113...v1.5.114)
+
+### 🚀 Enhancements
+
+- Centralized wangsit API library ([31e65c8](https://github.com/fewangsit/wangsvue/commit/31e65c8))
+
+### 🩹 Fixes
+
+- Could not resolve services ([b08032e](https://github.com/fewangsit/wangsvue/commit/b08032e))
+- Unavailable service ([ac87e9b](https://github.com/fewangsit/wangsvue/commit/ac87e9b))
+- Remove API export from build entry ([9bd4702](https://github.com/fewangsit/wangsvue/commit/9bd4702))
+
+### 🏡 Chore
+
+- Update wangsit-api-services ([c53f6a6](https://github.com/fewangsit/wangsvue/commit/c53f6a6))
+- Make api services as external deps ([334994a](https://github.com/fewangsit/wangsvue/commit/334994a))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.113
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.112...v1.5.113)
