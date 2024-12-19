@@ -36,12 +36,6 @@ import Dropdown from 'lib/components/dropdown/Dropdown.vue';
 import Changelog from 'lib/components/changelog/Changelog.vue';
 import UserName from 'lib/components/username/UserName.vue';
 
-import ExampleService from 'lib/services/example.service';
-
-onMounted(() => {
-  ExampleService.getDetail('id');
-});
-
 const dataSelected = shallowRef();
 const actionData = ref();
 const showDialog = shallowRef(false);
