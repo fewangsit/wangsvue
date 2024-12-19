@@ -6,7 +6,7 @@ import { DropdownChangeEvent } from 'primevue/dropdown';
  * Lite dropdown component props
  */
 export interface LiteDropdownProps {
-  modelValue: OptionValue;
+  modelValue: OptionValue | undefined;
   options: DropdownOption[] | undefined;
   /**
    * Specify the property name of option to be used as label.
