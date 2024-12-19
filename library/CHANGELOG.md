@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v1.5.111
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.110...v1.5.111)
+
+### 🩹 Fixes
+
+- **taskdetail:** Update condition for disabling 'Tandai Selesai' button in taskdetail ([d9d03f5](https://github.com/fewangsit/wangsvue/commit/d9d03f5))
+- **tEcBcEVe:** Update input validation for priority value in taskdetail ([b0bb205](https://github.com/fewangsit/wangsvue/commit/b0bb205))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.110
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.109...v1.5.110)
