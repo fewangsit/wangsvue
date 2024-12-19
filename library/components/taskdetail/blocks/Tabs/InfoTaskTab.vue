@@ -111,6 +111,62 @@ const teamLabel = computed(() => {
   return taskDetail.value?.team.length > 0 ? memberTeams.value : 'Tim';
 });
 
+/**
+ * Computed property to determine if the member setting is disabled.
+ *
+ * The member setting is considered disabled if:
+ * - The user type is not 'admin', 'pm', or 'teamLeader', and the approver does not have access.
+ * - The task detail's process name is 'API Spec'.
+ *
+ * @returns {boolean} - True if the member setting is disabled, false otherwise.
+ */
+const isMemberSettingDisabled = computed(
+  () =>
+    (!['admin', 'pm', 'teamLeader'].includes(userType.value) &&
+      !isApproverHasAccess.value) ||
+    taskDetail.value?.process?.name === 'API Spec',
+);
+
+/**
+ * Computed property to determine if the duration setting should be disabled.
+ *
+ * The duration setting is disabled if any of the following conditions are met:
+ * - The task has a continuous duration.
+ * - The task status is not 'Backlog' or 'Waiting for Approval'.
+ * - The user type is not 'admin', 'pm', or 'teamLeader', and the user does not have approver access, and the user is not a member.
+ *
+ * @returns {boolean} - True if the duration setting should be disabled, false otherwise.
+ */
+const isDurationSettingDisabled = computed(
+  () =>
+    isContinousDuration.value ||
+    !['Backlog', 'Waiting for Approval'].includes(taskDetail.value?.status) ||
+    (!['admin', 'pm', 'teamLeader'].includes(userType.value) &&
+      !isApproverHasAccess &&
+      !isMember),
+);
+
+/**
+ * Computed property to determine if the start date setting should be disabled.
+ *
+ * The start date setting is disabled if any of the following conditions are met:
+ * - The task is not a continuous duration and its duration is not defined yet.
+ * - The task process name is 'API Spec'.
+ * - The task status is not 'Backlog' or 'Waiting for Approval'.
+ * - The user is not an 'admin', 'pm', or 'teamLeader', and does not have approver access, and is not a member.
+ *
+ * @returns {boolean} - True if the start date setting should be disabled, false otherwise.
+ */
+const isStartDateSettingDisabled = computed(
+  () =>
+    (!isContinousDuration.value && durationLabel.value === 'Durasi') ||
+    taskDetail.value?.process?.name === 'API Spec' ||
+    !['Backlog', 'Waiting for Approval'].includes(taskDetail.value?.status) ||
+    (!['admin', 'pm', 'teamLeader'].includes(userType.value) &&
+      !isApproverHasAccess.value &&
+      !isMember.value),
+);
+
 const openCalendar = (): void => {
   const el: HTMLElement = document.querySelector('#startDateOfTaskDetail div');
   if (el) {
@@ -163,12 +219,7 @@ const getDuration = (duration: number): string => {
           <Button
             :class="[
               '!min-w-[150px] !h-[30px] !text-left !rounded',
-              {
-                'pointer-events-none':
-                  (!['admin', 'pm', 'teamLeader'].includes(userType) &&
-                    !isApproverHasAccess) ||
-                  taskDetail?.process?.name === 'API Spec',
-              },
+              { 'pointer-events-none': isMemberSettingDisabled },
             ]"
             :disabled="isNewTask"
             :label="memberLabel"
@@ -189,14 +240,7 @@ const getDuration = (duration: number): string => {
             :class="[
               '!w-[150px] !h-[30px] !text-left !rounded',
               {
-                'pointer-events-none':
-                  isContinousDuration ||
-                  !['Backlog', 'Waiting for Approval'].includes(
-                    taskDetail?.status,
-                  ) ||
-                  (!['admin', 'pm', 'teamLeader'].includes(userType) &&
-                    !isApproverHasAccess &&
-                    !isMember),
+                'pointer-events-none': isDurationSettingDisabled,
               },
             ]"
             :disabled="isNewTask"
@@ -211,16 +255,7 @@ const getDuration = (duration: number): string => {
             <Button
               :class="[
                 '!w-[165px] !h-[30px] !text-left !rounded',
-                {
-                  'pointer-events-none':
-                    taskDetail?.process?.name === 'API Spec' ||
-                    !['Backlog', 'Waiting for Approval'].includes(
-                      taskDetail?.status,
-                    ) ||
-                    (!['admin', 'pm', 'teamLeader'].includes(userType) &&
-                      !isApproverHasAccess &&
-                      !isMember),
-                },
+                { 'pointer-events-none': isStartDateSettingDisabled },
               ]"
               :disabled="isNewTask"
               :label="startDateLabel"

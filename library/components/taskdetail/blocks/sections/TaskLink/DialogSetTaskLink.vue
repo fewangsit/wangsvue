@@ -64,20 +64,38 @@ const dialogHeader = computed(() => {
   }
 });
 
-const getLinkType = (): TaskLinkURLType => {
-  if (props.type === 'link') {
-    return linkMenuIndex.value === 0 ? 'url' : 'embedded';
-  }
-
-  return 'url';
-};
+const initialValue = computed(() => ({
+  url:
+    props.initialValue?.linkType === 'url'
+      ? props.initialValue.link
+      : undefined,
+  embedded:
+    props.initialValue?.linkType === 'embedded'
+      ? props.initialValue.link
+      : undefined,
+}));
 
 const handleSubmit = async (payload: FormPayload): Promise<void> => {
   try {
     if (!taskId.value) return;
 
+    const getLinkType = (): TaskLinkURLType => {
+      if (props.type === 'link') {
+        return linkMenuIndex.value === 0 ? 'url' : 'embedded';
+      }
+
+      return 'url';
+    };
+
+    const getLink = (): string => {
+      if (getLinkType() === 'url') {
+        return payload.formValues.url as unknown as string;
+      }
+      return payload.formValues.embed as unknown as string;
+    };
+
     const dataDTO: EditTaskLinkDTO = {
-      link: payload.formValues.link as unknown as string,
+      link: getLink(),
       linkType: getLinkType(),
       type: props.type === 'microservices' ? 'service' : 'task',
     };
@@ -140,12 +158,8 @@ const embedCodeValidation = (event: Event | string): void => {
               :validator-message="{
                 empty: 'URL proses harus diisi.',
               }"
-              :value="
-                props.initialValue?.linkType === 'url'
-                  ? props.initialValue.link
-                  : undefined
-              "
-              field-name="link"
+              :value="initialValue.url"
+              field-name="url"
               label="URL"
               mandatory
               placeholder="Tulis URL"
@@ -156,13 +170,9 @@ const embedCodeValidation = (event: Event | string): void => {
             <InputText
               :invalid="customInvalidEmbed"
               :validator-message="invalidEmbedMessage"
-              :value="
-                props.initialValue?.linkType === 'embedded'
-                  ? props.initialValue.link
-                  : undefined
-              "
+              :value="initialValue.embedded"
               @input="embedCodeValidation"
-              field-name="link"
+              field-name="embed"
               label="Code Embed"
               mandatory
               placeholder="Paste kode embed"
@@ -176,11 +186,7 @@ const embedCodeValidation = (event: Event | string): void => {
           :validator-message="{
             empty: 'URL proses harus diisi.',
           }"
-          :value="
-            props.initialValue?.linkType === 'url'
-              ? props.initialValue.link
-              : undefined
-          "
+          :value="initialValue.url"
           field-name="link"
           label="URL"
           mandatory

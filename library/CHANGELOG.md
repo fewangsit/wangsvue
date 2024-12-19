@@ -1,6 +1,42 @@
 # Changelog
 
 
+## v1.5.113
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.112...v1.5.113)
+
+### 🩹 Fixes
+
+- **48L6dx0V:** Update condition for disabling start date in task detail ([b61b804](https://github.com/fewangsit/wangsvue/commit/b61b804))
+- **c0u9SFki:** Showing 'Tes API' button in task api if only task process is 'Create API' ([a95194c](https://github.com/fewangsit/wangsvue/commit/a95194c))
+- **4jseY1b4:** Hide task checklist if the task process is 'API Spec' ([36117ab](https://github.com/fewangsit/wangsvue/commit/36117ab))
+- **2VdNB0Ax:** Update initial value for link task in dialogsettasklink ([e97fe12](https://github.com/fewangsit/wangsvue/commit/e97fe12))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
+## v1.5.112
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.111...v1.5.112)
+
+### 🚀 Enhancements
+
+- Export queryParamsStringify util ([efc7df8](https://github.com/fewangsit/wangsvue/commit/efc7df8))
+
+### 🩹 Fixes
+
+- **LiteDropdown:** Type check failed for prop "modelValue ([c01febb](https://github.com/fewangsit/wangsvue/commit/c01febb))
+
+### 🏡 Chore
+
+- Wangsit-api-services package ([669a982](https://github.com/fewangsit/wangsvue/commit/669a982))
+- Update wangsit services library ([c9a7a9e](https://github.com/fewangsit/wangsvue/commit/c9a7a9e))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.111
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.110...v1.5.111)
