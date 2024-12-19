@@ -20,7 +20,11 @@ import { MenuItem } from '../menuitem';
 import TabMenu from '../tabmenu/TabMenu.vue';
 import InfoTaskTab from './blocks/Tabs/InfoTaskTab.vue';
 import ReviewTab from './blocks/Tabs/ReviewTab.vue';
-import { TaskChecklist, TaskDetailData } from 'lib/types/task.type';
+import {
+  TaskChecklist,
+  TaskDependency,
+  TaskDetailData,
+} from 'lib/types/task.type';
 import eventBus from 'lib/event-bus';
 import useLoadingStore from '../loading/store/loading.store';
 import { useToast } from 'lib/utils';
@@ -37,6 +41,7 @@ import EventLogTab from './blocks/Tabs/EventLogTab.vue';
 import { MentionSectionFunc } from '../comment/Comment.vue.d';
 import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
 import TaskChecklistServices from 'lib/services/taskChecklist.service';
+import TaskDependencyServices from 'lib/services/taskDependency.service';
 
 const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 
@@ -126,6 +131,32 @@ const isApproverHasAccess = computed(() => {
   );
 });
 
+/**
+ * Computed property to check if all checklist items are completed.
+ * Returns true if there are no checklists or all items in each checklist are checked.
+ */
+const isAllChecklistDone = computed(() => {
+  return (
+    !checklists.value.length ||
+    checklists.value.every((checklist) =>
+      checklist?.checklistItems?.every((item) => item?.checked),
+    )
+  );
+});
+
+/**
+ * Computed property to check if all task dependencies are completed.
+ * Returns true if there are no dependencies or all tasks in each dependency are marked as 'Selesai'.
+ */
+const isAllDependencyDone = computed(() => {
+  return (
+    !taskDependencies.value.length ||
+    taskDependencies.value.every((dep) =>
+      dep?.task?.every((t) => t?.status === 'Selesai'),
+    )
+  );
+});
+
 const user = ref<User>(
   JSON.parse(localStorage.getItem('user') as string) ?? {},
 );
@@ -157,6 +188,7 @@ const mentionSectionFunc = ref<MentionSectionFunc>();
 const commentSearch = ref<string>();
 
 const checklists = ref<TaskChecklist[]>([]);
+const taskDependencies = ref<TaskDependency[]>([]);
 
 const taskMenu = computed<TaskMenu[]>(() => {
   return [
@@ -261,6 +293,7 @@ const refreshAndEmitHandler = async (
 
     await getDetailTask();
     await getChecklists();
+    await getTaskDependencies();
 
     firstFetch.value = false;
 
@@ -315,6 +348,25 @@ const getChecklists = async (): Promise<void> => {
   } catch (error) {
     toast.add({
       message: 'Gagal memuat data ceklis.',
+      error,
+    });
+  }
+};
+
+const getTaskDependencies = async (): Promise<void> => {
+  try {
+    if (!taskId.value) return;
+
+    const { data } = await TaskDependencyServices.getTaskDependencies(
+      taskId.value,
+    );
+
+    if (data) {
+      taskDependencies.value = data.data;
+    }
+  } catch (error) {
+    toast.add({
+      message: 'Task dependensi gagal dimuat.',
       error,
     });
   }
@@ -480,6 +532,8 @@ watch(
             :approval-id="props.approvalId"
             :initial-module="props.initialModule"
             :initial-sub-module="props.initialSubModule"
+            :is-all-checklist-done="isAllChecklistDone"
+            :is-all-dependency-done="isAllDependencyDone"
             :product-backlog-item-id="props.productBacklogItemId"
           />
           <TabMenu

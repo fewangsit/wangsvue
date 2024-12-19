@@ -22,7 +22,7 @@ const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
 const ModuleServices = {
   getModuleList: (
     projectId: string,
-    params?: Record<string, string>,
+    params?: Record<string, string | boolean>,
   ): Promise<AxiosResponse> => {
     return API({ params }).get(`/${projectId}/project-detail/module`);
   },

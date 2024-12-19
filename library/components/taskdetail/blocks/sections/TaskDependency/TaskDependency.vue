@@ -27,8 +27,12 @@ import Dropdown from 'lib/components/dropdown/Dropdown.vue';
 import SubModuleServices from 'lib/services/submodule.service';
 import { cloneDeep } from 'lodash';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';
+import DialogReportBug from 'lib/components/dialogreportbug/DialogReportBug.vue';
+import eventBus from 'lib/event-bus';
+import { useLoadingStore } from 'lib/build-entry';
 
 const toast = useToast();
+const { setLoading } = useLoadingStore();
 
 const whitelistIframeTag = /<\s*\/?\s*(iframe)\b.*?>/;
 
@@ -45,6 +49,8 @@ const noSubModuleProcesses = [
   'Slicing Komponen Mobile',
   'Detailing',
 ];
+
+const userLogin = JSON.parse(localStorage.getItem('user') as string) ?? {};
 
 const userType =
   inject<ComputedRef<'member' | 'admin' | 'pm' | 'teamLeader' | 'guest'>>(
@@ -64,6 +70,9 @@ const taskDependencies = ref<TaskDependency[]>();
 const dependencies = ref<TaskDependency[]>();
 
 const loadingData = shallowRef<boolean>(false);
+const dialogReportBug = shallowRef<boolean>(false);
+
+const taskIdReportBug = shallowRef<string>();
 
 const taskProcess = computed(() => taskDetail.value?.process ?? undefined);
 
@@ -366,7 +375,9 @@ const getTaskDependencies = async (): Promise<TaskDependency[]> => {
 
 const getProjectModules = async (): Promise<ProjectModule[]> => {
   try {
-    const { data } = await ModuleServices.getModuleList(projectId.value);
+    const { data } = await ModuleServices.getModuleList(projectId.value, {
+      hasNoRestriction: true,
+    });
     if (data) {
       return data.data;
     }
@@ -666,6 +677,35 @@ const removeCustomDependency = async (depIndex: number): Promise<void> => {
   }
 };
 
+const reportBugTask = async (note?: string): Promise<void> => {
+  try {
+    setLoading(true);
+    const { data } = await TaskServices.reportBugTask(taskIdReportBug.value, {
+      note: note,
+    });
+    if (data) {
+      toast.add({
+        message: 'Task telah direport bug.',
+        severity: 'success',
+      });
+      dialogReportBug.value = false;
+      eventBus.emit('detail-task:update', { taskId: taskId.value });
+    }
+  } catch (error) {
+    toast.add({
+      message: 'Task gagal direport bug.',
+      error,
+    });
+  } finally {
+    setLoading(false);
+  }
+};
+
+const openDialogReportBug = (id: string): void => {
+  taskIdReportBug.value = id;
+  dialogReportBug.value = true;
+};
+
 watch(
   taskProcess,
   (value, oldValue) => {
@@ -816,8 +856,14 @@ watch(
                   </div>
                   <Badge :label="task.status" format="nowrap" />
                   <Button
-                    v-if="task.status === 'Selesai'"
+                    v-if="
+                      task.status === 'Selesai' &&
+                      task.assignedTo?.find(
+                        (member) => member._id !== userLogin._id,
+                      )
+                    "
                     :disabled="isDisabled"
+                    @click="openDialogReportBug(task._id)"
                     label="Report Bug"
                     severity="danger"
                     text
@@ -877,4 +923,5 @@ watch(
       </div>
     </div>
   </div>
+  <DialogReportBug v-model:visible="dialogReportBug" @submit="reportBugTask" />
 </template>

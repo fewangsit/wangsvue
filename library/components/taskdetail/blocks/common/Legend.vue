@@ -65,6 +65,8 @@ const props = defineProps<{
   };
   productBacklogItemId?: string;
   approvalId?: string;
+  isAllChecklistDone?: boolean;
+  isAllDependencyDone?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -331,8 +333,8 @@ const isRepositoryDropdownDisabled = computed<boolean>(() => {
  * 2. The module hasn't been selected.
  * 3. The submodule hasn't been selected (if the submodule is visible).
  * 4. The task status is either 'Selesai' or 'Reported Bug'.
- * 5. The user is neither an admin, pm, team leader, nor a member assigned to the task.
- *    And the user is not an approver with access to the task.
+ * 5. It is not a new task and the user is a guest
+ *    without approver access, or not an admin, pm, team leader, or member assigned to the task.
  */
 const isTitleInputDisabled = computed<boolean>(() => {
   const { process, module, submodule } = legendForm.value;
@@ -340,6 +342,7 @@ const isTitleInputDisabled = computed<boolean>(() => {
   const isModuleSelected = !!module;
   const isSubmoduleSelected = subModuleVisibility.value ? !!submodule : true;
   const isUserAuthorized =
+    isNewTask.value || // If it's a new task, the user is automatically authorized
     ['admin', 'pm', 'teamLeader'].includes(userType.value) ||
     isApproverHasAccess.value ||
     isMember.value;
@@ -1120,7 +1123,12 @@ watch(
               taskDetail?.status,
             ) && isMember
           "
-          :disabled="repositoryVisibility && !legendForm.repository"
+          :disabled="
+            repositoryVisibility &&
+            !legendForm.repository &&
+            !props.isAllChecklistDone &&
+            !props.isAllDependencyDone
+          "
           @click="dialogConfirmFinishTask = true"
           label="Tandai Selesai"
           severity="secondary"
@@ -1156,9 +1164,9 @@ watch(
     </div>
 
     <SonarQubeSummary
-      v-if="!isNewTask && legendForm.repository"
+      v-if="!isNewTask && taskDetail?.sonarqube"
+      :name="taskDetail?.sonarqube"
       :process-team="legendForm.process?.team?.[0]?.initial"
-      :repository="legendForm.repository"
     />
   </div>
 
