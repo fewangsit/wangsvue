@@ -14,7 +14,7 @@ import {
 } from './DialogAdjustmentTask.vue.d';
 
 import QuickFilter from '../quickfilter/QuickFilter.vue';
-import TaskServices from 'lib/services/task.service';
+import { TaskServices } from 'wangsit-api-services';
 import ButtonBulkAction from '../buttonbulkaction/ButtonBulkAction.vue';
 import ButtonFilter from '../buttonfilter/ButtonFilter.vue';
 import ButtonSearch from '../buttonsearch/ButtonSearch.vue';

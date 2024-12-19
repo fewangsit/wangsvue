@@ -3,7 +3,7 @@ import Icon from 'lib/components/icon/Icon.vue';
 import { TicketTaskId } from 'lib/types/ticket.type';
 import { inject, onMounted, Ref, shallowRef } from 'vue';
 import BadgeTicketStatus from './BadgeTicketStatus.vue';
-import TicketServices from 'lib/services/ticket.service';
+import { TicketServices } from 'wangsit-api-services';
 
 const taskId = inject<Ref<string>>('taskId');
 const isNewTask = inject<Ref<boolean>>('isNewTask');

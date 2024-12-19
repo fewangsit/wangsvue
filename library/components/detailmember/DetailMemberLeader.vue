@@ -16,7 +16,7 @@ import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
 import ButtonFilter from '../buttonfilter/ButtonFilter.vue';
 import DataTable from '../datatable/DataTable.vue';
 import FilterContainer from '../filtercontainer/FilterContainer.vue';
-import ProjectServices from 'lib/services/project.service';
+import { ProjectServices } from 'wangsit-api-services';
 import BadgeGroup from '../badgegroup/BadgeGroup.vue';
 
 const props = defineProps<{

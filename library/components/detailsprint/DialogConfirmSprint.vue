@@ -2,7 +2,7 @@
 import { useToast } from 'lib/utils';
 import { Sprint } from './DetailSprint.vue.d';
 import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
-import ApprovalServices from 'lib/services/approval.service';
+import { ApprovalServices } from 'wangsit-api-services';
 
 const toast = useToast();
 

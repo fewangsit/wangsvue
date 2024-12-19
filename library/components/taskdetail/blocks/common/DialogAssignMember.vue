@@ -7,12 +7,14 @@ import useLoadingStore from 'lib/components/loading/store/loading.store';
 import { DropdownOption } from 'lib/types/options.type';
 import { TaskDetailData } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
-import TaskServices from 'lib/services/task.service';
+import {
+  TaskServices,
+  ProjectTeamServices,
+  SubModuleServices,
+} from 'wangsit-api-services';
 import { UpdateTaskMemberDTO } from 'lib/dto/task.dto';
 import { FormPayload } from 'lib/components/form/Form.vue.d';
 import { AssignedMember } from 'lib/components/dialogdetailpbi/DialogDetailPbi.vue.d';
-import ProjectTeamServices from 'lib/services/projectTeam.service';
-import SubModuleServices from 'lib/services/submodule.service';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();

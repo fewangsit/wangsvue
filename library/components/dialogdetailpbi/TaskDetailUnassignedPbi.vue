@@ -17,8 +17,7 @@ import DataTable from '../datatable/DataTable.vue';
 import Button from '../button/Button.vue';
 import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
 import eventBus from 'lib/event-bus';
-import TaskServices from 'lib/services/task.service';
-import SprintServices from 'lib/services/sprint.service';
+import { SprintServices, TaskServices } from 'wangsit-api-services';
 
 const toast = useToast();
 

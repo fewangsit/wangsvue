@@ -17,7 +17,7 @@ import { WangsIcons } from '../icon/Icon.vue.d';
 import Icon from '../icon/Icon.vue';
 import Button from '../button/Button.vue';
 import UserName from '../username/UserName.vue';
-import NotificationServices from 'lib/services/notification.service';
+import { NotificationServices } from 'wangsit-api-services';
 
 const toast = useToast();
 

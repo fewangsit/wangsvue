@@ -13,11 +13,14 @@ import { DropdownOption } from 'lib/types/options.type';
 import LiteDropdown from 'lib/components/litedropdown/LiteDropdown.vue';
 import Button from 'lib/components/button/Button.vue';
 import Badge from 'lib/components/badge/Badge.vue';
-import ProjectProcessServices from 'lib/services/projectProcess.service';
+import {
+  ProjectProcessServices,
+  ModuleServices,
+  SubModuleServices,
+  TaskServices,
+  TaskChecklistServices,
+} from 'wangsit-api-services';
 import { useToast } from 'lib/utils';
-import ModuleServices from 'lib/services/module.service';
-import SubModuleServices from 'lib/services/submodule.service';
-import TaskServices from 'lib/services/task.service';
 import { CreateTaskDTO, EditTaskDTO } from 'lib/dto/task.dto';
 import { ProjectProcess } from 'lib/types/projectProcess.type';
 import { ProjectModule } from 'lib/types/projectModule.type';
@@ -28,7 +31,6 @@ import { TaskDetailData } from 'lib/types/task.type';
 import { useLoadingStore } from 'lib/build-entry';
 import DialogPriorityValue from './DialogPriorityValue.vue';
 import DialogReviewLeader from '../sections/Review/DialogReviewLeader.vue';
-import TaskChecklistServices from 'lib/services/taskChecklist.service';
 import DialogFinishReview from '../sections/Review/DialogFinishReview.vue';
 import DialogConfirmFinishTask from './DialogConfirmFinishTask.vue';
 import DialogConfirmEdit from './DialogConfirmEdit.vue';

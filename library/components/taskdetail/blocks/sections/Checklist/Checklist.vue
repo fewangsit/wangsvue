@@ -17,7 +17,7 @@ import { useToast } from 'lib/utils';
 import Checkbox from 'lib/components/checkbox/Checkbox.vue';
 import UserName from 'lib/components/username/UserName.vue';
 import ProgressBar from 'lib/components/progressbar/ProgressBar.vue';
-import TaskChecklistServices from 'lib/services/taskChecklist.service';
+import { TaskChecklistServices } from 'wangsit-api-services';
 import {
   TaskChecklist,
   TaskChecklistItem,

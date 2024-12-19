@@ -4,7 +4,7 @@ import { computed, ComputedRef, inject, Ref, shallowRef } from 'vue';
 import Button from 'lib/components/button/Button.vue';
 import { TaskDetailData } from 'lib/types/task.type';
 import Calendar from 'lib/components/calendar/Calendar.vue';
-import TaskServices from 'lib/services/task.service';
+import { TaskServices } from 'wangsit-api-services';
 import { EditTaskDTO } from 'lib/dto/task.dto';
 import eventBus from 'lib/event-bus';
 import { formatISODate, useToast } from 'lib/utils';

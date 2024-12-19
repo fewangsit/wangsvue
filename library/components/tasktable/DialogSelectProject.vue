@@ -4,7 +4,7 @@ import { ref, shallowRef } from 'vue';
 import Dropdown from '../dropdown/Dropdown.vue';
 import { DropdownOption } from 'lib/types/options.type';
 import { useToast } from 'lib/utils';
-import ProjectServices from 'lib/services/project.service';
+import { ProjectServices } from 'wangsit-api-services';
 import { FormPayload } from '../form/Form.vue.d';
 
 const toast = useToast();

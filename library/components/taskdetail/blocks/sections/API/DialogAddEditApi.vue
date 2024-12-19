@@ -6,7 +6,7 @@ import useLoadingStore from 'lib/components/loading/store/loading.store';
 import { useToast } from 'lib/utils';
 import InputText from 'lib/components/inputtext/InputText.vue';
 import { FormPayload } from 'lib/components/form/Form.vue.d';
-import TaskApiServices from 'lib/services/taskApi.service';
+import { TaskApiServices } from 'wangsit-api-services';
 import { AddTaskApiDTO, UpdateTaskApiDTO } from 'lib/dto/taskApi.dto';
 import { TaskAPI, TaskAPIFormDataCustom } from 'lib/types/task.type';
 

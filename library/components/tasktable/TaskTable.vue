@@ -21,7 +21,7 @@ import {
 import { MultiSelectOption } from 'lib/types/options.type';
 import DataTable from '../datatable/DataTable.vue';
 import { TaskOptions } from '../dialogdetailpbi/DialogDetailPbi.vue.d';
-import TaskServices from 'lib/services/task.service';
+import { TaskServices, TaskChecklistServices } from 'wangsit-api-services';
 import {
   TaskTableEmits,
   TaskTablePage,
@@ -39,7 +39,6 @@ import DialogConfirmDeleteTask from '../taskdetail/blocks/common/DialogConfirmDe
 import DialogAssignMember from '../taskdetail/blocks/common/DialogAssignMember.vue';
 import DialogReviewLeader from '../taskdetail/blocks/sections/Review/DialogReviewLeader.vue';
 import DialogFinishReview from '../taskdetail/blocks/sections/Review/DialogFinishReview.vue';
-import TaskChecklistServices from 'lib/services/taskChecklist.service';
 import { useLoadingStore } from 'lib/build-entry';
 import DialogConfirmFinishTask from '../taskdetail/blocks/common/DialogConfirmFinishTask.vue';
 import UserGroup from '../usergroup/UserGroup.vue';

@@ -17,7 +17,7 @@ import Button from '../button/Button.vue';
 import ButtonBulkAction from '../buttonbulkaction/ButtonBulkAction.vue';
 import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
 import DialogDetailPbi from '../dialogdetailpbi/DialogDetailPbi.vue';
-import SprintServices from 'lib/services/sprint.service';
+import { SprintServices } from 'wangsit-api-services';
 import quickFilterFields from './options/quickFilterFields';
 import Badge from '../badge/Badge.vue';
 import eventBus from 'lib/event-bus';

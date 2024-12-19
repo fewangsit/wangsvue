@@ -5,8 +5,7 @@ import { MultiSelectOption } from 'lib/types/options.type';
 import { FormPayload } from '../form/Form.vue.d';
 import { MemberAdminRole, Role } from './DetailMember.vue.d';
 import eventBus from 'lib/event-bus';
-import MemberAdminServices from 'lib/services/memberAdmin.service';
-import RoleServices from 'lib/services/role.service';
+import { RoleServices, MemberAdminServices } from 'wangsit-api-services';
 import DialogForm from '../dialogform/DialogForm.vue';
 import MultiSelect from '../multiselect/MultiSelect.vue';
 

@@ -2,11 +2,12 @@
 import { computed, ref, shallowRef } from 'vue';
 import { getNestedProperyValue } from 'lib/utils';
 import { UserNameProps } from './UserName.vue.d';
+import { Member } from 'wangsit-api-services/src/types/memberService.type';
 import Image from '../image/Image.vue';
 import Icon from '../icon/Icon.vue';
 import OverlayPanel from '../overlaypanel/OverlayPanel.vue';
 import OverlayPanelClass from '../overlaypanel/OverlayPanel.vue.d';
-import MemberServices, { Member } from 'lib/services/member.service';
+import { MemberServices } from 'wangsit-api-services';
 import Skeleton from 'primevue/skeleton';
 
 const props = withDefaults(defineProps<UserNameProps>(), {

@@ -10,7 +10,7 @@ import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
 import ButtonFilter from '../buttonfilter/ButtonFilter.vue';
 import DataTable from '../datatable/DataTable.vue';
 import FilterContainer from '../filtercontainer/FilterContainer.vue';
-import LogServices from 'lib/services/log.service';
+import { AuditServices as LogServices } from 'wangsit-api-services';
 
 const props = defineProps<{
   memberId: string;

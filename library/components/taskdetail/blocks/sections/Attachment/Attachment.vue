@@ -13,7 +13,7 @@ import Button from 'lib/components/button/Button.vue';
 import AttachmentItem from './AttachmentItem.vue';
 import { AttachmentItemData } from './AttachmentItem.vue.d';
 import DialogAddAttachment from '../../common/DialogAddAttachment.vue';
-import TaskAttachmentServices from 'lib/services/taskAttachment.service';
+import { TaskAttachmentServices } from 'wangsit-api-services';
 import AttachmentChangelog from './AttachmentChangelog.vue';
 import { useToast } from 'lib/utils';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';

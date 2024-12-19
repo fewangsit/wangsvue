@@ -5,7 +5,7 @@ import SonarQubeServices from 'lib/services/sonarQube.service';
 import Button from 'lib/components/button/Button.vue';
 import Icon from 'lib/components/icon/Icon.vue';
 import ProgressBar from 'lib/components/progressbar/ProgressBar.vue';
-import ProjectApiServerServices from 'lib/services/projectApiServer.service';
+import { ProjectApiServerServices } from 'wangsit-api-services';
 
 const toast = useToast();
 

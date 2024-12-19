@@ -13,7 +13,7 @@ import Badge from '../badge/Badge.vue';
 import UserName from '../username/UserName.vue';
 import Editor from '../editor/Editor.vue';
 import Timeline from '../timeline/Timeline.vue';
-import AuditServices from 'lib/services/log.service';
+import { AuditServices } from 'wangsit-api-services';
 
 const props = withDefaults(defineProps<DialogDetailPbiProps>(), {
   editable: true,

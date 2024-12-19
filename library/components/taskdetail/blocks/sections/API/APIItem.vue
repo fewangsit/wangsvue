@@ -15,7 +15,7 @@ import UserName from 'lib/components/username/UserName.vue';
 import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
 import DialogTestApi from './DialogTestApi.vue';
 import Form from 'lib/components/form/Form.vue';
-import TaskApiServices from 'lib/services/taskApi.service';
+import { TaskApiServices } from 'wangsit-api-services';
 
 const updateMentionSectionText = inject<(sectionTitle: string) => void>(
   'updateMentionSectionText',
