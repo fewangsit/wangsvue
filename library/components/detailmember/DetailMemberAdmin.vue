@@ -14,7 +14,7 @@ import { MultiSelectOption } from 'lib/types/options.type';
 import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
 import ButtonFilter from '../buttonfilter/ButtonFilter.vue';
 import DataTable from '../datatable/DataTable.vue';
-import MemberAdminServices from 'lib/services/memberAdmin.service';
+import { MemberAdminServices } from 'wangsit-api-services';
 import DialogMemberAdmin from './DialogMemberAdmin.vue';
 import Button from '../button/Button.vue';
 import eventBus from 'lib/event-bus';

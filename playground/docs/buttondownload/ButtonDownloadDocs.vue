@@ -5,7 +5,7 @@ import { FetchResponse } from 'lib/components/datatable/DataTable.vue.d';
 import DocTitle from '../DocTitle.vue';
 
 import ButtonDownload from 'lib/components/buttondownload/ButtonDownload.vue';
-import MemberServices from '../../../library/services/member.service';
+import { MemberServices } from 'wangsit-api-services';
 
 const tableColumns = [
   {

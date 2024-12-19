@@ -1,6 +1,6 @@
 import { FilterField } from 'lib/components/filtercontainer/FilterContainer.vue.d';
 import { MultiSelectOption } from 'lib/types/options.type';
-import SprintServices from 'lib/services/sprint.service';
+import { SprintServices } from 'wangsit-api-services';
 
 export const filterFieldsMember = (
   projectId: string,

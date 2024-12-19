@@ -6,7 +6,7 @@ import Icon from 'lib/components/icon/Icon.vue';
 import UserName from 'lib/components/username/UserName.vue';
 import { EditDescriptionTaskDTO } from 'lib/dto/task.dto';
 import eventBus from 'lib/event-bus';
-import TaskServices from 'lib/services/task.service';
+import { TaskServices } from 'wangsit-api-services';
 import { TaskDescription, TaskDetailData } from 'lib/types/task.type';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';
 import { useToast } from 'lib/utils';

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
-import TaskServices from 'lib/services/task.service';
+import { TaskServices } from 'wangsit-api-services';
 import { TaskDetailData } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 

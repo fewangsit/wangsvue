@@ -3,7 +3,7 @@ import { computed, ComputedRef, inject, Ref } from 'vue';
 import Button from 'lib/components/button/Button.vue';
 import Dialog from 'lib/components/dialog/Dialog.vue';
 import { useToast } from 'lib/utils';
-import TaskServices from 'lib/services/task.service';
+import { TaskServices } from 'wangsit-api-services';
 import Icon from 'lib/components/icon/Icon.vue';
 import { useLoadingStore } from 'lib/build-entry';
 

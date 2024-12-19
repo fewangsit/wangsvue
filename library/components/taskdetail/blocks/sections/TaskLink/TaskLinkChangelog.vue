@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { inject, ref, Ref } from 'vue';
 import { useToast } from 'lib/utils';
-import TaskLinkServices from 'lib/services/taskLink.service';
+import { TaskLinkServices } from 'wangsit-api-services';
 import { TaskLinkType } from 'lib/types/task.type';
 import Button from 'lib/components/button/Button.vue';
 import Dialog from 'lib/components/dialog/Dialog.vue';

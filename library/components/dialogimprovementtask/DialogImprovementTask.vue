@@ -7,15 +7,17 @@ import {
   DialogImprovementTaskProps,
 } from './DialogImprovementTask.vue.d';
 import { TaskChildren, TaskDependencyDetail } from 'lib/types/task.type';
-import TaskDependencyServices from 'lib/services/taskDependency.service';
+import {
+  TaskDependencyServices,
+  TaskServices,
+  NotificationServices,
+} from 'wangsit-api-services';
 import UserName from 'lib/components/username/UserName.vue';
 import MultiSelect from 'lib/components/multiselect/MultiSelect.vue';
 import DialogForm from '../dialogform/DialogForm.vue';
-import TaskServices from 'lib/services/task.service';
 import TaskDetail from '../taskdetail/TaskDetail.vue';
 import Animation from '../animation/Animation.vue';
 import Icon from '../icon/Icon.vue';
-import NotificationServices from 'lib/services/notification.service';
 
 const toast = useToast();
 

@@ -9,13 +9,15 @@ import Form from 'lib/components/form/Form.vue';
 import { FormPayload } from 'lib/components/form/Form.vue.d';
 import InputText from 'lib/components/inputtext/InputText.vue';
 import Button from 'lib/components/button/Button.vue';
-import TaskAttachmentServices from 'lib/services/taskAttachment.service';
+import {
+  TaskAttachmentServices,
+  TaskChecklistServices,
+} from 'wangsit-api-services';
 import { UpdateTaskAttachmentCaptionDTO } from 'lib/dto/taskAttachment.dto';
 import { formatDateReadable } from 'lib/utils/date.util';
 import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
 import { useToast } from 'lib/utils';
 import TaskAttachmentThumbnail from '../../common/AttachmentThumbnail.vue';
-import TaskChecklistServices from 'lib/services/taskChecklist.service';
 
 const toast = useToast();
 

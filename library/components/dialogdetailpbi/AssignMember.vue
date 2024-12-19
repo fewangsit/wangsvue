@@ -21,7 +21,7 @@ import FilterContainer from '../filtercontainer/FilterContainer.vue';
 import DataTable from '../datatable/DataTable.vue';
 import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
 import eventBus from 'lib/event-bus';
-import SprintServices from 'lib/services/sprint.service';
+import { SprintServices } from 'wangsit-api-services';
 
 const toast = useToast();
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useLoadingStore } from 'lib/build-entry';
 import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
-import ApprovalServices from 'lib/services/approval.service';
+import { ApprovalServices } from 'wangsit-api-services';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';
 import { useToast } from 'lib/utils';
 import { computed } from 'vue';

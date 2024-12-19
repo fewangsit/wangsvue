@@ -8,7 +8,7 @@ import {
   MultiSelectFilterField,
 } from '../filtercontainer/FilterContainer.vue.d';
 
-import LogServices from 'lib/services/log.service';
+import { AuditServices as LogServices } from 'wangsit-api-services';
 import {
   BaseChangelogPageProps,
   ChangelogFilter,

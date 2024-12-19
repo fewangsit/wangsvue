@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { computed, inject, ref, Ref, watch } from 'vue';
 import Icon from 'lib/components/icon/Icon.vue';
-import TaskServices from 'lib/services/task.service';
+import { TaskServices, TaskDependencyServices } from 'wangsit-api-services';
 import { TaskDetailData } from 'lib/types/task.type';
-import TaskDependencyServices from 'lib/services/taskDependency.service';
 import { useToast } from 'lib/utils';
 import LegendList from './LegendList.vue';
 import { TaskLegend } from '../../common/Legend.vue';

@@ -28,10 +28,14 @@ import {
 import eventBus from 'lib/event-bus';
 import useLoadingStore from '../loading/store/loading.store';
 import { useToast } from 'lib/utils';
-import TaskServices from 'lib/services/task.service';
+import {
+  TaskServices,
+  ProjectServices,
+  TaskChecklistServices,
+  TaskDependencyServices,
+} from 'wangsit-api-services';
 import DescriptionTab from './blocks/Tabs/DescriptionTab.vue';
 import TaskMore from './blocks/common/TaskMore.vue';
-import ProjectServices from 'lib/services/project.service';
 import { ProjectDetail } from 'lib/types/project.type';
 
 import TaskDetail from './TaskDetail.vue';
@@ -40,8 +44,6 @@ import { User } from 'lib/types/user.type';
 import EventLogTab from './blocks/Tabs/EventLogTab.vue';
 import { MentionSectionFunc } from '../comment/Comment.vue.d';
 import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
-import TaskChecklistServices from 'lib/services/taskChecklist.service';
-import TaskDependencyServices from 'lib/services/taskDependency.service';
 
 const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 

@@ -8,7 +8,7 @@ import AssignMember from './AssignMember.vue';
 import Button from '../button/Button.vue';
 import UserGroup from '../usergroup/UserGroup.vue';
 import TaskTable from '../tasktable/TaskTable.vue';
-import SprintServices from 'lib/services/sprint.service';
+import { SprintServices } from 'wangsit-api-services';
 
 const props = defineProps<TaskDetailPbiProps>();
 

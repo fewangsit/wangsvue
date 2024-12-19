@@ -15,7 +15,7 @@ import {
   TableCellComponent,
 } from 'lib/components/datatable/DataTable.vue.d';
 import Badge from 'lib/components/badge/Badge.vue';
-import TaskServices from 'lib/services/task.service';
+import { TaskServices } from 'wangsit-api-services';
 import eventBus from 'lib/event-bus';
 import { TaskDetailData } from 'lib/types/task.type';
 

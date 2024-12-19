@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TaskServices from 'lib/services/task.service';
+import { TaskServices } from 'wangsit-api-services';
 import { inject, ref, Ref, watch } from 'vue';
 import ReviewItem from '../sections/Review/ReviewItem.vue';
 import { TaskReview } from 'lib/types/task.type';
