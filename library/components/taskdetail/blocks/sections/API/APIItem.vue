@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { shallowRef, inject } from 'vue';
+import { shallowRef, inject, Ref } from 'vue';
 import { UpdateTaskApiDTO } from 'lib/dto/taskApi.dto';
-import { TaskAPIFormDataCustom } from 'lib/types/task.type';
+import { TaskAPIFormDataCustom, TaskDetailData } from 'lib/types/task.type';
 import { formatDateReadable } from 'lib/utils/date.util';
 import { useToast } from 'lib/utils';
 import { useLoadingStore } from 'lib/build-entry';
@@ -20,6 +20,7 @@ import TaskApiServices from 'lib/services/taskApi.service';
 const updateMentionSectionText = inject<(sectionTitle: string) => void>(
   'updateMentionSectionText',
 );
+const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -253,6 +254,7 @@ const contentTypeChange = (): void => {
                   type="button"
                 />
                 <Button
+                  v-if="taskDetail?.process?.name === 'Create API'"
                   @click="dialogTestApi = true"
                   label="Tes API"
                   severity="secondary"
