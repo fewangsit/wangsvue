@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v1.5.115
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.114...v1.5.115)
+
+### 🩹 Fixes
+
+- **D1so7gWW:** Update max hour into 8-9 hours in a day for set duration in task detail ([d19f25e](https://github.com/fewangsit/wangsvue/commit/d19f25e))
+- **6VyHm1ml:** Add optional chaining in taskdependency ([129a0d6](https://github.com/fewangsit/wangsvue/commit/129a0d6))
+- **FoZQN8Zd:** Remove 'Tandai Selesai' action in task table and trigger event update in task detail ([d499e9c](https://github.com/fewangsit/wangsvue/commit/d499e9c))
+- **ATUpkJ1t:** Update condition for visibility of checklists in taskdetail ([759171d](https://github.com/fewangsit/wangsvue/commit/759171d))
+- **S3eQZgPC:** Remove condition that makes task api become disabled for task with 'Create API' process ([4a524a7](https://github.com/fewangsit/wangsvue/commit/4a524a7))
+- **8VU2mWlG:** Update condition for showing review dialog based on checklist items in taskdetail and tasktable ([d00f557](https://github.com/fewangsit/wangsvue/commit/d00f557))
+
+### 🏡 Chore
+
+- Update wangsit-api-services ([ffe3a35](https://github.com/fewangsit/wangsvue/commit/ffe3a35))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.114
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.113...v1.5.114)
