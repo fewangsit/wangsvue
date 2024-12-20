@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, inject, Ref, ref, shallowRef } from 'vue';
 import { useToast } from 'lib/utils';
-import TaskChecklistServices from 'lib/services/taskChecklist.service';
+import { TaskChecklistServices } from 'wangsit-api-services';
 import Dialog from 'lib/components/dialog/Dialog.vue';
 import ButtonSearch from 'lib/components/buttonsearch/ButtonSearch.vue';
 import DataTable from 'lib/components/datatable/DataTable.vue';

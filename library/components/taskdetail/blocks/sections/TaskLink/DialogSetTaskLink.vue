@@ -8,7 +8,7 @@ import { MenuItem } from 'lib/components/menuitem';
 import TabMenu from 'lib/components/tabmenu/TabMenu.vue';
 import { EditTaskLinkDTO } from 'lib/dto/task.dto';
 import eventBus from 'lib/event-bus';
-import TaskLinkServices from 'lib/services/taskLink.service';
+import { TaskLinkServices } from 'wangsit-api-services';
 import { TaskLink, TaskLinkURLType } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 import { computed, inject, Ref, ref, shallowRef } from 'vue';

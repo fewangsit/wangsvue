@@ -8,7 +8,7 @@ import {
   TableColumn,
 } from '../datatable/DataTable.vue.d';
 import { SprintSummary } from './DetailSprint.vue.d';
-import SprintServices from 'lib/services/sprint.service';
+import { SprintServices } from 'wangsit-api-services';
 
 const props = defineProps<{
   sprintId: string | undefined;

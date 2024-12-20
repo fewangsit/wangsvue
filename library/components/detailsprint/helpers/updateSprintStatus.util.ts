@@ -1,5 +1,5 @@
 import { ToastMethod } from 'lib/utils/toast.util';
-import SprintServices from 'lib/services/sprint.service';
+import { SprintServices } from 'wangsit-api-services';
 
 const updateSprintStatus = async (
   fetchData: () => Promise<void> | void,

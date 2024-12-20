@@ -3,7 +3,7 @@ import { DotLottieVue } from '@lottiefiles/dotlottie-vue';
 import noDataLottie from 'lib/assets/lottie/no-data.lottie';
 import Timeline from 'lib/components/timeline/Timeline.vue';
 import { TimelineItem } from 'lib/components/timeline/Timeline.vue.d';
-import LogServices from 'lib/services/log.service';
+import { AuditServices as LogServices } from 'wangsit-api-services';
 import { formatISODate, useToast } from 'lib/utils';
 import { watch, inject, Ref, ref } from 'vue';
 

@@ -18,17 +18,19 @@ import { Member } from 'lib/dto/member.dto';
 import { dialogAdjustmentTaskTableColumn } from './options/dialogAdjustmentTaskTableColumn';
 import { dialogAdjustmentTaskSingleAction } from './options/dialogAdjustmentTaskSingleAction';
 
-import TaskServices from 'lib/services/task.service';
+import {
+  TaskServices,
+  MemberServices,
+  SubModuleServices,
+} from 'wangsit-api-services';
 import DialogForm from '../dialogform/DialogForm.vue';
 import DialogAdjustmentTaskHeader from './DialogAdjustmentTaskHeader.vue';
 import DataTable from '../datatable/DataTable.vue';
-import MemberServices from 'lib/services/member.service';
 import Dropdown from '../dropdown/Dropdown.vue';
 import eventBus from 'lib/event-bus';
 import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
 import Icon from '../icon/Icon.vue';
 import TaskDetail from '../taskdetail/TaskDetail.vue';
-import SubModuleServices from 'lib/services/submodule.service';
 
 const props = withDefaults(defineProps<DialogAdjustmentTaskProps>(), {
   autoClose: false,

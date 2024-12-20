@@ -12,7 +12,7 @@ import Icon from 'lib/components/icon/Icon.vue';
 import Button from 'lib/components/button/Button.vue';
 import TaskApiItem from './APIItem.vue';
 import DialogAddEditApi from './DialogAddEditApi.vue';
-import TaskApiServices from 'lib/services/taskApi.service';
+import { TaskApiServices } from 'wangsit-api-services';
 import { TaskAPIFormDataCustom, TaskDetailData } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';

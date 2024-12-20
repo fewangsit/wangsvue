@@ -5,7 +5,7 @@ import InputNumber from 'lib/components/inputnumber/InputNumber.vue';
 import { useToast } from 'lib/utils';
 import useLoadingStore from 'lib/components/loading/store/loading.store';
 import { EditTaskDTO } from 'lib/dto/task.dto';
-import TaskServices from 'lib/services/task.service';
+import { TaskServices } from 'wangsit-api-services';
 import eventBus from 'lib/event-bus';
 import DialogForm from 'lib/components/dialogform/DialogForm.vue';
 import { FormPayload } from 'lib/components/form/Form.vue.d';

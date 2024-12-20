@@ -4,7 +4,7 @@ import { DialogFormPayload } from 'lib/components/dialogform/DialogForm.vue.d';
 import InputNumber from 'lib/components/inputnumber/InputNumber.vue';
 import useLoadingStore from 'lib/components/loading/store/loading.store';
 import eventBus from 'lib/event-bus';
-import TaskServices from 'lib/services/task.service';
+import { TaskServices } from 'wangsit-api-services';
 import { TaskDetailData } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 import { computed, inject, Ref } from 'vue';

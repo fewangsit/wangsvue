@@ -2,7 +2,7 @@
 import DialogForm from 'lib/components/dialogform/DialogForm.vue';
 import useLoadingStore from 'lib/components/loading/store/loading.store';
 import { useToast } from 'lib/utils';
-import TaskChecklistServices from 'lib/services/taskChecklist.service';
+import { TaskChecklistServices } from 'wangsit-api-services';
 import { TaskChecklist, TaskChecklistItem } from 'lib/types/task.type';
 import Icon from 'lib/components/icon/Icon.vue';
 import { computed, inject, ref, watch } from 'vue';

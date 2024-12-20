@@ -2,8 +2,13 @@
 <script setup lang="ts">
 import Icon from 'lib/components/icon/Icon.vue';
 import MultiSelect from 'lib/components/multiselect/MultiSelect.vue';
-import TaskServices from 'lib/services/task.service';
-import ProjectProcessServices from 'lib/services/projectProcess.service';
+import {
+  TaskServices,
+  ProjectProcessServices,
+  TaskDependencyServices,
+  ModuleServices,
+  SubModuleServices,
+} from 'wangsit-api-services';
 import { TaskDependency, TaskDetailData } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 import {
@@ -16,15 +21,12 @@ import {
   shallowRef,
   watch,
 } from 'vue';
-import TaskDependencyServices from 'lib/services/taskDependency.service';
 import Button from 'lib/components/button/Button.vue';
 import UserName from 'lib/components/username/UserName.vue';
 import Badge from 'lib/components/badge/Badge.vue';
 import InputAdditional from '../../common/InputAdditional.vue';
-import ModuleServices from 'lib/services/module.service';
 import { ProjectModule } from 'lib/types/projectModule.type';
 import Dropdown from 'lib/components/dropdown/Dropdown.vue';
-import SubModuleServices from 'lib/services/submodule.service';
 import { cloneDeep } from 'lodash';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';
 import DialogReportBug from 'lib/components/dialogreportbug/DialogReportBug.vue';
@@ -727,6 +729,7 @@ watch(
 );
 </script>
 
+<!-- eslint-disable vue/html-indent -->
 <template>
   <div v-if="dependencies?.length" data-wv-section="detailtask-task-dependency">
     <div class="flex items-center justify-between">

@@ -1,6 +1,6 @@
 import { FilterField } from 'lib/components/filtercontainer/FilterContainer.vue.d';
 import { MultiSelectOption } from 'lib/types/options.type';
-import TaskServices from 'lib/services/task.service';
+import { TaskServices } from 'wangsit-api-services';
 
 const filterFields = (projectId: string, pbiId?: string): FilterField[] => [
   {

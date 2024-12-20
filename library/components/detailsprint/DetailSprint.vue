@@ -13,7 +13,7 @@ import { Pbi } from '../dialogdetailpbi/DialogDetailPbi.vue.d';
 import { FormPayload } from '../form/Form.vue.d';
 import { UpdateDoApprovalProcessBody } from 'lib/types/projectApproval.type';
 
-import SprintServices from 'lib/services/sprint.service';
+import { SprintServices, ApprovalServices } from 'wangsit-api-services';
 import DialogConfirmSprint from './DialogConfirmSprint.vue';
 import DialogAddPbi from './DialogAddPbi.vue';
 import DialogForm from '../dialogform/DialogForm.vue';
@@ -26,7 +26,6 @@ import Calendar from '../calendar/Calendar.vue';
 import DialogDetailPbi from '../dialogdetailpbi/DialogDetailPbi.vue';
 import updateSprintStatus from './helpers/updateSprintStatus.util';
 import SprintSummary from './SprintSummary.vue';
-import ApprovalServices from 'lib/services/approval.service';
 
 const toast = useToast();
 

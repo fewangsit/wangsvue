@@ -2,7 +2,7 @@
 import { ref, shallowRef, watch } from 'vue';
 import { JSONContent } from '@tiptap/vue-3';
 import { PostImage } from '../editor/Editor.vue.d';
-import { CommentServices } from 'lib/services/comment.service';
+import { CommentServices } from 'wangsit-api-services';
 import { getBaseURL } from 'lib/utils/getBaseURL.util';
 import { getNestedProperyValue } from 'lib/utils';
 import { CommentBlockProps, Reaction } from './Comment.vue.d';

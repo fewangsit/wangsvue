@@ -19,7 +19,7 @@ import DialogSetTaskLink from './DialogSetTaskLink.vue';
 import TaskLinkChangelog from './TaskLinkChangelog.vue';
 import Button from 'lib/components/button/Button.vue';
 import Icon from 'lib/components/icon/Icon.vue';
-import TaskLinkServices from 'lib/services/taskLink.service';
+import { TaskLinkServices } from 'wangsit-api-services';
 
 const toast = useToast();
 

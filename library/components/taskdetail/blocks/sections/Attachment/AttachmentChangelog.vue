@@ -3,7 +3,7 @@ import { inject, ref, Ref } from 'vue';
 import Button from 'lib/components/button/Button.vue';
 import Dialog from 'lib/components/dialog/Dialog.vue';
 import { useToast } from 'lib/utils';
-import TaskAttachmentServices from 'lib/services/taskAttachment.service';
+import { TaskAttachmentServices } from 'wangsit-api-services';
 import { TimelineItem } from 'lib/components/timeline/Timeline.vue.d';
 import Timeline from 'lib/components/timeline/Timeline.vue';
 import { DotLottieVue } from '@lottiefiles/dotlottie-vue';

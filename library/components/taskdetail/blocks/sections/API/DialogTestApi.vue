@@ -16,7 +16,7 @@ import { TaskAPIFormDataCustom } from 'lib/types/task.type';
 
 import Button from 'lib/components/button/Button.vue';
 import Dialog from 'lib/components/dialog/Dialog.vue';
-import ProjectQCServices from 'lib/services/projectQc.service';
+import { ProjectQCServices } from 'wangsit-api-services';
 import InputText from 'lib/components/inputtext/InputText.vue';
 import ValueFormDataInput from './ValueFormDataInput.vue';
 import IsRequiredText from './IsRequiredText.vue';

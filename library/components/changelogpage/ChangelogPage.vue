@@ -10,7 +10,7 @@ import {
   ChangelogType,
 } from './ChangelogPage.vue.d';
 
-import LogServices from 'lib/services/log.service';
+import { AuditServices as LogServices } from 'wangsit-api-services';
 import ButtonDownload from '../buttondownload/ButtonDownload.vue';
 import ButtonFilter from '../buttonfilter/ButtonFilter.vue';
 import ButtonSearch from '../buttonsearch/ButtonSearch.vue';

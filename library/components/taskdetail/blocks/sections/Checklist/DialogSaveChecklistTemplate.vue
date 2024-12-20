@@ -6,7 +6,7 @@ import Dropdown from 'lib/components/dropdown/Dropdown.vue';
 import useLoadingStore from 'lib/components/loading/store/loading.store';
 import { DropdownOption } from 'lib/types/options.type';
 import { useToast } from 'lib/utils';
-import TaskChecklistServices from 'lib/services/taskChecklist.service';
+import { TaskChecklistServices } from 'wangsit-api-services';
 import { FormPayload, FormValue } from 'lib/components/form/Form.vue.d';
 import { AddTaskChecklistTemplateDTO } from 'lib/dto/taskChecklist.dto';
 import { TaskChecklist, TaskDetailData } from 'lib/types/task.type';

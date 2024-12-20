@@ -9,7 +9,7 @@ import {
   TimelineItem,
 } from 'lib/components/timeline/Timeline.vue.d';
 import Timeline from 'lib/components/timeline/Timeline.vue';
-import TaskChecklistServices from 'lib/services/taskChecklist.service';
+import { TaskChecklistServices } from 'wangsit-api-services';
 import { DotLottieVue } from '@lottiefiles/dotlottie-vue';
 import noDataLottie from 'lib/assets/lottie/no-data.lottie';
 
