@@ -41,12 +41,8 @@ const isDisabled = computed(() => {
     ['Selesai', 'Reported Bug'] as WangsitStatus[]
   ).includes(taskDetail.value?.status);
 
-  const isTaskCreateAPI = taskDetail.value?.process?.name === 'Create API';
-
   return (
-    disabledStatus ||
-    isTaskCreateAPI ||
-    (userType.value === 'guest' && !isApproverHasAccess.value)
+    disabledStatus || (userType.value === 'guest' && !isApproverHasAccess.value)
   );
 });
 
