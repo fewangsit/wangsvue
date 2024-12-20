@@ -12,10 +12,6 @@ const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 const isTaskAPI = computed(() =>
   ['Create API', 'API Spec'].includes(taskDetail.value?.process?.name),
 );
-
-const isAPISpec = computed(
-  () => taskDetail.value?.process?.name === 'API Spec',
-);
 </script>
 
 <template>
@@ -24,7 +20,7 @@ const isAPISpec = computed(
       <TaskDescription />
       <TaskAttachment />
       <TaskLink />
-      <TaskChecklist v-if="!isAPISpec" />
+      <TaskChecklist v-if="!isTaskAPI" />
       <TaskApi v-if="isTaskAPI" />
     </div>
   </div>
