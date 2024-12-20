@@ -197,9 +197,10 @@ const updateStartDate = async (): Promise<void> => {
 };
 
 const getDuration = (duration: number): string => {
-  const days = Math.floor(duration / 1440); // 1440 minutes in a day
-  const hours = Math.floor((duration % 1440) / 60); // Remaining minutes to hours
-  const remainingMinutes = Math.floor(duration % 60); // Remaining minutes after full hours
+  const totalMinutesInDay = 9 * 60; // 9 hours in a day
+  const days = Math.floor(duration / totalMinutesInDay); // Full 9-hour days
+  const hours = Math.floor((duration % totalMinutesInDay) / 60); // Remaining hours
+  const remainingMinutes = Math.floor(duration % 60); // Remaining minutes
 
   return `${days}h ${hours}j ${remainingMinutes}m`;
 };

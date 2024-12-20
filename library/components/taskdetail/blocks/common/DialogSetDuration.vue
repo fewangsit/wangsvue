@@ -23,10 +23,17 @@ const handleSubmit = async (payload: DialogFormPayload): Promise<void> => {
   try {
     setLoading(true);
 
+    /*
+     * Extracts day, hour, and minute values from the payload's formValues.
+     * Calculates the total duration in minutes by converting days to minutes (day * 60 * 9),
+     * hours to minutes (hour * 60), and adding the minutes.
+     *
+     * Explanation: 1 day = 9 hours
+     */
     const { day, hour, minute } = payload.formValues;
 
     const durationMinutes: number =
-      (minute as number) + (hour as number) * 60 + (day as number) * 60 * 24;
+      (minute as number) + (hour as number) * 60 + (day as number) * 60 * 9;
 
     const { data } = await TaskServices.putEditTask(taskId.value, {
       duration: durationMinutes,
@@ -48,13 +55,29 @@ const handleSubmit = async (payload: DialogFormPayload): Promise<void> => {
   }
 };
 
+/**
+ * Calculates the duration in days, hours, or minutes based on the given type.
+ *
+ * The function takes a type parameter which can be 'day', 'hour', or 'minute'.
+ * It then calculates the duration based on the value of `duration.value`:
+ * - 'day': Returns the number of days by dividing the total minutes by 540 (minutes in a 9-hour day) and flooring the result.
+ * - 'hour': Returns the number of hours by taking the remainder of total minutes divided by 540, then dividing by 60 (minutes in an hour) and flooring the result.
+ * - 'minute': Returns the remaining minutes by taking the remainder of total minutes divided by 60.
+ *
+ * If `duration.value` is not a number, the function returns 0.
+ *
+ * @param {('day' | 'hour' | 'minute')} type - The type of duration to calculate.
+ * @returns {number} - The calculated duration in the specified type.
+ */
 const getDuration = (type: 'day' | 'hour' | 'minute'): number => {
   if (typeof duration.value !== 'number') return 0;
+
+  const totalMinutesInDay = 9 * 60;
   switch (type) {
     case 'day':
-      return Math.floor(duration.value / 1440);
+      return Math.floor(duration.value / totalMinutesInDay);
     case 'hour':
-      return Math.floor((duration.value % 1440) / 60);
+      return Math.floor((duration.value % totalMinutesInDay) / 60);
     case 'minute':
       return duration.value % 60;
   }
@@ -87,7 +110,7 @@ const getDuration = (type: 'day' | 'hour' | 'minute'): number => {
           use-validator
         />
         <InputNumber
-          :max="24"
+          :max="8"
           :min="0"
           :validator-message="{
             empty: 'Jam harus diisi.',
