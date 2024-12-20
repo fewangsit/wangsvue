@@ -41,6 +41,7 @@ import { AxiosResponse } from 'axios';
 import Editor from 'lib/components/editor/Editor.vue';
 import ChecklistChangelog from './ChecklistChangelog.vue';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';
+import eventBus from 'lib/event-bus';
 
 const toast = useToast();
 
@@ -90,6 +91,17 @@ const isDisabled = computed(() => {
     disabledStatus || (userType.value === 'guest' && !isApproverHasAccess.value)
   );
 });
+
+const reloadTask = (): void => {
+  eventBus.emit('detail-task:update', { taskId: taskId.value });
+};
+
+const refetch = async (): Promise<void> => {
+  await getChecklists();
+  if (!props.static) {
+    reloadTask();
+  }
+};
 
 const getMenuOptions = (disabled: boolean): MenuItem[] => {
   return disabled || selectedChecklist.value?.isRequested
@@ -158,7 +170,7 @@ const addChecklistItem = async (item: string, index: number): Promise<void> => {
     }
     if (response) {
       closeInputAddItem(index);
-      getChecklists();
+      await refetch();
     }
   } catch (error) {
     toast.add({
@@ -215,7 +227,7 @@ const renameChecklist = async (index: number, name: string): Promise<void> => {
     }
     if (response) {
       checklist.showRenameChecklist = false;
-      await getChecklists();
+      await refetch();
     }
   } catch (error) {
     toast.add({
@@ -241,7 +253,7 @@ const updateChecklistItem = async (args: {
     );
     if (data) {
       item.showRenameItem = false;
-      await getChecklists();
+      await refetch();
     }
   } catch (error) {
     toast.add({
@@ -321,7 +333,7 @@ const toggleChecklistItem = async (args: {
       body,
     );
     if (data) {
-      await getChecklists();
+      await refetch();
     }
     await nextTick();
   } catch (error) {
@@ -632,7 +644,7 @@ watch(
                 isDisabled || item.isRequested || checklist.isRequested
               "
               :item="attachment"
-              @deleted="getChecklists"
+              @deleted="refetch"
               type="checklist"
             />
           </div>
@@ -684,7 +696,7 @@ watch(
     v-model:visible="dialogAddChecklist"
     :static="props.static"
     @add="addStaticChecklist"
-    @added="getChecklists"
+    @added="refetch"
   />
 
   <DialogSaveChecklistTemplate
@@ -695,7 +707,7 @@ watch(
   <DialogConfirmChecklist
     v-model:visible="dialogDeleteChecklist"
     :checklist="selectedChecklist"
-    @submitted="getChecklists"
+    @submitted="refetch"
     type="deleteList"
   />
 
@@ -703,7 +715,7 @@ watch(
     v-model:visible="dialogDeleteChecklistItem"
     :checklist="selectedChecklist"
     :item="selectedChecklistItem"
-    @submitted="getChecklists"
+    @submitted="refetch"
     type="deleteItem"
   />
 
@@ -711,7 +723,7 @@ watch(
     v-model:visible="dialogUncheckChecklistItem"
     :checklist="selectedChecklist"
     :item="selectedChecklistItem"
-    @submitted="getChecklists"
+    @submitted="refetch"
     type="uncheckItem"
   />
 

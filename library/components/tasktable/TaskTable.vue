@@ -455,7 +455,6 @@ const filterFields = computed<CustomFilterField[]>(() => [
  * Table actions:
  * - Assign Member (only for Admin/PM/Leader and task status is Backlog)
  * - Review (only for Leader and task status is Pending Review Leader)
- * - Tandai Selesai (only for Member and task status is Sprint/Fixing Bug/Penyesuaian)
  * - Detail Task (only for Admin/PM/Leader/Member and task type is parent/dependency)
  * - Hapus (only for Admin/PM/Leader/Member and task status is Backlog/Sprint)
  * - Pulihkan (only if props.tab is 'deleted' )
@@ -495,19 +494,6 @@ const tableActions = computed<MenuItem[]>(() => {
         selectedTask.value?.taskType === 'parent' &&
         userType.value.includes('teamLeader'),
       command: openReviewDialog,
-    },
-    {
-      label: 'Tandai Selesai',
-      icon: 'check-double-fill',
-      visible:
-        ['Sprint', 'Fixing Bug', 'Penyesuaian'].includes(
-          selectedTask.value?.status,
-        ) &&
-        selectedTask.value?.taskType === 'parent' &&
-        userType.value.includes('member'),
-      command: (): void => {
-        dialogConfirmFinishTask.value = true;
-      },
     },
     ...commonTableActions,
     {

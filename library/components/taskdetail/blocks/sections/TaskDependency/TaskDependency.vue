@@ -468,6 +468,7 @@ const updateTaskDependency = async (depIndex: number): Promise<boolean> => {
     const isDataSent = await sendDependencyData();
     if (isDataSent) {
       await loadData();
+      reloadTask();
       return true;
     }
     return false;
@@ -671,6 +672,7 @@ const removeCustomDependency = async (depIndex: number): Promise<void> => {
       const isDataSent = await sendDependencyData();
       if (isDataSent) {
         await loadData();
+        reloadTask();
       }
     }
   } catch (error) {
@@ -693,7 +695,7 @@ const reportBugTask = async (note?: string): Promise<void> => {
         severity: 'success',
       });
       dialogReportBug.value = false;
-      eventBus.emit('detail-task:update', { taskId: taskId.value });
+      reloadTask();
     }
   } catch (error) {
     toast.add({
@@ -703,6 +705,10 @@ const reportBugTask = async (note?: string): Promise<void> => {
   } finally {
     setLoading(false);
   }
+};
+
+const reloadTask = (): void => {
+  eventBus.emit('detail-task:update', { taskId: taskId.value });
 };
 
 const openDialogReportBug = (id: string): void => {

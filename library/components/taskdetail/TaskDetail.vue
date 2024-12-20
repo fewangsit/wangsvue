@@ -306,7 +306,6 @@ const refreshAndEmitHandler = async (
         break;
       case 'update':
         emit('update');
-        taskMenuKey.value++;
         break;
     }
   } catch (error) {
