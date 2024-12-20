@@ -740,7 +740,8 @@ const onBlurTitleInput = (): void => {
 
 const openReviewDialog = async (): Promise<void> => {
   const checklists = await getChecklists();
-  if (checklists.length) {
+  const checklistItems = checklists.flatMap((item) => item.checklistItems);
+  if (checklistItems.length) {
     dialogReview.value = true;
   } else {
     dialogFinishReview.value = true;
