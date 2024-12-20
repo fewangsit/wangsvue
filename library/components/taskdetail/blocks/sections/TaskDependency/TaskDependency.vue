@@ -180,9 +180,9 @@ const loadData = async (): Promise<void> => {
     taskDependencies.value = await getTaskDependencies();
 
     // Merge process and task dependencies
-    const mergedDependencies = processDependencies.value.map((process) => {
+    const mergedDependencies = processDependencies.value?.map((process) => {
       // Find the corresponding task from taskDependencies based on process id
-      const taskData = taskDependencies.value.find(
+      const taskData = taskDependencies.value?.find(
         (task) =>
           task?.process?._id === process?.process?._id &&
           task?.module?._id === process?.module?._id,
@@ -235,7 +235,7 @@ const loadData = async (): Promise<void> => {
     });
 
     // Iterate through taskDependencies and add new processes that don't exist in processDependencies
-    taskDependencies.value.forEach((task) => {
+    taskDependencies.value?.forEach((task) => {
       const processExists = mergedDependencies.some(
         (process) =>
           process?.process?._id === task?.process?._id &&
@@ -314,7 +314,20 @@ const getProcessDependencies = async (): Promise<TaskDependency[]> => {
       const componentModule = projectModules.value?.find(
         (module) => module.name === 'Komponen',
       );
-      return response?.data?.processProjects?.[0].dependencies?.map(
+      const getModule = (processName: string): ProjectModule => {
+        if (processName === 'Pengonsepan') return conceptModule;
+        if (
+          [
+            'Komponen Web',
+            'Komponen Mobile',
+            'Slicing Komponen Web',
+            'Slicing Komponen Mobile',
+          ].includes(processName)
+        )
+          return componentModule;
+        return taskDetail.value?.module;
+      };
+      return response?.data?.processProjects?.[0]?.dependencies?.map(
         (dep: { name: string; _id: string }) => ({
           process: dep,
           module:
@@ -325,16 +338,7 @@ const getProcessDependencies = async (): Promise<TaskDependency[]> => {
              * This is because the dependency process will have a different module
              * depending on the process name.
              */
-            dep.name === 'Pengonsepan'
-              ? conceptModule
-              : [
-                    'Komponen Web',
-                    'Komponen Mobile',
-                    'Slicing Komponen Web',
-                    'Slicing Komponen Mobile',
-                  ].includes(dep.name)
-                ? componentModule
-                : taskDetail.value?.module,
+            getModule(dep.name),
           subModule: taskDetail.value?.subModule,
           task: [],
           options: [],
