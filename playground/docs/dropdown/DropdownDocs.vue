@@ -32,6 +32,69 @@ const items = ref(
             option-value="value"
             placeholder="Pilih status"
           />
+          <Dropdown
+            :initial-value="{
+              _id: '6721bfeba8a17fbc05abe894',
+              name: 'Heimdal',
+              sku: 'HEM',
+              type: 'Subscribe',
+              isElsa: false,
+              standardPrice: 600000,
+              standardDiscount: { type: 'percentage', value: 10 },
+            }"
+            :options="[
+              {
+                label: 'Heimdal',
+                value: {
+                  _id: '6721bfeba8a17fbc05abe894',
+                  brand: 'Heimdal',
+                  name: 'Heimdal',
+                  unit: 'device',
+                  subscribeTimeUnit: 'Tahun',
+                  type: 'Subscribe',
+                  sku: 'HEM',
+                  standardPrice: 600000,
+                  standardDiscount: {
+                    type: 'percentage',
+                    productType: 'Subscribe',
+                    subscribeValue: [10, 15],
+                  },
+                  status: 'aktif',
+                  onApprovalProcess: false,
+                  isElsa: false,
+                  proratedProduct: false,
+                },
+              },
+              {
+                label: 'IOT Defense Force-ELSA',
+                value: {
+                  _id: '6743e1dbaa2bd68205d1823d',
+                  brand: 'Heimdal',
+                  name: 'IOT Defense Force-ELSA',
+                  unit: 'Unit',
+                  subscribeTimeUnit: 'Tahun',
+                  type: 'Subscribe',
+                  sku: 'Heimdal-IOT-DF',
+                  standardPrice: 500000,
+                  standardDiscount: {
+                    type: 'percentage',
+                    productType: 'Subscribe',
+                    subscribeValue: [10, 5],
+                  },
+                  status: 'aktif',
+                  onApprovalProcess: true,
+                  isElsa: true,
+                  proratedProduct: false,
+                },
+              },
+            ]"
+            data-key="_id"
+            field-name="dropdownDataKey"
+            label="Dropdown dengan implementasi datakey"
+            option-label="label"
+            option-value="value"
+            placeholder="Pilih produk"
+          />
         </div>
       </div>
 

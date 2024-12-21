@@ -110,6 +110,13 @@ const getOptionLabel = (): string => {
   if (props.optionValue) {
     const matchOption = visibleOptions.value.find((op) => {
       if (typeof op != 'string') {
+        if (props.dataKey) {
+          return (
+            field.value[props.dataKey] ===
+            op[(props.optionValue ?? '') as keyof DropdownOption][props.dataKey]
+          );
+        }
+
         return isEqual(
           cloneDeep(op[(props.optionValue ?? '') as keyof DropdownOption]),
           cloneDeep(field.value),
