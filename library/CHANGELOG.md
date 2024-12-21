@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.116
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.115...v1.5.116)
+
+### 🚀 Enhancements
+
+- **Dropdown:** Implement data-key to match option with value ([cfa7601](https://github.com/fewangsit/wangsvue/commit/cfa7601))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.115
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.114...v1.5.115)
