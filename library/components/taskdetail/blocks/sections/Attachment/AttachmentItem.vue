@@ -209,7 +209,12 @@ const truncateText = (text: string): string => {
   <div v-else class="flex flex-col gap-2">
     <div class="flex justify-between">
       <div class="flex gap-2 items-center">
-        <TaskAttachmentThumbnail :item="item" small />
+        <TaskAttachmentThumbnail
+          :item="item"
+          @click="emit('clickItem', item)"
+          class="cursor-pointer"
+          small
+        />
         <div class="max-w-[430px] flex flex-col gap-1">
           <a
             v-if="item.type === 'link'"
@@ -223,20 +228,16 @@ const truncateText = (text: string): string => {
                 : truncateText(item.url)
             }}
           </a>
-          <span v-else class="text-xs">
+          <span
+            v-else
+            @click="emit('clickItem', item)"
+            class="text-xs cursor-pointer"
+          >
             {{ truncateText(item.displayName) }}
           </span>
         </div>
       </div>
       <div class="flex gap-2 items-center">
-        <Button
-          v-if="['image', 'pdf', 'mp4', 'mkv'].includes(item.type)"
-          class="!p-1"
-          icon="eye"
-          icon-class="!w-4 !h-4"
-          severity="secondary"
-          text
-        />
         <Button
           v-if="item.type !== 'link'"
           @click="downloadFile(item.url, item.displayName)"
