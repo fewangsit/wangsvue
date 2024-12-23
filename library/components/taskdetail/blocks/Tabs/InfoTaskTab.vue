@@ -152,6 +152,7 @@ const isDurationSettingDisabled = computed(
  * The start date setting is disabled if any of the following conditions are met:
  * - The task is not a continuous duration and its duration is not defined yet.
  * - The task process name is 'API Spec'.
+ * - The task have sub module.
  * - The task status is not 'Backlog' or 'Waiting for Approval'.
  * - The user is not an 'admin', 'pm', or 'teamLeader', and does not have approver access, and is not a member.
  *
@@ -161,6 +162,7 @@ const isStartDateSettingDisabled = computed(
   () =>
     (!isContinousDuration.value && durationLabel.value === 'Durasi') ||
     taskDetail.value?.process?.name === 'API Spec' ||
+    taskDetail.value?.subModule ||
     !['Backlog', 'Waiting for Approval'].includes(taskDetail.value?.status) ||
     (!['admin', 'pm', 'teamLeader'].includes(userType.value) &&
       !isApproverHasAccess.value &&
