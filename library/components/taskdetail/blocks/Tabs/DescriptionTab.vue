@@ -19,9 +19,11 @@ const isTaskAPI = computed(() =>
     <div class="flex flex-col gap-6">
       <TaskDescription />
       <TaskAttachment />
-      <TaskLink v-if="!isTaskAPI" />
-      <TaskChecklist v-if="!isTaskAPI" />
       <TaskApi v-if="isTaskAPI" />
+      <template v-else>
+        <TaskLink />
+        <TaskChecklist />
+      </template>
     </div>
   </div>
 </template>
