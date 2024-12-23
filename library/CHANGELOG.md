@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.118
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.117...v1.5.118)
+
+### 🩹 Fixes
+
+- **23Q3lNqy:** Checking task api for disability 'Tandai Selesai' button if the task process is 'API Spec' in taskdetail ([8659e12](https://github.com/fewangsit/wangsvue/commit/8659e12))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.117
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.116...v1.5.117)
