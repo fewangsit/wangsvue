@@ -120,16 +120,22 @@ const isApprover = computed(() => {
  * if the user has requested checklists in the task.
  */
 const isApproverHasAccess = computed(() => {
-  const hasRequestedChecklists = checklists.value.some(
-    (checklist) =>
-      checklist?.isRequested ||
-      checklist?.checklistItems?.some((item) => item?.isRequested),
-  );
-
   return (
     isApprover.value &&
     (taskDetail.value?.status === 'Waiting for Approval' ||
-      hasRequestedChecklists)
+      hasRequestedChecklist.value)
+  );
+});
+
+/**
+ * Computed property that checks if any checklist or checklist item has been requested.
+ * Returns true if there is at least one checklist or checklist item that is requested.
+ */
+const hasRequestedChecklist = computed(() => {
+  return checklists.value.some(
+    (checklist) =>
+      checklist?.isRequested ||
+      checklist?.checklistItems?.some((item) => item?.isRequested),
   );
 });
 
@@ -532,6 +538,7 @@ watch(
         >
           <Legend
             :approval-id="props.approvalId"
+            :has-requested-checklist="hasRequestedChecklist"
             :initial-module="props.initialModule"
             :initial-sub-module="props.initialSubModule"
             :is-all-checklist-done="isAllChecklistDone"

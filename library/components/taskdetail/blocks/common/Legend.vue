@@ -69,6 +69,7 @@ const props = defineProps<{
   approvalId?: string;
   isAllChecklistDone?: boolean;
   isAllDependencyDone?: boolean;
+  hasRequestedChecklist?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -363,16 +364,18 @@ const isTitleInputDisabled = computed<boolean>(() => {
  *
  * The button is disabled if:
  * - The repository is visible but not selected in the legend form.
- * - Not all checklists are done.
  * - Not all dependencies are done.
+ * - Not all checklists are done.
+ * - There's any requested checklist (waiting for approval).
  *
  * @returns {boolean} - True if the button should be disabled, false otherwise.
  */
 const isMarkAsDoneDisabled = computed(
   () =>
     (repositoryVisibility.value && !legendForm.value.repository) ||
+    !props.isAllDependencyDone ||
     !props.isAllChecklistDone ||
-    !props.isAllDependencyDone,
+    props.hasRequestedChecklist,
 );
 
 const getProcessOptions = async (): Promise<void> => {
