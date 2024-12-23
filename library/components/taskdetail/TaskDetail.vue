@@ -230,7 +230,7 @@ const toggleCommentSection = (): void => {
 const getProjectDetail = async (): Promise<void> => {
   try {
     const { data } = await ProjectServices.getProjectDetail(props.projectId);
-    projectDetail.value = data.data;
+    projectDetail.value = data.data as unknown as ProjectDetail;
   } catch (error) {
     toast.add({
       message: 'Gagal memuat proyek detail.',
@@ -426,6 +426,7 @@ provide('loadingTask', loadingTask);
 provide('openDetailTask', openDetailTask);
 provide('toggleCommentSection', toggleCommentSection);
 provide('updateMentionSectionText', updateMentionedSectionText);
+provide('projectDetail', projectDetail);
 
 watch(
   () => props.taskId,

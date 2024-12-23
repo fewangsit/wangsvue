@@ -15,11 +15,13 @@ import TaskDependency from '../sections/TaskDependency/TaskDependency.vue';
 import TaskList from '../sections/TaskList/TaskList.vue';
 import Ticket from '../sections/Ticket/Ticket.vue';
 import DialogCustomDependency from '../sections/TaskDependency/DialogCustomDependency.vue';
+import { ProjectDetail } from 'lib/types/project.type';
 
 const toast = useToast();
 
 const isNewTask = inject<Ref<boolean>>('isNewTask');
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
+const projectDetail = inject<Ref<ProjectDetail>>('projectDetail');
 const isMember = inject<Ref<boolean>>('isMember');
 const userType =
   inject<ComputedRef<'member' | 'admin' | 'pm' | 'teamLeader'>>('userType');
@@ -150,6 +152,7 @@ const isDurationSettingDisabled = computed(
  * Computed property to determine if the start date setting should be disabled.
  *
  * The start date setting is disabled if any of the following conditions are met:
+ * - The method of project task is sprint.
  * - The task is not a continuous duration and its duration is not defined yet.
  * - The task process name is 'API Spec'.
  * - The task have sub module.
@@ -160,6 +163,7 @@ const isDurationSettingDisabled = computed(
  */
 const isStartDateSettingDisabled = computed(
   () =>
+    projectDetail.value?.method === 'Sprint' ||
     (!isContinousDuration.value && durationLabel.value === 'Durasi') ||
     taskDetail.value?.process?.name === 'API Spec' ||
     taskDetail.value?.subModule ||
