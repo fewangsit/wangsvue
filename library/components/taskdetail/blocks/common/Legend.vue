@@ -70,6 +70,7 @@ const props = defineProps<{
   isAllChecklistDone?: boolean;
   isAllDependencyDone?: boolean;
   hasRequestedChecklist?: boolean;
+  anyApi?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -367,6 +368,7 @@ const isTitleInputDisabled = computed<boolean>(() => {
  * - Not all dependencies are done.
  * - Not all checklists are done.
  * - There's any requested checklist (waiting for approval).
+ * - The task process is 'API Spec' and does not have any task API / endpoint.
  *
  * @returns {boolean} - True if the button should be disabled, false otherwise.
  */
@@ -375,7 +377,8 @@ const isMarkAsDoneDisabled = computed(
     (repositoryVisibility.value && !legendForm.value.repository) ||
     !props.isAllDependencyDone ||
     !props.isAllChecklistDone ||
-    props.hasRequestedChecklist,
+    props.hasRequestedChecklist ||
+    (taskDetail.value?.process?.name === 'API Spec' && !props.anyApi),
 );
 
 const getProcessOptions = async (): Promise<void> => {

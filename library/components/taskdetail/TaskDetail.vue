@@ -33,6 +33,7 @@ import {
   ProjectServices,
   TaskChecklistServices,
   TaskDependencyServices,
+  TaskApiServices,
 } from 'wangsit-api-services';
 import DescriptionTab from './blocks/Tabs/DescriptionTab.vue';
 import TaskMore from './blocks/common/TaskMore.vue';
@@ -44,6 +45,7 @@ import { User } from 'lib/types/user.type';
 import EventLogTab from './blocks/Tabs/EventLogTab.vue';
 import { MentionSectionFunc } from '../comment/Comment.vue.d';
 import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
+import { TaskAPI } from 'wangsit-api-services/src/types/taskService.type';
 
 const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 
@@ -165,6 +167,10 @@ const isAllDependencyDone = computed(() => {
   );
 });
 
+const anyTaskApi = computed(() => {
+  return !!taskApis.value?.length;
+});
+
 const user = ref<User>(
   JSON.parse(localStorage.getItem('user') as string) ?? {},
 );
@@ -197,6 +203,7 @@ const commentSearch = ref<string>();
 
 const checklists = ref<TaskChecklist[]>([]);
 const taskDependencies = ref<TaskDependency[]>([]);
+const taskApis = ref<TaskAPI[]>([]);
 
 const taskMenu = computed<TaskMenu[]>(() => {
   return [
@@ -270,6 +277,10 @@ const getDetailTask = async (): Promise<void> => {
         name: data.data.module.name,
       },
     };
+
+    if (taskDetail.value?.process?.name === 'API Spec') {
+      await getTaskAPIs();
+    }
 
     taskId.value = data.data._id;
   } catch (error) {
@@ -374,6 +385,20 @@ const getTaskDependencies = async (): Promise<void> => {
   } catch (error) {
     toast.add({
       message: 'Task dependensi gagal dimuat.',
+      error,
+    });
+  }
+};
+
+const getTaskAPIs = async (): Promise<void> => {
+  try {
+    const { data } = await TaskApiServices.getTaskAPIs(taskId.value);
+    if (data) {
+      taskApis.value = data.data;
+    }
+  } catch (error) {
+    toast.add({
+      message: 'API gagal dimuat.',
       error,
     });
   }
@@ -537,6 +562,7 @@ watch(
           class="w-[800px] flex flex-col gap-3 !px-6 !py-3 overflow-y-auto detailtask-scrollbar-hide"
         >
           <Legend
+            :any-api="anyTaskApi"
             :approval-id="props.approvalId"
             :has-requested-checklist="hasRequestedChecklist"
             :initial-module="props.initialModule"
