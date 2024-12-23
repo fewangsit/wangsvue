@@ -22,7 +22,7 @@ const getProjectOptions = async (): Promise<void> => {
   try {
     isLoadingOptions.value = true;
 
-    const { data } = await ProjectServices.getProjectList();
+    const { data } = await ProjectServices.getProject();
 
     projectOptions.value = data.data?.map(
       (dt): DropdownOption => ({
