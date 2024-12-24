@@ -159,7 +159,11 @@ const postExecuteEndpoint = async (): Promise<void> => {
     try {
       executeEndpointResponse.value = {
         ...data.data,
-        response: JSON.stringify(JSON.parse(data.data?.response), null, 8),
+        response: JSON.stringify(
+          JSON.parse((data?.data?.response ?? '{}') as string),
+          null,
+          8,
+        ),
       };
     } catch (error) {
       console.error(error);

@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.5.119
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.118...v1.5.119)
+
+### 🩹 Fixes
+
+- **GebiSo4F:** Update date format ([41c4654](https://github.com/fewangsit/wangsvue/commit/41c4654))
+
+### 🏡 Chore
+
+- Remove wangsit-api-services from external deps ([5c7394b](https://github.com/fewangsit/wangsvue/commit/5c7394b))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.118
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.117...v1.5.118)
