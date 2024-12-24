@@ -70,7 +70,7 @@ const props = defineProps<{
   isAllChecklistDone?: boolean;
   isAllDependencyDone?: boolean;
   hasRequestedChecklist?: boolean;
-  anyApi?: boolean;
+  isAllEndpointChecked?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -378,7 +378,8 @@ const isMarkAsDoneDisabled = computed(
     !props.isAllDependencyDone ||
     !props.isAllChecklistDone ||
     props.hasRequestedChecklist ||
-    (taskDetail.value?.process?.name === 'API Spec' && !props.anyApi),
+    (taskDetail.value?.process?.name === 'API Spec' &&
+      !props.isAllEndpointChecked),
 );
 
 const getProcessOptions = async (): Promise<void> => {

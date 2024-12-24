@@ -167,8 +167,17 @@ const isAllDependencyDone = computed(() => {
   );
 });
 
-const anyTaskApi = computed(() => {
-  return !!taskApis.value?.length;
+/**
+ * Computed property to check if all endpoints are intact.
+ *
+ * This computed property evaluates whether all endpoints in the `taskApis` array
+ * have their `isIntact` property set to true. It returns true if the `taskApis` array
+ * is not empty and every endpoint in the array is intact.
+ */
+const isAllEndpointChecked = computed(() => {
+  return (
+    taskApis.value.length > 0 && taskApis.value.every((api) => api?.isIntact)
+  );
 });
 
 const user = ref<User>(
@@ -256,7 +265,11 @@ const getDetailTask = async (): Promise<void> => {
   try {
     loadingTask.value = true;
 
-    if (!taskId.value && !props.taskId) return;
+    if (!taskId.value && !props.taskId) {
+      console.log('🚀 ~ getDetailTask ~ props.taskId:', props.taskId);
+      console.log('🚀 ~ getDetailTask ~ taskId.value:', taskId.value);
+      return;
+    }
 
     const { data } = await TaskServices.getTaskDetail(
       taskId.value ?? props.taskId,
@@ -284,6 +297,7 @@ const getDetailTask = async (): Promise<void> => {
 
     taskId.value = data.data._id;
   } catch (error) {
+    console.error(error);
     toast.add({
       message: 'Data Task Detail gagal diambil.',
       severity: 'error',
@@ -300,7 +314,11 @@ const refreshAndEmitHandler = async (
 ): Promise<void> => {
   try {
     // Skip this function if id doesn't equal the task id.
-    if (id !== taskId.value || !taskId.value) return;
+    if (id !== taskId.value || !taskId.value) {
+      console.log('🚀 refreshAndEmitHandler ~ id:', id);
+      console.log('🚀 refreshAndEmitHandler ~ taskId.value:', taskId.value);
+      return;
+    }
 
     if (eventName === 'delete') {
       emit('delete');
@@ -562,13 +580,13 @@ watch(
           class="w-[800px] flex flex-col gap-3 !px-6 !py-3 overflow-y-auto detailtask-scrollbar-hide"
         >
           <Legend
-            :any-api="anyTaskApi"
             :approval-id="props.approvalId"
             :has-requested-checklist="hasRequestedChecklist"
             :initial-module="props.initialModule"
             :initial-sub-module="props.initialSubModule"
             :is-all-checklist-done="isAllChecklistDone"
             :is-all-dependency-done="isAllDependencyDone"
+            :is-all-endpoint-checked="isAllEndpointChecked"
             :product-backlog-item-id="props.productBacklogItemId"
           />
           <TabMenu

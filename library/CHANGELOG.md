@@ -1,6 +1,52 @@
 # Changelog
 
 
+## v1.5.122
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.121...v1.5.122)
+
+### 🩹 Fixes
+
+- Try to console the task id in taskdetail ([2900333](https://github.com/fewangsit/wangsvue/commit/2900333))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
+## v1.5.121
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.120...v1.5.121)
+
+## v1.5.120
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.119...v1.5.120)
+
+### 🩹 Fixes
+
+- **IIheSAhA:** Add checkbox for apiitem in taskdetail ([cd65f94](https://github.com/fewangsit/wangsvue/commit/cd65f94))
+- Update condition checking task api for disability 'Tandai Selesai' button in taskdetail ([534a690](https://github.com/fewangsit/wangsvue/commit/534a690))
+- Update condition checking task api for disability 'Tandai Selesai' button in taskdetail ([c7fe205](https://github.com/fewangsit/wangsvue/commit/c7fe205))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
+## v1.5.119
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.118...v1.5.119)
+
+### 🩹 Fixes
+
+- **GebiSo4F:** Update date format ([41c4654](https://github.com/fewangsit/wangsvue/commit/41c4654))
+
+### 🏡 Chore
+
+- Remove wangsit-api-services from external deps ([5c7394b](https://github.com/fewangsit/wangsvue/commit/5c7394b))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.118
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.117...v1.5.118)
