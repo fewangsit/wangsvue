@@ -308,17 +308,19 @@ const getDetailTask = async (): Promise<void> => {
   }
 };
 
+const loadData = async (): Promise<void> => {
+  await getDetailTask();
+  await getChecklists();
+  await getTaskDependencies();
+};
+
 const refreshAndEmitHandler = async (
   eventName: keyof DetailTaskEmits,
   id?: string,
 ): Promise<void> => {
   try {
     // Skip this function if id doesn't equal the task id.
-    if (id !== taskId.value || !taskId.value) {
-      console.log('🚀 refreshAndEmitHandler ~ id:', id);
-      console.log('🚀 refreshAndEmitHandler ~ taskId.value:', taskId.value);
-      return;
-    }
+    if (id !== taskId.value || !taskId.value) return;
 
     if (eventName === 'delete') {
       emit('delete');
@@ -328,18 +330,13 @@ const refreshAndEmitHandler = async (
 
     if (firstFetch.value) setLoading(true);
 
-    await getDetailTask();
-    await getChecklists();
-    await getTaskDependencies();
+    await loadData();
 
     firstFetch.value = false;
 
     switch (eventName) {
       case 'show':
         emit('show');
-        break;
-      case 'create':
-        emit('create');
         break;
       case 'update':
         emit('update');
@@ -356,9 +353,6 @@ const attachEventListener = (): void => {
   eventBus.on('detail-task:show', (event) =>
     refreshAndEmitHandler('show', event.taskId),
   );
-  eventBus.on('detail-task:create', (event) =>
-    refreshAndEmitHandler('create', event.taskId),
-  );
   eventBus.on('detail-task:update', (event) =>
     refreshAndEmitHandler('update', event.taskId),
   );
@@ -369,8 +363,13 @@ const attachEventListener = (): void => {
 
 const removeEventListener = (): void => {
   eventBus.off('detail-task:show');
-  eventBus.off('detail-task:create');
   eventBus.off('detail-task:update');
+  eventBus.off('detail-task:delete');
+};
+
+const onCreated = async (): Promise<void> => {
+  await loadData();
+  emit('create');
 };
 
 const getChecklists = async (): Promise<void> => {
@@ -588,6 +587,7 @@ watch(
             :is-all-dependency-done="isAllDependencyDone"
             :is-all-endpoint-checked="isAllEndpointChecked"
             :product-backlog-item-id="props.productBacklogItemId"
+            @create="onCreated"
           />
           <TabMenu
             v-model:active-index="taskMenuIndex"
