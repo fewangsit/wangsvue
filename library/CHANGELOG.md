@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v1.5.120
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.119...v1.5.120)
+
+### 🩹 Fixes
+
+- **IIheSAhA:** Add checkbox for apiitem in taskdetail ([cd65f94](https://github.com/fewangsit/wangsvue/commit/cd65f94))
+- Update condition checking task api for disability 'Tandai Selesai' button in taskdetail ([534a690](https://github.com/fewangsit/wangsvue/commit/534a690))
+- Update condition checking task api for disability 'Tandai Selesai' button in taskdetail ([c7fe205](https://github.com/fewangsit/wangsvue/commit/c7fe205))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.119
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.118...v1.5.119)
