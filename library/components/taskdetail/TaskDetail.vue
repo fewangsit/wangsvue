@@ -167,8 +167,17 @@ const isAllDependencyDone = computed(() => {
   );
 });
 
+/**
+ * Computed property to check if all endpoints are intact.
+ *
+ * This computed property evaluates whether all endpoints in the `taskApis` array
+ * have their `isIntact` property set to true. It returns true if the `taskApis` array
+ * is not empty and every endpoint in the array is intact.
+ */
 const isAllEndpointChecked = computed(() => {
-  return taskApis.value?.every((api) => api?.isIntact) ?? false;
+  return (
+    taskApis.value.length > 0 && taskApis.value.every((api) => api?.isIntact)
+  );
 });
 
 const user = ref<User>(
