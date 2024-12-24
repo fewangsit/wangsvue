@@ -42,6 +42,9 @@ import Editor from 'lib/components/editor/Editor.vue';
 import ChecklistChangelog from './ChecklistChangelog.vue';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';
 import eventBus from 'lib/event-bus';
+import GalleryPreview from 'lib/components/gallerypreview/GalleryPreview.vue';
+import { File } from 'lib/components/gallerypreview/GalleryPreview.vue.d';
+import { AttachmentItemData } from '../Attachment/AttachmentItem.vue.d';
 
 const toast = useToast();
 
@@ -80,6 +83,9 @@ const selectedChecklistItem = ref<TaskChecklistItem>();
 const moreMenu = ref();
 
 const togglingItem = shallowRef<boolean>(false);
+const galleryVisible = shallowRef<boolean>(false);
+const selectedAttachmentId = shallowRef<string>();
+const files = ref<File[]>([]);
 
 const isDisabled = computed(() => {
   if (props.static) return false;
@@ -184,6 +190,21 @@ const closeInputAddItem = (index: number): void => {
   checklists.value[index].showAddItem = false;
 };
 
+const getAllAttachments = (taskChecklists: TaskChecklist[]): File[] => {
+  return taskChecklists.flatMap(
+    (checklist) =>
+      checklist.checklistItems?.flatMap((item) =>
+        item.attachments.map((attachment) => ({
+          _id: attachment._id,
+          name: attachment.displayName || '',
+          type: attachment.type || 'unknown',
+          src: attachment.url || '',
+          createdAt: attachment.createdAt || '',
+        })),
+      ) || [],
+  );
+};
+
 const getChecklists = async (): Promise<void> => {
   if (props.static) {
     emit('updated', checklists.value);
@@ -201,6 +222,7 @@ const getChecklists = async (): Promise<void> => {
           key: 0,
         })),
       }));
+      files.value = getAllAttachments(checklists.value);
     }
   } catch (error) {
     toast.add({
@@ -378,6 +400,11 @@ const deleteStaticChecklist = (
   } else {
     checklists.value.splice(checklistIndex, 1);
   }
+};
+
+const openGallery = (item: AttachmentItemData): void => {
+  galleryVisible.value = true;
+  selectedAttachmentId.value = item._id;
 };
 
 watch(
@@ -644,6 +671,7 @@ watch(
                 isDisabled || item.isRequested || checklist.isRequested
               "
               :item="attachment"
+              @click-item="openGallery"
               @deleted="refetch"
               type="checklist"
             />
@@ -682,6 +710,12 @@ watch(
       </div>
     </div>
   </div>
+
+  <GalleryPreview
+    v-model:selected-id="selectedAttachmentId"
+    v-model:visible="galleryVisible"
+    :files="files"
+  />
 
   <DialogAddAttachment
     v-model:visible="dialogAddAttachment"

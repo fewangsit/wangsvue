@@ -16,6 +16,7 @@ import { TaskApiServices } from 'wangsit-api-services';
 import { TaskAPIFormDataCustom, TaskDetailData } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';
+import eventBus from 'lib/event-bus';
 
 const toast = useToast();
 
@@ -66,6 +67,15 @@ const getTaskAPIs = async (): Promise<void> => {
   }
 };
 
+const reloadTask = (): void => {
+  eventBus.emit('detail-task:update', { taskId: taskId.value });
+};
+
+const onUpdatedTaskApi = async (): Promise<void> => {
+  await getTaskAPIs();
+  reloadTask();
+};
+
 const openRenameDialog = (index: number): void => {
   selectedTaskApi.value = taskApis.value[index];
   dialogEditApi.value = true;
@@ -97,22 +107,22 @@ const openRenameDialog = (index: number): void => {
         v-model:task-api="taskApis[index]"
         :disabled="isDisabled"
         :project="taskDetail.project"
-        @deleted="getTaskAPIs"
+        @deleted="onUpdatedTaskApi"
         @open-edit="openRenameDialog(index)"
-        @updated="getTaskAPIs"
+        @updated="onUpdatedTaskApi"
       />
     </div>
   </div>
 
   <DialogAddEditApi
     v-model:visible="dialogAddApi"
-    @updated="getTaskAPIs"
+    @updated="onUpdatedTaskApi"
     type="add"
   />
   <DialogAddEditApi
     v-model:visible="dialogEditApi"
     :task-api="selectedTaskApi"
-    @updated="getTaskAPIs"
+    @updated="onUpdatedTaskApi"
     type="edit"
   />
 </template>

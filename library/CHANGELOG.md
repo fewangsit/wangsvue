@@ -1,6 +1,48 @@
 # Changelog
 
 
+## v1.5.118
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.117...v1.5.118)
+
+### 🩹 Fixes
+
+- **23Q3lNqy:** Checking task api for disability 'Tandai Selesai' button if the task process is 'API Spec' in taskdetail ([8659e12](https://github.com/fewangsit/wangsvue/commit/8659e12))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
+## v1.5.117
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.116...v1.5.117)
+
+### 🩹 Fixes
+
+- Update method to get project options ([3228047](https://github.com/fewangsit/wangsvue/commit/3228047))
+- **ATUpkJ1t:** Add visibility condition for link task in task detail ([d56e720](https://github.com/fewangsit/wangsvue/commit/d56e720))
+- **ATUpkJ1t:** Update visibility condition for link task in task detail ([d67ed0c](https://github.com/fewangsit/wangsvue/commit/d67ed0c))
+- **Vz3KwWBW:** Tasks that have sub-module cannot have their dates edited in task detail ([d7d9363](https://github.com/fewangsit/wangsvue/commit/d7d9363))
+- **nogpYx6Y:** Tasks that its method of project is sprint cannot have their dates edited in task detail ([b19d60d](https://github.com/fewangsit/wangsvue/commit/b19d60d))
+- **9LQKaAIZ:** Update disability conditions for 'Tandai Selesai' button in taskdetail ([4f24fc2](https://github.com/fewangsit/wangsvue/commit/4f24fc2))
+- **X1LJbYM3:** Update attachment preview in checklists ([8426e4c](https://github.com/fewangsit/wangsvue/commit/8426e4c))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
+## v1.5.116
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.115...v1.5.116)
+
+### 🚀 Enhancements
+
+- **Dropdown:** Implement data-key to match option with value ([cfa7601](https://github.com/fewangsit/wangsvue/commit/cfa7601))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.115
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.114...v1.5.115)

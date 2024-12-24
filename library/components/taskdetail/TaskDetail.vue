@@ -33,6 +33,7 @@ import {
   ProjectServices,
   TaskChecklistServices,
   TaskDependencyServices,
+  TaskApiServices,
 } from 'wangsit-api-services';
 import DescriptionTab from './blocks/Tabs/DescriptionTab.vue';
 import TaskMore from './blocks/common/TaskMore.vue';
@@ -44,6 +45,7 @@ import { User } from 'lib/types/user.type';
 import EventLogTab from './blocks/Tabs/EventLogTab.vue';
 import { MentionSectionFunc } from '../comment/Comment.vue.d';
 import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
+import { TaskAPI } from 'wangsit-api-services/src/types/taskService.type';
 
 const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 
@@ -120,16 +122,22 @@ const isApprover = computed(() => {
  * if the user has requested checklists in the task.
  */
 const isApproverHasAccess = computed(() => {
-  const hasRequestedChecklists = checklists.value.some(
-    (checklist) =>
-      checklist?.isRequested ||
-      checklist?.checklistItems?.some((item) => item?.isRequested),
-  );
-
   return (
     isApprover.value &&
     (taskDetail.value?.status === 'Waiting for Approval' ||
-      hasRequestedChecklists)
+      hasRequestedChecklist.value)
+  );
+});
+
+/**
+ * Computed property that checks if any checklist or checklist item has been requested.
+ * Returns true if there is at least one checklist or checklist item that is requested.
+ */
+const hasRequestedChecklist = computed(() => {
+  return checklists.value.some(
+    (checklist) =>
+      checklist?.isRequested ||
+      checklist?.checklistItems?.some((item) => item?.isRequested),
   );
 });
 
@@ -157,6 +165,10 @@ const isAllDependencyDone = computed(() => {
       dep?.task?.every((t) => t?.status === 'Selesai'),
     )
   );
+});
+
+const anyTaskApi = computed(() => {
+  return !!taskApis.value?.length;
 });
 
 const user = ref<User>(
@@ -191,6 +203,7 @@ const commentSearch = ref<string>();
 
 const checklists = ref<TaskChecklist[]>([]);
 const taskDependencies = ref<TaskDependency[]>([]);
+const taskApis = ref<TaskAPI[]>([]);
 
 const taskMenu = computed<TaskMenu[]>(() => {
   return [
@@ -230,7 +243,7 @@ const toggleCommentSection = (): void => {
 const getProjectDetail = async (): Promise<void> => {
   try {
     const { data } = await ProjectServices.getProjectDetail(props.projectId);
-    projectDetail.value = data.data;
+    projectDetail.value = data.data as unknown as ProjectDetail;
   } catch (error) {
     toast.add({
       message: 'Gagal memuat proyek detail.',
@@ -264,6 +277,10 @@ const getDetailTask = async (): Promise<void> => {
         name: data.data.module.name,
       },
     };
+
+    if (taskDetail.value?.process?.name === 'API Spec') {
+      await getTaskAPIs();
+    }
 
     taskId.value = data.data._id;
   } catch (error) {
@@ -373,6 +390,20 @@ const getTaskDependencies = async (): Promise<void> => {
   }
 };
 
+const getTaskAPIs = async (): Promise<void> => {
+  try {
+    const { data } = await TaskApiServices.getTaskAPIs(taskId.value);
+    if (data) {
+      taskApis.value = data.data;
+    }
+  } catch (error) {
+    toast.add({
+      message: 'API gagal dimuat.',
+      error,
+    });
+  }
+};
+
 const handleShow = async (): Promise<void> => {
   setLoading(true);
 
@@ -426,6 +457,7 @@ provide('loadingTask', loadingTask);
 provide('openDetailTask', openDetailTask);
 provide('toggleCommentSection', toggleCommentSection);
 provide('updateMentionSectionText', updateMentionedSectionText);
+provide('projectDetail', projectDetail);
 
 watch(
   () => props.taskId,
@@ -530,7 +562,9 @@ watch(
           class="w-[800px] flex flex-col gap-3 !px-6 !py-3 overflow-y-auto detailtask-scrollbar-hide"
         >
           <Legend
+            :any-api="anyTaskApi"
             :approval-id="props.approvalId"
+            :has-requested-checklist="hasRequestedChecklist"
             :initial-module="props.initialModule"
             :initial-sub-module="props.initialSubModule"
             :is-all-checklist-done="isAllChecklistDone"
