@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.122
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.121...v1.5.122)
+
+### 🩹 Fixes
+
+- Try to console the task id in taskdetail ([2900333](https://github.com/fewangsit/wangsvue/commit/2900333))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.121
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.120...v1.5.121)
