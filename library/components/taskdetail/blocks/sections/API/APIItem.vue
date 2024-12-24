@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { shallowRef, inject, Ref } from 'vue';
+import { shallowRef, inject, Ref, computed, nextTick } from 'vue';
 import { UpdateTaskApiDTO } from 'lib/dto/taskApi.dto';
 import { TaskAPIFormDataCustom, TaskDetailData } from 'lib/types/task.type';
 import { formatDateReadable } from 'lib/utils/date.util';
@@ -16,6 +16,7 @@ import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
 import DialogTestApi from './DialogTestApi.vue';
 import Form from 'lib/components/form/Form.vue';
 import { TaskApiServices } from 'wangsit-api-services';
+import Checkbox from 'lib/components/checkbox/Checkbox.vue';
 
 const updateMentionSectionText = inject<(sectionTitle: string) => void>(
   'updateMentionSectionText',
@@ -69,6 +70,13 @@ const expanded = shallowRef<boolean>(false);
 const formKey = shallowRef<number>(0);
 
 const saving = shallowRef<boolean>(false);
+
+const togglingItem = shallowRef<boolean>(false);
+const toggleKey = shallowRef(0);
+
+const isAPISpec = computed(
+  () => taskDetail.value?.process?.name === 'API Spec',
+);
 
 const toggleAccordion = (): void => {
   expanded.value = !expanded.value;
@@ -194,10 +202,50 @@ const contentTypeChange = (): void => {
   }
   makeChanges();
 };
+
+const toggleAPIStatus = async (state: boolean): Promise<void> => {
+  if (togglingItem.value) return;
+
+  try {
+    togglingItem.value = true;
+    const { data } = await TaskApiServices.toggleIntactStatus(
+      taskApi.value._id,
+      state,
+    );
+    if (data) {
+      emit('updated');
+    }
+    await nextTick();
+  } catch (error) {
+    console.error(error);
+    // If toggling is failed, set checked value back to its previous value
+    taskApi.value.isIntact = !state;
+    toggleKey.value++;
+    toast.add({
+      message: 'Gagal ceklis task API.',
+      error,
+    });
+  } finally {
+    togglingItem.value = false;
+  }
+};
 </script>
 
 <template>
-  <div class="grid grid-cols-[1fr,auto] gap-2.5 items-center">
+  <div
+    :class="[
+      'grid gap-2.5 items-center',
+      { 'grid-cols-[auto,1fr,auto]': isAPISpec },
+      { 'grid-cols-[1fr,auto]': !isAPISpec },
+    ]"
+  >
+    <Checkbox
+      :key="toggleKey"
+      v-if="isAPISpec"
+      v-model="taskApi.isIntact"
+      :disabled="props.disabled"
+      @update:model-value="toggleAPIStatus"
+    />
     <div
       class="w-full flex justify-between items-center px-3 py-3 bg-primary-50 rounded-lg"
     >
@@ -229,11 +277,18 @@ const contentTypeChange = (): void => {
       text
     />
     <transition name="slide-fade">
-      <div v-show="expanded" class="grid grid-cols-subgrid col-span-2">
+      <div
+        v-show="expanded"
+        :class="[
+          'grid grid-cols-subgrid',
+          { 'col-span-3': isAPISpec },
+          { 'col-span-2': !isAPISpec },
+        ]"
+      >
         <Form
           :key="formKey"
+          :class="[{ 'col-start-2': isAPISpec }]"
           @submit="updateTaskApi"
-          class=""
           hide-footer
           hide-stay-checkbox
         >
