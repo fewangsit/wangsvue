@@ -167,8 +167,8 @@ const isAllDependencyDone = computed(() => {
   );
 });
 
-const anyTaskApi = computed(() => {
-  return !!taskApis.value?.length;
+const isAllEndpointChecked = computed(() => {
+  return taskApis.value?.every((api) => api?.isIntact) ?? false;
 });
 
 const user = ref<User>(
@@ -562,13 +562,13 @@ watch(
           class="w-[800px] flex flex-col gap-3 !px-6 !py-3 overflow-y-auto detailtask-scrollbar-hide"
         >
           <Legend
-            :any-api="anyTaskApi"
             :approval-id="props.approvalId"
             :has-requested-checklist="hasRequestedChecklist"
             :initial-module="props.initialModule"
             :initial-sub-module="props.initialSubModule"
             :is-all-checklist-done="isAllChecklistDone"
             :is-all-dependency-done="isAllDependencyDone"
+            :is-all-endpoint-checked="isAllEndpointChecked"
             :product-backlog-item-id="props.productBacklogItemId"
           />
           <TabMenu
