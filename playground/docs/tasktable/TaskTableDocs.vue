@@ -10,6 +10,7 @@ import { ref } from 'vue';
 const projectId = sessionStorage.getItem('projectId') ?? '';
 
 const dialogDetailTask = ref(false);
+const dialogCreateTask = ref(false);
 </script>
 
 <template>
@@ -50,6 +51,18 @@ const dialogDetailTask = ref(false);
               approval-id="675163826a20cedef1e69413"
               project-id="6745365361c91ef9b2fb7a62"
               task-id="675163826a20cedef1e6940d"
+            />
+          </div>
+          <div class="">
+            <Button
+              @click="dialogCreateTask = true"
+              label="Create new task from sub module"
+            />
+            <TaskDetail
+              v-model:visible="dialogCreateTask"
+              :initial-module="{ _id: '67613d876ae5fdd54f9c8797' }"
+              :initial-sub-module="{ _id: '67690b47d0e49517cb32a968' }"
+              project-id="6761347c9f67838e0462f9de"
             />
           </div>
         </div>

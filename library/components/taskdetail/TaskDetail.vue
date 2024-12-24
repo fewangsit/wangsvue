@@ -265,7 +265,11 @@ const getDetailTask = async (): Promise<void> => {
   try {
     loadingTask.value = true;
 
-    if (!taskId.value && !props.taskId) return;
+    if (!taskId.value && !props.taskId) {
+      console.log('🚀 ~ getDetailTask ~ props.taskId:', props.taskId);
+      console.log('🚀 ~ getDetailTask ~ taskId.value:', taskId.value);
+      return;
+    }
 
     const { data } = await TaskServices.getTaskDetail(
       taskId.value ?? props.taskId,
@@ -293,6 +297,7 @@ const getDetailTask = async (): Promise<void> => {
 
     taskId.value = data.data._id;
   } catch (error) {
+    console.error(error);
     toast.add({
       message: 'Data Task Detail gagal diambil.',
       severity: 'error',
@@ -309,7 +314,11 @@ const refreshAndEmitHandler = async (
 ): Promise<void> => {
   try {
     // Skip this function if id doesn't equal the task id.
-    if (id !== taskId.value || !taskId.value) return;
+    if (id !== taskId.value || !taskId.value) {
+      console.log('🚀 refreshAndEmitHandler ~ id:', id);
+      console.log('🚀 refreshAndEmitHandler ~ taskId.value:', taskId.value);
+      return;
+    }
 
     if (eventName === 'delete') {
       emit('delete');
