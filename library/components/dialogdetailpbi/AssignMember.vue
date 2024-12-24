@@ -9,7 +9,7 @@ import {
   FetchResponse,
 } from '../datatable/DataTable.vue.d';
 import { MenuItem } from '../menuitem';
-import { getImageURL, getUserPermission, useToast } from 'lib/utils';
+import { getImageURL, getProjectPermission, useToast } from 'lib/utils';
 import UserName from '../username/UserName.vue';
 import BadgeGroup from '../badgegroup/BadgeGroup.vue';
 import Dialog from '../dialog/Dialog.vue';
@@ -79,7 +79,7 @@ const bulkOptions: MenuItem[] = [
   {
     label: 'Assign',
     icon: 'user-received-2-line',
-    visible: getUserPermission().create,
+    visible: getProjectPermission().create,
     command: (): void => {
       assignMember(true, true);
     },
@@ -129,7 +129,7 @@ const singleAction = (assignSection: boolean): MenuItem[] => {
     {
       label: 'Assign',
       icon: 'user-received-2-line',
-      visible: !assignSection && getUserPermission().create,
+      visible: !assignSection && getProjectPermission().create,
       command: (): void => {
         assignMember(!assignSection, false);
       },
@@ -138,7 +138,7 @@ const singleAction = (assignSection: boolean): MenuItem[] => {
       label: 'Unassign',
       icon: 'user-unfollow-line',
       visible:
-        assignSection && !isAllTaskCompleted && getUserPermission().delete,
+        assignSection && !isAllTaskCompleted && getProjectPermission().delete,
       command: (): void => {
         if (selectedMemberHasCompleteTasks) {
           visibleConfirmTransferTask.value = true;
