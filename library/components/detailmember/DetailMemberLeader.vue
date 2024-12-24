@@ -11,7 +11,7 @@ import { MultiSelectOption } from 'lib/types/options.type';
 import { ProjectLeaders } from './DetailMember.vue.d';
 import { MenuItem } from '../menuitem';
 import { navigateToUrl } from 'single-spa';
-import { getUserPermission } from 'lib/utils';
+import { getProjectPermission } from 'lib/utils';
 import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
 import ButtonFilter from '../buttonfilter/ButtonFilter.vue';
 import DataTable from '../datatable/DataTable.vue';
@@ -128,7 +128,7 @@ const singleAction = computed<MenuItem[]>(() => [
     label: 'Detail Proyek',
     icon: 'file-copy-2-line',
     visible:
-      getUserPermission().read ||
+      getProjectPermission().read ||
       selectedProject.value?.projectManager
         .map((member) => member._id)
         .includes(props.memberId),

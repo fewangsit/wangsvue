@@ -1,4 +1,5 @@
 import { DefineComponent } from 'vue';
+import { CustomValidation } from '../form/Form.vue.d';
 
 export type InputPasswordProps = {
   modelValue?: string;
@@ -11,7 +12,11 @@ export type InputPasswordProps = {
   fieldName?: string;
   useValidator?: boolean;
   invalid?: boolean;
-  validatorMessage?: string;
+  /**
+   * Set custom validator message.
+   * Will be show if invalid="true"
+   */
+  validatorMessage?: string | CustomValidation;
   validatorMessageClass?: string;
 };
 

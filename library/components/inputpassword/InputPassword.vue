@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref, watch, inject } from 'vue';
+import {
+  computed,
+  onMounted,
+  reactive,
+  ref,
+  watch,
+  inject,
+  nextTick,
+} from 'vue';
 import Password from 'primevue/password';
 import FieldWrapper from '../fieldwrapper/FieldWrapper.vue';
 import InputGroup from '../inputgroup/InputGroup.vue';
@@ -25,17 +33,15 @@ const field = reactive<FieldValidation<typeof props.modelValue>>({
 });
 
 const invalidInput = computed(() => props.invalid || !!field.errorMessage);
-const invalidMessage = computed(() => {
-  if (props.invalid && props.validatorMessage) return props.validatorMessage;
-  return field.errorMessage;
-});
 
 onMounted(() => {
   if (props.useValidator) {
     Object.assign(
       field,
       useField(props.fieldName ?? 'password', (value: string) => {
-        return setValidatorMessage(value);
+        return nextTick(() => {
+          return setValidatorMessage(value?.trim());
+        }); // Waits props.invalid changed
       }),
     );
 
@@ -44,10 +50,13 @@ onMounted(() => {
 });
 
 const setValidatorMessage = (value: string): boolean | string => {
-  if (!value && props.mandatory) {
-    return `${props.label} must not be empty`;
-  } else if (props.validatorMessage && props.invalid) {
+  if (typeof props.validatorMessage === 'string' && props.invalid) {
     return props.validatorMessage;
+  } else if (typeof props.validatorMessage !== 'string') {
+    const { empty } = props.validatorMessage ?? {};
+    if (!value && props.mandatory) {
+      return empty ?? true;
+    }
   }
 
   return true;
@@ -135,7 +144,7 @@ watch(
     </InputGroup>
     <ValidatorMessage
       :class="props.validatorMessageClass"
-      :message="invalidMessage"
+      :message="field.errorMessage"
     />
   </FieldWrapper>
 </template>

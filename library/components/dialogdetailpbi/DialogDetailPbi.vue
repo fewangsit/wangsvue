@@ -4,7 +4,7 @@ import { DialogDetailPbiProps } from './DialogDetailPbi.vue.d';
 import { TimelineItem } from '../timeline/Timeline.vue.d';
 import { JSONContent } from '../editor/Editor.vue.d';
 import { MenuItem } from '../menuitem';
-import { convertJsonImage, getUser, getUserPermission } from 'lib/utils';
+import { convertJsonImage, getUser, getProjectPermission } from 'lib/utils';
 import { User } from 'lib/types/user.type';
 import TaskDetailPbi from './TaskDetailPbi.vue';
 import Dialog from '../dialog/Dialog.vue';
@@ -124,7 +124,7 @@ const getEventLog = async (): Promise<void> => {
       v-if="
         selectedPbi?.isMemberAssigned ||
         selectedPbi?.createdBy._id === getUser()._id ||
-        getUserPermission(project, selectedPbi?.createdBy.teams).read
+        getProjectPermission(project, selectedPbi?.createdBy.teams).read
       "
       v-model:active-index="activeTab"
       :menu="menu"

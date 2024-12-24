@@ -3,7 +3,7 @@ import getUser from './getUser.util';
 import { Project, Teams } from 'lib/types/project.type';
 import { RoleMemberPermission } from 'lib/types/roleDetailAccess.type';
 
-const getUserPermission = (
+const getProjectPermission = (
   project?: Project,
   leaders?: Teams[],
 ): RoleMemberPermission => {
@@ -26,4 +26,4 @@ const getUserPermission = (
   return manageProject;
 };
 
-export default getUserPermission;
+export default getProjectPermission;
