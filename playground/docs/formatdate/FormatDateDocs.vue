@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import Card from 'lib/components/card/Card.vue';
 import DocTitle from '../DocTitle.vue';
-import { formatDate, TDateFormat, TTimeFormat } from 'lib/utils/date.util';
+import {
+  formatDate,
+  TDateFormat,
+  TTimeFormat,
+  formatISODate,
+} from 'lib/utils/date.util';
 
 const formatExamples: {
   dateFormat: TDateFormat;
@@ -110,7 +115,7 @@ const formatExamples: {
             No Custom Format (Default Wangsit)
           </span>
           <span>
-            {{ formatDate(new Date('04/08/2024 13:45:55')) }}
+            {{ formatISODate(new Date()) }}
           </span>
         </template>
       </div>

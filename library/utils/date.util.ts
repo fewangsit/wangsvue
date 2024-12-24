@@ -160,7 +160,8 @@ export const formatDate = (
 };
 
 export const formatISODate = (date: string | Date): string =>
-  new Date(date).toISOString().slice(0, 19).replace('T', ' ');
+  // Use Sweden locale, which uses ISO 8601 format: https://stackoverflow.com/a/58633651/27534858
+  new Date(date).toLocaleString('sv');
 
 /**
  * Formats a date to human readable form (timeago / relative time from now).
