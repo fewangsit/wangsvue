@@ -292,7 +292,7 @@ watch(
   </div>
 
   <template v-if="commentPosition === 'below'">
-    <div v-if="!isLoading">
+    <div v-if="!isLoading" class="mt-2">
       <CommentBlock
         :key="comment._id"
         v-for="comment in commentsList"
