@@ -191,7 +191,7 @@ const getEventLog = async (): Promise<void> => {
       :value="eventLogItems"
       class="h-[400px]"
     />
-    <div v-else-if="activeTab === 3" class="overflow-auto">
+    <div v-else-if="activeTab === 3" class="overflow-auto h-[400px]">
       <Comment
         :object-id="selectedPbi?._id"
         :user="{
@@ -199,7 +199,6 @@ const getEventLog = async (): Promise<void> => {
           name: getUser().nickName,
           profilePicture: getImageURL(getUser().profilePictureBig) as string,
         }"
-        class="h-[400px]"
         comment-type="pbi"
       />
     </div>
