@@ -1,6 +1,34 @@
 # Changelog
 
 
+## v1.5.138
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.137...v1.5.138)
+
+### 💅 Refactors
+
+- **DialogConfirm:** Add props to determine whether close button should be shown or not ([123a666](https://github.com/fewangsit/wangsvue/commit/123a666))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.137
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.136...v1.5.137)
+
+### 🩹 Fixes
+
+- Props invalid not yet implemented in button radio preset ([ed47979](https://github.com/fewangsit/wangsvue/commit/ed47979))
+
+### 🏡 Chore
+
+- **presets:** Update version ([b7705af](https://github.com/fewangsit/wangsvue/commit/b7705af))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.136
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.134...v1.5.136)
