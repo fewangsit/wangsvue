@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v1.5.134
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.131...v1.5.134)
+
+### 🩹 Fixes
+
+- Conflict in changelog.md file ([c03912f](https://github.com/fewangsit/wangsvue/commit/c03912f))
+
+### 🏡 Chore
+
+- **release:** V1.5.131 ([8b1ee67](https://github.com/fewangsit/wangsvue/commit/8b1ee67))
+- **release:** V1.5.132 ([470dd07](https://github.com/fewangsit/wangsvue/commit/470dd07))
+- **release:** V1.5.133 ([0e55609](https://github.com/fewangsit/wangsvue/commit/0e55609))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.133
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.132...v1.5.133)
