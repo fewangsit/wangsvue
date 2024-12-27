@@ -1205,6 +1205,7 @@ watch(
 
   <DialogFinishReview
     v-model:visible="dialogFinishReview"
+    :process-name="taskDetail?.process?.name"
     @report-bug="dialogReportBug = true"
     @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
   />

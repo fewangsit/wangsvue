@@ -962,6 +962,7 @@ const selectProject = (projectId: string): void => {
 
   <DialogFinishReview
     v-model:visible="dialogFinishReview"
+    :process-name="selectedTask?.process?.name"
     :task-id-prop="selectedTask?._id"
     @saved="reloadTable"
   />
