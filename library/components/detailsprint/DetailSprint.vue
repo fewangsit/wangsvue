@@ -180,7 +180,7 @@ const getPbis = async (): Promise<void> => {
         .map((pbi) => `"${pbi._id}"`)
         .toString()}]`,
     });
-    currentProductBacklogItems.value = data.data.data;
+    currentProductBacklogItems.value = data.data.data as Pbi[];
   } catch (error) {
     console.error(error);
   }
