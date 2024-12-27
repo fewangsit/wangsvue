@@ -142,6 +142,7 @@ import {
   NotificationItem,
   DialogImprovementTask,
   PDFViewer,
+  TooltipSpan,
 } from './components';
 
 export {
@@ -240,6 +241,7 @@ export {
   NotificationItem,
   DialogImprovementTask,
   PDFViewer,
+  TooltipSpan,
 
   // Component store
   useLoadingStore,
