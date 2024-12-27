@@ -66,6 +66,7 @@ import TaskTable from './tasktable/TaskTable.vue';
 import NotificationItem from './notificationitem/NotificationItem.vue';
 import DialogImprovementTask from './dialogimprovementtask/DialogImprovementTask.vue';
 import PDFViewer from './pdfviewer/PDFViewer.vue';
+import TooltipSpan from './tooltipspan/TooltipSpan.vue';
 
 export {
   Badge,
@@ -136,4 +137,5 @@ export {
   NotificationItem,
   DialogImprovementTask,
   PDFViewer,
+  TooltipSpan,
 };

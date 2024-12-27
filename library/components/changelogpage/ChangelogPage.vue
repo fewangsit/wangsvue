@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { useToast } from 'lib/utils';
 import { computed, inject, ref, shallowRef } from 'vue';
-import { FetchResponse, TableColumn } from '../datatable/DataTable.vue.d';
+import {
+  FetchResponse,
+  TableCellComponent,
+  TableColumn,
+} from '../datatable/DataTable.vue.d';
 
 import {
   ChangelogFilterQuery,
@@ -16,6 +20,7 @@ import ButtonFilter from '../buttonfilter/ButtonFilter.vue';
 import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
 import DataTable from '../datatable/DataTable.vue';
 import ChangelogFilter from './ChangelogFilter.vue';
+import TooltipSpan from '../tooltipspan/TooltipSpan.vue';
 
 const toast = useToast();
 const Preset = inject<Record<string, any>>('preset', {}).changelog;
@@ -123,8 +128,11 @@ const changelogColumn = ((): TableColumn[] => {
       header: 'Data Lama',
       sortable: true,
       visible: !props.removedColumns?.includes('oldValue'),
-      bodyTemplate: (data: ChangelogType): string => {
-        return data.oldValue ?? '-';
+      bodyComponent: (data: ChangelogType): TableCellComponent => {
+        return {
+          component: TooltipSpan,
+          props: { fullText: data.oldValue },
+        };
       },
     },
     {
@@ -132,8 +140,11 @@ const changelogColumn = ((): TableColumn[] => {
       header: 'Data Baru',
       sortable: true,
       visible: !props.removedColumns?.includes('newValue'),
-      bodyTemplate: (data: ChangelogType): string => {
-        return data.newValue ?? '-';
+      bodyComponent: (data: ChangelogType): TableCellComponent => {
+        return {
+          component: TooltipSpan,
+          props: { fullText: data.newValue },
+        };
       },
     },
     {

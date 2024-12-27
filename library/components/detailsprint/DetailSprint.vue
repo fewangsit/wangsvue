@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, shallowRef } from 'vue';
 import { AxiosError } from 'axios';
-import { getUserPermission, useToast } from 'lib/utils';
+import { getProjectPermission, useToast } from 'lib/utils';
 import { DropdownOption } from 'lib/types/options.type';
 import {
   DetailSprintEmits,
@@ -295,7 +295,7 @@ const putDoApprovalProcess = async (
       </div>
     </div>
     <Button
-      v-if="!isApproved && getUserPermission().update"
+      v-if="!isApproved && getProjectPermission().update"
       @click="visibleAddPbi = true"
       label="+ Product Backlog Item"
       severity="secondary"
@@ -349,7 +349,7 @@ const putDoApprovalProcess = async (
             text
           />
           <Button
-            v-if="getUserPermission().delete && !isApproved"
+            v-if="getProjectPermission().delete && !isApproved"
             @click.stop="deletePbi(pbi._id)"
             class="!p-0 !size-auto'"
             data-wv-section="delete-pbi"

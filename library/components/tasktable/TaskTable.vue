@@ -974,12 +974,18 @@ const selectProject = (projectId: string): void => {
 
   <DialogConfirmDeleteTask
     v-model:visible="dialogConfirmDeleteTask"
+    :page="page"
+    :project-id="projectId"
+    :selected-pbi-id="selectedPbi._id"
     :tasks="[selectedTask]"
     @saved="reloadTable"
   />
 
   <DialogConfirmDeleteTask
     v-model:visible="dialogConfirmDeleteTaskBulk"
+    :page="page"
+    :project-id="projectId"
+    :selected-pbi-id="selectedPbi._id"
     :tasks="selectedTasks"
     @saved="reloadTable"
   />
