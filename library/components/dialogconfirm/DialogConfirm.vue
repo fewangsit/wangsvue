@@ -27,6 +27,7 @@ const props = withDefaults(defineProps<DialogConfirmProps>(), {
   closeAfterConfirm: true,
   actionable: true,
   showIcon: true,
+  showCloseButton: true,
 });
 
 const emit = defineEmits<DialogConfirmEmits>();
@@ -131,6 +132,7 @@ const confirm = (): void => {
     <template #footer>
       <slot name="footer">
         <Button
+          v-if="showCloseButton"
           v-bind="DialogConfirmPreset?.cancelbutton"
           :label="closeButtonLabel"
           @click="closeDialog"
