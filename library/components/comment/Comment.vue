@@ -70,6 +70,7 @@ const fetchGetComments = async (): Promise<void> => {
         search: props.search,
       },
     );
+    commentsList.splice(0, commentsList.length);
     commentsList.push(...data.data);
     isLoading.value = false;
   } catch (error) {
