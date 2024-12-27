@@ -8,21 +8,10 @@ defineEmits<InputEmailEmits>();
 </script>
 <template>
   <InputText
-    :field-info="fieldInfo"
-    :field-name="fieldName"
-    :input-class="inputClass"
-    :input-container-class="inputContainerClass"
-    :label="label"
-    :label-class="labelClass"
-    :mandatory="mandatory"
-    :manual-invalid-container="manualInvalidContainer"
-    :model-value="modelValue"
-    :placeholder="placeholder"
-    :use-validator="useValidator"
-    :validator-message="validatorMessage"
-    :validator-message-class="validatorMessageClass"
     @blur="(event: unknown) => $emit('blur', event as Nullable<string>)"
+    @input="(event: unknown) => $emit('input', event as Nullable<string>)"
     @update:model-value="$emit('update:modelValue', $event)"
+    v-bind="$props"
     type="email"
   />
 </template>

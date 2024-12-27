@@ -56,7 +56,7 @@ import {
   checkRouteAccess,
   getImageURL,
   getUser,
-  getUserPermission,
+  getProjectPermission,
   getUserType,
   convertJsonImage,
   isEmptyObject,
@@ -142,6 +142,7 @@ import {
   NotificationItem,
   DialogImprovementTask,
   PDFViewer,
+  TooltipSpan,
 } from './components';
 
 export {
@@ -162,7 +163,7 @@ export {
   checkRouteAccess,
   getImageURL,
   getUser,
-  getUserPermission,
+  getProjectPermission,
   getUserType,
   convertJsonImage,
   isEmptyObject,
@@ -240,6 +241,7 @@ export {
   NotificationItem,
   DialogImprovementTask,
   PDFViewer,
+  TooltipSpan,
 
   // Component store
   useLoadingStore,

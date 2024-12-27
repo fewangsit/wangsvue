@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import DialogConfirm from 'lib/components/dialogconfirm/DialogConfirm.vue';
-import { TaskServices } from 'wangsit-api-services';
+import { SprintServices, TaskServices } from 'wangsit-api-services';
 import { TaskDetailData } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
+import { TaskTablePage } from 'lib/components/tasktable/TaskTable.vue.d';
 
 const toast = useToast();
 
 const props = defineProps<{
   tasks: Pick<TaskDetailData, '_id' | 'name'>[];
+  page: TaskTablePage;
+  projectId?: string;
+  selectedPbiId?: string;
 }>();
 
 const emit = defineEmits<{
@@ -18,16 +22,20 @@ const visible = defineModel<boolean>('visible', { required: true });
 
 const deleteTask = async (): Promise<void> => {
   try {
-    const { data } = await TaskServices.deleteTask(
-      props.tasks.map((task) => task._id),
-    );
-    if (data) {
-      toast.add({
-        message: 'Task telah dihapus.',
-        severity: 'success',
-      });
-      emit('saved');
+    if (props.page === 'project-productBacklogItem') {
+      await SprintServices.deletePbiTasks(
+        props.projectId,
+        props.selectedPbiId,
+        { taskIds: props.tasks.map((task) => task._id) },
+      );
+    } else {
+      await TaskServices.deleteTask(props.tasks.map((task) => task._id));
     }
+    toast.add({
+      message: 'Task telah dihapus.',
+      severity: 'success',
+    });
+    emit('saved');
   } catch (error) {
     toast.add({
       message: 'Task gagal dihapus.',
