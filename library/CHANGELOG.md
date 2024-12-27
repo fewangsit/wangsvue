@@ -1,6 +1,35 @@
 # Changelog
 
 
+## v1.5.135
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.134...v1.5.135)
+
+### 🚀 Enhancements
+
+- **InputPassword:** Custom validator message ([c223bfa](https://github.com/fewangsit/wangsvue/commit/c223bfa))
+- TooltipSpan component ([3cacbc2](https://github.com/fewangsit/wangsvue/commit/3cacbc2))
+- Delete pbi from task ([1d35a33](https://github.com/fewangsit/wangsvue/commit/1d35a33))
+
+### 🩹 Fixes
+
+- **comment:** Refresh data when search ([dd02c40](https://github.com/fewangsit/wangsvue/commit/dd02c40))
+
+### 💅 Refactors
+
+- Rename getProjectPermission util ([d630dff](https://github.com/fewangsit/wangsvue/commit/d630dff))
+- **InputEmail:** Props extend inputText props ([f3c23ad](https://github.com/fewangsit/wangsvue/commit/f3c23ad))
+- **notification:** Trigger reload on notification click ([4c7a3a7](https://github.com/fewangsit/wangsvue/commit/4c7a3a7))
+- **n6P83Z4s:** Truncated changelog data ([2b0ba6b](https://github.com/fewangsit/wangsvue/commit/2b0ba6b))
+
+### 🏡 Chore
+
+- Update wangsit-api-services ([5e9357b](https://github.com/fewangsit/wangsvue/commit/5e9357b))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.134
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.131...v1.5.134)
