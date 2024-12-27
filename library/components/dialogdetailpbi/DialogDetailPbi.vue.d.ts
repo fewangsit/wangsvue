@@ -102,6 +102,12 @@ export interface DialogDetailPbiProps {
    * @default true
    */
   editable?: boolean;
+  /**
+   * Whether the current user is a QC or not
+   *
+   * @default false
+   */
+  isQc?: boolean;
 }
 
 declare class DialogDetailPbi extends ClassComponent<

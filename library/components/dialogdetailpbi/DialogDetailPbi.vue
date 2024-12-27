@@ -4,7 +4,12 @@ import { DialogDetailPbiProps } from './DialogDetailPbi.vue.d';
 import { TimelineItem } from '../timeline/Timeline.vue.d';
 import { JSONContent } from '../editor/Editor.vue.d';
 import { MenuItem } from '../menuitem';
-import { convertJsonImage, getUser, getProjectPermission } from 'lib/utils';
+import {
+  convertJsonImage,
+  getUser,
+  getProjectPermission,
+  getImageURL,
+} from 'lib/utils';
 import { User } from 'lib/types/user.type';
 import TaskDetailPbi from './TaskDetailPbi.vue';
 import Dialog from '../dialog/Dialog.vue';
@@ -13,17 +18,13 @@ import Badge from '../badge/Badge.vue';
 import UserName from '../username/UserName.vue';
 import Editor from '../editor/Editor.vue';
 import Timeline from '../timeline/Timeline.vue';
+import Comment from '../comment/Comment.vue';
 import { AuditServices } from 'wangsit-api-services';
 
 const props = withDefaults(defineProps<DialogDetailPbiProps>(), {
   editable: true,
+  isQc: false,
 });
-
-const menu: MenuItem[] = [
-  { label: 'Deskripsi' },
-  { label: 'Task' },
-  { label: 'Event Log' },
-];
 
 const visible = defineModel<boolean>('visible', { required: true });
 const activeTab = shallowRef<number>();
@@ -35,6 +36,13 @@ const pbiDescription = computed<JSONContent | undefined>(() => {
   }
   return undefined;
 });
+
+const menu = computed<MenuItem[]>(() => [
+  { label: 'Deskripsi' },
+  { label: 'Task', visible: !props.isQc },
+  { label: 'Event Log', visible: !props.isQc },
+  { label: 'Komentar' },
+]);
 
 const printItems = computed<
   {
@@ -178,10 +186,22 @@ const getEventLog = async (): Promise<void> => {
     </template>
     <TaskDetailPbi v-else-if="activeTab === 1" v-bind="$props" />
     <Timeline
-      v-else
+      v-else-if="activeTab === 2"
       :align-detail="true"
       :value="eventLogItems"
       class="h-[400px]"
     />
+    <div v-else-if="activeTab === 3" class="overflow-auto">
+      <Comment
+        :object-id="selectedPbi?._id"
+        :user="{
+          _id: getUser()._id,
+          name: getUser().nickName,
+          profilePicture: getImageURL(getUser().profilePictureBig) as string,
+        }"
+        class="h-[400px]"
+        comment-type="pbi"
+      />
+    </div>
   </Dialog>
 </template>
