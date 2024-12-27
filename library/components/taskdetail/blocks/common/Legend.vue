@@ -77,6 +77,7 @@ const emit = defineEmits<{
   processChange: [
     process: Pick<ProjectProcess, '_id' | 'name' | 'team' | 'processPosition'>,
   ];
+  create: [];
 }>();
 
 const projectId = inject<Ref<string>>('projectId');
@@ -596,7 +597,7 @@ const createTask = async (): Promise<void> => {
 
     taskId.value = data.data;
 
-    eventBus.emit('detail-task:create', { taskId: taskId.value });
+    emit('create');
 
     isNewTask.value = false;
   } catch (error) {
@@ -1204,6 +1205,7 @@ watch(
 
   <DialogFinishReview
     v-model:visible="dialogFinishReview"
+    :process-name="taskDetail?.process?.name"
     @report-bug="dialogReportBug = true"
     @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
   />

@@ -19,6 +19,7 @@ const isMember = inject<ComputedRef<boolean>>('isMember', undefined);
 const visible = defineModel<boolean>('visible', { required: true });
 
 const props = defineProps<{
+  processName: string;
   taskIdProp?: string;
 }>();
 
@@ -32,6 +33,8 @@ const taskIdInject = inject<Ref<string>>('taskId', undefined);
 const taskId = computed(() =>
   taskIdInject ? taskIdInject.value : props.taskIdProp,
 );
+
+const isAPISpec = computed(() => props.processName === 'API Spec');
 
 const markReviewTaskAsDone = async (): Promise<void> => {
   try {
@@ -61,6 +64,24 @@ const markReviewTaskAsDone = async (): Promise<void> => {
 const openReportBugDialog = (): void => {
   emit('reportBug');
   visible.value = false;
+};
+
+const markTaskAsSprint = async (): Promise<void> => {
+  try {
+    setLoading(true);
+    const { data } = await TaskServices.markAsSprint(taskId.value);
+    if (data) {
+      emit('saved');
+      visible.value = false;
+    }
+  } catch (error) {
+    toast.add({
+      message: 'Task gagal dikembalikan ke pengerjaan.',
+      error,
+    });
+  } finally {
+    setLoading(false);
+  }
 };
 </script>
 
@@ -98,9 +119,16 @@ const openReportBugDialog = (): void => {
     <p>Task akan ditandai selesai, pastikan task telah dicek dengan teliti.</p>
     <template #footer>
       <Button
-        v-if="!isMember"
+        v-if="!isMember && !isAPISpec"
         @click="openReportBugDialog"
         label="Report Bug"
+        severity="secondary"
+        text
+      />
+      <Button
+        v-if="isAPISpec"
+        @click="markTaskAsSprint"
+        label="Kembalikan ke Pengerjaan"
         severity="secondary"
         text
       />

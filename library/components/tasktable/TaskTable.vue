@@ -962,6 +962,7 @@ const selectProject = (projectId: string): void => {
 
   <DialogFinishReview
     v-model:visible="dialogFinishReview"
+    :process-name="selectedTask?.process?.name"
     :task-id-prop="selectedTask?._id"
     @saved="reloadTable"
   />
@@ -976,7 +977,7 @@ const selectProject = (projectId: string): void => {
     v-model:visible="dialogConfirmDeleteTask"
     :page="page"
     :project-id="projectId"
-    :selected-pbi-id="selectedPbi._id"
+    :selected-pbi-id="selectedPbi?._id"
     :tasks="[selectedTask]"
     @saved="reloadTable"
   />
@@ -985,7 +986,7 @@ const selectProject = (projectId: string): void => {
     v-model:visible="dialogConfirmDeleteTaskBulk"
     :page="page"
     :project-id="projectId"
-    :selected-pbi-id="selectedPbi._id"
+    :selected-pbi-id="selectedPbi?._id"
     :tasks="selectedTasks"
     @saved="reloadTable"
   />
