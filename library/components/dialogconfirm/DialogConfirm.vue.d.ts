@@ -128,7 +128,7 @@ declare class DialogConfirm extends ClassComponent<
 
 declare module '@vue/runtime-core' {
   interface GlobalComponents {
-    DialogForm: GlobalComponentConstructor<DialogConfirm>;
+    DialogConfirm: GlobalComponentConstructor<DialogConfirm>;
   }
 }
 
