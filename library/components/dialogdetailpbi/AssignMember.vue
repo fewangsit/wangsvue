@@ -10,6 +10,8 @@ import {
 } from '../datatable/DataTable.vue.d';
 import { MenuItem } from '../menuitem';
 import { getImageURL, getProjectPermission, useToast } from 'lib/utils';
+import { SprintServices } from 'wangsit-api-services';
+import { Project } from 'lib/types/project.type';
 import UserName from '../username/UserName.vue';
 import BadgeGroup from '../badgegroup/BadgeGroup.vue';
 import Dialog from '../dialog/Dialog.vue';
@@ -21,12 +23,12 @@ import FilterContainer from '../filtercontainer/FilterContainer.vue';
 import DataTable from '../datatable/DataTable.vue';
 import DialogConfirm from '../dialogconfirm/DialogConfirm.vue';
 import eventBus from 'lib/event-bus';
-import { SprintServices } from 'wangsit-api-services';
 
 const toast = useToast();
 
 const props = defineProps<{
   pbiBody?: Pbi;
+  project?: Project;
 }>();
 
 const emit = defineEmits<{
@@ -79,7 +81,7 @@ const bulkOptions: MenuItem[] = [
   {
     label: 'Assign',
     icon: 'user-received-2-line',
-    visible: getProjectPermission().create,
+    visible: getProjectPermission(props.project).create,
     command: (): void => {
       assignMember(true, true);
     },
@@ -129,7 +131,7 @@ const singleAction = (assignSection: boolean): MenuItem[] => {
     {
       label: 'Assign',
       icon: 'user-received-2-line',
-      visible: !assignSection && getProjectPermission().create,
+      visible: !assignSection && getProjectPermission(props.project).create,
       command: (): void => {
         assignMember(!assignSection, false);
       },
@@ -138,7 +140,9 @@ const singleAction = (assignSection: boolean): MenuItem[] => {
       label: 'Unassign',
       icon: 'user-unfollow-line',
       visible:
-        assignSection && !isAllTaskCompleted && getProjectPermission().delete,
+        assignSection &&
+        !isAllTaskCompleted &&
+        getProjectPermission(props.project).delete,
       command: (): void => {
         if (selectedMemberHasCompleteTasks) {
           visibleConfirmTransferTask.value = true;

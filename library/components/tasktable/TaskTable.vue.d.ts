@@ -1,3 +1,4 @@
+import { Project } from 'lib/types/project.type';
 import { AssignedMember, Pbi } from '../dialogdetailpbi/DialogDetailPbi.vue.d';
 import { ClassComponent } from '../ts-helpers';
 
@@ -46,6 +47,10 @@ export interface TaskTableProps {
    */
   selectedPbi?: Pbi;
   assignedPbiMembers?: AssignedMember[];
+  /**
+   * Used to determine whether the current user is a PM or not
+   */
+  project?: Project;
   editablePbi?: boolean;
   /**
    * Used as parameter while fetching data table
