@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v1.5.140
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.139...v1.5.140)
+
+### 🩹 Fixes
+
+- **DialogConfirm:** Incorrect component declaration causing invalid component reference when `ctrl + click` ([ec01dba](https://github.com/fewangsit/wangsvue/commit/ec01dba))
+- **OverlayPanel:** Expose function show and hide as defined in declaration type file ([15926b3](https://github.com/fewangsit/wangsvue/commit/15926b3))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.139
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.136...v1.5.139)
