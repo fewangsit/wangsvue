@@ -36,6 +36,10 @@ export default {
         'border-general-200': props.disabled,
       },
 
+      {
+        '!border-danger-500': props.invalid,
+      },
+
       // Misc
       'cursor-pointer',
     ],
