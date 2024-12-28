@@ -121,7 +121,7 @@ const adjustPosition = async (): Promise<void> => {
 
         <a
           v-if="!loadingUser"
-          :href="`/user/${fullUserObject?._id}`"
+          :href="`/detail-member/${fullUserObject?._id}`"
           class="underline text-primary-400 text-[10px] leading-4 cursor-pointer hover:text-primary-500 transition-colors duration-100"
           target="_blank"
           title="link to user detail"
