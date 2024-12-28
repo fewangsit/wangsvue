@@ -8,6 +8,8 @@ export type TicketTaskId = {
   _id: string;
   ticketId: string;
   status: BadgeStatus;
+  subject: string;
+  deadline: string;
 };
 
 export type BadgeStatus =
