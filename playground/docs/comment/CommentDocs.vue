@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { GetCommentsResponse } from 'lib/components/comment/Comment.vue.d';
-import { getImageURL } from 'lib/utils';
+import { getImageURL } from 'wangsit-api-services';
 import Card from 'lib/components/card/Card.vue';
 import Comment from 'lib/components/comment/Comment.vue';
 import DocTitle from '../DocTitle.vue';

@@ -4,12 +4,7 @@ import { DialogDetailPbiProps } from './DialogDetailPbi.vue.d';
 import { TimelineItem } from '../timeline/Timeline.vue.d';
 import { JSONContent } from '../editor/Editor.vue.d';
 import { MenuItem } from '../menuitem';
-import {
-  convertJsonImage,
-  getUser,
-  getProjectPermission,
-  getImageURL,
-} from 'lib/utils';
+import { convertJsonImage, getUser, getProjectPermission } from 'lib/utils';
 import { User } from 'lib/types/user.type';
 import TaskDetailPbi from './TaskDetailPbi.vue';
 import Dialog from '../dialog/Dialog.vue';
@@ -19,7 +14,7 @@ import UserName from '../username/UserName.vue';
 import Editor from '../editor/Editor.vue';
 import Timeline from '../timeline/Timeline.vue';
 import Comment from '../comment/Comment.vue';
-import { AuditServices } from 'wangsit-api-services';
+import { AuditServices, getImageURL } from 'wangsit-api-services';
 
 const props = withDefaults(defineProps<DialogDetailPbiProps>(), {
   editable: true,

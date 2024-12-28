@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, reactive, ref, shallowRef, watch } from 'vue';
 import { JSONContent } from '@tiptap/vue-3';
-import { CommentServices } from 'wangsit-api-services';
-import { getImageURL, getNestedProperyValue } from 'lib/utils';
+import { getImageURL, CommentServices } from 'wangsit-api-services';
+import { getNestedProperyValue } from 'lib/utils';
 import {
   CommentProps,
   CommentData,

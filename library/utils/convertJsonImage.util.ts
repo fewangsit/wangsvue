@@ -1,5 +1,5 @@
 import { JSONContent } from 'lib/components/editor/Editor.vue.d';
-import getImageURL from './getImageURL.util';
+import { getImageURL } from 'wangsit-api-services';
 
 const convertJsonImage = (
   content: JSONContent | JSONContent[],

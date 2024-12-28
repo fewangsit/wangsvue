@@ -2,8 +2,8 @@
 import { ref, shallowRef, watch } from 'vue';
 import { JSONContent } from '@tiptap/vue-3';
 import { PostImage } from '../editor/Editor.vue.d';
-import { CommentServices } from 'wangsit-api-services';
-import { getImageURL, getNestedProperyValue } from 'lib/utils';
+import { CommentServices, getImageURL } from 'wangsit-api-services';
+import { getNestedProperyValue } from 'lib/utils';
 import { CommentBlockProps, Reaction } from './Comment.vue.d';
 
 import Editor from '../editor/Editor.vue';

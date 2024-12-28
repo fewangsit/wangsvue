@@ -9,8 +9,8 @@ import {
   FetchResponse,
 } from '../datatable/DataTable.vue.d';
 import { MenuItem } from '../menuitem';
-import { getImageURL, getProjectPermission, useToast } from 'lib/utils';
-import { SprintServices } from 'wangsit-api-services';
+import { getProjectPermission, useToast } from 'lib/utils';
+import { SprintServices, getImageURL } from 'wangsit-api-services';
 import { Project } from 'lib/types/project.type';
 import UserName from '../username/UserName.vue';
 import BadgeGroup from '../badgegroup/BadgeGroup.vue';
@@ -193,7 +193,8 @@ const getPbiAssignedMembers = async (
 
     totalMembers.value[query.assign ? 'assigned' : 'unassigned'] =
       data.data.totalRecords;
-    if (query.assign) assignedMembers.value = data.data.data;
+    if (query.assign)
+      assignedMembers.value = data.data.data as AssignedMember[];
 
     return data;
   } catch (error) {

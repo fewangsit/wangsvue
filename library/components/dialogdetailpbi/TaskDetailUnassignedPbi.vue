@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue';
 import taskQuickFilterFields from './options/taskQuickFilterFields';
-import { getImageURL, useToast } from 'lib/utils';
+import { useToast } from 'lib/utils';
 import {
   TableCellComponent,
   QueryParams,
@@ -17,7 +17,11 @@ import DataTable from '../datatable/DataTable.vue';
 import Button from '../button/Button.vue';
 import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
 import eventBus from 'lib/event-bus';
-import { SprintServices, TaskServices } from 'wangsit-api-services';
+import {
+  SprintServices,
+  TaskServices,
+  getImageURL,
+} from 'wangsit-api-services';
 
 const toast = useToast();
 

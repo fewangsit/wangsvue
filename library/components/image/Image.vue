@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { computed, inject, onMounted, onUnmounted, shallowRef } from 'vue';
 import { ImageProps } from './Image.vue.d';
-import { getImageURL, genPlaceholder } from 'lib/utils';
+import { genPlaceholder } from 'lib/utils';
 
 import Image from 'primevue/image';
 import Icon from '../icon/Icon.vue';
 import Button from '../button/Button.vue';
-import { getBaseURL } from 'wangsit-api-services';
+import { getBaseURL, getImageURL } from 'wangsit-api-services';
 
 const ImagePreset = inject<Record<string, any>>('preset', {}).image;
 
