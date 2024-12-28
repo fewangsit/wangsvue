@@ -150,8 +150,8 @@ importers:
         specifier: 4.1.0
         version: 4.1.0(vue@3.4.37)
       wangsit-api-services:
-        specifier: ^1.0.42
-        version: 1.0.42
+        specifier: ^1.0.47
+        version: 1.0.47
       xlsx:
         specifier: 0.18.5
         version: 0.18.5
@@ -8274,8 +8274,8 @@ packages:
       - debug
     dev: true
 
-  /wangsit-api-services@1.0.42:
-    resolution: {integrity: sha512-nusQ8UhMEh4FFjvmK1RTBUvzKZT3PlQX/y0kLs7tIDMdKiTLKUNaxs4xbVInKm8WWpwFqopCAHYMH/N5LvuwnQ==}
+  /wangsit-api-services@1.0.47:
+    resolution: {integrity: sha512-+TWvN0XK5Aw/3XVIXW1ps//9i65HJckdJZryFDwKycVlyUC7FdydZR6fdLMIt5HP50Lmx2yvo7vGP8NbaHWnow==}
     dev: false
 
   /watchpack@2.4.2:
