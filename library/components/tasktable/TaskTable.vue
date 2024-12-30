@@ -459,7 +459,7 @@ const filterFields = computed<CustomFilterField[]>(() => [
  * Table actions:
  * - Assign Member (only for Admin/PM/Leader and task status is Backlog)
  * - Review (only for Leader and task status is Pending Review Leader)
- * - Detail Task (only for Admin/PM/Leader/Member and task type is parent/dependency)
+ * - Detail Task (task type is parent/dependency)
  * - Hapus (only for Admin/PM/Leader/Member and task status is Backlog/Sprint)
  * - Pulihkan (only if props.tab is 'deleted' )
  * - Hapus Permanen (only if props.tab is 'deleted')
@@ -469,9 +469,7 @@ const tableActions = computed<MenuItem[]>(() => {
     {
       label: 'Detail Task',
       icon: 'file-copy-2-line',
-      visible:
-        ['parent', 'dependency'].includes(selectedTask.value?.taskType) &&
-        isIntersect(['admin', 'pm', 'teamLeader', 'member'], userType.value),
+      visible: ['parent', 'dependency'].includes(selectedTask.value?.taskType),
       command: (): void => {
         dialogDetailTask.value = true;
       },
