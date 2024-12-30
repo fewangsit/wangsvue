@@ -3,6 +3,7 @@ import { formatUserName, getInititalName } from './textFormatter.util';
 import { checkRouteAccess } from './role.util';
 import { formatDate, formatISODate, formatDateReadable } from './date.util';
 import { queryParamsStringfy } from './queryParamsStringfy.util';
+import getSalesRole from './getSalesRole.util';
 import filterOptions from './filterOptions.util';
 import exportToExcel from './exportToExcel.util';
 import genPlaceholder from './genPlaceholder.util';
@@ -45,6 +46,7 @@ export {
   getUser,
   getProjectPermission,
   getUserType,
+  getSalesRole,
   isIntersect,
   convertJsonImage,
   formatDate,
