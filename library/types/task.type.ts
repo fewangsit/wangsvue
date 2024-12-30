@@ -149,6 +149,7 @@ export interface TaskAPI {
   updatedBy: Member;
   updatedAt: string;
   anyChanges?: boolean; // Custom field for indicator if there is any changes in the data
+  taskStatus?: WangsitStatus;
 }
 
 export type FormDataBodyCustom = Omit<FormDataBody, 'isMandatory'> & {
