@@ -1,6 +1,46 @@
 # Changelog
 
 
+## v1.5.141
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.140...v1.5.141)
+
+### 🚀 Enhancements
+
+- **DetailPbi:** Comment tab ([3aabcc8](https://github.com/fewangsit/wangsvue/commit/3aabcc8))
+
+### 🩹 Fixes
+
+- **TooltipSpan:** Set tooltip autoHide to false ([c9a22fe](https://github.com/fewangsit/wangsvue/commit/c9a22fe))
+- **DetailSprint:** Mismatched types ([490c8c5](https://github.com/fewangsit/wangsvue/commit/490c8c5))
+
+### 💅 Refactors
+
+- Console error on delete task ([86c5ab6](https://github.com/fewangsit/wangsvue/commit/86c5ab6))
+- **notification:** Change reload method ([0d2b9aa](https://github.com/fewangsit/wangsvue/commit/0d2b9aa))
+- Delete getBaseURL ([08d4073](https://github.com/fewangsit/wangsvue/commit/08d4073))
+- **DetailPbi:** Height class ([2d672bd](https://github.com/fewangsit/wangsvue/commit/2d672bd))
+- Sprint project permissions ([c99901b](https://github.com/fewangsit/wangsvue/commit/c99901b))
+- **AttachmentThumbnail:** Pass item URL as is ([1baee5b](https://github.com/fewangsit/wangsvue/commit/1baee5b))
+- **Image:** Get base URL from api package ([8ca8992](https://github.com/fewangsit/wangsvue/commit/8ca8992))
+- Get Image URL from api package ([77eead6](https://github.com/fewangsit/wangsvue/commit/77eead6))
+- **UserName:** Change detail member route ([e97e10b](https://github.com/fewangsit/wangsvue/commit/e97e10b))
+
+### 📖 Documentation
+
+- New sprint ID ([3fe8afb](https://github.com/fewangsit/wangsvue/commit/3fe8afb))
+
+### 🏡 Chore
+
+- Remove wangsit-api-services from external deps" ([2cb99f4](https://github.com/fewangsit/wangsvue/commit/2cb99f4))
+- Update wangsit API ([285070f](https://github.com/fewangsit/wangsvue/commit/285070f))
+- Serve script ([cd87916](https://github.com/fewangsit/wangsvue/commit/cd87916))
+- Rename serve script ([4f4cf42](https://github.com/fewangsit/wangsvue/commit/4f4cf42))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.140
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.139...v1.5.140)
