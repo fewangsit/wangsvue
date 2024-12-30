@@ -28,10 +28,15 @@ import {
   TaskTableProps,
   TaskTableTab,
 } from './TaskTable.vue.d';
-import { User } from 'lib/types/user.type';
 import { TaskTableItem, TaskTableOptionQuery } from 'lib/types/task.type';
 import Badge from '../badge/Badge.vue';
-import { formatISODate, isIntersect, useToast } from 'lib/utils';
+import {
+  formatISODate,
+  getProjectPermission,
+  getUser,
+  isIntersect,
+  useToast,
+} from 'lib/utils';
 import DependencyCol from './DependencyCol.vue';
 import Button from '../button/Button.vue';
 import TaskDetail from '../taskdetail/TaskDetail.vue';
@@ -58,7 +63,7 @@ type CustomFilterField = FilterField & {
   visible: boolean;
 };
 
-const userData = JSON.parse(localStorage.getItem('user') as string) as User;
+const userData = getUser();
 const taskStatuses: string[] = [
   'Selesai',
   'Pending Review Leader',
@@ -607,11 +612,16 @@ const tableBulkActions = computed<MenuItem[]>(() => {
   return props.tab === 'deleted' ? deletedBulkActions : otherBulkActions;
 });
 
+/*
+ * Roles that can assign PBI tasks:
+ * Admin, PM, members assigned to the PBI
+ */
 const canAssignPbiTask = computed<boolean>(
   () =>
     props.assignedPbiMembers?.length &&
     !['Selesai', 'Pending Testing'].includes(props.selectedPbi?.status ?? '') &&
-    isIntersect(['admin', 'pm', 'teamLeader', 'member'], userType.value) &&
+    (getProjectPermission(props.project).create ||
+      getUser()._id in props.assignedPbiMembers.map((member) => member._id)) &&
     props.editablePbi,
 );
 
@@ -898,7 +908,11 @@ const selectProject = (projectId: string): void => {
       "
       :table-name="tableName"
       :tree-table="page !== 'project-productBacklogItem'"
-      @toggle-option="selectedTask = $event"
+      @toggle-option="
+        {
+          selectedTask = $event as TaskTableItem;
+        }
+      "
       data-key="_id"
       excel-toast-error-message="Data task gagal diunduh."
       lazy

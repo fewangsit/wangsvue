@@ -2,7 +2,7 @@
 import { onMounted, provide, shallowRef } from 'vue';
 import { TaskDetailPbiProps } from './TaskDetailPbi.vue.d';
 import { AssignedMember } from './DialogDetailPbi.vue.d';
-import { getUser } from 'lib/utils';
+import { getProjectPermission } from 'lib/utils';
 import TaskDetailUnassignedPbi from './TaskDetailUnassignedPbi.vue';
 import AssignMember from './AssignMember.vue';
 import Button from '../button/Button.vue';
@@ -55,7 +55,7 @@ const getPbiAssignedMembers = async (): Promise<void> => {
           !['Selesai', 'Pending Testing'].includes(
             props.selectedPbi?.status ?? '',
           ) &&
-          getUser().permission.manageProject.update &&
+          getProjectPermission(project).update &&
           props.editable
         "
         @click="visibleAssignMembers = true"
@@ -69,6 +69,7 @@ const getPbiAssignedMembers = async (): Promise<void> => {
     <TaskTable
       :assigned-pbi-members="assignedMembers"
       :editable-pbi="editable"
+      :project="project"
       :project-id="projectId"
       :selected-pbi="selectedPbi"
       @show-unassigned-task="visibleUnassignedTask = true"
@@ -85,6 +86,7 @@ const getPbiAssignedMembers = async (): Promise<void> => {
     <AssignMember
       v-model:visible="visibleAssignMembers"
       :pbi-body="selectedPbi"
+      :project="project"
       @add="getPbiAssignedMembers"
     />
   </div>

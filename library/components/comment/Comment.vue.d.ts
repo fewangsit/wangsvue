@@ -84,7 +84,7 @@ export interface CommentsQueryParams extends QueryParams {
   search: string;
 }
 
-export type CommentType = 'ticket' | 'task' | 'module' | 'sub-module';
+export type CommentType = 'ticket' | 'task' | 'module' | 'sub-module' | 'pbi';
 
 export interface Reaction {
   count: number;

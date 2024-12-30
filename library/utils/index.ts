@@ -5,7 +5,6 @@ import { formatDate, formatISODate, formatDateReadable } from './date.util';
 import { queryParamsStringfy } from './queryParamsStringfy.util';
 import filterOptions from './filterOptions.util';
 import exportToExcel from './exportToExcel.util';
-import getImageURL from './getImageURL.util';
 import genPlaceholder from './genPlaceholder.util';
 import getStatusSeverity from './statusSeverity.util';
 import getAttachmentIcon from './getAttachmentIcon.util';
@@ -39,7 +38,6 @@ export {
   exportToExcel,
   filterOptions,
   isEmptyObject,
-  getImageURL,
   genPlaceholder,
   getInititalName,
   getStatusSeverity,

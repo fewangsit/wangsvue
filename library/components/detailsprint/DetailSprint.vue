@@ -180,7 +180,7 @@ const getPbis = async (): Promise<void> => {
         .map((pbi) => `"${pbi._id}"`)
         .toString()}]`,
     });
-    currentProductBacklogItems.value = data.data.data;
+    currentProductBacklogItems.value = data.data.data as Pbi[];
   } catch (error) {
     console.error(error);
   }
@@ -295,7 +295,7 @@ const putDoApprovalProcess = async (
       </div>
     </div>
     <Button
-      v-if="!isApproved && getProjectPermission().update"
+      v-if="!isApproved && getProjectPermission(project).update"
       @click="visibleAddPbi = true"
       label="+ Product Backlog Item"
       severity="secondary"
@@ -349,7 +349,7 @@ const putDoApprovalProcess = async (
             text
           />
           <Button
-            v-if="getProjectPermission().delete && !isApproved"
+            v-if="getProjectPermission(project).delete && !isApproved"
             @click.stop="deletePbi(pbi._id)"
             class="!p-0 !size-auto'"
             data-wv-section="delete-pbi"

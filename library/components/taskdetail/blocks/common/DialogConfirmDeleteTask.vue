@@ -37,6 +37,7 @@ const deleteTask = async (): Promise<void> => {
     });
     emit('saved');
   } catch (error) {
+    console.error(error);
     toast.add({
       message: 'Task gagal dihapus.',
       error,
