@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v1.5.144
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.143...v1.5.144)
+
+### 🚀 Enhancements
+
+- **notification:** PBI, sprint notifications ([1bc3cb4](https://github.com/fewangsit/wangsvue/commit/1bc3cb4))
+
+### 🩹 Fixes
+
+- **notification:** Assign URL before reload attempt ([d9a1a65](https://github.com/fewangsit/wangsvue/commit/d9a1a65))
+
+### 🏡 Chore
+
+- Optimize primevue dependency ([2b4afd3](https://github.com/fewangsit/wangsvue/commit/2b4afd3))
+- Remove wangsit-api-services from external deps" ([17e56a4](https://github.com/fewangsit/wangsvue/commit/17e56a4))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.143
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.142...v1.5.143)
