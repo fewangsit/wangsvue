@@ -8,8 +8,8 @@ import { TaskTablePage } from 'lib/components/tasktable/TaskTable.vue.d';
 const toast = useToast();
 
 const props = defineProps<{
-  tasks: Pick<TaskDetailData, '_id' | 'name'>[];
-  page: TaskTablePage;
+  tasks: Pick<TaskDetailData, '_id' | 'name' | 'process'>[];
+  page?: TaskTablePage;
   projectId?: string;
   selectedPbiId?: string;
 }>();
@@ -29,7 +29,22 @@ const deleteTask = async (): Promise<void> => {
         { taskIds: props.tasks.map((task) => task._id) },
       );
     } else {
-      await TaskServices.deleteTask(props.tasks.map((task) => task._id));
+      const createAPITasks = props.tasks.filter(
+        (task) => task.process?.name === 'Create API',
+      );
+      const notCreateAPITasks = props.tasks.filter(
+        (task) => task.process?.name !== 'Create API',
+      );
+      if (createAPITasks.length) {
+        await TaskServices.deleteTasksPermanently(
+          createAPITasks.map((task) => task._id),
+        );
+      }
+      if (notCreateAPITasks.length) {
+        await TaskServices.deleteTask(
+          notCreateAPITasks.map((task) => task._id),
+        );
+      }
     }
     toast.add({
       message: 'Task telah dihapus.',
