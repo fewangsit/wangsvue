@@ -32,6 +32,7 @@ export type TaskDetailData = {
   timerStartedAt: string | null;
   timerStartedValue: number | null;
   approvalStatus: string;
+  isInActiveSprint: boolean;
 };
 
 export type TaskDescription = {

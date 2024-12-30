@@ -38,12 +38,14 @@ import { WangsitStatus } from 'lib/types/wangsStatus.type';
 import DialogReportBug from 'lib/components/dialogreportbug/DialogReportBug.vue';
 import SonarQubeSummary from './SonarQubeSummary.vue';
 import DialogConfirmApproval from './DialogConfirmApproval.vue';
+import { ProjectDetail } from 'lib/types/project.type';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
 
 const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
+const projectDetail = inject<Ref<ProjectDetail>>('projectDetail');
 const isNewTask = inject<Ref<boolean>>('isNewTask');
 const legendForm = inject<Ref<TaskLegendForm>>('legendForm');
 const loadingTask = inject<Ref<boolean>>('loadingTask');
@@ -371,6 +373,7 @@ const isTitleInputDisabled = computed<boolean>(() => {
  * - Not all checklists are done.
  * - There's any requested checklist (waiting for approval).
  * - There's any active tickets ('Open', 'Request Cancel', 'On Verification', 'On Progress').
+ * - The project method is sprint but there are no active sprint.
  * - The task process is 'API Spec' and does not have any task API / endpoint.
  *
  * @returns {boolean} - True if the button should be disabled, false otherwise.
@@ -382,6 +385,8 @@ const isMarkAsDoneDisabled = computed(
     !props.isAllChecklistDone ||
     props.hasRequestedChecklist ||
     props.hasActiveTickets ||
+    (projectDetail.value.method === 'Sprint' &&
+      !taskDetail.value.isInActiveSprint) ||
     (taskDetail.value?.process?.name === 'API Spec' &&
       !props.isAllEndpointChecked),
 );
