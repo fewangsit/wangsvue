@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v1.5.143
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.142...v1.5.143)
+
+### 🩹 Fixes
+
+- **Bm21ORXi:** Delete task permanently if it's Create API task ([b41534d](https://github.com/fewangsit/wangsvue/commit/b41534d))
+- **az4p9O2M:** Checking ticket for disability 'Tandai Selesai' button in taskdetail ([070548f](https://github.com/fewangsit/wangsvue/commit/070548f))
+
+### 💅 Refactors
+
+- **MultiRow:** Add attribute for bodyComponent ([bfbad47](https://github.com/fewangsit/wangsvue/commit/bfbad47))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.142
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.141...v1.5.142)
