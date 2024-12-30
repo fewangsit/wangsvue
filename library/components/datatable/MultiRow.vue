@@ -23,7 +23,19 @@ const Preset = inject<Record<string, any>>('preset', {}).datatable;
       "
       :class="attribute.class"
     >
-      {{ attribute.value }}
+      <component
+        :is="attribute.bodyComponent!.component"
+        v-if="attribute.bodyComponent"
+        v-model="attribute.bodyComponent!.model"
+        v-bind="attribute.bodyComponent!.props"
+        :class="attribute.class"
+        :disabled="attribute.bodyComponent!.disabled"
+        v-on="
+          attribute.bodyComponent!.events ? attribute.bodyComponent!.events : {}
+        "
+        @click.stop=""
+      />
+      <template v-else>{{ attribute.value }}</template>
     </span>
   </div>
 </template>
