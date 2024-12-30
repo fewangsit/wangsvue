@@ -139,7 +139,7 @@ const onBeforeAddLabel = (event: Event): void => {
   if (props.type === 'email') {
     if (badgeInput.value && op.value && newLabel.value) {
       if (!isValidEmail(newLabel.value)) {
-        op.value.toggle(event, badgeInput.value);
+        op.value.show(event, badgeInput.value);
 
         return;
       }

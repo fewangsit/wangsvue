@@ -71,6 +71,7 @@ const props = defineProps<{
   isAllDependencyDone?: boolean;
   hasRequestedChecklist?: boolean;
   isAllEndpointChecked?: boolean;
+  hasActiveTickets?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -369,6 +370,7 @@ const isTitleInputDisabled = computed<boolean>(() => {
  * - Not all dependencies are done.
  * - Not all checklists are done.
  * - There's any requested checklist (waiting for approval).
+ * - There's any active tickets ('Open', 'Request Cancel', 'On Verification', 'On Progress').
  * - The task process is 'API Spec' and does not have any task API / endpoint.
  *
  * @returns {boolean} - True if the button should be disabled, false otherwise.
@@ -379,6 +381,7 @@ const isMarkAsDoneDisabled = computed(
     !props.isAllDependencyDone ||
     !props.isAllChecklistDone ||
     props.hasRequestedChecklist ||
+    props.hasActiveTickets ||
     (taskDetail.value?.process?.name === 'API Spec' &&
       !props.isAllEndpointChecked),
 );

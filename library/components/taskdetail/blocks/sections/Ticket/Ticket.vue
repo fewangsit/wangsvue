@@ -8,7 +8,7 @@ import {
   shallowRef,
   watch,
 } from 'vue';
-import { BadgeStatus, TicketTaskId } from 'lib/types/ticket.type';
+import { TicketStatus, TicketTaskId } from 'lib/types/ticket.type';
 import { TicketServices } from 'wangsit-api-services';
 import { useToast } from 'lib/utils';
 import { TaskDetailData } from 'lib/types/task.type';
@@ -101,7 +101,7 @@ const getRemainingTime = (deadline?: string): RemainingTimeResult => {
   }
 };
 
-const getStatusOptions = (status: BadgeStatus): BadgeStatus[] => {
+const getStatusOptions = (status: TicketStatus): TicketStatus[] => {
   switch (status) {
     case 'Open':
       return [
@@ -136,7 +136,7 @@ const updateKeyByInterval = (): void => {
 
 const updateTicketStatus = async (
   ticketId: string,
-  status: BadgeStatus,
+  status: TicketStatus,
 ): Promise<void> => {
   try {
     const body = { status };
@@ -193,13 +193,13 @@ watch(
                     'Need Confirmation',
                     'Cancel Ticket',
                     'Closed',
-                  ] as BadgeStatus[]
+                  ] as TicketStatus[]
                 ).includes(ticket.status) || isDisabled
               "
               :initial-value="ticket.status"
               :options="getStatusOptions(ticket.status)"
               @update:model-value="
-                updateTicketStatus(ticket._id, $event as BadgeStatus)
+                updateTicketStatus(ticket._id, $event as TicketStatus)
               "
               placeholder="Pilih status"
             />
