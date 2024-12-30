@@ -34,6 +34,7 @@ import {
   TaskChecklistServices,
   TaskDependencyServices,
   TaskApiServices,
+  TicketServices,
 } from 'wangsit-api-services';
 import DescriptionTab from './blocks/Tabs/DescriptionTab.vue';
 import TaskMore from './blocks/common/TaskMore.vue';
@@ -46,6 +47,7 @@ import EventLogTab from './blocks/Tabs/EventLogTab.vue';
 import { MentionSectionFunc } from '../comment/Comment.vue.d';
 import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
 import { TaskAPI } from 'wangsit-api-services/src/types/taskService.type';
+import { TicketStatus, TicketTaskId } from 'lib/types/ticket.type';
 
 const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 
@@ -180,6 +182,25 @@ const isAllEndpointChecked = computed(() => {
   );
 });
 
+/**
+ * Computed property to determine if there are any active tickets.
+ *
+ * This property checks if there are any tickets with a status of
+ * 'Open', 'Request Cancel', 'On Verification', or 'On Progress'.
+ */
+const hasActiveTickets = computed(() => {
+  return tickets.value.some((ticket) =>
+    (
+      [
+        'Open',
+        'Request Cancel',
+        'On Verification',
+        'On Progress',
+      ] as TicketStatus[]
+    ).includes(ticket.status),
+  );
+});
+
 const user = ref<User>(
   JSON.parse(localStorage.getItem('user') as string) ?? {},
 );
@@ -213,6 +234,7 @@ const commentSearch = ref<string>();
 const checklists = ref<TaskChecklist[]>([]);
 const taskDependencies = ref<TaskDependency[]>([]);
 const taskApis = ref<TaskAPI[]>([]);
+const tickets = ref<TicketTaskId[]>([]);
 
 const taskMenu = computed<TaskMenu[]>(() => {
   return [
@@ -266,8 +288,6 @@ const getDetailTask = async (): Promise<void> => {
     loadingTask.value = true;
 
     if (!taskId.value && !props.taskId) {
-      console.log('🚀 ~ getDetailTask ~ props.taskId:', props.taskId);
-      console.log('🚀 ~ getDetailTask ~ taskId.value:', taskId.value);
       return;
     }
 
@@ -312,6 +332,7 @@ const loadData = async (): Promise<void> => {
   await getDetailTask();
   await getChecklists();
   await getTaskDependencies();
+  await getTickets();
 };
 
 const refreshAndEmitHandler = async (
@@ -416,6 +437,23 @@ const getTaskAPIs = async (): Promise<void> => {
   } catch (error) {
     toast.add({
       message: 'API gagal dimuat.',
+      error,
+    });
+  }
+};
+
+const getTickets = async (): Promise<void> => {
+  if (taskId.value === undefined || isNewTask.value) {
+    return;
+  }
+  try {
+    const { data } = await TicketServices.getTicketTaskId(taskId.value);
+    if (data) {
+      tickets.value = data.data;
+    }
+  } catch (error) {
+    toast.add({
+      message: 'Tiket gagal dimuat.',
       error,
     });
   }
@@ -580,6 +618,7 @@ watch(
         >
           <Legend
             :approval-id="props.approvalId"
+            :has-active-tickets="hasActiveTickets"
             :has-requested-checklist="hasRequestedChecklist"
             :initial-module="props.initialModule"
             :initial-sub-module="props.initialSubModule"
