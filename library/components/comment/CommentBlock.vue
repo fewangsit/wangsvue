@@ -2,8 +2,7 @@
 import { ref, shallowRef, watch } from 'vue';
 import { JSONContent } from '@tiptap/vue-3';
 import { PostImage } from '../editor/Editor.vue.d';
-import { CommentServices } from 'wangsit-api-services';
-import { getBaseURL } from 'lib/utils/getBaseURL.util';
+import { CommentServices, getImageURL } from 'wangsit-api-services';
 import { getNestedProperyValue } from 'lib/utils';
 import { CommentBlockProps, Reaction } from './Comment.vue.d';
 
@@ -97,7 +96,7 @@ const uploadImage = async (value: PostImage): Promise<void> => {
     const { data } = await CommentServices.postCommentsUpload({
       images: [value.image],
     });
-    value.setImageCb(`${getBaseURL('APP_FILES_API')}/files${data.data[0]}`);
+    value.setImageCb(getImageURL(data.data[0]));
   } catch (error) {
     console.error(error);
   }

@@ -15,7 +15,12 @@ const truncatedText = computed<string>(() => {
 </script>
 
 <template>
-  <span v-tooltip.top="fullText.length > length ? fullText : undefined">
+  <span
+    v-tooltip.top="{
+      value: fullText.length > length ? fullText : undefined,
+      autoHide: false,
+    }"
+  >
     {{ truncatedText }}
   </span>
 </template>

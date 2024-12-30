@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed, inject, onMounted, onUnmounted, shallowRef } from 'vue';
 import { ImageProps } from './Image.vue.d';
-import { getImageURL, genPlaceholder } from 'lib/utils';
+import { genPlaceholder } from 'lib/utils';
 
 import Image from 'primevue/image';
 import Icon from '../icon/Icon.vue';
 import Button from '../button/Button.vue';
+import { getBaseURL, getImageURL } from 'wangsit-api-services';
 
 const ImagePreset = inject<Record<string, any>>('preset', {}).image;
 
@@ -93,9 +94,7 @@ const imagePreview = computed(() => {
   const preview = imageThumbnail.value;
 
   if (typeof preview === 'string') {
-    const isFromFiles = preview.includes(
-      import.meta.env.VITE_APP_WANGSIT_FILES_API,
-    );
+    const isFromFiles = preview.includes(getBaseURL());
 
     return (preview.includes('http') && !isFromFiles) || // From public resource
       preview.includes('data:image/svg+xml') // Thumbnail

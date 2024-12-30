@@ -11,7 +11,7 @@ import project from './project.json';
 import Toast from 'lib/components/toast/Toast.vue';
 
 onMounted(() => {
-  sessionStorage.setItem('projectId', '6722dfe34b50d65e441a2537');
+  sessionStorage.setItem('projectId', '6763d977d628f99ad72a8e32');
 });
 
 const showDialog = shallowRef<boolean>(false);

@@ -13,17 +13,13 @@ import Badge from '../badge/Badge.vue';
 import UserName from '../username/UserName.vue';
 import Editor from '../editor/Editor.vue';
 import Timeline from '../timeline/Timeline.vue';
-import { AuditServices } from 'wangsit-api-services';
+import Comment from '../comment/Comment.vue';
+import { AuditServices, getImageURL } from 'wangsit-api-services';
 
 const props = withDefaults(defineProps<DialogDetailPbiProps>(), {
   editable: true,
+  isQc: false,
 });
-
-const menu: MenuItem[] = [
-  { label: 'Deskripsi' },
-  { label: 'Task' },
-  { label: 'Event Log' },
-];
 
 const visible = defineModel<boolean>('visible', { required: true });
 const activeTab = shallowRef<number>();
@@ -35,6 +31,13 @@ const pbiDescription = computed<JSONContent | undefined>(() => {
   }
   return undefined;
 });
+
+const menu = computed<MenuItem[]>(() => [
+  { label: 'Deskripsi' },
+  { label: 'Task', visible: !props.isQc },
+  { label: 'Event Log', visible: !props.isQc },
+  { label: 'Komentar' },
+]);
 
 const printItems = computed<
   {
@@ -178,10 +181,21 @@ const getEventLog = async (): Promise<void> => {
     </template>
     <TaskDetailPbi v-else-if="activeTab === 1" v-bind="$props" />
     <Timeline
-      v-else
+      v-else-if="activeTab === 2"
       :align-detail="true"
       :value="eventLogItems"
       class="h-[400px]"
     />
+    <div v-else-if="activeTab === 3" class="overflow-auto h-[400px]">
+      <Comment
+        :object-id="selectedPbi?._id"
+        :user="{
+          _id: getUser()._id,
+          name: getUser().nickName,
+          profilePicture: getImageURL(getUser().profilePictureBig) as string,
+        }"
+        comment-type="pbi"
+      />
+    </div>
   </Dialog>
 </template>

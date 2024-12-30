@@ -1,4 +1,5 @@
 import type { MaybeRef, MaybeRefOrGetter } from 'vue';
+import { getImageURL } from 'wangsit-api-services';
 import eventBus from './event-bus';
 
 // Style
@@ -54,10 +55,10 @@ import {
   useToast,
   getNestedProperyValue,
   checkRouteAccess,
-  getImageURL,
   getUser,
   getProjectPermission,
   getUserType,
+  getSalesRole,
   convertJsonImage,
   isEmptyObject,
   isIntersect,
@@ -165,6 +166,7 @@ export {
   getUser,
   getProjectPermission,
   getUserType,
+  getSalesRole,
   convertJsonImage,
   isEmptyObject,
   isIntersect,

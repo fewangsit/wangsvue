@@ -1,4 +1,4 @@
-import { navigateToUrl, triggerAppChange } from 'single-spa';
+import { navigateToUrl } from 'single-spa';
 import { NotificationItemType } from '../NotificationItem.vue.d';
 
 export const goToAccountMember = (notification: NotificationItemType): void => {
@@ -24,7 +24,7 @@ export const goToQC = (notification: NotificationItemType): void => {
   );
   const url = `/proyek/detail-proyek/quality-control/e2e-testing/pending-e2e-testing-${notification.data.platform}/end-to-end-testing`;
   navigateToUrl(url);
-  if (window.location.pathname.includes(url)) triggerAppChange();
+  if (window.location.pathname.includes(url)) window.location.reload();
 };
 
 export const goToProject = (notification: NotificationItemType): boolean => {
@@ -39,19 +39,19 @@ export const goToProject = (notification: NotificationItemType): boolean => {
       url = `/proyek/detail-proyek/modul/${notification.data.moduleId}/detail-modul`;
       if (notification.module === 'Comment') url += '/komentar';
       navigateToUrl(url);
-      if (window.location.pathname.includes(url)) triggerAppChange();
+      if (window.location.pathname.includes(url)) window.location.reload();
       return false;
     }
     if (notification.data.subModuleId) {
       url = `/proyek/detail-proyek/sub-modul/${notification.data.subModuleId}/detail-sub-modul`;
       if (notification.module === 'Comment') url += '/komentar';
       navigateToUrl(url);
-      if (window.location.pathname.includes(url)) triggerAppChange();
+      if (window.location.pathname.includes(url)) window.location.reload();
       return false;
     }
     if (notification.data.taskId) return true;
     navigateToUrl('/proyek/detail-proyek/tim');
-    if (window.location.pathname.includes(url)) triggerAppChange();
+    if (window.location.pathname.includes(url)) window.location.reload();
   }
   return false;
 };
@@ -70,6 +70,6 @@ export const goToProjectList = (notification: NotificationItemType): void => {
     }
     const url = '/proyek/daftar-proyek';
     navigateToUrl(url);
-    if (window.location.pathname.includes(url)) triggerAppChange();
+    if (window.location.pathname.includes(url)) window.location.reload();
   } else goToProject(notification);
 };
