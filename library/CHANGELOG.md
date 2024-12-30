@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.146
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.145...v1.5.146)
+
+### 🩹 Fixes
+
+- **0nPBqXiZ:** Update initial value of assigned member label in taskdetail ([daabe22](https://github.com/fewangsit/wangsvue/commit/daabe22))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.145
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.139...v1.5.145)
