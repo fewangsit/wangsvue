@@ -39,18 +39,17 @@ export const goToProject = (notification: NotificationItemType): boolean => {
       url = `/proyek/detail-proyek/modul/${notification.data.moduleId}/detail-modul`;
       if (notification.module === 'Comment') url += '/komentar';
       navigateToUrl(url);
-      if (window.location.pathname.includes(url)) window.location.reload();
       return false;
     }
     if (notification.data.subModuleId) {
       url = `/proyek/detail-proyek/sub-modul/${notification.data.subModuleId}/detail-sub-modul`;
       if (notification.module === 'Comment') url += '/komentar';
       navigateToUrl(url);
-      if (window.location.pathname.includes(url)) window.location.reload();
       return false;
     }
     if (notification.data.taskId) return true;
-    navigateToUrl('/proyek/detail-proyek/tim');
+    url = '/proyek/detail-proyek/tim';
+    navigateToUrl(url);
     if (window.location.pathname.includes(url)) window.location.reload();
   }
   return false;
