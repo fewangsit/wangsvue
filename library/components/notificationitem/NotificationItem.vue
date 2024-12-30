@@ -117,6 +117,7 @@ const goToDetail = (notification: NotificationItemType): void => {
       goToProjectList(notification);
       break;
     case 'Quality Control':
+    case 'Quality Control PBI':
       goToQC(notification);
       break;
     default:

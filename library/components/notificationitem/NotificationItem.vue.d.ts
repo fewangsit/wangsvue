@@ -29,12 +29,17 @@ export type NotificationItemType = {
     | 'API & Server '
     | 'Comment'
     | 'Quality Control'
+    | 'Quality Control PBI'
+    | 'PBI'
+    | 'Sprint'
     | 'Task Improvement';
   severity: StatusSeverity;
   type?: string | null;
   data?: {
     description?: string;
     projectId?: string;
+    sprintId?: string;
+    pbiId?: string;
     moduleId?: string;
     subModuleId?: string;
     taskId?: string;
