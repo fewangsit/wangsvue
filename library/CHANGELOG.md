@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.142
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.141...v1.5.142)
+
+### 🚀 Enhancements
+
+- Add util `getSalesRole` ([4a4706f](https://github.com/fewangsit/wangsvue/commit/4a4706f))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.141
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.140...v1.5.141)
