@@ -1,6 +1,68 @@
 # Changelog
 
 
+## v1.5.145
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.139...v1.5.145)
+
+### 🚀 Enhancements
+
+- **DetailPbi:** Comment tab ([3aabcc8](https://github.com/fewangsit/wangsvue/commit/3aabcc8))
+- Add util `getSalesRole` ([4a4706f](https://github.com/fewangsit/wangsvue/commit/4a4706f))
+- **notification:** PBI, sprint notifications ([1bc3cb4](https://github.com/fewangsit/wangsvue/commit/1bc3cb4))
+
+### 🩹 Fixes
+
+- **TooltipSpan:** Set tooltip autoHide to false ([c9a22fe](https://github.com/fewangsit/wangsvue/commit/c9a22fe))
+- **DetailSprint:** Mismatched types ([490c8c5](https://github.com/fewangsit/wangsvue/commit/490c8c5))
+- **DialogConfirm:** Incorrect component declaration causing invalid component reference when `ctrl + click` ([ec01dba](https://github.com/fewangsit/wangsvue/commit/ec01dba))
+- **OverlayPanel:** Expose function show and hide as defined in declaration type file ([15926b3](https://github.com/fewangsit/wangsvue/commit/15926b3))
+- **Bm21ORXi:** Delete task permanently if it's Create API task ([b41534d](https://github.com/fewangsit/wangsvue/commit/b41534d))
+- **az4p9O2M:** Checking ticket for disability 'Tandai Selesai' button in taskdetail ([070548f](https://github.com/fewangsit/wangsvue/commit/070548f))
+- **notification:** Assign URL before reload attempt ([d9a1a65](https://github.com/fewangsit/wangsvue/commit/d9a1a65))
+- **az4p9O2M:** Update condition of hasActiveTickets for 'Tandai Selesai' button disability in taskdetail ([d30b5f4](https://github.com/fewangsit/wangsvue/commit/d30b5f4))
+- **RX5VXEH1:** Update visility condition for 'Detail Task' action in tasktable ([4ff46a0](https://github.com/fewangsit/wangsvue/commit/4ff46a0))
+- **TNlUQRQW:** Update disibility condition for 'Tandai Selesai' button ([ed68fcd](https://github.com/fewangsit/wangsvue/commit/ed68fcd))
+- **0nPBqXiZ:** Remove autoselect member while create task with teamleader in taskdetail ([43dbfa2](https://github.com/fewangsit/wangsvue/commit/43dbfa2))
+
+### 💅 Refactors
+
+- Console error on delete task ([86c5ab6](https://github.com/fewangsit/wangsvue/commit/86c5ab6))
+- **notification:** Change reload method ([0d2b9aa](https://github.com/fewangsit/wangsvue/commit/0d2b9aa))
+- Delete getBaseURL ([08d4073](https://github.com/fewangsit/wangsvue/commit/08d4073))
+- **DetailPbi:** Height class ([2d672bd](https://github.com/fewangsit/wangsvue/commit/2d672bd))
+- Sprint project permissions ([c99901b](https://github.com/fewangsit/wangsvue/commit/c99901b))
+- **AttachmentThumbnail:** Pass item URL as is ([1baee5b](https://github.com/fewangsit/wangsvue/commit/1baee5b))
+- **Image:** Get base URL from api package ([8ca8992](https://github.com/fewangsit/wangsvue/commit/8ca8992))
+- Get Image URL from api package ([77eead6](https://github.com/fewangsit/wangsvue/commit/77eead6))
+- **UserName:** Change detail member route ([e97e10b](https://github.com/fewangsit/wangsvue/commit/e97e10b))
+- **MultiRow:** Add attribute for bodyComponent ([bfbad47](https://github.com/fewangsit/wangsvue/commit/bfbad47))
+
+### 📖 Documentation
+
+- New sprint ID ([3fe8afb](https://github.com/fewangsit/wangsvue/commit/3fe8afb))
+
+### 🏡 Chore
+
+- Remove wangsit-api-services from external deps" ([2cb99f4](https://github.com/fewangsit/wangsvue/commit/2cb99f4))
+- Update wangsit API ([285070f](https://github.com/fewangsit/wangsvue/commit/285070f))
+- Serve script ([cd87916](https://github.com/fewangsit/wangsvue/commit/cd87916))
+- **release:** V1.5.140 ([836b8d4](https://github.com/fewangsit/wangsvue/commit/836b8d4))
+- Rename serve script ([4f4cf42](https://github.com/fewangsit/wangsvue/commit/4f4cf42))
+- **release:** V1.5.141 ([63fd32d](https://github.com/fewangsit/wangsvue/commit/63fd32d))
+- **release:** V1.5.142 ([03b0ff5](https://github.com/fewangsit/wangsvue/commit/03b0ff5))
+- Optimize primevue dependency ([2b4afd3](https://github.com/fewangsit/wangsvue/commit/2b4afd3))
+- Remove wangsit-api-services from external deps" ([17e56a4](https://github.com/fewangsit/wangsvue/commit/17e56a4))
+- **release:** V1.5.143 ([c9732e8](https://github.com/fewangsit/wangsvue/commit/c9732e8))
+- **release:** V1.5.144 ([cfca03f](https://github.com/fewangsit/wangsvue/commit/cfca03f))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.144
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.143...v1.5.144)
