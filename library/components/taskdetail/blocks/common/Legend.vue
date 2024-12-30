@@ -596,7 +596,7 @@ const createTask = async (): Promise<void> => {
       repository: legendForm.value?.repository,
       name: legendForm.value.title,
       team: legendForm.value.process.team.map((team) => team.initial),
-      assignedTo: ['member', 'teamLeader', 'guest'].includes(userType.value)
+      assignedTo: ['member', 'guest'].includes(userType.value)
         ? [user._id]
         : undefined,
     };
