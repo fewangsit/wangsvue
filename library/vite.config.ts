@@ -62,4 +62,7 @@ export default defineConfig({
       lib: resolve(__dirname),
     },
   },
+  optimizeDeps: {
+    include: ['primevue'],
+  },
 });
