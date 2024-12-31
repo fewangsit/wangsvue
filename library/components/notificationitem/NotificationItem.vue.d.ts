@@ -28,13 +28,22 @@ export type NotificationItemType = {
     | 'Project'
     | 'API & Server '
     | 'Comment'
+    | 'Request Approval'
+    | 'Waiting for Approval'
     | 'Quality Control'
     | 'Quality Control PBI'
     | 'PBI'
     | 'Sprint'
+    | 'Improvement'
     | 'Task Improvement';
   severity: StatusSeverity;
-  type?: string | null;
+  type?:
+    | 'Task Baru'
+    | 'Hapus Ceklis'
+    | 'Uncheck Ceklis'
+    | 'Penyesuaian'
+    | 'Sprint'
+    | null;
   data?: {
     description?: string;
     projectId?: string;
