@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.149
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.148...v1.5.149)
+
+### 🩹 Fixes
+
+- Try to log for debug taskdetail ([fd4045b](https://github.com/fewangsit/wangsvue/commit/fd4045b))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.148
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.146...v1.5.148)
