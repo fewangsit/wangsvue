@@ -8,7 +8,7 @@ export const filterFieldsMember = (
   isAssign: boolean,
   isDocumentation: boolean,
 ): FilterField[] => {
-  return [
+  const defaultFilter: FilterField[] = [
     {
       label: 'Member',
       field: 'member',
@@ -22,7 +22,7 @@ export const filterFieldsMember = (
             isAssign,
             { member: true },
           );
-          return data.data.member;
+          return data.data.member as MultiSelectOption[];
         } catch (error) {
           console.error(error);
           return [];
@@ -44,18 +44,40 @@ export const filterFieldsMember = (
           );
           return data.data.team.filter((team) =>
             isDocumentation ? team.label === 'TW' : team.label !== 'TW',
-          );
+          ) as MultiSelectOption[];
         } catch (error) {
           console.error(error);
           return [];
         }
       },
     },
+  ];
+
+  const assignFilters: FilterField[] = [
+    ...defaultFilter,
     {
-      label: 'Progress Task',
+      label: 'Progress Task PBI',
+      fields: ['progressMin', 'progressMax'],
+      type: 'rangenumber',
+      placeholder: '0',
+    },
+    {
+      label: 'Progress Task Global',
+      fields: ['globalProgressMin', 'globalProgressMax'],
+      type: 'rangenumber',
+      placeholder: '0',
+    },
+  ];
+
+  const unassignFilters: FilterField[] = [
+    ...defaultFilter,
+    {
+      label: 'Progress Task Global',
       fields: ['progressMin', 'progressMax'],
       type: 'rangenumber',
       placeholder: '0',
     },
   ];
+
+  return isAssign ? assignFilters : unassignFilters;
 };
