@@ -80,16 +80,13 @@ const memberNicknames = computed(() =>
 const memberTeams = computed(() => taskDetail.value.team.join(', '));
 
 /**
- * If the task is new and the user is a team leader or a member,
+ * If the task is new and the user is a member or a guest,
  * then the member label should be the user's nickname.
  * Otherwise, it should be the nicknames of the assigned members.
  * If no member is assigned, then the label should be 'Member'.
  */
 const memberLabel = computed(() => {
-  if (
-    isNewTask.value &&
-    ['member', 'teamLeader', 'guest'].includes(userType.value)
-  ) {
+  if (isNewTask.value && ['member', 'guest'].includes(userType.value)) {
     /*
      * If the task is new and the user is a team leader or a member or a guest,
      * then get the user's nickname from local storage.
