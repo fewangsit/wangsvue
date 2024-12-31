@@ -28,6 +28,7 @@ export type NotificationItemType = {
     | 'Project'
     | 'API & Server '
     | 'Comment'
+    | 'Sub Module Deployment'
     | 'Request Approval'
     | 'Waiting for Approval'
     | 'Quality Control'

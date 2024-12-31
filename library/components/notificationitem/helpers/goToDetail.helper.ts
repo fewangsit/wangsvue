@@ -105,6 +105,8 @@ export const goToProject = (notification: NotificationItemType): boolean => {
     if (notification.data.subModuleId) {
       url = `/proyek/detail-proyek/sub-modul/${notification.data.subModuleId}/detail-sub-modul`;
       if (notification.module === 'Comment') url += '/komentar';
+      else if (notification.module === 'Sub Module Deployment')
+        url = '/proyek/detail-proyek/sub-modul/deployment';
       navigateToUrl(url);
       return false;
     }
