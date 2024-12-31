@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v1.5.148
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.146...v1.5.148)
+
+### 🚀 Enhancements
+
+- **getSalesRole:** Add more permissions ([f023069](https://github.com/fewangsit/wangsvue/commit/f023069))
+
+### 🩹 Fixes
+
+- Add moduleInitial props for fetching data in tasktable ([6c4d236](https://github.com/fewangsit/wangsvue/commit/6c4d236))
+
+### 🏡 Chore
+
+- **release:** V1.5.147 ([e9b6fc2](https://github.com/fewangsit/wangsvue/commit/e9b6fc2))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.147
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.146...v1.5.147)
