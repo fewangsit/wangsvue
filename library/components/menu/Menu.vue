@@ -8,7 +8,7 @@ import Icon from '../icon/Icon.vue';
 import PrimeMenu from 'primevue/menu';
 
 withDefaults(defineProps<MenuProps>(), { popup: true, model: [] });
-const emit = defineEmits<MenuEmits>();
+defineEmits<MenuEmits>();
 
 const Preset = inject<Record<string, any>>('preset', {}).menu;
 const menu = ref<Menu>();
@@ -24,11 +24,6 @@ const hide = (): void => {
   menu.value?.hide();
 };
 
-const onHideMenu = (e: Event): void => {
-  menu.value?.hide();
-  emit('blur', e);
-};
-
 defineExpose({
   toggle,
   show,
@@ -41,7 +36,7 @@ defineExpose({
     v-bind="$props"
     ref="menu"
     :model="filterVisibleMenu($props.model)"
-    @blur="onHideMenu"
+    @blur="$emit('blur', $event)"
     @focus="$emit('focus', $event)"
   >
     <template #item="{ item, props }">
