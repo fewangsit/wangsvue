@@ -343,14 +343,14 @@ const refreshAndEmitHandler = async (
   id?: string,
 ): Promise<void> => {
   try {
-    console.log('1', eventName);
+    console.log('1', eventName, taskId.value, id);
     // Skip this function if id doesn't equal the task id.
     if (id !== taskId.value || !taskId.value) {
-      console.log('2', eventName);
+      console.log('2', eventName, taskId.value, id);
       return;
     }
 
-    console.log('3', eventName);
+    console.log('3', eventName, taskId.value, id);
 
     if (eventName === 'delete') {
       emit('delete');
