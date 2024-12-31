@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.150
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.149...v1.5.150)
+
+### 🩹 Fixes
+
+- Try to log for debug taskdetail (1) ([9db4fa2](https://github.com/fewangsit/wangsvue/commit/9db4fa2))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.149
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.148...v1.5.149)
