@@ -646,7 +646,7 @@ const queryParamsByPage = computed(() => ({
     ? JSON.stringify([props.projectId])
     : undefined,
   module: props.page.toLowerCase().includes('module')
-    ? JSON.stringify([props.moduleId])
+    ? JSON.stringify([props.moduleInitial])
     : undefined,
   subModule: props.page.includes('subModule')
     ? JSON.stringify([props.subModuleId])
@@ -732,20 +732,20 @@ const getTaskOptions = async (
         tab: props.tab,
         query: { ...queryParamsByPage.value, [field]: true },
       });
-      responseData = response.data;
+      responseData = response.data as FetchOptionResponse<TaskOptions>;
     } else if (props.page === 'project-productBacklogItem') {
       const response = await TaskServices.getTaskOptions({
         ...queryParamsByPage.value,
         [field]: true,
       });
-      responseData = response.data;
+      responseData = response.data as FetchOptionResponse<TaskOptions>;
     } else {
       const response = await TaskServices.getTaskOptionsByTab({
         tab: props.tab,
         subTab: props.subTab,
         query: { ...queryParamsByPage.value, [field]: true },
       });
-      responseData = response.data;
+      responseData = response.data as FetchOptionResponse<TaskOptions>;
     }
 
     return responseData.data[field];
