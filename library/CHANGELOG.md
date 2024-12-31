@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.147
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.146...v1.5.147)
+
+### 🚀 Enhancements
+
+- **getSalesRole:** Add more permissions ([f023069](https://github.com/fewangsit/wangsvue/commit/f023069))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.146
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.145...v1.5.146)
