@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.153
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.152...v1.5.153)
+
+### 🩹 Fixes
+
+- **Menu:** Hide menu on showing another menu" ([742b62b](https://github.com/fewangsit/wangsvue/commit/742b62b))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.152
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.151...v1.5.152)
