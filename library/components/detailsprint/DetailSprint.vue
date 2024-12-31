@@ -88,6 +88,10 @@ const approveSprint = (): void => {
     errorMessage.value = 'Product backlog item harus dipilih.';
   } else if (!currentSprint.value?.startAt) {
     errorMessage.value = 'Tanggal mulai harus diisi.';
+  } else if (
+    currentProductBacklogItems.value.some((pbi) => pbi.totalTask === 0)
+  ) {
+    errorMessage.value = 'Terdapat PBI yang belum memiliki task.';
   } else {
     errorMessage.value = undefined;
     if (currentSprint.value?.isNeedApproval) {

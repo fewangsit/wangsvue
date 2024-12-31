@@ -37,46 +37,6 @@ const emit = defineEmits<{
 
 const projectId = sessionStorage.getItem('projectId') as string;
 
-const tableColumns: TableColumn[] = [
-  {
-    header: 'Member',
-    field: 'member',
-    sortable: true,
-    bodyComponent: (data: AssignedMember): TableCellComponent => {
-      return {
-        component: UserName,
-        props: {
-          user: {
-            ...data,
-            profilePicture: getImageURL(data.imageUrl),
-          },
-        },
-      };
-    },
-  },
-  {
-    header: 'Tim',
-    field: 'team',
-    sortable: true,
-    bodyComponent: (data: AssignedMember): TableCellComponent => {
-      return {
-        component: BadgeGroup,
-        props: {
-          headerLabel: 'Tim',
-          labels: data.team,
-          limit: 2,
-          emptyable: true,
-        },
-      };
-    },
-  },
-  {
-    header: 'Progres',
-    field: 'progress',
-    sortable: true,
-  },
-];
-
 const bulkOptions: MenuItem[] = [
   {
     label: 'Assign',
@@ -115,7 +75,69 @@ const memberMenu = computed<MenuItem[]>(() => {
   ];
 });
 
-const singleAction = (assignSection: boolean): MenuItem[] => {
+const tableColumns = computed<TableColumn[]>(() =>
+  [
+    {
+      header: 'Member',
+      field: 'member',
+      sortable: true,
+      bodyComponent: (data: AssignedMember): TableCellComponent => {
+        return {
+          component: UserName,
+          props: {
+            user: {
+              ...data,
+              profilePicture: getImageURL(data.imageUrl),
+            },
+          },
+        };
+      },
+    },
+    {
+      header: 'Tim',
+      field: 'team',
+      sortable: true,
+      bodyComponent: (data: AssignedMember): TableCellComponent => {
+        return {
+          component: BadgeGroup,
+          props: {
+            headerLabel: 'Tim',
+            labels: data.team,
+            limit: 2,
+            emptyable: true,
+          },
+        };
+      },
+    },
+    {
+      header: 'Progress Task PBI',
+      field: 'progress',
+      sortable: false,
+      bodyClass: 'w-[230px]',
+      tabIndex: 0,
+    },
+    {
+      header: 'Progress Task Global',
+      field: 'globalProgress',
+      sortable: false,
+      bodyClass: 'w-[230px]',
+      tabIndex: 0,
+    },
+    {
+      header: 'Progress Task Global',
+      field: 'progress',
+      sortable: false,
+      bodyClass: 'w-[320px]',
+      tabIndex: 1,
+    },
+  ].filter((column) => {
+    return column.tabIndex !== undefined
+      ? column.tabIndex === activeTab.value
+      : true;
+  }),
+);
+
+const singleAction = computed<MenuItem[]>(() => {
   let selectedMemberHasCompleteTasks: boolean | undefined = false;
   let isAllTaskCompleted: boolean | undefined = false;
   if ((selectedMember.value?.tasks?.length ?? 0) > 0) {
@@ -131,16 +153,17 @@ const singleAction = (assignSection: boolean): MenuItem[] => {
     {
       label: 'Assign',
       icon: 'user-received-2-line',
-      visible: !assignSection && getProjectPermission(props.project).create,
+      visible:
+        activeTab.value !== 0 && getProjectPermission(props.project).create,
       command: (): void => {
-        assignMember(!assignSection, false);
+        assignMember(activeTab.value !== 0, false);
       },
     },
     {
       label: 'Unassign',
       icon: 'user-unfollow-line',
       visible:
-        assignSection &&
+        activeTab.value === 0 &&
         !isAllTaskCompleted &&
         getProjectPermission(props.project).delete,
       command: (): void => {
@@ -156,7 +179,7 @@ const singleAction = (assignSection: boolean): MenuItem[] => {
       icon: 'file-copy-2-line',
     },
   ];
-};
+});
 
 const showDialog = (): void => {
   activeTab.value = 0;
@@ -309,7 +332,7 @@ const assignMember = async (
               assign: assignSection,
             }"
             :fetch-function="getPbiAssignedMembers"
-            :options="singleAction(assignSection)"
+            :options="singleAction"
             :selection-type="assignSection ? 'none' : 'checkbox'"
             :table-name="`product-backlog-items-member-${assignSection}`"
             @toggle-option="selectedMember = $event as AssignedMember"

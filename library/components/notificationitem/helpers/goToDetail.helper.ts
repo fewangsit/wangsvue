@@ -19,6 +19,7 @@ export const goToAccountMember = (notification: NotificationItemType): void => {
 export const goToQC = (notification: NotificationItemType): void => {
   sessionStorage.setItem('projectId', notification.data.projectId as string);
   let url: string;
+
   if (notification.data.subModuleId) {
     sessionStorage.setItem(
       'subModuleId',
@@ -29,6 +30,42 @@ export const goToQC = (notification: NotificationItemType): void => {
     sessionStorage.setItem('pbiId', notification.data.pbiId);
     url = `/proyek/detail-proyek/quality-control/pbi-testing/${notification.data.platform}`;
   }
+
+  navigateToUrl(url);
+  if (window.location.pathname.includes(url)) window.location.reload();
+};
+
+export const goToApproval = (notification: NotificationItemType): void => {
+  sessionStorage.setItem('projectId', notification.data.projectId);
+  let url = '/proyek/detail-proyek/approval';
+
+  switch (notification.module) {
+    case 'Request Approval':
+      url += '/request-approval';
+      break;
+    case 'Waiting for Approval':
+      url += '/waiting-for-approval';
+      break;
+  }
+
+  switch (notification.type) {
+    case 'Hapus Ceklis':
+      url += '/hapus-ceklis';
+      break;
+    case 'Penyesuaian':
+      url += '/penyesuaian';
+      break;
+    case 'Sprint':
+      url += '/sprint';
+      break;
+    case 'Task Baru':
+      url += '/task-baru';
+      break;
+    case 'Uncheck Ceklis':
+      url += '/uncheck-ceklis';
+      break;
+  }
+
   navigateToUrl(url);
   if (window.location.pathname.includes(url)) window.location.reload();
 };
@@ -42,11 +79,13 @@ export const goToProject = (notification: NotificationItemType): boolean => {
   else if (notification.data.projectId) {
     if (notification.data.taskId) return true;
     sessionStorage.setItem('projectId', notification.data.projectId);
+
     if (notification.data.sprintId) {
       url = `/proyek/detail-proyek/sprint/sprint/${notification.data.sprintId}/detail-sprint`;
       navigateToUrl(url);
       return false;
     }
+
     if (notification.data.pbiId) {
       sessionStorage.setItem('pbiId', notification.data.pbiId);
       url = '/proyek/detail-proyek/sprint';
@@ -55,18 +94,23 @@ export const goToProject = (notification: NotificationItemType): boolean => {
       navigateToUrl(url);
       return false;
     }
+
     if (notification.data.moduleId) {
       url = `/proyek/detail-proyek/modul/${notification.data.moduleId}/detail-modul`;
       if (notification.module === 'Comment') url += '/komentar';
       navigateToUrl(url);
       return false;
     }
+
     if (notification.data.subModuleId) {
       url = `/proyek/detail-proyek/sub-modul/${notification.data.subModuleId}/detail-sub-modul`;
       if (notification.module === 'Comment') url += '/komentar';
+      else if (notification.module === 'Sub Module Deployment')
+        url = '/proyek/detail-proyek/sub-modul/deployment';
       navigateToUrl(url);
       return false;
     }
+
     url = '/proyek/detail-proyek/tim';
     navigateToUrl(url);
     if (window.location.pathname.includes(url)) window.location.reload();
@@ -86,6 +130,7 @@ export const goToProjectList = (notification: NotificationItemType): void => {
       sessionStorage.setItem('projectId', notification.data.projectId);
       sessionStorage.setItem('openProjectId', notification.data.projectId);
     }
+
     const url = '/proyek/daftar-proyek';
     navigateToUrl(url);
     if (window.location.pathname.includes(url)) window.location.reload();
