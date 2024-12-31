@@ -186,7 +186,7 @@ const isAllEndpointChecked = computed(() => {
  * Computed property to determine if there are any active tickets.
  *
  * This property checks if there are any tickets with a status of
- * 'Open', 'Request Cancel', 'On Verification', or 'On Progress'.
+ * 'Open', 'Request Cancel', 'On Verification', 'On Progress', or 'Need Confirmation'.
  */
 const hasActiveTickets = computed(() => {
   return tickets.value.some((ticket) =>
@@ -196,6 +196,7 @@ const hasActiveTickets = computed(() => {
         'Request Cancel',
         'On Verification',
         'On Progress',
+        'Need Confirmation',
       ] as TicketStatus[]
     ).includes(ticket.status),
   );
