@@ -1,6 +1,6 @@
 import { FormDataBody } from 'lib/dto/taskApi.dto';
 import { Member } from './member.type';
-import { DropdownOption } from './options.type';
+import { DropdownOption, MultiSelectOption } from './options.type';
 import { Project } from './project.type';
 import { ProjectModule } from './projectModule.type';
 import { ProjectProcess } from './projectProcess.type';
@@ -60,9 +60,9 @@ export type TaskDependency = {
   selectedOptions?: string[];
   loading?: boolean;
   custom?: boolean;
-  processOptions?: DropdownOption[];
-  moduleOptions?: DropdownOption[];
-  subModuleOptions?: DropdownOption[];
+  processOptions?: DropdownOption[] | MultiSelectOption[];
+  moduleOptions?: DropdownOption[] | MultiSelectOption[];
+  subModuleOptions?: DropdownOption[] | MultiSelectOption[];
   subModuleVisibility?: boolean;
 };
 

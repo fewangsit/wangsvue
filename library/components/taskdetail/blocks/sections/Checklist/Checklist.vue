@@ -41,10 +41,10 @@ import { AxiosResponse } from 'axios';
 import Editor from 'lib/components/editor/Editor.vue';
 import ChecklistChangelog from './ChecklistChangelog.vue';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';
-import eventBus from 'lib/event-bus';
 import GalleryPreview from 'lib/components/gallerypreview/GalleryPreview.vue';
 import { File } from 'lib/components/gallerypreview/GalleryPreview.vue.d';
 import { AttachmentItemData } from '../Attachment/AttachmentItem.vue.d';
+import { DetailTaskEmits } from 'lib/components/taskdetail/TaskDetail.vue.d';
 
 const toast = useToast();
 
@@ -66,6 +66,10 @@ const updateMentionSectionText = inject<(sectionTitle: string) => void>(
   'updateMentionSectionText',
 );
 const isApproverHasAccess = inject<Ref<boolean>>('isApproverHasAccess');
+const refreshTaskHandler =
+  inject<(eventName: keyof DetailTaskEmits, id?: string) => Promise<void>>(
+    'refreshTaskHandler',
+  );
 
 const checklists = ref<TaskChecklist[]>(props.static ? [] : undefined);
 
@@ -99,7 +103,7 @@ const isDisabled = computed(() => {
 });
 
 const reloadTask = (): void => {
-  eventBus.emit('detail-task:update', { taskId: taskId.value });
+  refreshTaskHandler('update', taskId.value);
 };
 
 const refetch = async (): Promise<void> => {

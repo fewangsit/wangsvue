@@ -7,15 +7,19 @@ import InputURL from 'lib/components/inputurl/InputURL.vue';
 import { MenuItem } from 'lib/components/menuitem';
 import TabMenu from 'lib/components/tabmenu/TabMenu.vue';
 import { EditTaskLinkDTO } from 'lib/dto/task.dto';
-import eventBus from 'lib/event-bus';
 import { TaskLinkServices } from 'wangsit-api-services';
 import { TaskLink, TaskLinkURLType } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 import { computed, inject, Ref, ref, shallowRef } from 'vue';
+import { DetailTaskEmits } from 'lib/components/taskdetail/TaskDetail.vue.d';
 
 const toast = useToast();
 
 const taskId = inject<Ref<string>>('taskId');
+const refreshTaskHandler =
+  inject<(eventName: keyof DetailTaskEmits, id?: string) => Promise<void>>(
+    'refreshTaskHandler',
+  );
 
 const props = withDefaults(
   defineProps<{
@@ -102,7 +106,7 @@ const handleSubmit = async (payload: FormPayload): Promise<void> => {
 
     await TaskLinkServices.putTaskLink(taskId.value, dataDTO);
 
-    eventBus.emit('detail-task:update', { taskId: taskId.value });
+    refreshTaskHandler('update', taskId.value);
 
     visible.value = false;
   } catch (error) {
