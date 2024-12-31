@@ -5,7 +5,6 @@ import { EditorState, JSONContent } from 'lib/components/editor/Editor.vue.d';
 import Icon from 'lib/components/icon/Icon.vue';
 import UserName from 'lib/components/username/UserName.vue';
 import { EditDescriptionTaskDTO } from 'lib/dto/task.dto';
-import eventBus from 'lib/event-bus';
 import { TaskServices } from 'wangsit-api-services';
 import { TaskDescription, TaskDetailData } from 'lib/types/task.type';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';
@@ -22,6 +21,7 @@ import {
   toRaw,
   watch,
 } from 'vue';
+import { DetailTaskEmits } from 'lib/components/taskdetail/TaskDetail.vue.d';
 
 const toast = useToast();
 
@@ -38,6 +38,10 @@ const userType =
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 const taskId = inject<Ref<string>>('taskId');
 const isApproverHasAccess = inject<Ref<boolean>>('isApproverHasAccess');
+const refreshTaskHandler =
+  inject<(eventName: keyof DetailTaskEmits, id?: string) => Promise<void>>(
+    'refreshTaskHandler',
+  );
 
 const taskDescription = ref<TaskDescription>();
 
@@ -118,7 +122,7 @@ const handleSave = async (): Promise<void> => {
 
     await TaskServices.putTaskDescription(taskId.value, dataDTO);
 
-    eventBus.emit('detail-task:update', { taskId: taskId.value });
+    refreshTaskHandler('update', taskId.value);
 
     handleOnBlur();
   } catch (error) {

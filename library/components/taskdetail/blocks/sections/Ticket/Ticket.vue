@@ -14,8 +14,8 @@ import { useToast } from 'lib/utils';
 import { TaskDetailData } from 'lib/types/task.type';
 import Icon from 'lib/components/icon/Icon.vue';
 import Dropdown from 'lib/components/dropdown/Dropdown.vue';
-import eventBus from 'lib/event-bus';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';
+import { DetailTaskEmits } from 'lib/components/taskdetail/TaskDetail.vue.d';
 
 const toast = useToast();
 
@@ -28,6 +28,10 @@ const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 const isNewTask = inject<Ref<boolean>>('isNewTask');
 const isMember = inject<ComputedRef<boolean>>('isMember');
+const refreshTaskHandler =
+  inject<(eventName: keyof DetailTaskEmits, id?: string) => Promise<void>>(
+    'refreshTaskHandler',
+  );
 
 const tickets = ref<TicketTaskId[]>();
 const ticketKey = shallowRef(0);
@@ -159,7 +163,7 @@ const updateTicketStatus = async (
 };
 
 const reloadTask = (): void => {
-  eventBus.emit('detail-task:update', { taskId: taskId.value });
+  refreshTaskHandler('update', taskId.value);
 };
 
 watch(

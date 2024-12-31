@@ -3,17 +3,21 @@ import DialogForm from 'lib/components/dialogform/DialogForm.vue';
 import { DialogFormPayload } from 'lib/components/dialogform/DialogForm.vue.d';
 import InputNumber from 'lib/components/inputnumber/InputNumber.vue';
 import useLoadingStore from 'lib/components/loading/store/loading.store';
-import eventBus from 'lib/event-bus';
 import { TaskServices } from 'wangsit-api-services';
 import { TaskDetailData } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 import { computed, inject, Ref } from 'vue';
+import { DetailTaskEmits } from '../../TaskDetail.vue.d';
 
 const { setLoading } = useLoadingStore();
 const toast = useToast();
 
 const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
+const refreshTaskHandler =
+  inject<(eventName: keyof DetailTaskEmits, id?: string) => Promise<void>>(
+    'refreshTaskHandler',
+  );
 
 const visible = defineModel<boolean>('visible', { required: true });
 
@@ -39,7 +43,7 @@ const handleSubmit = async (payload: DialogFormPayload): Promise<void> => {
       duration: durationMinutes,
     });
     if (data) {
-      eventBus.emit('detail-task:update', { taskId: taskId.value });
+      refreshTaskHandler('update', taskId.value);
       toast.add({
         message: 'Durasi telah disimpan.',
         severity: 'success',

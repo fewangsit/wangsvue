@@ -4,12 +4,9 @@ import {
   DefineComponent,
   provide,
   ref,
-  onMounted,
-  onUnmounted,
   watch,
   inject,
   shallowRef,
-  onBeforeUnmount,
 } from 'vue';
 
 import Dialog from 'primevue/dialog';
@@ -25,7 +22,6 @@ import {
   TaskDependency,
   TaskDetailData,
 } from 'lib/types/task.type';
-import eventBus from 'lib/event-bus';
 import useLoadingStore from '../loading/store/loading.store';
 import { useToast } from 'lib/utils';
 import {
@@ -65,18 +61,6 @@ const emit = defineEmits<DetailTaskEmits>();
 type TaskMenu = MenuItem & {
   component: DefineComponent<any, any, any>;
 };
-
-onMounted(async () => {
-  attachEventListener();
-});
-
-onUnmounted(() => {
-  removeEventListener();
-});
-
-onBeforeUnmount(() => {
-  removeEventListener();
-});
 
 const userType = computed(() => {
   const { permission } = JSON.parse(localStorage.getItem('user') || '{}');
@@ -336,7 +320,7 @@ const loadData = async (): Promise<void> => {
   await getTickets();
 };
 
-const refreshAndEmitHandler = async (
+const refreshTaskHandler = async (
   eventName: keyof DetailTaskEmits,
   id?: string,
 ): Promise<void> => {
@@ -369,24 +353,6 @@ const refreshAndEmitHandler = async (
   } finally {
     setLoading(false);
   }
-};
-
-const attachEventListener = (): void => {
-  eventBus.on('detail-task:show', (event) =>
-    refreshAndEmitHandler('show', event.taskId),
-  );
-  eventBus.on('detail-task:update', (event) =>
-    refreshAndEmitHandler('update', event.taskId),
-  );
-  eventBus.on('detail-task:delete', (event) =>
-    refreshAndEmitHandler('delete', event.taskId),
-  );
-};
-
-const removeEventListener = (): void => {
-  eventBus.off('detail-task:show');
-  eventBus.off('detail-task:update');
-  eventBus.off('detail-task:delete');
 };
 
 const onCreated = async (): Promise<void> => {
@@ -473,7 +439,7 @@ const handleShow = async (): Promise<void> => {
     isNewTask.value = true;
   }
 
-  eventBus.emit('detail-task:show', { taskId: taskId.value });
+  refreshTaskHandler('show', taskId.value);
 };
 
 /**
@@ -514,6 +480,7 @@ provide('openDetailTask', openDetailTask);
 provide('toggleCommentSection', toggleCommentSection);
 provide('updateMentionSectionText', updateMentionedSectionText);
 provide('projectDetail', projectDetail);
+provide('refreshTaskHandler', refreshTaskHandler);
 
 watch(
   () => props.taskId,

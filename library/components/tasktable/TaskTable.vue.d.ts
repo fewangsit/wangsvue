@@ -31,12 +31,18 @@ export interface TaskTableProps {
    */
   projectId?: string;
   /**
-   * Used as query params while fetching data table
+   * Used as initial value of module for task detail's legend
    * in project-module / project-subModule page
    */
   moduleId?: string;
   /**
    * Used as query params while fetching data table
+   * in project-module / project-subModule page
+   */
+  moduleInitial?: string;
+  /**
+   * Used as query params while fetching data table
+   * and initial value of submodule for task detail's legend
    * in project-subModule page
    */
   subModuleId?: string;

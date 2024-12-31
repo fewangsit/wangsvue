@@ -16,7 +16,7 @@ import { TaskApiServices } from 'wangsit-api-services';
 import { TaskAPIFormDataCustom, TaskDetailData } from 'lib/types/task.type';
 import { useToast } from 'lib/utils';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';
-import eventBus from 'lib/event-bus';
+import { DetailTaskEmits } from 'lib/components/taskdetail/TaskDetail.vue.d';
 
 const toast = useToast();
 
@@ -31,6 +31,10 @@ const userType =
 const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 const isApproverHasAccess = inject<Ref<boolean>>('isApproverHasAccess');
+const refreshTaskHandler =
+  inject<(eventName: keyof DetailTaskEmits, id?: string) => Promise<void>>(
+    'refreshTaskHandler',
+  );
 
 const dialogAddApi = shallowRef<boolean>(false);
 const dialogEditApi = shallowRef<boolean>(false);
@@ -68,7 +72,7 @@ const getTaskAPIs = async (): Promise<void> => {
 };
 
 const reloadTask = (): void => {
-  eventBus.emit('detail-task:update', { taskId: taskId.value });
+  refreshTaskHandler('update', taskId.value);
 };
 
 const onUpdatedTaskApi = async (): Promise<void> => {

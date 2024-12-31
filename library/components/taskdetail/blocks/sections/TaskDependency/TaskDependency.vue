@@ -30,8 +30,9 @@ import Dropdown from 'lib/components/dropdown/Dropdown.vue';
 import { cloneDeep } from 'lodash';
 import { WangsitStatus } from 'lib/types/wangsStatus.type';
 import DialogReportBug from 'lib/components/dialogreportbug/DialogReportBug.vue';
-import eventBus from 'lib/event-bus';
 import { useLoadingStore } from 'lib/build-entry';
+import { DetailTaskEmits } from 'lib/components/taskdetail/TaskDetail.vue.d';
+import { DropdownOption } from 'lib/types/options.type';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -64,6 +65,10 @@ const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
 const isNewTask = inject<Ref<boolean>>('isNewTask');
 const openDetailTask = inject<(taskIdParam: string) => void>('openDetailTask');
 const isApproverHasAccess = inject<Ref<boolean>>('isApproverHasAccess');
+const refreshTaskHandler =
+  inject<(eventName: keyof DetailTaskEmits, id?: string) => Promise<void>>(
+    'refreshTaskHandler',
+  );
 
 const projectModules = ref<ProjectModule[]>();
 
@@ -146,7 +151,8 @@ const getTaskOptions = async (args: {
     };
     const { data: response } = await TaskServices.getTaskOptions(params);
     if (response) {
-      dependencies.value[args.index].options = response.data.taskOptions;
+      dependencies.value[args.index].options = response.data
+        .taskOptions as DropdownOption[];
     }
   } catch (error) {
     toast.add({
@@ -710,7 +716,7 @@ const reportBugTask = async (note?: string): Promise<void> => {
 };
 
 const reloadTask = (): void => {
-  eventBus.emit('detail-task:update', { taskId: taskId.value });
+  refreshTaskHandler('update', taskId.value);
 };
 
 const openDialogReportBug = (id: string): void => {

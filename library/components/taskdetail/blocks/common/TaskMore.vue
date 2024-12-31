@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import { ref, shallowRef } from 'vue';
+import { inject, ref, shallowRef } from 'vue';
 import Button from 'lib/components/button/Button.vue';
 import Menu from 'lib/components/menu/Menu.vue';
 import { MenuItem } from 'lib/components/menuitem';
 import { TaskDetailData } from 'lib/types/task.type';
 import DialogConfirmDeleteTask from './DialogConfirmDeleteTask.vue';
-import eventBus from 'lib/event-bus';
+import { DetailTaskEmits } from '../../TaskDetail.vue.d';
+
+const refreshTaskHandler =
+  inject<(eventName: keyof DetailTaskEmits, id?: string) => Promise<void>>(
+    'refreshTaskHandler',
+  );
 
 const props = defineProps<{
   taskDetail: TaskDetailData;
@@ -46,8 +51,6 @@ const toggleMenu = (e: Event): void => {
   <DialogConfirmDeleteTask
     v-model:visible="deleteConfirm"
     :tasks="[props.taskDetail]"
-    @saved="
-      eventBus.emit('detail-task:delete', { taskId: props.taskDetail._id })
-    "
+    @saved="refreshTaskHandler('delete', props.taskDetail._id)"
   />
 </template>

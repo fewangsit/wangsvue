@@ -26,7 +26,6 @@ import { ProjectProcess } from 'lib/types/projectProcess.type';
 import { ProjectModule } from 'lib/types/projectModule.type';
 import { ProjectSubModule } from 'lib/types/projectSubmodule.type';
 import Textarea from 'primevue/textarea';
-import eventBus from 'lib/event-bus';
 import { TaskDetailData } from 'lib/types/task.type';
 import { useLoadingStore } from 'lib/build-entry';
 import DialogPriorityValue from './DialogPriorityValue.vue';
@@ -39,6 +38,7 @@ import DialogReportBug from 'lib/components/dialogreportbug/DialogReportBug.vue'
 import SonarQubeSummary from './SonarQubeSummary.vue';
 import DialogConfirmApproval from './DialogConfirmApproval.vue';
 import { ProjectDetail } from 'lib/types/project.type';
+import { DetailTaskEmits } from '../../TaskDetail.vue.d';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -56,6 +56,10 @@ const userType =
 const isProcessTeamLeader = inject<ComputedRef<boolean>>('isProcessTeamLeader');
 const isMember = inject<ComputedRef<boolean>>('isMember');
 const isApproverHasAccess = inject<ComputedRef<boolean>>('isApproverHasAccess');
+const refreshTaskHandler =
+  inject<(eventName: keyof DetailTaskEmits, id?: string) => Promise<void>>(
+    'refreshTaskHandler',
+  );
 
 const props = defineProps<{
   initialModule?: {
@@ -631,7 +635,7 @@ const editTask = async (): Promise<void> => {
 
     await TaskServices.putEditTask(taskId.value, dataDTO);
 
-    eventBus.emit('detail-task:update', { taskId: taskId.value });
+    refreshTaskHandler('update', taskId.value);
   } catch (error) {
     console.error(error);
     toast.add({
@@ -859,7 +863,7 @@ const reportBugTask = async (note?: string): Promise<void> => {
         severity: 'success',
       });
       dialogReportBug.value = false;
-      eventBus.emit('detail-task:update', { taskId: taskId.value });
+      refreshTaskHandler('update', taskId.value);
     }
   } catch (error) {
     toast.add({
@@ -881,10 +885,10 @@ const onSubmitApproval = (): void => {
     taskDetail.value?.status === 'Waiting for Approval' &&
     !isApproved.value
   ) {
-    eventBus.emit('detail-task:delete', { taskId: taskId.value });
+    refreshTaskHandler('delete', taskId.value);
   } else {
     approvalId.value = null;
-    eventBus.emit('detail-task:update', { taskId: taskId.value });
+    refreshTaskHandler('update', taskId.value);
   }
 };
 
@@ -1208,26 +1212,26 @@ watch(
 
   <DialogReviewLeader
     v-model:visible="dialogReview"
-    @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
+    @saved="refreshTaskHandler('update', taskId)"
   />
 
   <DialogFinishReview
     v-model:visible="dialogFinishReview"
     :process-name="taskDetail?.process?.name"
     @report-bug="dialogReportBug = true"
-    @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
+    @saved="refreshTaskHandler('update', taskId)"
   />
 
   <DialogConfirmFinishTask
     v-model:visible="dialogConfirmFinishTask"
     :task-detail="taskDetail"
-    @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
+    @saved="refreshTaskHandler('update', taskId)"
   />
 
   <DialogConfirmEdit
     v-model:visible="dialogConfirmEdit"
     :task-detail="taskDetail"
-    @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
+    @saved="refreshTaskHandler('update', taskId)"
   />
 
   <DialogConfirmApproval
