@@ -6,9 +6,11 @@ import { filterVisibleMenu } from './helpers';
 import Menu, { MenuEmits, MenuProps } from './Menu.vue.d';
 import Icon from '../icon/Icon.vue';
 import PrimeMenu from 'primevue/menu';
+import eventBus from 'lib/event-bus';
 
+const overlayId = +new Date();
 withDefaults(defineProps<MenuProps>(), { popup: true, model: [] });
-defineEmits<MenuEmits>();
+const emit = defineEmits<MenuEmits>();
 
 const Preset = inject<Record<string, any>>('preset', {}).menu;
 const menu = ref<Menu>();
@@ -20,14 +22,28 @@ const show = (e: Event): void => {
   menu.value?.show(e);
 };
 
-const hide = (): void => {
-  menu.value?.hide();
+const hideMenu = (event: { overlayId: number }): void => {
+  if (menu.value && event.overlayId !== overlayId) menu.value?.hide();
+  console.log(overlayId, event.overlayId);
+};
+
+const onHideMenu = (e: Event): void => {
+  console.log('hide', overlayId);
+  eventBus.off('overlay:show', hideMenu);
+  emit('blur', e);
+};
+
+const onShowMenu = (e: Event): void => {
+  console.log('show', overlayId);
+  eventBus.emit('overlay:show', { overlayId });
+  eventBus.on('overlay:show', hideMenu);
+  emit('focus', e);
 };
 
 defineExpose({
   toggle,
   show,
-  hide,
+  hide: hideMenu,
 });
 </script>
 
@@ -36,8 +52,8 @@ defineExpose({
     v-bind="$props"
     ref="menu"
     :model="filterVisibleMenu($props.model)"
-    @blur="$emit('blur', $event)"
-    @focus="$emit('focus', $event)"
+    @blur="onHideMenu"
+    @focus="onShowMenu"
   >
     <template #item="{ item, props }">
       <router-link
