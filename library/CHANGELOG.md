@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.151
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.150...v1.5.151)
+
+### 🩹 Fixes
+
+- **taskdetail:** Change eventbus emit detailtask:event into provide inject method in taskdetail ([7a6bedc](https://github.com/fewangsit/wangsvue/commit/7a6bedc))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.150
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.149...v1.5.150)
