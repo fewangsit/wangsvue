@@ -66,7 +66,8 @@ type TaskMenu = MenuItem & {
   component: DefineComponent<any, any, any>;
 };
 
-onMounted(async () => {
+onMounted(() => {
+  console.log('onMounted');
   attachEventListener();
 });
 
@@ -330,6 +331,7 @@ const getDetailTask = async (): Promise<void> => {
 };
 
 const loadData = async (): Promise<void> => {
+  console.log('loadData');
   await getDetailTask();
   await getChecklists();
   await getTaskDependencies();
@@ -341,8 +343,14 @@ const refreshAndEmitHandler = async (
   id?: string,
 ): Promise<void> => {
   try {
+    console.log('1', eventName);
     // Skip this function if id doesn't equal the task id.
-    if (id !== taskId.value || !taskId.value) return;
+    if (id !== taskId.value || !taskId.value) {
+      console.log('2', eventName);
+      return;
+    }
+
+    console.log('3', eventName);
 
     if (eventName === 'delete') {
       emit('delete');
@@ -372,6 +380,7 @@ const refreshAndEmitHandler = async (
 };
 
 const attachEventListener = (): void => {
+  console.log('attachEventListener');
   eventBus.on('detail-task:show', (event) =>
     refreshAndEmitHandler('show', event.taskId),
   );
