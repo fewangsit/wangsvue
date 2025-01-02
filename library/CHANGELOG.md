@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.156
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.155...v1.5.156)
+
+### 💅 Refactors
+
+- **ApproverInfo:** Adjust format date ([b5cfb14](https://github.com/fewangsit/wangsvue/commit/b5cfb14))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.155
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.154...v1.5.155)
