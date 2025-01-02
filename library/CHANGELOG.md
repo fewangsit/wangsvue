@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v1.5.155
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.154...v1.5.155)
+
+### 🩹 Fixes
+
+- **Menu:** Hide menu on showing another menu (todo) ([4843e9f](https://github.com/fewangsit/wangsvue/commit/4843e9f))
+- **Menu:** Hide menu on showing another menu ([a4ab220](https://github.com/fewangsit/wangsvue/commit/a4ab220))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.154
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.153...v1.5.154)
