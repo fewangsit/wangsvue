@@ -1,6 +1,52 @@
 # Changelog
 
 
+## v1.5.154
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.153...v1.5.154)
+
+### 🚀 Enhancements
+
+- **InputText:** Implement validate on blur ([cb60579](https://github.com/fewangsit/wangsvue/commit/cb60579))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.153
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.152...v1.5.153)
+
+### 🩹 Fixes
+
+- **Menu:** Hide menu on showing another menu" ([742b62b](https://github.com/fewangsit/wangsvue/commit/742b62b))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
+## v1.5.152
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.151...v1.5.152)
+
+### 🚀 Enhancements
+
+- **detailSprint:** PBI must have tasks to start ([8695360](https://github.com/fewangsit/wangsvue/commit/8695360))
+- **notification:** Improvement and approval notifs ([715ba27](https://github.com/fewangsit/wangsvue/commit/715ba27))
+- **notification:** Sub module deployment notif ([bf90c98](https://github.com/fewangsit/wangsvue/commit/bf90c98))
+
+### 🩹 Fixes
+
+- **Menu:** Hide menu on showing another menu ([14ca7e1](https://github.com/fewangsit/wangsvue/commit/14ca7e1))
+
+### 💅 Refactors
+
+- **detailPBI:** Add global task progress column ([8c8c812](https://github.com/fewangsit/wangsvue/commit/8c8c812))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.151
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.150...v1.5.151)
