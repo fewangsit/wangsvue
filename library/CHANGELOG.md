@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.157
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.156...v1.5.157)
+
+### 🚀 Enhancements
+
+- **DataTable:** Add `info` attribute on table column header ([193bacb](https://github.com/fewangsit/wangsvue/commit/193bacb))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.156
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.155...v1.5.156)
