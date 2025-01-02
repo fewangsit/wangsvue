@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.154
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.153...v1.5.154)
+
+### 🚀 Enhancements
+
+- **InputText:** Implement validate on blur ([cb60579](https://github.com/fewangsit/wangsvue/commit/cb60579))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.153
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.152...v1.5.153)
