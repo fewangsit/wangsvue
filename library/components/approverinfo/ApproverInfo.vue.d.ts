@@ -24,6 +24,10 @@ export interface ApproverInfoProps {
    * To set label text when showShortInfo is false
    */
   label?: string;
+  /**
+   * To format date in list approver
+   * @default true
+   */
   useFormatDate?: boolean;
 }
 

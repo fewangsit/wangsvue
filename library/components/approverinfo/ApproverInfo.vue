@@ -9,6 +9,7 @@ import { formatDate } from 'lib/utils';
 
 const props = withDefaults(defineProps<ApproverInfoProps>(), {
   showShortInfo: true,
+  useFormatDate: true,
 });
 
 const showApprovalPopUp = shallowRef<boolean>(false);
@@ -48,7 +49,13 @@ const getSeverity = (status?: string): BadgeProps['severity'] => {
 
 const getDate = (dateString?: string): string => {
   if (props.useFormatDate) {
-    return dateString ? formatDate(new Date(dateString)) : '-';
+    return dateString
+      ? formatDate(new Date(dateString), {
+          locale: 'id-ID',
+          dateFormat: 'dd/mm/yyyy',
+          timeFormat: 'HH:mm',
+        })
+      : '-';
   }
   return dateString;
 };
@@ -88,7 +95,7 @@ const getDate = (dateString?: string): string => {
   <Dialog
     v-model:visible="showApprovalPopUp"
     class="min-w-[400px]"
-    header="Approval List"
+    header="List Approver"
     modal
   >
     <div class="flex flex-col gap-3 justify-between">
