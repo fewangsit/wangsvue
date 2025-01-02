@@ -185,6 +185,12 @@ export interface InputTextProps extends /* @vue-ignore */ InputHTMLAttributes {
    */
   blurOnReachMaxLength?: boolean;
   /**
+   * Validate the input on blur event.
+   *
+   * @default false - on input event
+   */
+  validateOnBlur?: boolean;
+  /**
    * For Input URL, whether validate the protocol http/https
    *
    * @default true
