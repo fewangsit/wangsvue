@@ -22,28 +22,32 @@ const show = (e: Event): void => {
   menu.value?.show(e);
 };
 
-const hideMenu = (event: { overlayId: number }): void => {
+const hide = (event: { overlayId: number }): void => {
+  // If another overlay is clicked, hide the current overlay
   if (menu.value && event.overlayId !== overlayId) menu.value?.hide();
-  console.log(overlayId, event.overlayId);
 };
 
 const onHideMenu = (e: Event): void => {
-  console.log('hide', overlayId);
-  eventBus.off('overlay:show', hideMenu);
   emit('blur', e);
+  /*
+   * Waiting for next tick will prevent the menu from
+   * closing, so need to wait for 1 second
+   */
+  setTimeout(() => {
+    eventBus.off('overlay:show', hide);
+  }, 1000);
 };
 
 const onShowMenu = (e: Event): void => {
-  console.log('show', overlayId);
+  eventBus.on('overlay:show', hide);
   eventBus.emit('overlay:show', { overlayId });
-  eventBus.on('overlay:show', hideMenu);
   emit('focus', e);
 };
 
 defineExpose({
   toggle,
   show,
-  hide: hideMenu,
+  hide,
 });
 </script>
 
