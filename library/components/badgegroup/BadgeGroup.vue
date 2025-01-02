@@ -8,6 +8,7 @@ import Dialog from 'primevue/dialog';
 const props = withDefaults(defineProps<BadgeGroupProps>(), {
   headerLabel: 'Header',
   emptyable: false,
+  textMore: 'more',
 });
 
 const Preset = inject<Record<string, any>>('preset', {}).badgegroup;
@@ -35,7 +36,7 @@ const totalRemainingLabel = computed(
     />
     <Button
       v-if="totalRemainingLabel"
-      :label="`+${totalRemainingLabel} more`"
+      :label="`+${totalRemainingLabel} ${textMore}`"
       v-bind="Preset.showmorebutton"
       @click="detailDialog = true"
       severity="dark"

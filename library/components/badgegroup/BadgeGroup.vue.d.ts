@@ -5,6 +5,12 @@ export interface BadgeGroupProps
   extends Omit<BadgeProps, 'label' | 'disabled' | 'removable'> {
   labels: string[];
   /**
+   * The text shown on the more button
+   *
+   * @default 'more'
+   */
+  textMore?: string;
+  /**
    * Maximum number of label to be shown.
    */
   limit?: number;
