@@ -190,6 +190,7 @@ export type ColumnPreset = ColumnTogglePreset | ColumnMultiRowPreset;
 export interface TableColumn {
   header?: string;
   field: string;
+  info?: string;
   editable?: boolean;
   sortable?: boolean;
   /**

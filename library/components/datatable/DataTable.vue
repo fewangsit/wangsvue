@@ -934,7 +934,15 @@ const listenUpdateTableEvent = (): void => {
                 @click="col.sortable ? sortColumn(col.field, $event) : null"
               >
                 <span v-bind="Preset.headercellcontent">
-                  {{ col.header }}
+                  <span class="flex">
+                    {{ col.header }}
+                    <Icon
+                      v-if="col.info"
+                      :info="col.info"
+                      class="w-[10px] h-[10px]"
+                      icon="info"
+                    />
+                  </span>
 
                   <Icon
                     v-if="col.sortable"
