@@ -4,7 +4,7 @@ export interface ApproverDetail {
   _id?: string;
   level: number;
   type: 'and' | 'or';
-  status: 'selesai' | 'menunggu approval';
+  status: 'disetujui' | 'ditolak' | 'menunggu approval';
   approvers: {
     _id: string;
     fullName: string;

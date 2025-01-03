@@ -133,20 +133,17 @@ const onUpdateModelValue = (e?: string): void => {
   ) {
     const max = props.maxLength;
     const sliced = e.slice(0, max);
-    emit('update:modelValue', sliced);
-
-    if (props.useValidator) {
-      field.value = sliced;
-      temporaryValue.value = sliced;
-    }
+    temporaryValue.value = sliced;
     inputKey.value++;
   } else {
-    emit('update:modelValue', e);
-    if (props.useValidator) {
-      field.value = e;
-      temporaryValue.value = e;
-    }
+    temporaryValue.value = e;
   }
+
+  if (!props.validateOnBlur && props.useValidator) {
+    field.value = temporaryValue.value;
+  }
+
+  emit('update:modelValue', temporaryValue.value);
 };
 
 /**
@@ -164,8 +161,8 @@ watch(
 watch(
   () => props.modelValue,
   (value) => {
-    field.value = value?.trim();
     temporaryValue.value = value?.trim();
+    if (!props.validateOnBlur) field.value = temporaryValue.value;
   },
 );
 

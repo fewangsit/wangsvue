@@ -1,6 +1,32 @@
 # Changelog
 
 
+## v1.5.159
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.158...v1.5.159)
+
+### 🚀 Enhancements
+
+- **BadgeGroup:** Add custom text for 'more' button when labels length exceed limit ([6147e60](https://github.com/fewangsit/wangsvue/commit/6147e60))
+- **Form:** Expose function `setOuterFieldsWrapperHeight` to manually calls it outside ([60329de](https://github.com/fewangsit/wangsvue/commit/60329de))
+
+### 🩹 Fixes
+
+- **ApproverInfo:** Incorrect date format ([910dd88](https://github.com/fewangsit/wangsvue/commit/910dd88))
+- **ApproverInfo:** Incorrect conditions to show specific badge/text ([be80474](https://github.com/fewangsit/wangsvue/commit/be80474))
+
+### 💅 Refactors
+
+- **InputText:** Implement validateOnBlur more restrictly ([004ab98](https://github.com/fewangsit/wangsvue/commit/004ab98))
+
+### 🏡 Chore
+
+- **presets:** Update version ([67fa726](https://github.com/fewangsit/wangsvue/commit/67fa726))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.158
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.157...v1.5.158)
