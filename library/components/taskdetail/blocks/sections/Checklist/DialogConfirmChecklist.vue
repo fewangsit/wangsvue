@@ -184,8 +184,11 @@ watch(visible, () => (reason.value = ''));
       <Textarea
         v-model="reason"
         v-focus
+        :max-input="120"
+        :max-length="120"
         :validator-message="{
           empty: 'Alasan harus diisi.',
+          exceed: 'Maksimal 120 karakter.',
         }"
         field-name="reason"
         label="Alasan"
