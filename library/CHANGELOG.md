@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.162
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.161...v1.5.162)
+
+### 🩹 Fixes
+
+- Update condition for showing delete task action in tasktable ([2f8db5d](https://github.com/fewangsit/wangsvue/commit/2f8db5d))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
 ## v1.5.161
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.151...v1.5.161)
