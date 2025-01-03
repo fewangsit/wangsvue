@@ -52,8 +52,8 @@ const getDate = (dateString?: string): string => {
     return dateString
       ? formatDate(new Date(dateString), {
           locale: 'id-ID',
-          dateFormat: 'dd/mm/yyyy',
-          timeFormat: 'HH:mm',
+          dateFormat: 'dd M yyyy',
+          timeFormat: 'HH:mm:ss',
         })
       : '-';
   }
@@ -105,7 +105,7 @@ const getDate = (dateString?: string): string => {
             Level {{ approval.level }} ({{ approval.type.toLowerCase() }})
           </span>
           <Badge
-            v-if="approval.status === 'selesai'"
+            v-if="approval.status !== 'menunggu approval'"
             label="selesai"
             severity="success"
           />
@@ -122,7 +122,7 @@ const getDate = (dateString?: string): string => {
             }}</span>
           </div>
           <span
-            v-if="approval.status === 'selesai' && !approver.action"
+            v-if="approval.status !== 'menunggu approval' && !approver.action"
             class="text-general-800 font-normal text-xs"
           >
             Tidak terlibat

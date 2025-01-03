@@ -181,9 +181,7 @@ export default {
   },
   itemCheckbox: presetCheckbox,
   closeButton: {
-    class: [
-      'hidden',
-    ],
+    class: ['hidden'],
   },
   closeButtonIcon: {
     class: [
@@ -236,7 +234,7 @@ export default {
       'py-2 px-4',
 
       // Color
-      { 'bg-primary-50': context.selected },
+      { '!font-medium': context.selected },
       {
         'text-surface-700':
           !context.focused && !context.selected && !context.disabled,
@@ -246,16 +244,13 @@ export default {
           !context.focused && !context.selected && context.disabled,
       },
       {
-        'bg-surface-200 text-surface-700':
-          context.focused && !context.selected,
+        'bg-primary-50 text-surface-700': context.focused && !context.selected,
       },
       {
-        'bg-primary-bg-weak text-primary':
-          context.focused && context.selected,
+        'bg-primary-50 text-primary-500': context.focused && context.selected,
       },
       {
-        'text-surface-700':
-          !context.focused && context.selected,
+        'text-surface-700': !context.focused && context.selected,
       },
 
       //States
