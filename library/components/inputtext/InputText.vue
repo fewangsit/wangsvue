@@ -24,6 +24,7 @@ const props = withDefaults(defineProps<InputTextProps>(), {
   maxLength: 30,
   type: 'text',
   blurOnReachMaxLength: false,
+  validateOnBlur: false,
   manualInvalidContainer: false,
   useProtocol: true,
 });
@@ -41,6 +42,9 @@ const field = reactive<FieldValidation<Nullable<string>>>({
 
 const invalidInput = computed(() => props.invalid || !!field.errorMessage);
 const inputKey = shallowRef(0);
+const temporaryValue = shallowRef<Nullable<string>>(
+  props.value || props.modelValue,
+); // Temporary store the input value for props.validateOnBlur
 
 onMounted(() => {
   if (props.useValidator) {
@@ -114,6 +118,12 @@ const validateEmail = (
     : invalidFormat;
 };
 
+const onBlurEvent = (): void => {
+  if (props.validateOnBlur) field.value = temporaryValue.value;
+  emit('blur', temporaryValue.value);
+  // Emit('blur', ($event.target as HTMLInputElement).value)
+};
+
 const onUpdateModelValue = (e?: string): void => {
   if (
     e &&
@@ -123,13 +133,17 @@ const onUpdateModelValue = (e?: string): void => {
   ) {
     const max = props.maxLength;
     const sliced = e.slice(0, max);
-    emit('update:modelValue', sliced);
-    if (props.useValidator) field.value = sliced;
+    temporaryValue.value = sliced;
     inputKey.value++;
   } else {
-    emit('update:modelValue', e);
-    if (props.useValidator) field.value = e;
+    temporaryValue.value = e;
   }
+
+  if (!props.validateOnBlur && props.useValidator) {
+    field.value = temporaryValue.value;
+  }
+
+  emit('update:modelValue', temporaryValue.value);
 };
 
 /**
@@ -139,6 +153,7 @@ watch(
   () => props.value,
   (newValue) => {
     field.value = newValue?.trim();
+    temporaryValue.value = newValue?.trim();
   },
   { once: true },
 );
@@ -146,7 +161,8 @@ watch(
 watch(
   () => props.modelValue,
   (value) => {
-    field.value = value?.trim();
+    temporaryValue.value = value?.trim();
+    if (!props.validateOnBlur) field.value = temporaryValue.value;
   },
 );
 
@@ -193,7 +209,7 @@ watch(
         :invalid="invalidInput"
         :model-value="field.value"
         :placeholder="inputPlaceholder"
-        @blur="emit('blur', ($event.target as HTMLInputElement).value)"
+        @blur="onBlurEvent"
         @input="emit('input', ($event.target as HTMLInputElement).value)"
         @update:model-value="onUpdateModelValue"
       />

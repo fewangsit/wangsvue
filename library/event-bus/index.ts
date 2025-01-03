@@ -39,11 +39,6 @@ export type Events = {
   'data-table:update-selected-data': TableEvent & { data?: Data[] };
   'data-table:clear-selected-data': TableEvent;
 
-  'detail-task:show': { taskId: string };
-  'detail-task:create': { taskId: string };
-  'detail-task:update': { taskId: string };
-  'detail-task:delete': { taskId: string };
-
   'work-calendar:reset-month': unknown;
   'work-calendar:reset-year': unknown;
 

@@ -7,10 +7,12 @@ export type TicketTaskIdResponse = {
 export type TicketTaskId = {
   _id: string;
   ticketId: string;
-  status: BadgeStatus;
+  status: TicketStatus;
+  subject: string;
+  deadline: string;
 };
 
-export type BadgeStatus =
+export type TicketStatus =
   | 'Open'
   | 'On Verification'
   | 'Request Cancel'

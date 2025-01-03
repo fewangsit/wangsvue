@@ -34,7 +34,15 @@ const toggle = (event: Event): void => {
   op.value.toggle(event);
 };
 
-defineExpose({ toggle });
+const show = (event: Event): void => {
+  op.value.show(event);
+};
+
+const hide = (): void => {
+  op.value.hide();
+};
+
+defineExpose({ toggle, hide, show });
 </script>
 
 <template>

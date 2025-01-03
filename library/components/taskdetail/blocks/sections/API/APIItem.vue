@@ -17,6 +17,7 @@ import DialogTestApi from './DialogTestApi.vue';
 import Form from 'lib/components/form/Form.vue';
 import { TaskApiServices } from 'wangsit-api-services';
 import Checkbox from 'lib/components/checkbox/Checkbox.vue';
+import { WangsitStatus } from 'lib/types/wangsStatus.type';
 
 const updateMentionSectionText = inject<(sectionTitle: string) => void>(
   'updateMentionSectionText',
@@ -76,6 +77,19 @@ const toggleKey = shallowRef(0);
 
 const isAPISpec = computed(
   () => taskDetail.value?.process?.name === 'API Spec',
+);
+
+/**
+ * Computed property to determine if the delete action should be disabled.
+ *
+ * This property checks if the current task status is either 'Backlog' or 'Sprint'.
+ * If the task status is not one of these, the delete action will be disabled.
+ */
+const isDeleteDisabled = computed(
+  () =>
+    !(['Backlog', 'Sprint'] as WangsitStatus[]).includes(
+      taskApi.value.taskStatus,
+    ),
 );
 
 const toggleAccordion = (): void => {
@@ -270,7 +284,7 @@ const toggleAPIStatus = async (state: boolean): Promise<void> => {
       </div>
     </div>
     <Button
-      :disabled="props.disabled"
+      :disabled="props.disabled || isDeleteDisabled"
       @click="dialogDeleteConfirm = true"
       icon="close"
       severity="danger"

@@ -26,7 +26,6 @@ import { ProjectProcess } from 'lib/types/projectProcess.type';
 import { ProjectModule } from 'lib/types/projectModule.type';
 import { ProjectSubModule } from 'lib/types/projectSubmodule.type';
 import Textarea from 'primevue/textarea';
-import eventBus from 'lib/event-bus';
 import { TaskDetailData } from 'lib/types/task.type';
 import { useLoadingStore } from 'lib/build-entry';
 import DialogPriorityValue from './DialogPriorityValue.vue';
@@ -38,12 +37,15 @@ import { WangsitStatus } from 'lib/types/wangsStatus.type';
 import DialogReportBug from 'lib/components/dialogreportbug/DialogReportBug.vue';
 import SonarQubeSummary from './SonarQubeSummary.vue';
 import DialogConfirmApproval from './DialogConfirmApproval.vue';
+import { ProjectDetail } from 'lib/types/project.type';
+import { DetailTaskEmits } from '../../TaskDetail.vue.d';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
 
 const taskId = inject<Ref<string>>('taskId');
 const taskDetail = inject<Ref<TaskDetailData>>('taskDetail');
+const projectDetail = inject<Ref<ProjectDetail>>('projectDetail');
 const isNewTask = inject<Ref<boolean>>('isNewTask');
 const legendForm = inject<Ref<TaskLegendForm>>('legendForm');
 const loadingTask = inject<Ref<boolean>>('loadingTask');
@@ -54,6 +56,10 @@ const userType =
 const isProcessTeamLeader = inject<ComputedRef<boolean>>('isProcessTeamLeader');
 const isMember = inject<ComputedRef<boolean>>('isMember');
 const isApproverHasAccess = inject<ComputedRef<boolean>>('isApproverHasAccess');
+const refreshTaskHandler =
+  inject<(eventName: keyof DetailTaskEmits, id?: string) => Promise<void>>(
+    'refreshTaskHandler',
+  );
 
 const props = defineProps<{
   initialModule?: {
@@ -71,12 +77,14 @@ const props = defineProps<{
   isAllDependencyDone?: boolean;
   hasRequestedChecklist?: boolean;
   isAllEndpointChecked?: boolean;
+  hasActiveTickets?: boolean;
 }>();
 
 const emit = defineEmits<{
   processChange: [
     process: Pick<ProjectProcess, '_id' | 'name' | 'team' | 'processPosition'>,
   ];
+  create: [];
 }>();
 
 const projectId = inject<Ref<string>>('projectId');
@@ -368,6 +376,8 @@ const isTitleInputDisabled = computed<boolean>(() => {
  * - Not all dependencies are done.
  * - Not all checklists are done.
  * - There's any requested checklist (waiting for approval).
+ * - There's any active tickets ('Open', 'Request Cancel', 'On Verification', 'On Progress').
+ * - The project method is sprint but there are no active sprint.
  * - The task process is 'API Spec' and does not have any task API / endpoint.
  *
  * @returns {boolean} - True if the button should be disabled, false otherwise.
@@ -378,6 +388,9 @@ const isMarkAsDoneDisabled = computed(
     !props.isAllDependencyDone ||
     !props.isAllChecklistDone ||
     props.hasRequestedChecklist ||
+    props.hasActiveTickets ||
+    (projectDetail.value.method === 'Sprint' &&
+      !taskDetail.value.isInActiveSprint) ||
     (taskDetail.value?.process?.name === 'API Spec' &&
       !props.isAllEndpointChecked),
 );
@@ -587,7 +600,7 @@ const createTask = async (): Promise<void> => {
       repository: legendForm.value?.repository,
       name: legendForm.value.title,
       team: legendForm.value.process.team.map((team) => team.initial),
-      assignedTo: ['member', 'teamLeader', 'guest'].includes(userType.value)
+      assignedTo: ['member', 'guest'].includes(userType.value)
         ? [user._id]
         : undefined,
     };
@@ -596,7 +609,7 @@ const createTask = async (): Promise<void> => {
 
     taskId.value = data.data;
 
-    eventBus.emit('detail-task:create', { taskId: taskId.value });
+    emit('create');
 
     isNewTask.value = false;
   } catch (error) {
@@ -622,7 +635,7 @@ const editTask = async (): Promise<void> => {
 
     await TaskServices.putEditTask(taskId.value, dataDTO);
 
-    eventBus.emit('detail-task:update', { taskId: taskId.value });
+    refreshTaskHandler('update', taskId.value);
   } catch (error) {
     console.error(error);
     toast.add({
@@ -850,7 +863,7 @@ const reportBugTask = async (note?: string): Promise<void> => {
         severity: 'success',
       });
       dialogReportBug.value = false;
-      eventBus.emit('detail-task:update', { taskId: taskId.value });
+      refreshTaskHandler('update', taskId.value);
     }
   } catch (error) {
     toast.add({
@@ -872,10 +885,10 @@ const onSubmitApproval = (): void => {
     taskDetail.value?.status === 'Waiting for Approval' &&
     !isApproved.value
   ) {
-    eventBus.emit('detail-task:delete', { taskId: taskId.value });
+    refreshTaskHandler('delete', taskId.value);
   } else {
     approvalId.value = null;
-    eventBus.emit('detail-task:update', { taskId: taskId.value });
+    refreshTaskHandler('update', taskId.value);
   }
 };
 
@@ -1199,25 +1212,26 @@ watch(
 
   <DialogReviewLeader
     v-model:visible="dialogReview"
-    @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
+    @saved="refreshTaskHandler('update', taskId)"
   />
 
   <DialogFinishReview
     v-model:visible="dialogFinishReview"
+    :process-name="taskDetail?.process?.name"
     @report-bug="dialogReportBug = true"
-    @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
+    @saved="refreshTaskHandler('update', taskId)"
   />
 
   <DialogConfirmFinishTask
     v-model:visible="dialogConfirmFinishTask"
     :task-detail="taskDetail"
-    @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
+    @saved="refreshTaskHandler('update', taskId)"
   />
 
   <DialogConfirmEdit
     v-model:visible="dialogConfirmEdit"
     :task-detail="taskDetail"
-    @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
+    @saved="refreshTaskHandler('update', taskId)"
   />
 
   <DialogConfirmApproval

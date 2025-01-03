@@ -182,6 +182,7 @@ export interface ColumnMultiRowPreset {
 export interface MultiRowAttribute {
   class?: string | string[];
   value?: string;
+  bodyComponent?: TableCellComponent;
 }
 
 export type ColumnPreset = ColumnTogglePreset | ColumnMultiRowPreset;
@@ -189,6 +190,7 @@ export type ColumnPreset = ColumnTogglePreset | ColumnMultiRowPreset;
 export interface TableColumn {
   header?: string;
   field: string;
+  info?: string;
   editable?: boolean;
   sortable?: boolean;
   /**

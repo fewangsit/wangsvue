@@ -3,6 +3,7 @@ import { navigateToUrl } from 'single-spa';
 import { computed } from 'vue';
 import {
   goToAccountMember,
+  goToApproval,
   goToProject,
   goToProjectList,
   goToQC,
@@ -113,11 +114,19 @@ const goToDetail = (notification: NotificationItemType): void => {
     case 'API & Server ':
       navigateToUrl('/proyek/detail-proyek/api-server');
       break;
+    case 'Improvement':
+      navigateToUrl('/proyek/detail-proyek/penyesuaian');
+      break;
     case 'Project':
       goToProjectList(notification);
       break;
     case 'Quality Control':
+    case 'Quality Control PBI':
       goToQC(notification);
+      break;
+    case 'Request Approval':
+    case 'Waiting for Approval':
+      goToApproval(notification);
       break;
     default:
       showDetailTask = goToProject(notification);

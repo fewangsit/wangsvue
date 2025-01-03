@@ -4,7 +4,7 @@ export interface ApproverDetail {
   _id?: string;
   level: number;
   type: 'and' | 'or';
-  status: 'selesai' | 'menunggu approval';
+  status: 'disetujui' | 'ditolak' | 'menunggu approval';
   approvers: {
     _id: string;
     fullName: string;
@@ -24,6 +24,10 @@ export interface ApproverInfoProps {
    * To set label text when showShortInfo is false
    */
   label?: string;
+  /**
+   * To format date in list approver
+   * @default true
+   */
   useFormatDate?: boolean;
 }
 

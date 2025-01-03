@@ -11,6 +11,7 @@
     "build": "rimraf dist && pnpm build:presets && vite build",
     "build:dev": "vite build --watch",
     "build:lib": "pnpm --filter wangsvue build",
+    "serve:http": "pnpm serve library/dist --cors",
     "release": "pnpm --filter wangsvue release",
     "release:minor": "pnpm --filter wangsvue release:minor",
     "release:patch": "pnpm --filter wangsvue release:patch",
@@ -64,6 +65,7 @@
     "moment-timezone": "^0.5.45",
     "pnpm": "^9.9.0",
     "primevue": "^3.53.0",
+    "serve": "^14.2.4",
     "sharp": "^0.33.5",
     "single-spa": "6.0.1",
     "socket.io-client": "^4.8.0",
@@ -74,7 +76,7 @@
     "vue-i18n": "9.13.1",
     "vue-router": "^4.4.3",
     "vuex": "4.1.0",
-    "wangsit-api-services": "^1.0.35",
+    "wangsit-api-services": "^1.0.55",
     "xlsx": "0.18.5"
   },
   "devDependencies": {

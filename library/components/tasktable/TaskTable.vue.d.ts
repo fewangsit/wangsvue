@@ -1,3 +1,4 @@
+import { Project } from 'lib/types/project.type';
 import { AssignedMember, Pbi } from '../dialogdetailpbi/DialogDetailPbi.vue.d';
 import { ClassComponent } from '../ts-helpers';
 
@@ -30,12 +31,18 @@ export interface TaskTableProps {
    */
   projectId?: string;
   /**
-   * Used as query params while fetching data table
+   * Used as initial value of module for task detail's legend
    * in project-module / project-subModule page
    */
   moduleId?: string;
   /**
    * Used as query params while fetching data table
+   * in project-module / project-subModule page
+   */
+  moduleInitial?: string;
+  /**
+   * Used as query params while fetching data table
+   * and initial value of submodule for task detail's legend
    * in project-subModule page
    */
   subModuleId?: string;
@@ -46,6 +53,10 @@ export interface TaskTableProps {
    */
   selectedPbi?: Pbi;
   assignedPbiMembers?: AssignedMember[];
+  /**
+   * Used to determine whether the current user is a PM or not
+   */
+  project?: Project;
   editablePbi?: boolean;
   /**
    * Used as parameter while fetching data table

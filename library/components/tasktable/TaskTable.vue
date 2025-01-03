@@ -28,10 +28,15 @@ import {
   TaskTableProps,
   TaskTableTab,
 } from './TaskTable.vue.d';
-import { User } from 'lib/types/user.type';
 import { TaskTableItem, TaskTableOptionQuery } from 'lib/types/task.type';
 import Badge from '../badge/Badge.vue';
-import { formatISODate, isIntersect, useToast } from 'lib/utils';
+import {
+  formatISODate,
+  getProjectPermission,
+  getUser,
+  isIntersect,
+  useToast,
+} from 'lib/utils';
 import DependencyCol from './DependencyCol.vue';
 import Button from '../button/Button.vue';
 import TaskDetail from '../taskdetail/TaskDetail.vue';
@@ -58,7 +63,7 @@ type CustomFilterField = FilterField & {
   visible: boolean;
 };
 
-const userData = JSON.parse(localStorage.getItem('user') as string) as User;
+const userData = getUser();
 const taskStatuses: string[] = [
   'Selesai',
   'Pending Review Leader',
@@ -454,7 +459,7 @@ const filterFields = computed<CustomFilterField[]>(() => [
  * Table actions:
  * - Assign Member (only for Admin/PM/Leader and task status is Backlog)
  * - Review (only for Leader and task status is Pending Review Leader)
- * - Detail Task (only for Admin/PM/Leader/Member and task type is parent/dependency)
+ * - Detail Task (task type is parent/dependency)
  * - Hapus (only for Admin/PM/Leader/Member and task status is Backlog/Sprint)
  * - Pulihkan (only if props.tab is 'deleted' )
  * - Hapus Permanen (only if props.tab is 'deleted')
@@ -464,9 +469,7 @@ const tableActions = computed<MenuItem[]>(() => {
     {
       label: 'Detail Task',
       icon: 'file-copy-2-line',
-      visible:
-        ['parent', 'dependency'].includes(selectedTask.value?.taskType) &&
-        isIntersect(['admin', 'pm', 'teamLeader', 'member'], userType.value),
+      visible: ['parent', 'dependency'].includes(selectedTask.value?.taskType),
       command: (): void => {
         dialogDetailTask.value = true;
       },
@@ -607,11 +610,16 @@ const tableBulkActions = computed<MenuItem[]>(() => {
   return props.tab === 'deleted' ? deletedBulkActions : otherBulkActions;
 });
 
+/*
+ * Roles that can assign PBI tasks:
+ * Admin, PM, members assigned to the PBI
+ */
 const canAssignPbiTask = computed<boolean>(
   () =>
     props.assignedPbiMembers?.length &&
     !['Selesai', 'Pending Testing'].includes(props.selectedPbi?.status ?? '') &&
-    isIntersect(['admin', 'pm', 'teamLeader', 'member'], userType.value) &&
+    (getProjectPermission(props.project).create ||
+      getUser()._id in props.assignedPbiMembers.map((member) => member._id)) &&
     props.editablePbi,
 );
 
@@ -638,7 +646,7 @@ const queryParamsByPage = computed(() => ({
     ? JSON.stringify([props.projectId])
     : undefined,
   module: props.page.toLowerCase().includes('module')
-    ? JSON.stringify([props.moduleId])
+    ? JSON.stringify([props.moduleInitial])
     : undefined,
   subModule: props.page.includes('subModule')
     ? JSON.stringify([props.subModuleId])
@@ -724,20 +732,20 @@ const getTaskOptions = async (
         tab: props.tab,
         query: { ...queryParamsByPage.value, [field]: true },
       });
-      responseData = response.data;
+      responseData = response.data as FetchOptionResponse<TaskOptions>;
     } else if (props.page === 'project-productBacklogItem') {
       const response = await TaskServices.getTaskOptions({
         ...queryParamsByPage.value,
         [field]: true,
       });
-      responseData = response.data;
+      responseData = response.data as FetchOptionResponse<TaskOptions>;
     } else {
       const response = await TaskServices.getTaskOptionsByTab({
         tab: props.tab,
         subTab: props.subTab,
         query: { ...queryParamsByPage.value, [field]: true },
       });
-      responseData = response.data;
+      responseData = response.data as FetchOptionResponse<TaskOptions>;
     }
 
     return responseData.data[field];
@@ -898,7 +906,11 @@ const selectProject = (projectId: string): void => {
       "
       :table-name="tableName"
       :tree-table="page !== 'project-productBacklogItem'"
-      @toggle-option="selectedTask = $event"
+      @toggle-option="
+        {
+          selectedTask = $event as TaskTableItem;
+        }
+      "
       data-key="_id"
       excel-toast-error-message="Data task gagal diunduh."
       lazy
@@ -962,6 +974,7 @@ const selectProject = (projectId: string): void => {
 
   <DialogFinishReview
     v-model:visible="dialogFinishReview"
+    :process-name="selectedTask?.process?.name"
     :task-id-prop="selectedTask?._id"
     @saved="reloadTable"
   />
@@ -974,12 +987,18 @@ const selectProject = (projectId: string): void => {
 
   <DialogConfirmDeleteTask
     v-model:visible="dialogConfirmDeleteTask"
+    :page="page"
+    :project-id="projectId"
+    :selected-pbi-id="selectedPbi?._id"
     :tasks="[selectedTask]"
     @saved="reloadTable"
   />
 
   <DialogConfirmDeleteTask
     v-model:visible="dialogConfirmDeleteTaskBulk"
+    :page="page"
+    :project-id="projectId"
+    :selected-pbi-id="selectedPbi?._id"
     :tasks="selectedTasks"
     @saved="reloadTable"
   />

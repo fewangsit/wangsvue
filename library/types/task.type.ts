@@ -1,6 +1,6 @@
 import { FormDataBody } from 'lib/dto/taskApi.dto';
 import { Member } from './member.type';
-import { DropdownOption } from './options.type';
+import { DropdownOption, MultiSelectOption } from './options.type';
 import { Project } from './project.type';
 import { ProjectModule } from './projectModule.type';
 import { ProjectProcess } from './projectProcess.type';
@@ -32,6 +32,7 @@ export type TaskDetailData = {
   timerStartedAt: string | null;
   timerStartedValue: number | null;
   approvalStatus: string;
+  isInActiveSprint: boolean;
 };
 
 export type TaskDescription = {
@@ -59,9 +60,9 @@ export type TaskDependency = {
   selectedOptions?: string[];
   loading?: boolean;
   custom?: boolean;
-  processOptions?: DropdownOption[];
-  moduleOptions?: DropdownOption[];
-  subModuleOptions?: DropdownOption[];
+  processOptions?: DropdownOption[] | MultiSelectOption[];
+  moduleOptions?: DropdownOption[] | MultiSelectOption[];
+  subModuleOptions?: DropdownOption[] | MultiSelectOption[];
   subModuleVisibility?: boolean;
 };
 
@@ -149,6 +150,7 @@ export interface TaskAPI {
   updatedBy: Member;
   updatedAt: string;
   anyChanges?: boolean; // Custom field for indicator if there is any changes in the data
+  taskStatus?: WangsitStatus;
 }
 
 export type FormDataBodyCustom = Omit<FormDataBody, 'isMandatory'> & {
@@ -192,7 +194,7 @@ export interface TaskTableItem {
   name: string;
   assignedTo: Member[];
   team: string[];
-  status: string;
+  status: WangsitStatus;
   priority?: number;
   timeReportedBug: number;
   childTask: number;

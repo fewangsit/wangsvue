@@ -133,8 +133,10 @@ const handleSubmit = async (e: FormPayload): Promise<void> => {
         </template>
       </Dropdown>
       <InputText
+        :max-length="30"
         :validator-message="{
           empty: 'Nama template harus diisi.',
+          exceed: 'Maksimal 30 karakter.',
         }"
         field-name="name"
         label="Nama Template"

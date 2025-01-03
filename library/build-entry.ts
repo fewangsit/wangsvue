@@ -1,4 +1,5 @@
 import type { MaybeRef, MaybeRefOrGetter } from 'vue';
+import { getImageURL } from 'wangsit-api-services';
 import eventBus from './event-bus';
 
 // Style
@@ -54,10 +55,10 @@ import {
   useToast,
   getNestedProperyValue,
   checkRouteAccess,
-  getImageURL,
   getUser,
-  getUserPermission,
+  getProjectPermission,
   getUserType,
+  getSalesRole,
   convertJsonImage,
   isEmptyObject,
   isIntersect,
@@ -142,6 +143,7 @@ import {
   NotificationItem,
   DialogImprovementTask,
   PDFViewer,
+  TooltipSpan,
 } from './components';
 
 export {
@@ -162,8 +164,9 @@ export {
   checkRouteAccess,
   getImageURL,
   getUser,
-  getUserPermission,
+  getProjectPermission,
   getUserType,
+  getSalesRole,
   convertJsonImage,
   isEmptyObject,
   isIntersect,
@@ -240,6 +243,7 @@ export {
   NotificationItem,
   DialogImprovementTask,
   PDFViewer,
+  TooltipSpan,
 
   // Component store
   useLoadingStore,

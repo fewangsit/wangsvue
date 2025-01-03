@@ -6,7 +6,6 @@ import { TaskDetailData } from 'lib/types/task.type';
 import Calendar from 'lib/components/calendar/Calendar.vue';
 import { TaskServices } from 'wangsit-api-services';
 import { EditTaskDTO } from 'lib/dto/task.dto';
-import eventBus from 'lib/event-bus';
 import { formatISODate, useToast } from 'lib/utils';
 import { TaskLegendForm } from '../common/Legend.vue';
 import DialogAssignMember from '../common/DialogAssignMember.vue';
@@ -16,6 +15,7 @@ import TaskList from '../sections/TaskList/TaskList.vue';
 import Ticket from '../sections/Ticket/Ticket.vue';
 import DialogCustomDependency from '../sections/TaskDependency/DialogCustomDependency.vue';
 import { ProjectDetail } from 'lib/types/project.type';
+import { DetailTaskEmits } from '../../TaskDetail.vue.d';
 
 const toast = useToast();
 
@@ -28,6 +28,10 @@ const userType =
 const legendForm = inject<Ref<TaskLegendForm>>('legendForm');
 const taskId = inject<Ref<string>>('taskId');
 const isApproverHasAccess = inject<Ref<string>>('isApproverHasAccess');
+const refreshTaskHandler =
+  inject<(eventName: keyof DetailTaskEmits, id?: string) => Promise<void>>(
+    'refreshTaskHandler',
+  );
 
 const showDialogAssignMember = shallowRef<boolean>(false);
 const showDialogSetDuration = shallowRef<boolean>(false);
@@ -80,16 +84,13 @@ const memberNicknames = computed(() =>
 const memberTeams = computed(() => taskDetail.value.team.join(', '));
 
 /**
- * If the task is new and the user is a team leader or a member,
+ * If the task is new and the user is a member or a guest,
  * then the member label should be the user's nickname.
  * Otherwise, it should be the nicknames of the assigned members.
  * If no member is assigned, then the label should be 'Member'.
  */
 const memberLabel = computed(() => {
-  if (
-    isNewTask.value &&
-    ['member', 'teamLeader', 'guest'].includes(userType.value)
-  ) {
+  if (isNewTask.value && ['member', 'guest'].includes(userType.value)) {
     /*
      * If the task is new and the user is a team leader or a member or a guest,
      * then get the user's nickname from local storage.
@@ -188,7 +189,8 @@ const updateStartDate = async (): Promise<void> => {
 
     const { data } = await TaskServices.putEditTask(taskId.value, body);
     if (data) {
-      eventBus.emit('detail-task:update', { taskId: taskId.value });
+      refreshTaskHandler('update', taskId.value);
+
       toast.add({
         message: 'Tanggal mulai telah disimpan.',
         severity: 'success',
@@ -216,7 +218,7 @@ const getDuration = (duration: number): string => {
   <div data-wv-section="detailtask-info-task-tab">
     <DialogAssignMember
       v-model:visible="showDialogAssignMember"
-      @saved="eventBus.emit('detail-task:update', { taskId: taskId })"
+      @saved="refreshTaskHandler('update', taskId)"
     />
     <DialogSetDuration v-model:visible="showDialogSetDuration" />
     <DialogCustomDependency v-model:visible="showDialogCustomDependency" />

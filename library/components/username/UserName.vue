@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, shallowRef } from 'vue';
+import { navigateToUrl } from 'single-spa';
 import { getNestedProperyValue } from 'lib/utils';
 import { UserNameProps } from './UserName.vue.d';
 import { Member } from 'wangsit-api-services/src/types/memberService.type';
@@ -121,10 +122,12 @@ const adjustPosition = async (): Promise<void> => {
 
         <a
           v-if="!loadingUser"
-          :href="`/user/${fullUserObject?._id}`"
+          @click.stop="
+            navigateToUrl(
+              `/tim-member/member/${fullUserObject?._id}/detail-member`,
+            )
+          "
           class="underline text-primary-400 text-[10px] leading-4 cursor-pointer hover:text-primary-500 transition-colors duration-100"
-          target="_blank"
-          title="link to user detail"
         >
           Detail Member
         </a>

@@ -3,16 +3,16 @@ import { formatUserName, getInititalName } from './textFormatter.util';
 import { checkRouteAccess } from './role.util';
 import { formatDate, formatISODate, formatDateReadable } from './date.util';
 import { queryParamsStringfy } from './queryParamsStringfy.util';
+import getSalesRole from './getSalesRole.util';
 import filterOptions from './filterOptions.util';
 import exportToExcel from './exportToExcel.util';
-import getImageURL from './getImageURL.util';
 import genPlaceholder from './genPlaceholder.util';
 import getStatusSeverity from './statusSeverity.util';
 import getAttachmentIcon from './getAttachmentIcon.util';
 import isEmptyObject from './object.util';
 import getUser from './getUser.util';
 import getUserType from './getUserType.util';
-import getUserPermission from './getUserPermission.util';
+import getProjectPermission from './getProjectPermission.util';
 import isIntersect from './isIntersect';
 import convertJsonImage from './convertJsonImage.util';
 
@@ -39,14 +39,14 @@ export {
   exportToExcel,
   filterOptions,
   isEmptyObject,
-  getImageURL,
   genPlaceholder,
   getInititalName,
   getStatusSeverity,
   getAttachmentIcon,
   getUser,
-  getUserPermission,
+  getProjectPermission,
   getUserType,
+  getSalesRole,
   isIntersect,
   convertJsonImage,
   formatDate,

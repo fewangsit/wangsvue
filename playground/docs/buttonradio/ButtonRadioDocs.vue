@@ -17,7 +17,7 @@ const model = shallowRef();
         class="w-[111px] flex flex-col gap-3 h-auto p-4 relative bg-white rounded-[5px] border-2 border-dashed border-[#9747ff]"
       >
         Model: {{ model }}
-        <ButtonRadio v-model="model" label="A" value="a" />
+        <ButtonRadio v-model="model" invalid label="A" value="a" />
         <ButtonRadio v-model="model" label="B" value="b" />
       </div>
     </template>

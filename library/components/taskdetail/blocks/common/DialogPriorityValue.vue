@@ -6,11 +6,15 @@ import { useToast } from 'lib/utils';
 import useLoadingStore from 'lib/components/loading/store/loading.store';
 import { EditTaskDTO } from 'lib/dto/task.dto';
 import { TaskServices } from 'wangsit-api-services';
-import eventBus from 'lib/event-bus';
 import DialogForm from 'lib/components/dialogform/DialogForm.vue';
 import { FormPayload } from 'lib/components/form/Form.vue.d';
+import { DetailTaskEmits } from '../../TaskDetail.vue.d';
 
 const taskId = inject<Ref<string>>('taskId');
+const refreshTaskHandler =
+  inject<(eventName: keyof DetailTaskEmits, id?: string) => Promise<void>>(
+    'refreshTaskHandler',
+  );
 
 const { setLoading } = useLoadingStore();
 const toast = useToast();
@@ -47,7 +51,7 @@ const handleSubmit = async (e: FormPayload): Promise<void> => {
         severity: 'success',
       });
 
-      eventBus.emit('detail-task:update', { taskId: taskId.value });
+      refreshTaskHandler('update', taskId.value);
 
       visible.value = false;
     }

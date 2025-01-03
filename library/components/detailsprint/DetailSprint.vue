@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, shallowRef } from 'vue';
 import { AxiosError } from 'axios';
-import { getUserPermission, useToast } from 'lib/utils';
+import { getProjectPermission, useToast } from 'lib/utils';
 import { DropdownOption } from 'lib/types/options.type';
 import {
   DetailSprintEmits,
@@ -88,6 +88,10 @@ const approveSprint = (): void => {
     errorMessage.value = 'Product backlog item harus dipilih.';
   } else if (!currentSprint.value?.startAt) {
     errorMessage.value = 'Tanggal mulai harus diisi.';
+  } else if (
+    currentProductBacklogItems.value.some((pbi) => pbi.totalTask === 0)
+  ) {
+    errorMessage.value = 'Terdapat PBI yang belum memiliki task.';
   } else {
     errorMessage.value = undefined;
     if (currentSprint.value?.isNeedApproval) {
@@ -180,7 +184,7 @@ const getPbis = async (): Promise<void> => {
         .map((pbi) => `"${pbi._id}"`)
         .toString()}]`,
     });
-    currentProductBacklogItems.value = data.data.data;
+    currentProductBacklogItems.value = data.data.data as Pbi[];
   } catch (error) {
     console.error(error);
   }
@@ -295,7 +299,7 @@ const putDoApprovalProcess = async (
       </div>
     </div>
     <Button
-      v-if="!isApproved && getUserPermission().update"
+      v-if="!isApproved && getProjectPermission(project).update"
       @click="visibleAddPbi = true"
       label="+ Product Backlog Item"
       severity="secondary"
@@ -349,7 +353,7 @@ const putDoApprovalProcess = async (
             text
           />
           <Button
-            v-if="getUserPermission().delete && !isApproved"
+            v-if="getProjectPermission(project).delete && !isApproved"
             @click.stop="deletePbi(pbi._id)"
             class="!p-0 !size-auto'"
             data-wv-section="delete-pbi"

@@ -6,9 +6,11 @@ import { filterVisibleMenu } from './helpers';
 import Menu, { MenuEmits, MenuProps } from './Menu.vue.d';
 import Icon from '../icon/Icon.vue';
 import PrimeMenu from 'primevue/menu';
+import eventBus from 'lib/event-bus';
 
+const overlayId = +new Date();
 withDefaults(defineProps<MenuProps>(), { popup: true, model: [] });
-defineEmits<MenuEmits>();
+const emit = defineEmits<MenuEmits>();
 
 const Preset = inject<Record<string, any>>('preset', {}).menu;
 const menu = ref<Menu>();
@@ -20,8 +22,26 @@ const show = (e: Event): void => {
   menu.value?.show(e);
 };
 
-const hide = (): void => {
-  menu.value?.hide();
+const hide = (event: { overlayId: number }): void => {
+  // If another overlay is clicked, hide the current overlay
+  if (menu.value && event.overlayId !== overlayId) menu.value?.hide();
+};
+
+const onHideMenu = (e: Event): void => {
+  emit('blur', e);
+  /*
+   * Waiting for next tick will prevent the menu from
+   * closing, so need to wait for 1 second
+   */
+  setTimeout(() => {
+    eventBus.off('overlay:show', hide);
+  }, 1000);
+};
+
+const onShowMenu = (e: Event): void => {
+  eventBus.on('overlay:show', hide);
+  eventBus.emit('overlay:show', { overlayId });
+  emit('focus', e);
 };
 
 defineExpose({
@@ -36,8 +56,8 @@ defineExpose({
     v-bind="$props"
     ref="menu"
     :model="filterVisibleMenu($props.model)"
-    @blur="$emit('blur', $event)"
-    @focus="$emit('focus', $event)"
+    @blur="onHideMenu"
+    @focus="onShowMenu"
   >
     <template #item="{ item, props }">
       <router-link

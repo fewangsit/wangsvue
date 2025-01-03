@@ -4,6 +4,7 @@ import DocTitle from '../DocTitle.vue';
 import InputText from 'lib/components/inputtext/InputText.vue';
 import { computed, shallowRef } from 'vue';
 const text = shallowRef('This is an example text that exceeds max length');
+const initiallyempty = shallowRef();
 
 const invalidState = computed(() => text.value?.length > 10);
 </script>
@@ -28,6 +29,22 @@ const invalidState = computed(() => text.value?.length > 10);
           use-validator
           v-model:="text"
           validator-message="Error Message"
+        />
+        These input is initially empty
+        <InputText
+          :validator-message="{ empty: 'validate on blur' }"
+          field-name="emptytext"
+          mandatory
+          use-validator
+          validate-on-blur
+        />
+        <InputText
+          v-model="initiallyempty"
+          :validator-message="{ empty: 'validate on blur' }"
+          field-name="alsoemptytext"
+          mandatory
+          use-validator
+          validate-on-blur
         />
         Disabled and Invalid State
         <InputText

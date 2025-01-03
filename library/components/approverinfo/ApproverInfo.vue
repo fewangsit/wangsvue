@@ -9,6 +9,7 @@ import { formatDate } from 'lib/utils';
 
 const props = withDefaults(defineProps<ApproverInfoProps>(), {
   showShortInfo: true,
+  useFormatDate: true,
 });
 
 const showApprovalPopUp = shallowRef<boolean>(false);
@@ -48,7 +49,13 @@ const getSeverity = (status?: string): BadgeProps['severity'] => {
 
 const getDate = (dateString?: string): string => {
   if (props.useFormatDate) {
-    return dateString ? formatDate(new Date(dateString)) : '-';
+    return dateString
+      ? formatDate(new Date(dateString), {
+          locale: 'id-ID',
+          dateFormat: 'dd M yyyy',
+          timeFormat: 'HH:mm:ss',
+        })
+      : '-';
   }
   return dateString;
 };
@@ -88,7 +95,7 @@ const getDate = (dateString?: string): string => {
   <Dialog
     v-model:visible="showApprovalPopUp"
     class="min-w-[400px]"
-    header="Approval List"
+    header="List Approver"
     modal
   >
     <div class="flex flex-col gap-3 justify-between">
@@ -98,7 +105,7 @@ const getDate = (dateString?: string): string => {
             Level {{ approval.level }} ({{ approval.type.toLowerCase() }})
           </span>
           <Badge
-            v-if="approval.status === 'selesai'"
+            v-if="approval.status !== 'menunggu approval'"
             label="selesai"
             severity="success"
           />
@@ -115,7 +122,7 @@ const getDate = (dateString?: string): string => {
             }}</span>
           </div>
           <span
-            v-if="approval.status === 'selesai' && !approver.action"
+            v-if="approval.status !== 'menunggu approval' && !approver.action"
             class="text-general-800 font-normal text-xs"
           >
             Tidak terlibat

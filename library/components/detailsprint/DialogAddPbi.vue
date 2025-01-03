@@ -110,7 +110,7 @@ const getPbis = async (
     if (!query.status) query.status = '["Backlog", "Overdue", "Reported Bug"]';
 
     const { data } = await SprintServices.getListPbis(projectId, query);
-    return data;
+    return data as FetchResponse<Pbi>;
   } catch (error) {
     console.error(error);
   }
@@ -169,7 +169,7 @@ const addPbis = async (): Promise<void> => {
         :columns="columns"
         :fetch-function="getPbis"
         :options="singleAction"
-        @toggle-option="selectedPbi = $event"
+        @toggle-option="selectedPbi = $event as Pbi"
         lazy
         selection-type="checkbox"
         table-name="list-pbi-table-unassigned"

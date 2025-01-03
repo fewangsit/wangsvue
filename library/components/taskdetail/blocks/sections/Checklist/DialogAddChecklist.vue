@@ -125,8 +125,10 @@ const handleSuccess = (): void => {
   >
     <template #fields>
       <InputText
+        :max-length="30"
         :validator-message="{
           empty: 'Nama ceklis harus diisi.',
+          exceed: 'Maksimal 30 karakter.',
         }"
         field-name="name"
         label="Nama Ceklis"

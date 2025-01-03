@@ -158,7 +158,12 @@ const tableColumns = computed<TableColumn[]>(() => {
         fieldAttributes: (data: Pipeline): MultiRowAttribute[] => {
           return data.products.map((each) => {
             return {
-              value: each.quantity.toString(),
+              bodyComponent: {
+                component: Badge,
+                props: {
+                  label: each.sku,
+                },
+              },
               class:
                 each.quantity > 13 ? 'text-success-500' : 'text-danger-500',
             };

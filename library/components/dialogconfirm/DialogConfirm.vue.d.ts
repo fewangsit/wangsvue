@@ -62,10 +62,15 @@ export interface DialogConfirmProps {
    */
   message?: string;
   /**
-   * Wether show icon header or not.
+   * Whether show icon header or not.
    * @default true;
    */
   showIcon?: boolean;
+  /**
+   * Whether show close button or not (footer button that has label, not close button with icon 'X').
+   * @default true;
+   */
+  showCloseButton?: boolean;
 }
 
 /**
@@ -123,7 +128,7 @@ declare class DialogConfirm extends ClassComponent<
 
 declare module '@vue/runtime-core' {
   interface GlobalComponents {
-    DialogForm: GlobalComponentConstructor<DialogConfirm>;
+    DialogConfirm: GlobalComponentConstructor<DialogConfirm>;
   }
 }
 

@@ -4,12 +4,9 @@ import {
   DefineComponent,
   provide,
   ref,
-  onMounted,
-  onUnmounted,
   watch,
   inject,
   shallowRef,
-  onBeforeUnmount,
 } from 'vue';
 
 import Dialog from 'primevue/dialog';
@@ -25,7 +22,6 @@ import {
   TaskDependency,
   TaskDetailData,
 } from 'lib/types/task.type';
-import eventBus from 'lib/event-bus';
 import useLoadingStore from '../loading/store/loading.store';
 import { useToast } from 'lib/utils';
 import {
@@ -34,6 +30,7 @@ import {
   TaskChecklistServices,
   TaskDependencyServices,
   TaskApiServices,
+  TicketServices,
 } from 'wangsit-api-services';
 import DescriptionTab from './blocks/Tabs/DescriptionTab.vue';
 import TaskMore from './blocks/common/TaskMore.vue';
@@ -46,6 +43,8 @@ import EventLogTab from './blocks/Tabs/EventLogTab.vue';
 import { MentionSectionFunc } from '../comment/Comment.vue.d';
 import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
 import { TaskAPI } from 'wangsit-api-services/src/types/taskService.type';
+import { TicketStatus, TicketTaskId } from 'lib/types/ticket.type';
+import { WangsitStatus } from 'lib/types/wangsStatus.type';
 
 const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 
@@ -63,18 +62,6 @@ const emit = defineEmits<DetailTaskEmits>();
 type TaskMenu = MenuItem & {
   component: DefineComponent<any, any, any>;
 };
-
-onMounted(async () => {
-  attachEventListener();
-});
-
-onUnmounted(() => {
-  removeEventListener();
-});
-
-onBeforeUnmount(() => {
-  removeEventListener();
-});
 
 const userType = computed(() => {
   const { permission } = JSON.parse(localStorage.getItem('user') || '{}');
@@ -180,6 +167,26 @@ const isAllEndpointChecked = computed(() => {
   );
 });
 
+/**
+ * Computed property to determine if there are any active tickets.
+ *
+ * This property checks if there are any tickets with a status of
+ * 'Open', 'Request Cancel', 'On Verification', 'On Progress', or 'Need Confirmation'.
+ */
+const hasActiveTickets = computed(() => {
+  return tickets.value.some((ticket) =>
+    (
+      [
+        'Open',
+        'Request Cancel',
+        'On Verification',
+        'On Progress',
+        'Need Confirmation',
+      ] as TicketStatus[]
+    ).includes(ticket.status),
+  );
+});
+
 const user = ref<User>(
   JSON.parse(localStorage.getItem('user') as string) ?? {},
 );
@@ -213,6 +220,7 @@ const commentSearch = ref<string>();
 const checklists = ref<TaskChecklist[]>([]);
 const taskDependencies = ref<TaskDependency[]>([]);
 const taskApis = ref<TaskAPI[]>([]);
+const tickets = ref<TicketTaskId[]>([]);
 
 const taskMenu = computed<TaskMenu[]>(() => {
   return [
@@ -265,7 +273,9 @@ const getDetailTask = async (): Promise<void> => {
   try {
     loadingTask.value = true;
 
-    if (!taskId.value && !props.taskId) return;
+    if (!taskId.value && !props.taskId) {
+      return;
+    }
 
     const { data } = await TaskServices.getTaskDetail(
       taskId.value ?? props.taskId,
@@ -293,6 +303,7 @@ const getDetailTask = async (): Promise<void> => {
 
     taskId.value = data.data._id;
   } catch (error) {
+    console.error(error);
     toast.add({
       message: 'Data Task Detail gagal diambil.',
       severity: 'error',
@@ -303,7 +314,14 @@ const getDetailTask = async (): Promise<void> => {
   }
 };
 
-const refreshAndEmitHandler = async (
+const loadData = async (): Promise<void> => {
+  await getDetailTask();
+  await getChecklists();
+  await getTaskDependencies();
+  await getTickets();
+};
+
+const refreshTaskHandler = async (
   eventName: keyof DetailTaskEmits,
   id?: string,
 ): Promise<void> => {
@@ -319,18 +337,13 @@ const refreshAndEmitHandler = async (
 
     if (firstFetch.value) setLoading(true);
 
-    await getDetailTask();
-    await getChecklists();
-    await getTaskDependencies();
+    await loadData();
 
     firstFetch.value = false;
 
     switch (eventName) {
       case 'show':
         emit('show');
-        break;
-      case 'create':
-        emit('create');
         break;
       case 'update':
         emit('update');
@@ -343,25 +356,9 @@ const refreshAndEmitHandler = async (
   }
 };
 
-const attachEventListener = (): void => {
-  eventBus.on('detail-task:show', (event) =>
-    refreshAndEmitHandler('show', event.taskId),
-  );
-  eventBus.on('detail-task:create', (event) =>
-    refreshAndEmitHandler('create', event.taskId),
-  );
-  eventBus.on('detail-task:update', (event) =>
-    refreshAndEmitHandler('update', event.taskId),
-  );
-  eventBus.on('detail-task:delete', (event) =>
-    refreshAndEmitHandler('delete', event.taskId),
-  );
-};
-
-const removeEventListener = (): void => {
-  eventBus.off('detail-task:show');
-  eventBus.off('detail-task:create');
-  eventBus.off('detail-task:update');
+const onCreated = async (): Promise<void> => {
+  await loadData();
+  emit('create');
 };
 
 const getChecklists = async (): Promise<void> => {
@@ -413,6 +410,23 @@ const getTaskAPIs = async (): Promise<void> => {
   }
 };
 
+const getTickets = async (): Promise<void> => {
+  if (taskId.value === undefined || isNewTask.value) {
+    return;
+  }
+  try {
+    const { data } = await TicketServices.getTicketTaskId(taskId.value);
+    if (data) {
+      tickets.value = data.data;
+    }
+  } catch (error) {
+    toast.add({
+      message: 'Tiket gagal dimuat.',
+      error,
+    });
+  }
+};
+
 const handleShow = async (): Promise<void> => {
   setLoading(true);
 
@@ -426,7 +440,7 @@ const handleShow = async (): Promise<void> => {
     isNewTask.value = true;
   }
 
-  eventBus.emit('detail-task:show', { taskId: taskId.value });
+  refreshTaskHandler('show', taskId.value);
 };
 
 /**
@@ -467,6 +481,7 @@ provide('openDetailTask', openDetailTask);
 provide('toggleCommentSection', toggleCommentSection);
 provide('updateMentionSectionText', updateMentionedSectionText);
 provide('projectDetail', projectDetail);
+provide('refreshTaskHandler', refreshTaskHandler);
 
 watch(
   () => props.taskId,
@@ -549,7 +564,9 @@ watch(
             v-if="
               !isNewTask &&
               userType !== 'guest' &&
-              ['Backlog', 'Sprint'].includes(taskDetail?.status)
+              (
+                ['Backlog', 'Sprint', 'Waiting for Approval'] as WangsitStatus[]
+              ).includes(taskDetail?.status)
             "
             :task-detail="taskDetail"
           />
@@ -572,6 +589,7 @@ watch(
         >
           <Legend
             :approval-id="props.approvalId"
+            :has-active-tickets="hasActiveTickets"
             :has-requested-checklist="hasRequestedChecklist"
             :initial-module="props.initialModule"
             :initial-sub-module="props.initialSubModule"
@@ -579,6 +597,7 @@ watch(
             :is-all-dependency-done="isAllDependencyDone"
             :is-all-endpoint-checked="isAllEndpointChecked"
             :product-backlog-item-id="props.productBacklogItemId"
+            @create="onCreated"
           />
           <TabMenu
             v-model:active-index="taskMenuIndex"
