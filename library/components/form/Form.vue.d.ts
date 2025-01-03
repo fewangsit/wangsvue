@@ -196,6 +196,10 @@ declare class Form extends ClassComponent<FormProps, FormSlots, FormEmits> {
    * Exposed function that handle submit inside form component
    */
   submit: (e?: Event | undefined) => Promise<void | undefined>;
+  /**
+   * Exposed function to set the outer fields wrapper height.
+   */
+  setOuterFieldsWrapperHeight: () => void;
 }
 
 declare module '@vue/runtime-core' {

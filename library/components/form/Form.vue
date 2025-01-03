@@ -111,6 +111,7 @@ defineExpose({
   clearField,
   resetField,
   errors,
+  setOuterFieldsWrapperHeight,
 });
 </script>
 
