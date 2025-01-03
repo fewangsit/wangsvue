@@ -194,7 +194,7 @@ export interface TaskTableItem {
   name: string;
   assignedTo: Member[];
   team: string[];
-  status: string;
+  status: WangsitStatus;
   priority?: number;
   timeReportedBug: number;
   childTask: number;

@@ -1,6 +1,114 @@
 # Changelog
 
 
+## v1.5.164
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.163...v1.5.164)
+
+## v1.5.163
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.162...v1.5.163)
+
+### 🏡 Chore
+
+- **release:** V1.5.162 ([2b842cc](https://github.com/fewangsit/wangsvue/commit/2b842cc))
+
+### ❤️ Contributors
+
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
+## v1.5.162
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.161...v1.5.162)
+
+### 🩹 Fixes
+
+- Update condition for showing delete task action in tasktable ([2f8db5d](https://github.com/fewangsit/wangsvue/commit/2f8db5d))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+
+## v1.5.161
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.151...v1.5.161)
+
+### 🚀 Enhancements
+
+- **detailSprint:** PBI must have tasks to start ([8695360](https://github.com/fewangsit/wangsvue/commit/8695360))
+- **notification:** Improvement and approval notifs ([715ba27](https://github.com/fewangsit/wangsvue/commit/715ba27))
+- **notification:** Sub module deployment notif ([bf90c98](https://github.com/fewangsit/wangsvue/commit/bf90c98))
+- **InputText:** Implement validate on blur ([cb60579](https://github.com/fewangsit/wangsvue/commit/cb60579))
+- **DataTable:** Add `info` attribute on table column header ([193bacb](https://github.com/fewangsit/wangsvue/commit/193bacb))
+- **icon:** Timer-line ([52ed2bc](https://github.com/fewangsit/wangsvue/commit/52ed2bc))
+- **BadgeGroup:** Add custom text for 'more' button when labels length exceed limit ([6147e60](https://github.com/fewangsit/wangsvue/commit/6147e60))
+- **Form:** Expose function `setOuterFieldsWrapperHeight` to manually calls it outside ([60329de](https://github.com/fewangsit/wangsvue/commit/60329de))
+
+### 🩹 Fixes
+
+- **Menu:** Hide menu on showing another menu ([14ca7e1](https://github.com/fewangsit/wangsvue/commit/14ca7e1))
+- **Menu:** Hide menu on showing another menu" ([742b62b](https://github.com/fewangsit/wangsvue/commit/742b62b))
+- **Menu:** Hide menu on showing another menu (todo) ([4843e9f](https://github.com/fewangsit/wangsvue/commit/4843e9f))
+- **Menu:** Hide menu on showing another menu ([a4ab220](https://github.com/fewangsit/wangsvue/commit/a4ab220))
+- **ApproverInfo:** Incorrect date format ([910dd88](https://github.com/fewangsit/wangsvue/commit/910dd88))
+- **ApproverInfo:** Incorrect conditions to show specific badge/text ([be80474](https://github.com/fewangsit/wangsvue/commit/be80474))
+- **JLxCadSC:** Update condition for showing action for delete task ([cd0b4cf](https://github.com/fewangsit/wangsvue/commit/cd0b4cf))
+- **1eGFaqFk:** Add max input validation for some inputtext in taskdetail ([d6a44d7](https://github.com/fewangsit/wangsvue/commit/d6a44d7))
+
+### 💅 Refactors
+
+- **detailPBI:** Add global task progress column ([8c8c812](https://github.com/fewangsit/wangsvue/commit/8c8c812))
+- **ApproverInfo:** Adjust format date ([b5cfb14](https://github.com/fewangsit/wangsvue/commit/b5cfb14))
+- **InputText:** Implement validateOnBlur more restrictly ([004ab98](https://github.com/fewangsit/wangsvue/commit/004ab98))
+- **UserName:** Change member detail link ([77ae76c](https://github.com/fewangsit/wangsvue/commit/77ae76c))
+
+### 🏡 Chore
+
+- **release:** V1.5.152 ([9e1c443](https://github.com/fewangsit/wangsvue/commit/9e1c443))
+- **release:** V1.5.153 ([9807e61](https://github.com/fewangsit/wangsvue/commit/9807e61))
+- **release:** V1.5.154 ([f072201](https://github.com/fewangsit/wangsvue/commit/f072201))
+- **release:** V1.5.155 ([6f4bc28](https://github.com/fewangsit/wangsvue/commit/6f4bc28))
+- **release:** V1.5.156 ([8db22f0](https://github.com/fewangsit/wangsvue/commit/8db22f0))
+- Update wangsit API ([2f77ee1](https://github.com/fewangsit/wangsvue/commit/2f77ee1))
+- **release:** V1.5.157 ([5960558](https://github.com/fewangsit/wangsvue/commit/5960558))
+- **release:** V1.5.158 ([26fa962](https://github.com/fewangsit/wangsvue/commit/26fa962))
+- **presets:** Update version ([e3f033a](https://github.com/fewangsit/wangsvue/commit/e3f033a))
+- **presets:** Update version ([7393933](https://github.com/fewangsit/wangsvue/commit/7393933))
+- **presets:** Update version ([67fa726](https://github.com/fewangsit/wangsvue/commit/67fa726))
+- **release:** V1.5.159 ([1e260d6](https://github.com/fewangsit/wangsvue/commit/1e260d6))
+- **release:** V1.5.160 ([ff7184f](https://github.com/fewangsit/wangsvue/commit/ff7184f))
+- Update wangsit-api-services version ([a2f992c](https://github.com/fewangsit/wangsvue/commit/a2f992c))
+
+### ❤️ Contributors
+
+- Dzulqtera <dzul@qtera.co.id>
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
+## v1.5.160
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.159...v1.5.160)
+
+### 🩹 Fixes
+
+- **JLxCadSC:** Update condition for showing action for delete task ([cd0b4cf](https://github.com/fewangsit/wangsvue/commit/cd0b4cf))
+
+### 💅 Refactors
+
+- **UserName:** Change member detail link ([77ae76c](https://github.com/fewangsit/wangsvue/commit/77ae76c))
+
+### 🏡 Chore
+
+- **presets:** Update version ([e3f033a](https://github.com/fewangsit/wangsvue/commit/e3f033a))
+- **presets:** Update version ([7393933](https://github.com/fewangsit/wangsvue/commit/7393933))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+- Dzulqtera <dzul@qtera.co.id>
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.159
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.158...v1.5.159)

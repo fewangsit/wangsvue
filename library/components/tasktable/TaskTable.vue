@@ -51,6 +51,7 @@ import ButtonBulkAction from '../buttonbulkaction/ButtonBulkAction.vue';
 import DialogConfirmRestoreTask from './DialogConfirmRestoreTask.vue';
 import DialogConfirmDeleteTaskPermanently from './DialogConfirmDeleteTaskPermanently.vue';
 import DialogSelectProject from './DialogSelectProject.vue';
+import { WangsitStatus } from 'lib/types/wangsStatus.type';
 
 const toast = useToast();
 const { setLoading } = useLoadingStore();
@@ -503,7 +504,9 @@ const tableActions = computed<MenuItem[]>(() => {
       icon: 'delete-bin',
       danger: true,
       visible:
-        ['Backlog', 'Sprint'].includes(selectedTask.value?.status) &&
+        (
+          ['Backlog', 'Sprint', 'Waiting for Approval'] as WangsitStatus[]
+        ).includes(selectedTask.value?.status) &&
         selectedTask.value?.taskType === 'parent' &&
         isIntersect(['admin', 'pm', 'teamLeader', 'member'], userType.value),
       command: (): void => {

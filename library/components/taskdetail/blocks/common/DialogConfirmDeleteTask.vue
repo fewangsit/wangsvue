@@ -8,7 +8,7 @@ import { TaskTablePage } from 'lib/components/tasktable/TaskTable.vue.d';
 const toast = useToast();
 
 const props = defineProps<{
-  tasks: Pick<TaskDetailData, '_id' | 'name' | 'process'>[];
+  tasks: Pick<TaskDetailData, '_id' | 'name' | 'process' | 'status'>[];
   page?: TaskTablePage;
   projectId?: string;
   selectedPbiId?: string;
@@ -29,21 +29,37 @@ const deleteTask = async (): Promise<void> => {
         { taskIds: props.tasks.map((task) => task._id) },
       );
     } else {
-      const createAPITasks = props.tasks.filter(
-        (task) => task.process?.name === 'Create API',
+      /**
+       * Filters the tasks to find those that should be permanently deleted.
+       * A task is considered for permanent deletion if (or):
+       * - The task's process name is 'Create API'
+       * - The task's status is 'Waiting for Approval'
+       */
+      const deletePermanentTasks = props.tasks.filter(
+        (task) =>
+          task.process?.name === 'Create API' ||
+          task.status === 'Waiting for Approval',
       );
-      const notCreateAPITasks = props.tasks.filter(
-        (task) => task.process?.name !== 'Create API',
+
+      /**
+       * Filters the tasks to find those that should be temporarily deleted.
+       * A task is considered for temporary deletion if (and):
+       * - The task's process name is not 'Create API'
+       * - The task's status is not 'Waiting for Approval'
+       */
+      const deleteTempTasks = props.tasks.filter(
+        (task) =>
+          task.process?.name !== 'Create API' &&
+          task.status !== 'Waiting for Approval',
       );
-      if (createAPITasks.length) {
+
+      if (deletePermanentTasks.length) {
         await TaskServices.deleteTasksPermanently(
-          createAPITasks.map((task) => task._id),
+          deletePermanentTasks.map((task) => task._id),
         );
       }
-      if (notCreateAPITasks.length) {
-        await TaskServices.deleteTask(
-          notCreateAPITasks.map((task) => task._id),
-        );
+      if (deleteTempTasks.length) {
+        await TaskServices.deleteTask(deleteTempTasks.map((task) => task._id));
       }
     }
     toast.add({

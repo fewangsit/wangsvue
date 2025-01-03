@@ -44,6 +44,7 @@ import { MentionSectionFunc } from '../comment/Comment.vue.d';
 import ButtonSearch from '../buttonsearch/ButtonSearch.vue';
 import { TaskAPI } from 'wangsit-api-services/src/types/taskService.type';
 import { TicketStatus, TicketTaskId } from 'lib/types/ticket.type';
+import { WangsitStatus } from 'lib/types/wangsStatus.type';
 
 const DialogPreset = inject<Record<string, any>>('preset', {}).dialog;
 
@@ -563,7 +564,9 @@ watch(
             v-if="
               !isNewTask &&
               userType !== 'guest' &&
-              ['Backlog', 'Sprint'].includes(taskDetail?.status)
+              (
+                ['Backlog', 'Sprint', 'Waiting for Approval'] as WangsitStatus[]
+              ).includes(taskDetail?.status)
             "
             :task-detail="taskDetail"
           />

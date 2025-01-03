@@ -38,7 +38,7 @@ const isLoading = shallowRef<boolean>(false);
 const executeEndpointResponse = shallowRef<ExecuteEndpoint>();
 const pathVariablesData = reactive<Record<string, unknown>>({});
 const queryParamsData = reactive<Record<string, unknown>>({});
-const requestBodyJson = ref();
+const requestBodyJson = ref('{}');
 const formDataBody = reactive<Record<string, unknown>>({});
 
 const formDataTableColumn: TableColumn[] = [
@@ -125,7 +125,7 @@ const getEndpointDetail = async (): Promise<void> => {
 
     if (data.data.type === 'json' && data.data.jsonBody) {
       requestBodyJson.value = JSON.stringify(
-        JSON.parse(data.data?.jsonBody),
+        JSON.parse(data.data?.jsonBody ?? '{}') ?? {},
         null,
         8,
       );
@@ -159,11 +159,7 @@ const postExecuteEndpoint = async (): Promise<void> => {
     try {
       executeEndpointResponse.value = {
         ...data.data,
-        response: JSON.stringify(
-          JSON.parse((data?.data?.response ?? '{}') as string),
-          null,
-          8,
-        ),
+        response: JSON.stringify(data?.data?.response ?? '{}', null, 8),
       };
     } catch (error) {
       console.error(error);
@@ -309,11 +305,9 @@ const excludeEmptyValueObject = (
       </div>
       <div class="flex flex-col gap-3">
         <span class="font-semibold">Query Params</span>
-        <template v-if="detailEndpoint?.query?.length <= 0">
-          <span class="text-center">Tidak ada parameter.</span>
-        </template>
-        <template v-else>
+        <template v-if="(detailEndpoint?.query?.length ?? 0) > 0">
           <DataTable
+            v-if="keyValueTableColum"
             :columns="keyValueTableColum"
             :custom-column="false"
             :fetch-function="getTableDataQueryParams"
@@ -325,14 +319,15 @@ const excludeEmptyValueObject = (
             table-name="query-params"
           />
         </template>
+        <template v-else>
+          <span class="text-center">Tidak ada parameter.</span>
+        </template>
       </div>
       <div class="flex flex-col gap-3">
         <span class="font-semibold">Path Variable</span>
-        <template v-if="detailEndpoint?.pathVariables?.length <= 0">
-          <span class="text-center">Tidak ada parameter.</span>
-        </template>
-        <template v-else>
+        <template v-if="(detailEndpoint?.pathVariables?.length ?? 0) > 0">
           <DataTable
+            v-if="keyValueTableColum"
             :columns="keyValueTableColum"
             :custom-column="false"
             :fetch-function="getTableDataPathVariable"
@@ -344,26 +339,35 @@ const excludeEmptyValueObject = (
             table-name="path-variables"
           />
         </template>
+        <template v-else>
+          <span class="text-center">Tidak ada parameter.</span>
+        </template>
       </div>
 
-      <div class="bg-[#F8F7EE] p-3 rounded-lg">
-        <span class="font-semibold">Request Body</span>
+      <div class="flex flex-col gap-3">
+        <div class="bg-[#F8F7EE] p-3 rounded-lg">
+          <span class="font-semibold">Request Body</span>
+        </div>
+        <template v-if="detailEndpoint?.type === 'json'">
+          <CodeSnippet
+            v-if="requestBodyJson"
+            :code="requestBodyJson"
+            :readonly="false"
+          />
+        </template>
+        <template v-else-if="detailEndpoint?.type === 'form-data'">
+          <DataTable
+            :columns="formDataTableColumn"
+            :custom-column="false"
+            :fetch-function="getTableDataFormDataTable"
+            :use-option="false"
+            selection-type="none"
+          />
+        </template>
+        <template v-else>
+          <span class="text-center">Tidak ada parameter.</span>
+        </template>
       </div>
-      <template v-if="detailEndpoint?.type === 'json'">
-        <CodeSnippet v-model:code="requestBodyJson" :readonly="false" />
-      </template>
-      <template v-else-if="detailEndpoint?.formDataBody">
-        <DataTable
-          :columns="formDataTableColumn"
-          :custom-column="false"
-          :fetch-function="getTableDataFormDataTable"
-          :use-option="false"
-          selection-type="none"
-        />
-      </template>
-      <template v-else>
-        <span class="text-center">Tidak ada parameter.</span>
-      </template>
 
       <div
         class="bg-[#F8F7EE] p-3 rounded-lg flex flex-row items-center justify-between"
@@ -408,30 +412,37 @@ const excludeEmptyValueObject = (
           <span>Memuat response...</span>
         </template>
 
-        <template v-if="!isLoading && executeEndpointResponse === undefined">
-          <img :src="wangsitLogo" alt="Wangsit Logo" class="opacity-50 w-24" />
-          <span>
-            Masukkan URL dan klik Lakukan Pengetesan untuk melihat response
-          </span>
-        </template>
-
-        <div
-          v-if="!isLoading && executeEndpointResponse !== undefined"
-          class="flex w-full gap-4"
-        >
-          <div class="flex-1 overflow-hidden">
-            <p class="!font-semibold text-xs mb-3">API Spec</p>
-            <CodeSnippet
-              :code="detailEndpoint?.apiSpecResponse"
-              lang="json"
-              readonly
+        <template v-else>
+          <template v-if="executeEndpointResponse?.response === undefined">
+            <img
+              :src="wangsitLogo"
+              alt="Wangsit Logo"
+              class="opacity-50 w-24"
             />
+            <span>
+              Masukkan URL dan klik Lakukan Pengetesan untuk melihat response
+            </span>
+          </template>
+
+          <div v-else class="flex w-full gap-4">
+            <div class="flex-1 overflow-hidden">
+              <p class="!font-semibold text-xs mb-3">API Spec</p>
+              <CodeSnippet
+                :code="detailEndpoint?.apiSpecResponse"
+                lang="json"
+                readonly
+              />
+            </div>
+            <div class="flex-1 overflow-hidden">
+              <p class="!font-semibold text-xs mb-3">Response</p>
+              <CodeSnippet
+                :code="executeEndpointResponse?.response"
+                lang="json"
+                readonly
+              />
+            </div>
           </div>
-          <div class="flex-1 overflow-hidden">
-            <p class="!font-semibold text-xs mb-3">Response</p>
-            <CodeSnippet :code="executeEndpointResponse?.response" readonly />
-          </div>
-        </div>
+        </template>
       </div>
     </template>
   </Dialog>
