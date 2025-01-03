@@ -52,8 +52,8 @@ const getDate = (dateString?: string): string => {
     return dateString
       ? formatDate(new Date(dateString), {
           locale: 'id-ID',
-          dateFormat: 'dd/mm/yyyy',
-          timeFormat: 'HH:mm',
+          dateFormat: 'dd M yyyy',
+          timeFormat: 'HH:mm:ss',
         })
       : '-';
   }
