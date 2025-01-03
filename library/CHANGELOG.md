@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.5.165
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.164...v1.5.165)
+
+### 💅 Refactors
+
+- **InputText:** Adjust validator priority ([d6da039](https://github.com/fewangsit/wangsvue/commit/d6da039))
+
+### 🏡 Chore
+
+- Adjust package ([708bf68](https://github.com/fewangsit/wangsvue/commit/708bf68))
+
+### ❤️ Contributors
+
+- Priya Bagus Amanullah <priyabagus.a29@gmail.com>
+
 ## v1.5.164
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.163...v1.5.164)
