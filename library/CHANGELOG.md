@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v1.5.160
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.159...v1.5.160)
+
+### 🩹 Fixes
+
+- **JLxCadSC:** Update condition for showing action for delete task ([cd0b4cf](https://github.com/fewangsit/wangsvue/commit/cd0b4cf))
+
+### 💅 Refactors
+
+- **UserName:** Change member detail link ([77ae76c](https://github.com/fewangsit/wangsvue/commit/77ae76c))
+
+### 🏡 Chore
+
+- **presets:** Update version ([e3f033a](https://github.com/fewangsit/wangsvue/commit/e3f033a))
+- **presets:** Update version ([7393933](https://github.com/fewangsit/wangsvue/commit/7393933))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+- Dzulqtera <dzul@qtera.co.id>
+- Zain Kurnia <programmer-fe3@qwertysystem.net>
+
 ## v1.5.159
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.158...v1.5.159)
