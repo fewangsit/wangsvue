@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.5.158
+
+[compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.157...v1.5.158)
+
+### 🚀 Enhancements
+
+- **icon:** Timer-line ([52ed2bc](https://github.com/fewangsit/wangsvue/commit/52ed2bc))
+
+### 🏡 Chore
+
+- Update wangsit API ([2f77ee1](https://github.com/fewangsit/wangsvue/commit/2f77ee1))
+
+### ❤️ Contributors
+
+- Rhapsodya Piedro Asmorobangun ([@piedorr](http://github.com/piedorr))
+
 ## v1.5.157
 
 [compare changes](https://github.com/fewangsit/wangsvue/compare/v1.5.156...v1.5.157)
